@@ -1,0 +1,220 @@
+//
+// HEADER
+//
+
+.page {
+    max-width: 1280px;
+    min-width: 1000px;
+    margin: 0 auto;
+    padding-top: emCalc(45);
+    padding-bottom: emCalc(35);
+    overflow: hidden;
+}
+
+header {
+    @include grid-row;
+    .logo {
+        @include grid-column(4, $collapse: true);
+        font-size: 20px;
+        color: $secondary-color;
+    }
+    nav { 
+        @include grid-column(7, $float: right, $collapse: true);
+        font-weight: bold; 
+    }
+    ul { @include inline-list; float: right; }
+    
+    a:hover { color: $gray; }
+    // TO BE STYLED LATER
+    .search {
+        display: none;
+    }
+}
+
+
+//
+// HOME
+//
+
+// Noteworthy
+.n-container {
+    border-top: 1px $gray solid;
+
+    @include grid-row;
+    @include translate3d(0,90%,0);
+    @include transition(transform 150ms ease);
+
+    &.open { 
+        @include translate3d(0,0,0);
+        h2:before { content:"-"; }
+    }
+
+    header { 
+        margin-top: 1em;
+        margin-bottom: 1em;
+
+    }
+
+    h2 { 
+        @include grid-column(2);
+        font-size: emCalc(15);
+        font-weight: normal;
+        &:before {
+            content: "+";
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+
+    .row {
+        padding-bottom: emCalc(35);
+    }
+
+    // bricks are in an html defined row
+    .brick {
+        height: 150px;
+        @include grid-column(3);
+        @include rotate(0);
+
+        .copy {
+            padding: 1em;
+            height: 100%;
+            background: black;
+            @include transition(box-shadow 150ms ease);
+        }
+        p, h3 {
+            color: white;
+        }
+        p { 
+            font-size: emCalc(12);
+            line-height: 1.4;
+        }
+
+        .img { 
+            position: absolute;
+            text-align: center;
+            left: 0;
+            right: 0;
+            z-index: -1;
+            @include translate3d(0,0,0);
+            @include transition(transform 150ms ease);
+            @include backface-visibility(hidden);
+        }
+
+        img {
+            opacity: 0;
+            @include transition(box-shadow 150ms ease, opacity 150ms ease);
+        }
+
+        &:hover { 
+
+            .copy {
+                background: white;
+                @include box-shadow(0 5px 10px rgba(0,0,0,0.5));
+            }
+            p,h3 {
+                color: black;
+            }
+
+            .img {
+                @include translate3d(0,-100%,0);
+            }
+            img {
+                opacity: 1;
+                @include box-shadow;
+            }
+        }
+    }
+
+}
+
+//
+// PROJECTS
+//
+
+// PROJECT FILTER BAR
+
+.pro-filter {
+    //overflow: auto;
+    @include grid-row;
+
+    .views,
+    .sorts {
+        float: right;
+    }
+    .sorts { margin-right: 5px; }
+
+    button {
+        padding: 0.2em;
+        background: none;
+    }
+}
+
+.filter {
+    float: left;
+    margin-right: 1em;
+
+    h3 { cursor: pointer; }
+
+    .controls {overflow: auto; }
+    .views {float: left;}
+    .close {float: right;}
+
+    .wrapper {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+        overflow-y: scroll;
+        max-height: 250%;
+        @include transition(opacity 150ms ease);
+    }
+
+    &.open .wrapper {
+        opacity: 1;
+        z-index: 1;
+    }
+    
+    .name { opacity: 0; }
+    .icon { opacity: 0; }
+    .name,
+    .icon { @include transition(opacity 150ms ease); }
+}
+
+.names {
+    img {display:none;} 
+
+    .name {
+        opacity: 1;
+    }
+}
+
+.icons {
+    h4 { display: none; }
+
+    width: 500px;
+    li {
+        width: 16.66667%;
+        float: left;
+        margin-bottom: 5px;
+    }
+    .icon {
+        opacity: 1;
+    }
+}
+
+// PROJECTS: IMAGE SHOWCASE
+
+.isotope-grid { 
+    //max-width : 164px * 7;
+    margin: 0 auto;
+}
+
+.thumb { 
+    //margin-right: 10px;
+    //width: 164px; 
+    //margin: 5px;
+    img { width: 100%; }
+}
+//.wide.thumb { width: 334px; }
+//.showcase { @include grid-row; }
+.projects-sorter { width: 1200px; margin: 0 auto; }
