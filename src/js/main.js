@@ -23,3 +23,18 @@ $('#titleView').click(function(e){
 $('.close').click(function(e){
     $(this).parents('.open').removeClass('open')
 })
+
+var iso = document.getElementById('iso-grid')
+
+$(iso).imagesLoaded( function(){
+    isoLoader(iso)
+})
+
+$('#mockImageGallery').click(function(e){
+    e.preventDefault()
+    $.get('/pa/templates/includes/image-showcase.php', function(d){
+        $('#showcaseContainer').append(d)
+    }).done(function(){
+        isoLoader('#iso-grid')
+    })
+})

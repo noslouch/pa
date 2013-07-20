@@ -1,20 +1,27 @@
 //
-// HEADER
+// GLOBAL
 //
 
-.page {
+ .page {
     max-width: 1280px;
     min-width: 1000px;
     margin: 0 auto;
-    padding-top: emCalc(45);
-    padding-bottom: emCalc(35);
+    padding: emCalc(45) emCalc(14) emCalc(35);
     overflow: hidden;
 }
+
+//
+// HEADER
+//
+
+
+
 
 header {
     @include grid-row;
     .logo {
-        @include grid-column(4, $collapse: true);
+        @include grid-column(4);
+        padding-left: 0;
         font-size: 20px;
         color: $secondary-color;
     }
@@ -166,12 +173,13 @@ header {
         z-index: -1;
         overflow-y: scroll;
         max-height: 250%;
+        background: white;
         @include transition(opacity 150ms ease);
     }
 
     &.open .wrapper {
         opacity: 1;
-        z-index: 1;
+        z-index: 3;
     }
     
     .name { opacity: 0; }
@@ -215,6 +223,29 @@ header {
     //margin: 5px;
     img { width: 100%; }
 }
-//.wide.thumb { width: 334px; }
-//.showcase { @include grid-row; }
+
 .projects-sorter { width: 1200px; margin: 0 auto; }
+
+// PROJECTS: PROJECT VIEWER
+
+.viewer {
+    @include grid-row;
+}
+
+.details {
+    @include grid-column(3);
+    padding-left: 0;
+
+    // .type and .links are nested in .row defined in the markup
+    .type,
+    .links { 
+        @include grid-column(6, $collapse: true);
+    }
+}
+
+.container {
+    @include grid-column(9);
+}
+
+
+

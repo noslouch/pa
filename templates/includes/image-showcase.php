@@ -16,7 +16,7 @@
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/164/216" alt="" /></a>
+                <a href="/pa/templates/project-viewer.php"><img src="http://placekitten.com/164/216" alt="" /></a>
             </div> <!-- .thumb -->
             <div class="wide thumb">
                 <div class="caption">

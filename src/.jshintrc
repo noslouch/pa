@@ -14,5 +14,6 @@
   "browser": true,
   "jquery": true,
   "globalstrict": true,
-  "devel" : true
+  "devel" : true,
+  "globals" : { "isoLoader" : true }
 }

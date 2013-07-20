@@ -2414,17 +2414,66 @@ button {
   opacity: 0;
 }
 
+/* line 73, ../../src/sass/_modules.scss */
+.isotope-item {
+  z-index: 2;
+}
+
+/* line 77, ../../src/sass/_modules.scss */
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* line 85, ../../src/sass/_modules.scss */
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+  -moz-transition-duration: 0.8s;
+  -ms-transition-duration: 0.8s;
+  -o-transition-duration: 0.8s;
+  transition-duration: 0.8s;
+}
+
+/* line 93, ../../src/sass/_modules.scss */
+.isotope {
+  -webkit-transition-property: height, width;
+  -moz-transition-property: height, width;
+  -ms-transition-property: height, width;
+  -o-transition-property: height, width;
+  transition-property: height, width;
+}
+
+/* line 101, ../../src/sass/_modules.scss */
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+  -moz-transition-property: -moz-transform, opacity;
+  -ms-transition-property: -ms-transform, opacity;
+  -o-transition-property: -o-transform, opacity;
+  transition-property: transform, opacity;
+}
+
+/* line 113, ../../src/sass/_modules.scss */
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+  -moz-transition-duration: 0s;
+  -ms-transition-duration: 0s;
+  -o-transition-duration: 0s;
+  transition-duration: 0s;
+}
+
 /* line 5, ../../src/sass/_layout.scss */
 .page {
   max-width: 1280px;
   min-width: 1000px;
   margin: 0 auto;
-  padding-top: 2.8125em;
-  padding-bottom: 2.1875em;
+  padding: 2.8125em 0.875em 2.1875em;
   overflow: hidden;
 }
 
-/* line 14, ../../src/sass/_layout.scss */
+/* line 20, ../../src/sass/_layout.scss */
 header {
   width: 100%;
   margin-left: auto;
@@ -2443,17 +2492,18 @@ header:before, header:after {
 header:after {
   clear: both;
 }
-/* line 16, ../../src/sass/_layout.scss */
+/* line 22, ../../src/sass/_layout.scss */
 header .logo {
   position: relative;
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 0.53125em;
+  padding-right: 0.53125em;
   width: 33.33333%;
   float: left;
+  padding-left: 0;
   font-size: 20px;
   color: red;
 }
-/* line 21, ../../src/sass/_layout.scss */
+/* line 28, ../../src/sass/_layout.scss */
 header nav {
   position: relative;
   padding-left: 0;
@@ -2462,7 +2512,7 @@ header nav {
   float: right;
   font-weight: bold;
 }
-/* line 25, ../../src/sass/_layout.scss */
+/* line 32, ../../src/sass/_layout.scss */
 header ul {
   margin: 0 auto 1.0625em auto;
   margin-left: -1.375em;
@@ -2483,16 +2533,16 @@ header ul > li {
 header ul > li > * {
   display: block;
 }
-/* line 27, ../../src/sass/_layout.scss */
+/* line 34, ../../src/sass/_layout.scss */
 header a:hover {
   color: #9a9a9a;
 }
-/* line 29, ../../src/sass/_layout.scss */
+/* line 36, ../../src/sass/_layout.scss */
 header .search {
   display: none;
 }
 
-/* line 40, ../../src/sass/_layout.scss */
+/* line 47, ../../src/sass/_layout.scss */
 .n-container {
   border-top: 1px #9a9a9a solid;
   width: 100%;
@@ -2521,7 +2571,7 @@ header .search {
 .n-container:after {
   clear: both;
 }
-/* line 47, ../../src/sass/_layout.scss */
+/* line 54, ../../src/sass/_layout.scss */
 .n-container.open {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
@@ -2529,16 +2579,16 @@ header .search {
   -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-/* line 49, ../../src/sass/_layout.scss */
+/* line 56, ../../src/sass/_layout.scss */
 .n-container.open h2:before {
   content: "-";
 }
-/* line 52, ../../src/sass/_layout.scss */
+/* line 59, ../../src/sass/_layout.scss */
 .n-container header {
   margin-top: 1em;
   margin-bottom: 1em;
 }
-/* line 58, ../../src/sass/_layout.scss */
+/* line 65, ../../src/sass/_layout.scss */
 .n-container h2 {
   position: relative;
   padding-left: 0.53125em;
@@ -2548,17 +2598,17 @@ header .search {
   font-size: 0.9375em;
   font-weight: normal;
 }
-/* line 62, ../../src/sass/_layout.scss */
+/* line 69, ../../src/sass/_layout.scss */
 .n-container h2:before {
   content: "+";
   display: inline-block;
   margin-right: 5px;
 }
-/* line 69, ../../src/sass/_layout.scss */
+/* line 76, ../../src/sass/_layout.scss */
 .n-container .row {
   padding-bottom: 2.1875em;
 }
-/* line 74, ../../src/sass/_layout.scss */
+/* line 81, ../../src/sass/_layout.scss */
 .n-container .brick {
   height: 150px;
   position: relative;
@@ -2572,7 +2622,7 @@ header .search {
   -o-transform: rotate(0);
   transform: rotate(0);
 }
-/* line 79, ../../src/sass/_layout.scss */
+/* line 86, ../../src/sass/_layout.scss */
 .n-container .brick .copy {
   padding: 1em;
   height: 100%;
@@ -2582,16 +2632,16 @@ header .search {
   -o-transition: box-shadow 150ms ease;
   transition: box-shadow 150ms ease;
 }
-/* line 85, ../../src/sass/_layout.scss */
+/* line 92, ../../src/sass/_layout.scss */
 .n-container .brick p, .n-container .brick h3 {
   color: white;
 }
-/* line 88, ../../src/sass/_layout.scss */
+/* line 95, ../../src/sass/_layout.scss */
 .n-container .brick p {
   font-size: 0.75em;
   line-height: 1.4;
 }
-/* line 93, ../../src/sass/_layout.scss */
+/* line 100, ../../src/sass/_layout.scss */
 .n-container .brick .img {
   position: absolute;
   text-align: center;
@@ -2613,7 +2663,7 @@ header .search {
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-/* line 104, ../../src/sass/_layout.scss */
+/* line 111, ../../src/sass/_layout.scss */
 .n-container .brick img {
   opacity: 0;
   -webkit-transition: box-shadow 150ms ease, opacity 150ms ease;
@@ -2621,18 +2671,18 @@ header .search {
   -o-transition: box-shadow 150ms ease, opacity 150ms ease;
   transition: box-shadow 150ms ease, opacity 150ms ease;
 }
-/* line 111, ../../src/sass/_layout.scss */
+/* line 118, ../../src/sass/_layout.scss */
 .n-container .brick:hover .copy {
   background: white;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
-/* line 115, ../../src/sass/_layout.scss */
+/* line 122, ../../src/sass/_layout.scss */
 .n-container .brick:hover p, .n-container .brick:hover h3 {
   color: black;
 }
-/* line 119, ../../src/sass/_layout.scss */
+/* line 126, ../../src/sass/_layout.scss */
 .n-container .brick:hover .img {
   -webkit-transform: translate3d(0, -100%, 0);
   -moz-transform: translate3d(0, -100%, 0);
@@ -2640,7 +2690,7 @@ header .search {
   -o-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
-/* line 122, ../../src/sass/_layout.scss */
+/* line 129, ../../src/sass/_layout.scss */
 .n-container .brick:hover img {
   opacity: 1;
   -webkit-box-shadow: 0px 0px 5px #333333;
@@ -2648,7 +2698,7 @@ header .search {
   box-shadow: 0px 0px 5px #333333;
 }
 
-/* line 137, ../../src/sass/_layout.scss */
+/* line 144, ../../src/sass/_layout.scss */
 .pro-filter {
   width: 100%;
   margin-left: auto;
@@ -2667,68 +2717,69 @@ header .search {
 .pro-filter:after {
   clear: both;
 }
-/* line 142, ../../src/sass/_layout.scss */
+/* line 149, ../../src/sass/_layout.scss */
 .pro-filter .views,
 .pro-filter .sorts {
   float: right;
 }
-/* line 145, ../../src/sass/_layout.scss */
+/* line 152, ../../src/sass/_layout.scss */
 .pro-filter .sorts {
   margin-right: 5px;
 }
-/* line 147, ../../src/sass/_layout.scss */
+/* line 154, ../../src/sass/_layout.scss */
 .pro-filter button {
   padding: 0.2em;
   background: none;
 }
 
-/* line 153, ../../src/sass/_layout.scss */
+/* line 160, ../../src/sass/_layout.scss */
 .filter {
   float: left;
   margin-right: 1em;
 }
-/* line 157, ../../src/sass/_layout.scss */
+/* line 164, ../../src/sass/_layout.scss */
 .filter h3 {
   cursor: pointer;
 }
-/* line 159, ../../src/sass/_layout.scss */
+/* line 166, ../../src/sass/_layout.scss */
 .filter .controls {
   overflow: auto;
 }
-/* line 160, ../../src/sass/_layout.scss */
+/* line 167, ../../src/sass/_layout.scss */
 .filter .views {
   float: left;
 }
-/* line 161, ../../src/sass/_layout.scss */
+/* line 168, ../../src/sass/_layout.scss */
 .filter .close {
   float: right;
 }
-/* line 163, ../../src/sass/_layout.scss */
+/* line 170, ../../src/sass/_layout.scss */
 .filter .wrapper {
   position: absolute;
   opacity: 0;
   z-index: -1;
   overflow-y: scroll;
   max-height: 250%;
+  background: white;
   -webkit-transition: opacity 150ms ease;
   -moz-transition: opacity 150ms ease;
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
 }
-/* line 172, ../../src/sass/_layout.scss */
+/* line 180, ../../src/sass/_layout.scss */
 .filter.open .wrapper {
   opacity: 1;
-  z-index: 1;
+  z-index: 3;
 }
-/* line 177, ../../src/sass/_layout.scss */
+/* line 185, ../../src/sass/_layout.scss */
 .filter .name {
   opacity: 0;
 }
-/* line 178, ../../src/sass/_layout.scss */
+/* line 186, ../../src/sass/_layout.scss */
 .filter .icon {
   opacity: 0;
 }
-/* line 180, ../../src/sass/_layout.scss */
+/* line 188, ../../src/sass/_layout.scss */
 .filter .name,
 .filter .icon {
   -webkit-transition: opacity 150ms ease;
@@ -2737,99 +2788,94 @@ header .search {
   transition: opacity 150ms ease;
 }
 
-/* line 184, ../../src/sass/_layout.scss */
+/* line 192, ../../src/sass/_layout.scss */
 .names img {
   display: none;
 }
-/* line 186, ../../src/sass/_layout.scss */
+/* line 194, ../../src/sass/_layout.scss */
 .names .name {
   opacity: 1;
 }
 
-/* line 191, ../../src/sass/_layout.scss */
+/* line 199, ../../src/sass/_layout.scss */
 .icons {
   width: 500px;
 }
-/* line 192, ../../src/sass/_layout.scss */
+/* line 200, ../../src/sass/_layout.scss */
 .icons h4 {
   display: none;
 }
-/* line 195, ../../src/sass/_layout.scss */
+/* line 203, ../../src/sass/_layout.scss */
 .icons li {
   width: 16.66667%;
   float: left;
   margin-bottom: 5px;
 }
-/* line 200, ../../src/sass/_layout.scss */
+/* line 208, ../../src/sass/_layout.scss */
 .icons .icon {
   opacity: 1;
 }
 
-/* line 207, ../../src/sass/_layout.scss */
+/* line 215, ../../src/sass/_layout.scss */
 .isotope-grid {
   margin: 0 auto;
 }
 
-/* line 216, ../../src/sass/_layout.scss */
+/* line 224, ../../src/sass/_layout.scss */
 .thumb img {
   width: 100%;
 }
 
-/* line 220, ../../src/sass/_layout.scss */
+/* line 227, ../../src/sass/_layout.scss */
 .projects-sorter {
   width: 1200px;
   margin: 0 auto;
 }
 
-/**** Isotope Filtering ****/
-/* line 3, ../../src/sass/_masonry.scss */
-.isotope-item {
-  z-index: 2;
+/* line 231, ../../src/sass/_layout.scss */
+.viewer {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 74.375em;
+  *zoom: 1;
+}
+/* line 121, ../../../../../Ruby/Gems/1.8/gems/zurb-foundation-4.3.0/scss/foundation/components/_global.scss */
+.viewer:before, .viewer:after {
+  content: " ";
+  display: table;
+}
+/* line 122, ../../../../../Ruby/Gems/1.8/gems/zurb-foundation-4.3.0/scss/foundation/components/_global.scss */
+.viewer:after {
+  clear: both;
 }
 
-/* line 7, ../../src/sass/_masonry.scss */
-.isotope-hidden.isotope-item {
-  pointer-events: none;
-  z-index: 1;
+/* line 235, ../../src/sass/_layout.scss */
+.details {
+  position: relative;
+  padding-left: 0.53125em;
+  padding-right: 0.53125em;
+  width: 25%;
+  float: left;
+  padding-left: 0;
+}
+/* line 241, ../../src/sass/_layout.scss */
+.details .type,
+.details .links {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+  width: 50%;
+  float: left;
 }
 
-/**** Isotope CSS3 transitions ****/
-/* line 15, ../../src/sass/_masonry.scss */
-.isotope,
-.isotope .isotope-item {
-  -webkit-transition-duration: 0.8s;
-  -moz-transition-duration: 0.8s;
-  -ms-transition-duration: 0.8s;
-  -o-transition-duration: 0.8s;
-  transition-duration: 0.8s;
-}
-
-/* line 23, ../../src/sass/_masonry.scss */
-.isotope {
-  -webkit-transition-property: height, width;
-  -moz-transition-property: height, width;
-  -ms-transition-property: height, width;
-  -o-transition-property: height, width;
-  transition-property: height, width;
-}
-
-/* line 31, ../../src/sass/_masonry.scss */
-.isotope .isotope-item {
-  -webkit-transition-property: -webkit-transform, opacity;
-  -moz-transition-property: -moz-transform, opacity;
-  -ms-transition-property: -ms-transform, opacity;
-  -o-transition-property: -o-transform, opacity;
-  transition-property: transform, opacity;
-}
-
-/**** disabling Isotope CSS3 transitions ****/
-/* line 43, ../../src/sass/_masonry.scss */
-.isotope.no-transition,
-.isotope.no-transition .isotope-item,
-.isotope .isotope-item.no-transition {
-  -webkit-transition-duration: 0s;
-  -moz-transition-duration: 0s;
-  -ms-transition-duration: 0s;
-  -o-transition-duration: 0s;
-  transition-duration: 0s;
+/* line 246, ../../src/sass/_layout.scss */
+.container {
+  position: relative;
+  padding-left: 0.53125em;
+  padding-right: 0.53125em;
+  width: 75%;
+  float: left;
 }

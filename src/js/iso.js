@@ -41,14 +41,6 @@
     var iso = document.getElementById('iso-grid')
 
     $(iso).imagesLoaded( function(){
-        $(iso).isotope({
-            itemSelector: '.thumb',
-            layoutMode : 'masonry',
-            masonry : {
-                gutterWidth: 7,
-                columnWidth: 164
-            },
-            resizable : false
-        })
+        isoLoader(iso)
     })
 //})

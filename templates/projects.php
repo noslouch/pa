@@ -3,6 +3,10 @@
 
         <?php include("includes/pro-filter.php"); ?>
 
-        <div id="starfield" class="starfield"></div>
+        <?php include("includes/image-showcase.php"); ?>
+        <!-- 
+            STARFIELD TO BE ADDED LATER
+            <div id="starfield" class="starfield"></div>
+        -->
 
 <?php include("includes/footer.php"); ?>

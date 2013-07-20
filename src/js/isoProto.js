@@ -37,10 +37,3 @@
     return ( this.masonry.cols !== prevSegments );
   };
 
-//$(window).load(function(){
-    var iso = document.getElementById('iso-grid')
-
-    $(iso).imagesLoaded( function(){
-        isoLoader(iso)
-    })
-//})

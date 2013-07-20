@@ -16,7 +16,7 @@
                     <h2 class="visuallyhidden">Main Navigation</h2>
                     <ul>
                         <li>Home</li>
-                        <li><a href="templates/projects.php">Projects</a></li>
+                        <li><a href="/pa/templates/projects.php">Projects</a></li>
                         <li>Photography</li>
                         <li>Film</li>
                         <li>Profile</li>
