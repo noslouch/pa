@@ -9,7 +9,10 @@ function isoLoader(id) {
             masonry : {
                 gutterWidth: 7,
                 columnWidth: 164
-            }
+            },
+            onLayout : function() { 
+                $(this).css('overflow', 'visible')
+           }
         })
     })
 }

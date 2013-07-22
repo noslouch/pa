@@ -11,11 +11,11 @@
     <body>
         <div class="page">
             <header>
-                <h1 class="logo"><a href="/">Peter Arnell</a></h1>
+                <h1 class="logo"><a href="/pa">Peter Arnell</a></h1>
                 <nav>
                     <h2 class="visuallyhidden">Main Navigation</h2>
                     <ul>
-                        <li><a href="/">Home</a></li>
+                        <li><a href="/pa">Home</a></li>
                         <li><a href="/pa/templates/projects.php">Projects</a></li>
                         <li><a href="/pa/templates/photography.php">Photography</a></li>
                         <li><a href="/pa/templates/film.php">Film</a></li>

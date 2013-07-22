@@ -1,3 +1,19 @@
+<?php
+    if (isset($_GET['template'])) {
+        $q = $_GET['template'];
+    } else {
+        $q = $_SERVER['QUERY_STRING'];
+    }
+    
+    if ($q == 'projects' || $q == 'mockProjectCovers') {
+        $aTag = '<a href="/pa/templates/project-single.php">';
+    } else if ($q == 'photo' || $q == 'mockPhotoCovers') {
+        $aTag = '<a href="/pa/templates/photo-single.php">';
+    } else if ($q == 'single-project' || $q == 'single-photo') {
+        $aTag = '<a href="#" id="mockFancybox">';
+    }
+?>
+                
     <!-- 
         IMAGE SHOWCASE
         *an image gallery sorted by isotope*
@@ -13,86 +29,108 @@
     <div class="showcase image fixed large">
         <div class="isotope-grid" id="iso-grid">
             <div class="thumb">
+                <div class="wrapper">
+                    <div class="caption">
+                        <p>This is a caption.</p>
+                    </div> <!-- .caption -->
+                    <?php echo $aTag; ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div>
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <div class="caption">
+                        <p></p>
+                    </div> <!-- .caption -->
+                    <?php echo $aTag; ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div>
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <div class="caption">
+                        <p></p>
+                    </div> <!-- .caption -->
+                    <?php echo $aTag; ?>
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div>
+            </div> <!-- .wide .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <div class="caption">
+                        <p>This is a slightly longer caption so we can see what it looks like when the captions span multiple lines.</p>
+                    </div> <!-- .caption -->
+                    <?php echo $aTag; ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div>
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <div class="caption">
+                        <p></p>
+                    </div> <!-- .caption -->
+                    <?php echo $aTag; ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div>
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <div class="caption">
+                        <p></p>
+                    </div> <!-- .caption -->
+                    <?php echo $aTag; ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div>
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <div class="caption">
+                        <p>This is a caption on a wide thumbnail.</p>
+                    </div> <!-- .caption -->
+                    <?php echo $aTag; ?>
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div>
+            </div> <!-- .wide .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <div class="caption">
+                        <p></p>
+                    </div> <!-- .caption -->
+                    <?php echo $aTag; ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div>
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <?php
-                    if (isset($_GET['template'])) {
-                        $q = $_GET['template'];
-                    } else {
-                        $q = $_SERVER['QUERY_STRING'];
-                    }
-                    
-                    if ($q == 'projects' || $q == 'mockProjectCovers') {
-                        $aTag = '<a href="/pa/templates/project-single.php">';
-                    } else if ($q == 'photo' || $q == 'mockPhotoCovers') {
-                        $aTag = '<a href="/pa/templates/photo-single.php">';
-                    } else if ($q == 'single-project' || $q == 'single-photo') {
-                        $aTag = '<a href="#" id="mockFancybox">';
-                    }
-                ?>
-                
                 <?php echo $aTag; ?>
-                    <img src="http://placekitten.com/164/216" alt="" />
+                    <img src="http://placekitten.com/401/259" alt="" />
                 </a>
-            </div> <!-- .thumb -->
-            <div class="wide thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <?php echo $aTag; ?>
-                <img src="http://placekitten.com/334/216" alt="" /></a>
-            </div> <!-- .wide .thumb -->
-            <div class="thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <?php echo $aTag; ?>
-                <img src="http://placekitten.com/164/216" alt="" /></a>
-            </div> <!-- .thumb -->
-            <div class="thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <?php echo $aTag; ?>
-                <img src="http://placekitten.com/164/216" alt="" /></a>
-            </div> <!-- .thumb -->
-            <div class="thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <?php echo $aTag; ?>
-                <img src="http://placekitten.com/164/216" alt="" /></a>
-            </div> <!-- .thumb -->
-            <div class="wide thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/334/216" alt="" /></a>
-            </div> <!-- .wide .thumb -->
-            <div class="thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/164/216" alt="" /></a>
-            </div> <!-- .thumb -->
-            <div class="wide thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/334/216" alt="" /></a>
             </div> <!-- .wide .thumb -->
             <div class="wide thumb">
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/334/216" alt="" /></a>
+                <?php echo $aTag; ?>
+                    <img src="http://placekitten.com/401/259" alt="" />
+                </a>
             </div> <!-- .wide .thumb -->
             <div class="wide thumb">
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/334/216" alt="" /></a>
+                <?php echo $aTag; ?>
+                    <img src="http://placekitten.com/401/259" alt="" />
+                </a>
             </div> <!-- .wide .thumb -->
         </div> <!-- .masonry-grid -->
     </div> <!-- .showcase .image -->

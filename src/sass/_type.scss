@@ -1,0 +1,84 @@
+//
+// HEADER
+//
+
+
+.logo {
+    font-size: 20px;
+    a { color: $secondary-color; }
+    a:hover { color: $gray; }
+}
+
+nav { font-weight: bold; 
+    a:hover { color: $gray; }
+}
+
+
+//
+// HOME
+//
+
+// NOTEWORTHY
+
+.n-container {
+
+    h2 {
+        font-size: emCalc(15);
+        font-weight: normal;
+    }
+
+    p, h3 {
+        color: white;
+    }
+
+    p { 
+        font-size: emCalc(12);
+        line-height: 1.4;
+    }
+
+    .brick:hover {
+        p,h3 {
+            color: black;
+        }
+    }
+}
+
+//
+// CONTACT
+//
+
+.contact {
+    display: table;
+    height: 100%;
+    width: 100%;
+
+    .wrapper {
+        display:table-cell;
+        vertical-align: middle;
+    }
+
+    h3 {
+        margin: 0px;
+        line-height: 1;
+        font-size: emCalc(50); }
+}
+
+//
+// SHOWCASES
+//
+
+// LIST SHOWCASE
+
+.list {
+    h3 {
+        color: $secondary-color;
+        font-weight: 200;
+        font-size: emCalc(18);
+    }
+
+    h4 {
+        font-size: emCalc(18);
+        font-weight: 500;
+    }
+}
+

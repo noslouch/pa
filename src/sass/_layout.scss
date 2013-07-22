@@ -2,12 +2,17 @@
 // GLOBAL
 //
 
+html, body {
+    height: 100%;
+}
+
  .page {
-    max-width: 1190px;
+    max-width: 1280px;
     min-width: 1000px;
     margin: 0 auto;
-    padding: emCalc(45) 0 emCalc(35);
-    overflow-y: hidden;
+    padding: emCalc(45) emCalc(45) emCalc(35);
+    //overflow-y: hidden;
+    height: 100%;
 }
 
 iframe {
@@ -23,16 +28,12 @@ header {
     @include grid-row(collapse);
     .logo { @include grid-column(4,$collapse: true);
         //padding-left: 0;
-        font-size: 20px;
-        color: $secondary-color;
     }
     nav { 
         @include grid-column(7, $float: right, $collapse: true);
-        font-weight: bold; 
     }
     ul { @include inline-list; float: right; }
     
-    a:hover { color: $gray; }
     // TO BE STYLED LATER
     .search {
         display: none;
@@ -46,11 +47,15 @@ header {
 
 // Noteworthy
 .n-container {
+    position: fixed;
+    bottom: 0;
     border-top: 1px $gray solid;
 
     @include grid-row(collapse);
-    @include translate3d(0,90%,0);
+    @include translate3d(0,75%,0);
     @include transition(transform 150ms ease);
+
+    max-width: 1190px;
 
     &.open { 
         @include translate3d(0,0,0);
@@ -65,8 +70,6 @@ header {
 
     h2 { 
         @include grid-column(2);
-        font-size: emCalc(15);
-        font-weight: normal;
         &:before {
             content: "+";
             display: inline-block;
@@ -90,13 +93,6 @@ header {
             background: black;
             @include transition(box-shadow 150ms ease);
         }
-        p, h3 {
-            color: white;
-        }
-        p { 
-            font-size: emCalc(12);
-            line-height: 1.4;
-        }
 
         .img { 
             position: absolute;
@@ -119,9 +115,6 @@ header {
             .copy {
                 background: white;
                 @include box-shadow(0 5px 10px rgba(0,0,0,0.5));
-            }
-            p,h3 {
-                color: black;
             }
 
             .img {
@@ -159,10 +152,10 @@ header {
 }
 
 .filter {
-    //float: left;
-    //margin-right: 1em;
-    @include grid-column(1.5, $collapse: true);
+    @include grid-column(1, $collapse: true);
+    width: auto;
     margin-left: -10px;
+    margin-right: 20px;
 
     h3 {
         display: inline-block;
@@ -176,6 +169,7 @@ header {
     .close {float: right;}
 
     .wrapper {
+        min-width: 330px;
         position: absolute;
         padding: 1em;
         opacity: 0;
@@ -252,49 +246,3 @@ header {
     @include grid-column(9);
 }
 
-//
-// SHOWCASES
-//
-
-.showcase { @include grid-column(12, $collapse:true); }
-
-// IMAGE SHOWCASE
-
-.isotope-grid { 
-    //max-width : 164px * 7;
-    margin: 0 auto;
-}
-
-.thumb { 
-    //margin-right: 10px;
-    //width: 164px; 
-    //margin: 5px;
-    img { width: 100%; }
-}
-
-.covers-container {
-    @include grid-row(collapse);
-}
-
-// LIST SHOWCASE
-
-.list {
-    //section { @include grid-row(collapse); }
-    li {
-        border-bottom: 1px solid $light-gray;
-        @include grid-column(12, $collapse:true);
-    }
-}
-
-.covers-container {
-    li:nth-child(n+2) { @include grid-column(6, $collapse: true); }
-}
-
-// FILM GRID
-
-.film-row {
-    @include grid-row(collapse);
-
-    > div { @include grid-column(3, $collapse: true);
-    }
-}

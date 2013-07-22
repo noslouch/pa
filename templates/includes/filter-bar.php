@@ -15,8 +15,14 @@
             </div>
             <ul id="brandList" class="icons">
                 <li>                  
-                    <div class="icon"><a href="/pa/templates/projects.php"><img src="http://placekitten.com/g/80/45" alt="" /></a></div>
-                    <h4 class="name"><a href="/pa/templates/projects.php">Brand Name</a></h4>
+                    <div class="icon">
+                        <a href="/pa/templates/projects.php">
+                            <img class="has-tip tip-top" data-tooltip src="http://placekitten.com/g/80/45" title="Brand Name">
+                        </a>
+                    </div>
+                    <h4 class="name">
+                        <a href="/pa/templates/projects.php">Brand Name</a>
+                    </h4>
                 </li>
                 <li>
                     <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>

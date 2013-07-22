@@ -109,7 +109,7 @@ $include-html-button-classes: true;
 // $include-html-pricing-classes: $include-html-classes;
 // $include-html-progress-classes: $include-html-classes;
 // $include-html-magellan-classes: $include-html-classes;
-// $include-html-tooltip-classes: $include-html-classes;
+$include-html-tooltip-classes: true;
 
 // Media Queries
 
@@ -137,7 +137,7 @@ $include-html-button-classes: true;
 // Grid Variables
 //
 
-$row-width: emCalc(1190);
+$row-width: emCalc(1280);
 $column-gutter: emCalc(17);
 //$total-columns: 4;
 
@@ -1209,24 +1209,24 @@ $button-round: 0px;
 // Tooltip Variables
 //
 
-// $has-tip-border-bottom: dotted 1px #ccc;
+$has-tip-border-bottom:none;
 // $has-tip-font-weight: bold;
 // $has-tip-font-color: #333;
-// $has-tip-border-bottom-hover: dotted 1px darken($primary-color, 20%);
+$has-tip-border-bottom-hover:none;
 // $has-tip-font-color-hover: $primary-color;
-// $has-tip-cursor-type: help;
+$has-tip-cursor-type: pointer;
 
 // $tooltip-padding: emCalc(8);
-// $tooltip-bg: #000;
+$tooltip-bg:rgba(255,255,255,0.8);
 // $tooltip-font-size: emCalc(15);
-// $tooltip-font-weight: bold;
-// $tooltip-font-color: #fff;
+$tooltip-font-weight: 400;
+$tooltip-font-color: $secondary-color;
 // $tooltip-line-height: 1.3;
 // $tooltip-close-font-size: emCalc(10);
 // $tooltip-close-font-weight: normal;
 // $tooltip-close-font-color: #888;
 // $tooltip-font-size-sml: emCalc(14);
-// $tooltip-radius: $global-radius;
+$tooltip-radius: 0;
 // $tooltip-pip-size: 5px;
 
 //

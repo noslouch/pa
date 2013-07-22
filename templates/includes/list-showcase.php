@@ -1,12 +1,126 @@
+<?php
+    if (isset($_GET['template'])) {
+        $q = $_GET['template'];
+    } else {
+        $q = $_SERVER['QUERY_STRING'];
+    }
+    
+    if ($q == 'projects' || $q == 'mockProjectList') {
+        $aTag = '<a href="/pa/templates/project-single.php">';
+    } else if ($q == 'photo' || $q == 'mockPhotoList') {
+        $aTag = '<a href="/pa/templates/photo-single.php">';
+    } else if ($q == 'single-project' || $q == 'single-photo') {
+        $aTag = '<a href="#" id="mockFancybox">';
+    }
+?>
         <!--
             LIST SHOWCASE
             *a nicely formatted list of titles. summaries are optional.*
         -->
         <div class="showcase list">
-            <?php 
-                $q = $_SERVER['QUERY_STRING'];
-                if ($q == 'mockRelated') {
-            ?>
+            <?php if ($q == 'mockProjectList') { ?>
+            <section>
+                <ul>
+                    <li>
+                        <h3>1986</h3>
+                    </li>
+                    <li>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Project Title
+                            </a>
+                            <div class="thumb">
+                                <img src="http://placekitten.com/197/259" alt="" />
+                            </div> <!-- .thumb -->
+                        </h4>
+                    </li>
+                    <li>
+                        <h4>
+                            <a href="">Project Title</a>
+                            <div class="wide thumb">
+                                <img src="http://placekitten.com/401/259" alt="" />
+                            </div> <!-- .thumb -->
+                        </h4>
+                    </li>
+                    <li>
+                        <h4>
+                            <a href="">Project Title</a>
+                            <div class="wide thumb">
+                                <img src="http://placekitten.com/401/259" alt="" />
+                            </div> <!-- .thumb -->
+                        </h4>
+                    </li>
+                    <li>
+                        <h4>
+                            <a href="">Project Title</a>
+                            <div class="thumb">
+                                <img src="http://placekitten.com/197/259" alt="" />
+                            </div> <!-- .thumb -->
+                        </h4>
+                    </li>
+                    <li>
+                        <h4>
+                            <a href="">Project Title</a>
+                            <div class="wide thumb">
+                                <img src="http://placekitten.com/401/259" alt="" />
+                            </div> <!-- .thumb -->
+                        </h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <ul>
+                    <li>
+                        <h3>1987</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                </ul>
+            </section>
+            <?php } else if ($q == 'mockRelated') { ?>
             <section>
                 <ul>
                     <li>
@@ -44,7 +158,7 @@
                         <h3>2013</h3>
                     </li>
                     <li>
-                        <h4><a href="">Press Title</a></h4>
+                        <h4><a href="#" id="mockPress">Press Title</a></h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
                     </li>
                     <li>
@@ -114,8 +228,10 @@
                         <h3>2013</h3>
                     </li>
                     <li>
-                        <h4><a href="">Article Title</a></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
+                        <a href="#" id="mockArticle">
+                            <h4>Article Title</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
+                        </a>
                     </li>
                     <li>
                         <h4><a href="">Article Title</a></h4>
@@ -139,81 +255,6 @@
                     <li>
                         <h4><a href="">Article Title</a></h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
-                    </li>
-                </ul>
-            </section>
-            <?php } else if ($q == 'mockProjectList') { ?>
-            <section>
-                <ul>
-                    <li>
-                        <h3>1986</h3>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                </ul>
-            </section>
-            <section>
-                <ul>
-                    <li>
-                        <h3>1987</h3>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
-                    </li>
-                    <li>
-                        <h4><a href="">Project Title</a></h4>
                     </li>
                 </ul>
             </section>
