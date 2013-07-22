@@ -1,53 +1,23 @@
         <!--
             LIST SHOWCASE
             *a nicely formatted list of titles. summaries are optional.*
-            
-            the .double class creates two columns of titles beneath a full-width header LI.
         -->
-        <div class="showcase list double">
+        <div class="showcase list">
+            <?php 
+                $q = $_SERVER['QUERY_STRING'];
+                if ($q == 'mockRelated') {
+            ?>
             <section>
                 <ul>
                     <li>
-                        <h3></h3>
+                        <h3>Related Projects</h3>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
+                        <h4><a href="">Project Title</a></h4>
                         <p></p>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
+                        <h4><a href="">Project Title</a></h4>
                         <p></p>
                     </li>
                 </ul>
@@ -55,142 +25,347 @@
             <section>
                 <ul>
                     <li>
-                        <h3></h3>
+                        <h3>Related Press</h3>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
+                        <h4><a href="">Press Title</a></h4>
                         <p></p>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
+                        <h4><a href="">Press Title</a></h4>
                         <p></p>
                     </li>
+                </ul>
+            </section>
+            <?php } else if ($q == 'mockPressList') { ?>
+            <section>
+                <ul>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h3>2013</h3>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Press Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Press Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                 </ul>
             </section>
             <section>
                 <ul>
                     <li>
-                        <h3></h3>
+                        <h3>2012</h3>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Press Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Press Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Press Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
+                    </li>
+                </ul>
+            </section>
+            <?php } else if ($q == 'mockAwardList') { ?>
+            <section>
+                <ul>
+                    <li>
+                        <h3>2013</h3>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Award Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Award Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                 </ul>
             </section>
             <section>
                 <ul>
                     <li>
-                        <h3></h3>
+                        <h3>2012</h3>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Award Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Award Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                     <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
-                    </li>
-                    <li>
-                        <h4><a href=""></a></h4>
-                        <p></p>
+                        <h4><a href="">Award Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                 </ul>
             </section>
+            <?php } else if($q == 'mockArticleList') { ?>
+            <section>
+                <ul>
+                    <li>
+                        <h3>2013</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Article Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
+                    </li>
+                    <li>
+                        <h4><a href="">Article Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <ul>
+                    <li>
+                        <h3>2012</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Article Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
+                    </li>
+                    <li>
+                        <h4><a href="">Article Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
+                    </li>
+                    <li>
+                        <h4><a href="">Article Title</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
+                    </li>
+                </ul>
+            </section>
+            <?php } else if ($q == 'mockProjectList') { ?>
+            <section>
+                <ul>
+                    <li>
+                        <h3>1986</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <ul>
+                    <li>
+                        <h3>1987</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Project Title</a></h4>
+                    </li>
+                </ul>
+            </section>
+            <?php } else if ($q == 'mockPhotoList') { ?>
+            <section>
+                <ul>
+                    <li>
+                        <h3>1986</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <ul>
+                    <li>
+                        <h3>1987</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Photo Gallery</a></h4>
+                    </li>
+                </ul>
+            </section>
+            <?php } else if ($q == 'mockFilmList') { ?>
+            <section>
+                <ul>
+                    <li>
+                        <h3>1986</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <ul>
+                    <li>
+                        <h3>1987</h3>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                    <li>
+                        <h4><a href="">Film</a></h4>
+                    </li>
+                </ul>
+            </section>
+            <?php } ?>
         </div> <!-- .showcase .list -->

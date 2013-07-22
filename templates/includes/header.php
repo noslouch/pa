@@ -11,17 +11,17 @@
     <body>
         <div class="page">
             <header>
-                <h1 class="logo">Peter Arnell</h1>
+                <h1 class="logo"><a href="/">Peter Arnell</a></h1>
                 <nav>
                     <h2 class="visuallyhidden">Main Navigation</h2>
                     <ul>
-                        <li>Home</li>
+                        <li><a href="/">Home</a></li>
                         <li><a href="/pa/templates/projects.php">Projects</a></li>
-                        <li>Photography</li>
-                        <li>Film</li>
-                        <li>Profile</li>
-                        <li>Contact</li>
-                        <li>Stream</li>
+                        <li><a href="/pa/templates/photography.php">Photography</a></li>
+                        <li><a href="/pa/templates/film.php">Film</a></li>
+                        <li><a href="/pa/templates/profile.php">Profile</a></li>
+                        <li><a href="/pa/templates/contact.php">Contact</a></li>
+                        <li><a href="/pa/templates/stream.php">Stream</a></li>
                     </ul>
                     <form class="search" action=""><input type="search" /></form>
                 </nav>

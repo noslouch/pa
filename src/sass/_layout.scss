@@ -3,25 +3,26 @@
 //
 
  .page {
-    max-width: 1280px;
+    max-width: 1190px;
     min-width: 1000px;
     margin: 0 auto;
-    padding: emCalc(45) emCalc(14) emCalc(35);
-    overflow: hidden;
+    padding: emCalc(45) 0 emCalc(35);
+    overflow-y: hidden;
+}
+
+iframe {
+    width: 100%;
+    height: 490px;
 }
 
 //
 // HEADER
 //
 
-
-
-
 header {
-    @include grid-row;
-    .logo {
-        @include grid-column(4);
-        padding-left: 0;
+    @include grid-row(collapse);
+    .logo { @include grid-column(4,$collapse: true);
+        //padding-left: 0;
         font-size: 20px;
         color: $secondary-color;
     }
@@ -47,7 +48,7 @@ header {
 .n-container {
     border-top: 1px $gray solid;
 
-    @include grid-row;
+    @include grid-row(collapse);
     @include translate3d(0,90%,0);
     @include transition(transform 150ms ease);
 
@@ -139,11 +140,11 @@ header {
 // PROJECTS
 //
 
-// PROJECT FILTER BAR
+// FILTER BAR
 
-.pro-filter {
+.filter-bar {
     //overflow: auto;
-    @include grid-row;
+    @include grid-row(collapse);
 
     .views,
     .sorts {
@@ -158,10 +159,17 @@ header {
 }
 
 .filter {
-    float: left;
-    margin-right: 1em;
+    //float: left;
+    //margin-right: 1em;
+    @include grid-column(1.5, $collapse: true);
+    margin-left: -10px;
 
-    h3 { cursor: pointer; }
+    h3 {
+        display: inline-block;
+        margin: 0;
+        padding: 0.75em;
+        cursor: pointer; 
+    }
 
     .controls {overflow: auto; }
     .views {float: left;}
@@ -169,17 +177,30 @@ header {
 
     .wrapper {
         position: absolute;
+        padding: 1em;
         opacity: 0;
         z-index: -1;
-        overflow-y: scroll;
-        max-height: 250%;
         background: white;
         @include transition(opacity 150ms ease);
+        @include box-shadow(0 6px 10px rgba(0,0,0,0.25));
     }
 
-    &.open .wrapper {
-        opacity: 1;
-        z-index: 3;
+    ul {
+        overflow-y: scroll;
+        max-height: 400px;
+        margin: 0;
+        padding: 0;
+    }
+
+    &.open {
+        h3 { 
+            background: white;
+            @include box-shadow(0 3px 10px rgba(0,0,0,0.25));
+        }
+        .wrapper {
+            opacity: 1;
+            z-index: 3;
+        }
     }
     
     .name { opacity: 0; }
@@ -210,26 +231,10 @@ header {
     }
 }
 
-// PROJECTS: IMAGE SHOWCASE
-
-.isotope-grid { 
-    //max-width : 164px * 7;
-    margin: 0 auto;
-}
-
-.thumb { 
-    //margin-right: 10px;
-    //width: 164px; 
-    //margin: 5px;
-    img { width: 100%; }
-}
-
-.projects-sorter { width: 1200px; margin: 0 auto; }
-
-// PROJECTS: PROJECT VIEWER
+// PROJECT VIEWER TEMPLATE
 
 .viewer {
-    @include grid-row;
+    @include grid-row(collapse);
 }
 
 .details {
@@ -247,5 +252,49 @@ header {
     @include grid-column(9);
 }
 
+//
+// SHOWCASES
+//
 
+.showcase { @include grid-column(12, $collapse:true); }
 
+// IMAGE SHOWCASE
+
+.isotope-grid { 
+    //max-width : 164px * 7;
+    margin: 0 auto;
+}
+
+.thumb { 
+    //margin-right: 10px;
+    //width: 164px; 
+    //margin: 5px;
+    img { width: 100%; }
+}
+
+.covers-container {
+    @include grid-row(collapse);
+}
+
+// LIST SHOWCASE
+
+.list {
+    //section { @include grid-row(collapse); }
+    li {
+        border-bottom: 1px solid $light-gray;
+        @include grid-column(12, $collapse:true);
+    }
+}
+
+.covers-container {
+    li:nth-child(n+2) { @include grid-column(6, $collapse: true); }
+}
+
+// FILM GRID
+
+.film-row {
+    @include grid-row(collapse);
+
+    > div { @include grid-column(3, $collapse: true);
+    }
+}

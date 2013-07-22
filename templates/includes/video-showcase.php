@@ -7,9 +7,9 @@
     -->
 
     <div class="showcase video">
-        <iframe src="" frameborder="0"></iframe>
+        <iframe src="http://player.vimeo.com/video/70642037" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> 
         <div class="video-caption">
-            <h3></h3>
-            <p></p>
+            <h3>Optional Video caption and info</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat tellus odio, eu pulvinar leo luctus quis. Mauris eget risus euismod, cursus.</p>
         </div>
     </div>

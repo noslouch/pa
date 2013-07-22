@@ -16,31 +16,53 @@
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <a href="/pa/templates/project-viewer.php"><img src="http://placekitten.com/164/216" alt="" /></a>
+                <?php
+                    if (isset($_GET['template'])) {
+                        $q = $_GET['template'];
+                    } else {
+                        $q = $_SERVER['QUERY_STRING'];
+                    }
+                    
+                    if ($q == 'projects' || $q == 'mockProjectCovers') {
+                        $aTag = '<a href="/pa/templates/project-single.php">';
+                    } else if ($q == 'photo' || $q == 'mockPhotoCovers') {
+                        $aTag = '<a href="/pa/templates/photo-single.php">';
+                    } else if ($q == 'single-project' || $q == 'single-photo') {
+                        $aTag = '<a href="#" id="mockFancybox">';
+                    }
+                ?>
+                
+                <?php echo $aTag; ?>
+                    <img src="http://placekitten.com/164/216" alt="" />
+                </a>
             </div> <!-- .thumb -->
             <div class="wide thumb">
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/334/216" alt="" /></a>
+                <?php echo $aTag; ?>
+                <img src="http://placekitten.com/334/216" alt="" /></a>
             </div> <!-- .wide .thumb -->
             <div class="thumb">
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/164/216" alt="" /></a>
+                <?php echo $aTag; ?>
+                <img src="http://placekitten.com/164/216" alt="" /></a>
             </div> <!-- .thumb -->
             <div class="thumb">
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/164/216" alt="" /></a>
+                <?php echo $aTag; ?>
+                <img src="http://placekitten.com/164/216" alt="" /></a>
             </div> <!-- .thumb -->
             <div class="thumb">
                 <div class="caption">
                     <p></p>
                 </div> <!-- .caption -->
-                <a href=""><img src="http://placekitten.com/164/216" alt="" /></a>
+                <?php echo $aTag; ?>
+                <img src="http://placekitten.com/164/216" alt="" /></a>
             </div> <!-- .thumb -->
             <div class="wide thumb">
                 <div class="caption">

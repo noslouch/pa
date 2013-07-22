@@ -1,4 +1,8 @@
-<div class="pro-filter" id="pro-filter">
+<div class="filter-bar" id="filter-bar">
+    <?php 
+        $q = $_GET['template'];
+        if ($q == 'projects') {
+    ?>
     <div class="filter brand">
         <h3>Brand</h3>
         <div class="wrapper">
@@ -11,8 +15,8 @@
             </div>
             <ul id="brandList" class="icons">
                 <li>                  
-                    <div class="icon"><a href="/pa/templates/projects-filtered.php"><img src="http://placekitten.com/g/80/45" alt="" /></a></div>
-                    <h4 class="name"><a href="/pa/templates/projects-filtered.php">Brand Name</a></h4>
+                    <div class="icon"><a href="/pa/templates/projects.php"><img src="http://placekitten.com/g/80/45" alt="" /></a></div>
+                    <h4 class="name"><a href="/pa/templates/projects.php">Brand Name</a></h4>
                 </li>
                 <li>
                     <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
@@ -277,12 +281,28 @@
             </ul> <!-- .names -->
         </div> <!-- .wrapper -->
     </div> <!-- .filter -->
+
     <div class="views">
-        <button>Cover Images</button>
-        <button>Titles</button>
+        <button id="mockProjectCovers" type="button">Cover Images</button>
+        <button id="mockProjectList" type="button">Titles</button>
     </div> <!-- .views -->
     <div class="sorts">
-        <button>Alpha</button>
-        <button>Date</button>
+        <button type="button">Alpha</button>
+        <button type="button">Date</button>
     </div> <!-- .sorts -->
-</div> <!-- .pro-filter -->
+
+    <?php } else if ($q == 'photo' || $q == 'film') { ?>
+
+    <div class="left">
+        <div class="views">
+            <button id="mockProjectCovers" type="button">Cover Images</button>
+            <button id="mockProjectList" type="button">Titles</button>
+        </div> <!-- .views -->
+        <div class="sorts">
+            <button type="button">Alpha</button>
+            <button type="button">Date</button>
+        </div> <!-- .sorts -->
+    </div> <!-- .left -->
+
+    <?php } ?>
+</div> <!-- .filter-bar -->

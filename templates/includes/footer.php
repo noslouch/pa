@@ -1,3 +1,4 @@
+        </div> <!-- .page -->
         <script src="/pa/lib/vendor/jquery.js"></script>
         <script src="/pa/lib/isotope/jquery.isotope.min.js"></script>
         <script src="/pa/build/js/utils.js"></script>

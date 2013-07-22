@@ -9,31 +9,31 @@
             <p class="summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.</p> <!-- .summary -->
             <ul class="showcase-links">
                 <li><a href="#" id="mockImageGallery">Image Gallery</a></li>
-                <li><a href="#" id="mockImageGallery">Video</a></li>
-                <li><a href="#" id="mockImageGallery">Info</a></li>
-                <li><a href="#" id="mockImageGallery">Related</a></li>
+                <li><a href="#" id="mockVideo">Video</a></li>
+                <li><a href="#" id="mockInfo">Info</a></li>
+                <li><a href="#" id="mockRelated">Related</a></li>
             </ul> <!-- .showcase-links -->
             <ul class="tags">
                 <li class="row">
                     <span class="type">Brand</span>
                     <div class="links">
-                        <a href="">DKNY</a>
+                        <a href="#" id="mockTag">DKNY</a>
                     </div> <!-- .links -->
                 </li> <!-- .row -->
                 <li class="row">
                     <span class="type">Industry</span>
                     <div class="links">
-                        <a href="">Fashion</a>,
-                        <a href="">Bath & Body</a>
+                        <a href="#" id="mockTag">Fashion</a>,
+                        <a href="#" id="mockTag">Bath & Body</a>
                     </div> <!-- .links -->
                 </li> <!-- .row -->
                 <li class="row">
                     <span class="type">Project Type</span>
                     <div class="links">
-                        <a href="">Communications</a>,
-                        <a href="">Advertising</a>,
-                        <a href="">Identity</a>,
-                        <a href="">Interactive</a>
+                        <a href="#" id="mockTag">Communications</a>,
+                        <a href="#" id="mockTag">Advertising</a>,
+                        <a href="#" id="mockTag">Identity</a>,
+                        <a href="#" id="mockTag">Interactive</a>
                     </div> <!-- .links -->
                 </li> <!-- .row -->
             </ul> <!-- .tags -->
