@@ -8,10 +8,10 @@
         <div class="wrapper">
             <div class="controls">
                 <div class="views">
-                    <button id="logoView" type="button">Logos</button>
-                    <button id="titleView" type="button">Titles</button>
+                    <button class="icon-view active" id="logoView" type="button"></button>
+                    <button class="title-view" id="titleView" type="button"></button>
                 </div>
-                <button id="close" class="close" type="button">Close</button>
+                <button id="close" class="close" type="button"></button>
             </div>
             <ul id="brandList" class="icons">
                 <li>                  
@@ -289,26 +289,26 @@
     </div> <!-- .filter -->
 
     <div class="views">
-        <button id="mockProjectCovers" type="button">Cover Images</button>
-        <button id="mockProjectList" type="button">Titles</button>
+        <button class="icon-view active" id="mockProjectCovers" type="button"></button>
+        <button class="title-view" id="mockProjectList" type="button"></button>
     </div> <!-- .views -->
     <div class="sorts">
-        <button type="button">Alpha</button>
-        <button type="button">Date</button>
+        <button class="alpha-sort active" type="button"></button>
+        <button class="date-sort" type="button"></button>
     </div> <!-- .sorts -->
 
     <?php } else if ($q == 'photo' || $q == 'film') { ?>
-
-    <div class="left">
+    
+    <div class="wrapper">
         <div class="views">
-            <button id="mockProjectCovers" type="button">Cover Images</button>
-            <button id="mockProjectList" type="button">Titles</button>
+            <button class="icon-view active" id="mockProjectCovers" type="button"></button>
+            <button class="title-view" id="mockProjectList" type="button"></button>
         </div> <!-- .views -->
         <div class="sorts">
-            <button type="button">Alpha</button>
-            <button type="button">Date</button>
+            <button class="alpha-sort active" type="button"></button>
+            <button class="date-sort" type="button"></button>
         </div> <!-- .sorts -->
-    </div> <!-- .left -->
+    </div>
 
     <?php } ?>
 </div> <!-- .filter-bar -->

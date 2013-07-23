@@ -4,13 +4,17 @@
 
 
 .logo {
-    font-size: 20px;
+    font-size: emCalc(19);
+    font-weight: 500;
     a { color: $secondary-color; }
     a:hover { color: $gray; }
 }
 
-nav { font-weight: bold; 
-    a:hover { color: $gray; }
+nav { 
+    font-weight: 500;
+    font-size: emCalc(19);
+    a:hover,
+    .active { color: $gray; }
 }
 
 
@@ -23,8 +27,14 @@ nav { font-weight: bold;
 .n-container {
 
     h2 {
-        font-size: emCalc(15);
-        font-weight: normal;
+        font-size: emCalc(13);
+        font-weight: 500;
+    }
+
+    h3 {
+        font-size: emCalc(19);
+        font-weight: 500;
+        line-height: 1.2;
     }
 
     p, h3 {
@@ -32,14 +42,38 @@ nav { font-weight: bold;
     }
 
     p { 
-        font-size: emCalc(12);
-        line-height: 1.4;
+        font-size: emCalc(13);
+        line-height: 1.2;
     }
 
     .brick:hover {
         p,h3 {
             color: black;
         }
+    }
+}
+
+//
+// PROJECTS
+//
+
+// FILTER BAR
+
+.filter {
+    h3 {
+        font-size: emCalc(13);
+        font-weight: 500;
+
+        &:hover { color: $secondary-color; }
+    }
+
+    &.open h3 { color: $secondary-color; }
+
+    .name,
+    .icon {
+        font-size: emCalc(19);
+        font-weight: 500;
+        margin: 0;
     }
 }
 
@@ -64,6 +98,45 @@ nav { font-weight: bold;
 }
 
 //
+// SINGLE VIEW TEMPLATE
+//
+
+.details {
+
+    h3 { 
+        font-size: emCalc(19);
+        span { 
+            display: block;
+            font-weight: 300;
+        }
+    }
+
+    p {
+        font-size: emCalc(19);
+        font-weight: 300;
+        line-height: 1.4;
+    }
+}
+
+.showcase-links {
+    font-size: emCalc(19);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.tags {
+    font-size: emCalc(13);
+}
+
+.type {
+    font-weight: 300;
+}
+
+.links {
+    font-weight: 500;
+}
+
+//
 // SHOWCASES
 //
 
@@ -72,13 +145,57 @@ nav { font-weight: bold;
 .list {
     h3 {
         color: $secondary-color;
-        font-weight: 200;
-        font-size: emCalc(18);
+        font-weight: 300;
+        font-size: emCalc(19);
     }
 
     h4 {
-        font-size: emCalc(18);
+        font-size: emCalc(19);
         font-weight: 500;
     }
 }
 
+// VIDEO SHOWCASE
+
+.video-caption {
+    width: 60%;
+
+    h3 {
+        font-size: emCalc(19);
+        font-weight: 500;
+        margin-top: 1em;
+        margin-bottom: 0;
+    }
+    p {
+        font-size: emCalc(13);
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+
+// TEXT SHOWCASE
+
+.project-info {
+    p {
+        font-size: emCalc(19);
+        font-weight: 300;
+    }
+}
+
+// FILM GRID
+
+.film-row {
+    h3 {
+        font-size: emCalc(19);
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    p { 
+        font-size: emCalc(13);
+        font-weight: 300;
+        line-height: 1.2;
+        color: $primary-color;
+    }
+
+    a:hover h3 { color: $secondary-color; }
+}

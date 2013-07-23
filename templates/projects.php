@@ -1,4 +1,7 @@
-<?php include("includes/header.php"); ?>
+<?php 
+    $_GET['template'] = 'projects';
+    include("includes/header.php"); 
+?>
         <h2 class="visuallyhidden">Projects Home</h2>
 
         <?php 

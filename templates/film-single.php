@@ -1,4 +1,7 @@
-<?php include("includes/header.php"); ?>
+<?php 
+    $_GET['template'] = 'film';
+    include("includes/header.php");
+?>
     <h2 class="visuallyhidden">Single Film View</h2>
 
     <div class="viewer">

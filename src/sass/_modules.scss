@@ -2,7 +2,7 @@
 // COLORS
 //
 
-$gray: #9A9A9A;
+$gray: #999999;
 $light-gray: #E0E0E0;
 
 //
@@ -27,7 +27,9 @@ button {
 }
 
 .quotes {
-    height: 380px;
+    height: 88%;
+    @include transition(height 150ms ease);
+
     .container {
         position: relative;
         width: 100%;
@@ -41,6 +43,8 @@ button {
         position: absolute;
         top: 0;
     }
+
+    &.short { height: 66%; }
 }
 
 
@@ -158,10 +162,17 @@ button {
     bottom: -1px;
     left: 0;
     right: 0;
-    padding: 7px 10px;
+    padding: 12px 10px;
     opacity: 0;
     z-index: 1;
     @include transition(opacity 150ms ease);
+
+    p {
+        margin: 0;
+        font-size: emCalc(11);
+        font-weight: 500;
+        line-height: 1;
+    }
 }
 
 .thumb { 
@@ -175,6 +186,7 @@ button {
 // LIST SHOWCASE
 
 .list {
+
     li {
         border-bottom: 1px solid $light-gray;
         @include grid-column(12, $collapse:true);
@@ -202,7 +214,7 @@ button {
         position: absolute;
         left: -1em;
         right: 0;
-        bottom: 61px;
+        bottom: 65px;
         opacity: 0;
         @include transition(height 150ms ease, opacity 150ms ease);
         @include rotate(0);
@@ -236,10 +248,133 @@ button {
 
 }
 
+.viewer .list {
+    width: 589px;
+    float: right;
+}
+
+// TEXT SHOWCASE
+
+.project-info {
+    width: 589px;
+    float: right;
+}
+
 // FILM GRID
 
 .film-row {
-    @include grid-row(collapse);
+    @include grid-row(nest);
 
-    > div { @include grid-column(3, $collapse: true); }
+    > div { @include grid-column(3); }
+    .img { position: relative; }
+    a { display: block; }
+}
+
+
+// SPRITES
+
+@import "icons/*.png";
+//@include all-icons-sprites;
+
+.search-icon {
+    @include icons-sprite(search);
+    width: 13px;
+    height: 17px;
+}
+
+.filter h3:after {
+    @include icons-sprite(down-arrow);
+    width: 7px;
+    height: 4px;
+    content: '';
+    display: inline-block;
+    margin-left: 8px;
+    margin-bottom: 3px;
+}
+
+.filter h3:hover:after,
+.filter.open h3:after {
+    @include icons-sprite(down-arrow-red);
+}
+
+.icon-view {
+    @include icons-sprite(icon-view);
+    width: 16px;
+    height: 15px;
+
+    &:hover {
+        @include icons-sprite(icon-view-hover);
+    }
+
+    &.active {
+        @include icons-sprite(icon-view-selected);
+    }
+}
+
+.title-view {
+    @include icons-sprite(title-view);
+    width: 25px;
+    height: 13px;
+
+    &:hover {
+        @include icons-sprite(title-view-hover);
+    }
+
+    &.active {
+        @include icons-sprite(title-view-selected);
+    }
+}
+
+.alpha-sort {
+    @include icons-sprite(alpha-sort);
+    width: 26px;
+    height: 8px;
+
+    &:hover {
+        @include icons-sprite(alpha-sort-hover);
+    }
+
+    &.active {
+        @include icons-sprite(alpha-sort-selected);
+    }
+}
+
+.date-sort {
+    @include icons-sprite(date-sort);
+    width: 21px;
+    height: 8px;
+
+    &:hover {
+        @include icons-sprite(date-sort-hover);
+    }
+
+    &.active {
+        @include icons-sprite(date-sort-selected);
+    }
+}
+
+.close {
+    @include icons-sprite(close);
+    width: 11px;
+    height: 12px;
+    
+    &:hover {
+        @include icons-sprite(close-hover);
+    }
+}
+
+.film-row .img:before {
+    @include icons-sprite(play);
+    content: '';
+    position: absolute;
+    width: 76px;
+    height: 43px;
+    left: 50%;
+    margin-left: -38px;
+    top: 50%;
+    margin-top: -22px;
+}
+
+.film-row > div:hover .img:before {
+    @include icons-sprite(play-hover);
 }

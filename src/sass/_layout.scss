@@ -30,14 +30,20 @@ header {
         //padding-left: 0;
     }
     nav { 
-        @include grid-column(7, $float: right, $collapse: true);
+        @include grid-column(8, $float: right, $collapse: true);
     }
-    ul { @include inline-list; float: right; }
+    ul { 
+        @include inline-list;
+        float: right;
+        margin: 0;
+        > li { margin-left: 15px; }
+    }
     
     // TO BE STYLED LATER
-    .search {
-        display: none;
+    .search-icon {
+        margin-top: 7px;
     }
+    .search-form { display: none; }
 }
 
 
@@ -52,7 +58,7 @@ header {
     border-top: 1px $gray solid;
 
     @include grid-row(collapse);
-    @include translate3d(0,75%,0);
+    @include translate3d(0,76%,0);
     @include transition(transform 150ms ease);
 
     max-width: 1190px;
@@ -136,18 +142,28 @@ header {
 // FILTER BAR
 
 .filter-bar {
-    //overflow: auto;
     @include grid-row(collapse);
+    text-align: right;
+    margin-bottom: 2em;
+    margin-top: 2em;
 
     .views,
     .sorts {
-        float: right;
+        display: inline-block;
+        margin-top: 7px;
+        position: relative;
     }
-    .sorts { margin-right: 5px; }
+    .views { margin-right: 7px; }
+    .sorts { top: -2px; }
 
     button {
         padding: 0.2em;
-        background: none;
+        margin: 0;
+    }
+
+    .wrapper {
+        text-align: left;
+        margin-bottom: 0.75em;
     }
 }
 
@@ -164,14 +180,17 @@ header {
         cursor: pointer; 
     }
 
-    .controls {overflow: auto; }
+    .controls {
+        overflow: auto;
+        margin-bottom: 1em;
+    }
     .views {float: left;}
     .close {float: right;}
 
     .wrapper {
         min-width: 330px;
         position: absolute;
-        padding: 1em;
+        padding: 0.5em 1em 1em 0.75em;
         opacity: 0;
         z-index: -1;
         background: white;
@@ -199,8 +218,17 @@ header {
     
     .name { opacity: 0; }
     .icon { opacity: 0; }
+
     .name,
-    .icon { @include transition(opacity 150ms ease); }
+    .icon {
+        @include transition(opacity 150ms ease);
+        text-align: left;
+    }
+
+    .views {
+        margin-right: 0;
+        margin-top: -3px;
+    }
 }
 
 .names {
@@ -225,7 +253,9 @@ header {
     }
 }
 
-// PROJECT VIEWER TEMPLATE
+//
+// SINGLE VIEW TEMPLATE
+//
 
 .viewer {
     @include grid-row(collapse);
@@ -236,13 +266,16 @@ header {
     padding-left: 0;
 
     // .type and .links are nested in .row defined in the markup
-    .type,
+    .tags > li { line-height: 1.2; }
+    .type {
+        @include grid-column(4, $collapse: true);
+    }
     .links { 
-        @include grid-column(6, $collapse: true);
+        @include grid-column(8, $collapse: true);
     }
 }
 
 .container {
-    @include grid-column(9);
+    @include grid-column(8.55, $float: right, $collapse: true);
 }
 

@@ -20,7 +20,7 @@
 -->
 <div class="showcase text">
     <?php if ($q == 'mockInfo') { ?>
-    <article>
+    <article class="project-info">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p> 
 
         <p>In porttitor eleifend nisl sed dignissim. Quisque lacinia nec diam eget mattis. Mauris sed venenatis turpis. Donec facilisis sem augue, vitae elementum dui tempor eu. Nullam condimentum mauris auctor erat aliquet bibendum nec quis urna. Ut id mauris a nulla elementum condimentum.</p> 
@@ -111,7 +111,7 @@
         <p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>
     </article>
     <?php } else if ($q == 'mockVideoInfo') { ?>
-    <article>
+    <article class="film-info">
         <header>
             <h3>Film</h3>
             <time datetime="2013">2013</time>

@@ -126,5 +126,5 @@ $(function(){
         slides.push(new Slide(quotes[i]))
     }
 
-    //slides[0].staggerOpen()
+    slides[0].staggerOpen()
 })

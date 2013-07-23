@@ -1,4 +1,8 @@
-<?php include("includes/header.php"); ?>
+<?php 
+    $_GET['template'] = 'photography';
+    include("includes/header.php"); 
+?>
+
     <h2 class="visuallyhidden">Photography Home</h2>
 
     <?php 
