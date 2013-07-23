@@ -359,11 +359,11 @@ $list-style-position: inside;
 // $button-font-family: inherit;
 $button-font-color: black;
 // $button-font-color-alt: #333;
-// $button-font-med: emCalc(16);
+$button-font-med: emCalc(13);
 // $button-font-tny: emCalc(11);
 // $button-font-sml: emCalc(13);
 // $button-font-lrg: emCalc(20);
-// $button-font-weight: bold;
+$button-font-weight: 500;
 // $button-font-align: center;
 
 // We use these to control various hover effects.

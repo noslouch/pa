@@ -4,7 +4,7 @@
 ?>
     <h2 class="visuallyhidden">Single Film View</h2>
 
-    <div class="viewer">
+    <div class="film viewer">
 
         <div class="details">
         <?php
@@ -13,7 +13,10 @@
         </div> <!-- .details -->
 
         <div class="container" id="showcaseContainer">
-            <?php include("includes/video-showcase.php"); ?>
+            <?php 
+                $_GET['template'] = 'film';
+                include("includes/video-showcase.php"); 
+            ?>
         </div> <!-- .container -->
 
     </div> <!-- .viewer -->

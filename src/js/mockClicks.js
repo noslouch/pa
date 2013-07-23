@@ -98,7 +98,7 @@ $('#mockRelated').click(function(e){
 $('#mockTag').click(function(e){
     e.preventDefault()
     
-    window.location = '/pa/templates/projects-filtered.php'
+    window.location = '/pa/templates/projects.php'
 })
 
 $('#mockPressList').click(function(e){

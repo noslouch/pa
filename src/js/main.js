@@ -52,6 +52,11 @@ $('#mockProjectCovers').click(function(e){
     $('#mockProjectList').removeClass('active')
 })
 
+$('.viewer li a').click(function(e){
+    $('.viewer .active').removeClass('active')
+    $(this).addClass('active')
+})
+
 $('.close').click(function(e){
     $(this).parents('.open').removeClass('open')
 })
@@ -62,3 +67,6 @@ $(iso).imagesLoaded( function(){
     isoLoader(iso)
 })
 
+$('time').each(function(){
+    // to be implemented
+})

@@ -1,0 +1,115 @@
+//
+// LIST SHOWCASE
+//
+
+// LAYOUT
+.list {
+
+    ul { margin: 0; }
+    li {
+        border-bottom: 1px solid $light-gray;
+        @include grid-column(12, $collapse:true);
+    }
+
+    h3 {
+        margin-top: 1.25em;
+        margin-bottom: 1.25em;
+    }
+
+    li:first-child h3 { margin-top: 1em; }
+
+    h4 {
+        width: 75%;
+        position: relative;
+    }
+    a {
+        display: block;
+        background: white;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        margin-top: 0.25em;
+        margin-bottom: 0.25em;
+        @include transition(box-shadow 150ms ease);
+    }
+    .thumb {
+        overflow: hidden;
+        height: 0px;
+        position: absolute;
+        left: -1em;
+        right: 0;
+        bottom: 65px;
+        opacity: 0;
+        @include transition(height 150ms ease, opacity 150ms ease);
+        @include rotate(0);
+
+        img {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            margin-left: -98.5px;
+        }
+    }
+    .wide.thumb img { margin-left: -200px; }
+}
+
+.covers-container {
+    li:nth-child(n+2) { @include grid-column(6, $collapse: true); }
+
+    .list a {
+        padding-left: 1em;
+        margin-left: -1em;
+        
+        &:hover {
+            @include box-shadow(0 0 25px 3px rgba(0,0,0,0.1));
+
+            & + .thumb {
+                height: 350px;
+                opacity: 1;
+            }
+        }
+    }
+
+}
+
+.viewer .list {
+    width: 589px;
+    float: right;
+}
+
+.profile {
+    .list {
+        li:first-child h3 { margin-top: 0; }
+        li:nth-child(n+2) { padding: 1.5em 0; }
+        h4 { 
+            margin: 0;
+            margin-bottom: 0.25em;
+            line-height: 1;
+        }
+        a {
+            padding: 0;
+            margin: 0;
+        }
+        p { 
+            font-size: emCalc(13);
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 0;
+        }
+    }
+}
+
+// TYPE
+
+.list {
+    h3 {
+        color: $secondary-color;
+        font-weight: 300;
+        font-size: emCalc(19);
+    }
+
+    h4 {
+        font-size: emCalc(19);
+        font-weight: 500;
+    }
+}
+

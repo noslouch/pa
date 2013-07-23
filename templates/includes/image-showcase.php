@@ -36,7 +36,7 @@
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/197/259" alt="" />
                     </a>
-                </div>
+                </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
             <div class="thumb">
                 <div class="wrapper">
@@ -46,7 +46,7 @@
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/197/259" alt="" />
                     </a>
-                </div>
+                </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
             <div class="wide thumb">
                 <div class="wrapper">
@@ -56,7 +56,7 @@
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/401/259" alt="" />
                     </a>
-                </div>
+                </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
             <div class="thumb">
                 <div class="wrapper">
@@ -66,7 +66,7 @@
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/197/259" alt="" />
                     </a>
-                </div>
+                </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
             <div class="thumb">
                 <div class="wrapper">
@@ -76,7 +76,7 @@
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/197/259" alt="" />
                     </a>
-                </div>
+                </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
             <div class="thumb">
                 <div class="wrapper">
@@ -86,7 +86,7 @@
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/197/259" alt="" />
                     </a>
-                </div>
+                </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
             <div class="wide thumb">
                 <div class="wrapper">
@@ -96,7 +96,7 @@
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/401/259" alt="" />
                     </a>
-                </div>
+                </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
             <div class="thumb">
                 <div class="wrapper">
@@ -106,31 +106,37 @@
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/197/259" alt="" />
                     </a>
-                </div>
+                </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
             <div class="wide thumb">
-                <?php echo $aTag; ?>
-                    <div class="caption">
-                        <p></p>
-                    </div> <!-- .caption -->
-                    <img src="http://placekitten.com/401/259" alt="" />
-                </a>
+                <div class="wrapper">
+                    <?php echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
             <div class="wide thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <?php echo $aTag; ?>
-                    <img src="http://placekitten.com/401/259" alt="" />
-                </a>
+                <div class="wrapper">
+                    <?php echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
             <div class="wide thumb">
-                <div class="caption">
-                    <p></p>
-                </div> <!-- .caption -->
-                <?php echo $aTag; ?>
-                    <img src="http://placekitten.com/401/259" alt="" />
-                </a>
+                <div class="wrapper">
+                    <?php echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
         </div> <!-- .masonry-grid -->
     </div> <!-- .showcase .image -->

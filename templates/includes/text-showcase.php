@@ -61,7 +61,9 @@
                 </a>
             </div>
         </div>
-        <button type="button">View All Press</button>
+        <div class="wrapper">
+            <button type="button">View All Press</button>
+        </div>
     </article>
     <?php } else if ($q == 'mockArticle') { ?>
     <article>
@@ -93,10 +95,12 @@
                 </a>
             </div>
         </div>
-        <button type="button">View All Press</button>
+        <div class="wrapper">
+            <button type="button">View All Articles by PA</button>
+        </div>
     </article>
     <?php } else if ($q == 'mockBio') { ?>
-    <article>
+    <article class="bio">
         <div class="img">
             <img src="/pa/assets/img/arnellbio.png" alt="" />
         </div>
@@ -111,7 +115,7 @@
         <p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>
     </article>
     <?php } else if ($q == 'mockVideoInfo') { ?>
-    <article class="film-info">
+    <article>
         <header>
             <h3>Film</h3>
             <time datetime="2013">2013</time>
@@ -119,7 +123,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p> 
 
         <p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>
-        <button></button>
+        <button>View All Film</button>
     </article>
     <?php } ?>
 </div>

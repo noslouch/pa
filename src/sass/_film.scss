@@ -1,0 +1,47 @@
+//
+// FILM
+//
+
+// LAYOUT
+
+.film-row {
+    @include grid-row(nest);
+    margin-bottom: 3em;
+
+    > div { @include grid-column(3); }
+    .img { position: relative; }
+    a { display: block; }
+}
+
+// TYPE
+
+.film-row {
+    h3 {
+        font-size: emCalc(19);
+        font-weight: 500;
+        margin-bottom: 0;
+        margin-top: 0.75em;
+    }
+    a p { 
+        font-size: emCalc(13);
+        font-weight: 300;
+        line-height: 1.2;
+        color: $primary-color;
+    }
+}
+
+.film .details { // this actuall calls a text-showcase
+    p {
+        font-size: emCalc(13);
+        font-weight: 500;
+        line-height: 1.2;
+    }
+
+    button:before {
+        content: "<";
+        color: red;
+        display: inline;
+        vertical-align: text-top;
+        margin-right: 0.5em;
+    }
+} 

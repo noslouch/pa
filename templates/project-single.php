@@ -3,12 +3,12 @@
     include("includes/header.php"); 
 ?>
 
-    <div class="viewer">
+    <div class="project viewer">
         <div class="details">
-            <h3>
-                Donna Karen Bath & Body
-                <span>1986</span>
-            </h3>
+            <header>
+                <h3>Donna Karen Bath & Body</h3>
+                <time datetime="1986">1986</time>
+            </header>
             <p class="summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.</p> <!-- .summary -->
             <ul class="showcase-links">
                 <li><a href="#" id="mockImageGallery">Image Gallery</a></li>

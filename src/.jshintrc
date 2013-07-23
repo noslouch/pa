@@ -15,5 +15,8 @@
   "jquery": true,
   "globalstrict": true,
   "devel" : true,
-  "globals" : { "isoLoader" : true }
+  "globals" : {
+    "isoLoader" : true,
+    "makeTime" : true
+  }
 }

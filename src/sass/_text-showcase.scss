@@ -1,0 +1,83 @@
+//
+// TEXT SHOWCASE
+//
+
+// LAYOUT
+
+.text {
+    max-width: 589px;
+    float: right;
+}
+
+.profile article {
+
+    header {
+        @include grid-row;
+        border-bottom: 1px solid $light-gray;
+        padding-bottom: 1.25em;
+        margin-bottom: 1em;
+    }
+
+    h3, time {
+        @include grid-column(6, $collapse: true);
+    }
+    .wrapper { 
+        padding-top: 1em;
+        border-top: 1px solid $light-gray; }
+
+    button:before {
+        content: "<";
+        color: red;
+        display: inline;
+        vertical-align: text-top;
+        margin-right: 0.5em;
+    }
+}
+
+.gallery {
+    @include grid-row(nest);
+    margin-bottom: 1.25em;
+
+    .img {
+        @include grid-column(3);
+    }
+}
+
+.bio .img {
+    float: left;
+    margin-right: 1em;
+}
+
+
+// TYPE
+
+.text {
+    p {
+        font-size: emCalc(19);
+        font-weight: 300;
+    }
+}
+
+.profile article {
+    h3, time {
+        font-size: emCalc(19);
+    }
+    
+    h3 {
+        font-weight: 500;
+        margin: 0;
+        text-align: left;
+    }
+
+    time {
+        font-weight: 100;
+        text-align: right;
+    }
+    
+    p {
+        font-size: emCalc(13);
+        font-weight: 500;
+        line-height: 1.2;
+    }
+}
+

@@ -5,7 +5,7 @@
 
     <h2 class="visuallyhidden">Profile Home</h2>
 
-    <div class="viewer">
+    <div class="profile viewer">
 
         <div class="details">
             <ul class="showcase-links">

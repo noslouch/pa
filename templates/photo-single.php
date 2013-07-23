@@ -2,12 +2,12 @@
     $_GET['template'] = 'photography';
     include("includes/header.php"); 
 ?>
-    <div class="viewer">
+    <div class="photo viewer">
         <div class="details">
-            <h3>
-                Photo Gallery
-                <span>2012</span>
-            </h3>
+            <header>
+                <h3>Photo Gallery</h3>
+                <time datetime="2013">2013</time>
+            </header>
             <p class="summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.</p> <!-- .summary -->
         </div> <!-- .details -->
         <div class="container" id="showcaseContainer">

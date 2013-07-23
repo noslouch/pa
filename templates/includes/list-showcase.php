@@ -5,12 +5,12 @@
         $q = $_SERVER['QUERY_STRING'];
     }
     
-    if ($q == 'projects' || $q == 'mockProjectList') {
+    if ($q == 'projects' || $q == 'mockProjectList' || $q == 'mockRelated') {
         $aTag = '<a href="/pa/templates/project-single.php">';
     } else if ($q == 'photo' || $q == 'mockPhotoList') {
         $aTag = '<a href="/pa/templates/photo-single.php">';
-    } else if ($q == 'single-project' || $q == 'single-photo') {
-        $aTag = '<a href="#" id="mockFancybox">';
+    } else if ($q == 'mockFilmList') {
+        $aTag = '<a href="/pa/templates/film-single.php">';
     }
 ?>
         <!--
@@ -127,11 +127,19 @@
                         <h3>Related Projects</h3>
                     </li>
                     <li>
-                        <h4><a href="">Project Title</a></h4>
+                    <h4>
+                        <?php echo $aTag; ?>
+                            Project Title
+                        </a>
+                    </h4>
                         <p></p>
                     </li>
                     <li>
-                        <h4><a href="">Project Title</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Project Title
+                            </a>
+                        </h4>
                         <p></p>
                     </li>
                 </ul>
@@ -142,11 +150,11 @@
                         <h3>Related Press</h3>
                     </li>
                     <li>
-                        <h4><a href="">Press Title</a></h4>
+                        <h4><a href="#" id="mockPress">Press Title</a></h4>
                         <p></p>
                     </li>
                     <li>
-                        <h4><a href="">Press Title</a></h4>
+                        <h4><a href="#" id="mockPress">Press Title</a></h4>
                         <p></p>
                     </li>
                 </ul>
@@ -157,14 +165,18 @@
                     <li>
                         <h3>2013</h3>
                     </li>
+                    <li>     
+                        <a href="#" id="mockPress">
+                            <h4>Press Title</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
+                        </a>
+                   </li>
                     <li>
-                        <h4><a href="#" id="mockPress">Press Title</a></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
-                    </li>
-                    <li>
-                        <h4><a href="">Press Title</a></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
-                    </li>
+                        <a href="#" id="mockPress">
+                            <h4>Press Title</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
+                        </a>
+                   </li>
                 </ul>
             </section>
             <section>
@@ -173,17 +185,23 @@
                         <h3>2012</h3>
                     </li>
                     <li>
-                        <h4><a href="">Press Title</a></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
-                    </li>
+                        <a href="#" id="mockPress">
+                            <h4>Press Title</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
+                        </a>
+                   </li>
                     <li>
-                        <h4><a href="">Press Title</a></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
-                    </li>
+                        <a href="#" id="mockPress">
+                            <h4>Press Title</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
+                        </a>
+                   </li>
                     <li>
-                        <h4><a href="">Press Title</a></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
-                    </li>
+                        <a href="#" id="mockPress">
+                            <h4>Press Title</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
+                        </a>
+                   </li>
                 </ul>
             </section>
             <?php } else if ($q == 'mockAwardList') { ?>
@@ -340,34 +358,74 @@
                         <h3>1986</h3>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                 </ul>
             </section>
@@ -377,34 +435,74 @@
                         <h3>1987</h3>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Film</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Film
+                            </a>
+                        </h4>
                     </li>
                 </ul>
             </section>

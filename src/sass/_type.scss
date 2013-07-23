@@ -1,21 +1,8 @@
+
 //
 // HEADER
 //
 
-
-.logo {
-    font-size: emCalc(19);
-    font-weight: 500;
-    a { color: $secondary-color; }
-    a:hover { color: $gray; }
-}
-
-nav { 
-    font-weight: 500;
-    font-size: emCalc(19);
-    a:hover,
-    .active { color: $gray; }
-}
 
 
 //
@@ -24,34 +11,6 @@ nav {
 
 // NOTEWORTHY
 
-.n-container {
-
-    h2 {
-        font-size: emCalc(13);
-        font-weight: 500;
-    }
-
-    h3 {
-        font-size: emCalc(19);
-        font-weight: 500;
-        line-height: 1.2;
-    }
-
-    p, h3 {
-        color: white;
-    }
-
-    p { 
-        font-size: emCalc(13);
-        line-height: 1.2;
-    }
-
-    .brick:hover {
-        p,h3 {
-            color: black;
-        }
-    }
-}
 
 //
 // PROJECTS
@@ -59,143 +18,7 @@ nav {
 
 // FILTER BAR
 
-.filter {
-    h3 {
-        font-size: emCalc(13);
-        font-weight: 500;
-
-        &:hover { color: $secondary-color; }
-    }
-
-    &.open h3 { color: $secondary-color; }
-
-    .name,
-    .icon {
-        font-size: emCalc(19);
-        font-weight: 500;
-        margin: 0;
-    }
-}
-
-//
-// CONTACT
-//
-
-.contact {
-    display: table;
-    height: 100%;
-    width: 100%;
-
-    .wrapper {
-        display:table-cell;
-        vertical-align: middle;
-    }
-
-    h3 {
-        margin: 0px;
-        line-height: 1;
-        font-size: emCalc(50); }
-}
 
 //
 // SINGLE VIEW TEMPLATE
 //
-
-.details {
-
-    h3 { 
-        font-size: emCalc(19);
-        span { 
-            display: block;
-            font-weight: 300;
-        }
-    }
-
-    p {
-        font-size: emCalc(19);
-        font-weight: 300;
-        line-height: 1.4;
-    }
-}
-
-.showcase-links {
-    font-size: emCalc(19);
-    font-weight: 500;
-    line-height: 1.2;
-}
-
-.tags {
-    font-size: emCalc(13);
-}
-
-.type {
-    font-weight: 300;
-}
-
-.links {
-    font-weight: 500;
-}
-
-//
-// SHOWCASES
-//
-
-// LIST SHOWCASE
-
-.list {
-    h3 {
-        color: $secondary-color;
-        font-weight: 300;
-        font-size: emCalc(19);
-    }
-
-    h4 {
-        font-size: emCalc(19);
-        font-weight: 500;
-    }
-}
-
-// VIDEO SHOWCASE
-
-.video-caption {
-    width: 60%;
-
-    h3 {
-        font-size: emCalc(19);
-        font-weight: 500;
-        margin-top: 1em;
-        margin-bottom: 0;
-    }
-    p {
-        font-size: emCalc(13);
-        font-weight: 300;
-        line-height: 1.2;
-    }
-}
-
-// TEXT SHOWCASE
-
-.project-info {
-    p {
-        font-size: emCalc(19);
-        font-weight: 300;
-    }
-}
-
-// FILM GRID
-
-.film-row {
-    h3 {
-        font-size: emCalc(19);
-        font-weight: 500;
-        margin-bottom: 0;
-    }
-    p { 
-        font-size: emCalc(13);
-        font-weight: 300;
-        line-height: 1.2;
-        color: $primary-color;
-    }
-
-    a:hover h3 { color: $secondary-color; }
-}

@@ -1,0 +1,60 @@
+//
+// IMAGE SHOWCASE
+//
+
+// LAYOUT
+
+.isotope-grid { 
+    margin: 0 auto;
+    
+    .wrapper { @include transition(transform 150ms ease); }
+
+    .thumb {
+        margin-bottom: 0.75em;
+        width: 164px;
+    }
+
+    .wide.thumb { width: 334px; }
+
+    .thumb:hover {
+        z-index: 3;
+        
+        .wrapper {
+            @include scale(1.2);
+            @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
+        }
+
+        .caption {
+            opacity: 1; }
+    }
+}
+
+.caption {
+    color: $secondary-color;
+    background: white;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    padding: 12px 10px;
+    opacity: 0;
+    z-index: 1;
+    @include transition(opacity 150ms ease);
+
+    p {
+        margin: 0;
+        font-size: emCalc(11);
+        font-weight: 500;
+        line-height: 1;
+    }
+}
+
+.thumb { 
+    img { max-width: 100%; }
+}
+
+.covers-container {
+    @include grid-row(collapse);
+}
+
+
