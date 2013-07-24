@@ -26,6 +26,39 @@ iframe {
     height: 490px;
 }
 
+button.red:hover {
+    background: $secondary-color;
+    color: white;
+
+    &:before {
+        color: $primary-color;
+    }
+}
+
+button.white {
+    @include transition(box-shadow 150ms ease);
+    @include box-shadow(inset 0 0 0 0 white);
+}
+
+button.white:hover {
+    background: white;
+    @include box-shadow(inset 0 0 1px 1px $gray);
+    //border: 1px solid $gray;
+    color: $primary-color;
+
+    &:before {
+        color: $primary-color;
+    }
+}
+
+button.black:hover {
+    background: $primary-color;
+    color: white;
+
+    &:before {
+        //color: $primary-color;
+    }
+}
 //
 // HEADER
 //

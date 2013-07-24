@@ -32,7 +32,7 @@
         <p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>
     </article>
     <?php } else if ($q == 'mockPress') { ?>
-    <article>
+    <article class="press">
         <header>
             <h3>Press Title</h3>
             <time datetime="2013-7-12">August 12, 2013</time>
@@ -66,7 +66,7 @@
         </div>
     </article>
     <?php } else if ($q == 'mockArticle') { ?>
-    <article>
+    <article class="press">
         <header>
             <h3>Article Title</h3>
             <time datetime="2013-7-12">August 12, 2013</time>

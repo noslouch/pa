@@ -9,7 +9,7 @@
     float: right;
 }
 
-.profile article {
+.press {
 
     header {
         @include grid-row;
@@ -58,7 +58,7 @@
     }
 }
 
-.profile article {
+.press {
     h3, time {
         font-size: emCalc(19);
     }

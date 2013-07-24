@@ -283,34 +283,74 @@
                         <h3>1986</h3>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                     <li>
-                        <h4><a href="">Photo Gallery</a></h4>
+                        <h4>
+                            <?php echo $aTag; ?>
+                                Photo Gallery
+                            </a>
+                        </h4>
                     </li>
                 </ul>
             </section>
