@@ -6,7 +6,6 @@ var quotes = $('.quotes h3'),
 
 
 function Slide(h1, gallery){
-    var openFlag = false
     var self = this
     self.blinds = h1.children
     self.g = gallery
@@ -30,18 +29,13 @@ function Slide(h1, gallery){
     }
 
     self.staggerOpen = function(){
-        openFlag = true
         open(0)
     }
 
     self.staggerClose = function(){
-        openFlag = false
         close(0)
     }
 
-    self.isOpen = function() {
-        return openFlag
-    }
 }
 
 Slide.prototype.lastBlind = function(){
@@ -90,7 +84,10 @@ function Gallery(c){
             var els = $('#bullets li')
             var li = els[self.q[0]]
             $(els).removeClass('active-slide')
-            $(li).addClass('active-slide')
+            var p = $(li).addClass('active-slide').position()
+            $('#dot').animate({
+                top: p.top
+            })
         }
 
     }
@@ -142,19 +139,23 @@ Gallery.prototype.getQueue = function(){
 
 Gallery.prototype.bullets = function(){
     var $ul = $('<ul/>')
+    var $dot = $('<div/>').attr('id', 'dot').addClass('dot')
+    $ul.append($dot)
+
     for (var i = 0; i < this.slides.length; i++){
         var $li = $('<li/>')
         if (i === 0) {
             $li.addClass('active-slide')
         }
         var $a = $('<a/>').attr('id', i)
-        $a.text(i)
+        //$a.text(i)
         $li.append($a)
         $ul.append($li)
     }
     $ul.appendTo('#bullets')
+
+    this.getCurrent().animate()
 }
 
 var g = new Gallery(container)
 g.bullets()
-g.getCurrent().animate()

@@ -2528,13 +2528,48 @@ button {
   top: 10em;
   right: 3em;
 }
+/* line 85, ../../src/sass/_modules.scss */
+.indicators ul {
+  margin: 0;
+  padding: 0;
+  background: black;
+  z-index: 0;
+  position: absolute;
+  overflow: hidden;
+}
+/* line 93, ../../src/sass/_modules.scss */
+.indicators li {
+  background: url(../../assets/img/mask.png);
+  width: 20px;
+  height: 25px;
+}
+/* line 98, ../../src/sass/_modules.scss */
+.indicators a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 
-/* line 86, ../../src/sass/_modules.scss */
+/* line 105, ../../src/sass/_modules.scss */
+.dot {
+  position: absolute;
+  z-index: -1;
+  width: 20px;
+  height: 20px;
+  background: red;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* line 114, ../../src/sass/_modules.scss */
 .active-slide a {
   color: red;
 }
 
-/* line 94, ../../src/sass/_modules.scss */
+/* line 122, ../../src/sass/_modules.scss */
 .showcase {
   position: relative;
   padding-left: 0;
@@ -2549,14 +2584,14 @@ button {
   background: url('../../assets/img/icons-s61fcdbc6af.png') no-repeat;
 }
 
-/* line 102, ../../src/sass/_modules.scss */
+/* line 130, ../../src/sass/_modules.scss */
 .search-icon {
   background-position: 0 0;
   width: 13px;
   height: 17px;
 }
 
-/* line 108, ../../src/sass/_modules.scss */
+/* line 136, ../../src/sass/_modules.scss */
 .filter h3:after {
   background-position: 0 -263px;
   width: 7px;
@@ -2567,84 +2602,84 @@ button {
   margin-bottom: 3px;
 }
 
-/* line 119, ../../src/sass/_modules.scss */
+/* line 147, ../../src/sass/_modules.scss */
 .filter h3:hover:after,
 .filter.open h3:after {
   background-position: 0 -259px;
 }
 
-/* line 123, ../../src/sass/_modules.scss */
+/* line 151, ../../src/sass/_modules.scss */
 .icon-view {
   background-position: 0 -229px;
   width: 16px;
   height: 15px;
 }
-/* line 128, ../../src/sass/_modules.scss */
+/* line 156, ../../src/sass/_modules.scss */
 .icon-view:hover {
   background-position: 0 -244px;
 }
-/* line 132, ../../src/sass/_modules.scss */
+/* line 160, ../../src/sass/_modules.scss */
 .icon-view.active {
   background-position: 0 -151px;
 }
 
-/* line 137, ../../src/sass/_modules.scss */
+/* line 165, ../../src/sass/_modules.scss */
 .title-view {
   background-position: 0 -216px;
   width: 25px;
   height: 13px;
 }
-/* line 142, ../../src/sass/_modules.scss */
+/* line 170, ../../src/sass/_modules.scss */
 .title-view:hover {
   background-position: 0 -166px;
 }
-/* line 146, ../../src/sass/_modules.scss */
+/* line 174, ../../src/sass/_modules.scss */
 .title-view.active {
   background-position: 0 -203px;
 }
 
-/* line 151, ../../src/sass/_modules.scss */
+/* line 179, ../../src/sass/_modules.scss */
 .alpha-sort {
   background-position: 0 -103px;
   width: 26px;
   height: 8px;
 }
-/* line 156, ../../src/sass/_modules.scss */
+/* line 184, ../../src/sass/_modules.scss */
 .alpha-sort:hover {
   background-position: 0 -119px;
 }
-/* line 160, ../../src/sass/_modules.scss */
+/* line 188, ../../src/sass/_modules.scss */
 .alpha-sort.active {
   background-position: 0 -127px;
 }
 
-/* line 165, ../../src/sass/_modules.scss */
+/* line 193, ../../src/sass/_modules.scss */
 .date-sort {
   background-position: 0 -111px;
   width: 21px;
   height: 8px;
 }
-/* line 170, ../../src/sass/_modules.scss */
+/* line 198, ../../src/sass/_modules.scss */
 .date-sort:hover {
   background-position: 0 -135px;
 }
-/* line 174, ../../src/sass/_modules.scss */
+/* line 202, ../../src/sass/_modules.scss */
 .date-sort.active {
   background-position: 0 -143px;
 }
 
-/* line 179, ../../src/sass/_modules.scss */
+/* line 207, ../../src/sass/_modules.scss */
 .close {
   background-position: 0 -191px;
   width: 11px;
   height: 12px;
 }
-/* line 184, ../../src/sass/_modules.scss */
+/* line 212, ../../src/sass/_modules.scss */
 .close:hover {
   background-position: 0 -179px;
 }
 
-/* line 189, ../../src/sass/_modules.scss */
+/* line 217, ../../src/sass/_modules.scss */
 .film-row .img:before {
   background-position: 0 -17px;
   content: '';
@@ -2657,23 +2692,23 @@ button {
   margin-top: -22px;
 }
 
-/* line 201, ../../src/sass/_modules.scss */
+/* line 229, ../../src/sass/_modules.scss */
 .film-row > div:hover .img:before {
   background-position: 0 -60px;
 }
 
-/* line 209, ../../src/sass/_modules.scss */
+/* line 237, ../../src/sass/_modules.scss */
 .isotope-item {
   z-index: 2;
 }
 
-/* line 213, ../../src/sass/_modules.scss */
+/* line 241, ../../src/sass/_modules.scss */
 .isotope-hidden.isotope-item {
   pointer-events: none;
   z-index: 1;
 }
 
-/* line 221, ../../src/sass/_modules.scss */
+/* line 249, ../../src/sass/_modules.scss */
 .isotope,
 .isotope .isotope-item {
   -webkit-transition-duration: 0.8s;
@@ -2683,7 +2718,7 @@ button {
   transition-duration: 0.8s;
 }
 
-/* line 229, ../../src/sass/_modules.scss */
+/* line 257, ../../src/sass/_modules.scss */
 .isotope {
   -webkit-transition-property: height, width;
   -moz-transition-property: height, width;
@@ -2692,7 +2727,7 @@ button {
   transition-property: height, width;
 }
 
-/* line 237, ../../src/sass/_modules.scss */
+/* line 265, ../../src/sass/_modules.scss */
 .isotope .isotope-item {
   -webkit-transition-property: -webkit-transform, opacity;
   -moz-transition-property: -moz-transform, opacity;
@@ -2701,7 +2736,7 @@ button {
   transition-property: transform, opacity;
 }
 
-/* line 249, ../../src/sass/_modules.scss */
+/* line 277, ../../src/sass/_modules.scss */
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
