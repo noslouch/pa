@@ -146,7 +146,9 @@ Gallery.prototype.getQueue = function(){
 
 Gallery.prototype.bullets = function(){
     var $ul = $('<ul/>')
+    var $wrap = $('<div />').addClass('wrapper')
     var $dot = $('<div/>').attr('id', 'dot').addClass('dot')
+    $ul.appendTo($wrap)
     $ul.append($dot)
 
     for (var i = 0; i < this.slides.length; i++){
@@ -155,11 +157,10 @@ Gallery.prototype.bullets = function(){
             $li.addClass('active-slide')
         }
         var $a = $('<a/>').attr('id', i)
-        //$a.text(i)
         $li.append($a)
         $ul.append($li)
     }
-    $ul.appendTo('#bullets')
+    $wrap.appendTo('#bullets')
 
     this.getCurrent().animate()
 }

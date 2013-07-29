@@ -30,9 +30,7 @@
                         <div class="blind closed">- Newsweek</div>
                     </h3>
                 </div> <!-- .slide -->
-        <div class="indicators" id="bullets">
-            
-        </div>
+                <div class="indicators" id="bullets"></div>
             </div> <!-- .container -->
         </div> <!-- quotes -->
 
