@@ -2,34 +2,31 @@
 /*jshint -W002*/
 
 var quotes = $('.quotes h3'),
-    container = document.getElementById('container'),
-    slides = [],
-    animation
+    container = document.getElementById('container')
 
 
-function Slide(h1){
+function Slide(h1, gallery){
     var openFlag = false
     var self = this
     self.blinds = h1.children
+    self.g = gallery
 
-    self.init()
-    
-    function open(index){
-        if ( index === self.blinds.length ) {
+    function open(blindIndex){
+        if ( blindIndex === self.blinds.length ) {
             return
         }
-        $(self.blinds[index]).addClass('opened ')
-        $(self.blinds[index]).removeClass('closed')
-        setTimeout(open.bind(self,index+1), 110)
+        $(self.blinds[blindIndex]).addClass('opened ')
+        $(self.blinds[blindIndex]).removeClass('closed')
+        setTimeout(open.bind(self,blindIndex+1), 110)
     }
 
-    function close(index){
-        if ( index === self.blinds.length ) {
+    function close(blindIndex){
+        if ( blindIndex === self.blinds.length ) {
             return
         }
-        $(self.blinds[index]).removeClass('opened')
-        $(self.blinds[index]).addClass('closed')
-        setTimeout(close.bind(self,index+1), 110)
+        $(self.blinds[blindIndex]).removeClass('opened')
+        $(self.blinds[blindIndex]).addClass('closed')
+        setTimeout(close.bind(self,blindIndex+1), 110)
     }
 
     self.staggerOpen = function(){
@@ -45,86 +42,119 @@ function Slide(h1){
     self.isOpen = function() {
         return openFlag
     }
-
-    self.lastBlind = function(){
-        return self.blinds[self.blinds.length-1]
-    }
 }
 
-Slide.prototype.init = function(){
-    Slide.prototype.slides = Slide.prototype.slides || []
-    Slide.prototype.slides.push(this)
+Slide.prototype.lastBlind = function(){
+    return this.blinds[this.blinds.length-1]
 }
 
-
-Slide.prototype.getCurrent = function(){
-    var current;
-    var slides = Slide.prototype.slides
-    for (var i = 0; i < slides.length; i++){
-        if (slides[i].isOpen()){
-            current = slides[i]
-            break
-        }
-    }
-    if (!current){
-        current = slides[0]
-    }
-
-    return current
+Slide.prototype.getBlind = function(n){
+    return this.blinds[n-1]
 }
 
-Slide.prototype.getNext = function(){
-    var current = Slide.prototype.getCurrent()
-    var next;
-
-    for (var i = 0; i < Slide.prototype.slides.length; i++){
-        if (slides[i] === current){
-            next = slides[i+1]
-        }
-    }
-
-    return next
+Slide.prototype.animate = function(){
+    this.g.openSlide = this
+    setTimeout(this.staggerClose, 2500)
+    this.staggerOpen()
 }
 
-function animationHandler(e){
-    var slide = Slide.prototype.getCurrent(),
-        next = Slide.prototype.getNext(),
-        lastBlind = slide.lastBlind(),
-        blind = e.target
+function Gallery(c){
+    var self = this
 
-    if (blind === lastBlind && $(lastBlind).hasClass('opened')) {
-        setTimeout(slide.staggerClose, 2000)
-        try {
-            animation = setTimeout(next.staggerOpen, 4500)
-        } catch(e) {
-            next = Slide.prototype.slides[0]
-            animation = setTimeout(next.staggerOpen, 4500)
-        }
+    // Slides array for reference
+    this.slides = []
 
-    }
-}
-
-$(container).on('webkitTransitionEnd', animationHandler)
-$(container).on('transitionEnd', animationHandler)
-$(container).on('transitionend', animationHandler)
-
-/*
-function valueSwap($input1, $input2){
-    $input1.change(function(e){
-        $input2.val(e.target.value)
-    })
-    $input2.change(function(e){
-        $input1.val(e.target.value)
-    })
-}
-*/
-
-
-$(function(){
+    // Animation Queue
+    this.q = []
 
     for (var i = 0; i < quotes.length; i++){
-        slides.push(new Slide(quotes[i]))
+        this.slides.push(new Slide(quotes[i],self))
+        this.q.push(i)
     }
 
-    slides[0].staggerOpen()
-})
+    var galleryHandler = function(e){
+        var openSlide = self.getCurrent(),
+            lastBlind = openSlide.lastBlind(),
+            thirdFromEnd = openSlide.getBlind(openSlide.blinds.length-1),
+            currentBlind = e.target
+
+
+        if (currentBlind === thirdFromEnd && $(thirdFromEnd).hasClass('closed')) {
+            if (self.q.userChoice){
+                self.getNext().animate()
+                self.q.userChoice = false
+            } else {
+                self.update().animate()
+            }
+
+            var els = $('#bullets li')
+            var li = els[self.q[0]]
+            $(els).removeClass('active-slide')
+            $(li).addClass('active-slide')
+        }
+
+    }
+
+    $(c).on('webkitTransitionEnd', galleryHandler)
+    $(c).on('transitionEnd', galleryHandler)
+    $(c).on('transitionend', galleryHandler)
+
+    $(c).on('click', 'a', function(e){
+        e.preventDefault()
+        self.update(e.target.id)
+    })
+}
+
+
+Gallery.prototype.getCurrent = function(){
+    return this.openSlide || this.slides[0]
+}
+
+Gallery.prototype.getNext = function(){
+    if (this.openSlide) {
+        return this.slides[this.q[0]]
+    } else {
+        return this.slides[1]
+    }
+}
+
+Gallery.prototype.update = function(){
+    if (arguments.length < 1) {
+        // move closed slide to end of queue
+        // next slide to open moves to first position
+        var justClosed = this.q.shift()
+        this.q.push(justClosed)
+    } else {
+        // move user selected slide to first position
+        var nextIndex = parseInt(arguments[0], 10)
+        var end = this.q.splice(0, this.q.indexOf(nextIndex))
+        this.q = this.q.concat(end)
+        // userChoice flag to override other update calls
+        this.q.userChoice = true
+    }
+    // next slide, either sequential or user-selected is in q[0]
+    return this.slides[this.q[0]]
+}
+
+Gallery.prototype.getQueue = function(){
+    return this.q
+}
+
+Gallery.prototype.bullets = function(){
+    var $ul = $('<ul/>')
+    for (var i = 0; i < this.slides.length; i++){
+        var $li = $('<li/>')
+        if (i === 0) {
+            $li.addClass('active-slide')
+        }
+        var $a = $('<a/>').attr('id', i)
+        $a.text(i)
+        $li.append($a)
+        $ul.append($li)
+    }
+    $ul.appendTo('#bullets')
+}
+
+var g = new Gallery(container)
+g.bullets()
+g.getCurrent().animate()

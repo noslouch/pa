@@ -51,6 +51,13 @@ button {
 .quotes h3 {
     display: table-cell;
     vertical-align: middle;
+    font-size: emCalc(10);
+}
+
+@media only screen and (min-height: 300px) {
+    .quotes h3 {
+        font-size: emCalc(15);
+    }
 }
 
 .blind { 
@@ -68,6 +75,16 @@ button {
 
 .closed {
     opacity: 0;
+}
+
+.indicators {
+    position: absolute;
+    top: 10em;
+    right: 3em;
+}
+
+.active-slide a {
+    color: red;
 }
 
 //

@@ -64,28 +64,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 7, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 7, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .ir {
   background-color: transparent;
   border: 0;
   overflow: hidden;
   *text-indent: -9999px;
 }
-/* line 27, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 27, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .ir:before {
   content: "";
   display: block;
   width: 0;
-  height: 100%;
+  height: 150%;
 }
 
-/* line 9, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 9, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .hidden {
   display: none !important;
   visibility: hidden;
 }
 
-/* line 11, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 11, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -96,7 +96,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   position: absolute;
   width: 1px;
 }
-/* line 67, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 67, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
   clip: auto;
   height: auto;
@@ -106,21 +106,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   width: auto;
 }
 
-/* line 13, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 13, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .invisible {
   visibility: hidden;
 }
 
-/* line 93, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 93, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .clearfix:before, .clearfix:after {
   content: " ";
   display: table;
 }
-/* line 98, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 98, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .clearfix:after {
   clear: both;
 }
-/* line 104, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.0/stylesheets/h5bp/_helpers.scss */
+/* line 104, ../../../../../Ruby/Gems/1.8/gems/compass-h5bp-0.1.1/stylesheets/h5bp/_helpers.scss */
 .clearfix {
   *zoom: 1;
 }
@@ -2491,9 +2491,16 @@ button {
 .quotes h3 {
   display: table-cell;
   vertical-align: middle;
+  font-size: 0.625em;
 }
 
-/* line 56, ../../src/sass/_modules.scss */
+@media only screen and (min-height: 300px) {
+  /* line 58, ../../src/sass/_modules.scss */
+  .quotes h3 {
+    font-size: 0.9375em;
+  }
+}
+/* line 63, ../../src/sass/_modules.scss */
 .blind {
   font-size: 3em;
   font-family: "Helvetica Neue", arial, sans-serif;
@@ -2505,17 +2512,29 @@ button {
   transition: opacity 2000ms ease-out;
 }
 
-/* line 65, ../../src/sass/_modules.scss */
+/* line 72, ../../src/sass/_modules.scss */
 .opened {
   opacity: 1;
 }
 
-/* line 69, ../../src/sass/_modules.scss */
+/* line 76, ../../src/sass/_modules.scss */
 .closed {
   opacity: 0;
 }
 
-/* line 77, ../../src/sass/_modules.scss */
+/* line 80, ../../src/sass/_modules.scss */
+.indicators {
+  position: absolute;
+  top: 10em;
+  right: 3em;
+}
+
+/* line 86, ../../src/sass/_modules.scss */
+.active-slide a {
+  color: red;
+}
+
+/* line 94, ../../src/sass/_modules.scss */
 .showcase {
   position: relative;
   padding-left: 0;
@@ -2530,14 +2549,14 @@ button {
   background: url('../../assets/img/icons-s61fcdbc6af.png') no-repeat;
 }
 
-/* line 85, ../../src/sass/_modules.scss */
+/* line 102, ../../src/sass/_modules.scss */
 .search-icon {
   background-position: 0 0;
   width: 13px;
   height: 17px;
 }
 
-/* line 91, ../../src/sass/_modules.scss */
+/* line 108, ../../src/sass/_modules.scss */
 .filter h3:after {
   background-position: 0 -263px;
   width: 7px;
@@ -2548,84 +2567,84 @@ button {
   margin-bottom: 3px;
 }
 
-/* line 102, ../../src/sass/_modules.scss */
+/* line 119, ../../src/sass/_modules.scss */
 .filter h3:hover:after,
 .filter.open h3:after {
   background-position: 0 -259px;
 }
 
-/* line 106, ../../src/sass/_modules.scss */
+/* line 123, ../../src/sass/_modules.scss */
 .icon-view {
   background-position: 0 -229px;
   width: 16px;
   height: 15px;
 }
-/* line 111, ../../src/sass/_modules.scss */
+/* line 128, ../../src/sass/_modules.scss */
 .icon-view:hover {
   background-position: 0 -244px;
 }
-/* line 115, ../../src/sass/_modules.scss */
+/* line 132, ../../src/sass/_modules.scss */
 .icon-view.active {
   background-position: 0 -151px;
 }
 
-/* line 120, ../../src/sass/_modules.scss */
+/* line 137, ../../src/sass/_modules.scss */
 .title-view {
   background-position: 0 -216px;
   width: 25px;
   height: 13px;
 }
-/* line 125, ../../src/sass/_modules.scss */
+/* line 142, ../../src/sass/_modules.scss */
 .title-view:hover {
   background-position: 0 -166px;
 }
-/* line 129, ../../src/sass/_modules.scss */
+/* line 146, ../../src/sass/_modules.scss */
 .title-view.active {
   background-position: 0 -203px;
 }
 
-/* line 134, ../../src/sass/_modules.scss */
+/* line 151, ../../src/sass/_modules.scss */
 .alpha-sort {
   background-position: 0 -103px;
   width: 26px;
   height: 8px;
 }
-/* line 139, ../../src/sass/_modules.scss */
+/* line 156, ../../src/sass/_modules.scss */
 .alpha-sort:hover {
   background-position: 0 -119px;
 }
-/* line 143, ../../src/sass/_modules.scss */
+/* line 160, ../../src/sass/_modules.scss */
 .alpha-sort.active {
   background-position: 0 -127px;
 }
 
-/* line 148, ../../src/sass/_modules.scss */
+/* line 165, ../../src/sass/_modules.scss */
 .date-sort {
   background-position: 0 -111px;
   width: 21px;
   height: 8px;
 }
-/* line 153, ../../src/sass/_modules.scss */
+/* line 170, ../../src/sass/_modules.scss */
 .date-sort:hover {
   background-position: 0 -135px;
 }
-/* line 157, ../../src/sass/_modules.scss */
+/* line 174, ../../src/sass/_modules.scss */
 .date-sort.active {
   background-position: 0 -143px;
 }
 
-/* line 162, ../../src/sass/_modules.scss */
+/* line 179, ../../src/sass/_modules.scss */
 .close {
   background-position: 0 -191px;
   width: 11px;
   height: 12px;
 }
-/* line 167, ../../src/sass/_modules.scss */
+/* line 184, ../../src/sass/_modules.scss */
 .close:hover {
   background-position: 0 -179px;
 }
 
-/* line 172, ../../src/sass/_modules.scss */
+/* line 189, ../../src/sass/_modules.scss */
 .film-row .img:before {
   background-position: 0 -17px;
   content: '';
@@ -2638,23 +2657,23 @@ button {
   margin-top: -22px;
 }
 
-/* line 184, ../../src/sass/_modules.scss */
+/* line 201, ../../src/sass/_modules.scss */
 .film-row > div:hover .img:before {
   background-position: 0 -60px;
 }
 
-/* line 192, ../../src/sass/_modules.scss */
+/* line 209, ../../src/sass/_modules.scss */
 .isotope-item {
   z-index: 2;
 }
 
-/* line 196, ../../src/sass/_modules.scss */
+/* line 213, ../../src/sass/_modules.scss */
 .isotope-hidden.isotope-item {
   pointer-events: none;
   z-index: 1;
 }
 
-/* line 204, ../../src/sass/_modules.scss */
+/* line 221, ../../src/sass/_modules.scss */
 .isotope,
 .isotope .isotope-item {
   -webkit-transition-duration: 0.8s;
@@ -2664,7 +2683,7 @@ button {
   transition-duration: 0.8s;
 }
 
-/* line 212, ../../src/sass/_modules.scss */
+/* line 229, ../../src/sass/_modules.scss */
 .isotope {
   -webkit-transition-property: height, width;
   -moz-transition-property: height, width;
@@ -2673,7 +2692,7 @@ button {
   transition-property: height, width;
 }
 
-/* line 220, ../../src/sass/_modules.scss */
+/* line 237, ../../src/sass/_modules.scss */
 .isotope .isotope-item {
   -webkit-transition-property: -webkit-transform, opacity;
   -moz-transition-property: -moz-transform, opacity;
@@ -2682,7 +2701,7 @@ button {
   transition-property: transform, opacity;
 }
 
-/* line 232, ../../src/sass/_modules.scss */
+/* line 249, ../../src/sass/_modules.scss */
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
