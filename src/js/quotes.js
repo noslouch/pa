@@ -99,6 +99,13 @@ function Gallery(c){
     $(c).on('click', 'a', function(e){
         e.preventDefault()
         self.update(e.target.id)
+            var els = $('#bullets li')
+            var li = els[self.q[0]]
+            $(els).removeClass('active-slide')
+            var p = $(li).addClass('active-slide').position()
+            $('#dot').animate({
+                top: p.top
+            })
     })
 }
 
