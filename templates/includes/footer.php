@@ -1,15 +1,15 @@
         </div> <!-- .page -->
-        <script src="/pa/lib/vendor/jquery.js"></script>
-        <script src="/pa/lib/isotope/jquery.isotope.min.js"></script>
+        <script src="/lib/vendor/jquery.js"></script>
+        <script src="/lib/isotope/jquery.isotope.min.js"></script>
 
-        <script src="/pa/build/js/utils.js"></script>
-        <script src="/pa/build/js/isoProto.js"></script>
-        <script src="/pa/build/js/quotes.js"></script>
-        <script src="/pa/build/js/mockClicks.js"></script>
-        <script src="/pa/build/js/main.js"></script>
+        <script src="/build/js/utils.js"></script>
+        <script src="/build/js/isoProto.js"></script>
+        <script src="/build/js/quotes.js"></script>
+        <script src="/build/js/mockClicks.js"></script>
+        <script src="/build/js/main.js"></script>
 
-        <script src="/pa/lib/foundation/foundation.js"></script>
-        <script src="/pa/lib/foundation/foundation.tooltips.js"></script>
+        <script src="/lib/foundation/foundation.js"></script>
+        <script src="/lib/foundation/foundation.tooltips.js"></script>
         <script>
             $(document).foundation()
         </script>

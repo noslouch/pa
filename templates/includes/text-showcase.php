@@ -102,7 +102,7 @@
     <?php } else if ($q == 'mockBio') { ?>
     <article class="bio">
         <div class="img">
-            <img src="/pa/assets/img/arnellbio.png" alt="" />
+            <img src="/assets/img/arnellbio.png" alt="" />
         </div>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p> 
 

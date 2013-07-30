@@ -6,11 +6,11 @@
     }
     
     if ($q == 'projects' || $q == 'mockProjectList' || $q == 'mockRelated') {
-        $aTag = '<a href="/pa/templates/project-single.php">';
+        $aTag = '<a href="/templates/project-single.php">';
     } else if ($q == 'photo' || $q == 'mockPhotoList') {
-        $aTag = '<a href="/pa/templates/photo-single.php">';
+        $aTag = '<a href="/templates/photo-single.php">';
     } else if ($q == 'mockFilmList') {
-        $aTag = '<a href="/pa/templates/film-single.php">';
+        $aTag = '<a href="/templates/film-single.php">';
     }
 ?>
         <!--

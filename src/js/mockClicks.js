@@ -22,7 +22,7 @@ $('#mockProjectList').click(function(e){
         q = 'mockFilmList'
     }
 
-    $.get('/pa/templates/includes/list-showcase.php', q, function(d){
+    $.get('/templates/includes/list-showcase.php', q, function(d){
         $showcase.append(d)
     })
 })
@@ -40,7 +40,7 @@ $('#mockProjectCovers').click(function(e){
         q = 'mockProjectCovers'
     } else if (e.target.baseURI.indexOf('film') > -1) {
         q = 'mockFilmCovers'
-        $.get('/pa/templates/includes/film-grid.php', q, function(d){
+        $.get('/templates/includes/film-grid.php', q, function(d){
             $showcase.append(d)
         }).done(function(){
             isoLoader('#iso-grid')
@@ -48,7 +48,7 @@ $('#mockProjectCovers').click(function(e){
         return
     }
 
-    $.get('/pa/templates/includes/image-showcase.php', q, function(d){
+    $.get('/templates/includes/image-showcase.php', q, function(d){
         $showcase.append(d)
     }).done(function(){
         isoLoader('#iso-grid')
@@ -61,7 +61,7 @@ $('#mockImageGallery').click(function(e){
     e.preventDefault()
     $showcase.empty()
 
-    $.get('/pa/templates/includes/image-showcase.php', 'single-project', function(d){
+    $.get('/templates/includes/image-showcase.php', 'single-project', function(d){
         $showcase.append(d)
     }).done(function(){
         isoLoader('#iso-grid')
@@ -72,7 +72,7 @@ $('#mockVideo').click(function(e){
     e.preventDefault()
     $showcase.empty()
 
-    $.get('/pa/templates/includes/video-showcase.php', function(d){
+    $.get('/templates/includes/video-showcase.php', function(d){
         $showcase.append(d)
     })
 })
@@ -81,7 +81,7 @@ $('#mockInfo').click(function(e){
     e.preventDefault()
     $showcase.empty()
 
-    $.get('/pa/templates/includes/text-showcase.php','mockInfo', function(d){
+    $.get('/templates/includes/text-showcase.php','mockInfo', function(d){
         $showcase.append(d)
     })
 })
@@ -90,7 +90,7 @@ $('#mockRelated').click(function(e){
     e.preventDefault()
     $showcase.empty()
 
-    $.get('/pa/templates/includes/list-showcase.php', 'mockRelated', function(d){
+    $.get('/templates/includes/list-showcase.php', 'mockRelated', function(d){
         $showcase.append(d)
     })
 })
@@ -98,13 +98,13 @@ $('#mockRelated').click(function(e){
 $('#mockTag').click(function(e){
     e.preventDefault()
     
-    window.location = '/pa/templates/projects.php'
+    window.location = '/templates/projects.php'
 })
 
 $('#mockPressList').click(function(e){
     e.preventDefault()
 
-    $.get('/pa/templates/includes/list-showcase.php', 'mockPressList', function(d){
+    $.get('/templates/includes/list-showcase.php', 'mockPressList', function(d){
         $showcase.empty()
         $showcase.append(d)
     })
@@ -113,7 +113,7 @@ $('#mockPressList').click(function(e){
 $showcase.on('click', '#mockPress', function(e){
     e.preventDefault()
 
-    $.get('/pa/templates/includes/text-showcase.php', 'mockPress', function(d){
+    $.get('/templates/includes/text-showcase.php', 'mockPress', function(d){
         $showcase.empty()
         $showcase.append(d)
     })
@@ -122,7 +122,7 @@ $showcase.on('click', '#mockPress', function(e){
 $('#mockBio').click(function(e) {
     e.preventDefault()
 
-    $.get('/pa/templates/includes/text-showcase.php', 'mockBio', function(d){
+    $.get('/templates/includes/text-showcase.php', 'mockBio', function(d){
         $showcase.empty()
         $showcase.append(d)
     })
@@ -131,7 +131,7 @@ $('#mockBio').click(function(e) {
 $('#mockAwardList').click(function(e){
     e.preventDefault()
 
-    $.get('/pa/templates/includes/list-showcase.php', 'mockAwardList', function(d){
+    $.get('/templates/includes/list-showcase.php', 'mockAwardList', function(d){
         $showcase.empty()
         $showcase.append(d)
     })
@@ -140,7 +140,7 @@ $('#mockAwardList').click(function(e){
 $('#mockArticleList').click(function(e){
     e.preventDefault()
 
-    $.get('/pa/templates/includes/list-showcase.php', 'mockArticleList', function(d){
+    $.get('/templates/includes/list-showcase.php', 'mockArticleList', function(d){
         $showcase.empty()
         $showcase.append(d)
     })
@@ -149,7 +149,7 @@ $('#mockArticleList').click(function(e){
 $showcase.on('click', '#mockArticle', function(e){
     e.preventDefault()
 
-    $.get('/pa/templates/includes/text-showcase.php', 'mockArticle', function(d){
+    $.get('/templates/includes/text-showcase.php', 'mockArticle', function(d){
         $showcase.empty()
         $showcase.append(d)
     })

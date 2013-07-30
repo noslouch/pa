@@ -6,9 +6,9 @@
     }
     
     if ($q == 'projects' || $q == 'mockProjectCovers') {
-        $aTag = '<a href="/pa/templates/project-single.php">';
+        $aTag = '<a href="/templates/project-single.php">';
     } else if ($q == 'photo' || $q == 'mockPhotoCovers') {
-        $aTag = '<a href="/pa/templates/photo-single.php">';
+        $aTag = '<a href="/templates/photo-single.php">';
     } else if ($q == 'single-project' || $q == 'single-photo') {
         $aTag = '<a href="#" id="mockFancybox">';
     }
