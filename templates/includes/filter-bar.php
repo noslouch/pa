@@ -379,16 +379,18 @@
 
     <?php } else if ($q == 'photo' || $q == 'film') { ?>
     
+    <!--
     <div class="wrapper">
         <div class="views">
             <button class="icon-view active" id="mockProjectCovers" type="button"></button>
             <button class="title-view" id="mockProjectList" type="button"></button>
-        </div> <!-- .views -->
+        </div> 
         <div class="sorts">
             <button class="alpha-sort active" type="button"></button>
             <button class="date-sort" type="button"></button>
-        </div> <!-- .sorts -->
+        </div> 
     </div>
+    -->
 
     <?php } ?>
 </div> <!-- .filter-bar -->
