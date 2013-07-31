@@ -287,6 +287,9 @@
             </ul> <!-- .names -->
         </div> <!-- .wrapper -->
     </div> <!-- .filter -->
+    <div class="filter view-all">
+        <h3 id="viewAll">View All</h3>
+    </div> <!-- .filter -->
 
     <div class="views">
         <button class="icon-view active" id="mockProjectCovers" type="button"></button>
@@ -296,6 +299,16 @@
         <button class="alpha-sort active" type="button"></button>
         <button class="date-sort" type="button"></button>
     </div> <!-- .sorts -->
+    <div class="jump-to">
+        <h3>Jump To</h3>
+        <div class="wrapper">
+            <ul class="alphas">
+                <li class="alpha">A</li>
+            </ul> <!-- .alphas -->
+            <ul class="dates">
+
+            </ul> <!-- .dates -->
+    </div>
 
     <?php } else if ($q == 'photo' || $q == 'film') { ?>
     

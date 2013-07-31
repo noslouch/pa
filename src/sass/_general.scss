@@ -2,6 +2,7 @@
 // GLOBAL
 //
 
+a { @include transition(color 150ms ease); }
 a:hover * {
     color: $secondary-color;
 }
@@ -80,7 +81,7 @@ header {
         font-weight: 500;
         font-size: emCalc(19);
         max-width: 589px;
-        a:hover { color: $gray; }
+        a:hover { color: $secondary-color; }
     }
 
     ul { 
@@ -316,6 +317,7 @@ header {
     h3 {
         font-size: emCalc(13);
         font-weight: 500;
+        @include transition(color 150ms ease);
 
         &:hover { color: $secondary-color; }
     }

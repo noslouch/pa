@@ -154,6 +154,10 @@ button {
     @include icons-sprite(down-arrow-red);
 }
 
+.view-all h3:after {
+    content: none;
+}
+
 .icon-view {
     @include icons-sprite(icon-view);
     width: 16px;
