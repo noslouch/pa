@@ -1,4 +1,6 @@
-        </div> <!-- .page -->
+            </div> <!-- .page -->
+        </div> <!-- .outer-wrapper -->
+
         <script src="/lib/vendor/jquery.js"></script>
         <script src="/lib/isotope/jquery.isotope.min.js"></script>
 

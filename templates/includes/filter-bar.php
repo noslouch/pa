@@ -361,8 +361,8 @@
         <h3>Sort By</h3>
         <div class="wrapper">
             <ul>
-                <li><a href="#" class="active" id="alphaSort">Name</a></li>
-                <li><a href="#" class="" id="dateSort">Date</a></li>
+                <li><button class="active" id="alphaSort" type="button">Name</button></li>
+                <li><button class="" id="dateSort" type="button">Date</button></li>
             </ul>
         </div> <!-- .wrapper -->
     </div> <!-- .sorts -->
@@ -370,9 +370,9 @@
         <h3>View By</h3>
         <div class="wrapper">
             <ul>
-                <li><a href="#" class="icon-view active" id="mockProjectCovers">Cover Image</a></li>
-                <li><a href="#" class="title-view" id="mockProjectList">Project Title</a></li>
-                <li><a href="#" class="random-view" id="starfieldView">Random</a></li>
+                <li><button class="icon-view active" id="mockProjectCovers" type="button">Cover Image</button></li>
+                <li><button class="title-view" id="mockProjectList" type="button">Project Title</button></li>
+                <li><button class="random-view" id="starfieldView" type="button">Random</button></li>
             </ul>
         </div> <!-- .wrapper -->
     </div> <!-- .views -->

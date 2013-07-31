@@ -14,8 +14,8 @@
         <script src="/lib/vendor/custom.modernizr.js"></script>
     </head>
     <body>
-        <div class="page">
-            <header>
+        <div class="outer-wrapper">
+            <header class="site-header">
                 <h1 class="logo"><a href="/">Peter Arnell</a></h1>
                 <nav>
                     <h2 class="visuallyhidden">Main Navigation</h2>
@@ -31,4 +31,5 @@
                     </ul>
                     <form class="search-form" action=""><input type="search" /></form>
                 </nav>
-            </header>
+            </header> <!-- .site-header -->
+            <div class="page">
