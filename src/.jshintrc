@@ -17,6 +17,7 @@
   "devel" : true,
   "globals" : {
     "isoLoader" : true,
+    "fbLoader" : true,
     "makeTime" : true
   }
 }

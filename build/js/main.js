@@ -70,3 +70,11 @@ $(iso).imagesLoaded( function(){
 $('time').each(function(){
     // to be implemented
 })
+
+$(function(){
+    try {
+        fbLoader()
+    } catch(e) {
+        console.log('no fancybox')
+    }
+})

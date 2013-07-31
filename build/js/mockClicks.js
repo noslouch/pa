@@ -65,6 +65,7 @@ $('#mockImageGallery').click(function(e){
         $showcase.append(d)
     }).done(function(){
         isoLoader('#iso-grid')
+        fbLoader()
     })
 })
 

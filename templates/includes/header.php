@@ -8,6 +8,7 @@
         <meta name="viewport" content="width=device-width">
         <title>Peter Arnell</title>
 
+        <link href="/lib/fancybox/jquery.fancybox.css" rel="stylesheet" />
         <link href="/lib/jscrollpane/jquery.jscrollpane.css" rel="stylesheet">
         <link href="/build/css/app.css" rel="stylesheet">
     

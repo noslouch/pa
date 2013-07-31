@@ -25,3 +25,19 @@ function makeTime(date) {
     res[2] = d.getDate()
     return res.join("-")
 }
+
+function fbLoader(){
+    $('.mockFancybox').fancybox({
+        padding: 0,
+        margin: 0,
+        type : 'image',
+        helpers : {
+            overlay : {
+                css : {
+                    'background' : 'white'
+                }
+            }
+        }
+    })
+}
+
