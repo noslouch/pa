@@ -159,29 +159,44 @@ button {
 }
 
 .icon-view {
-    @include icons-sprite(icon-view);
-    width: 16px;
-    height: 15px;
+    
+    &:before {
+        @include icons-sprite(icon-view);
+        width: 16px;
+        height: 15px;
+        content: '';
+        display: inline-block;
+        float: left;
+        margin-top: 4px;
+        margin-left: 1px;
+    }
 
-    &:hover {
+    &:hover:before {
         @include icons-sprite(icon-view-hover);
     }
 
-    &.active {
+    &.active:before {
         @include icons-sprite(icon-view-selected);
     }
 }
 
 .title-view {
-    @include icons-sprite(title-view);
-    width: 25px;
-    height: 13px;
+    
+    &:before {
+        @include icons-sprite(title-view);
+        width: 25px;
+        height: 13px;
+        content: '';
+        display: inline-block;
+        float: left;
+        margin-top: 5px;
+    }
 
-    &:hover {
+    &:hover:before {
         @include icons-sprite(title-view-hover);
     }
 
-    &.active {
+    &.active:before {
         @include icons-sprite(title-view-selected);
     }
 }

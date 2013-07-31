@@ -5,11 +5,11 @@
         $q = $_SERVER['QUERY_STRING'];
     }
     
-    if ($q == 'projects' || $q == 'mockProjectList' || $q == 'mockRelated') {
+    if ( $q == 'projects' || $q == 'mockProjectList' ) {
         $aTag = '<a href="/templates/project-single.php">';
-    } else if ($q == 'photo' || $q == 'mockPhotoList') {
+    } else if ( $q == 'photo' || $q == 'mockPhotoList' ) {
         $aTag = '<a href="/templates/photo-single.php">';
-    } else if ($q == 'mockFilmList') {
+    } else if ( $q == 'mockFilmList' ) {
         $aTag = '<a href="/templates/film-single.php">';
     }
 ?>
@@ -122,39 +122,38 @@
             </section>
             <?php } else if ($q == 'mockRelated') { ?>
             <section>
+                <h3 class="visuallyhidden">Related Items</h3>
                 <ul>
                     <li>
-                        <h3>Related Projects</h3>
-                    </li>
-                    <li>
-                    <h4>
-                        <?php echo $aTag; ?>
-                            Project Title
-                        </a>
-                    </h4>
-                        <p></p>
-                    </li>
-                    <li>
                         <h4>
-                            <?php echo $aTag; ?>
+                            <a href="/templates/project-single.php">
                                 Project Title
                             </a>
                         </h4>
                         <p></p>
                     </li>
-                </ul>
-            </section>
-            <section>
-                <ul>
                     <li>
-                        <h3>Related Press</h3>
-                    </li>
-                    <li>
-                        <h4><a href="#" id="mockPress">Press Title</a></h4>
+                        <h4>
+                            <a href="http://www.google.com">
+                                External link
+                            </a>
+                        </h4>
                         <p></p>
                     </li>
                     <li>
-                        <h4><a href="#" id="mockPress">Press Title</a></h4>
+                        <h4>
+                            <a href="/templates/profile.php">
+                                Press Title
+                            </a>
+                        </h4>
+                        <p></p>
+                    </li>
+                    <li>
+                        <h4>
+                            <a href="/templates/photo-single.php">
+                                Photo Gallery  
+                            </a>
+                        </h4>
                         <p></p>
                     </li>
                 </ul>

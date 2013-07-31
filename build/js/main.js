@@ -14,7 +14,7 @@ var $filters = $('.filter')
 
 $(filterBar).click(function(e){
     if (e.target.nodeName === 'H3') {
-        $filters.removeClass('open')
+        $(filterBar).children('.open').removeClass('open')
         $(e.target.parentElement).addClass('open')
     }
     if (!$(e.target).hasClass('filter-bar')){
@@ -23,8 +23,8 @@ $(filterBar).click(function(e){
 })
 
 $(document).click(function(e){
-    if ($filters.hasClass('open')){
-        $filters.removeClass('open')
+    if ($(filterBar).children().hasClass('open')){
+        $(filterBar).children('.open').removeClass('open')
     }
 })
 

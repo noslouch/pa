@@ -227,14 +227,6 @@ header {
     margin-bottom: 2em;
     margin-top: 2em;
 
-    .views,
-    .sorts {
-        display: inline-block;
-        margin-top: 7px;
-        position: relative;
-    }
-    .views { margin-right: 7px; }
-    .sorts { top: -2px; }
 
     button {
         padding: 0.2em;
@@ -264,7 +256,7 @@ header {
         overflow: auto;
         margin-bottom: 1em;
     }
-    .views {float: left;}
+    
     .close {float: right;}
 
     .wrapper {
@@ -305,10 +297,56 @@ header {
         text-align: left;
     }
 
-    .views {
-        margin-right: 0;
-        margin-top: -3px;
+}
+
+.views,
+.sorts,
+.jump-to {
+    @extend .filter;
+    float: right;
+}
+
+.sorts,
+.views {
+    a {
+        display: block;
+        text-align: right;
     }
+}
+
+.sorts {
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+
+    .wrapper {
+        right: 0;
+        min-width: 79px;
+    }
+}
+
+.views {
+    margin-right: 5px;
+
+    .wrapper {
+        right: 0;
+        min-width: 150px;
+    }
+}
+
+.jump-to {
+    margin-right: 0;
+    margin-left: 0;
+
+    .wrapper {
+        right: 0;
+        min-width: 86px;
+    }
+
+    .alphas,
+    .dates { display: none; }
+
+    &.alpha .alphas { display: block; }
+    &.date .dates { display: block; }
 }
 
 // FILTER TYPE
@@ -325,7 +363,9 @@ header {
     &.open h3 { color: $secondary-color; }
 
     .name,
-    .icon {
+    .icon,
+    .alphas,
+    .dates {
         font-size: emCalc(19);
         font-weight: 500;
         margin: 0;
@@ -351,6 +391,13 @@ header {
     }
     .icon {
         opacity: 1;
+    }
+}
+
+.views,
+.sorts {
+    a {
+        font-size: emCalc(14);
     }
 }
 
