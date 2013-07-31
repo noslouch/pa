@@ -2888,17 +2888,21 @@ button {
   padding: 1.5em 0;
 }
 /* line 83, ../../src/sass/_list-showcase.scss */
+.profile .list li:last-child {
+  margin-bottom: 1.25em;
+}
+/* line 85, ../../src/sass/_list-showcase.scss */
 .profile .list h4 {
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
 }
-/* line 88, ../../src/sass/_list-showcase.scss */
+/* line 90, ../../src/sass/_list-showcase.scss */
 .profile .list a {
   padding: 0;
   margin: 0;
 }
-/* line 92, ../../src/sass/_list-showcase.scss */
+/* line 94, ../../src/sass/_list-showcase.scss */
 .profile .list p {
   font-size: 0.8125em;
   font-weight: 500;
@@ -2906,13 +2910,13 @@ button {
   margin-bottom: 0;
 }
 
-/* line 104, ../../src/sass/_list-showcase.scss */
+/* line 106, ../../src/sass/_list-showcase.scss */
 .list h3 {
   color: red;
   font-weight: 300;
   font-size: 1.1875em;
 }
-/* line 110, ../../src/sass/_list-showcase.scss */
+/* line 112, ../../src/sass/_list-showcase.scss */
 .list h4 {
   font-size: 1.1875em;
   font-weight: 500;
@@ -3112,6 +3116,13 @@ button {
 }
 /* line 77, ../../src/sass/_text-showcase.scss */
 .press p {
+  font-size: 0.8125em;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* line 84, ../../src/sass/_text-showcase.scss */
+.profile .text P {
   font-size: 0.8125em;
   font-weight: 500;
   line-height: 1.2;

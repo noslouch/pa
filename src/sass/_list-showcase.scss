@@ -80,6 +80,8 @@
     .list {
         li:first-child h3 { margin-top: 0; }
         li:nth-child(n+2) { padding: 1.5em 0; }
+        li:last-child { margin-bottom: 1.25em; }
+
         h4 { 
             margin: 0;
             margin-bottom: 0.25em;
