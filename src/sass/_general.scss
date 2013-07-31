@@ -239,6 +239,10 @@ header {
     }
 }
 
+.profile .filter-bar {
+    margin: 0;
+}
+
 .filter {
     @include grid-column(1, $collapse: true);
     width: auto;
@@ -353,6 +357,7 @@ header {
 
 .filter {
     h3 {
+        color: $primary-color;
         font-size: emCalc(13);
         font-weight: 500;
         @include transition(color 150ms ease);

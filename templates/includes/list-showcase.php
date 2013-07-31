@@ -158,7 +158,10 @@
                     </li>
                 </ul>
             </section>
-            <?php } else if ($q == 'mockPressList') { ?>
+            <?php } else if ($q == 'mockPressList') { 
+                    $_GET['template'] = 'press';
+                    include('filter-bar.php');
+            ?>
             <section>
                 <ul>
                     <li>
@@ -210,11 +213,11 @@
                         <h3>2013</h3>
                     </li>
                     <li>
-                        <h4><a href="">Award Title</a></h4>
+                        <h4>Award Title</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.</p>
                     </li>
                     <li>
-                        <h4><a href="">Award Title</a></h4>
+                        <h4>Award Title</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                 </ul>
@@ -225,15 +228,15 @@
                         <h3>2012</h3>
                     </li>
                     <li>
-                        <h4><a href="">Award Title</a></h4>
+                        <h4>Award Title</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                     <li>
-                        <h4><a href="">Award Title</a></h4>
+                        <h4>Award Title</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                     <li>
-                        <h4><a href="">Award Title</a></h4>
+                        <h4>Award Title</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar.</p>
                     </li>
                 </ul>

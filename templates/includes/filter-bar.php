@@ -392,5 +392,75 @@
     </div>
     -->
 
+    <?php } else if ( $q == 'press' ) { ?>
+
+    <div class="jump-to alpha">
+        <h3>Jump To</h3>
+        <div class="wrapper">
+            <ul class="alphas">
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+                <li>E</li>
+                <li>F</li>
+                <li>G</li>
+                <li>H</li>
+                <li>I</li>
+                <li>J</li>
+                <li>K</li>
+                <li>L</li>
+                <li>M</li>
+                <li>N</li>
+                <li>O</li>
+                <li>P</li>
+                <li>Q</li>
+                <li>R</li>
+                <li>S</li>
+                <li>T</li>
+                <li>U</li>
+                <li>V</li>
+                <li>W</li>
+                <li>X</li>
+                <li>Y</li>
+                <li>Z</li>
+            </ul> <!-- .alphas -->
+            <ul class="dates">
+                <li>1983</li>
+                <li>1984</li>
+                <li>1985</li>
+                <li>1986</li>
+                <li>1987</li>
+                <li>1988</li>
+                <li>1989</li>
+                <li>1990</li>
+                <li>1991</li>
+                <li>1992</li>
+                <li>1993</li>
+                <li>1994</li>
+                <li>1995</li>
+                <li>1996</li>
+                <li>1997</li>
+                <li>1998</li>
+                <li>1999</li>
+                <li>2000</li>
+                <li>2001</li>
+                <li>2002</li>
+                <li>2003</li>
+                <li>2004</li>
+                <li>2005</li>
+                <li>2006</li>
+                <li>2007</li>
+                <li>2008</li>
+                <li>2009</li>
+                <li>2010</li>
+                <li>2011</li>
+                <li>2012</li>
+                <li>2013</li>
+            </ul> <!-- .dates -->
+        </div> <!-- .wrapper -->
+    </div> <!-- .jump-to -->
+
     <?php } ?>
+
 </div> <!-- .filter-bar -->
