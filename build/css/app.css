@@ -3135,11 +3135,11 @@ button {
   line-height: 1.2;
 }
 
-/* line 7, ../../src/sass/_film.scss */
+/* line 9, ../../src/sass/_film.scss */
 .film-row {
   width: auto;
-  margin-left: -0.53125em;
-  margin-right: -0.53125em;
+  margin-left: -0.21875em;
+  margin-right: -0.21875em;
   margin-top: 0;
   margin-bottom: 0;
   max-width: none;
@@ -3155,31 +3155,31 @@ button {
 .film-row:after {
   clear: both;
 }
-/* line 11, ../../src/sass/_film.scss */
+/* line 13, ../../src/sass/_film.scss */
 .film-row > div {
   position: relative;
-  padding-left: 0.53125em;
-  padding-right: 0.53125em;
+  padding-left: 0.21875em;
+  padding-right: 0.21875em;
   width: 25%;
   float: left;
 }
-/* line 12, ../../src/sass/_film.scss */
+/* line 14, ../../src/sass/_film.scss */
 .film-row .img {
   position: relative;
 }
-/* line 13, ../../src/sass/_film.scss */
+/* line 15, ../../src/sass/_film.scss */
 .film-row a {
   display: block;
 }
 
-/* line 19, ../../src/sass/_film.scss */
+/* line 23, ../../src/sass/_film.scss */
 .film-row h3 {
   font-size: 1.1875em;
   font-weight: 500;
   margin-bottom: 0;
   margin-top: 0.75em;
 }
-/* line 25, ../../src/sass/_film.scss */
+/* line 29, ../../src/sass/_film.scss */
 .film-row a p {
   font-size: 0.8125em;
   font-weight: 300;
@@ -3187,13 +3187,13 @@ button {
   color: black;
 }
 
-/* line 34, ../../src/sass/_film.scss */
+/* line 38, ../../src/sass/_film.scss */
 .film .details p {
   font-size: 0.8125em;
   font-weight: 500;
   line-height: 1.2;
 }
-/* line 40, ../../src/sass/_film.scss */
+/* line 44, ../../src/sass/_film.scss */
 .film .details button:before {
   content: "<";
   color: red;

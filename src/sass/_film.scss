@@ -4,6 +4,8 @@
 
 // LAYOUT
 
+$column-gutter: emCalc(7);
+
 .film-row {
     @include grid-row(nest);
     margin-bottom: 3em;
@@ -12,6 +14,8 @@
     .img { position: relative; }
     a { display: block; }
 }
+
+$column-gutter: emCalc(17);
 
 // TYPE
 

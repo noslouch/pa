@@ -3,7 +3,7 @@
     <div>    
         <a href="film-single.php">
             <div class="img">
-                <img src="http://placekitten.com/282/179">
+                <img src="http://placekitten.com/294/179">
             </div>
             <h3>Film Title</h3>
             <p>Film Description Goes here</p>
@@ -12,7 +12,7 @@
     <div>
         <a href="film-single.php">
             <div class="img">
-                <img src="http://placekitten.com/282/179">
+                <img src="http://placekitten.com/294/179">
             </div>
             <h3>Film Title</h3>
             <p>Film Description Goes here</p>
@@ -21,7 +21,7 @@
     <div>
         <a href="film-single.php">
             <div class="img">
-                <img src="http://placekitten.com/282/179">
+                <img src="http://placekitten.com/294/179">
             </div>
             <h3>Film Title</h3>
             <p>Film Description Goes here</p>
@@ -30,7 +30,7 @@
     <div>
         <a href="film-single.php">
             <div class="img">
-                <img src="http://placekitten.com/282/179">
+                <img src="http://placekitten.com/294/179">
             </div>
             <h3>Film Title</h3>
             <p>Film Description Goes here</p>
@@ -41,7 +41,7 @@
     <div>
         <a href="film-single.php">
             <div class="img">
-                <img src="http://placekitten.com/282/179">
+                <img src="http://placekitten.com/294/179">
             </div>
             <h3>Film Title</h3>
             <p>Film Description Goes here</p>
@@ -50,7 +50,7 @@
     <div>
         <a href="film-single.php">
             <div class="img">
-                <img src="http://placekitten.com/282/179">
+                <img src="http://placekitten.com/294/179">
             </div>
             <h3>Film Title</h3>
             <p>Film Description Goes here</p>
