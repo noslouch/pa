@@ -1,6 +1,10 @@
 <?php
-    if (isset($_GET['template'])) {
+    $q = null;
+    $p = null;
+
+    if ( isset($_GET['template']) ) {
         $q = $_GET['template'];
+        $p = $_SERVER['QUERY_STRING'];
     } else {
         $q = $_SERVER['QUERY_STRING'];
     }
@@ -9,7 +13,7 @@
         $aTag = '<a href="/templates/project-single.php">';
     } else if ($q == 'photo' || $q == 'mockPhotoCovers') {
         $aTag = '<a href="/templates/photo-single.php">';
-    } else if ($q == 'single-project' || $q == 'single-photo') {
+    } else if ( $q == 'single-project' || $q == 'single-photo' ) {
         $aTag = '<a href="http://placekitten.com/1080/600" class="mockFancybox" rel="gallery" title="Caption goes here">';
     }
 ?>
@@ -28,19 +32,206 @@
     -->
     <div class="showcase image fixed large">
         <div class="isotope-grid" id="iso-grid">
+            <?php if ( $p == '1' ) { ?>
             <div class="thumb">
                 <div class="wrapper">
-                    <?php echo $aTag; ?>
+                    <?php 
+                        echo $aTag; ?>
                         <div class="caption">
-                            <p>This is a caption.</p>
+                            <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <?php } else if ( $p == '3' ) { ?>
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/802/518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
             <div class="thumb">
                 <div class="wrapper">
-                    <?php echo $aTag; ?>
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <?php } else if ( $p == '3a' ) { ?>
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                        <!--<img src="http://placekitten.com/802/518" alt="" />-->
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <?php } else if ( $p == '4' ) { ?>
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                        <!--<img src="http://placekitten.com/802/518" alt="" />-->
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <?php } else if ( $p == '4a' ) { ?>
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/394/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/802/518" alt="" />
+                        <!--<img src="http://placekitten.com/394/518" alt="" />-->
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <?php } else if ( $p == '8' ) { ?>
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
@@ -50,19 +241,99 @@
             </div> <!-- .thumb -->
             <div class="wide thumb">
                 <div class="wrapper">
-                    <?php echo $aTag; ?>
+                    <?php 
+                        echo $aTag; ?>
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/401/259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
-            </div> <!-- .wide .thumb -->
+            </div> <!-- .thumb -->
             <div class="thumb">
                 <div class="wrapper">
-                    <?php echo $aTag; ?>
+                    <?php 
+                        echo $aTag; ?>
                         <div class="caption">
-                            <p>This is a slightly longer caption so we can see what it looks like when the captions span multiple lines.</p>
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/802/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <?php } else if ( $p == '20' ) { ?>
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/802/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/197/259" alt="" />
                     </a>
@@ -70,10 +341,300 @@
             </div> <!-- .thumb -->
             <div class="thumb">
                 <div class="wrapper">
-                    <?php echo $aTag; ?>
+                    <?php 
+                        echo $aTag; ?>
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/802/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/802/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/802/518" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                    <?php 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+
+
+            <?php } else { ?>
+
+
+            <div class="thumb">
+                <div class="wrapper">
+                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                    <a href="/templates/project-single.php?1">
+                        <div class="caption">
+                            <p>One Photo.</p>
+                        </div> <!-- .caption -->
+                <?php } else { 
+                    echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                <?php } ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                    <a href="/templates/project-single.php?3">
+                        <div class="caption">
+                            <p>Three Photos.</p>
+                        </div> <!-- .caption -->
+                <?php } else { 
+                    echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                <?php } ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                    <a href="/templates/project-single.php?3a">
+                        <div class="caption">
+                            <p>Three Photos Alternate.</p>
+                        </div> <!-- .caption -->
+                    <?php } else { 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                    <?php } ?>
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .wide .thumb -->
+            <div class="wide thumb">
+                <div class="wrapper">
+                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                    <a href="/templates/project-single.php?4">
+                        <div class="caption">
+                            <p>Four Photos.</p>
+                        </div> <!-- .caption -->
+                    <?php } else { 
+                        echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                    <?php } ?>
+                        <img src="http://placekitten.com/401/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .wide .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                    <a href="/templates/project-single.php?4a">
+                        <div class="caption">
+                            <p>Four Photos Alternate.</p>
+                        </div> <!-- .caption -->
+                <?php } else { 
+                    echo $aTag; ?>
+                        <div class="caption">
+                            <p>This is a slightly longer caption so we can see what it looks like when the captions span multiple lines.</p>
+                        </div> <!-- .caption -->
+                <? } ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                    <a href="/templates/project-single.php?8">
+                        <div class="caption">
+                            <p>Eight Photos.</p>
+                        </div> <!-- .caption -->
+                <?php } else { 
+                    echo $aTag; ?>
+                        <div class="caption">
+                            <p>This is a slightly longer caption so we can see what it looks like when the captions span multiple lines.</p>
+                        </div> <!-- .caption -->
+                <? } ?>
+                        <img src="http://placekitten.com/197/259" alt="" />
+                    </a>
+                </div> <!-- .wrapper -->
+            </div> <!-- .thumb -->
+            <div class="thumb">
+                <div class="wrapper">
+                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                    <a href="/templates/project-single.php?20">
+                        <div class="caption">
+                            <p>Twenty Photos.</p>
+                        </div> <!-- .caption -->
+                <?php } else { 
+                    echo $aTag; ?>
+                        <div class="caption">
+                            <p></p>
+                        </div> <!-- .caption -->
+                <?php } ?>
                         <img src="http://placekitten.com/197/259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -138,6 +699,7 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
+        <?php } ?>
         </div> <!-- .masonry-grid -->
     </div> <!-- .showcase .image -->
 

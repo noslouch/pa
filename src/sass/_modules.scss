@@ -314,6 +314,14 @@ button {
           transition-property:         transform, opacity;
 }
 
+.isotope.rtl .isotope-item {
+  -webkit-transition-property: right, top, -webkit-transform, opacity;
+     -moz-transition-property: right, top, -moz-transform, opacity;
+      -ms-transition-property: right, top, -ms-transform, opacity;
+       -o-transition-property: right, top, -o-transform, opacity;
+          transition-property: right, top, transform, opacity;
+}
+
 // CSS3 TRANSITION FALLBACKS
 
 .isotope.no-transition,

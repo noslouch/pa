@@ -1,16 +1,18 @@
 "use strict";
 
 function isoLoader(id) {
-    var $id = $(id)
-    var $img = $('.image.showcase img')
+    var $id = $(id),
+        $img = $('.image.showcase img'),
+        rtl = $('.isotope-grid').hasClass('rtl')
 
     $id.imagesLoaded( function(){ 
         $id.isotope({
+            transformsEnabled: !rtl,
             itemSelector: '.thumb',
             layoutMode : 'masonry',
             masonry : {
                 gutterWidth: 7,
-                columnWidth: 164
+                columnWidth: rtl ? 164*1.5 : 164
             },
             onLayout : function() { 
                 $(this).css('overflow', 'visible')
@@ -19,6 +21,7 @@ function isoLoader(id) {
 
         $img.addClass('loaded')
     })
+
 }
 
 function makeTime(date) {

@@ -2786,7 +2786,16 @@ button {
   transition-property: transform, opacity;
 }
 
-/* line 321, ../../src/sass/_modules.scss */
+/* line 317, ../../src/sass/_modules.scss */
+.isotope.rtl .isotope-item {
+  -webkit-transition-property: right, top, -webkit-transform, opacity;
+  -moz-transition-property: right, top, -moz-transform, opacity;
+  -ms-transition-property: right, top, -ms-transform, opacity;
+  -o-transition-property: right, top, -o-transform, opacity;
+  transition-property: right, top, transform, opacity;
+}
+
+/* line 329, ../../src/sass/_modules.scss */
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
@@ -2797,23 +2806,23 @@ button {
   transition-duration: 0s;
 }
 
-/* line 333, ../../src/sass/_modules.scss */
+/* line 341, ../../src/sass/_modules.scss */
 .fancybox-wrap .logo {
   position: fixed;
   top: 1em;
   left: 2em;
   font-size: 1.125em;
 }
-/* line 338, ../../src/sass/_modules.scss */
+/* line 346, ../../src/sass/_modules.scss */
 .fancybox-wrap .logo a {
   color: red;
 }
-/* line 339, ../../src/sass/_modules.scss */
+/* line 347, ../../src/sass/_modules.scss */
 .fancybox-wrap .logo a:hover {
   color: black;
 }
 
-/* line 342, ../../src/sass/_modules.scss */
+/* line 350, ../../src/sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;
@@ -2994,14 +3003,22 @@ button {
   width: 164px;
 }
 /* line 17, ../../src/sass/_image-showcase.scss */
+.isotope-grid.rtl .thumb {
+  width: 246px;
+}
+/* line 19, ../../src/sass/_image-showcase.scss */
 .isotope-grid .wide.thumb {
   width: 334px;
 }
-/* line 19, ../../src/sass/_image-showcase.scss */
-.isotope-grid .thumb:hover {
-  z-index: 3;
+/* line 20, ../../src/sass/_image-showcase.scss */
+.isotope-grid.rtl .wide.thumb {
+  width: 501px;
 }
 /* line 22, ../../src/sass/_image-showcase.scss */
+.isotope-grid .thumb:hover {
+  z-index: 4;
+}
+/* line 25, ../../src/sass/_image-showcase.scss */
 .isotope-grid .thumb:hover .wrapper {
   -webkit-transform: scale(1.2, 1.2);
   -moz-transform: scale(1.2, 1.2);
@@ -3012,12 +3029,12 @@ button {
   -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
 }
-/* line 27, ../../src/sass/_image-showcase.scss */
+/* line 30, ../../src/sass/_image-showcase.scss */
 .isotope-grid .thumb:hover .caption {
   opacity: 1;
 }
 
-/* line 32, ../../src/sass/_image-showcase.scss */
+/* line 35, ../../src/sass/_image-showcase.scss */
 .caption {
   color: red;
   background: white;
@@ -3033,7 +3050,7 @@ button {
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
 }
-/* line 44, ../../src/sass/_image-showcase.scss */
+/* line 47, ../../src/sass/_image-showcase.scss */
 .caption p {
   margin: 0;
   font-size: 0.6875em;
@@ -3041,12 +3058,12 @@ button {
   line-height: 1;
 }
 
-/* line 53, ../../src/sass/_image-showcase.scss */
+/* line 56, ../../src/sass/_image-showcase.scss */
 .thumb img {
   max-width: 100%;
 }
 
-/* line 56, ../../src/sass/_image-showcase.scss */
+/* line 59, ../../src/sass/_image-showcase.scss */
 .covers-container {
   width: 100%;
   margin: 0;

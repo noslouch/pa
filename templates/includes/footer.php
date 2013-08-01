@@ -10,7 +10,28 @@
         <?php } ?>
 
         <script src="/build/js/utils.js"></script>
-        <script src="/build/js/isoProto.js"></script>
+
+        <?php
+            $p = null;
+            if ( isset($_SERVER['QUERY_STRING']) ) { $p = $_SERVER['QUERY_STRING']; }
+
+            switch ($p) {
+                case 1:
+                case 3:
+                case 4:
+                case 5:
+        ?>
+        <script src="/build/js/isoRTL.js"></script>
+        <?php
+                break;
+                default:
+        ?>
+        <script src="/build/js/iso.js"></script>
+        <?php
+                break;
+            }
+        ?>
+
         <script src="/build/js/mockClicks.js"></script>
         <script src="/build/js/main.js"></script>
 

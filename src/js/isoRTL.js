@@ -37,3 +37,10 @@
     return ( this.masonry.cols !== prevSegments );
   };
 
+// modify Isotope's absolute position method
+
+$.Isotope.prototype._positionAbs = function( x, y ) {
+  return { right: x, top: y };
+};
+
+$('.isotope-grid').addClass('rtl')

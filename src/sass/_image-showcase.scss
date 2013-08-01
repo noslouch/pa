@@ -14,10 +14,13 @@
         width: 164px;
     }
 
+    &.rtl .thumb { width: 164px*1.5; }
+
     .wide.thumb { width: 334px; }
+    &.rtl .wide.thumb { width: 334px*1.5; }
 
     .thumb:hover {
-        z-index: 3;
+        z-index: 4;
         
         .wrapper {
             @include scale(1.2);
