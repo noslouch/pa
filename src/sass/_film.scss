@@ -41,11 +41,20 @@ $column-gutter: emCalc(17);
         line-height: 1.2;
     }
 
-    button:before {
-        content: "<";
-        color: red;
-        display: inline;
-        vertical-align: text-top;
-        margin-right: 0.5em;
+    button {
+
+        &:before {
+            content: "<";
+            color: red;
+            display: inline;
+            vertical-align: text-top;
+            margin-right: 0.5em;
+        }
+        
+        &:hover {
+            background: $secondary-color;
+            color: white;
+            &:before { color: $primary-color; }
+        }
     }
 } 
