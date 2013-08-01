@@ -3,13 +3,15 @@
 function isoLoader(id) {
     var $id = $(id),
         $img = $('.image.showcase img'),
-        rtl = $('.isotope-grid').hasClass('rtl')
+        showcase = document.getElementById('showcaseContainer'),
+        rtl = $(showcase).hasClass('rtl'),
+        fixed = $(showcase).hasClass('fixed')
 
     $id.imagesLoaded( function(){ 
         $id.isotope({
             transformsEnabled: !rtl,
             itemSelector: '.thumb',
-            layoutMode : 'masonry',
+            layoutMode : fixed ? 'masonry' : 'fitRows',
             masonry : {
                 gutterWidth: 7,
                 columnWidth: rtl ? 164*1.5 : 164

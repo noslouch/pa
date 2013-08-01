@@ -17,9 +17,9 @@
 
             switch ($p) {
                 case 1:
+                case 2:
                 case 3:
                 case 4:
-                case 5:
         ?>
         <script src="/build/js/isoRTL.js"></script>
         <?php
@@ -27,10 +27,7 @@
                 default:
         ?>
         <script src="/build/js/iso.js"></script>
-        <?php
-                break;
-            }
-        ?>
+        <?php break; } ?>
 
         <script src="/build/js/mockClicks.js"></script>
         <script src="/build/js/main.js"></script>

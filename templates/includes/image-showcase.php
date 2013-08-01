@@ -23,15 +23,29 @@
         *an image gallery sorted by isotope*
 
         the .fixed class is a conditional class.
-            the standard image showcase fixes image heights to 216px and allows widths to flow proportionally.
-            the fixed class will also fix the width to 164px for portrait oriented images or 334px or landscape oriented images
+            the standard image showcase fixes image heights to 216px or 323px and allows widths to flow proportionally.
+            the fixed class will also fix the width to 164px (246px in .large containers) for portrait oriented images or 334px (501px in .large containers) or landscape oriented images
 
         the .large class is a conditional class.
-            if the count of thumbnails to load is less than 5, all thumbnails will be doubled in size to 432px high and either 328px wide, 668px wide, or proportionally wide to its native aspect ratio, depending on the circumstances.
+            if the count of thumbnails to load is less than 5, all thumbnails will be scaled in size to 323px high and either 246px wide, 501px wide, or proportionally wide to its native aspect ratio, depending on the circumstances.
         isotope will handle layout.
     -->
-    <div class="showcase image fixed large">
-        <div class="isotope-grid" id="iso-grid">
+    <?php
+        switch($p) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                    echo '<div class="showcase image large">';
+            break;
+
+            default:
+                    echo '<div class="showcase image">';
+            break;
+        }
+    ?>
+
+        <div class="clearfix isotope-grid" id="iso-grid">
             <?php if ( $p == '1' ) { ?>
             <div class="thumb">
                 <div class="wrapper">
@@ -52,7 +66,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placekitten.com/494/518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -205,7 +219,9 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
+
             <?php } else if ( $p == '8' ) { ?>
+
             <div class="wide thumb">
                 <div class="wrapper">
                     <?php 
@@ -213,7 +229,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placekitten.com/601/259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -224,7 +240,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placekitten.com/501/309" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -235,7 +251,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placekitten.com/497/284" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->

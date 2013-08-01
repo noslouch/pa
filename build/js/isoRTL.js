@@ -43,4 +43,4 @@ $.Isotope.prototype._positionAbs = function( x, y ) {
   return { right: x, top: y };
 };
 
-$('.isotope-grid').addClass('rtl')
+$('#showcaseContainer').addClass('rtl')

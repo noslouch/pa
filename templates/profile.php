@@ -20,7 +20,7 @@
                 <li><a href="#" id="mockArticleList">Collaborators/Acknowledgements</a></li>
             </ul>
         </div> <!-- .showcase-links -->
-        <div class="container" id="showcaseContainer">
+        <div class="fixed container" id="showcaseContainer">
 
         </div> <!-- .container -->
 

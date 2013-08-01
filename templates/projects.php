@@ -8,7 +8,7 @@
             $_GET['template'] = 'projects';
             include("includes/filter-bar.php"); ?>
 
-        <div class="covers-container" id="showcaseContainer">
+        <div class="fixed covers-container" id="showcaseContainer">
         
         <!--
             This container will start with the starfield of project covers (randomly chosen).

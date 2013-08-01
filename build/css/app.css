@@ -2989,36 +2989,52 @@ button {
 /* line 7, ../../src/sass/_image-showcase.scss */
 .isotope-grid {
   margin: 0 auto;
+  height: 100%;
+  max-width: 100%;
 }
-/* line 10, ../../src/sass/_image-showcase.scss */
+/* line 12, ../../src/sass/_image-showcase.scss */
 .isotope-grid .wrapper {
   -webkit-transition: -webkit-transform 150ms ease;
   -moz-transition: -moz-transform 150ms ease;
   -o-transition: -o-transform 150ms ease;
   transition: transform 150ms ease;
-}
-/* line 12, ../../src/sass/_image-showcase.scss */
-.isotope-grid .thumb {
-  margin-bottom: 7px;
-  width: 164px;
+  overflow: hidden;
 }
 /* line 17, ../../src/sass/_image-showcase.scss */
-.isotope-grid.rtl .thumb {
+.isotope-grid .thumb {
+  margin-bottom: 7px;
+  width: auto;
+  min-width: 164px;
+  height: 216px;
+  margin-left: 7px;
+}
+/* line 25, ../../src/sass/_image-showcase.scss */
+.rtl .isotope-grid .thumb {
+  height: 323px;
+}
+/* line 27, ../../src/sass/_image-showcase.scss */
+.fixed .isotope-grid .thumb {
+  width: 164px;
+  margin-left: 0;
+}
+/* line 28, ../../src/sass/_image-showcase.scss */
+.fixed.rtl .isotope-grid .thumb {
   width: 246px;
 }
-/* line 19, ../../src/sass/_image-showcase.scss */
-.isotope-grid .wide.thumb {
+/* line 30, ../../src/sass/_image-showcase.scss */
+.fixed .isotope-grid .wide.thumb {
   width: 334px;
+  margin-left: 0;
 }
-/* line 20, ../../src/sass/_image-showcase.scss */
-.isotope-grid.rtl .wide.thumb {
+/* line 31, ../../src/sass/_image-showcase.scss */
+.fixed.rtl .isotope-grid .wide.thumb {
   width: 501px;
 }
-/* line 22, ../../src/sass/_image-showcase.scss */
+/* line 33, ../../src/sass/_image-showcase.scss */
 .isotope-grid .thumb:hover {
   z-index: 4;
 }
-/* line 25, ../../src/sass/_image-showcase.scss */
+/* line 36, ../../src/sass/_image-showcase.scss */
 .isotope-grid .thumb:hover .wrapper {
   -webkit-transform: scale(1.2, 1.2);
   -moz-transform: scale(1.2, 1.2);
@@ -3029,12 +3045,12 @@ button {
   -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
 }
-/* line 30, ../../src/sass/_image-showcase.scss */
+/* line 41, ../../src/sass/_image-showcase.scss */
 .isotope-grid .thumb:hover .caption {
   opacity: 1;
 }
 
-/* line 35, ../../src/sass/_image-showcase.scss */
+/* line 46, ../../src/sass/_image-showcase.scss */
 .caption {
   color: red;
   background: white;
@@ -3050,7 +3066,7 @@ button {
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
 }
-/* line 47, ../../src/sass/_image-showcase.scss */
+/* line 58, ../../src/sass/_image-showcase.scss */
 .caption p {
   margin: 0;
   font-size: 0.6875em;
@@ -3058,12 +3074,13 @@ button {
   line-height: 1;
 }
 
-/* line 56, ../../src/sass/_image-showcase.scss */
+/* line 67, ../../src/sass/_image-showcase.scss */
 .thumb img {
+  max-height: 100%;
   max-width: 100%;
 }
 
-/* line 59, ../../src/sass/_image-showcase.scss */
+/* line 72, ../../src/sass/_image-showcase.scss */
 .covers-container {
   width: 100%;
   margin: 0;
@@ -4005,7 +4022,7 @@ iframe {
   position: relative;
   padding-left: 0;
   padding-right: 0;
-  width: 71.33333%;
+  width: 71.83333%;
   float: right;
 }
 

@@ -9,7 +9,7 @@
         $_GET['template'] = 'photo';
         include("includes/filter-bar.php"); ?>
 
-    <div class="covers-container" id="showcaseContainer">
+    <div class="fixed covers-container" id="showcaseContainer">
         <!--
             This container will hold cover images for photo galleries.
         -->
