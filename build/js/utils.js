@@ -81,7 +81,6 @@ function fbLoader(){
         },
         beforeShow : function() {
             $('#bullet-wrap li').removeClass('active-slide')
-
             var p = $('li#'+this.index).addClass('active-slide').position()
             $('#dot').animate({
                 left: p.left
