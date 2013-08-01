@@ -2845,12 +2845,21 @@ button {
 .list li:first-child h3 {
   margin-top: 1em;
 }
-/* line 21, ../../src/sass/_list-showcase.scss */
+/* line 20, ../../src/sass/_list-showcase.scss */
+.list li:first-child h4 {
+  margin-top: 0;
+}
+/* line 23, ../../src/sass/_list-showcase.scss */
+.list li:first-child h4 a {
+  margin-top: 0;
+  padding-top: 0;
+}
+/* line 29, ../../src/sass/_list-showcase.scss */
 .list h4 {
   width: 75%;
   position: relative;
 }
-/* line 25, ../../src/sass/_list-showcase.scss */
+/* line 33, ../../src/sass/_list-showcase.scss */
 .list a {
   display: block;
   background: white;
@@ -2863,7 +2872,7 @@ button {
   -o-transition: box-shadow 150ms ease;
   transition: box-shadow 150ms ease;
 }
-/* line 34, ../../src/sass/_list-showcase.scss */
+/* line 42, ../../src/sass/_list-showcase.scss */
 .list .thumb {
   overflow: hidden;
   height: 0px;
@@ -2882,19 +2891,19 @@ button {
   -o-transform: rotate(0);
   transform: rotate(0);
 }
-/* line 45, ../../src/sass/_list-showcase.scss */
+/* line 53, ../../src/sass/_list-showcase.scss */
 .list .thumb img {
   position: absolute;
   bottom: 0;
   left: 50%;
   margin-left: -98.5px;
 }
-/* line 52, ../../src/sass/_list-showcase.scss */
+/* line 60, ../../src/sass/_list-showcase.scss */
 .list .wide.thumb img {
   margin-left: -200px;
 }
 
-/* line 56, ../../src/sass/_list-showcase.scss */
+/* line 64, ../../src/sass/_list-showcase.scss */
 .covers-container li:nth-child(n+2) {
   position: relative;
   padding-left: 0;
@@ -2902,53 +2911,53 @@ button {
   width: 50%;
   float: left;
 }
-/* line 58, ../../src/sass/_list-showcase.scss */
+/* line 66, ../../src/sass/_list-showcase.scss */
 .covers-container .list a {
   padding-left: 1em;
   margin-left: -1em;
 }
-/* line 62, ../../src/sass/_list-showcase.scss */
+/* line 70, ../../src/sass/_list-showcase.scss */
 .covers-container .list a:hover {
   -webkit-box-shadow: 0 0 25px 3px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 25px 3px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 25px 3px rgba(0, 0, 0, 0.1);
 }
-/* line 65, ../../src/sass/_list-showcase.scss */
+/* line 73, ../../src/sass/_list-showcase.scss */
 .covers-container .list a:hover + .thumb {
   height: 350px;
   opacity: 1;
 }
 
-/* line 74, ../../src/sass/_list-showcase.scss */
+/* line 82, ../../src/sass/_list-showcase.scss */
 .viewer .list {
   width: 589px;
   float: right;
 }
 
-/* line 81, ../../src/sass/_list-showcase.scss */
+/* line 89, ../../src/sass/_list-showcase.scss */
 .profile .list li:first-child h3 {
   margin-top: 0;
 }
-/* line 82, ../../src/sass/_list-showcase.scss */
+/* line 90, ../../src/sass/_list-showcase.scss */
 .profile .list li:nth-child(n+2) {
   padding: 1.5em 0;
 }
-/* line 83, ../../src/sass/_list-showcase.scss */
+/* line 91, ../../src/sass/_list-showcase.scss */
 .profile .list li:last-child {
   margin-bottom: 1.25em;
 }
-/* line 85, ../../src/sass/_list-showcase.scss */
+/* line 93, ../../src/sass/_list-showcase.scss */
 .profile .list h4 {
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
 }
-/* line 90, ../../src/sass/_list-showcase.scss */
+/* line 98, ../../src/sass/_list-showcase.scss */
 .profile .list a {
   padding: 0;
   margin: 0;
 }
-/* line 94, ../../src/sass/_list-showcase.scss */
+/* line 102, ../../src/sass/_list-showcase.scss */
 .profile .list p {
   font-size: 0.8125em;
   font-weight: 500;
@@ -2956,13 +2965,13 @@ button {
   margin-bottom: 0;
 }
 
-/* line 106, ../../src/sass/_list-showcase.scss */
+/* line 114, ../../src/sass/_list-showcase.scss */
 .list h3 {
   color: red;
   font-weight: 300;
   font-size: 1.1875em;
 }
-/* line 112, ../../src/sass/_list-showcase.scss */
+/* line 120, ../../src/sass/_list-showcase.scss */
 .list h4 {
   font-size: 1.1875em;
   font-weight: 500;
@@ -3975,13 +3984,15 @@ button.black:hover {
   padding-right: 0.53125em;
   width: 25%;
   float: left;
+  position: fixed;
+  max-width: 298px;
   padding-left: 0;
 }
-/* line 482, ../../src/sass/_general.scss */
+/* line 484, ../../src/sass/_general.scss */
 .details .tags > li {
   line-height: 1.2;
 }
-/* line 483, ../../src/sass/_general.scss */
+/* line 485, ../../src/sass/_general.scss */
 .details .type {
   position: relative;
   padding-left: 0;
@@ -3989,7 +4000,7 @@ button.black:hover {
   width: 33.33333%;
   float: left;
 }
-/* line 486, ../../src/sass/_general.scss */
+/* line 488, ../../src/sass/_general.scss */
 .details .links {
   position: relative;
   padding-left: 0;
@@ -3998,7 +4009,7 @@ button.black:hover {
   float: left;
 }
 
-/* line 491, ../../src/sass/_general.scss */
+/* line 493, ../../src/sass/_general.scss */
 .container {
   position: relative;
   padding-left: 0;
@@ -4007,55 +4018,55 @@ button.black:hover {
   float: right;
 }
 
-/* line 498, ../../src/sass/_general.scss */
+/* line 500, ../../src/sass/_general.scss */
 .details header {
   margin-bottom: 1.75em;
 }
-/* line 499, ../../src/sass/_general.scss */
+/* line 501, ../../src/sass/_general.scss */
 .details h3, .details time {
   font-size: 1.1875em;
 }
-/* line 500, ../../src/sass/_general.scss */
+/* line 502, ../../src/sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.5em;
   line-height: 0.7;
 }
-/* line 506, ../../src/sass/_general.scss */
+/* line 508, ../../src/sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 511, ../../src/sass/_general.scss */
+/* line 513, ../../src/sass/_general.scss */
 .details p {
   font-size: 1.1875em;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 518, ../../src/sass/_general.scss */
+/* line 520, ../../src/sass/_general.scss */
 .showcase-links {
   font-size: 1.1875em;
   font-weight: 500;
   line-height: 1.2;
 }
 
-/* line 524, ../../src/sass/_general.scss */
+/* line 526, ../../src/sass/_general.scss */
 .tags {
   font-size: 0.8125em;
 }
 
-/* line 528, ../../src/sass/_general.scss */
+/* line 530, ../../src/sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 532, ../../src/sass/_general.scss */
+/* line 534, ../../src/sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 538, ../../src/sass/_general.scss */
+/* line 540, ../../src/sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }

@@ -476,6 +476,8 @@ button.black:hover {
 
 .details {
     @include grid-column(3);
+    position: fixed;
+    max-width: 298px;
     padding-left: 0;
 
     // .type and .links are nested in .row defined in the markup
