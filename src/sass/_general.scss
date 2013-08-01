@@ -36,7 +36,7 @@ iframe {
 }
 
 .page {
-    padding: 115px emCalc(45) emCalc(35);
+    padding: 109px emCalc(45) emCalc(35);
     height: 100%;
 }
 
@@ -206,6 +206,7 @@ iframe {
     @include grid-row(collapse);
     text-align: right;
     margin-bottom: 2em;
+    background: white;
 
     button {
         padding: 0;
@@ -410,6 +411,7 @@ iframe {
     button {
         font-size: emCalc(14);
         background: none;
+        &:hover { color: $secondary-color; }
     }
 }
 

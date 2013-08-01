@@ -18,6 +18,7 @@
   "globals" : {
     "isoLoader" : true,
     "fbLoader" : true,
+    "stars" : true,
     "makeTime" : true
   }
 }

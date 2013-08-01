@@ -9,6 +9,10 @@
         <script src="/build/js/quotes.js"></script>
         <?php } ?>
 
+        <?php if ( $_GET['template'] == 'projects' ) { ?>
+        <script src="/build/js/starfield.js"></script>
+        <?php } ?>
+
         <script src="/build/js/utils.js"></script>
 
         <?php

@@ -536,9 +536,9 @@
             <?php } else { ?>
 
 
-            <div class="thumb">
+            <div class="thumb pepsi food-beverage publications">
                 <div class="wrapper">
-                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                <?php if ( $q == 'projects' || $q == 'mockProjectCovers' ) { ?>
                     <a href="/templates/project-single.php?1">
                         <div class="caption">
                             <p>One Photo.</p>
@@ -553,9 +553,9 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
-            <div class="thumb">
+            <div class="thumb sony technology publications">
                 <div class="wrapper">
-                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                <?php if ( $q == 'projects' || $q == 'mockProjectCovers' ) { ?>
                     <a href="/templates/project-single.php?3">
                         <div class="caption">
                             <p>Three Photos.</p>
@@ -570,9 +570,9 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
-            <div class="wide thumb">
+            <div class="wide thumb sony technology product-design">
                 <div class="wrapper">
-                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                <?php if ( $q == 'projects' || $q == 'mockProjectCovers' ) { ?>
                     <a href="/templates/project-single.php?3a">
                         <div class="caption">
                             <p>Three Photos Alternate.</p>
@@ -587,9 +587,9 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
-            <div class="wide thumb">
+            <div class="wide thumb sony technology product-design">
                 <div class="wrapper">
-                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                <?php if ( $q == 'projects' || $q == 'mockProjectCovers' ) { ?>
                     <a href="/templates/project-single.php?4">
                         <div class="caption">
                             <p>Four Photos.</p>
@@ -604,9 +604,9 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
-            <div class="thumb">
+            <div class="thumb sony technology communications">
                 <div class="wrapper">
-                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                <?php if ( $q == 'projects' || $q == 'mockProjectCovers' ) { ?>
                     <a href="/templates/project-single.php?4a">
                         <div class="caption">
                             <p>Four Photos Alternate.</p>
@@ -621,9 +621,9 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
-            <div class="thumb">
+            <div class="thumb dkny apparel-fashion publications">
                 <div class="wrapper">
-                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                <?php if ( $q == 'projects' || $q == 'mockProjectCovers' ) { ?>
                     <a href="/templates/project-single.php?8">
                         <div class="caption">
                             <p>Eight Photos.</p>
@@ -638,9 +638,9 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
-            <div class="thumb">
+            <div class="thumb pepsi food-beverage publications">
                 <div class="wrapper">
-                <?php if ( $q == 'projects' || $q == 'mockProjectsCovers' ) { ?>
+                <?php if ( $q == 'projects' || $q == 'mockProjectCovers' ) { ?>
                     <a href="/templates/project-single.php?20">
                         <div class="caption">
                             <p>Twenty Photos.</p>
@@ -655,7 +655,7 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
-            <div class="thumb">
+            <div class="thumb sony technology communications">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
                         <div class="caption">
@@ -665,7 +665,7 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
-            <div class="wide thumb">
+            <div class="wide thumb pepsi food-beverage product-design">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
                         <div class="caption">
@@ -675,7 +675,7 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
-            <div class="thumb">
+            <div class="thumb dkny apparel-fashion communications">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
                         <div class="caption">
@@ -685,7 +685,7 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
-            <div class="wide thumb">
+            <div class="wide thumb pepsi food-beverage communications">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
                         <div class="caption">
@@ -695,7 +695,7 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
-            <div class="wide thumb">
+            <div class="wide thumb dkny apparel-fashion product-design">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
                         <div class="caption">
@@ -705,7 +705,7 @@
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
-            <div class="wide thumb">
+            <div class="wide thumb sony technology publications">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
                         <div class="caption">

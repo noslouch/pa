@@ -16,17 +16,33 @@
             <ul id="brandList" class="icons">
                 <li>                  
                     <div class="icon">
-                        <a href="/templates/projects.php">
-                            <img class="has-tip tip-top" data-tooltip src="http://placekitten.com/g/80/45" title="Brand Name">
+                        <a href="#" data-filter=".pepsi">
+                            <img class="has-tip tip-top" data-tooltip src="http://placekitten.com/g/80/45" title="Pepsi">
                         </a>
                     </div>
                     <h4 class="name">
-                        <a href="/templates/projects.php">Brand Name</a>
+                        <a href="#" data-filter=".pepsi">Pepsi</a>
                     </h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
-                    <h4 class="name">Brand Name</h4>
+                    <div class="icon">
+                        <a href="#" data-filter=".sony">
+                            <img class="has-tip tip-top" data-tooltip src="http://placekitten.com/g/80/45" title="Sony Media Experience">
+                        </a>
+                    </div>
+                    <h4 class="name">
+                        <a href="#" data-filter=".sony">Sony Media Experience</a>
+                    </h4>
+                </li>
+                <li>
+                    <div class="icon">
+                        <a href="#" data-filter=".dkny">
+                            <img class="has-tip tip-top" data-tooltip src="http://placekitten.com/g/80/45" title="Donna Karen New York">
+                        </a>
+                    </div>
+                    <h4 class="name">
+                        <a href="#" data-filter=".dkny">Donna Karen New York</a>
+                    </h4>
                 </li>
                 <li>
                     <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
@@ -128,13 +144,19 @@
         <div class="wrapper">
             <ul class="names">
                 <li>
-                    <h4 class="name">Industry Name</h4>
+                    <h4 class="name">
+                        <a href="#" data-filter=".apparel-fashion">Apparel + Fashion</a>
+                    </h4>
                 </li>
                 <li>
-                    <h4 class="name">Industry Name</h4>
+                    <h4 class="name">
+                        <a href="#" data-filter=".food-beverage">Food + Beverage</a>
+                    </h4>
                 </li>
                 <li>
-                    <h4 class="name">Industry Name</h4>
+                    <h4 class="name">
+                        <a href="#" data-filter=".technology">Technology</a>
+                    </h4>
                 </li>
                 <li>
                     <h4 class="name">Industry Name</h4>
@@ -210,13 +232,19 @@
         <div class="wrapper">
             <ul class="names">
                 <li>
-                    <h4 class="name">Project Type</h4>
+                    <h4 class="name">
+                        <a href="#" data-filter=".product-design">Product Design</a>
+                    </h4>
                 </li>
                 <li>
-                    <h4 class="name">Project Type</h4>
+                    <h4 class="name">
+                        <a href="#" data-filter=".communications">Communications</a>
+                    </h4>
                 </li>
                 <li>
-                    <h4 class="name">Project Type</h4>
+                    <h4 class="name">
+                        <a href="#" data-filter=".publications">Publications</a>
+                    </h4>
                 </li>
                 <li>
                     <h4 class="name">Project Type</h4>
@@ -288,7 +316,7 @@
         </div> <!-- .wrapper -->
     </div> <!-- .filter -->
     <div class="filter view-all">
-        <h3 id="viewAll">View All</h3>
+        <h3><a href="#" data-filter="*">View All</a></h3>
     </div> <!-- .filter -->
 
     <div class="jump-to alpha">
@@ -361,16 +389,16 @@
         <h3>Sort By</h3>
         <div class="wrapper">
             <ul>
-                <li><button class="active" id="alphaSort" type="button">Name</button></li>
-                <li><button class="" id="dateSort" type="button">Date</button></li>
+                <li><button id="alphaSort" type="button">Name</button></li>
+                <li><button id="dateSort" type="button">Date</button></li>
             </ul>
         </div> <!-- .wrapper -->
     </div> <!-- .sorts -->
-    <div class="views">
+    <div class="views" id="views">
         <h3>View By</h3>
         <div class="wrapper">
             <ul>
-                <li><button class="icon-view active" id="mockProjectCovers" type="button">Cover Image</button></li>
+                <li><button class="icon-view" id="mockProjectCovers" type="button">Cover Image</button></li>
                 <li><button class="title-view" id="mockProjectList" type="button">Project Title</button></li>
                 <li><button class="random-view" id="starfieldView" type="button">Random</button></li>
             </ul>

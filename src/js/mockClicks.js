@@ -1,18 +1,14 @@
 "use strict";
 var $showcase = $('#showcaseContainer')
 
-$showcase.on('click', '#mockFancybox', function(e){
-    e.preventDefault()
-    
-    // to be implemented
-    alert('Image Popup')
-})
-
 $('#mockProjectList').click(function(e){
     e.preventDefault()
     $showcase.empty()
-    var q
+    $('#starfield').remove()
 
+    var q = 'mockProjectList'
+
+    /*
     if (e.target.baseURI.indexOf('photography') > -1) {
         // photography
         q = 'mockPhotoList'
@@ -21,6 +17,7 @@ $('#mockProjectList').click(function(e){
     } else if (e.target.baseURI.indexOf('film') > -1) {
         q = 'mockFilmList'
     }
+    */
 
     $.get('/templates/includes/list-showcase.php', q, function(d){
         $showcase.append(d)
@@ -30,8 +27,10 @@ $('#mockProjectList').click(function(e){
 $('#mockProjectCovers').click(function(e){
     e.preventDefault()
     $showcase.empty()
+    $('#starfield').remove()
 
-    var q
+    var q = 'mockProjectCovers'
+    /*
 
     if (e.target.baseURI.indexOf('photography') > -1) {
         // photography
@@ -47,14 +46,21 @@ $('#mockProjectCovers').click(function(e){
         })
         return
     }
+    */
 
     $.get('/templates/includes/image-showcase.php', q, function(d){
         $showcase.append(d)
     }).done(function(){
         isoLoader('#iso-grid')
-        console.log('hit')
         $('#iso-grid').css('overflow', 'visible')
     })
+})
+
+$('#starfieldView').click(function(e){
+    e.preventDefault()
+    $showcase.empty()
+    $('#starfield').remove()
+    stars()
 })
 
 $('#mockImageGallery').click(function(e){
