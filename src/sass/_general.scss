@@ -13,6 +13,13 @@ html, body {
     height: 100%;
 }
 
+.image.showcase img {
+    opacity: 0;
+    @include transition(opacity 150ms ease);
+}
+
+.image.showcase img.loaded { opacity: 1; }
+
 iframe {
     width: 100%;
     height: 490px;

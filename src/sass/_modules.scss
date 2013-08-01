@@ -117,6 +117,25 @@ button {
     @include border-radius(10px);
 }
 
+.fancybox-overlay .indicators {
+    position: fixed;
+    bottom: 2.6em;
+    left: 3em;
+    height: auto;
+
+    li { 
+        background: url(../../assets/img/small-mask.png);
+        float: left; 
+        width: 17px;
+        height: 12px;
+    }
+
+    .dot {
+        width: 12px;
+        height: 12px;
+    }
+}
+
 .active-slide a {
     color: red;
 }
@@ -305,4 +324,26 @@ button {
       -ms-transition-duration: 0s;
        -o-transition-duration: 0s;
           transition-duration: 0s;
+}
+
+//
+// FANCYBOX
+//
+
+.fancybox-wrap .logo {
+    position: fixed;
+    top: 1em;
+    left: 2em;
+    font-size: emCalc(18);
+    a { color: $secondary-color; }
+    a:hover { color: $primary-color; }
+}
+
+.fancybox-title {
+    color: $primary-color;
+    position: fixed;
+    bottom: 3em;
+    right: 3em;
+    font-size: emCalc(13);
+    font-weight: 500;
 }

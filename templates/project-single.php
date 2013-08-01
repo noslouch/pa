@@ -51,6 +51,10 @@
                 video-showcase
         -->
 
+        <?php
+            $_GET['template'] = 'single-project';
+            include("includes/image-showcase.php"); ?>
+    
         </div> <!-- .container -->
     </div> <!-- .viewer -->
 <?php include("includes/footer.php"); ?>
