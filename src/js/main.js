@@ -56,12 +56,16 @@ $('#logoView').click(function(e){
     $(this).addClass('active')
     $('#titleView').removeClass('active')
     $('#brandList').removeClass('names').addClass('icons')
+    e.preventDefault()
+    e.stopPropagation()
 })
 
 $('#titleView').click(function(e){
     $(this).addClass('active')
     $('#logoView').removeClass('active')
     $('#brandList').removeClass('icons').addClass('names')
+    e.preventDefault()
+    e.stopPropagation()
 })
 
 /*
