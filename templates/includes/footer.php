@@ -5,15 +5,19 @@
         <script src="/lib/isotope/jquery.isotope.min.js"></script>
         <script src="/lib/fancybox/jquery.fancybox.js"></script>
 
+        <script src="/build/js/utils.js"></script>
+
         <?php if ( $_GET['template'] == 'home' ) { ?>
         <script src="/build/js/quotes.js"></script>
+        <script>
+            checkQuoteHeight()
+        </script>
         <?php } ?>
 
         <?php if ( $_GET['template'] == 'projects' ) { ?>
         <script src="/build/js/starfield.js"></script>
         <?php } ?>
 
-        <script src="/build/js/utils.js"></script>
 
         <?php
             $p = null;

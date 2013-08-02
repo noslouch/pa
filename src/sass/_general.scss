@@ -73,22 +73,26 @@ iframe {
 
 .site-header {
     @include grid-row(collapse);
+    min-width: 850px;
     position: fixed;
     z-index: 4;
     padding: emCalc(45) emCalc(45) emCalc(25);
     background: white;
 
     .logo {
-        @include grid-column(4,$collapse: true);
+        //@include grid-column(4,$collapse: true);
+        float: left;
         font-size: emCalc(19);
         font-weight: 500;
+        line-height: 1;
         a { color: $secondary-color; }
         a:hover { color: $gray; }
         //padding-left: 0;
     }
 
     nav { 
-        @include grid-column(8, $float: right, $collapse: true);
+        //@include grid-column(8, $float: right, $collapse: true);
+        float: right;
         font-weight: 500;
         font-size: emCalc(19);
         max-width: 589px;
@@ -98,7 +102,9 @@ iframe {
             @include inline-list;
             float: left;
             margin: 0;
-            > li { margin-left: 15px; }
+            > li { 
+                line-height: 1.5;
+                margin-left: 15px; }
             li:first-child { margin-left: 0; }
         }
     }
@@ -121,6 +127,7 @@ iframe {
     position: fixed;
     bottom: 0;
     border-top: 1px $gray solid;
+    background: white;
 
     @include grid-row(collapse);
     @include translate3d(0,76%,0);
@@ -178,6 +185,8 @@ iframe {
         }
 
         img {
+            // for now; update to work with variable brick widths
+            max-width: 280px;
             opacity: 0;
             @include transition(box-shadow 150ms ease, opacity 150ms ease);
         }

@@ -5,7 +5,7 @@
             <div class="row">
                 <article class="brick">
                     <div class="img">
-                       <img src="http://placekitten.com/80/250" alt="" />
+                      <!-- <img src="http://placekitten.com/80/250" alt="" />-->
                     </div>
                     <div class="copy">
                         <h3>Headline Goes here</h3>
@@ -14,7 +14,7 @@
                 </article>
                 <article class="brick">
                     <div class="img">
-                        <img src="http://placekitten.com/180/250" alt="" />
+                        <img src="/assets/img/noteworthy1.jpg" alt="" />
                     </div>
                     <div class="copy">
                         <h3>Headline Goes Here</h3>
@@ -23,16 +23,16 @@
                 </article>
                 <article class="brick">
                     <div class="img">
-                        <img src="http://placekitten.com/230/250" alt="" />
+                        <img src="/assets/img/noteworthy2.jpg" alt="" />
                     </div>
                     <div class="copy">
-                        <h3>A Headline that goes pretty long just so we can see how far a headline ought to go.</h3>
+                        <h3>A Headline that goes pretty long just so we can see.</h3>
                         <p>Short summary.</p>
                     </div>
                 </article>
                 <article class="brick">
                     <div class="img">
-                        <img src="http://placekitten.com/280/450" alt="" />
+                        <img src="/assets/img/noteworthy3.jpg" alt="" />
                     </div>
                     <div class="copy">
                         <h3>Short Headline.</h3>

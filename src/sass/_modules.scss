@@ -44,17 +44,21 @@ button {
         top: 0;
     }
 
+    h3 {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: emCalc(10);
+        @include transition(font-size 150ms ease);
+
+    }
+
     &.short { height: 66%; }
+    &.small h3 { font-size: emCalc(10); }
 }
 
 
-.quotes h3 {
-    display: table-cell;
-    vertical-align: middle;
-    font-size: emCalc(10);
-}
 
-@media only screen and (min-height: 300px) {
+@media only screen and (min-width: 1080px) {
     .quotes h3 {
         font-size: emCalc(15);
     }
@@ -64,7 +68,9 @@ button {
     font-size: 3em;
     font-family: "Helvetica Neue", arial, sans-serif;
     font-weight: 600;
-    min-height: 50px;
+    min-height: 25px;
+    line-height: 1;
+    min-width: 659px;
     @include transition(opacity 2000ms ease-out);
 }
 
