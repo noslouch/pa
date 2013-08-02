@@ -4221,7 +4221,6 @@ iframe {
   margin: 0;
   max-width: 80em;
   *zoom: 1;
-  margin-top: 2em;
 }
 /* line 121, ../../../../../Ruby/Gems/1.8/gems/zurb-foundation-4.3.0/scss/foundation/components/_global.scss */
 .viewer:before, .viewer:after {
@@ -4233,7 +4232,7 @@ iframe {
   clear: both;
 }
 
-/* line 493, ../../src/sass/_general.scss */
+/* line 492, ../../src/sass/_general.scss */
 .details {
   position: relative;
   padding-left: 0.53125em;
@@ -4244,11 +4243,11 @@ iframe {
   max-width: 298px;
   padding-left: 0;
 }
-/* line 500, ../../src/sass/_general.scss */
+/* line 499, ../../src/sass/_general.scss */
 .details .tags > li {
   line-height: 1.2;
 }
-/* line 501, ../../src/sass/_general.scss */
+/* line 500, ../../src/sass/_general.scss */
 .details .type {
   position: relative;
   padding-left: 0;
@@ -4256,7 +4255,7 @@ iframe {
   width: 33.33333%;
   float: left;
 }
-/* line 504, ../../src/sass/_general.scss */
+/* line 503, ../../src/sass/_general.scss */
 .details .links {
   position: relative;
   padding-left: 0;
@@ -4265,7 +4264,7 @@ iframe {
   float: left;
 }
 
-/* line 509, ../../src/sass/_general.scss */
+/* line 508, ../../src/sass/_general.scss */
 .container {
   position: relative;
   padding-left: 0;
@@ -4274,55 +4273,55 @@ iframe {
   float: right;
 }
 
-/* line 516, ../../src/sass/_general.scss */
+/* line 515, ../../src/sass/_general.scss */
 .details header {
   margin-bottom: 1.75em;
 }
-/* line 517, ../../src/sass/_general.scss */
+/* line 516, ../../src/sass/_general.scss */
 .details h3, .details time {
   font-size: 1.1875em;
 }
-/* line 518, ../../src/sass/_general.scss */
+/* line 517, ../../src/sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.5em;
   line-height: 0.7;
 }
-/* line 524, ../../src/sass/_general.scss */
+/* line 523, ../../src/sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 529, ../../src/sass/_general.scss */
+/* line 528, ../../src/sass/_general.scss */
 .details p {
   font-size: 1.1875em;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 536, ../../src/sass/_general.scss */
+/* line 535, ../../src/sass/_general.scss */
 .showcase-links {
   font-size: 1.1875em;
   font-weight: 500;
   line-height: 1.2;
 }
 
-/* line 542, ../../src/sass/_general.scss */
+/* line 541, ../../src/sass/_general.scss */
 .tags {
   font-size: 0.8125em;
 }
 
-/* line 546, ../../src/sass/_general.scss */
+/* line 545, ../../src/sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 550, ../../src/sass/_general.scss */
+/* line 549, ../../src/sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 556, ../../src/sass/_general.scss */
+/* line 555, ../../src/sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }

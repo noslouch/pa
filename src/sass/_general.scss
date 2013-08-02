@@ -487,7 +487,6 @@ iframe {
 // layout
 .viewer {
     @include grid-row(collapse);
-    margin-top: 2em;
 }
 
 .details {
