@@ -1,5 +1,9 @@
             </div> <!-- .page -->
         </div> <!-- .outer-wrapper -->
+        
+        <?php if ( $_GET['template'] == 'home' ) {
+            include("templates/includes/noteworthy.php");
+        } ?>
 
         <script src="/lib/vendor/jquery.js"></script>
         <script src="/lib/isotope/jquery.isotope.min.js"></script>

@@ -1,3 +1,4 @@
+    <div class="n-wrapper">
         <section class="n-container" id="n-container">
             <header>
                 <h2><a href="#n-container">Noteworthy</a></h2>
@@ -41,3 +42,4 @@
                 </article>
             </div>
         </section> <!-- .n-container -->
+    </div> <!-- .n-wrapper -->

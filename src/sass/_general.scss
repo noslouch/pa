@@ -139,20 +139,23 @@ iframe {
 //
 
 // Noteworthy layout & animation
-.n-container {
+.n-wrapper {
     position: fixed;
+    width: 100%;
+    padding: 0 2em;
+}
+
+.n-container {
     bottom: 0;
     border-top: 1px $gray solid;
     background: white;
 
     @include grid-row(collapse);
-    @include translate3d(0,76%,0);
+    @include translate3d(0,-24%,0);
     @include transition(transform 150ms ease);
 
-    max-width: 1190px;
-
     &.open { 
-        @include translate3d(0,0,0);
+        @include translate3d(0,-100%,0);
         h2:before { content:"-"; }
     }
 
