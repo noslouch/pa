@@ -115,4 +115,8 @@ $(function(){
     }
 
     checkScroll()
+
+    $('.film-row').imagesLoaded(function(){
+        $(this).addClass('loaded')
+    })
 })

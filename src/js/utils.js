@@ -64,6 +64,7 @@ function fbLoader(){
         margin: [75, 0, 75, 0],
         padding: 0,
         type : 'image',
+        closeClick: true,
         //nextEffect : 'fade',
         //prevEffect : 'fade',
         helpers : {

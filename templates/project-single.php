@@ -11,7 +11,7 @@
             </header>
             <p class="summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.</p> <!-- .summary -->
             <ul class="showcase-links">
-                <li><a href="#" id="mockImageGallery">Image Gallery</a></li>
+                <li><a href="#" id="mockImageGallery" class="active">Image Gallery</a></li>
                 <li><a href="#" id="mockVideo">Video</a></li>
                 <li><a href="#" id="mockInfo">Info</a></li>
                 <li><a href="#" id="mockRelated">Related</a></li>

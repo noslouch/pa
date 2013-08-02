@@ -123,25 +123,6 @@ button {
     @include border-radius(10px);
 }
 
-.fancybox-overlay .indicators {
-    position: fixed;
-    bottom: 2.6em;
-    left: 3em;
-    height: auto;
-
-    li { 
-        background: url(../../assets/img/small-mask.png);
-        float: left; 
-        width: 17px;
-        height: 12px;
-    }
-
-    .dot {
-        width: 12px;
-        height: 12px;
-    }
-}
-
 .active-slide a {
     color: red;
 }
@@ -191,16 +172,16 @@ button {
         height: 15px;
         content: '';
         display: inline-block;
-        float: left;
         margin-top: 4px;
-        margin-left: 1px;
+        position: absolute;
+        left: 0;
     }
 
     &:hover:before {
         @include icons-sprite(icon-view-hover);
     }
 
-    &.active:before {
+    .active &:before {
         @include icons-sprite(icon-view-selected);
     }
 }
@@ -213,8 +194,9 @@ button {
         height: 13px;
         content: '';
         display: inline-block;
-        float: left;
         margin-top: 5px;
+        position: absolute;
+        left: -1px;
     }
 
     &:hover:before {
@@ -350,26 +332,30 @@ button {
     
     .logo {
         position: fixed;
-        top: 15px;
-        left: 10px;
+        top: 39px;
+        left: 39px;
         margin: 0;
         line-height: 0.8;
         font-size: emCalc(18);
+        z-index: 1;
+        cursor: pointer;
+
         a { color: $secondary-color; }
         a:hover { color: $primary-color; }
     }
 
     .close {
         position: fixed;
-        top: 15px;
-        right: 10px;
+        top: 39px;
+        right: 39px;
         z-index: 2;
     }
 }
 
 .fancybox-nav {
     position: fixed;
-    z-index: 1;
+    width: 20%;
+    z-index: 0;
 }
 
 .fancybox-next span,
@@ -382,6 +368,7 @@ button {
 .fancybox-next { 
     span {
         @include icons-sprite(next);
+        right: 39px;
     }
     &:hover span { @include icons-sprite(next-hover); }
 }
@@ -389,8 +376,29 @@ button {
 .fancybox-prev { 
     span {
         @include icons-sprite(prev);
+        left: 39px;
     }
     &:hover span { @include icons-sprite(prev-hover); }
+}
+
+.fancybox-overlay .indicators {
+    position: fixed;
+    bottom: 2.6em;
+    left: 3em;
+    height: auto;
+    z-index: 8040;
+
+    li { 
+        background: url(../../assets/img/small-mask.png);
+        float: left; 
+        width: 17px;
+        height: 12px;
+    }
+
+    .dot {
+        width: 12px;
+        height: 12px;
+    }
 }
 
 .fancybox-title {

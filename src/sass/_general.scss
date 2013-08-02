@@ -2,10 +2,15 @@
 // GLOBAL
 //
 
-a { @include transition(color 150ms ease); }
+a, a * { @include transition(color 450ms ease-out); }
+
+a:hover, a:hover * { @include transition(color 150ms ease); }
+
 a:hover * {
     color: $secondary-color;
+    //@include transition(color 250ms ease-out); 
 }
+
 a:focus { color: auto; }
 .active { color: $gray; }
 
@@ -57,6 +62,19 @@ iframe {
 // HEADER
 //
 
+.header-wrapper {
+    position: fixed;
+    width: 100%;
+    background: white;
+    z-index: 4;
+}
+
+.inner-header {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+
 .outer-wrapper {
     max-width: 1280px;
     margin: 0 auto;
@@ -72,11 +90,9 @@ iframe {
 .page.projects { padding-top: 178px; }
 
 .site-header {
-    @include grid-row(collapse);
+    width: 100%;
     min-width: 850px;
-    position: fixed;
-    z-index: 4;
-    padding: emCalc(45) emCalc(45) emCalc(25);
+    padding: emCalc(45);
     background: white;
 
     .logo {
@@ -300,7 +316,7 @@ iframe {
 
     ul {
         overflow-y: scroll;
-        max-height: 400px;
+        max-height: 390px;
         margin: 0;
         padding: 0;
     }
@@ -348,9 +364,10 @@ iframe {
 .views {
     button {
         display: block;
-        text-align: right;
+        text-align: left;
         line-height: inherit;
         width: 100%;
+        padding-left: 2.5em;
     }
 
     ul { overflow: hidden; }
@@ -362,15 +379,17 @@ iframe {
 
     .wrapper {
         right: 0;
-        min-width: 79px;
+        min-width: 80px;
     }
+
+    button { padding: 0; }
 }
 
 .views {
     margin-right: 5px;
 
     .wrapper {
-        right: 0;
+        left: 0;
         min-width: 150px;
     }
 }
@@ -384,6 +403,7 @@ iframe {
         button {
             display: inline-block;
             width: auto;
+            padding-left: 0;
         }
     }
 
@@ -391,6 +411,7 @@ iframe {
     .title-view:before {
         margin-top: 0;
         margin-left: 0;
+        position: relative;
     }
 
     .title-view:before {
@@ -404,7 +425,7 @@ iframe {
 
     .wrapper {
         right: 0;
-        min-width: 86px;
+        min-width: 85px;
     }
 
     .alphas,

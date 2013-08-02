@@ -66,7 +66,7 @@
     .list a {
         padding-left: 1em;
         margin-left: -1em;
-        
+        /*
         &:hover {
             @include box-shadow(0 0 25px 3px rgba(0,0,0,0.1));
 
@@ -76,6 +76,7 @@
                 z-index: 4;
             }
         }
+        */
     }
 
 }

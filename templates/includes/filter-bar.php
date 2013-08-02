@@ -17,7 +17,7 @@
                 <li>                  
                     <div class="icon">
                         <a href="#" data-filter=".pepsi">
-                            <img class="has-tip tip-top" data-tooltip src="http://placekitten.com/g/80/45" title="Pepsi">
+                            <img class="has-tip tip-top" data-tooltip src="http://placehold.it/80x45" title="Pepsi">
                         </a>
                     </div>
                     <h4 class="name">
@@ -27,7 +27,7 @@
                 <li>
                     <div class="icon">
                         <a href="#" data-filter=".sony">
-                            <img class="has-tip tip-top" data-tooltip src="http://placekitten.com/g/80/45" title="Sony Media Experience">
+                            <img class="has-tip tip-top" data-tooltip src="http://placehold.it/80x45" title="Sony Media Experience">
                         </a>
                     </div>
                     <h4 class="name">
@@ -37,7 +37,7 @@
                 <li>
                     <div class="icon">
                         <a href="#" data-filter=".dkny">
-                            <img class="has-tip tip-top" data-tooltip src="http://placekitten.com/g/80/45" title="Donna Karen New York">
+                            <img class="has-tip tip-top" data-tooltip src="http://placehold.it/80x45" title="Donna Karen New York">
                         </a>
                     </div>
                     <h4 class="name">
@@ -45,95 +45,95 @@
                     </h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
                 <li>
-                    <div class="icon"><img src="http://placekitten.com/g/80/45" alt="" /></div>
+                    <div class="icon"><img src="http://placehold.it/80x45" alt="" /></div>
                     <h4 class="name">Brand Name</h4>
                 </li>
             </ul>

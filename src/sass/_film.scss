@@ -20,6 +20,10 @@ $column-gutter: emCalc(17);
 // TYPE
 
 .film-row {
+    opacity: 0; @include transition(opacity 150ms ease);
+
+    &.loaded { opacity: 1; }
+
     h3 {
         font-size: emCalc(19);
         font-weight: 500;

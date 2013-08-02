@@ -14,7 +14,7 @@
     } else if ($q == 'photography' || $q == 'mockPhotoCovers') {
         $aTag = '<a href="/templates/photo-single.php">';
     } else if ( $q == 'single-project' || $q == 'single-photo' ) {
-        $aTag = '<a href="http://placekitten.com/1080/600" class="mockFancybox" rel="gallery" title="Caption goes here">';
+        $aTag = '<a href="http://placehold.it/1080x600" class="mockFancybox" rel="gallery" title="Caption goes here">';
     }
 ?>
                 
@@ -54,7 +54,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -66,7 +66,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/494/518" alt="" />
+                        <img src="http://placehold.it/494x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -77,7 +77,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/802/518" alt="" />
+                        <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -88,7 +88,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -100,7 +100,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -111,7 +111,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -122,7 +122,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -134,7 +134,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -145,7 +145,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -156,7 +156,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -167,7 +167,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -179,7 +179,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -190,7 +190,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -201,7 +201,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/394/518" alt="" />
+                        <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -212,7 +212,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/802/518" alt="" />
+                        <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -226,7 +226,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/601/259" alt="" />
+                        <img src="http://placehold.it/601x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -237,7 +237,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/501/309" alt="" />
+                        <img src="http://placehold.it/501x309" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -248,7 +248,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/497/284" alt="" />
+                        <img src="http://placehold.it/497x284" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -259,7 +259,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -270,7 +270,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -281,7 +281,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -292,7 +292,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -303,7 +303,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/802/518" alt="" />
+                        <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -315,7 +315,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -326,7 +326,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -337,7 +337,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/802/518" alt="" />
+                        <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -348,7 +348,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -359,7 +359,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -370,7 +370,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -381,7 +381,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -392,7 +392,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -403,7 +403,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/802/518" alt="" />
+                        <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -414,7 +414,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -425,7 +425,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -436,7 +436,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/802/518" alt="" />
+                        <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -447,7 +447,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -458,7 +458,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -469,7 +469,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/802/518" alt="" />
+                        <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -480,7 +480,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -491,7 +491,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -502,7 +502,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -513,7 +513,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -524,7 +524,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -546,7 +546,7 @@
                             <p></p>
                         </div> <!-- .caption -->
                 <?php } ?>
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -563,7 +563,7 @@
                             <p></p>
                         </div> <!-- .caption -->
                 <?php } ?>
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -580,7 +580,7 @@
                             <p></p>
                         </div> <!-- .caption -->
                     <?php } ?>
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
@@ -597,7 +597,7 @@
                             <p></p>
                         </div> <!-- .caption -->
                     <?php } ?>
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
@@ -614,7 +614,7 @@
                             <p>This is a slightly longer caption so we can see what it looks like when the captions span multiple lines.</p>
                         </div> <!-- .caption -->
                 <? } ?>
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -631,7 +631,7 @@
                             <p>This is a slightly longer caption so we can see what it looks like when the captions span multiple lines.</p>
                         </div> <!-- .caption -->
                 <? } ?>
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -648,7 +648,7 @@
                             <p></p>
                         </div> <!-- .caption -->
                 <?php } ?>
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -658,7 +658,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -668,7 +668,7 @@
                         <div class="caption">
                             <p>This is a caption on a wide thumbnail.</p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
@@ -678,7 +678,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/197/259" alt="" />
+                        <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -688,7 +688,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
@@ -698,7 +698,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->
@@ -708,7 +708,7 @@
                         <div class="caption">
                             <p></p>
                         </div> <!-- .caption -->
-                        <img src="http://placekitten.com/401/259" alt="" />
+                        <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .wide .thumb -->

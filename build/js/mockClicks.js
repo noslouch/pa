@@ -64,10 +64,13 @@ $('#starfieldView').click(function(e){
 })
 
 $('#mockImageGallery').click(function(e){
+    var s;
     e.preventDefault()
     $showcase.empty()
-
-    $.get('/templates/includes/image-showcase.php', 'single-project', function(d){
+    
+    //if ( e.view.location.search ) { s = e.view.location.search.slice(1) }
+        
+    $.get('/templates/includes/image-showcase.php', s || 'single-project', function(d){
         $showcase.append(d)
     }).done(function(){
         isoLoader('#iso-grid')
