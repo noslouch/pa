@@ -23,7 +23,8 @@ function stars(){
         var i = 0;
 
         function go(){
-            $(images[i]).appendTo($container)
+            var $a = $('<a/>').attr('href', '/templates/project-single.php').append(images[i])
+            $a.appendTo($container)
             setTimeout(go, 550)
             i++
         }
