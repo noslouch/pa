@@ -19,6 +19,7 @@
     "isoLoader" : true,
     "fbLoader" : true,
     "stars" : true,
+    "checkScroll": true,
     "makeTime" : true
   }
 }

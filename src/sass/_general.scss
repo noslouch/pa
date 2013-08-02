@@ -20,6 +20,34 @@ html, body {
 
 .image.showcase img.loaded { opacity: 1; }
 
+.loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+
+    .table {
+        display: table;
+        width: 100%;
+        height: 100%;
+    }
+
+    .table-cell {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    span {
+        background: url(/assets/img/loader.gif) no-repeat;
+        width: 32px;
+        height: 32px;
+        display: inline-block;
+    }
+}
+
 iframe {
     width: 100%;
     height: 490px;
@@ -36,8 +64,9 @@ iframe {
 }
 
 .page {
-    padding: 85px emCalc(45) emCalc(35);
+    padding: 85px emCalc(44) emCalc(35);
     height: 100%;
+    position: relative;
 }
 
 .page.projects { padding-top: 178px; }
@@ -79,6 +108,8 @@ iframe {
         margin-top: 7px;
     }
     .search-form { display: none; }
+
+    &.shadow { @include box-shadow(0 2px 30px -10px rgba(0,0,0,0.1)); }
 }
 
 //
@@ -359,7 +390,7 @@ iframe {
 }
 
 .jump-to {
-    margin-right: 0;
+    margin-right: -10px;
     margin-left: 0;
 
     .wrapper {
@@ -476,7 +507,7 @@ iframe {
 }
 
 .container {
-    @include grid-column(8.55, $float: right, $collapse: true);
+    @include grid-column(8.6, $float: right, $collapse: true);
 }
 
 // type

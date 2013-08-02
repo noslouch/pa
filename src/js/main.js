@@ -65,16 +65,16 @@ $('#titleView').click(function(e){
 })
 
 /*
-$('#mockProjectList').click(function(e){
-    e.preventDefault()
-    $(this).addClass('active')
-    $('#mockProjectCovers').removeClass('active')
+$('#mockprojectlist').click(function(e){
+    e.preventdefault()
+    $(this).addclass('active')
+    $('#mockprojectcovers').removeclass('active')
 })
 
-$('#mockProjectCovers').click(function(e){
-    e.preventDefault()
-    $(this).addClass('active')
-    $('#mockProjectList').removeClass('active')
+$('#mockprojectcovers').click(function(e){
+    e.preventdefault()
+    $(this).addclass('active')
+    $('#mockprojectlist').removeclass('active')
 })
 */
 
@@ -109,4 +109,6 @@ $(function(){
     } catch(e) {
         console.log('no fancybox')
     }
+
+    checkScroll()
 })

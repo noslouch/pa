@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="wrapper">
-            <a href="/templates/profile.php?press" class="button">View All Press</a>
+            <a href="/templates/profile.php?mockPressList" class="button">View All Press</a>
         </div>
     </article>
     <?php } else if ($q == 'mockArticle') { ?>
@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="wrapper">
-            <button type="button">View All Articles by PA</button>
+            <a href="/templates/profile.php?mockArticleList" class="button">View All Articles</a>
         </div>
     </article>
     <?php } else if ($q == 'mockBio') { ?>

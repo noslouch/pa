@@ -340,13 +340,51 @@ button {
 // FANCYBOX
 //
 
-.fancybox-wrap .logo {
+.fancybox-wrap { 
+    
+    .logo {
+        position: fixed;
+        top: 15px;
+        left: 10px;
+        margin: 0;
+        line-height: 0.8;
+        font-size: emCalc(18);
+        a { color: $secondary-color; }
+        a:hover { color: $primary-color; }
+    }
+
+    .close {
+        position: fixed;
+        top: 15px;
+        right: 10px;
+        z-index: 2;
+    }
+}
+
+.fancybox-nav {
     position: fixed;
-    top: 1em;
-    left: 2em;
-    font-size: emCalc(18);
-    a { color: $secondary-color; }
-    a:hover { color: $primary-color; }
+    z-index: 1;
+}
+
+.fancybox-next span,
+.fancybox-prev span {
+    width: 21px;
+    height: 28px;
+    visibility: visible;
+}
+
+.fancybox-next { 
+    span {
+        @include icons-sprite(next);
+    }
+    &:hover span { @include icons-sprite(next-hover); }
+}
+
+.fancybox-prev { 
+    span {
+        @include icons-sprite(prev);
+    }
+    &:hover span { @include icons-sprite(prev-hover); }
 }
 
 .fancybox-title {

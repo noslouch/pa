@@ -1,5 +1,15 @@
 "use strict";
 
+function checkScroll(){
+
+    function inspect(){
+        $('.site-header').toggleClass('shadow', window.scrollY > 0)
+        setTimeout(inspect, 150) 
+    }
+
+    setTimeout(inspect, 150) 
+}
+
 function isoLoader(id) {
     var $id = $(id),
         $img = $('.image.showcase img'),
@@ -41,6 +51,7 @@ function fbBulletBuilder(){
 
 function fbLoader(){
     $('.mockFancybox').fancybox({
+        margin: [75, 0, 75, 0],
         padding: 0,
         type : 'image',
         //nextEffect : 'fade',
@@ -56,7 +67,8 @@ function fbLoader(){
             }
         },
         tpl : {
-            wrap : '<div class="fancybox-wrap" tabIndex="-1"><h1 class="logo"><a href="/">Peter Arnell</a></h1><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div></div>'
+            wrap : '<div class="fancybox-wrap" tabIndex="-1"><h1 class="logo"><a href="/">Peter Arnell</a></h1><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div></div>',
+            closeBtn : '<a title="Close" class="close" href="javascript:;"></a>',
         },
         afterLoad : function() {
             if (!window.loaded) {
@@ -95,3 +107,24 @@ function fbLoader(){
     })
 }
 
+function Spinner(){
+    var self = this,
+        $loader = $('<div/>').addClass('loader').attr('id', 'loader'),
+        $t = $('<div/>').addClass('table'),
+        $tc = $('<div/>').addClass('table-cell')
+
+    $tc.append('<span/>')
+    $t.append($tc)
+    $loader.append($t)
+
+    this.detach = function() {
+        $loader.detach()
+    }
+
+    this.append = function() {
+        $('body').append($loader)
+    }
+
+    this.append()
+
+}

@@ -16,7 +16,6 @@ function stars(){
     var $container = $('<div>').addClass('starfield').attr('id','starfield')
 
     $container.on('finished', function(e){
-        $('.loader').hide()
         stagger()
     })
 
@@ -39,7 +38,7 @@ function stars(){
             left : HALF_WIDTH + randomRange(-HALF_WIDTH, HALF_WIDTH),
             top : HALF_HEIGHT + randomRange(-HALF_HEIGHT, HALF_HEIGHT)
         }).addClass('fast')
-        
+
         if (i === imageLimit - 1) { $container.trigger('finished') }
     }
 

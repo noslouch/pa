@@ -112,7 +112,6 @@
                             <p></p>
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/394/518" alt="" />
-                        <!--<img src="http://placekitten.com/802/518" alt="" />-->
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -147,7 +146,6 @@
                             <p></p>
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/394/518" alt="" />
-                        <!--<img src="http://placekitten.com/802/518" alt="" />-->
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -215,7 +213,6 @@
                             <p></p>
                         </div> <!-- .caption -->
                         <img src="http://placekitten.com/802/518" alt="" />
-                        <!--<img src="http://placekitten.com/394/518" alt="" />-->
                     </a>
                 </div> <!-- .wrapper -->
             </div> <!-- .thumb -->
@@ -718,4 +715,3 @@
         <?php } ?>
         </div> <!-- .masonry-grid -->
     </div> <!-- .showcase .image -->
-
