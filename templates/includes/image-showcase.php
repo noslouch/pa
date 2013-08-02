@@ -11,7 +11,7 @@
     
     if ($q == 'projects' || $q == 'mockProjectCovers') {
         $aTag = '<a href="/templates/project-single.php">';
-    } else if ($q == 'photo' || $q == 'mockPhotoCovers') {
+    } else if ($q == 'photography' || $q == 'mockPhotoCovers') {
         $aTag = '<a href="/templates/photo-single.php">';
     } else if ( $q == 'single-project' || $q == 'single-photo' ) {
         $aTag = '<a href="http://placekitten.com/1080/600" class="mockFancybox" rel="gallery" title="Caption goes here">';

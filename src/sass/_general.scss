@@ -36,9 +36,11 @@ iframe {
 }
 
 .page {
-    padding: 109px emCalc(45) emCalc(35);
+    padding: 85px emCalc(45) emCalc(35);
     height: 100%;
 }
+
+.page.projects { padding-top: 178px; }
 
 .site-header {
     @include grid-row(collapse);
@@ -62,16 +64,16 @@ iframe {
         font-size: emCalc(19);
         max-width: 589px;
         a:hover { color: $secondary-color; }
+
+        ul { 
+            @include inline-list;
+            float: left;
+            margin: 0;
+            > li { margin-left: 15px; }
+            li:first-child { margin-left: 0; }
+        }
     }
 
-    ul { 
-        @include inline-list;
-        float: left;
-        margin: 0;
-        > li { margin-left: 15px; }
-        li:first-child { margin-left: 0; }
-    }
-    
     // TO BE STYLED LATER
     .search-icon {
         margin-top: 7px;
@@ -205,7 +207,8 @@ iframe {
 .filter-bar {
     @include grid-row(collapse);
     text-align: right;
-    margin-bottom: 2em;
+    clear: both;
+    padding-top: 2em;
     background: white;
 
     button {
@@ -249,6 +252,7 @@ iframe {
         padding: 0.5em 1em 1em 0.75em;
         opacity: 0;
         z-index: -1;
+        pointer-events: none;
         background: white;
         @include transition(opacity 150ms ease);
         @include box-shadow(0 6px 10px rgba(0,0,0,0.25));
@@ -269,6 +273,7 @@ iframe {
         .wrapper {
             opacity: 1;
             z-index: 3;
+            pointer-events: auto;
         }
     }
     
@@ -281,6 +286,15 @@ iframe {
         text-align: left;
     }
 
+}
+
+.view-all {
+    @extend .filter;
+    h3 { padding: 0; }
+    a { 
+        display: block;
+        padding: 0.75em;
+    }
 }
 
 .views,
@@ -462,7 +476,7 @@ iframe {
 }
 
 .container {
-    @include grid-column(8.62, $float: right, $collapse: true);
+    @include grid-column(8.55, $float: right, $collapse: true);
 }
 
 // type

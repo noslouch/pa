@@ -159,8 +159,8 @@
                 </ul>
             </section>
             <?php } else if ($q == 'mockPressList') { 
-                    $_GET['template'] = 'press';
-                    include('filter-bar.php');
+                    //$_GET['template'] = 'press';
+                    //include('filter-bar.php');
             ?>
             <section>
                 <ul>

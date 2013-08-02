@@ -1,5 +1,5 @@
 <?php 
-    $_GET['template'] = 'projects';
+    $_GET['template'] = 'project-single';
     include("includes/header.php"); 
 ?>
 

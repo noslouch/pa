@@ -5,8 +5,8 @@
         <h2 class="visuallyhidden">Projects Home</h2>
 
         <?php 
-            $_GET['template'] = 'projects';
-            include("includes/filter-bar.php"); ?>
+            //$_GET['template'] = 'projects';
+            //include("includes/filter-bar.php"); ?>
 
         <div class="fixed covers-container" id="showcaseContainer">
         <?php //echo '<pre>'; print_r($GLOBALS); ?>

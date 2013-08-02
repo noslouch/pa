@@ -14,11 +14,13 @@ var filterBar = document.getElementById('filter-bar')
 var $filters = $('.filter a')
 
 $(filterBar).click(function(e){
-    if (e.target.nodeName === 'H3') {
+
+    if ( e.target.nodeName === 'H3' || e.target.nodeName === 'BUTTON' ) {
         $(filterBar).children('.open').removeClass('open')
         $(e.target.parentElement).addClass('open')
     }
-    if (!$(e.target).hasClass('filter-bar')){
+
+    if ( !$(e.target).hasClass('filter-bar') ){
         e.stopPropagation()
     }
 })
@@ -42,9 +44,11 @@ $filters.click(function(){
             $('#iso-grid').css('overflow', 'visible')
             $('#iso-grid').isotope({filter : f })
         })
+    } else {
+        $('#iso-grid').isotope({filter : f })
     }
 
-    $('#iso-grid').isotope({filter : f })
+    $(filterBar).children('.open').removeClass('open')
     return false
 })
 

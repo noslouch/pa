@@ -41,7 +41,8 @@ $column-gutter: emCalc(17);
         line-height: 1.2;
     }
 
-    button {
+    .button {
+        background: $light-gray;
 
         &:before {
             content: "<";

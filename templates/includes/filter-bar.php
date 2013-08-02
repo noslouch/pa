@@ -1,8 +1,8 @@
+<?php 
+    $q = $_GET['template'];
+    if ($q == 'projects') {
+?>
 <div class="filter-bar" id="filter-bar">
-    <?php 
-        $q = $_GET['template'];
-        if ($q == 'projects') {
-    ?>
     <div class="filter brand">
         <h3>Brand</h3>
         <div class="wrapper">
@@ -404,6 +404,7 @@
             </ul>
         </div> <!-- .wrapper -->
     </div> <!-- .views -->
+</div> <!-- .filter-bar -->
 
     <?php } else if ($q == 'photo' || $q == 'film') { ?>
     
@@ -422,6 +423,7 @@
 
     <?php } else if ( $q == 'press' ) { ?>
 
+<div class="filter-bar" id="filter-bar">
     <div class="jump-to alpha">
         <h3>Jump To</h3>
         <div class="wrapper">
@@ -489,6 +491,7 @@
         </div> <!-- .wrapper -->
     </div> <!-- .jump-to -->
 
+</div> <!-- .filter-bar -->
+
     <?php } ?>
 
-</div> <!-- .filter-bar -->

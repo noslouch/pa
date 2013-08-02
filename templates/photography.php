@@ -6,8 +6,8 @@
     <h2 class="visuallyhidden">Photography Home</h2>
 
     <?php 
-        $_GET['template'] = 'photo';
-        include("includes/filter-bar.php"); ?>
+        //$_GET['template'] = 'photo';
+        //include("includes/filter-bar.php"); ?>
 
     <div class="fixed covers-container" id="showcaseContainer">
         <!--

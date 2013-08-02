@@ -32,5 +32,6 @@
                     </ul>
                     <form class="search-form" action=""><input type="search" /></form>
                 </nav>
+                <?php include("filter-bar.php"); ?>
             </header> <!-- .site-header -->
-            <div class="page">
+            <div class="page <?php echo $t; ?>">

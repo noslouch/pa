@@ -47,23 +47,23 @@
         <p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>
         <div class="gallery">
             <div class="img">
-                <a href="#" id="mockFancybox">
+                <a href="http://placekitten.com/1168/817" class="mockFancybox" rel="gallery">
                     <img src="http://placekitten.com/168/217" alt="" />
                 </a>
             </div>
             <div class="img">
-                <a href="#" id="mockFancybox">
+                <a href="http://placekitten.com/918/767" class="mockFancybox" rel="gallery">
                     <img src="http://placekitten.com/168/217" alt="" />
                 </a>
             </div>
             <div class="img">
-                <a href="#" id="mockFancybox">
+                <a href="http://placekitten.com/1068/817" class="mockFancybox" rel="gallery">
                     <img src="http://placekitten.com/168/217" alt="" />
                 </a>
             </div>
         </div>
         <div class="wrapper">
-            <button type="button">View All Press</button>
+            <a href="/templates/profile.php?press" class="button">View All Press</a>
         </div>
     </article>
     <?php } else if ($q == 'mockArticle') { ?>
@@ -81,17 +81,17 @@
         <p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>
         <div class="gallery">
             <div class="img">
-                <a href="#" id="mockFancybox">
+                <a href="http://placekitten.com/968/717" class="mockFancybox" rel="gallery">
                     <img src="http://placekitten.com/168/217" alt="" />
                 </a>
             </div>
             <div class="img">
-                <a href="#" id="mockFancybox">
+                <a href="http://placekitten.com/868/617" class="mockFancybox" rel="gallery">
                     <img src="http://placekitten.com/168/217" alt="" />
                 </a>
             </div>
             <div class="img">
-                <a href="#" id="mockFancybox">
+                <a href="http://placekitten.com/768/717" class="mockFancybox" rel="gallery">
                     <img src="http://placekitten.com/168/217" alt="" />
                 </a>
             </div>
@@ -124,7 +124,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p> 
 
         <p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>
-        <button>View All Film</button>
+        <a href="/templates/film.php" class="button">View All Film</a>
     </article>
     <?php } ?>
 </div>

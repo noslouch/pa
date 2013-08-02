@@ -25,12 +25,22 @@
         padding-top: 1em;
         border-top: 1px solid $light-gray; }
 
-    button:before {
-        content: "<";
-        color: red;
-        display: inline;
-        vertical-align: text-top;
-        margin-right: 0.5em;
+    .button {
+        background: $light-gray;
+        
+        &:before {
+            content: "<";
+            color: red;
+            display: inline;
+            vertical-align: text-top;
+            margin-right: 0.5em;
+        }
+
+        &:hover {
+            background: $secondary-color;
+            color: white;
+            &:before { color: $primary-color; }
+        }
     }
 }
 

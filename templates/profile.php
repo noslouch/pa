@@ -21,6 +21,13 @@
             </ul>
         </div> <!-- .showcase-links -->
         <div class="fixed container" id="showcaseContainer">
+            <?php
+                if ( isset($_SERVER['QUERY_STRING']) ) {
+                $q = $_SERVER['QUERY_STRING'];
+                $_GET['template'] = $q;
+                include('includes/text-showcase.php');
+                }
+            ?>
 
         </div> <!-- .container -->
 
