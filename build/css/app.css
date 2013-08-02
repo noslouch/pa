@@ -2823,15 +2823,21 @@ button {
   right: 39px;
   z-index: 2;
 }
+/* line 353, ../../src/sass/_modules.scss */
+.fancybox-wrap .fancybox-skin {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
 
-/* line 355, ../../src/sass/_modules.scss */
+/* line 356, ../../src/sass/_modules.scss */
 .fancybox-nav {
   position: fixed;
   width: 20%;
   z-index: 0;
 }
 
-/* line 362, ../../src/sass/_modules.scss */
+/* line 363, ../../src/sass/_modules.scss */
 .fancybox-next span,
 .fancybox-prev span {
   width: 21px;
@@ -2839,27 +2845,27 @@ button {
   visibility: visible;
 }
 
-/* line 369, ../../src/sass/_modules.scss */
+/* line 370, ../../src/sass/_modules.scss */
 .fancybox-next span {
   background-position: 0 -159px;
   right: 39px;
 }
-/* line 373, ../../src/sass/_modules.scss */
+/* line 374, ../../src/sass/_modules.scss */
 .fancybox-next:hover span {
   background-position: 0 -131px;
 }
 
-/* line 377, ../../src/sass/_modules.scss */
+/* line 378, ../../src/sass/_modules.scss */
 .fancybox-prev span {
   background-position: 0 -187px;
   left: 39px;
 }
-/* line 381, ../../src/sass/_modules.scss */
+/* line 382, ../../src/sass/_modules.scss */
 .fancybox-prev:hover span {
   background-position: 0 -103px;
 }
 
-/* line 384, ../../src/sass/_modules.scss */
+/* line 385, ../../src/sass/_modules.scss */
 .fancybox-overlay .indicators {
   position: fixed;
   bottom: 2.6em;
@@ -2867,20 +2873,20 @@ button {
   height: auto;
   z-index: 8040;
 }
-/* line 391, ../../src/sass/_modules.scss */
+/* line 392, ../../src/sass/_modules.scss */
 .fancybox-overlay .indicators li {
   background: url(../../assets/img/small-mask.png);
   float: left;
   width: 17px;
   height: 12px;
 }
-/* line 398, ../../src/sass/_modules.scss */
+/* line 399, ../../src/sass/_modules.scss */
 .fancybox-overlay .indicators .dot {
   width: 12px;
   height: 12px;
 }
 
-/* line 404, ../../src/sass/_modules.scss */
+/* line 405, ../../src/sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;

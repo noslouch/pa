@@ -350,6 +350,7 @@ button {
         right: 39px;
         z-index: 2;
     }
+    .fancybox-skin { @include box-shadow(none); }
 }
 
 .fancybox-nav {
@@ -409,3 +410,4 @@ button {
     font-size: emCalc(13);
     font-weight: 500;
 }
+
