@@ -51,9 +51,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -63,9 +60,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/494x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -74,9 +68,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -85,9 +76,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -97,9 +85,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -108,9 +93,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -119,9 +101,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -131,9 +110,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -142,9 +118,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -153,9 +126,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -164,9 +134,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -176,9 +143,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -187,9 +151,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -198,9 +159,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/394x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -209,9 +167,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -223,9 +178,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/601x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -234,9 +186,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/501x309" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -245,9 +194,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/497x284" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -256,9 +202,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -267,9 +210,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -278,9 +218,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -289,9 +226,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -300,9 +234,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -312,9 +243,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -323,9 +251,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -334,9 +259,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -345,9 +267,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -356,9 +275,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -367,9 +283,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -378,9 +291,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -389,9 +299,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -400,9 +307,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -411,9 +315,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -422,9 +323,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -433,9 +331,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -444,9 +339,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -455,9 +347,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -466,9 +355,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/802x518" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -477,9 +363,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -488,9 +371,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -499,9 +379,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -510,9 +387,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -521,9 +395,6 @@
                 <div class="wrapper">
                     <?php 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -542,9 +413,6 @@
                         </div> <!-- .caption -->
                 <?php } else { 
                     echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                 <?php } ?>
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
@@ -559,9 +427,6 @@
                         </div> <!-- .caption -->
                 <?php } else { 
                     echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                 <?php } ?>
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
@@ -576,9 +441,6 @@
                         </div> <!-- .caption -->
                     <?php } else { 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                     <?php } ?>
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
@@ -593,9 +455,6 @@
                         </div> <!-- .caption -->
                     <?php } else { 
                         echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                     <?php } ?>
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
@@ -644,9 +503,6 @@
                         </div> <!-- .caption -->
                 <?php } else { 
                     echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                 <?php } ?>
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
@@ -655,9 +511,6 @@
             <div class="thumb sony technology communications">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -675,9 +528,6 @@
             <div class="thumb dkny apparel-fashion communications">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/197x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -685,9 +535,6 @@
             <div class="wide thumb pepsi food-beverage communications">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -695,9 +542,6 @@
             <div class="wide thumb dkny apparel-fashion product-design">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
@@ -705,9 +549,6 @@
             <div class="wide thumb sony technology publications">
                 <div class="wrapper">
                     <?php echo $aTag; ?>
-                        <div class="caption">
-                            <p></p>
-                        </div> <!-- .caption -->
                         <img src="http://placehold.it/401x259" alt="" />
                     </a>
                 </div> <!-- .wrapper -->
