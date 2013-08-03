@@ -16,6 +16,7 @@ a:focus { color: auto; }
 
 html, body {
     height: 100%;
+    min-width: 1000px;
 }
 
 .image.showcase img {
@@ -100,7 +101,7 @@ iframe {
         float: right;
         font-weight: 500;
         font-size: emCalc(19);
-        max-width: 589px;
+        width: 589px;
         a:hover { color: $secondary-color; }
 
         ul { 
@@ -531,6 +532,7 @@ iframe {
     @include grid-column(3);
     position: fixed;
     max-width: 298px;
+    min-width: 275px;
     padding-left: 0;
 
     // .type and .links are nested in .row defined in the markup
@@ -544,7 +546,8 @@ iframe {
 }
 
 .container {
-    @include grid-column(8.6, $float: right, $collapse: true);
+    @include grid-column(8.7, $float: right, $collapse: true);
+    max-width: 854px;
 }
 
 // type

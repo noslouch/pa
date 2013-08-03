@@ -119,8 +119,8 @@ $(function(){
 
 })
 
-$(window).load(function(){
+//$(window).load(function(){
     //$(iso).imagesLoaded( function(){
         isoLoader(iso)
     //})
-})
+//})

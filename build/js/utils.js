@@ -79,7 +79,7 @@ function fbLoader(){
         },
         tpl : {
             wrap : '<div class="fancybox-wrap" tabIndex="-1"><h1 class="logo"><a href="/">Peter Arnell</a></h1><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div></div>',
-            closeBtn : '<a title="Close" class="close" href="javascript:;"></a>',
+            closeBtn : '<a title="Close" class="close" href="javascript:;"><span></span></a>',
         },
         afterLoad : function() {
             if (!window.loaded) {

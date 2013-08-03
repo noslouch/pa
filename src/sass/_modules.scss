@@ -236,13 +236,19 @@ button {
     }
 }
 
-.close {
-    @include icons-sprite(close);
-    width: 11px;
-    height: 12px;
+.close { 
+    
+    span {
+        @include icons-sprite(close);
+        width: 11px;
+        height: 12px;
+        display: block;
+    }
     
     &:hover {
-        @include icons-sprite(close-hover);
+        span {
+            @include icons-sprite(close-hover);
+        }
     }
 }
 
@@ -346,9 +352,10 @@ button {
 
     .close {
         position: fixed;
-        top: 39px;
-        right: 39px;
+        top: 0;
+        right: 0;
         z-index: 2;
+        padding: 39px;
     }
     .fancybox-skin { @include box-shadow(none); }
 }
