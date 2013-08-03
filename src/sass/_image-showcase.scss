@@ -28,10 +28,22 @@
 
     .rtl & .thumb a { height: 323px; }
 
-    .fixed & .thumb a {width: 164px; margin-left: 0;}
+    .fixed & .thumb { 
+        margin-left: 0;
+
+        a { 
+            width: 164px;
+        } 
+    }
     .fixed.rtl & .thumb a { width: 164px*1.5; }
 
-    .fixed & .wide.thumb a { width: 334px; margin-left: 0;}
+    .fixed & .wide.thumb { 
+        a { 
+            width: 334px; 
+        }
+        margin-left: 0;
+    }
+
     .fixed.rtl & .wide.thumb a { width: 334px*1.5; }
 
     .thumb:hover {
