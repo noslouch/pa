@@ -71,6 +71,8 @@
 
 .covers-container {
     @include grid-row(collapse);
+    max-width: 1190px;
+    margin: 0 auto;
 }
 
 

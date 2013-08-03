@@ -3,7 +3,7 @@
 function checkScroll(){
 
     function inspect(){
-        $('.site-header').toggleClass('shadow', window.scrollY > 0)
+        $('.header-wrapper').toggleClass('shadow', window.scrollY > 0)
         setTimeout(inspect, 150) 
     }
 

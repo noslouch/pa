@@ -99,9 +99,6 @@ $('.close').click(function(e){
 
 var iso = document.getElementById('iso-grid')
 
-$(iso).imagesLoaded( function(){
-    isoLoader(iso)
-})
 
 $('time').each(function(){
     // to be implemented
@@ -119,4 +116,11 @@ $(function(){
     $('.film-row').imagesLoaded(function(){
         $(this).addClass('loaded')
     })
+
+})
+
+$(window).load(function(){
+    //$(iso).imagesLoaded( function(){
+        isoLoader(iso)
+    //})
 })

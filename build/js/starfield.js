@@ -23,7 +23,7 @@ function stars(){
         var i = 0;
 
         function go(){
-            var $a = $('<a/>').attr('href', '/templates/project-single.php').append(images[i])
+            var $a = $('<a/>').attr('href', '/templates/project-single.php').append(images[i]).addClass('fast')
             $a.appendTo($container)
             setTimeout(go, 550)
             i++
@@ -38,7 +38,7 @@ function stars(){
         $(images[i]).css({
             left : HALF_WIDTH + randomRange(-HALF_WIDTH, HALF_WIDTH),
             top : HALF_HEIGHT + randomRange(-HALF_HEIGHT, HALF_HEIGHT)
-        }).addClass('fast')
+        })
 
         if (i === imageLimit - 1) { $container.trigger('finished') }
     }
