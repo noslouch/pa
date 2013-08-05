@@ -6,8 +6,9 @@
 
 $s = 'PETER ARNELL';
 
+$ext = ($_SERVER['SERVER_ADDR'] == '127.0.0.1') ? '.local' : '.com';
 $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$base_url .= "://".$_SERVER['HTTP_HOST'];
+$base_url .= "://".$_SERVER['HTTP_HOST'].$ext;
 $admin_url  = $base_url . '/admin.php';
 
 $env = strpos($base_url, 'heroku') ? 'heroku' : 'dev';
@@ -32,7 +33,7 @@ $config['site_url'] = $base_url;
 $config['server_path'] = FCPATH;
 $config['cp_url'] = $admin_url;
 
-$config['site_label'] = $e.' - '.$s;
+//$config['site_label'] = $e.' - '.$s;
 $config['cookie_prefix'] = '';
 
 $config['theme_folder_url'] = $config['site_url']."/themes/";
@@ -69,19 +70,19 @@ $config['time_reference'] = 'local';
 
 /* Universal database connection settings
 -------------------------------------------------------------------*/
-$active_group = $env;
+$active_group = $ext;
 $active_record = TRUE;
 
-$db['dev']['hostname'] =  'us-cdbr-east-04.cleardb.com';
-$db['dev']['username'] =  'b86903d8fe453c';
-$db['dev']['password'] =  '4376d9be';
-$db['dev']['database'] = 'heroku_f0ff3901de97924';
-$db['dev']['dbprefix'] = 'exp_';
-$db['heroku']['hostname'] = 'us-cdbr-east-04.cleardb.com';
-$db['heroku']['username'] = 'bea2dd643b849b';
-$db['heroku']['password'] = 'ed8c3ec7';
-$db['heroku']['database'] = 'heroku_a097090bd82144f';
-$db['heroku']['dbprefix'] = "exp_";
+$db['.local']['hostname'] =  'us-cdbr-east-04.cleardb.com';
+$db['.local']['username'] =  'b86903d8fe453c';
+$db['.local']['password'] =  '4376d9be';
+$db['.local']['database'] = 'heroku_f0ff3901de97924';
+$db['.local']['dbprefix'] = 'exp_';
+$db['.com']['hostname'] = 'us-cdbr-east-04.cleardb.com';
+$db['.com']['username'] = 'bea2dd643b849b';
+$db['.com']['password'] = 'ed8c3ec7';
+$db['.com']['database'] = 'heroku_a097090bd82144f';
+$db['.com']['dbprefix'] = "exp_";
 
 $db[$active_group]['dbdriver'] = "mysql";
 $db[$active_group]['pconnect'] = FALSE;
