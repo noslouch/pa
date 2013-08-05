@@ -1,5 +1,19 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+$s = 'PETER ARNELL';
+$config['env'] = 'dev';
+
+$base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+$base_url .= "://".$_SERVER['HTTP_HOST'];
+
+if ( strpos($base_url, 'local') ) {
+    $e = 'DEVELOP';
+} else if ( strpos($base_url, 'staging') ) {
+    $e = 'STAGING';
+} else {
+    $e = '';
+}
+
 /*
 |--------------------------------------------------------------------------
 | ExpressionEngine Config Items
@@ -18,10 +32,11 @@ $config['debug'] = '1';
 $config['doc_url'] = 'http://ellislab.com/expressionengine/user-guide/';
 $config['is_system_on'] = 'y';
 $config['allow_extensions'] = 'y';
-$config['site_label'] = 'STAGING - Peter Arnell';
+
+$config['site_label'] = $e.' - '.$s;
 $config['cookie_prefix'] = '';
 
-$config['site_url'] = "http://".$_SERVER['HTTP_HOST'];
+$config['site_url'] = $base_url;
 $config['server_path'] = FCPATH;
 $config['cp_url'] = $config['site_url'].'/admin.php';
 $config['theme_folder_url'] = $config['site_url']."/themes/";
@@ -29,6 +44,13 @@ $config['theme_folder_path'] = $config['server_path']."/themes/";
 $config['save_tmpl_files'] = "y";
 $config['tmpl_file_basepath'] = $config['server_path']."/templates/";
 
+$config['avatar_url'] = $base_url."/uploads/system/avatars/";
+$config['avatar_path'] = $config['server_path']."/uploads/system/avatars/";
+$config['photo_url'] = $base_url."/uploads/system/member_photos/";
+$config['photo_path'] = $config['server_path']."/uploads/system/member_photos/";
+$config['sig_img_url'] = $base_url."/uploads/system/signature_attachments/";
+$config['sig_img_path'] = $config['server_path']."/uploads/system/signature_attachments/";
+$config['prv_msg_upload_path'] = $config['server_path']."/uploads/system/pm_attachments/";
 
 // END EE config items
 
