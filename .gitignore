@@ -2,8 +2,6 @@
 *.swp
 .sass-cache
 .DS_Store
-
-
 system/expressionengine/cache/*
 php_files
 #system/expressionengine/config/database.php
