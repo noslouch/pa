@@ -10,15 +10,11 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" :
 $base_url .= "://".$_SERVER['HTTP_HOST'];
 $admin_url  = $base_url . '/admin.php';
 
-$env = strpos($base_url, 'heroku') ? 'heroku' : 'dev';
+// staging and production share the same DB, develop on separate DB
+//$env = strpos($base_url, 'heroku') ? 'heroku' : 'dev';
 
-if ( strpos($base_url, 'local') ) {
-    $e = 'DEVELOP';
-} else if ( strpos($base_url, 'staging') ) {
-    $e = 'STAGING';
-} else {
-    $e = '';
-}
+// develop and staging share the same DB, production on separate DB
+$env = (( strpos($base_url, 'local') || strpos($base_url, 'staging') ) ? 'dev' : 'heroku');
 
 $config['app_version'] = '261';
 $config['install_lock'] = "";
@@ -33,7 +29,6 @@ $config['server_path'] = FCPATH;
 $config['cp_url'] = $admin_url;
 $config['site_index'] = '/index.php';
 
-$config['site_label'] = $e.' - '.$s;
 $config['cookie_prefix'] = '';
 
 $config['theme_folder_url'] = $config['site_url']."/themes/";
