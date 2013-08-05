@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-    <p>hello world</p>
-</body>
-</html>
+<?php 
+
+    //$_GET['template'] = 'home';
+    //include("templates/includes/header.php"); 
+?>
+
+{embed="includes/header"}
+
+    <h2 class="visuallyhidden">Home</h2>
+    <?php //include("templates/includes/quotes.php"); ?>
+    {embed="includes/quotes"}
+
+{embed="includes/footer"}
+
+<?php //include("templates/includes/footer.php"); ?>
