@@ -6,3 +6,4 @@
         <?php include("templates/includes/quotes.php"); ?>
 
 <?php include("templates/includes/footer.php"); ?>
+ 
