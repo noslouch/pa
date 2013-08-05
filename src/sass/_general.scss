@@ -158,6 +158,8 @@ iframe {
     @include translate3d(0,-24%,0);
     @include transition(transform 150ms ease);
 
+    margin: 0 auto;
+
     &.open { 
         @include translate3d(0,-100%,0);
         h2:before { content:"-"; }
