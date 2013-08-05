@@ -1,0 +1,107 @@
+[   
+    {
+        "id": "1",
+        "title": "Pepsi Branding",
+        "date": "1123214400000",
+        "thumbnail": "http://placehold.it/80x45",
+        "cover" : { 
+            "src": "http://placehold.it/164x216",
+            "orientation" : "vertical",
+            "caption" : ""
+        },
+        "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.",
+        "brands_tags": ["Pepsi"],
+        "industry_tags": ["Food + Beverage"],
+        "type_tags" : ["Communications", "Advertising"],
+        "showcases": {
+            "videos": [
+                {
+                    "video_title": "Pepsi Commercial",
+                    "video_url": "www.youtube.com/embed/po0jY4WvCIc",
+                    "video_caption": "Optional Caption"
+                }
+            ],
+            "galleries": [ 
+                {
+                    "gallery_title" : "Pepsi Ads",
+                    "images" : [
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        },
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        },
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        },
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        },
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        }
+                    ]
+                },
+                {
+                    "gallery_title" : "Pepsi Logo Evolution",
+                    "images" : [
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        },
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        },
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        },
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        },
+                        {
+                            "thumb_url": "http://placehold.it/394x518",
+                            "large_url": "http://placehold.it/1080x600",
+                            "caption": ""
+                        }
+                    ]
+                }
+            ],
+            "info": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p><p>In porttitor eleifend nisl sed dignissim. Quisque lacinia nec diam eget mattis. Mauris sed venenatis turpis. Donec facilisis sem augue, vitae elementum dui tempor eu. Nullam condimentum mauris auctor erat aliquet bibendum nec quis urna. Ut id mauris a nulla elementum condimentum.</p><p>Mauris faucibus eros varius nunc gravida bibendum. Morbi egestas eget sapien pellentesque tristique. Fusce sit amet mollis justo. Duis nec nisi dui. Ut pulvinar, neque quis aliquet auctor, lectus diam tempor sem, sit amet ullamcorper purus ante a justo. In euismod augue lobortis risus venenatis accumsan.</p><p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi lobortis, dui eget bibendum adipiscing, magna est placerat purus, nec malesuada ligula tortor vitae urna. Aliquam tristique neque leo, eu ultricies elit dignissim eget. Sed imperdiet leo at pellentesque condimentum.</p><p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>",
+            "related": [
+                { 
+                    "text" : "Related Project",
+                    "href" : ""
+                },
+                {
+                    "text" : "External Link",
+                    "href" : "http://google.com"
+                },
+                {
+                    "text" : "Press Title",
+                    "href" : ""
+                },
+                {
+                    "text" : "Photo Gallery",
+                    "href" : ""
+                }
+            ]
+        }
+    }
+]
