@@ -2,6 +2,7 @@
     {
         "id": "1",
         "title": "Pepsi Branding",
+        "url" : "pepsi-branding",
         "date": "1123214400000",
         "thumbnail": "http://placehold.it/80x45",
         "cover" : { 
@@ -106,6 +107,7 @@
     {
         "id": "2",
         "title": "DKNY",
+        "url" : "dkny",
         "date": "1361750400000",
         "thumbnail": "http://placehold.it/80x45",
         "cover" : { 
