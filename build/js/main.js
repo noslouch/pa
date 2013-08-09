@@ -69,20 +69,6 @@ $('#titleView').click(function(e){
     e.stopPropagation()
 })
 
-/*
-$('#mockprojectlist').click(function(e){
-    e.preventdefault()
-    $(this).addclass('active')
-    $('#mockprojectcovers').removeclass('active')
-})
-
-$('#mockprojectcovers').click(function(e){
-    e.preventdefault()
-    $(this).addclass('active')
-    $('#mockprojectlist').removeclass('active')
-})
-*/
-
 $('#views').click(function(e){
     e.preventDefault()
     $(e.delegateTarget).find('.active').removeClass('active')

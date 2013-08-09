@@ -1,4 +1,4 @@
-/*global SingleView, CoverView*/
+/*global SingleView, ImageShowcase, Header*/
 "use strict";
 
 var PA = PA || {}
@@ -6,39 +6,72 @@ var PA = PA || {}
 var Router = Backbone.Router.extend({
 
     routes : {
-        "projects" : "projectLoader",
-        "projects/:title" : "singleProject",
-        "photography" : "photoLoader",
-        "photograhy/:title" : "singlePhoto",
-        "film" : "filmLoader",
-        "film/:title" : "filmSingle",
-        "profile" : "profileLoader",
-        "profile/:title" : "profileSingle",
-        "contact" : "contactLoader",
-        "stream" : "streamLoader"
+        "/" : "homeLoader",
+        "projects" : "projects",
+        "projects/:title" : "viewer",
+        "photography" : "photography",
+        "photograhy/:title" : "viewer",
+        "film" : "film",
+        "film/:title" : "viewer",
+        "profile" : "profile",
+        "profile/:title" : "viewer",
+        "contact" : "contact",
+        "stream" : "stream"
     },
 
-    singleProject : function(title) { 
-        $('#showcaseContainer').remove()
-        var s = new SingleView({ model : projects.findWhere({ url : title }) })
-    },
+    viewer : function(title) {
+        if (PA.projects.length === 0) {
+            // Projects haven't loaded yet because
+            // A) navigate to direct URL
+            // B) navigate from a different page section
 
-    projectLoader : function() {
-        $.get('/fixtures/projectFixture').done(function(d) {
-            _.each(d, function(e, i, l){
-                projects.add( new Project(e) )
+            $.get('/fixtures/projectFixture').done(function(d) {
+                var project = new PA.Project( _.findWhere(d, {url : title}) )
+                PA.singleProject = new SingleView({ model : project })
             })
-            var c = new CoverView({
-                collection : projects,
-                container : '#showcaseContainer'
+
+        } else {
+            // Projects are loaded
+
+            var p = PA.projects.findWhere({ url : title })
+            PA.singleProject = new SingleView({ model : p })
+        }
+    },
+
+    projects : function() {
+        $.get('/fixtures/projectFixture').done(function(d) {
+
+            PA.projects = new PA.Projects(d)
+            PA.coverImages = new PA.CoverGallery( PA.projects.pluck('coverImage'))
+            PA.showcase = new PA.ShowcaseContainer()
+            PA.showcase.render({
+                collection : PA.coverImages,
+                cover : true,
+                type : 'image'
             })
         })
+    },
+
+    film : function() {
+        $('.page').append('film')
+    },
+
+    photography : function() {
+        $('.page').append('photography')
+    },
+
+    profile : function() {
+        $('.page').append('profile')
+    },
+
+    contact : function() {
+        $('.page').append('contact')
+    },
+
+    stream : function() {
+        $('.page').append('stream')
     }
 })
 
 PA.router = new Router()
-PA.router.on('route', function(){
-    console.dir(arguments)
-})
-
 Backbone.history.start({pushState: true, root: "/"})

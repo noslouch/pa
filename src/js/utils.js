@@ -60,7 +60,7 @@ function fbBulletBuilder(){
 }
 
 function fbLoader(){
-    $('.mockFancybox').fancybox({
+    $('.fancybox').fancybox({
         margin: [75, 0, 75, 0],
         padding: 0,
         type : 'image',

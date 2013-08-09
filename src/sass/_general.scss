@@ -548,8 +548,14 @@ iframe {
 }
 
 .container {
-    @include grid-column(8.7, $float: right, $collapse: true);
-    max-width: 854px;
+    @include grid-row(collapse);
+    max-width: 1190px;
+    margin: 0 auto;
+
+    .viewer & {
+        @include grid-column(8.7, $float: right, $collapse: true);
+        max-width: 854px;
+    }
 }
 
 // type

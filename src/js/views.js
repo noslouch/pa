@@ -1,28 +1,42 @@
 "use strict";
 
-var coverTemplate = _.template('<div class="wrapper"><a href="/projects/<%= url %>"><% if (cover.caption) { %><div class="caption"><p><%= cover.caption %></p></div><% } %><img src="<%= cover.src %>"></a></div>')
+var PA = PA || {}
 
-var galleryTemplate = _.template('<div class="thumb <%= orientation %>"><div class="wrapper"><a href="<%= large_url %>" class="fancybox" rel="gallery" <% if (caption) { %> title="<%= caption %>"><div class="caption"><p><%= caption %></p></div><% } else { %>><% } %><img src="<%= thumb_url %>"></a></div></div>')
+// Site-Wide Header
 
-var GalleryView = Backbone.View.extend({
-    tagName : "div",
-    className : "clearfix isotope-grid showcase image",
-    id : "iso-grid",
-    template : galleryTemplate,
-    render : function(){
-
+PA.header = new Backbone.View({
+    el : ".site-header nav",
+    events : {
+        click : function(e){
+            e.preventDefault()
+            PA.router.navigate(e.target.pathname, {trigger: true})
+        }
     }
 })
 
+// Base Template
 
-var CoverThumb = Backbone.View.extend({
+
+var thumbTemplate = _.template('<div class="wrapper"><a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %>><% if (caption) { %> <div class="caption"><p><%= caption %></p></div><% } %><img src="<%= thumb %>"></a></div>')
+
+
+var Thumb = Backbone.View.extend({
     tagName : "div",
-    template : coverTemplate,
+    template : thumbTemplate,
     className : function() {
-        return "thumb " + this.model.get('allTags').join(' ') + (this.model.get('cover').wide ? " wide" : "")
+        if (this.options.cover) {
+            return "thumb " + this.model.get('tags').join(' ') + (this.model.get('wide') ? " wide" : "")
+        } else {
+            return "thumb" + (this.model.get('wide') ? " wide" : "")
+        }
     },
     render : function(){
-        this.$el.html( this.template(this.model.attributes) )
+        this.$el.html( this.template({
+            url : this.model.get('url'),
+            cover : this.options.cover,
+            caption : this.model.get('caption'),
+            thumb : this. model.get('thumb')
+        }) )
         return this
     },
     events : {
@@ -34,42 +48,112 @@ var CoverThumb = Backbone.View.extend({
    }
 })
 
-var CoverView = Backbone.View.extend({
+var ImageShowcase = Backbone.View.extend({
     tagName : "div",
-    className : "clearfix isotope-grid showcase image",
+    className : function() {
+        var classes = ["isotope-grid", "showcase", "image"]
+        if (this.options.cover) {
+            return classes.concat(["fixed"]).join(' ')
+        } else if (this.collection.length < 5) {
+            return classes.concat(["rtl"]).join(' ')
+        } else {
+            return classes.join(' ')
+        }
+    },
     id : "iso-grid",
-    render : function() {
-        var projects = this.collection.models
-        _.each(projects, function(project) {
-            var coverThumb = new CoverThumb({ model : project })
-            this.$el.append( coverThumb.render().el )
+    render : function(){
+        this.collection.forEach(function(image) {
+            var thumb = new Thumb({ 
+                model : image,
+                cover : this.options.cover ? true : false
+            })
+            this.$el.append( thumb.render().el )
         }, this)
     },
     initialize: function() {
-        this.render()
-        this.$el.appendTo( this.options.container )
-        isoLoader( "#" + this.id )
+        this.$el.html( this.render() )
+        var $el = this.$el,
+            $img = $el.find('img'),
+            rtl = $el.hasClass('rtl'),
+            fixed = $el.hasClass('fixed')
+
+        $el.imagesLoaded( function() {
+            $el.isotope({
+                transformsEnabled: !rtl,
+                itemSelector: '.thumb',
+                layoutMode : fixed ? 'masonry' : 'fitRows',
+                masonry : {
+                    gutterWidth: 7,
+                    columnWidth: rtl ? 164*1.5 : 164
+                },
+                onLayout : function() { 
+                    $(this).css('overflow', 'visible')
+                }
+            })
+
+            $img.addClass('loaded')
+        })
     }
 })
 
-var SingleView = Backbone.View.extend({ 
+PA.ShowcaseContainer = Backbone.View.extend({
+    tagName : 'div',
+    id : 'showcaseContainer',
+    className : 'container',
+    render : function(options){
+        switch (options.type) {
+            case 'image':
+                this.$el.html( new ImageShowcase(options).el )
+                fbLoader()
+                break;
+            case 'list':
+                //this.$el.html( new ListShowcase(options).el )
+                break;
+            case 'text':
+                //this.$el.html( new TextShowcase(options).el )
+                break;
+            default:
+                break;
+        }
+
+        if (options.cover) {
+            $('.page').html(this.el)
+        }
+    }
+})
+
+var SingleView = Backbone.View.extend({
+    tagName : "div",
     className : "project viewer",
-    render: function() { 
-        this.$el.html( this.template( this.model.attributes ) ) 
-    }, 
-    initialize : function() { 
+    render: function() {
+        var attr = this.model.attributes
+        this.$el.html( this.template( {
+            title : attr.title,
+            date : attr.date,
+            summary : attr.summary,
+            showcases : this.model.get('showcases'),
+            brand_tags : attr.brand_tags,
+            industry_tags : attr.industry_tags,
+            type_tags : attr.type_tags
+        }))
+    },
+    initialize : function() {
         this.template = _.template( $('#single-project').html() )
         this.render()
-        this.$el.appendTo('.page')
-    }
-})
-
-var Header = new Backbone.View({
-    el : ".site-header nav",
+        $('.page').html(this.el)
+    },
     events : {
-        click : function(e){
-            e.preventDefault()
-            PA.router.navigate(e.target.pathname, {trigger: true})
+        "click .showcase-links a" : function(e) {
+            var showcaseModel = this.model.get('showcases').get(e.target.id)
+            if (showcaseModel.get('type') === 'gallery') {
+                var gallery = showcaseModel.get('gallery')
+                PA.showcase = new PA.ShowcaseContainer({el : "#showcaseContainer"})
+                PA.showcase.render({
+                    collection : gallery,
+                    cover : false,
+                    type: 'image'
+                })
+            }
         }
     }
 })

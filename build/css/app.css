@@ -3206,31 +3206,31 @@ button {
   height: 216px;
 }
 /* line 29, ../../src/sass/_image-showcase.scss */
-.rtl .isotope-grid .thumb a {
+.isotope-grid.rtl .thumb a {
   height: 323px;
 }
 /* line 31, ../../src/sass/_image-showcase.scss */
-.fixed .isotope-grid .thumb {
+.isotope-grid.fixed .thumb {
   margin-left: 0;
 }
 /* line 34, ../../src/sass/_image-showcase.scss */
-.fixed .isotope-grid .thumb a {
+.isotope-grid.fixed .thumb a {
   width: 164px;
 }
 /* line 38, ../../src/sass/_image-showcase.scss */
-.fixed.rtl .isotope-grid .thumb a {
+.isotope-grid.fixed.rtl .thumb a {
   width: 246px;
 }
 /* line 40, ../../src/sass/_image-showcase.scss */
-.fixed .isotope-grid .wide.thumb {
+.isotope-grid.fixed .wide.thumb {
   margin-left: 0;
 }
 /* line 41, ../../src/sass/_image-showcase.scss */
-.fixed .isotope-grid .wide.thumb a {
+.isotope-grid.fixed .wide.thumb a {
   width: 334px;
 }
 /* line 47, ../../src/sass/_image-showcase.scss */
-.fixed.rtl .isotope-grid .wide.thumb a {
+.isotope-grid.fixed.rtl .wide.thumb a {
   width: 501px;
 }
 /* line 49, ../../src/sass/_image-showcase.scss */
@@ -3281,25 +3281,6 @@ button {
 .thumb img {
   max-height: 100%;
   max-width: 100%;
-}
-
-/* line 88, ../../src/sass/_image-showcase.scss */
-.covers-container {
-  width: 100%;
-  margin: 0;
-  max-width: 80em;
-  *zoom: 1;
-  max-width: 1190px;
-  margin: 0 auto;
-}
-/* line 121, ../../../../../Ruby/Gems/1.8/gems/zurb-foundation-4.3.0/scss/foundation/components/_global.scss */
-.covers-container:before, .covers-container:after {
-  content: " ";
-  display: table;
-}
-/* line 122, ../../../../../Ruby/Gems/1.8/gems/zurb-foundation-4.3.0/scss/foundation/components/_global.scss */
-.covers-container:after {
-  clear: both;
 }
 
 /* line 7, ../../src/sass/_text-showcase.scss */
@@ -4345,6 +4326,24 @@ iframe {
 
 /* line 550, ../../src/sass/_general.scss */
 .container {
+  width: 100%;
+  margin: 0;
+  max-width: 80em;
+  *zoom: 1;
+  max-width: 1190px;
+  margin: 0 auto;
+}
+/* line 121, ../../../../../Ruby/Gems/1.8/gems/zurb-foundation-4.3.0/scss/foundation/components/_global.scss */
+.container:before, .container:after {
+  content: " ";
+  display: table;
+}
+/* line 122, ../../../../../Ruby/Gems/1.8/gems/zurb-foundation-4.3.0/scss/foundation/components/_global.scss */
+.container:after {
+  clear: both;
+}
+/* line 555, ../../src/sass/_general.scss */
+.viewer .container {
   position: relative;
   padding-left: 0;
   padding-right: 0;
@@ -4353,55 +4352,55 @@ iframe {
   max-width: 854px;
 }
 
-/* line 558, ../../src/sass/_general.scss */
+/* line 564, ../../src/sass/_general.scss */
 .details header {
   margin-bottom: 1.75em;
 }
-/* line 559, ../../src/sass/_general.scss */
+/* line 565, ../../src/sass/_general.scss */
 .details h3, .details time {
   font-size: 1.1875em;
 }
-/* line 560, ../../src/sass/_general.scss */
+/* line 566, ../../src/sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.5em;
   line-height: 0.7;
 }
-/* line 566, ../../src/sass/_general.scss */
+/* line 572, ../../src/sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 571, ../../src/sass/_general.scss */
+/* line 577, ../../src/sass/_general.scss */
 .details p {
   font-size: 1.1875em;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 578, ../../src/sass/_general.scss */
+/* line 584, ../../src/sass/_general.scss */
 .showcase-links {
   font-size: 1.1875em;
   font-weight: 500;
   line-height: 1.2;
 }
 
-/* line 584, ../../src/sass/_general.scss */
+/* line 590, ../../src/sass/_general.scss */
 .tags {
   font-size: 0.8125em;
 }
 
-/* line 588, ../../src/sass/_general.scss */
+/* line 594, ../../src/sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 592, ../../src/sass/_general.scss */
+/* line 598, ../../src/sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 598, ../../src/sass/_general.scss */
+/* line 604, ../../src/sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }

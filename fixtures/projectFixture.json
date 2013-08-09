@@ -2,11 +2,12 @@
     {
         "id": "1",
         "title": "Pepsi Branding",
-        "url" : "pepsi-branding",
         "date": "1123214400000",
-        "thumbnail": "http://placehold.it/80x45",
+        "thumb": "http://placehold.it/80x45",
+        "url" : "pepsi-branding",
         "cover" : { 
-            "src": "http://placehold.it/164x216",
+            "thumb": "http://placehold.it/164x216",
+            "url" : "pepsi-branding",
             "wide" : "",
             "caption" : ""
         },
@@ -26,28 +27,28 @@
                 "title" : "Pepsi Ads",
                 "images" : [
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     }
                 ]
@@ -57,28 +58,28 @@
                 "title" : "Pepsi Logo Evolution",
                 "images" : [
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     }
                 ]
@@ -88,30 +89,31 @@
         "relatedLinks": [
             { 
                 "text" : "Related Project",
-                "href" : ""
+                "url" : ""
             },
             {
                 "text" : "External Link",
-                "href" : "http://google.com"
+                "url" : "http://google.com"
             },
             {
                 "text" : "Press Title",
-                "href" : ""
+                "url" : ""
             },
             {
                 "text" : "Photo Gallery",
-                "href" : ""
+                "url" : ""
             }
         ]
     },
     {
         "id": "2",
         "title": "DKNY",
-        "url" : "dkny",
         "date": "1361750400000",
-        "thumbnail": "http://placehold.it/80x45",
+        "thumb": "http://placehold.it/80x45",
+        "url" : "dkny",
         "cover" : { 
-            "src": "http://placehold.it/164x334",
+            "thumb": "http://placehold.it/164x334",
+            "url" : "dkny",
             "wide" : "true",
             "caption" : ""
         },
@@ -131,28 +133,28 @@
                 "title" : "DKNY Ads",
                 "images" : [
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     }
                 ]
@@ -162,28 +164,28 @@
                 "title" : "DKNY Advertising Campaign",
                 "images" : [
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb_url": "http://placehold.it/394x518",
-                        "large_url": "http://placehold.it/1080x600",
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
                         "caption": ""
                     }
                 ]

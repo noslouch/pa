@@ -8,15 +8,8 @@
       
 
 
-        <div class="fixed covers-container" id="showcaseContainer">
-        
-        <!--
-            This container will start with the starfield of project covers (randomly chosen).
-            Based on user choice, these contents can be replaced with an image showcase or list showcase (double wide).
-        -->
 
-        </div> 
-
+        </div> <!-- .page -->
         <script type="text/template" id="single-project">
             <div class="details">
                 <header>
@@ -25,9 +18,9 @@
                 </header>
                 <p class="summary"><%= summary %></p> <!-- .summary -->
                 <ul class="showcase-links">
-                    <% _.each(showcases, function(showcase) { %>
-                        <li><%= showcase.title %></li>
-                    <% }) %>
+                    <% showcases.forEach(function(showcase) { 
+                        print('<li><a href="#" id="'+ showcase.cid +'">'+ showcase.get('title') + '</a></li>')
+                    }) %>
                     <li><a href="#" id="mockInfo">Info</a></li>
                     <li><a href="#" id="mockRelated">Related</a></li>
                 </ul> <!-- .showcase-links -->
