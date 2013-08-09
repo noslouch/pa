@@ -1,11 +1,16 @@
             </div> <!-- .page -->
         </div> <!-- .outer-wrapper -->
         
-        <?php if ( $_GET['template'] == 'home' ) {
-            include("templates/includes/noteworthy.php");
-        } ?>
+        <?php if ( $_GET['template'] == 'home' ) { ?>
+            {embed="includes/noteworthy"}
+            <!--include("templates/includes/noteworthy.php");-->
+        <?php } ?>
 
+        <script src="{site_url}/lib/vendor/underscore.js"></script>
+        <script src="{site_url}/lib/vendor/json2.js"></script>
         <script src="{site_url}/lib/vendor/jquery.js"></script>
+        <script src="{site_url}/lib/vendor/backbone.js"></script>
+        
         <script src="{site_url}/lib/isotope/jquery.isotope.min.js"></script>
         <script src="{site_url}/lib/fancybox/jquery.fancybox.js"></script>
 
@@ -39,9 +44,14 @@
                 default:
         ?>
         <script src="{site_url}/build/js/iso.js"></script>
-        <?php break; } ?>
+        <?php 
+                break; 
+        } ?>
 
         <script src="{site_url}/build/js/mockClicks.js"></script>
+        <script src="{site_url}/build/js/models.js"></script>
+        <script src="{site_url}/build/js/views.js"></script>
+        <script src="{site_url}/build/js/routes.js"></script>
         <script src="{site_url}/build/js/main.js"></script>
 
 

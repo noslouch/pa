@@ -20,6 +20,11 @@
     "fbLoader" : true,
     "stars" : true,
     "checkScroll": true,
-    "makeTime" : true
+    "Backbone" : true,
+    "makeTime" : true,
+    "projects" : true,
+    "Project" : true,
+    "PA" : true,
+    "_" : true
   }
 }

@@ -1,7 +1,9 @@
 <?php
     $_GET['template'] = 'film';
-    include("includes/header.php"); 
+    //include("includes/header.php"); 
 ?>
+
+{embed="includes/header" nav="film"}
     <h2 class="visuallyhidden">Film Home</h2>
 
     <?php
@@ -12,4 +14,6 @@
         <?php include("includes/film-grid.php"); ?>
     </div>
 
-<?php include("includes/footer.php"); ?>
+{embed="includes/footer"}
+
+<?php //include("includes/footer.php"); ?>

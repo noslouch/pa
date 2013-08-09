@@ -1,7 +1,5 @@
-<?php 
-    $q = $_GET['template'];
-    if ($q == 'projects') {
-?>
+{if embed:nav == 'projects' && segment_2 =='' }
+
 <div class="filter-bar" id="filter-bar">
     <div class="filter brand">
         <h3>Brand</h3>
@@ -406,22 +404,7 @@
     </div> <!-- .views -->
 </div> <!-- .filter-bar -->
 
-    <?php } else if ($q == 'photo' || $q == 'film') { ?>
-    
-    <!--
-    <div class="wrapper">
-        <div class="views">
-            <button class="icon-view active" id="mockProjectCovers" type="button"></button>
-            <button class="title-view" id="mockProjectList" type="button"></button>
-        </div> 
-        <div class="sorts">
-            <button class="alpha-sort active" type="button"></button>
-            <button class="date-sort" type="button"></button>
-        </div> 
-    </div>
-    -->
-
-    <?php } else if ( $q == 'press' ) { ?>
+{if:elseif embed:nav =='press' }
 
 <div class="filter-bar" id="filter-bar">
     <div class="jump-to alpha">
@@ -493,5 +476,4 @@
 
 </div> <!-- .filter-bar -->
 
-    <?php } ?>
-
+{/if}

@@ -27,7 +27,7 @@ $config['system_folder'] = 'system';
 $config['site_url'] = $base_url;
 $config['server_path'] = FCPATH;
 $config['cp_url'] = $admin_url;
-$config['site_index'] = '/index.php';
+$config['site_index'] = '';
 
 $config['cookie_prefix'] = '';
 

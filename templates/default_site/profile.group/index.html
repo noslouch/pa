@@ -1,8 +1,9 @@
 <?php 
     $_GET['template'] = 'profile';
-    include("includes/header.php"); 
+    //include("includes/header.php"); 
 ?>
 
+{embed="includes/header" nav="profile"}
     <h2 class="visuallyhidden">Profile Home</h2>
 
     <div class="profile viewer">
@@ -41,6 +42,7 @@
             </ul>
         </div> <!-- .showcase-links -->
         <div class="fixed container" id="showcaseContainer">
+
             <?php
                 //if ( isset($_SERVER['QUERY_STRING']) ) {
                     $_GET['template'] = $q;
@@ -59,4 +61,7 @@
         </div> <!-- .container -->
 
     </div> <!-- .viewer -->
-<?php include("includes/footer.php"); ?>
+
+{embed="includes/footer"}
+
+<?php //include("includes/footer.php"); ?>

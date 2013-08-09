@@ -1,7 +1,9 @@
 <?php 
     $_GET['template'] = 'project-single';
-    include("includes/header.php"); 
+    //include("includes/header.php"); 
 ?>
+
+{embed="includes/header" nav="projects"}
 
     <div class="project viewer">
         <div class="details">
@@ -53,8 +55,11 @@
 
         <?php
             $_GET['template'] = 'single-project';
-            include("includes/image-showcase.php"); ?>
+            //include("includes/image-showcase.php"); ?>
     
         </div> <!-- .container -->
     </div> <!-- .viewer -->
-<?php include("includes/footer.php"); ?>
+
+{embed="includes/footer"}
+
+<?php //include("includes/footer.php"); ?>

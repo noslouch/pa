@@ -1,8 +1,9 @@
 "use strict";
 /*jshint -W002*/
 
-var qContainer = document.getElementById('quotes')
-var $showcase = $('#showcaseContainer')
+var qContainer = document.getElementById('quotes'),
+    $showcase = $('#showcaseContainer'),
+    PA = PA || {}
 
 $('#n-container header').click(function(e){
     e.preventDefault()

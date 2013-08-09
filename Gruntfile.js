@@ -81,7 +81,7 @@ module.exports = function(grunt) {
         tasks: ['jshint:test', 'qunit']
       },
       dev: {
-        files: ['src/**/*', 'index.php', 'templates/**/*'],
+        files: ['src/**/*', 'templates/**/*'],
         tasks : ['compass', 'jshint:src','copy:dev'],
       }
     },
