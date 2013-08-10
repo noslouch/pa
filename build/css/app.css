@@ -3202,7 +3202,6 @@ button {
 .isotope-grid .thumb a {
   display: block;
   width: auto;
-  min-width: 164px;
   height: 216px;
 }
 /* line 29, ../../src/sass/_image-showcase.scss */

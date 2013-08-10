@@ -27,27 +27,20 @@
                 "title" : "Pepsi Ads",
                 "images" : [
                     {
-                        "thumb": "http://placehold.it/394x518",
+                        "lg_thumb": "http://placehold.it/445x468",
+                        "thumb": "http://placehold.it/369x368",
                         "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb": "http://placehold.it/394x518",
+                        "lg_thumb": "http://placehold.it/644x518",
+                        "thumb": "http://placehold.it/444x343",
                         "url": "http://placehold.it/1080x600",
                         "caption": ""
                     },
                     {
-                        "thumb": "http://placehold.it/394x518",
-                        "url": "http://placehold.it/1080x600",
-                        "caption": ""
-                    },
-                    {
-                        "thumb": "http://placehold.it/394x518",
-                        "url": "http://placehold.it/1080x600",
-                        "caption": ""
-                    },
-                    {
-                        "thumb": "http://placehold.it/394x518",
+                        "lg_thumb": "http://placehold.it/444x618",
+                        "thumb": "http://placehold.it/294x418",
                         "url": "http://placehold.it/1080x600",
                         "caption": ""
                     }
@@ -112,10 +105,10 @@
         "thumb": "http://placehold.it/80x45",
         "url" : "dkny",
         "cover" : { 
-            "thumb": "http://placehold.it/164x334",
+            "thumb": "http://placehold.it/334x216",
             "url" : "dkny",
             "wide" : "true",
-            "caption" : ""
+            "caption" : "DKNY - a caption"
         },
         "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.",
         "brand_tags": ["DKNY"],

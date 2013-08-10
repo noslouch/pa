@@ -17,7 +17,7 @@ PA.header = new Backbone.View({
 // Base Template
 
 
-var thumbTemplate = _.template('<div class="wrapper"><a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %>><% if (caption) { %> <div class="caption"><p><%= caption %></p></div><% } %><img src="<%= thumb %>"></a></div>')
+var thumbTemplate = _.template('<div class="wrapper"><a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %>><% if (caption) { %> <div class="caption"><p><%= caption %></p></div><% } %><img src="<% large ? print(lg_thumb) : print(thumb") %>"></a></div>')
 
 
 var Thumb = Backbone.View.extend({
@@ -35,7 +35,9 @@ var Thumb = Backbone.View.extend({
             url : this.model.get('url'),
             cover : this.options.cover,
             caption : this.model.get('caption'),
-            thumb : this. model.get('thumb')
+            thumb : this.model.get('thumb'),
+            lg_thumb : this.model.get('lg_thumb'),
+            large : this.options.large
         }) )
         return this
     },
@@ -65,7 +67,8 @@ var ImageShowcase = Backbone.View.extend({
         this.collection.forEach(function(image) {
             var thumb = new Thumb({ 
                 model : image,
-                cover : this.options.cover ? true : false
+                cover : this.options.cover ? true : false,
+                large : this.collection.length < 5
             })
             this.$el.append( thumb.render().el )
         }, this)
