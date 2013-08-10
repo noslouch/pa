@@ -1,0 +1,28 @@
+ChromeView
+  - header subview
+    - filter bar subview
+
+TEMPLATES
+ImageShowcase
+  - fixed or fluid dimensions
+  - large or small thumbnails
+Thumbnail
+FilmGrid
+ListShowcase
+  - single or double wide
+TextShowcase
+VideoShowcase
+Noteworthy
+Quotes
+FilterBar
+
+VIEWS
+ProjectLanding
+ProjectSingle
+PhotographyLanding
+PhotographySingle
+FilmLanding
+FilmSingle
+Profile
+Contact
+Stream

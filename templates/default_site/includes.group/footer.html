@@ -1,31 +1,30 @@
         </div> <!-- .outer-wrapper -->
         
-        <?php if ( $_GET['template'] == 'home' ) { ?>
-            {embed="includes/noteworthy"}
-            <!--include("templates/includes/noteworthy.php");-->
-        <?php } ?>
-
+        <!-- LIBRARIES -->
         <script src="{site_url}/lib/vendor/underscore.js"></script>
         <script src="{site_url}/lib/vendor/json2.js"></script>
         <script src="{site_url}/lib/vendor/jquery.js"></script>
         <script src="{site_url}/lib/vendor/backbone.js"></script>
-        
         <script src="{site_url}/lib/isotope/jquery.isotope.min.js"></script>
         <script src="{site_url}/lib/fancybox/jquery.fancybox.js"></script>
+        <script src="{site_url}/lib/foundation/foundation.js"></script>
+        <script src="{site_url}/lib/foundation/foundation.tooltips.js"></script>
+        <script>
+            $(document).foundation()
+        </script>
 
         <script src="{site_url}/build/js/utils.js"></script>
 
-        <?php if ( $_GET['template'] == 'home' ) { ?>
+        {if segment_1 == ''}
         <script src="{site_url}/build/js/quotes.js"></script>
         <script>
             checkQuoteHeight()
         </script>
-        <?php } ?>
+        {/if}
 
-        <?php if ( $_GET['template'] == 'projects' ) { ?>
+        {if segment_1 == 'projects' && segment_2 == ''}
         <script src="{site_url}/build/js/starfield.js"></script>
-        <?php } ?>
-
+        {/if}
 
         <?php
             $p = null;
@@ -53,14 +52,6 @@
         <script src="{site_url}/build/js/routes.js"></script>
         <script src="{site_url}/build/js/dispatcher.js"></script>
         <script src="{site_url}/build/js/main.js"></script>
-
-
-        <script src="{site_url}/lib/foundation/foundation.js"></script>
-        <script src="{site_url}/lib/foundation/foundation.tooltips.js"></script>
-
-        <script>
-            $(document).foundation()
-        </script>
 
         <script src="http://localhost:35729/livereload.js"></script>
     </body>

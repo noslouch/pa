@@ -2,7 +2,7 @@
 
 var PA = PA || {}
 
-// Site-Wide Header
+// Navigation Controller
 
 PA.header = new Backbone.View({
     el : ".site-header nav",
@@ -14,10 +14,19 @@ PA.header = new Backbone.View({
     }
 })
 
-// Base Template
+// Base Templates
 
+var ChromeView = Backbone.View.extend()
 
-var thumbTemplate = _.template('<div class="wrapper"><a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %>><% if (caption) { %> <div class="caption"><p><%= caption %></p></div><% } %><img src="<% large ? print(lg_thumb) : print(thumb") %>"></a></div>')
+var HomeView = Backbone.View.extend()
+var ProjectsView = Backbone.View.extend()
+var PhotoView = Backbone.View.extend()
+var FilmView = Backbone.View.extend()
+var ProfileView = Backbone.View.extend()
+var ContactView = Backbone.View.extend()
+var StreamView = Backbone.View.extend()
+
+var thumbTemplate = _.template('<div class="wrapper"><a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %>><% if (caption) { %> <div class="caption"><p><%= caption %></p></div><% } %><img src="<% large ? print(lg_thumb) : print(thumb) %>"></a></div>')
 
 
 var Thumb = Backbone.View.extend({

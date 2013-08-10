@@ -1,69 +1,61 @@
-<?php 
-    $_GET['template'] = 'projects';
-    //include("includes/header.php"); 
-?>
+<?php $_GET['template'] = 'projects'; ?>
+
 {embed="includes/header" nav="projects"}
 
-        <h2 class="visuallyhidden">Projects</h2>
-      
+    </div> <!-- .page -->
 
+    <script type="text/template" id="single-project">
+        <div class="details">
+            <header>
+                <h3><%= title %></h3>
+                <time datetime="<% new Date(parseInt(date,10)).getFullYear() %>"><% new Date(parseInt(date,10)).getFullYear() %></time>
+            </header>
+            <p class="summary"><%= summary %></p> <!-- .summary -->
+            <ul class="showcase-links">
+                <% showcases.forEach(function(showcase) { 
+                    print('<li><a href="#" id="'+ showcase.cid +'">'+ showcase.get('title') + '</a></li>')
+                }) %>
+                <li><a href="#" id="mockInfo">Info</a></li>
+                <li><a href="#" id="mockRelated">Related</a></li>
+            </ul> <!-- .showcase-links -->
+            <ul class="tags">
+                <li class="row">
+                    <span class="type">Brand</span>
+                    <div class="links">
+                        <% _.each(brand_tags, function(tag) { %>
+                            <a href="#" id="mockTag"><%= tag %></a>
+                        <% }) %>
+                    </div> <!-- .links -->
+                </li> <!-- .row -->
+                <li class="row">
+                    <span class="type">Industry</span>
+                    <div class="links">
+                        <% _.each(industry_tags, function(tag) { %>
+                            <a href="#" id="mockTag"><%= tag %></a>
+                        <% }) %>
+                    </div> <!-- .links -->
+                </li> <!-- .row -->
+                <li class="row">
+                    <span class="type">Project Type</span>
+                    <div class="links">
+                        <% _.each(type_tags, function(tag) { %>
+                            <a href="#" id="mockTag"><%= tag %></a>
+                        <% }) %>
+                    </div> <!-- .links -->
+                </li> <!-- .row -->
+            </ul> <!-- .tags -->
+        </div> <!-- .details -->
+        <div class="container" id="showcaseContainer">
 
+        <!--
+            This container will dynamically load one of the following showcases:
+                image-showcase
+                list-showcase
+                text-showcase
+                video-showcase
+        -->
 
-        </div> <!-- .page -->
-        <script type="text/template" id="single-project">
-            <div class="details">
-                <header>
-                    <h3><%= title %></h3>
-                    <time datetime="<% new Date(parseInt(date,10)).getFullYear() %>"><% new Date(parseInt(date,10)).getFullYear() %></time>
-                </header>
-                <p class="summary"><%= summary %></p> <!-- .summary -->
-                <ul class="showcase-links">
-                    <% showcases.forEach(function(showcase) { 
-                        print('<li><a href="#" id="'+ showcase.cid +'">'+ showcase.get('title') + '</a></li>')
-                    }) %>
-                    <li><a href="#" id="mockInfo">Info</a></li>
-                    <li><a href="#" id="mockRelated">Related</a></li>
-                </ul> <!-- .showcase-links -->
-                <ul class="tags">
-                    <li class="row">
-                        <span class="type">Brand</span>
-                        <div class="links">
-                            <% _.each(brand_tags, function(tag) { %>
-                                <a href="#" id="mockTag"><%= tag %></a>
-                            <% }) %>
-                        </div> <!-- .links -->
-                    </li> <!-- .row -->
-                    <li class="row">
-                        <span class="type">Industry</span>
-                        <div class="links">
-                            <% _.each(industry_tags, function(tag) { %>
-                                <a href="#" id="mockTag"><%= tag %></a>
-                            <% }) %>
-                        </div> <!-- .links -->
-                    </li> <!-- .row -->
-                    <li class="row">
-                        <span class="type">Project Type</span>
-                        <div class="links">
-                            <% _.each(type_tags, function(tag) { %>
-                                <a href="#" id="mockTag"><%= tag %></a>
-                            <% }) %>
-                        </div> <!-- .links -->
-                    </li> <!-- .row -->
-                </ul> <!-- .tags -->
-            </div> <!-- .details -->
-            <div class="container" id="showcaseContainer">
-
-            <!--
-                This container will dynamically load one of the following showcases:
-                    image-showcase
-                    list-showcase
-                    text-showcase
-                    video-showcase
-            -->
-
-            </div> <!-- .container -->
-        </script>
+        </div> <!-- .container -->
+    </script>
 
 {embed="includes/footer"}
-
-<?php //include("includes/footer.php"); ?>
