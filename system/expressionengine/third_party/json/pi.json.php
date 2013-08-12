@@ -181,7 +181,8 @@ class Json
 		
 		$this->EE->load->library('javascript');
 		
-		$data = $this->EE->javascript->generate_json($this->entries, TRUE);
+		//$data = $this->EE->javascript->generate_json($this->entries, TRUE);
+        $data = json_encode($this->entries);
 		
 		$this->EE->load->library('typography');
 		

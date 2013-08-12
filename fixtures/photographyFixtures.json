@@ -8,7 +8,7 @@
             "thumb" : "http://placehold.it/216x328",
             "url" : "thailand",
             "wide" : "true",
-            "caption" : "Photos from Thailand",
+            "caption" : "Photos from Thailand"
         },
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.",
         "gallery" : [
@@ -51,7 +51,7 @@
                 "thumb": "http://placehold.it/494x518",
                 "url": "http://placehold.it/1080x600",
                 "caption": ""
-            },
+            }
         ]
     },
     {
@@ -63,7 +63,7 @@
             "thumb" : "http://placehold.it/216x164",
             "url" : "vacation-shots",
             "wide" : "true",
-            "caption" : "",
+            "caption" : ""
         },
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.",
         "gallery" : [
@@ -81,7 +81,7 @@
                 "thumb": "http://placehold.it/394x318",
                 "url": "http://placehold.it/1080x600",
                 "caption": ""
-            },
+            }
         ]
     }
 ]

@@ -1,0 +1,57 @@
+[
+    {
+        "id" : "5",
+        "title" : "PA Short Film",
+        "date" : "2013",
+        "url" : "pa-short-film",
+        "thumb" : "http://placehold.it/292x178",
+        "summary" : "A summary of the film, which goes on the Films landing page",
+        "film_id" : "<iframe src=\"http://player.vimeo.com/video/71880032\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>",
+        "source" : "vimeo",
+        "content" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p><p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>"
+    },
+    {
+        "id" : "6",
+        "title" : "Experimental Work",
+        "date" : "2000",
+        "url" : "experimental-work",
+        "thumb" : "http://placehold.it/292x178",
+        "summary" : "Some short words about the content go here, but do not show up on the main viewer page",
+        "film_id" : "<iframe src=\"//www.youtube.com/embed/5br-7Yx0bgc\" frameborder=\"0\" allowfullscreen></iframe>",
+        "source" : "youtube",
+        "content" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p><p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>"
+    },
+    {
+        "id" : "7",
+        "title" : "Another Film",
+        "date" : "1980",
+        "url" : "another-film",
+        "thumb" : "http://placehold.it/292x178",
+        "summary" : "Some short words about the content go here, but do not show up on the main viewer page",
+        "film_id" : "<iframe src=\"//www.youtube.com/embed/5br-7Yx0bgc\" frameborder=\"0\" allowfullscreen></iframe>",
+        "source" : "other",
+        "content" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p><p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>"
+    },
+    {
+        "id" : "8",
+        "title" : "Film #8",
+        "date" : "1980",
+        "url" : "another-film",
+        "thumb" : "http://placehold.it/292x178",
+        "summary" : "Some short words about the content go here, but do not show up on the main viewer page",
+        "film_id" : "<iframe src=\"//www.youtube.com/embed/5br-7Yx0bgc\" frameborder=\"0\" allowfullscreen></iframe>",
+        "source" : "other",
+        "content" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p><p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>"
+    },
+    {
+        "id" : "9",
+        "title" : "Films for Fall",
+        "date" : "1980",
+        "url" : "another-film",
+        "thumb" : "http://placehold.it/292x178",
+        "summary" : "Some short words about the content go here, but do not show up on the main viewer page",
+        "film_id" : "<iframe src=\"//www.youtube.com/embed/5br-7Yx0bgc\" frameborder=\"0\" allowfullscreen></iframe>",
+        "source" : "other",
+        "content" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p><p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>"
+    }
+]

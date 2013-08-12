@@ -28,19 +28,29 @@ var StreamView = Backbone.View.extend()
 
 var ProjectListView = Backbone.View.extend({
     tagName : 'section',
+    header : PA.jst.listHeaderPartial,
+    partial : PA.jst.listItemPartial,
+
     render : function() {
         var projects = this.options.projects
-        var $listTmpl = $( PA.jst.listTemplate({ date : this.options.date }) )
-        _.each(projects, function(project) {
-            $listTmpl.find('#date')
-            .after( PA.jst.listItemPartial({
-                section : 'projects',
-                url : project.get('url'),
-                title : project.get('title')
-            }) )
-        } )
+        var path = this.options.path
+        var date = this.options.date
 
-        $listTmpl.appendTo(this.el)
+        this.$el.append( '<ul />')
+        this.$('ul').append( this.header({ date : date }) )
+
+        _.each( projects, function(project) {
+
+            this.$('ul')
+            .append( this.partial({
+                path : path ? path + "/" : "",
+                url : project.get('url'),
+                title : project.get('title'),
+                summary : path === 'projects' ? project.get('summary') : ''
+            }) )
+
+        }, this )
+
         return this.el
     }
 
@@ -50,14 +60,49 @@ var ProjectListShowcase = Backbone.View.extend({
     tagName : 'div',
     className : 'showcase list',
     render : function(){
+        this.$el.empty()
+
         // groupedCollection is an object of years paired with project objects that fall within that year.
-        _.each(this.options.groupedCollection, function(v,k){
-            var html = new ProjectListView({ date : k, projects : v})
-            this.$el.append(html.render())
-        }, this)
+        _.each( this.options.groupedCollection, function(v,k){
+            var html = new ProjectListView({
+                date : k,
+                projects : v,
+                path : this.options.path
+            })
+            this.$el.append( html.render() )
+        }, this )
         return this.el
     }
 })
+
+var FilmThumb = Backbone.View.extend({
+    tagName : 'div',
+    template : PA.jst.filmThumb,
+    render : function() {
+        var html = this.template( this.model.attributes )
+        this.$el.append( html )
+        return this.el
+    }
+})
+
+var FilmShowcase = Backbone.View.extend({
+    tagName : 'div',
+    rowTmpl : PA.jst.filmRow,
+    $row : undefined,
+    render : function() {
+
+        this.collection.forEach( function(model, index){
+            if (index % 4 === 0) {
+                this.$row = $( this.rowTmpl() )
+                this.$el.append(this.$row)
+            }
+            this.$row.append( new FilmThumb({ model : model }).render() )
+        }, this )
+
+        return this.el
+    }
+})
+
 
 var Thumb = Backbone.View.extend({
     tagName : "div",
@@ -70,7 +115,6 @@ var Thumb = Backbone.View.extend({
         }
     },
     render : function(){
-        console.log(this)
         this.$el.html( this.template({
             url : this.model.get('url'),
             cover : this.options.cover,
@@ -157,6 +201,9 @@ PA.ShowcaseContainer = Backbone.View.extend({
                 break;
             case 'text':
                 //this.$el.html( new TextShowcase(options).el )
+                break;
+            case 'film':
+                //this.$el.html ( new FilmShowcase(options).el )
                 break;
             default:
                 break;
