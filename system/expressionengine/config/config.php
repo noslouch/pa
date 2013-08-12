@@ -11,7 +11,7 @@ $base_url .= "://".$_SERVER['HTTP_HOST'];
 $admin_url  = $base_url . '/admin.php';
 
 // staging and production share the same DB, develop on separate DB
-//$env = strpos($base_url, 'heroku') ? 'heroku' : 'dev';
+// $env = strpos($base_url, 'heroku') ? 'heroku' : 'dev';
 
 // develop and staging share the same DB, production on separate DB
 $env = (( strpos($base_url, 'local') || strpos($base_url, 'staging') ) ? 'dev' : 'heroku');
