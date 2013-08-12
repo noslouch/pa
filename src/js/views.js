@@ -26,6 +26,121 @@ var ProfileView = Backbone.View.extend()
 var ContactView = Backbone.View.extend()
 var StreamView = Backbone.View.extend()
 
+var BrandControls = Backbone.View.extend({
+    tagName : 'div',
+    className : 'controls',
+    template : PA.jst.controlsPartial,
+    events : {
+        'click #logoView' : 'toggleView',
+        'click #titleView' : 'toggleView',
+        'click #close' : 'close'
+    },
+    render : function() {
+        this.$el.html( this.template() )
+        return this.el
+    }
+})
+
+
+var ProjectFilterItem = Backbone.View.extend({
+    tagName : 'li',
+    template : PA.jst.namePartial,
+    render : function() {
+        this.$el
+            .html( this.template({ 
+                tag : this.options.tag
+            }) )
+        return this.el
+    }
+})
+
+var ProjectFilter = Backbone.View.extend({
+    tagName : 'ul',
+    className : 'names',
+    render : function() {
+        var filter
+        switch (this.options.type) {
+            case 'industry':
+                filter = 'industry_tags'
+                break;
+            case 'type':
+                filter = 'type_tags'
+                break;
+            default:
+                break;
+        }
+
+        var tags = this.collection
+            .pluck(filter)
+            .reduceRight(function(a,b) {
+                return a.concat(b) 
+            }, [])
+
+        tags.forEach( function(tag) {
+            this.$el
+                .append( new ProjectFilterItem({ tag : tag }).render() )
+        }, this )
+
+        return this.el
+    }
+})
+
+var BrandFilterItem = Backbone.View.extend({
+    tagName : 'li',
+    logoTemplate : PA.jst.logoPartial,
+    nameTemplate : PA.jst.namePartial,
+    render : function() {
+        this.$el.append( this.logoTemplate({ tag : this.options.tag, logo: this.options.logo }) )
+        this.$el.append( this.nameTemplate({ tag : this.options.tag }) )
+        return this.el
+    }
+})
+
+var BrandFilter = Backbone.View.extend({
+    tagName : 'ul',
+    id : 'brandList',
+    className : 'icons',
+    render : function() {
+        var tags = this.collection
+            .pluck('brand_tags')
+            .reduceRight( function(a,b) { 
+                return a.concat(b) 
+            }, [] )
+
+        tags.forEach( function(tag) {
+            this.$el
+                .append( new BrandFilterItem({ 
+                    tag : tag,
+                    logo : 'http://placehold.it/80x45'
+                })
+                .render() )
+        }, this)
+
+        return this.el
+    }
+})
+
+var FilterBar = Backbone.View.extend({
+    tagName: 'div',
+    className : 'filter-bar',
+    id : 'filter-bar',
+    template : PA.jst.projectFilter,
+    initialize : function() {
+        this.$el.html( this.template() )
+    },
+    render : function() {
+        this.$('#brand .wrapper')
+            .append( new BrandControls().render() )
+            .append( new BrandFilter({ collection : this.collection }).render() )
+        this.$('#industry .wrapper')
+            .append( new ProjectFilter({ type : 'industry', collection : this.collection }).render() )
+        this.$('#type .wrapper')
+            .append( new ProjectFilter({ type : 'type', collection : this.collection }).render() )
+
+        return this.el
+    }
+})
+
 var ProjectListView = Backbone.View.extend({
     tagName : 'section',
     header : PA.jst.listHeaderPartial,

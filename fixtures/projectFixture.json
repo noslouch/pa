@@ -3,8 +3,8 @@
         "id": "1",
         "title": "Pepsi Branding",
         "date": "1123214400000",
-        "thumb": "http://placehold.it/80x45",
         "url" : "pepsi-branding",
+        "logo": "http://placehold.it/80x45",
         "cover" : { 
             "thumb": "http://placehold.it/164x216",
             "url" : "pepsi-branding",
@@ -102,7 +102,7 @@
         "id": "2",
         "title": "DKNY",
         "date": "1361750400000",
-        "thumb": "http://placehold.it/80x45",
+        "logo": "http://placehold.it/80x45",
         "url" : "dkny",
         "cover" : { 
             "thumb": "http://placehold.it/334x216",

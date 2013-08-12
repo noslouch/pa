@@ -63,6 +63,45 @@ JST.filmThumb = [
 
 JST.filmRow = '<div class="film-row"></div>'
 
+JST.projectFilter = [
+    '<div class="filter brand" id="brand">',
+        '<h3>Brand</h3>',
+        '<div class="wrapper"></div>',
+    '</div>',
+    '<div class="filter" id="industry">',
+        '<h3>Industry</h3>',
+        '<div class="wrapper"></div>',
+    '</div>',
+    '<div class="filter" id="type">',
+        '<h3>Project Type</h3>',
+        '<div class="wrapper"></div>',
+    '</div>'
+].join('\n')
+
+JST.controlsPartial = [
+    '<div class="views">',
+        '<button class="icon-view active" id="logoView" type="button"></button>',
+        '<button class="title-view" id="titleView" type="button"></button>',
+    '</div>',
+    '<button class="close" id="close" type="button"></button>'
+].join('\n')
+
+JST.logoPartial = [
+    '<div class="icon">',
+        '<a href="#" data-filter=".<%= tag %>">',
+            '<img class="has-tip tip-top" data-tooltip src="<%= logo %>" title="<%= tag %>">',
+        '</a>',
+    '</div>'
+].join('\n')
+
+JST.namePartial = [
+    '<h4 class="name">',
+        '<a href="#" data-filter=".<%= tag %>">',
+            '<%= tag %>',
+        '</a>',
+    '</h4>'
+].join('\n')
+
 for (var tmpl in JST) {
     if (JST.hasOwnProperty(tmpl)) {
         JST[tmpl] = _.template(JST[tmpl])
