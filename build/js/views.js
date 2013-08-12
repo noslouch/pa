@@ -26,12 +26,42 @@ var ProfileView = Backbone.View.extend()
 var ContactView = Backbone.View.extend()
 var StreamView = Backbone.View.extend()
 
-var thumbTemplate = _.template('<div class="wrapper"><a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %>><% if (caption) { %> <div class="caption"><p><%= caption %></p></div><% } %><img src="<% large ? print(lg_thumb) : print(thumb) %>"></a></div>')
+var ProjectListView = Backbone.View.extend({
+    tagName : 'section',
+    render : function() {
+        var projects = this.options.projects
+        var $listTmpl = $( PA.jst.listTemplate({ date : this.options.date }) )
+        _.each(projects, function(project) {
+            $listTmpl.find('#date')
+            .after( PA.jst.listItemPartial({
+                section : 'projects',
+                url : project.get('url'),
+                title : project.get('title')
+            }) )
+        } )
 
+        $listTmpl.appendTo(this.el)
+        return this.el
+    }
+
+})
+
+var ProjectListShowcase = Backbone.View.extend({
+    tagName : 'div',
+    className : 'showcase list',
+    render : function(){
+        // groupedCollection is an object of years paired with project objects that fall within that year.
+        _.each(this.options.groupedCollection, function(v,k){
+            var html = new ProjectListView({ date : k, projects : v})
+            this.$el.append(html.render())
+        }, this)
+        return this.el
+    }
+})
 
 var Thumb = Backbone.View.extend({
     tagName : "div",
-    template : thumbTemplate,
+    template : PA.jst.thumbTemplate,
     className : function() {
         if (this.options.cover) {
             return "thumb " + this.model.get('tags').join(' ') + (this.model.get('wide') ? " wide" : "")
@@ -40,6 +70,7 @@ var Thumb = Backbone.View.extend({
         }
     },
     render : function(){
+        console.log(this)
         this.$el.html( this.template({
             url : this.model.get('url'),
             cover : this.options.cover,
@@ -72,18 +103,21 @@ var ImageShowcase = Backbone.View.extend({
         }
     },
     id : "iso-grid",
+    thumbs : [],
     render : function(){
         this.collection.forEach(function(image) {
             var thumb = new Thumb({ 
                 model : image,
                 cover : this.options.cover ? true : false,
-                large : this.collection.length < 5
+                large : this.collection.length < 5 && !this.options.cover
             })
             this.$el.append( thumb.render().el )
+            this.thumbs.push(thumb)
         }, this)
     },
     initialize: function() {
-        this.$el.html( this.render() )
+        this.render()
+
         var $el = this.$el,
             $img = $el.find('img'),
             rtl = $el.hasClass('rtl'),

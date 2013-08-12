@@ -61,7 +61,7 @@ module.exports = function(grunt) {
     },
     copy: {
         dev : {
-            files : [{ expand: true, src: ['src/js/*.js'], dest: 'build/js/', flatten: true }]
+            files : [{ expand: true, src: ['src/js/**/*.js'], dest: 'build/js/', flatten: true }]
         }
     },
     watch: {
