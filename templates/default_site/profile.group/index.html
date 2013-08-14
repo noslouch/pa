@@ -39,20 +39,6 @@
         </div> <!-- .showcase-links -->
         <div class="container" id="showcaseContainer">
 
-            <?php
-                //if ( isset($_SERVER['QUERY_STRING']) ) {
-                    $_GET['template'] = $q;
-
-                    if ( substr_count($q, 'List') > 0 ) {
-                        include('includes/list-showcase.php');
-                    } else if ( substr_count($q, 'Gallery') > 0 ) {
-                        include('includes/image-showcase.php');
-                    //}
-                } else {
-                    $_GET['template'] = 'mockBio';
-                    include('includes/text-showcase.php');
-                }
-            ?>
 
         </div> <!-- .container -->
 

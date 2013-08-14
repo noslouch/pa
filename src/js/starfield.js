@@ -9,14 +9,38 @@ var PA = PA || {}
     HALF_WIDTH = window.innerWidth / 2,
     HALF_HEIGHT = window.innerHeight / 2,
     imageLimit = SCREEN_WIDTH < 320 ? 12 : 48,
+    // images = app.randomCovers() // should return a Backbone collection of cover images
     images = []
 
     function randomRange(min, max) {
         return ((Math.random()*(max-min)) + min)
     }
 
+    var $container = $('<div>').addClass('starfield').attr('id','starfield')
     function stars(){
-        var $container = $('<div>').addClass('starfield').attr('id','starfield')
+        app.starsRunning = true
+
+        /*
+        images.forEach( function(image) {
+            image.$el.css({
+                left : HALF_WIDTH + randomRange(-HALF_WIDTH, HALF_WIDTH),
+                top : HALF_HEIGHT + randomRange(-HALF_HEIGHT, HALF_HEIGHT)
+            })
+        }
+
+        function stagger() {
+            var i = 0;
+
+            function go() {
+                var $a = $('<a/>').attr('href', images.models[i].get('url')).append(images.models[i].el).addClass('fast')
+                $a.appendTo($container)
+                setTimeout(go, 550)
+                i++
+            }
+
+            go()
+        }
+        */
 
         $container.on('finished', function(e){
             stagger()
@@ -49,6 +73,14 @@ var PA = PA || {}
         $('.outer-wrapper').after($container)
     }
 
-    app.mockStars = stars
+    function starDestroy() {
+        $container.remove()
+        app.starsRunning = false
+    }
+
+    app.starInit = stars
+    app.starDeath = starDestroy
+    app.starsRunning = false
+
     return app
 }(PA))

@@ -3,7 +3,7 @@
 
 var PA = PA || {}
 
-var Router = Backbone.Router.extend({
+PA.Router = Backbone.Router.extend({
 
     routes : {
         "/" : "homeLoader",
@@ -27,28 +27,39 @@ var Router = Backbone.Router.extend({
 
             $.get('/fixtures/projectFixture').done(function(d) {
                 var project = new PA.Project( _.findWhere(d, {url : title}) )
-                PA.singleProject = new SingleView({ model : project })
+                $('.page').html( new SingleView({ model : project }).render() )
             })
 
         } else {
             // Projects are loaded
 
             var p = PA.projects.findWhere({ url : title })
-            PA.singleProject = new SingleView({ model : p })
+            $('.page').html( new SingleView({ model : p }).render() )
         }
     },
 
     projects : function() {
-        $.get('/fixtures/projectFixture').done(function(d) {
+                   /*
+        PA.chrome = PA.chrome || new PA.Page({ el : '.page' })
+        PA.chrome.render({
+            section : 'Projects',
+            pageClass : 'projects'
+        })
+        */
 
+        $.get('/fixtures/projectFixture').done(function(d) {
             PA.projects = new PA.Projects(d)
+            PA.app.header.render({ filter: true, collection : PA.projects })
             PA.coverImages = new PA.CoverGallery( PA.projects.pluck('coverImage'))
-            PA.showcase = new PA.ShowcaseContainer()
-            PA.showcase.render({
+            PA.starInit()
+
+            /*
+            PA.page.$el.html( new PA.ShowcaseContainer().render({
                 collection : PA.coverImages,
                 cover : true,
                 type : 'image'
-            })
+            }) )
+            */
         })
     },
 
@@ -73,5 +84,5 @@ var Router = Backbone.Router.extend({
     }
 })
 
-PA.router = new Router()
+PA.router = new PA.Router()
 Backbone.history.start({pushState: true, root: "/"})
