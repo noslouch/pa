@@ -102,8 +102,9 @@ PA.FilmThumb = Backbone.View.extend({
     }
 })
 
-PA.FilmShowcase = Backbone.View.extend({
+PA.FilmThumbLayout = Backbone.View.extend({
     tagName : 'div',
+    className: 'film-container',
     rowTmpl : PA.jst.filmRow,
     $row : undefined,
     render : function() {
@@ -113,8 +114,14 @@ PA.FilmShowcase = Backbone.View.extend({
                 this.$row = $( this.rowTmpl() )
                 this.$el.append(this.$row)
             }
-            this.$row.append( new PA.FilmThumb({ model : model }).render() )
+            this.$row.append( new PA.FilmThumb({ 
+                model : model 
+            }).render() )
         }, this )
+
+        this.$('.film-row').imagesLoaded( function() {
+            $(this).addClass('loaded')
+        })
 
         return this.el
     }

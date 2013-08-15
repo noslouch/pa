@@ -22,7 +22,7 @@ JST.projectDetails = [
 ].join('\n')
 
 JST.profileLinks = [
-    '<ul class="showcase-links">',
+    '<ul class="profile-links" id="profileViewer">',
         '<li><a href="#" id="bio" class="active">Bio/CV</a></li>',
         '<li><a href="#" id="press">Press</a></li>',
         '<li><a href="#" id="awards">Selected Awards</a></li>',
@@ -54,14 +54,14 @@ JST.tag = '<a href="#"><%= tag %></a>'
 
 JST.textTemplate = [
     '<article class="<%= type %>">', // .project-info, .press, .bio
-        '<%- content %>',
+        '<%= content %>',
     '</article>'
 ].join('\n')
 
 JST.textTemplateHeader = [
     '<header>',
         '<h3><%= title %></h3>',
-        '<time datetime="<%= htmlDate %><%= date %></time>',
+        '<time datetime="<%= htmlDate %>"><%= date %></time>',
     '</header>'
 ].join('\n')
 
@@ -83,7 +83,7 @@ JST.textGallery = [
 
 JST.backButton = [
     '<div class="wrapper">',
-        '<a href="#" class="button" id="back"><%= buttonText %></a>',
+        '<a href="<%= url %>" class="button" id="back"><%= buttonText %></a>',
     '</div>'
 ].join('\n')
 
@@ -104,7 +104,7 @@ JST.videoCaption = [
 
 JST.thumbTemplate = [
     '<div class="wrapper">',
-        '<a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %>>',
+        '<a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %> title="<%= caption %>">',
             '<% if (caption) { %>',
                 '<div class="caption">',
                     '<p><%= caption %></p>',
@@ -153,7 +153,7 @@ JST.awardItemPartial = [
 JST.filmRow = '<div class="film-row"></div>'
 
 JST.filmThumb = [
-    '<a href="<%= url %>">',
+    '<a href="/film/<%= url %>">',
         '<div class="img">',
             '<img src="<%= thumb %>">',
         '</div>',

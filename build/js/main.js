@@ -85,15 +85,12 @@ $(function(){
 
     checkScroll()
 
-    $('.film-row').imagesLoaded(function(){
-        $(this).addClass('loaded')
-    })
 
 })
 
 //$(window).load(function(){
     //$(iso).imagesLoaded( function(){
-        isoLoader(iso)
+        //isoLoader(iso)
     //})
 //})
 //

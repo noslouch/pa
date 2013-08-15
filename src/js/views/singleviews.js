@@ -19,7 +19,6 @@ PA.TagRow = Backbone.View.extend({
     }
 })
 
-// instantiated with el : #details
 PA.ProjectDetails = Backbone.View.extend({
     events : {},
     template : PA.jst.projectDetails,
@@ -47,46 +46,35 @@ PA.ProjectViewer = Backbone.View.extend({
             el : this.$('#details'),
             model : this.model
         })
-        //this.showcase = new PA.ShowcaseContainer({ el : this.$('#showcaseContainer') })
     },
     render: function(options) {
         this.details.render()
 
-        try {
-            var showcases = this.model.get('showcases')
-            showcases.forEach( function(showcase) {
-                this.$('#showcaseLinks')
-                    .prepend( PA.jst.showcaseLinks({
-                        cid : showcase.cid,
-                        title : showcase.get('title')
-                    }) )
-            }, this )
+        var showcases = this.model.get('showcases')
+        showcases.forEach( function(showcase) {
+            this.$('#showcaseLinks')
+                .prepend( PA.jst.showcaseLinks({
+                    cid : showcase.cid,
+                    title : showcase.get('title')
+                }) )
+        }, this )
 
-            this.$('#tags')
-                .append( new PA.TagRow({ 
-                    type : 'Brand', 
-                    tags : this.model.get('brand_tags') 
-                }).render() )
-                .append( new PA.TagRow({ 
-                    type : 'Industry', 
-                    tags : this.model.get('industry_tags') 
-                }).render() )
-                .append( new PA.TagRow({ 
-                    type : 'Project Type', 
-                    tags : this.model.get('type_tags') 
-                }).render() )
+        this.$('#tags')
+            .append( new PA.TagRow({ 
+                type : 'Brand', 
+                tags : this.model.get('brand_tags') 
+            }).render() )
+            .append( new PA.TagRow({ 
+                type : 'Industry', 
+                tags : this.model.get('industry_tags') 
+            }).render() )
+            .append( new PA.TagRow({ 
+                type : 'Project Type', 
+                tags : this.model.get('type_tags') 
+            }).render() )
 
-            this.showcaseHandler( this.$('#showcaseLinks li:first-child a')[0].id )
+        this.showcaseHandler( this.$('#showcaseLinks li:first-child a')[0].id )
 
-        } catch(e) {
-
-            var gallery = new PA.ImageShowcase({
-                collection : this.model.get('photos')
-            })
-            this.$('#showcaseContainer').html( gallery.render() )
-            gallery.firstLoad()
-
-        }
         return this.el
     },
     events : {
@@ -123,5 +111,93 @@ PA.ProjectViewer = Backbone.View.extend({
         try {
             showcase.firstLoad()
         } catch(e1) {}
+    }
+})
+
+PA.AlbumDetails = Backbone.View.extend({
+    template : PA.jst.textTemplate, // type, content
+    header : PA.jst.textTemplateHeader, // title, htmlDate, date
+    back : PA.jst.backButton, // buttonText, url
+    render : function() {
+        var $article = $( this.template({
+            type : 'photo',
+            content : this.model.get('content')
+        }) ).prepend( this.header({
+            title : this.model.get('title'),
+            htmlDate : this.makeHtmlDate( this.model.get('date') ),
+            date : this.parseDate( this.model.get('date') ).getFullYear()
+        }) ).append( this.back({
+            buttonText : 'View All Photo Albums',
+            url : '/photography'
+        }) )
+
+        this.$el.append($article)
+    }
+})
+
+PA.SingleAlbumView = Backbone.View.extend({
+    tagName : 'div',
+    className : 'photo viewer',
+    baseTmpl : PA.jst.viewer,
+    initialize : function() {
+        this.$el.html( this.baseTmpl() )
+        this.details = new PA.AlbumDetails({
+            el : this.$('#details'),
+            model : this.model
+        })
+    },
+    render : function(options) {
+        this.details.render()
+
+        var gallery = new PA.ImageShowcase({
+            collection : this.model.get('photos')
+        })
+        this.$('#showcaseContainer').html( gallery.render() )
+        gallery.firstLoad()
+
+        return this.el
+    }
+})
+
+PA.FilmDetails = Backbone.View.extend({
+    template : PA.jst.textTemplate, // type, content
+    header : PA.jst.textTemplateHeader, // title, htmlDate, date
+    back : PA.jst.backButton, // buttonText, url
+    render : function() {
+        var $article = $( this.template({
+            type : 'film',
+            content : this.model.get('content')
+        }) )
+        $article.prepend( this.header({
+            title : this.model.get('title'),
+            htmlDate : this.makeHtmlDate( this.model.get('date') ),
+            date : this.parseDate( this.model.get('date') ).getFullYear()
+        }) ).append( this.back({
+            buttonText : 'View All Film',
+            url : '/film'
+        }) )
+
+        this.$el.append($article)
+    }
+})
+
+PA.SingleFilmView = Backbone.View.extend({
+    tagName : 'div',
+    className : 'film viewer',
+    baseTmpl : PA.jst.viewer,
+    initialize : function() {
+        this.$el.html( this.baseTmpl() )
+        this.details = new PA.FilmDetails({
+            el : this.$('#details'),
+            model : this.model
+        })
+    },
+    render : function(options) {
+        this.details.render()
+        this.$('#showcaseContainer').html( new PA.VideoShowcase({
+            model : this.model
+        }).render() )
+
+        return this.el
     }
 })

@@ -11,6 +11,7 @@ PA.ProfileLinks = Backbone.View.extend({
     events : {}
 })
 
+/*
 PA.ProfileViewer = Backbone.View.extend({
     tagName : 'div',
     className : 'profile viewer',
@@ -24,5 +25,20 @@ PA.ProfileViewer = Backbone.View.extend({
     },
     render : function() {
         return this.el
+    }
+})
+*/
+
+PA.ProfileViewer = Backbone.View.extend({
+    initialize : function() {
+        this.links = this.$('#showcaseLinks')
+    },
+    render : function() {},
+    events : {
+        'click ul a' : 'profileLoader'
+    },
+    profileLoader : function(e) {
+        e.preventDefault()
+        console.log(e.currentTarget.id)
     }
 })

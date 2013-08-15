@@ -12,9 +12,9 @@ PA.Router = Backbone.Router.extend({
         "photography" : "photography",
         "photography/:title" : "singleAlbum",
         "film" : "film",
-        "film/:title" : "viewer",
+        "film/:title" : "singleFilm",
         "profile" : "profile",
-        "profile/:title" : "viewer",
+        "profile/:title" : "profileSection",
         "contact" : "contact",
         "stream" : "stream"
     },
@@ -107,50 +107,96 @@ PA.Router = Backbone.Router.extend({
 
     singleAlbum : function(title) {
 
-        try {
-        //if (PA.albums.length) {
+        if (PA.albums.length) {
             // Photo Galleries are loaded
 
-            var photoAlbum = PA.albums.findWhere({ url : title })
+            var photoAlbumModel = PA.albums.findWhere({ url : title })
 
-            PA.singleAlbum = new PA.ProjectViewer({
-                model : photoAlbum
+            PA.singleAlbumView = new PA.SingleAlbumView({
+                model : photoAlbumModel
             })
 
             PA.app.page.render({
-                view : PA.singleAlbum,
+                view : PA.singleAlbumView,
                 pageClass : 'photography',
-                section : photoAlbum.get('title')
+                section : photoAlbumModel.get('title')
             })
 
-        } catch(e) {
+        } else {
             // Photo Galleries haven't loaded yet because
             // A) navigate to direct URL
             // B) navigate from a different page section
 
             $.get('/fixtures/photographyFixture').done(function(d) {
-                var photoAlbum = new PA.PhotoAlbum( _.findWhere(d, {url : title}) )
+                var photoAlbumModel = new PA.PhotoAlbum( _.findWhere(d, {url : title}) )
 
-                PA.singleAlbum = new PA.ProjectViewer({
-                    model : photoAlbum
+                PA.singleAlbumView = new PA.SingleAlbumView({
+                    model : photoAlbumModel
                 })
 
                 PA.app.page.render({
-                    view : PA.singleAlbum,
+                    view : PA.singleAlbumView,
                     pageClass : 'photography',
-                    section : photoAlbum.get('title')
+                    section : photoAlbumModel.get('title')
                 })
             })
         }
 
-
     },
+
     film : function() {
-        $('.page').append('film')
+        $.get('/fixtures/filmFixture').done( function(d) {
+            PA.films = new PA.Films(d)
+            PA.filmLanding = new PA.FilmThumbLayout({
+                collection : PA.films
+            })
+
+            PA.app.page.render({
+                view : PA.filmLanding,
+                pageClass : 'film',
+                section : 'Film Home'
+            })
+
+        } )
+    },
+
+    singleFilm : function(title) {
+
+        if (PA.films.length) {
+            // Films are loaded
+
+            var filmModel = PA.films.findWhere({ url : title })
+
+            PA.singleFilmView = new PA.SingleFilmView({
+                model : filmModel
+            })
+
+            PA.app.page.render({
+                view : PA.singleFilmView,
+                pageClass : 'film',
+                section : filmModel.get('title')
+            })
+        } else {
+            // Films haven't loaded yet
+
+            $.get('/fixtures/filmFixture').done( function(d) {
+                var filmModel = new PA.PhotoAlbum( _.findWhere(d, { url : title }) )
+                PA.singleFilmView = new PA.SingleFilmView({
+                    model : filmModel
+                })
+
+                PA.app.page.render({
+                    view : PA.singleFilmView,
+                    pageClass : 'film',
+                    section : filmModel.get('title')
+                })
+            })
+        }
     },
 
     profile : function() {
-        $('.page').append('profile')
+
+        PA.profileView = new PA.ProfileViewer({ el : '#profileViewer' })
     },
 
     contact : function() {

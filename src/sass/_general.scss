@@ -546,6 +546,25 @@ iframe {
     .links { 
         @include grid-column(8, $collapse: true);
     }
+
+    .button {
+        background: $light-gray;
+        padding-bottom: 13px;
+        
+        &:before {
+            content: "<";
+            color: red;
+            display: inline;
+            vertical-align: text-top;
+            margin-right: 0.5em;
+        }
+
+        &:hover {
+            background: $secondary-color;
+            color: white;
+            &:before { color: $primary-color; }
+        }
+    }
 }
 
 .container {
@@ -582,7 +601,8 @@ iframe {
     }
 }
 
-.showcase-links {
+.showcase-links,
+.profile-links {
     font-size: emCalc(19);
     font-weight: 500;
     line-height: 1.2;

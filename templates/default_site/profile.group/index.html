@@ -2,39 +2,18 @@
 
 {embed="includes/header" nav="profile"}
 
-    <div class="profile viewer">
+    <div class="profile viewer" id="profileViewer">
         <div class="details">
-            <ul class="showcase-links">
-                <li>
-                <?php
-                    $q = $_SERVER['QUERY_STRING'];
-                    if ( $q == null ) { 
-                ?>
-                    <a href="#" id="mockBio" class="active">
-                <?php } else { ?>
-                    <a href="#" id="mockBio">
-                <?php } ?>  Bio/CV</a>
-                </li>
-                <li>
-                <?php if ( $q == 'mockPressList' ) { ?>
-                    <a href="#" id="mockPressList" class="active">
-                <?php } else { ?>
-                    <a href="#" id="mockPressList">
-                <?php } ?>  Press</a>
-                </li>
-                <li><a href="#" id="mockAwardList">Selected Awards</a></li>
-                <li><a href="#" id="mockImageGallery">Photos of PA</a></li>
-                <li>
-                <?php if ( $q == 'mockArticleList' ) { ?>
-                    <a href="#" id="mockArticleList" class="active">
-                <?php } else { ?>
-                    <a href="#" id="mockArticleList">
-                <?php } ?>  Articles by PA</a>
-                </li>
-                <li><a href="#" id="mockArticleList">Articles about PA</a></li>
-                <li><a href="#" id="mockArticleList">Interviews</a></li>
-                <li><a href="#" id="mockArticleList">Transcripts</a></li>
-                <li><a href="#" id="mockArticleList">Acknowledgements</a></li>
+            <ul class="profile-links" id="profileLinks">
+                <li><a href="#" id="bio" class="active">Bio/CV</a></li>
+                <li><a href="#" id="press">Press</a></li>
+                <li><a href="#" id="awards">Selected Awards</a></li>
+                <li><a href="#" id="paPhotos">Photos of PA</a></li>
+                <li><a href="#" id="paAuthor">Articles by PA</a></li>
+                <li><a href="#" id="paSubject">Articles about PA</a></li>
+                <li><a href="#" id="interviews">Interviews</a></li>
+                <li><a href="#" id="transcripts">Transcripts</a></li>
+                <li><a href="#" id="acknowledgements">Acknowledgements</a></li>
             </ul>
         </div> <!-- .showcase-links -->
         <div class="container" id="showcaseContainer">

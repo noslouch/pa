@@ -11,46 +11,47 @@
             "caption" : "Photos from Thailand"
         },
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.",
+        "content" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Vivamus rhoncus mauris vel molestie cursus. Vivamus rhoncus mauris vel molestie cursus. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.</p>",
         "gallery" : [
             {
                 "thumb": "http://placehold.it/494x518",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/294x818",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/394x318",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/294x818",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/494x518",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/394x468",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/494x518",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/494x518",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             }
         ]
     },
@@ -66,18 +67,19 @@
             "caption" : ""
         },
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.",
+        "content" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Vivamus rhoncus mauris vel molestie cursus. Vivamus rhoncus mauris vel molestie cursus. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.</p>",
         "gallery" : [
             {
                 "thumb": "http://placehold.it/494x518",
                 "lg_thumb": "http://placehold.it/894x918",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/294x818",
                 "lg_thumb": "http://placehold.it/494x1518",
                 "url": "http://placehold.it/1080x600",
-                "caption": ""
+                "caption": "A caption."
             },
             {
                 "thumb": "http://placehold.it/394x318",

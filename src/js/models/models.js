@@ -1,7 +1,6 @@
 "use strict";
-
 var PA = PA || {}
-PA.projects = PA.projects || []
+PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
 PA.Project = Backbone.Model.extend({
     initialize : function(project, options) {
@@ -85,6 +84,8 @@ PA.ProfileSection = Backbone.Model.extend()
 
 
 
-PA.films = new Backbone.Collection()
-PA.profile = new Backbone.Collection()
+PA.films = new PA.Films()
+PA.profile = new PA.ProfileSection()
+PA.projects = new PA.Projects()
+PA.albums = new PA.PhotoAlbums()
 
