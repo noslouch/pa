@@ -20,11 +20,11 @@ html, body {
 }
 
 .image.showcase img {
-    opacity: 0;
-    @include transition(opacity 150ms ease);
+    //opacity: 0;
+    //@include transition(opacity 150ms ease);
 }
 
-.image.showcase img.loaded { opacity: 1; }
+//.image.showcase img.loaded { opacity: 1; }
 
 .loader {
     position: absolute;
@@ -549,14 +549,14 @@ iframe {
 }
 
 .container {
-    @include grid-row(collapse);
-    max-width: 1190px;
-    margin: 0 auto;
+    //@include grid-row(collapse);
+    //max-width: 1190px;
+    //margin: 0 auto;
 
-    .viewer & {
+    //.viewer & {
         @include grid-column(8.7, $float: right, $collapse: true);
         max-width: 854px;
-    }
+    //}
 }
 
 // type

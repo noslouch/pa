@@ -5,7 +5,7 @@
         "date" : "1356998400000",
         "url" : "thailand",
         "cover" : {
-            "thumb" : "http://placehold.it/216x328",
+            "thumb" : "http://placehold.it/334x216",
             "url" : "thailand",
             "wide" : "true",
             "caption" : "Photos from Thailand"
@@ -60,7 +60,7 @@
         "date" : "1356998400000",
         "url" : "vacation-shots",
         "cover" : {
-            "thumb" : "http://placehold.it/216x164",
+            "thumb" : "http://placehold.it/334x216",
             "url" : "vacation-shots",
             "wide" : "true",
             "caption" : ""
@@ -69,16 +69,19 @@
         "gallery" : [
             {
                 "thumb": "http://placehold.it/494x518",
+                "lg_thumb": "http://placehold.it/894x918",
                 "url": "http://placehold.it/1080x600",
                 "caption": ""
             },
             {
                 "thumb": "http://placehold.it/294x818",
+                "lg_thumb": "http://placehold.it/494x1518",
                 "url": "http://placehold.it/1080x600",
                 "caption": ""
             },
             {
                 "thumb": "http://placehold.it/394x318",
+                "lg_thumb": "http://placehold.it/694x618",
                 "url": "http://placehold.it/1080x600",
                 "caption": ""
             }

@@ -11,7 +11,16 @@ PA.Project = Backbone.Model.extend({
             }),
             showcases : new PA.Showcases(project.showcases)
         })
-
+        /*
+        this.get('showcases').add({
+            type : 'info',
+            content : this.get('infoText')
+        },
+        {
+            type : 'related',
+            links : this.get('relatedLinks')
+        })
+        */
     }
 })
 
@@ -21,11 +30,11 @@ PA.Projects = Backbone.Collection.extend({
 
 PA.CoverImage = Backbone.Model.extend({
     initialize: function(image, options) {
-        this.set( {tags : options.tags} )
+        this.set({ tags : options.tags || [] })
     }
 })
 
-PA.CoverGallery = Backbone.Collection.extend({
+PA.Covers = Backbone.Collection.extend({
     model : PA.CoverImage
 })
 
@@ -52,16 +61,28 @@ PA.Gallery = Backbone.Collection.extend({
     model : PA.GalleryImage
 })
 
+PA.PhotoAlbum = Backbone.Model.extend({
+    initialize : function(album, options) {
+        this.set({
+            coverImage : new PA.CoverImage( this.get('cover'), {} ),
+            photos : new PA.Gallery(album.gallery)
+        })
+    }
+})
 
-PA.Film = Backbone.Model.extend()
-PA.ProfileSection = Backbone.Model.extend()
-PA.PhotoAlbum = Backbone.Model.extend()
-
-/*
-PA.photoAlbums = new Backbone.Collection({
+PA.PhotoAlbums = Backbone.Collection.extend({
     model : PA.PhotoAlbum
 })
-*/
+
+PA.Film = Backbone.Model.extend({
+})
+
+PA.Films = Backbone.Collection.extend({
+    model : PA.Film
+})
+
+PA.ProfileSection = Backbone.Model.extend()
+
 
 
 PA.films = new Backbone.Collection()

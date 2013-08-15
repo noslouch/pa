@@ -1,5 +1,6 @@
 'use strict';
 var PA = PA || {}
+PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
 PA.BrandControls = Backbone.View.extend({
     tagName : 'div',
@@ -104,9 +105,6 @@ PA.BrandFilter = Backbone.View.extend({
     }
 })
 
-var FilterControls = Backbone.View.extend({
-
-})
 
 // instantiate with projects collection
 PA.FilterBar = Backbone.View.extend({
@@ -114,10 +112,18 @@ PA.FilterBar = Backbone.View.extend({
     className : 'filter-bar',
     id : 'filter-bar',
     template : PA.jst.projectFilter,
+    initialize : function() {
+        _.bindAll(this, 'render', 'openMenu','debug')
+        this.$el.html( this.template() )
+    },
     events : {
-        'click' : function(e) { e.preventDefault(); e.stopPropagation() },
-        'click h3' : 'openMenu',
-        'click .filter a' : 'filter'
+        'click .filter' : function(e){
+            e.preventDefault()
+            e.stopPropagation() 
+            console.log('click')
+        },
+        'click .filter a' : 'filter',
+        'click h3' : 'openMenu'
         //'click h3' : 'debug'
     },
     openMenu : function(e) {
@@ -125,31 +131,29 @@ PA.FilterBar = Backbone.View.extend({
         $(e.target.parentElement).addClass('open')
     },
     filter : function(e) {
-        this.dispatcher.trigger('filter', e)
+        PA.dispatcher.trigger('filter', e)
     },
     debug : function(e) { 
         //console.log($(e.currentTarget).data('filter'))
         //this.dispatcher.trigger('filter2', e)
     },
-    initialize : function() {
-        this.$el.html( this.template() )
-        this.dispatcher = PA.dispatcher
-    },
-    render : function(options) {
+    render : function() {
+        this.collection = PA.projects
+
         this.$('#brand .wrapper')
             .append( new PA.BrandControls().render() )
             .append( new PA.BrandFilter({
-                collection : options.collection
+                collection : this.collection
             }).render() )
         this.$('#industry .wrapper')
             .append( new PA.ProjectFilter({
                 type : 'industry',
-                collection : options.collection
+                collection : this.collection
             }).render() )
         this.$('#type .wrapper')
             .append( new PA.ProjectFilter({
                 type : 'type',
-                collection : options.collection
+                collection : this.collection
             }).render() )
 
         this.$el
@@ -157,7 +161,7 @@ PA.FilterBar = Backbone.View.extend({
             .append( PA.jst.sorts() )
             .append( PA.jst.views() )
 
-        return this.el
+        PA.app.header.$el.append( this.el )
     }
 })
 

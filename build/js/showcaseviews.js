@@ -1,7 +1,8 @@
 'use strict';
 var PA = PA || {}
+PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
-var ImageThumb = Backbone.View.extend({
+PA.ImageThumb = Backbone.View.extend({
     tagName : "div",
     template : PA.jst.thumbTemplate,
     className : function() {
@@ -13,7 +14,7 @@ var ImageThumb = Backbone.View.extend({
     },
     render : function(){
         this.$el.html( this.template({
-            url : this.model.get('url'),
+            url : this.options.path ? this.options.path + '/' + this.model.get('url') : this.model.get('url'),
             cover : this.options.cover,
             caption : this.model.get('caption'),
             thumb : this.model.get('thumb'),
@@ -26,14 +27,17 @@ var ImageThumb = Backbone.View.extend({
         click : "view"
     },
     view : function (e) {
-        e.preventDefault()
-        PA.router.navigate("projects/" + this.model.get('url'), {trigger : true} )
+        //e.preventDefault()
+        //PA.router.navigate("projects/" + this.model.get('url'), {trigger : true} )
    }
 })
 
-var ImageShowcase = Backbone.View.extend({
+PA.ImageShowcase = Backbone.View.extend({
     tagName : 'div',
     id : 'iso-grid',
+    initialize : function() {
+        _.bindAll(this, 'render', 'firstLoad', 'filter')
+    },
     className : function() {
         var classes = ['isotope-grid', 'showcase', 'image']
         if (this.options.cover) {
@@ -44,19 +48,23 @@ var ImageShowcase = Backbone.View.extend({
             return classes.join(' ')
         }
     },
-    render : function(){
+    render : function(options){
         this.collection.forEach(function(image) {
-            var thumb = new ImageThumb({
+            var thumb = new PA.ImageThumb({
                 model : image,
                 cover : this.options.cover ? true : false,
-                large : this.collection.length < 5 && !this.options.cover
+                large : this.collection.length < 5 && !this.options.cover,
+                path : this.options.path
             })
             this.$el.append( thumb.render() )
         }, this)
 
+        //this.isotope()
+        fbLoader()
+
         return this.el
     },
-    isotope: function() {
+    firstLoad: function() {
 
         var $img = this.$('img'),
             rtl = this.$el.hasClass('rtl'),
@@ -72,17 +80,19 @@ var ImageShowcase = Backbone.View.extend({
                     columnWidth: rtl ? 164*1.5 : 164
                 },
                 onLayout : function() {
-                    console.dir(this)
                     $(this).css('overflow', 'visible')
                 }
             })
 
             $img.addClass('loaded')
         })
+    },
+    filter : function(filter) {
+        this.$el.isotope({ filter : filter })
     }
 })
 
-var FilmThumb = Backbone.View.extend({
+PA.FilmThumb = Backbone.View.extend({
     tagName : 'div',
     template : PA.jst.filmThumb,
     render : function() {
@@ -92,7 +102,7 @@ var FilmThumb = Backbone.View.extend({
     }
 })
 
-var FilmShowcase = Backbone.View.extend({
+PA.FilmShowcase = Backbone.View.extend({
     tagName : 'div',
     rowTmpl : PA.jst.filmRow,
     $row : undefined,
@@ -103,14 +113,14 @@ var FilmShowcase = Backbone.View.extend({
                 this.$row = $( this.rowTmpl() )
                 this.$el.append(this.$row)
             }
-            this.$row.append( new FilmThumb({ model : model }).render() )
+            this.$row.append( new PA.FilmThumb({ model : model }).render() )
         }, this )
 
         return this.el
     }
 })
 
-var VideoShowcase = Backbone.View.extend({
+PA.VideoShowcase = Backbone.View.extend({
     tagname : 'div',
     className : 'showcase video',
     videoCaption : PA.jst.videoCaption,
@@ -136,6 +146,10 @@ var VideoShowcase = Backbone.View.extend({
     }
 })
 
+PA.TextShowcase = Backbone.View.extend({
+
+})
+
 PA.ShowcaseContainer = Backbone.View.extend({
     tagName : 'div',
     id : 'showcaseContainer',
@@ -146,10 +160,10 @@ PA.ShowcaseContainer = Backbone.View.extend({
                 // instantiated with options object, can be passed through render method
                 // collection : new CoverGallery or new Gallery
                 // cover : boolean
-                var html = new ImageShowcase(this.options)
+                var html = new PA.ImageShowcase(this.options)
                 this.$el.html( html.render() )
                 html.isotope()
-                fbLoader()
+                return this
                 break;
             case 'list':
                 //this.$el.html( new ListShowcase(options).el )
@@ -174,4 +188,3 @@ PA.ShowcaseContainer = Backbone.View.extend({
         this.options = options
     }
 })
-
