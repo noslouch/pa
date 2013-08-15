@@ -1,7 +1,7 @@
 [
     {
         "id" : "23",
-        "type" : "paArticle",
+        "type" : "paSubject",
         "title" : "Article Title #1",
         "date" : "1376421187413",
         "url" : "article-title-1",
@@ -32,7 +32,7 @@
     },
     {
         "id" : "24",
-        "type" : "paArticle",
+        "type" : "paSubject",
         "title" : "Article Title #2",
         "date" : "1376421187413",
         "url" : "articlet-title-2",
@@ -63,7 +63,7 @@
     },
     {
         "id" : "25",
-        "type" : "paArticle",
+        "type" : "paSubject",
         "title" : "Article Title #3",
         "date" : "1325394000000",
         "url" : "article-title-3",
@@ -94,7 +94,7 @@
     },
     {
         "id" : "26",
-        "type" : "paArticle",
+        "type" : "paSubject",
         "title" : "Article Title #4",
         "date" : "1325394000000",
         "url" : "article-title-4",

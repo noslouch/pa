@@ -2,7 +2,7 @@
 var PA = PA || {}
 PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
-Backbone.View.prototype.makeHtmlDate = function(dateString, onlyYear) {
+Backbone.Model.prototype.makeHtmlDate = function(dateString, onlyYear) {
     var res = [],
         d = parseInt(dateString, 10)
 
@@ -18,7 +18,7 @@ Backbone.View.prototype.makeHtmlDate = function(dateString, onlyYear) {
     return res.join("-")
 }
 
-Backbone.View.prototype.parseDate = function(dateString) {
+Backbone.Model.prototype.parseDate = function(dateString) {
     return new Date( parseInt(dateString, 10) )
 }
 

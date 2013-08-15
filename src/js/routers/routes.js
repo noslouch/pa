@@ -196,7 +196,29 @@ PA.Router = Backbone.Router.extend({
 
     profile : function() {
 
-        PA.profileView = new PA.ProfileViewer({ el : '#profileViewer' })
+        PA.profilePages = new Backbone.Collection()
+        var add = function(d) { PA.profilePages.add(d) }
+        $.when( $.get('/fixtures/awardsFixture'),
+                $.get('/fixtures/bioFixture'),
+                $.get('/fixtures/paAuthorFixture'),
+                $.get('/fixtures/paPhotosFixture'),
+                $.get('/fixtures/pressFixture')
+        ).done( function(){
+            _.each(arguments, function(el){
+                PA.profilePages.add(el[0])
+                PA.groupedProfilePages = PA.profilePages.groupBy('type')
+            })
+        })
+        PA.profileView = new PA.ProfileViewer({
+            el : '#profileViewer',
+            collection : PA.profilePages
+        })
+
+        PA.app.page.render({
+            view : PA.profileView,
+            pageClass : 'profile',
+            section : 'Profile Home',
+        })
     },
 
     contact : function() {

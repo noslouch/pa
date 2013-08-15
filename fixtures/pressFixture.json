@@ -1,11 +1,11 @@
 [
     {
         "id" : "11",
+        "type" : "press",
         "title" : "Press Title #1",
         "date" : "1376421187413",
         "url" : "press-title-1",
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.",
-        "type" : "press",
         "gallery" : [
             {
                 "thumb" : "http://placehold.it/168x217",
@@ -32,11 +32,11 @@
     },
     {
         "id" : "12",
+        "type" : "press",
         "title" : "Press Title #2",
         "date" : "1376421187413",
         "url" : "press-title-2",
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.",
-        "type" : "press",
         "gallery" : [
             {
                 "thumb" : "http://placehold.it/168x217",
@@ -63,11 +63,11 @@
     },
     {
         "id" : "13",
+        "type" : "press",
         "title" : "Press Title #3",
         "date" : "1325394000000",
         "url" : "press-title-3",
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.",
-        "type" : "press",
         "gallery" : [
             {
                 "thumb" : "http://placehold.it/168x217",
@@ -94,11 +94,11 @@
     },
     {
         "id" : "14",
+        "type" : "press",
         "title" : "Press Title #4",
         "date" : "1325394000000",
         "url" : "press-title-4",
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.",
-        "type" : "press",
         "gallery" : [
             {
                 "thumb" : "http://placehold.it/168x217",

@@ -73,11 +73,17 @@ JST.bioImage = [
 
 JST.textGallery = [
     '<div class="gallery">',
-        '<div class="img">',
-            '<a href="<%= url %>" class="fancybox" rel="gallery">',
-                '<img src="<%= thumb %>" alt="<%= caption %>">',
-            '</a>',
-        '</div>',
+        '<% _.each(images, function(image) { %>',
+            '<% print( imageTemplate({ url : image.url, thumb : image.thumb, caption : image.caption }) ) %>',
+        '<% }) %>',
+    '</div>'
+].join('\n')
+
+JST.textGalleryImage = [
+    '<div class="img">',
+        '<a href="<%= url %>" class="fancybox" rel="gallery">',
+            '<img src="<%= thumb %>" alt="<%= caption %>">',
+        '</a>',
     '</div>'
 ].join('\n')
 
@@ -131,7 +137,7 @@ JST.listHiddenHeaderPartial = [
 
 JST.listItemPartial = [
     '<li>',
-        '<a href="<%= path %><%= url %>">',
+        '<a href="<%= path %><%= url %>" id="<%= id %>">',
             '<h4>',
                 '<%= title %>',
             '</h4>',

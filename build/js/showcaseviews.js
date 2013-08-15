@@ -32,6 +32,9 @@ PA.ImageThumb = Backbone.View.extend({
    }
 })
 
+// instantiate with
+// cover : boolean
+// collection/model : of images
 PA.ImageShowcase = Backbone.View.extend({
     tagName : 'div',
     id : 'iso-grid',
@@ -154,44 +157,63 @@ PA.VideoShowcase = Backbone.View.extend({
 })
 
 PA.TextShowcase = Backbone.View.extend({
+    tagName : 'div',
+    className : 'showcase text',
+    base : PA.jst.textTemplate,
+    header : PA.jst.textTemplateHeader,
+    bioImg : PA.jst.bioImage,
+    gallery : PA.jst.textGallery,
+    back : PA.jst.backButton,
+    render : function() {
+        return this.$el
+    }
+})
+
+PA.ListView = Backbone.View.extend({
+    tagName : 'section',
+    header : PA.jst.listHeaderPartial,
+    partial : PA.jst.listItemPartial,
+
+    render : function() {
+        var listItems = this.options.listItems
+        var path = this.options.path
+        var date = this.options.date
+
+        this.$el.append( '<ul />')
+        this.$('ul').append( this.header({ date : date }) )
+
+        _.each( listItems, function(listItem) {
+
+            this.$('ul')
+            .append( this.partial({
+                path : path ? path + "/" : "",
+                url : listItem.get('url'),
+                id : listItem.id,
+                title : listItem.get('title'),
+                summary : listItem.get('summary')
+            }) )
+
+        }, this )
+
+        return this.el
+    }
 
 })
 
-PA.ShowcaseContainer = Backbone.View.extend({
+PA.ListShowcase = Backbone.View.extend({
     tagName : 'div',
-    id : 'showcaseContainer',
-    className : 'container',
+    className : 'showcase list',
     render : function(){
-        switch (this.options.type) {
-            case 'image':
-                // instantiated with options object, can be passed through render method
-                // collection : new CoverGallery or new Gallery
-                // cover : boolean
-                var html = new PA.ImageShowcase(this.options)
-                this.$el.html( html.render() )
-                html.isotope()
-                return this
-                break;
-            case 'list':
-                //this.$el.html( new ListShowcase(options).el )
-                break;
-            case 'text':
-                //this.$el.html( new TextShowcase(options).el )
-                break;
-            case 'film':
-                //this.$el.html ( new FilmShowcase(options).el )
-                break;
-            default:
-                break;
-        }
 
+        // groupedCollection is an object of years paired with project objects that fall within that year.
+        _.each( this.options.groupedCollection, function(v,k){
+            var html = new PA.ListView({
+                date : k,
+                listItems : v,
+                path : this.options.path
+            })
+            this.$el.append( html.render() )
+        }, this )
         return this.el
-
-        if (this.options.cover) {
-            //$('.page').html(this.el)
-        }
-    },
-    initialize : function(options) {
-        this.options = options
     }
 })
