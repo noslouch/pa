@@ -21,7 +21,7 @@ PA.Router = Backbone.Router.extend({
 
     projects : function() {
 
-        $.get('/fixtures/projectFixture').done(function(d) {
+        $.get('/fixtures/projectFixture.json').done(function(d) {
             PA.projects = new PA.Projects(d)
 
             PA.app.header.filterBar.render()
@@ -66,7 +66,7 @@ PA.Router = Backbone.Router.extend({
             // A) navigate to direct URL
             // B) navigate from a different page section
 
-            $.get('/fixtures/projectFixture').done(function(d) {
+            $.get('/fixtures/projectFixture.json').done(function(d) {
                 var project = new PA.Project( _.findWhere(d, {url : title}) )
 
                 PA.singleProject = new PA.ProjectViewer({
@@ -85,7 +85,7 @@ PA.Router = Backbone.Router.extend({
     },
 
     photography : function() {
-        $.get('/fixtures/photographyFixture').done(function(d) {
+        $.get('/fixtures/photographyFixture.json').done(function(d) {
             PA.albums = new PA.PhotoAlbums(d)
 
             PA.coverImages = new PA.Covers( PA.albums.pluck('coverImage') )
@@ -127,7 +127,7 @@ PA.Router = Backbone.Router.extend({
             // A) navigate to direct URL
             // B) navigate from a different page section
 
-            $.get('/fixtures/photographyFixture').done(function(d) {
+            $.get('/fixtures/photographyFixture.json').done(function(d) {
                 var photoAlbumModel = new PA.PhotoAlbum( _.findWhere(d, {url : title}) )
 
                 PA.singleAlbumView = new PA.SingleAlbumView({
@@ -145,7 +145,7 @@ PA.Router = Backbone.Router.extend({
     },
 
     film : function() {
-        $.get('/fixtures/filmFixture').done( function(d) {
+        $.get('/fixtures/filmFixture.json').done( function(d) {
             PA.films = new PA.Films(d)
             PA.filmLanding = new PA.FilmThumbLayout({
                 collection : PA.films
@@ -179,7 +179,7 @@ PA.Router = Backbone.Router.extend({
         } else {
             // Films haven't loaded yet
 
-            $.get('/fixtures/filmFixture').done( function(d) {
+            $.get('/fixtures/filmFixture.json').done( function(d) {
                 var filmModel = new PA.PhotoAlbum( _.findWhere(d, { url : title }) )
                 PA.singleFilmView = new PA.SingleFilmView({
                     model : filmModel
@@ -198,11 +198,11 @@ PA.Router = Backbone.Router.extend({
 
         PA.profilePages = new Backbone.Collection()
         var add = function(d) { PA.profilePages.add(d) }
-        $.when( $.get('/fixtures/awardsFixture'),
-                $.get('/fixtures/bioFixture'),
-                $.get('/fixtures/paAuthorFixture'),
-                $.get('/fixtures/paPhotosFixture'),
-                $.get('/fixtures/pressFixture')
+        $.when( $.get('/fixtures/awardsFixture.json'),
+                $.get('/fixtures/bioFixture.json'),
+                $.get('/fixtures/paAuthorFixture.json'),
+                $.get('/fixtures/paPhotosFixture.json'),
+                $.get('/fixtures/pressFixture.json')
         ).done( function(){
             _.each(arguments, function(el){
                 PA.profilePages.add(el[0])
