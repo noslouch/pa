@@ -1,0 +1,69 @@
+.ChannelImagesField .cfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden;}
+.ChannelImagesField .cfix {display:inline-block; }
+/* required comment for clearfix to work in Opera \*/
+* html .ChannelImagesField .cfix { height:1%; }
+.ChannelImagesField .cfix {display:block; }
+/* end clearfix */
+
+.ChannelImagesField {position:relative;}
+
+/* TABS: jQuery UI Reset! */
+.ChannelImagesField .ChannelImagesTabs {padding:0; margin:0; background:none; border:0; border-radius:0;}
+.ChannelImagesField .ChannelImagesTabs li {background:none; padding:0; margin:0; border:0; border-radius:0;}
+.ChannelImagesField .ChannelImagesTabs li a {background:none; padding:0; margin:0; border:0; border-radius:0;}
+.ChannelImagesField .ui-tabs-panel {padding:10px 5px;}
+
+/* TABS: Normal Style */
+.ChannelImagesField .ChannelImagesTabs {border-bottom:1px solid #B8B8B8;}
+.ChannelImagesField .ChannelImagesTabs li {margin-left:5px; margin-bottom: -1px; height:22px; background:url(img/tab_inactive_bg.gif) repeat-x; border:1px solid #B8B8B8; border-top-left-radius:2px; border-top-right-radius:2px; line-height:22px;}
+.ChannelImagesField .ChannelImagesTabs li a {color:#646464; padding:0 5px; font-size:11px; font-weight:bold; float:left; text-decoration:none; outline:none;}
+.ChannelImagesField .ChannelImagesTabs li.ui-tabs-selected {border-bottom:none;}
+.ChannelImagesField .ChannelImagesTabs li.ui-tabs-selected a {color:#B22447;}
+.ChannelImagesField .ChannelImagesTabsHolder {background:#FFFFFF; border-bottom:1px solid #B8B8B8; border-left:1px solid #B8B8B8; border-right:1px solid #B8B8B8;}
+
+/* TABLE */
+.ChannelImagesField .ChannelImagesTable {width:100%; border:1px solid #b6c0c2; border-radius:3px; -webkit-border-radius: 3px; -moz-border-radius:4px;}
+.ChannelImagesField .ChannelImagesTable thead {background:none !important}
+.ChannelImagesField .ChannelImagesTable th {text-align:left; font-size:12px; color:#505050 !important; line-height:13px; background:#fff url(img/thead_bg.png) repeat-x 0 1px !important; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))) !important; background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)) !important; border-bottom:1px solid #BBB !important; text-shadow:0 1px #fff; padding:5px 10px 6px 10px !important; border-left:0 !important; border-top:0 !important; cursor:default !important; text-shadow: none !important;}
+.ChannelImagesField .ChannelImagesTable th:first-child {border-right:1px solid #ccc; border-right-color:rgba(0,0,0,0.1) !important; }
+.ChannelImagesField .ChannelImagesTable th:last-child {border-right:none !important;}
+.ChannelImagesField .ChannelImagesTable th h4 {font-size:14px; color:#37444D; margin:0 !important;}
+.ChannelImagesField .ChannelImagesTable th h4 small {font-size:10px; font-family:Helvetica,Arial,sans-serif; color:#37444D; font-weight:normal;}
+.ChannelImagesField .ChannelImagesTable td {padding:5px 8px; font-size:11px; background:#fff; border:solid #e3e3e3; border-width:1px 0 0 0;}
+.ChannelImagesField .ChannelImagesTable td:first-child {border-right-width:1px}
+.ChannelImagesField .ChannelImagesTable td:last-child {border-right:none !important;}
+.ChannelImagesField .ChannelImagesTable td input[type=text] {border:0; padding:3px;}
+.ChannelImagesField .ChannelImagesTable td input[type=text]:focus {padding:3px;}
+.ChannelImagesField .ChannelImagesTable td select {padding:3px 5px; border:1px solid #ccc;}
+.ChannelImagesField .ChannelImagesTable td select option {padding:0 3px;}
+.ChannelImagesField .ChannelImagesTable td small {display:block; margin:2px 0 0 0;}
+.ChannelImagesField .ChannelImagesTable tr.odd td {background:#fff;}
+.ChannelImagesField .ChannelImagesTable tbody tr:last-child td:last-child {border-bottom-right-radius:4px; -webkit-border-bottom-right-radius: 4px;}
+.ChannelImagesField .ChannelImagesTable tbody tr:last-child td:first-child {border-bottom-left-radius:4px; -webkit-border-bottom-left-radius: 4px;}
+.ChannelImagesField .ChannelImagesTable tfoot {background:none !important}
+.ChannelImagesField .ChannelImagesTable tfoot td {text-align:left; font-size:12px; color:#505050 !important; line-height:13px; background:#fff url(img/thead_bg.png) repeat-x 0 1px !important; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))) !important; background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)) !important; border-bottom:1px solid #BBB; text-shadow:0 1px #fff; padding:5px 10px 6px 10px !important; border-left:0 !important; cursor:default !important;}
+.ChannelImagesField .ActionGroup {margin-bottom:20px !important}
+.ChannelImagesField .ActionGroup .group_name h4 {float:left; padding:0 10px 0 0;}
+.ChannelImagesField .ActionGroup .group_name h4 input {border:1px solid #ccc; font-size:12px; padding:2px 5px;}
+.ChannelImagesField .ActionGroup .action_cols th {border-right:1px solid #ccc !important;}
+.ChannelImagesField .ActionGroup .action_cols th:last-child {border-right:0 !important;}
+.ChannelImagesField .ActionGroup td {border-right-width:1px}
+.ChannelImagesField .MoveAction {float:left; width:16px; height:16px; background:url(img/move.png) no-repeat; text-indent:-9999px; cursor:move; margin:0 6px 0 0}
+.ChannelImagesField .DelAction {float:left; width:16px; height:16px; background:url(img/delete.png) no-repeat; text-indent:-9999px;}
+.ChannelImagesField .DelActionGroup {width:16px; height:16px; background:url(img/del.png) no-repeat; display:block; position:absolute; right:-17px; top:-14px; text-indent:-9999px;}
+
+.ChannelImagesField .default_actions {display:none}
+.ChannelImagesField .ActionGroup {width:95%; margin:0 auto;}
+.ChannelImagesField .ActionGroup .imageprev {float:right; display:block; position:relative; height:16px;}
+
+.ChannelImagesField h3 {color:#37444D; font-size:16px; font-family:Helvetica,Arial,sans-serif; margin:0; margin-bottom:10px !important; padding:0;}
+.ChannelImagesField h3 small {display:block; font-size:11px; font-weight:normal; padding:5px 0 0;}
+
+.ChannelImagesField .AddActionGroup {width:200px; color:#505050 !important; font-weight:bold; display:block; font-size:13px; background:#fff url(img/thead_bg.png) repeat-x 0 1px; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))); background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)); text-shadow:0 1px #fff; padding:4px 8px 7px; border:1px solid #b6c0c2; border-radius:3px; -webkit-border-radius:3px; text-decoration:none; text-align:center;}
+.ChannelImagesField .AddActionGroup img {left:-5px; position:relative; top:3px;}
+.ChannelImagesField .AddActionGroup:hover {text-decoration:none !important; color:#E7174B !important}
+
+.ChannelImagesField .TestLocation {padding:0 0 0 20px; height:16px; display:block; background:url(img/test.png) no-repeat; line-height:16px; font-size:13px; font-weight:bold;}
+
+.ChannelImagesField .view_toggle {position:absolute; font-weight:bold; padding:0 10px; font-size:12px; left:450px; top:0; margin-left:5px; margin-bottom: -1px; height:22px; background:url(img/tab_inactive_bg.gif) repeat-x; border:1px solid #B8B8B8; border-top-left-radius:2px; border-top-right-radius:2px; line-height:22px;}
+.ChannelImagesField .view_toggle input {position:relative; top:2px;}

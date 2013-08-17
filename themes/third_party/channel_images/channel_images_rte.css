@@ -1,0 +1,12 @@
+.WysiHat-editor-toolbar .channel_images b {background:url({theme_folder_url}img/select_images_grey.png) center center no-repeat; display:block; height:16px; width:16px;}
+.WysiHat-editor-toolbar .channel_images:hover b {background:url({theme_folder_url}img/select_images.png) center center no-repeat;}
+
+.rte-channel_images-dialog {background:#F7F8FA}
+.rte-channel_images-dialog ul.tabs {background:none; border-bottom:1px solid #ccc;}
+.rte-channel_images-dialog ul.tabs li.ui-tabs-selected {background:none;}
+.rte-channel_images-dialog .tabcontent {padding:10px 0;}
+.rte-channel_images-dialog .tabcontent .imageholder{height:200px !important; overflow-y:scroll; border-bottom:1px solid #ccc;}
+.rte-channel_images-dialog .tabcontent .sizeholder {}
+.rte-channel_images-dialog .tabcontent .sizeholder li {float:left; margin-right:10px;}
+.rte-channel_images-dialog .CImage {background:#FFF; border:1px solid #EEE; float:left; padding:7px; cursor:pointer;}
+.rte-channel_images-dialog .Selected {background:#0073E7}
