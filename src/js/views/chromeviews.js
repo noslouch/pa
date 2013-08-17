@@ -64,7 +64,7 @@ PA.App = Backbone.View.extend({
         'click' : 'closeMenu'
     },
     closeMenu : function(e) { 
-        this.$('.open').removeClass('open')
+        this.header.$('.open').removeClass('open')
     },
     routeHandler : function(methodName, urlParam) {
         if (methodName !== 'projects'){

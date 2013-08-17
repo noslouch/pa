@@ -24,8 +24,8 @@ PA.ProjectDetails = Backbone.View.extend({
     template : PA.jst.projectDetails,
     render : function(options) {
         this.$el.html( this.template({
-            htmlDate : new Date( parseInt(this.model.get('date'),10) ).getFullYear(),
-            date : new Date( parseInt(this.model.get('date'),10) ).getFullYear(),
+            htmlDate : this.model.get('htmlDate'),
+            date : this.model.get('date').year(),
             title : this.model.get('title'),
             summary : this.model.get('summary')
         }) )
@@ -124,8 +124,8 @@ PA.AlbumDetails = Backbone.View.extend({
             content : this.model.get('content')
         }) ).prepend( this.header({
             title : this.model.get('title'),
-            htmlDate : this.makeHtmlDate( this.model.get('date') ),
-            date : this.parseDate( this.model.get('date') ).getFullYear()
+            htmlDate : this.model.get('htmlDate'),
+            date : this.model.get('date').year()
         }) ).append( this.back({
             buttonText : 'View All Photo Albums',
             url : '/photography'
@@ -170,8 +170,8 @@ PA.FilmDetails = Backbone.View.extend({
         }) )
         $article.prepend( this.header({
             title : this.model.get('title'),
-            htmlDate : this.makeHtmlDate( this.model.get('date') ),
-            date : this.parseDate( this.model.get('date') ).getFullYear()
+            htmlDate : this.model.get('htmlDate'),
+            date : this.model.get('date').year(),
         }) ).append( this.back({
             buttonText : 'View All Film',
             url : '/film'

@@ -1,11 +1,11 @@
 [
     {
         "id" : "23",
+        "type" : "articles-by-pa",
         "title" : "Article Title #1",
         "date" : "1376421187413",
         "url" : "article-title-1",
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.",
-        "type" : "press",
         "gallery" : [
             {
                 "thumb" : "http://placehold.it/168x217",
@@ -32,11 +32,11 @@
     },
     {
         "id" : "24",
+        "type" : "articles-by-pa",
         "title" : "Article Title #2",
         "date" : "1376421187413",
         "url" : "articlet-title-2",
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.",
-        "type" : "press",
         "gallery" : [
             {
                 "thumb" : "http://placehold.it/168x217",
@@ -63,11 +63,11 @@
     },
     {
         "id" : "25",
+        "type" : "articles-by-pa",
         "title" : "Article Title #3",
         "date" : "1325394000000",
         "url" : "article-title-3",
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.",
-        "type" : "press",
         "gallery" : [
             {
                 "thumb" : "http://placehold.it/168x217",
@@ -94,11 +94,11 @@
     },
     {
         "id" : "26",
+        "type" : "articles-by-pa",
         "title" : "Article Title #4",
         "date" : "1325394000000",
         "url" : "article-title-4",
         "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit.",
-        "type" : "press",
         "gallery" : [
             {
                 "thumb" : "http://placehold.it/168x217",

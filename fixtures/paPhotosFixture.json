@@ -1,8 +1,9 @@
 [
     {
         "id" : "22",
+        "type" : "photos-of-pa",
         "url" : "photos-of-pa",
-        "images" : [
+        "gallery" : [
             {
                 "thumb" : "http://placehold.it/197x259",
                 "url" : "http://placehold.it/1080x600",

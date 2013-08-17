@@ -8,7 +8,9 @@ PA.Project = Backbone.Model.extend({
             coverImage : new PA.CoverImage( this.get('cover'), {
                 tags : project.brand_tags.concat(project.type_tags).concat(project.industry_tags)
             }),
-            showcases : new PA.Showcases(project.showcases)
+            showcases : new PA.Showcases(project.showcases),
+            htmlDate : this.makeHtmlDate( this.get('date') ),
+            date : this.parseDate( this.get('date' ) )
         })
         /*
         this.get('showcases').add({
@@ -20,6 +22,9 @@ PA.Project = Backbone.Model.extend({
             links : this.get('relatedLinks')
         })
         */
+    },
+    url : function() {
+        return '/projects/' + this.get('url')
     }
 })
 
@@ -64,8 +69,13 @@ PA.PhotoAlbum = Backbone.Model.extend({
     initialize : function(album, options) {
         this.set({
             coverImage : new PA.CoverImage( this.get('cover'), {} ),
-            photos : new PA.Gallery(album.gallery)
+            photos : new PA.Gallery(album.gallery),
+            htmlDate : this.makeHtmlDate( this.get('date') ),
+            date : this.parseDate( this.get('date' ) )
         })
+    },
+    url : function() {
+        return '/photography/' + this.get('url')
     }
 })
 
@@ -74,12 +84,43 @@ PA.PhotoAlbums = Backbone.Collection.extend({
 })
 
 PA.Film = Backbone.Model.extend({
+    url : function() {
+        return '/film/' + this.get('url')
+    }
 })
 
 PA.Films = Backbone.Collection.extend({
     model : PA.Film
 })
 
+PA.PressItem = Backbone.Model.extend({
+    initialize : function(pressItem, options){
+        this.set({
+            htmlDate : this.makeHtmlDate( this.get('date') ),
+            date : this.parseDate( this.get('date') )
+        })
+     },
+    url : function() {
+        return '/press/' + this.get('url')
+    }
+})
+
+PA.PressCollection = Backbone.Collection.extend({
+    model : PA.PressItem
+})
+
+PA.AwardItem = Backbone.Model.extend({
+    initialize : function(awardItem, options){
+        this.set({
+            htmlDate : this.makeHtmlDate( this.get('date') ),
+            date : this.parseDate( this.get('date' ) )
+        })
+     }
+})
+
+PA.AwardCollection = Backbone.Collection.extend({
+    model : PA.AwardItem
+})
 PA.ProfileSection = Backbone.Model.extend()
 
 

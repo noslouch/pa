@@ -4312,30 +4312,8 @@ iframe {
   width: 66.66667%;
   float: left;
 }
-/* line 550, ../../src/sass/_general.scss */
-.details .button {
-  background: #e0e0e0;
-  padding-bottom: 13px;
-}
-/* line 554, ../../src/sass/_general.scss */
-.details .button:before {
-  content: "<";
-  color: red;
-  display: inline;
-  vertical-align: text-top;
-  margin-right: 0.5em;
-}
-/* line 562, ../../src/sass/_general.scss */
-.details .button:hover {
-  background: red;
-  color: white;
-}
-/* line 565, ../../src/sass/_general.scss */
-.details .button:hover:before {
-  color: black;
-}
 
-/* line 570, ../../src/sass/_general.scss */
+/* line 552, ../../src/sass/_general.scss */
 .container {
   position: relative;
   padding-left: 0;
@@ -4345,33 +4323,60 @@ iframe {
   max-width: 854px;
 }
 
-/* line 584, ../../src/sass/_general.scss */
+/* line 565, ../../src/sass/_general.scss */
+.viewer .button,
+.container .button {
+  background: #e0e0e0;
+  padding-bottom: 13px;
+}
+/* line 569, ../../src/sass/_general.scss */
+.viewer .button:before,
+.container .button:before {
+  content: "<";
+  color: red;
+  display: inline;
+  vertical-align: text-top;
+  margin-right: 0.5em;
+}
+/* line 577, ../../src/sass/_general.scss */
+.viewer .button:hover,
+.container .button:hover {
+  background: red;
+  color: white;
+}
+/* line 580, ../../src/sass/_general.scss */
+.viewer .button:hover:before,
+.container .button:hover:before {
+  color: black;
+}
+
+/* line 588, ../../src/sass/_general.scss */
 .details header {
   margin-bottom: 1.75em;
 }
-/* line 585, ../../src/sass/_general.scss */
+/* line 589, ../../src/sass/_general.scss */
 .details h3, .details time {
   font-size: 1.1875em;
 }
-/* line 586, ../../src/sass/_general.scss */
+/* line 590, ../../src/sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.5em;
   line-height: 0.7;
 }
-/* line 592, ../../src/sass/_general.scss */
+/* line 596, ../../src/sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 597, ../../src/sass/_general.scss */
+/* line 601, ../../src/sass/_general.scss */
 .details p {
   font-size: 1.1875em;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 605, ../../src/sass/_general.scss */
+/* line 609, ../../src/sass/_general.scss */
 .showcase-links,
 .profile-links {
   font-size: 1.1875em;
@@ -4379,22 +4384,22 @@ iframe {
   line-height: 1.2;
 }
 
-/* line 611, ../../src/sass/_general.scss */
+/* line 615, ../../src/sass/_general.scss */
 .tags {
   font-size: 0.8125em;
 }
 
-/* line 615, ../../src/sass/_general.scss */
+/* line 619, ../../src/sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 619, ../../src/sass/_general.scss */
+/* line 623, ../../src/sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 625, ../../src/sass/_general.scss */
+/* line 629, ../../src/sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }

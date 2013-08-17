@@ -547,6 +547,21 @@ iframe {
         @include grid-column(8, $collapse: true);
     }
 
+}
+
+.container {
+    //@include grid-row(collapse);
+    //max-width: 1190px;
+    //margin: 0 auto;
+
+    //.viewer & {
+        @include grid-column(8.7, $float: right, $collapse: true);
+        max-width: 854px;
+    //}
+}
+
+.viewer,
+.container {
     .button {
         background: $light-gray;
         padding-bottom: 13px;
@@ -565,17 +580,6 @@ iframe {
             &:before { color: $primary-color; }
         }
     }
-}
-
-.container {
-    //@include grid-row(collapse);
-    //max-width: 1190px;
-    //margin: 0 auto;
-
-    //.viewer & {
-        @include grid-column(8.7, $float: right, $collapse: true);
-        max-width: 854px;
-    //}
 }
 
 // type
