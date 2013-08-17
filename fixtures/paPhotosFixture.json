@@ -1,7 +1,7 @@
 [
     {
         "id" : "22",
-        "type" : "paPhotos",
+        "type" : "photos-of-pa",
         "url" : "photos-of-pa",
         "gallery" : [
             {

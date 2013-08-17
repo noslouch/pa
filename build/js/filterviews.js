@@ -120,7 +120,6 @@ PA.FilterBar = Backbone.View.extend({
         'click .filter' : function(e){
             e.preventDefault()
             e.stopPropagation() 
-            console.log('click')
         },
         'click .filter a' : 'filter',
         'click h3' : 'openMenu'

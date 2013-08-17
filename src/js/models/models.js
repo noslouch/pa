@@ -22,6 +22,9 @@ PA.Project = Backbone.Model.extend({
             links : this.get('relatedLinks')
         })
         */
+    },
+    url : function() {
+        return '/projects/' + this.get('url')
     }
 })
 
@@ -70,6 +73,9 @@ PA.PhotoAlbum = Backbone.Model.extend({
             htmlDate : this.makeHtmlDate( this.get('date') ),
             date : this.parseDate( this.get('date' ) )
         })
+    },
+    url : function() {
+        return '/photography/' + this.get('url')
     }
 })
 
@@ -78,6 +84,9 @@ PA.PhotoAlbums = Backbone.Collection.extend({
 })
 
 PA.Film = Backbone.Model.extend({
+    url : function() {
+        return '/film/' + this.get('url')
+    }
 })
 
 PA.Films = Backbone.Collection.extend({
@@ -90,7 +99,10 @@ PA.PressItem = Backbone.Model.extend({
             htmlDate : this.makeHtmlDate( this.get('date') ),
             date : this.parseDate( this.get('date') )
         })
-     }
+     },
+    url : function() {
+        return '/press/' + this.get('url')
+    }
 })
 
 PA.PressCollection = Backbone.Collection.extend({

@@ -124,7 +124,7 @@ JST.thumbTemplate = [
 JST.listHeaderPartial = [
     '<li>',
         '<h3>',
-            '<date datetime="<%= date %>"><%= date %></date>',
+            '<date datetime="<%= htmlDate %>"><%= date %></date>',
         '</h3>',
     '</li>'
 ].join('\n')
@@ -137,14 +137,18 @@ JST.listHiddenHeaderPartial = [
 
 JST.listItemPartial = [
     '<li>',
-        '<a href="<%= path %><%= url %>" id="<%= id %>">',
+        '<% if (url) { %>',
+            '<a href="<%= path %><%= url %>" id="<%= id %>">',
+        '<% } %>',
             '<h4>',
                 '<%= title %>',
             '</h4>',
             '<p>',
                 '<%= summary %>',
             '</p>',
-        '</a>',
+        '<% if (url) { %>',
+            '</a>',
+        '<% } %>',
     '</li>'
 ].join('\n')
 
@@ -159,7 +163,7 @@ JST.awardItemPartial = [
 JST.filmRow = '<div class="film-row"></div>'
 
 JST.filmThumb = [
-    '<a href="/film/<%= url %>">',
+    '<a href="<%= url %>">',
         '<div class="img">',
             '<img src="<%= thumb %>">',
         '</div>',

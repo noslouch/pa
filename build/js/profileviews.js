@@ -11,70 +11,53 @@ PA.ProfileLinks = Backbone.View.extend({
     events : {}
 })
 
-/*
-PA.ProfileViewer = Backbone.View.extend({
-    tagName : 'div',
-    className : 'profile viewer',
-    baseTmpl : PA.jst.viewer,
-    pLinks : PA.jst.profileLinks,
-    initialize : function() {
-        this.$el.html( this.baseTmpl() )
-        this.$('#details').html( this.pLinks() )
-        this.$('#bio').addClass('active')
-        this.showcase = new PA.ShowcaseContainer({ el : this.$('#showcaseContainer') })
-    },
-    render : function() {
-        return this.el
-    }
-})
-*/
-
 PA.ProfileViewer = Backbone.View.extend({
     initialize : function() {
-        _.bindAll(this, 'contentLoader', 'profileLoader')
+        _.bindAll(this, 'contentLoader', 'sectionLoader','toggleActive', 'navigate')
         this.links = this.$('#showcaseLinks')
     },
     render : function() {},
     events : {
-        'click ul a' : 'profileLoader',
-        'click .list a': 'contentLoader'
+        'click #profileLinks a' : 'navigate',
+        'click .list a': 'navigate',
+        'click #back' : 'navigate'
     },
-    contentLoader : function(e){
+    navigate : function(e) {
         e.preventDefault()
-        var model = this.collection.get(e.currentTarget.id),
+        PA.router.navigate(e.currentTarget.pathname, {trigger : true})
+    },
+    contentLoader : function(section, urlTitle) {
+        var model = this.collection.where({ url : urlTitle })[0],
             $container = this.$('#showcaseContainer'),
             layoutView = new PA.TextShowcase(),
-            $layout = layoutView.render()
+            $layout = layoutView.render(),
+            $base
 
-        console.log(model)
-        console.log(model.get('gallery'))
-        var $base = $( layoutView.base({
+        $base = $( layoutView.base({
             type : 'press',
             content : model.get('content')
         }) )
         .prepend( layoutView.header({
             title : model.get('title'),
-            htmlDate : model.get('htmlDate'),
-            date : model.get('date')
+            htmlDate : Backbone.Model.prototype.makeHtmlDate( model.get('date') ),
+            date : Backbone.Model.prototype.parseDate( model.get('date') ).format('MMMM DD, YYYY')
         }) )
         .append( layoutView.gallery({
             images : model.get('gallery'),
             imageTemplate : PA.jst.textGalleryImage
         }) )
         .append( layoutView.back({
-            url : '/profile',
+            url : '/profile/' + section,
             buttonText : 'See All Items'
         }) ).appendTo( $layout )
 
         $container.html( $layout )
     },
-    profileLoader : function(e) {
+    sectionLoader : function(urlTitle) {
         var $container = this.$('#showcaseContainer'),
-            data = this.collection.where({ type : e.currentTarget.id })
+            data = this.collection.where({ type : urlTitle })
 
-        e.preventDefault()
-
-        switch(e.currentTarget.id){
+        switch(urlTitle){
             case 'bio':
             var layoutView = new PA.TextShowcase(),
                 $layout = layoutView.render(),
@@ -90,15 +73,15 @@ PA.ProfileViewer = Backbone.View.extend({
                 $container.html($layout)
                 break;
             case 'press':
-                var pressCollection = new PA.PressCollection()
+                PA.pressCollection = new PA.PressCollection()
                 _.each(PA.groupedProfilePages.press, function(e) {
-                    pressCollection.add(e.attributes) 
+                    PA.pressCollection.add(e.attributes)
                 })
                 $container.html( new PA.ListShowcase({
-                    groupedCollection : pressCollection.groupBy( function(e){ 
-                        return e.get('date').getFullYear() 
+                    groupedCollection : PA.pressCollection.groupBy( function(e){
+                        return e.get('date').year()
                     } ),
-                    path : 'profile'
+                    path : '/profile'
                 }).render() )
                 break;
             case 'awards':
@@ -108,12 +91,13 @@ PA.ProfileViewer = Backbone.View.extend({
                 })
                 $container.html( new PA.ListShowcase({
                     groupedCollection : awardCollection.groupBy( function(e){ 
-                        return e.get('date').getFullYear() 
+                        return e.get('date').year()
                     } ),
-                    path : 'profile'
+                    path : false,
+                    url : false
                 }).render() )
                 break;
-            case 'paPhotos':
+            case 'photos-of-pa':
                 var album = new PA.PhotoAlbum( data[0].attributes )
                 var images = new PA.ImageShowcase({
                     cover : false,
@@ -122,9 +106,9 @@ PA.ProfileViewer = Backbone.View.extend({
                 $container.html( images.render() )
                 images.firstLoad()
                 break;
-            case 'paAuthor':
+            case 'articles-by-pa':
                 break;
-            case 'paSubject':
+            case 'articles-about-pa':
                 break;
             case 'interviews':
                 break;
@@ -136,5 +120,9 @@ PA.ProfileViewer = Backbone.View.extend({
                 break;
         }
 
+    },
+    toggleActive : function(section){
+        this.$('.active').removeClass('active')
+        $('#'+section).addClass('active')
     }
 })

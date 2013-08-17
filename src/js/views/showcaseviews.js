@@ -99,7 +99,12 @@ PA.FilmThumb = Backbone.View.extend({
     tagName : 'div',
     template : PA.jst.filmThumb,
     render : function() {
-        var html = this.template( this.model.attributes )
+        var html = this.template({
+            url : this.model.url(),
+            thumb : this.model.get('thumb'),
+            title : this.model.get('title'),
+            summary : this.model.get('summary')
+        })
         this.$el.append( html )
         return this.el
     }
@@ -175,19 +180,23 @@ PA.ListView = Backbone.View.extend({
     partial : PA.jst.listItemPartial,
 
     render : function() {
-        var listItems = this.options.listItems
-        var path = this.options.path
-        var date = this.options.date
+        var listItems = this.options.listItems,
+            path = this.options.path,
+            date = this.options.date,
+            url = this.options.url === false ? false : true
 
         this.$el.append( '<ul />')
-        this.$('ul').append( this.header({ date : date }) )
+        this.$('ul').append( this.header({ 
+            htmlDate : date,
+            date : date 
+        }) )
 
         _.each( listItems, function(listItem) {
 
             this.$('ul')
             .append( this.partial({
-                path : path ? path + "/" : "",
-                url : listItem.get('url'),
+                path : path ? path : '',
+                url : url ? listItem.url() : false,
                 id : listItem.id,
                 title : listItem.get('title'),
                 summary : listItem.get('summary')
@@ -210,7 +219,8 @@ PA.ListShowcase = Backbone.View.extend({
             var html = new PA.ListView({
                 date : k,
                 listItems : v,
-                path : this.options.path
+                path : this.options.path,
+                url : this.options.url
             })
             this.$el.append( html.render() )
         }, this )
