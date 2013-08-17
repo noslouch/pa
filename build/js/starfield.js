@@ -50,10 +50,12 @@ var PA = PA || {}
             var i = 0;
 
             function go(){
-                var $a = $('<a/>').attr('href', '/templates/project-single.php').append(images[i]).addClass('fast')
+                var $a = $('<a/>').attr('href', '#').append(images[i]).addClass('fast')
                 $a.appendTo($container)
-                setTimeout(go, 550)
                 i++
+                if (i < images.length) {
+                    setTimeout(go, 550)
+                }
             }
 
             go()
