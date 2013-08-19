@@ -41,17 +41,19 @@ PA.ProjectViewer = Backbone.View.extend({
     initialize : function() {
         _.bindAll(this, 'showcaseHandler')
 
+        this.showcases = this.model.get('showcases')
         this.$el.html( this.baseTmpl() )
         this.details = new PA.ProjectDetails({ 
             el : this.$('#details'),
             model : this.model
         })
+
+        //this.listenTo(this.showcases, 'change:active', 
     },
     render: function(options) {
         this.details.render()
 
-        var showcases = this.model.get('showcases')
-        showcases.forEach( function(showcase) {
+        this.showcases.forEach( function(showcase) {
             this.$('#showcaseLinks')
                 .prepend( PA.jst.showcaseLinks({
                     cid : showcase.cid,
@@ -73,7 +75,7 @@ PA.ProjectViewer = Backbone.View.extend({
                 tags : this.model.get('type_tags') 
             }).render() )
 
-        this.showcaseHandler( this.$('#showcaseLinks li:first-child a')[0].id )
+        //this.showcaseHandler( this.$('#showcaseLinks li:first-child a')[0].id )
 
         return this.el
     },
