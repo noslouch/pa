@@ -6,7 +6,7 @@ PA.PhotoAlbum = Backbone.Model.extend({
     initialize : function(album, options) {
         this.set({
             coverImage : new PA.CoverImage( this.get('cover'), {} ),
-            photos : new PA.Gallery(album.gallery),
+            photos : new PA.CoverGallery(album.gallery),
             htmlDate : this.makeHtmlDate( this.get('date') ),
             date : this.parseDate( this.get('date' ) )
         })

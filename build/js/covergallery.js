@@ -6,4 +6,4 @@ PA.CoverGallery = Backbone.Collection.extend({
     model : PA.CoverImage
 })
 
-PA.coverGallery = new PA.CoverGallery()
+//PA.coverGallery = new PA.CoverGallery()

@@ -6,7 +6,7 @@ PA.Showcase = Backbone.Model.extend({
     initialize: function(showcase, options){
         if ( showcase.type === 'gallery' ) {
             this.set({
-                gallery : new PA.Gallery(showcase.images)
+                gallery : new PA.CoverGallery(showcase.images)
             })
         }
     }
