@@ -82,9 +82,12 @@ module.exports = function(grunt) {
       },
       dev: {
         files: ['src/**/*', 'templates/**/*'],
-        tasks : ['compass', 'jshint:src','copy:dev'],
+        tasks : ['compass', 'jshint:src', 'copy:dev'],
       }
     },
+    clean: {
+        build : "build/"
+    }
   });
 
   // These plugins provide necessary tasks.
@@ -95,8 +98,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-clean');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('refresh', ['clean', 'compass', 'jshint:src', 'copy:dev']);
 
 };
