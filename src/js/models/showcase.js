@@ -12,6 +12,7 @@ PA.Showcase = Backbone.Model.extend({
                 gallery : new PA.CoverGallery(showcase.images)
             })
         }
+
     },
     activate : function(){
         this.set('active', true)
