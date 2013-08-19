@@ -86,7 +86,7 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-        build : "build/"
+        build : "build"
     }
   });
 
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-clean');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
