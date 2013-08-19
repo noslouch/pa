@@ -25,8 +25,6 @@ PA.ShowcaseViewer = Backbone.View.extend({
     },
 
     render : function(model, value, options) {
-        console.log('render called')
-        console.log('arguments: ', arguments)
         if (value) {
 
             var showcase
@@ -73,7 +71,6 @@ PA.ShowcaseLink = Backbone.View.extend({
 
     toggleModel : function(e) {
         e.preventDefault()
-        console.log('toggleModel called by model')
         this.model.trigger('swap', this.model)
     },
 
@@ -135,7 +132,9 @@ PA.ProjectViewer = Backbone.View.extend({
 
         this.showcases.forEach( function(showcase) {
             this.$('#showcaseLinks')
-                .append( new PA.ShowcaseLink({ model : showcase }).render() )
+                .append( new PA.ShowcaseLink({ 
+                    model : showcase 
+                }).render() )
         }, this )
 
         this.$('#tags')

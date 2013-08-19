@@ -12,10 +12,13 @@ PA.Showcase = Backbone.Model.extend({
                 gallery : new PA.CoverGallery(showcase.images)
             })
         }
-
+        this.url = function() {
+            return options.path + '/' + this.get('url_title')
+        }
     },
     activate : function(){
         this.set('active', true)
+        PA.router.navigate(this.url())
     },
     deactivate : function(){
         this.set('active', false)
