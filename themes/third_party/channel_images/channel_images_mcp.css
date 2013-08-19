@@ -1,0 +1,62 @@
+#mainContent .pageContents {padding:0 0 10px !important; border-top:0 !important;}
+
+#dbody {padding:10px;}
+
+/* Top Menu */
+.dmenu {background-color: #c8d2d7; background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(255, 255, 255, 0.2)), color-stop(100%, rgba(255, 255, 255, 0))); background-image:-moz-linear-gradient(top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%); background-image:linear-gradient(top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%); overflow:auto; padding:3px 3px 6px 17px; -moz-box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset; -webkit-box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset; -o-box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset; box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset;}
+.dmenu li {float:left; margin:0; padding:2px;}
+.dmenu li a {background:#ABB7C3; color:#fff !important; font-size:11px; font-weight:bold; margin:3px 7px 0 0; padding:5px 10px 5px 10px; display:block; text-decoration:none; text-transform:uppercase; border-radius:5px;}
+.dmenu li.current {}
+.dmenu li.current a, .dmenu li a:hover {color:#fff; font-weight:bold; background:#27343C; text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2); -moz-box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset; -webkit-box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset; -o-box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset; box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset;}
+
+/* Section Title */
+.btitle {padding:7px 15px 7px 10px; background:#fff; border:1px solid #ddd;}
+.btitle h2 {color:#222; display:inline-block; font-size:15pt; font-weight:300; margin:0 15px 0 0; text-shadow:0 1px 0 #FFF;}
+.btitle .abtn.enabled {cursor:pointer; opacity:1; filter:alpha(opacity=100);}
+
+/* Action Buttons */
+.abtn {position:relative; top:-3px; height:14px; padding:3px 5px; color:#333; display:inline-block; background:url(img/bg_button.png) !important; border-width:1px !important; border-style:solid !important; border-color:#999 #999 #888 !important; -moz-box-shadow:0 1px 0 rgba(0,0,0,0.1); -webkit-box-shadow:0 1px 0 rgba(0,0,0,0.1); box-shadow:0 1px 0 rgba(0,0,0,0.1); font-size:11px;}
+.abtn:hover {text-decoration:none !important;}
+.abtn.btn-action {cursor:default; opacity:0.3; filter:alpha(opacity=30);}
+.abtn span {display:block; padding:0 0 0 20px; font-size:11px !important; font-weight:normal !important; color:#333 !important; font-family:'Helvetica Neue',Helvetica,'Trebuchet MS',Arial,sans-serif;}
+.abtn.add span {background:url(img/add.png) no-repeat left center;}
+.abtn.start span {background:url(img/process.png) no-repeat left center;}
+
+/* Datatable */
+.dtable {width:100%; border:1px solid #b6c0c2; border-radius:3px; -webkit-border-radius: 3px; -moz-border-radius:4px;}
+.dtable thead {background:none !important}
+.dtable thead tr {background:#fff url(img/thead_bg.png) repeat-x 0 1px !important; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))) !important; background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)) !important;}
+.dtable th {text-align:left; font-size:12px; color:#505050 !important; line-height:13px; border-bottom:1px solid #BBB; text-shadow:0 1px #fff; padding:5px 10px 6px 10px; border-left:0; border-top:0; text-shadow: none; border-right:1px solid #ccc; border-right-color:rgba(0,0,0,0.1);}
+.dtable th:last-child {border-right:none !important;}
+.dtable th.sorting {cursor:pointer; background: url(img/arrow.gif) no-repeat scroll 98% center transparent;}
+.dtable th.sorting_asc {background: url(img/arrow_asc.gif) no-repeat scroll 98% center transparent;}
+.dtable th.sorting_desc {background: url(img/arrow_desc.gif) no-repeat scroll 98% center transparent;}
+.dtable td {padding:5px 8px; font-size:11px; background:#fff; border:solid #e3e3e3; border-width:1px 1px 0 0;}
+.dtable td:last-child {border-right:none !important;}
+.dtable td small {display:block; float:left; margin:0 5px 0 0; color:#505050 !important; font-weight:bold; display:block; font-size:12px; background:#fff url(img/thead_bg.png) repeat-x 0 1px; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))); background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)); text-shadow:0 1px #fff; padding:2px 4px; border:1px solid #b6c0c2; border-radius:3px; -webkit-border-radius:3px; text-decoration:none; text-align:center;}
+.dtable tr.odd td {background:#fff;}
+.dtable tbody tr:last-child td:last-child {border-bottom-right-radius:4px; -webkit-border-bottom-right-radius: 4px;}
+.dtable tbody tr:last-child td:first-child {border-bottom-left-radius:4px; -webkit-border-bottom-left-radius: 4px;}
+.dtable tbody tr.even td {background-color:#F6F6F6}
+.dtable tbody tr:hover td {background-color:#FFF7D1}
+.dtable tfoot th {border-bottom:0; border-top:1px solid #BBB; background:#fff url(img/thead_bg.png) repeat-x 0 1px !important; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))) !important; background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)) !important;}
+
+/* Labels */
+.label,.badge{font-size:11.844px;font-weight:bold;line-height:14px;color:#fff;vertical-align:baseline;white-space:nowrap;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);background-color:#999999;}
+.label{padding:1px 4px 2px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+.badge{padding:1px 9px 2px;-webkit-border-radius:9px;-moz-border-radius:9px;border-radius:9px;}
+a.label:hover,a.badge:hover{color:#fff;text-decoration:none;cursor:pointer;}
+.label-important,.badge-important{background-color:#b94a48;}
+.label-important[href],.badge-important[href]{background-color:#953b39;}
+.label-warning,.badge-warning{background-color:#f89406;}
+.label-warning[href],.badge-warning[href]{background-color:#c67605;}
+.label-success,.badge-success{background-color:#468847;}
+.label-success[href],.badge-success[href]{background-color:#356635;}
+.label-info,.badge-info{background-color:#3a87ad;}
+.label-info[href],.badge-info[href]{background-color:#2d6987;}
+.label-inverse,.badge-inverse{background-color:#333;}
+.label-inverse[href],.badge-inverse[href]{background-color:#1a1a1a;}
+
+#regen_fields {padding:20px 20px 0;}
+#regen_fields span {float:left; margin-right:10px; padding:5px; cursor:pointer}
+#regen_images p.loading {padding:0 0 0 20px; background:url(img/spinner.gif) no-repeat left center;}

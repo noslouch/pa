@@ -15,6 +15,7 @@ $admin_url  = $base_url . '/admin.php';
 
 // develop and staging share the same DB, production on separate DB
 $env = (( strpos($base_url, 'local') || strpos($base_url, 'staging') ) ? 'dev' : 'heroku');
+$env = strpos($base_url, 'develop') ? 'dev' : $env;
 
 $config['app_version'] = '261';
 $config['install_lock'] = "";

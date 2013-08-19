@@ -2,6 +2,7 @@
         
         <!-- LIBRARIES -->
         <script src="{site_url}/lib/vendor/underscore.js"></script>
+        <script src="{site_url}/lib/vendor/moment.min.js"></script>
         <script src="{site_url}/lib/vendor/json2.js"></script>
         <script src="{site_url}/lib/vendor/jquery.js"></script>
         <script src="{site_url}/lib/vendor/backbone.js"></script>
@@ -22,9 +23,7 @@
         </script>
         {/if}
 
-        {if segment_1 == 'projects' && segment_2 == ''}
         <script src="{site_url}/build/js/starfield.js"></script>
-        {/if}
 
         <?php
             $p = null;
@@ -46,13 +45,44 @@
                 break; 
         } ?>
 
-        <script src="{site_url}/build/js/mockClicks.js"></script>
+        <!--<script src="{site_url}/build/js/mockClicks.js"></script>-->
         <script src="{site_url}/build/js/jst.js"></script>
-        <script src="{site_url}/build/js/models.js"></script>
-        <script src="{site_url}/build/js/views.js"></script>
+
+        <!-- MODELS -->
+        <script src="{site_url}/build/js/album.js"></script>
+        <script src="{site_url}/build/js/award.js"></script>
+        <script src="{site_url}/build/js/cover.js"></script>
+        <script src="{site_url}/build/js/film.js"></script>
+        <script src="{site_url}/build/js/galleryimage.js"></script>
+        <script src="{site_url}/build/js/pressitem.js"></script>
+        <script src="{site_url}/build/js/project.js"></script>
+        <script src="{site_url}/build/js/showcase.js"></script>
+
+        <!-- COLLECTIONS -->
+        <script src="{site_url}/build/js/albums.js"></script>
+        <script src="{site_url}/build/js/awards.js"></script>
+        <script src="{site_url}/build/js/covergallery.js"></script>
+        <script src="{site_url}/build/js/films.js"></script>
+        <script src="{site_url}/build/js/photogallery.js"></script>
+        <script src="{site_url}/build/js/pressitems.js"></script>
+        <script src="{site_url}/build/js/projects.js"></script>
+        <script src="{site_url}/build/js/showcases.js"></script>
+
+
+        <!-- VIEWS -->
+        <script src="{site_url}/build/js/singleviews.js"></script>
+        <script src="{site_url}/build/js/showcaseviews.js"></script>
+        <script src="{site_url}/build/js/profileviews.js"></script>
+        <script src="{site_url}/build/js/projectviews.js"></script>
+        <script src="{site_url}/build/js/filterviews.js"></script>
+        <script src="{site_url}/build/js/chromeviews.js"></script>
+
+        <!-- ROUTER -->
         <script src="{site_url}/build/js/routes.js"></script>
-        <script src="{site_url}/build/js/dispatcher.js"></script>
+
+        <!-- INIT -->
         <script src="{site_url}/build/js/main.js"></script>
+        <script src="{site_url}/build/js/app.js"></script>
 
         <script src="http://localhost:35729/livereload.js"></script>
     </body>

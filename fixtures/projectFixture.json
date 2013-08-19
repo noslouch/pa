@@ -19,8 +19,16 @@
             {
                 "type" : "video",
                 "title": "Pepsi Commercial",
-                "url": "www.youtube.com/embed/po0jY4WvCIc",
-                "caption": "Optional Caption"
+                "video_id": "70927545",
+                "caption": "Optional Caption",
+                "youtube" : false
+            },
+            {
+                "type" : "video",
+                "title" : "Pepsi Commercial (iframe)",
+                "video_src" : "<iframe src=\"http://player.vimeo.com/video/70927545\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen><\/iframe>",
+                "caption" : "A caption on this iframe video",
+                "youtube" : false
             },
             {
                 "type" : "gallery",
@@ -118,7 +126,8 @@
             { 
                 "type" : "video",
                 "title": "DKNY Commercial",
-                "url": "www.youtube.com/dkny",
+                "video_id" : "rRKQ7znVXkA",
+                "youtube" : "true",
                 "caption": "Optional Caption"
             },
             {

@@ -5,10 +5,18 @@
 // LAYOUT
 
 .isotope-grid { 
+    @include grid-row(collapse);
     margin: 0 auto;
     height: 100%;
-    max-width: 100%;
+    max-width: 1190px;
     
+    img {
+        opacity: 0;
+        @include transition(opacity 150ms ease);
+
+        &.loaded { opacity: 1; }
+    }
+
     .wrapper { 
         @include transition(transform 150ms ease);
         overflow: hidden;

@@ -11,26 +11,15 @@ $('#n-container header').click(function(e){
     $(qContainer).toggleClass('short')
 })
 
+$(document).on('click', '#starfield a', function(e){
+    e.preventDefault()
+    e.stopPropagation()
+})
+
 var filterBar = document.getElementById('filter-bar')
 var $filters = $('.filter a')
 
-$(filterBar).click(function(e){
-
-    if ( e.target.nodeName === 'H3' || e.target.nodeName === 'BUTTON' ) {
-        $(filterBar).children('.open').removeClass('open')
-        $(e.target.parentElement).addClass('open')
-    }
-
-    if ( !$(e.target).hasClass('filter-bar') ){
-        e.stopPropagation()
-    }
-})
-
-$(document).click(function(e){
-    if ($(filterBar).children().hasClass('open')){
-        $(filterBar).children('.open').removeClass('open')
-    }
-})
+/*
 
 $filters.click(function(){
     var f = $(this).attr('data-filter')
@@ -83,6 +72,7 @@ $('.viewer li a').click(function(e){
 $('.close').click(function(e){
     $(this).parents('.open').removeClass('open')
 })
+*/
 
 var iso = document.getElementById('iso-grid')
 
@@ -100,15 +90,12 @@ $(function(){
 
     checkScroll()
 
-    $('.film-row').imagesLoaded(function(){
-        $(this).addClass('loaded')
-    })
 
 })
 
 //$(window).load(function(){
     //$(iso).imagesLoaded( function(){
-        isoLoader(iso)
+        //isoLoader(iso)
     //})
 //})
 //
