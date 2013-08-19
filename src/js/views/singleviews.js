@@ -110,6 +110,7 @@ PA.ProjectViewer = Backbone.View.extend({
     tagName : "div",
     className : "project viewer",
     baseTmpl : PA.jst.viewer,
+    back : PA.jst.backButton,
     initialize : function() {
         _.bindAll(this, 'swap')
         this.$el.html( this.baseTmpl() )
@@ -150,6 +151,11 @@ PA.ProjectViewer = Backbone.View.extend({
                 type : 'Project Type', 
                 tags : this.model.get('type_tags') 
             }).render() )
+
+        this.$('#details').append( this.back({
+            buttonText : 'Back to Projects',
+            url : '/projects'
+        }) )
 
         return this.el
     },
