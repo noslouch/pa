@@ -8,7 +8,8 @@ PA.Router = Backbone.Router.extend({
     routes : {
         "" : "homeLoader",
         "projects" : "projects",
-        "projects/:title" : "singleProject",
+        "projects/:project" : "singleProject",
+        "projects/:project/:showcase" : "showcaseItem",
         "photography" : "photography",
         "photography/:title" : "singleAlbum",
         "film" : "film",
@@ -27,7 +28,7 @@ PA.Router = Backbone.Router.extend({
 
             PA.app.header.filterBar.render()
 
-            PA.coverImages = new PA.Covers( PA.projects.pluck('coverImage') )
+            PA.coverImages = new PA.CoverGallery( PA.projects.pluck('coverImage') )
             PA.coverShowcase = new PA.ImageShowcase({
                 cover : true,
                 collection : PA.coverImages,
@@ -45,15 +46,21 @@ PA.Router = Backbone.Router.extend({
         })
     },
 
-    singleProject : function(title) {
+    /*
+    singleProject : function(project) {
+
+    },
+    */
+
+    singleProject : function(project, showcase) {
 
         if (PA.projects.length) {
             // Projects are loaded
 
-            var project = PA.projects.findWhere({ url : title })
+            PA.currentProject = PA.projects.findWhere({ url : project })
 
             PA.singleProject = new PA.ProjectViewer({
-                model : project
+                model : PA.currentProject
             })
 
             PA.app.page.render({
@@ -68,16 +75,16 @@ PA.Router = Backbone.Router.extend({
             // B) navigate from a different page section
 
             $.get('/fixtures/projectFixture.json').done(function(d) {
-                var project = new PA.Project( _.findWhere(d, {url : title}) )
+                PA.currentProject = new PA.Project( _.findWhere(d, {url : project}) )
 
                 PA.singleProject = new PA.ProjectViewer({
-                    model : project
+                    model : PA.currentProject
                 })
 
                 PA.app.page.render({
                     view : PA.singleProject,
                     pageClass : 'project-single',
-                    section : project.get('title')
+                    section : PA.currentProject.get('title')
                 })
             })
         }
@@ -89,7 +96,7 @@ PA.Router = Backbone.Router.extend({
         $.get('/fixtures/photographyFixture.json').done(function(d) {
             PA.albums = new PA.PhotoAlbums(d)
 
-            PA.coverImages = new PA.Covers( PA.albums.pluck('coverImage') )
+            PA.coverImages = new PA.CoverGallery( PA.albums.pluck('coverImage') )
             PA.coverShowcase = new PA.ImageShowcase({
                 cover : true,
                 collection : PA.coverImages,
