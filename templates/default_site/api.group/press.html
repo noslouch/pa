@@ -6,7 +6,7 @@
         "URLTitle": "{url_title}",
         "Summary": "{if summary_press}{summary_press}{/if}",
         "Content": "{content_press}",
-        "Image": "{exp:channel_images:images entry_id="{entry_id}" limit="1"}{image:url:thumb}>{/exp:channel_images:images}"
+        "Image": "{exp:channel_images:images entry_id="{entry_id}" limit="1"}{image:description}{image:url:thumb}{/exp:channel_images:images}"
     },
 {/exp:channel:entries}
 ]
