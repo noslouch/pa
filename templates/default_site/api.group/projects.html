@@ -3,7 +3,7 @@
     {
         "Title": "{title}",
         "url": "{url_title}",
-        "Summary": "{if summary}{summary}{/if}",
+        "Summary": <?php echo json_encode('{if summary}{summary}{/if}'); ?>,
         "Image": "{exp:channel_images:images entry_id="{entry_id}" limit="1"}{image:url}{/exp:channel_images:images}"
     }
     {/exp:channel:entries}
