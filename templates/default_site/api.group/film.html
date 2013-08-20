@@ -1,5 +1,15 @@
-{exp:json:entries channel="film" 
-
-{if segment_2}entry_id=segment_2{/if}
-
-}
+<?php header('Content-type: application/json'); ?>
+[
+{exp:channel:entries channel="film" limit="100"}
+    {
+        "Title": "{title}",
+        "URLTitle": "{url_title}",
+        "Summary": "{if summary}{summary}{/if}",
+        "VideoID": "{if video_id_film}{video_id_film}{/if}",
+        "VideoCode": "{if video_code_film}{video_code_film}{/if}",
+        "Youtube": "{if youtube_film}{youtube_film}{/if}",
+        "Content": "{content_film}",
+        "Image": "{exp:channel_images:images entry_id="{entry_id}" limit="1"}{image:description}{image:url:thumb}{/exp:channel_images:images}"
+    },
+{/exp:channel:entries}
+]

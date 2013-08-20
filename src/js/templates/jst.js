@@ -15,8 +15,6 @@ JST.projectDetails = [
     '</header>',
     '<p class="summary"><%= summary %></p>',
     '<ul class="showcase-links" id="showcaseLinks">',
-        '<li><a href="#" id="info">Info</a></li>',
-        '<li><a href="#" id="related">Related</a></li>',
     '</ul>',
     '<ul class="tags" id="tags"></ul>'
 ].join('\n')
@@ -36,11 +34,9 @@ JST.profileLinks = [
 ].join('\n')
 
 JST.showcaseLinks = [
-    '<li>',
-        '<a href="#" id="<%= cid %>">',
-            '<%= title %>',
-        '</a>',
-    '</li>'
+    '<a href="#" id="<%= cid %>">',
+        '<%= title %>',
+    '</a>'
 ].join('\n')
 
 JST.tagLinks = [

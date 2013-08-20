@@ -19,6 +19,7 @@
             {
                 "type" : "video",
                 "title": "Pepsi Commercial",
+                "url_title" : "pepsi-commercial",
                 "video_id": "70927545",
                 "caption": "Optional Caption",
                 "youtube" : false
@@ -26,6 +27,7 @@
             {
                 "type" : "video",
                 "title" : "Pepsi Commercial (iframe)",
+                "url_title" : "pepsi-commercial-iframe",
                 "video_src" : "<iframe src=\"http://player.vimeo.com/video/70927545\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen><\/iframe>",
                 "caption" : "A caption on this iframe video",
                 "youtube" : false
@@ -33,6 +35,7 @@
             {
                 "type" : "gallery",
                 "title" : "Pepsi Ads",
+                "url_title" : "pepsi-ads",
                 "images" : [
                     {
                         "lg_thumb": "http://placehold.it/445x468",
@@ -57,6 +60,7 @@
             {
                 "type" : "gallery",
                 "title" : "Pepsi Logo Evolution",
+                "url_title" : "pepsi-logo-evolution",
                 "images" : [
                     {
                         "thumb": "http://placehold.it/394x518",
@@ -126,6 +130,7 @@
             { 
                 "type" : "video",
                 "title": "DKNY Commercial",
+                "url_title" : "dkny-commercial",
                 "video_id" : "rRKQ7znVXkA",
                 "youtube" : "true",
                 "caption": "Optional Caption"
@@ -133,6 +138,7 @@
             {
                 "type" : "gallery",
                 "title" : "DKNY Ads",
+                "url_title" : "dkny-ads",
                 "images" : [
                     {
                         "thumb": "http://placehold.it/394x518",
@@ -164,6 +170,7 @@
             {
                 "type" : "gallery",
                 "title" : "DKNY Advertising Campaign",
+                "url_title" : "dkny-advertising-campaign",
                 "images" : [
                     {
                         "thumb": "http://placehold.it/394x518",
