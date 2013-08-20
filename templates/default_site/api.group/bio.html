@@ -1,0 +1,11 @@
+<?php header('Content-type: application/json'); ?>
+[
+{exp:channel:entries channel="profile_bio" limit="100"}
+    {
+        "Title": "{title}",
+        "URLTitle": "{url_title}",
+        "Content": "{content_bio}",
+        "Image": "{bio_image}"
+    },
+{/exp:channel:entries}
+]
