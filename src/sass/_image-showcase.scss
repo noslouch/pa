@@ -5,10 +5,18 @@
 // LAYOUT
 
 .isotope-grid { 
+    @include grid-row(collapse);
     margin: 0 auto;
     height: 100%;
-    max-width: 100%;
+    max-width: 1190px;
     
+    img {
+        opacity: 0;
+        @include transition(opacity 150ms ease);
+
+        &.loaded { opacity: 1; }
+    }
+
     .wrapper { 
         @include transition(transform 150ms ease);
         overflow: hidden;
@@ -21,30 +29,30 @@
         a {
             display: block;
             width: auto;
-            min-width: 164px;
+            //min-width: 164px;
             height: 216px;
         }
     }
 
-    .rtl & .thumb a { height: 323px; }
+    &.rtl .thumb a { height: 323px; }
 
-    .fixed & .thumb { 
+    &.fixed .thumb { 
         margin-left: 0;
 
         a { 
             width: 164px;
         } 
     }
-    .fixed.rtl & .thumb a { width: 164px*1.5; }
+    &.fixed.rtl .thumb a { width: 164px*1.5; }
 
-    .fixed & .wide.thumb { 
+    &.fixed .wide.thumb { 
         a { 
             width: 334px; 
         }
         margin-left: 0;
     }
 
-    .fixed.rtl & .wide.thumb a { width: 334px*1.5; }
+    &.fixed.rtl .wide.thumb a { width: 334px*1.5; }
 
     .thumb:hover {
         z-index: 4;
@@ -85,10 +93,5 @@
         max-width: 100%; }
 }
 
-.covers-container {
-    @include grid-row(collapse);
-    max-width: 1190px;
-    margin: 0 auto;
-}
 
 

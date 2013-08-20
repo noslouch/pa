@@ -1,0 +1,223 @@
+[   
+    {
+        "id": "1",
+        "title": "Pepsi Branding",
+        "date": "1123214400000",
+        "url" : "pepsi-branding",
+        "logo": "http://placehold.it/80x45",
+        "cover" : { 
+            "thumb": "http://placehold.it/164x216",
+            "url" : "pepsi-branding",
+            "wide" : "",
+            "caption" : ""
+        },
+        "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.",
+        "brand_tags": ["Pepsi"],
+        "industry_tags": ["Food + Beverage"],
+        "type_tags" : ["Communications", "Advertising"],
+        "showcases": [
+            {
+                "type" : "video",
+                "title": "Pepsi Commercial",
+                "url_title" : "pepsi-commercial",
+                "video_id": "70927545",
+                "caption": "Optional Caption",
+                "youtube" : false
+            },
+            {
+                "type" : "video",
+                "title" : "Pepsi Commercial (iframe)",
+                "url_title" : "pepsi-commercial-iframe",
+                "video_src" : "<iframe src=\"http://player.vimeo.com/video/70927545\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen><\/iframe>",
+                "caption" : "A caption on this iframe video",
+                "youtube" : false
+            },
+            {
+                "type" : "gallery",
+                "title" : "Pepsi Ads",
+                "url_title" : "pepsi-ads",
+                "images" : [
+                    {
+                        "lg_thumb": "http://placehold.it/445x468",
+                        "thumb": "http://placehold.it/369x368",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "lg_thumb": "http://placehold.it/644x518",
+                        "thumb": "http://placehold.it/444x343",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "lg_thumb": "http://placehold.it/444x618",
+                        "thumb": "http://placehold.it/294x418",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    }
+                ]
+            },
+            {
+                "type" : "gallery",
+                "title" : "Pepsi Logo Evolution",
+                "url_title" : "pepsi-logo-evolution",
+                "images" : [
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    }
+                ]
+            }
+        ],
+        "infoText": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p><p>In porttitor eleifend nisl sed dignissim. Quisque lacinia nec diam eget mattis. Mauris sed venenatis turpis. Donec facilisis sem augue, vitae elementum dui tempor eu. Nullam condimentum mauris auctor erat aliquet bibendum nec quis urna. Ut id mauris a nulla elementum condimentum.</p><p>Mauris faucibus eros varius nunc gravida bibendum. Morbi egestas eget sapien pellentesque tristique. Fusce sit amet mollis justo. Duis nec nisi dui. Ut pulvinar, neque quis aliquet auctor, lectus diam tempor sem, sit amet ullamcorper purus ante a justo. In euismod augue lobortis risus venenatis accumsan.</p><p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi lobortis, dui eget bibendum adipiscing, magna est placerat purus, nec malesuada ligula tortor vitae urna. Aliquam tristique neque leo, eu ultricies elit dignissim eget. Sed imperdiet leo at pellentesque condimentum.</p><p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>",
+        "relatedLinks": [
+            { 
+                "text" : "Related Project",
+                "url" : ""
+            },
+            {
+                "text" : "External Link",
+                "url" : "http://google.com"
+            },
+            {
+                "text" : "Press Title",
+                "url" : ""
+            },
+            {
+                "text" : "Photo Gallery",
+                "url" : ""
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "title": "DKNY",
+        "date": "1361750400000",
+        "logo": "http://placehold.it/80x45",
+        "url" : "dkny",
+        "cover" : { 
+            "thumb": "http://placehold.it/334x216",
+            "url" : "dkny",
+            "wide" : "true",
+            "caption" : "DKNY - a caption"
+        },
+        "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus mauris vel molestie cursus. Suspendisse vehicula tortor metus, non iaculis.",
+        "brand_tags": ["DKNY"],
+        "industry_tags": ["Fashion + Apparel"],
+        "type_tags" : ["Branding", "Photography"],
+        "showcases": [
+            { 
+                "type" : "video",
+                "title": "DKNY Commercial",
+                "url_title" : "dkny-commercial",
+                "video_id" : "rRKQ7znVXkA",
+                "youtube" : "true",
+                "caption": "Optional Caption"
+            },
+            {
+                "type" : "gallery",
+                "title" : "DKNY Ads",
+                "url_title" : "dkny-ads",
+                "images" : [
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    }
+                ]
+            },
+            {
+                "type" : "gallery",
+                "title" : "DKNY Advertising Campaign",
+                "url_title" : "dkny-advertising-campaign",
+                "images" : [
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    },
+                    {
+                        "thumb": "http://placehold.it/394x518",
+                        "url": "http://placehold.it/1080x600",
+                        "caption": ""
+                    }
+                ]
+            }
+        ],
+        "infoText": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla, libero et cursus pulvinar, nisl urna bibendum metus, sit amet aliquet libero tellus sit amet velit. Aliquam lectus metus, euismod eget consequat quis, egestas et eros. Mauris rhoncus lacinia varius. Duis lectus arcu, sagittis non ligula suscipit, euismod mattis lacus.</p><p>In porttitor eleifend nisl sed dignissim. Quisque lacinia nec diam eget mattis. Mauris sed venenatis turpis. Donec facilisis sem augue, vitae elementum dui tempor eu. Nullam condimentum mauris auctor erat aliquet bibendum nec quis urna. Ut id mauris a nulla elementum condimentum.</p><p>Mauris faucibus eros varius nunc gravida bibendum. Morbi egestas eget sapien pellentesque tristique. Fusce sit amet mollis justo. Duis nec nisi dui. Ut pulvinar, neque quis aliquet auctor, lectus diam tempor sem, sit amet ullamcorper purus ante a justo. In euismod augue lobortis risus venenatis accumsan.</p><p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi lobortis, dui eget bibendum adipiscing, magna est placerat purus, nec malesuada ligula tortor vitae urna. Aliquam tristique neque leo, eu ultricies elit dignissim eget. Sed imperdiet leo at pellentesque condimentum.</p><p>Nullam vitae dignissim arcu. Nam ante erat, dictum sed magna sed, tincidunt aliquet nulla. Pellentesque at elit a mi tempus euismod. Duis at mollis augue. Donec a ligula nisl. Proin ut ante turpis.</p>",
+        "relatedLinks": [
+            { 
+                "text" : "Related Project",
+                "href" : ""
+            },
+            {
+                "text" : "External Link",
+                "href" : "http://google.com"
+            },
+            {
+                "text" : "Press Title",
+                "href" : ""
+            },
+            {
+                "text" : "Photo Gallery",
+                "href" : ""
+            }
+        ]
+    }
+]

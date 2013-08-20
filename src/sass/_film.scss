@@ -6,6 +6,12 @@
 
 $column-gutter: emCalc(7);
 
+.film-container {
+    width: 100%;
+    max-width: 1190px;
+    margin: 0 auto;
+}
+
 .film-row {
     @include grid-row(nest);
     margin-bottom: 3em;
@@ -45,6 +51,7 @@ $column-gutter: emCalc(17);
         line-height: 1.2;
     }
 
+    /*
     .button {
         background: $light-gray;
 
@@ -62,4 +69,5 @@ $column-gutter: emCalc(17);
             &:before { color: $primary-color; }
         }
     }
+    */
 } 

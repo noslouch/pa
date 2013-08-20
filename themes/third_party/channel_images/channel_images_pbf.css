@@ -1,0 +1,189 @@
+.CIField {margin:5px 0; padding:0; width:auto; position: relative;}
+.CIField .hidden {display:none}
+
+/* ClearFix */
+*+html .CIField .clearfix {min-height:1%;}
+.CIField .clearfix:after {clear:both; content:"."; display:block; height:0; visibility:hidden; font-size:0;}
+
+/* DragDrop */
+.CIField .CIDragDrop {display:none; position:absolute; top:0; left:0; background:white; border:3px dashed #CCC; z-index:9999}
+.CIField .CIDragDrop p {color:grey; text-align:center; font-size:20px; padding-top:20px;}
+
+/* Main Table */
+.CIField .CITable {width:100%; border:1px solid #b6c0c2; border-radius:4px;}
+.CIField .CITable thead {background:none !important}
+.CIField .CITable thead th {text-align:left; font-size:12px; color:#505050 !important; line-height:13px; background:#fff url(img/thead_bg.png) repeat-x 0 1px !important; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))) !important; background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)) !important; border-bottom:1px solid #BBB; text-shadow:0 1px #fff; padding:5px 10px 6px 10px !important; border-left:0 !important; cursor:default !important; border-right:1px solid #ccc; border-right-color:rgba(0,0,0,0.1) !important;}
+.CIField .CITable thead th:last-child {border-right:none !important;}
+.CIField .CITable thead th h4 {font-size:14px; color:#37444D;}
+.CIField .CITable thead th.top_actions {padding:4px 7px 4px 7px !important;}
+.CIField .CITable thead th.top_actions .block {float:left; height:16px; position:relative; margin:0 15px 0 0;}
+.CIField .CITable thead th.top_actions .block:hover {color:#077EB5;}
+.CIField .CITable thead th.top_actions .block_long {float:left; width:50%; height:16px;}
+.CIField .CITable thead th.top_actions .UploadImages {background:url(img/select_images.png) no-repeat; padding:0 0 0 20px; oultine:0;}
+.CIField .CITable thead th.top_actions .StoredImages {background:url(img/find.png) no-repeat; padding:0 0 0 20px; cursor:pointer; outline:0; line-height:1.4;}
+.CIField .CITable thead th.top_actions .ImportImages {background:url(img/import.png) no-repeat; padding:0 0 0 20px; cursor:pointer; outline:0; line-height:1.4;}
+.CIField .CITable thead th.top_actions .StopUpload {background:url(img/stop.png) no-repeat; padding:0 0 0 20px; cursor:pointer; outline:0; text-decoration:none; display:none; margin:0 0 0 10px;}
+.CIField .CITable thead th .swfupload {float:left; left:0; position:absolute; top:0;}
+.CIField .CITable td {padding:5px 8px; font-size:11px; background:#fff; border:solid #e3e3e3; border-width:1px 1px 0 0;}
+.CIField .CITable tfoot {background:none !important}
+.CIField .CITable tfoot td {text-align:right; font-size:12px; color:#505050 !important; line-height:13px; background:#fff url(img/thead_bg.png) repeat-x 0 1px !important; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))) !important; background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)) !important; border-bottom:1px solid #BBB; text-shadow:0 1px #fff; padding:5px 10px 6px 10px !important; border-left:0 !important; cursor:default !important;}
+.CIField .CITable .Button {display:block; font-size:13px; background:#fff url(img/thead_bg.png) repeat-x 0 1px; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))); background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06)); text-shadow:0 1px #fff; padding:3px 8px; border:1px solid #b6c0c2; border-radius:3px; text-decoration:none; text-align:center; cursor:pointer;}
+.CIField .CITable .Button:hover {background:#fff url(img/thead_bg.png) repeat-x 0 1px;}
+.CIField .CITable .PrimaryImage td {background:#FBF9EA !important; border-top:2px solid #FFF6AF !important; border-bottom:2px solid #FFF6AF !important;}
+.CIField .CITable .Image td span {padding:0 0 0 20px; background: url(img/edit.png) no-repeat; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; filter: alpha(opacity=50); opacity:0.5; zoom: 1;}
+.CIField .CITable a {border:none;}
+.CIField .CITable textarea, .CIField .CITable .image_title {border:none;resize:none;padding:0;font-size:12px;border-radius:0;}
+.CIField .CITable textarea {height:50px; width:100%;}
+.CIField .CITable .image_title {width:100%;}
+
+
+/* Upload Progress */
+.CIField .UploadProgress {width:80%; padding:2px; float:right; border:1px solid #F7BA29; position:relative; top:-2px; text-shadow:none;}
+.CIField .UploadProgress div.progress {width:0%; background:#F7BA29; overflow:visible}
+.CIField .UploadProgress div.progress div.inner {width:100%; padding:1px 5px; font-size:10px; color:#333; min-width:250px;}
+
+/* Stored Images */
+.CIField .SearchImages input {box-sizing:content-box !important}
+.CIField .SearchImages {}
+.CIField .SearchImages table {margin:0; width:100%;}
+.CIField .SearchImages .entryfilter, .CIField .SearchImages .imagefilter {border:1px solid #B6C0C2; border-radius:3px 3px 3px 3px; width:50%; vertical-align:top; padding:0;}
+.CIField .SearchImages .filter {height:21px; position:relative; border-bottom: 1px solid #bbb; padding: 5px 7px; background:#e5e5e5 url(img/filter_bg.png) repeat-x;}
+.CIField .SearchImages .filter .left {float:left; width:50%;}
+.CIField .SearchImages .filter .right {float:left; width:50%; text-align:right;}
+.CIField .SearchImages .filter .right label {display:inline;}
+.CIField .SearchImages .filter .right select {border:1px solid #ccc}
+/*.CIField .SearchImages .filter .searchicon {display:block; position:absolute; top:7px; left:12px; padding-left:16px; height:18px; background:url(img/search_icon.png) no-repeat 0 50%;}*/
+.CIField .SearchImages .filter input {color:#5F6C74; margin:0; padding:3px 21px 2px; border: 1px solid #a7b0b2; width:99%; *width:auto; height:13px; outline:none; background:#fff url(img/search_icon.png) no-repeat 4px 3px;  -webkit-box-sizing:content-box; -moz-box-sizing:content-box; -ms-box-sizing:content-box; box-sizing:content-box;}
+.CIField .SearchImages .entries {background:#fff; padding:5px; height:175px; overflow:scroll;}
+.CIField .SearchImages .entries a {text-decoration:none; display:block;}
+.CIField .SearchImages .entryimages {border:1px solid #B6C0C2; border-radius:3px 3px 3px 3px; width:50%; vertical-align:top; padding:0;}
+.CIField .SearchImages .images {padding:5px 0 5px 5px; height:175px; overflow:scroll;}
+.CIField .SearchImages .images .img {float:left; margin:0 5px 5px 0; position:relative;}
+.CIField .SearchImages .images .img span.add {height:16px; width:16px; display:block; background:url(img/add.png) no-repeat; outline:0; text-indent:-9999px; position:absolute; bottom:0; right:0}
+.CIField .SearchImages .images .img span.Loading {background:url(img/spinner.gif) no-repeat;}
+.CIField .SearchImages .SearchingForImages {display:none; height:16px; background:url(img/spinner.gif) no-repeat; padding:0 0 0 20px; text-align:left; line-height:19px; margin:0;}
+.CIField .SearchImages .Loading {display:none; height:16px; background:url(img/spinner.gif) no-repeat; padding:0 0 0 20px; text-align:left; line-height:19px; margin:0;}
+.CIField .SearchImages h4 {color:#37444D; font-size:14px; margin:3px 0 0;}
+.CIField .SearchImages .imagefilter .filter {height:auto;}
+.CIField .SearchImages .imagefilter .filter .left {width:85%}
+.CIField .SearchImages .imagefilter .filter .right {width:15%}
+.CIField .SearchImages .imagefilter .filter input {width:15%;}
+
+/* Image Queue */
+.CIField .ImageQueue .File {height:16px; background-color:#C5D9FF; border:1px solid #b6c0c2; float:left; margin:3px; padding:2px 3px 2px 20px; border-radius:3px; text-shadow:none; line-height:17px;}
+.CIField .ImageQueue .Queued {background:#C5D9FF url(img/queue.png) no-repeat 2px 2px;}
+.CIField .ImageQueue .Uploading {background:#EFDE2C url(img/spinner.gif) no-repeat 2px 2px;}
+.CIField .ImageQueue .Done {background:#68EF1D url(img/success.png) no-repeat 2px 2px;}
+.CIField .ImageQueue .Error {background:#EF1D25 url(img/delete.png) no-repeat 2px 2px;}
+
+/* Image Buttons */
+.CIField .Image .gIcon {width:16px; height:16px; display:block; float:left; margin:0 6px 3px 0;}
+.CIField .Image .ImageProcessAction {background: url(img/process.png) no-repeat;}
+.CIField .Image .ImageMove {background: url(img/move.png) no-repeat;}
+.CIField .Image .ImageCover {background: url(img/star_empty.png) no-repeat;}
+.CIField .Image .StarIcon {background: url(img/star.png) no-repeat !important;}
+.CIField .Image .ImageDel {background: url(img/delete.png) no-repeat; margin-right:0 !important;}
+.CIField .Image .ImageEdit {background: url(img/edit.png) no-repeat;}
+.CIField .Image .ImageLinked {background: url(img/break_link.png) no-repeat !important;}
+.CIField .Image .ImageReplace {background: url(img/refresh.png) no-repeat;}
+
+.CIField .TileBased .Image {z-index:50; width:100px; padding:2px 2px 0; height:119px;margin:0 5px 5px 0;position:relative; float:left; border:2px solid transparent}
+.CIField .TileBased .Image a {width:100px;height:100px;display:block;}
+.CIField .TileBased .Image a img {width:100px;height:100px;border-radius:5px 5px 0 0;}
+.CIField .TileBased .Image canvas.imgcanv {border-radius:5px 5px 0 0; vertical-align: bottom; opacity:0.2; filter:alpha(opacity:20);}
+.CIField .TileBased .Image .progress {position:absolute;top:0;height:90px;width:90px;margin:5px 0 0 5px; z-index:999}
+.CIField .TileBased .Image .filename {width:78px; padding:0 10px; position:relative; left:0; text-shadow: 0 1px #fff; border-radius:0 0 5px 5px; background:#fff url(../images/thead_bg.png) repeat-x 0 1px; background: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(rgba(0,0,0,0.06))); background:-moz-linear-gradient(top, transparent, rgba(0,0,0,0.06));}
+.CIField .TileBased .Image .filename .name {font-size:10px; height: 10px; overflow: hidden; padding: 2px 0 5px; white-space: nowrap; width: 80px;}
+.CIField .TileBased .Image .actions {height:18px;width:94px;padding:3px;position:absolute;top:2px;background:#000;display:none;border-radius:5px 5px 0 0;border-bottom:1px solid #eee;}
+.CIField .TileBased .Image .actions .abtn {display:block;width:16px;height:16px;float:right;background-repeat:no-repeat;margin: 0 3px 0 0;cursor:pointer;}
+.CIField .TileBased .Image .actions .btn-edit {background-image:url(img/edit_white.png)}
+.CIField .TileBased .Image .actions .btn-delete {background-image:url(img/trash_white.png)}
+.CIField .TileBased .Image .actions .btn-star {background-image:url(img/star_white.png); float:left;}
+.CIField .TileBased .Image .actions .btn-replace {background-image:url(img/refresh_white.png)}
+.CIField .TileBased .Image:hover .actions {display:block;}
+.CIField .TileBased .PrimaryImage {border:2px solid orange; padding:0;border-radius:7px 7px 7px 7px;}
+.CIField .TileBased .PrimaryImage .filename {}
+.CIField .TileBased .image_title {background:none;}
+
+.ChannelImagesSubmitWait {padding:0 0 0 20px; background:url(img/spinner.gif) no-repeat; text-align: left; font-weight:bold; color:green;}
+
+/* Per Image Action */
+.PerImgActionWrapper {}
+.PerImgActionWrapper td small {display:block; margin:2px 0 0 0;}
+.PerImgActionWrapper .ActionHolder {margin:10px 0 0 0;}
+.PerImgActionWrapper .ApplyingAction {display:none}
+.PerImgActionWrapper .ApplyingAction td p {min-height:16px; padding:0 0 0 25px; background:url(img/spinner.gif) no-repeat 2px 2px; text-align:left; line-height:18px;}
+
+/* Import Files */
+.CIField .ImportImagesBtn {position:relative; cursor:pointer; color:#fff; padding: 5px 20px 6px; background-color:#0064cd; background-repeat: repeat-x; background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd)); background-image: -moz-linear-gradient(top, #049cdb, #0064cd); background-image: -ms-linear-gradient(top, #049cdb, #0064cd); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd)); background-image: -webkit-linear-gradient(top, #049cdb, #0064cd); background-image: -o-linear-gradient(top, #049cdb, #0064cd); background-image: linear-gradient(top, #049cdb, #0064cd); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#049cdb', endColorstr='#0064cd', GradientType=0); text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); border-color: #0064cd #0064cd #003f81; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); font-size: 13px; line-height: normal; border: 1px solid #ccc; border-bottom-color: #bbb; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -webkit-transition: 0.1s linear all; -moz-transition: 0.1s linear all; -ms-transition: 0.1s linear all; -o-transition: 0.1s linear all; transition: 0.1s linear all;}
+.CIField .ImportImagesBtn span {display:none; position:absolute; left:-18px; background:url(img/spinner.gif) no-repeat; width:16px; height:16px;}
+
+/* WYGWAM */
+.WCI_Images {}
+.WCI_Images ul.tabs {border-bottom:1px solid #ccc;}
+.WCI_Images ul.tabs li.ui-tabs-selected {background:none;}
+.WCI_Images .CImage {height:60px; overflow:hidden; float:left; border:5px solid #fff;}
+.WCI_Images .CImage:hover {border-color:#eee;}
+.WCI_Images .CImage img {width:60px; height:60px; cursor:pointer;}
+.WCI_Images .Selected {border-color:#0073E7 !important;}
+.WCI_Images .tabcontent .imageholder {height:260px !important; overflow-y: scroll;}
+.WCI_Images .tabcontent .sizeholder {margin-top:5px;}
+.WCI_Images .tabcontent .sizeholder li {float:left; margin-right:10px;}
+
+#redactor_modal_content .ui-widget-header {background:none;}
+#redactor_modal_content .ui-widget-content {background:none; border:none;}
+#redactor_modal_content .ui-tabs-panel {border:1px solid #ccc;}
+#redactor_modal_content .WCI_Images ul.tabs {border-bottom:none;}
+
+/* edit Image Wrapper */
+.ci_eiw {background-color: #c8d2d7; background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(255, 255, 255, 0.2)), color-stop(100%, rgba(255, 255, 255, 0))); background-image:-moz-linear-gradient(top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%); background-image:linear-gradient(top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%); overflow:auto; padding:3px 3px 6px 3px; -moz-box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset; -webkit-box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset; -o-box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset; box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset;}
+.ci_eiw .eiw_left {width:20%;float:left;}
+.ci_eiw .ci_eiw_imgholder {width:80%; float:left;}
+.ci_eiw ul {display:block;clear:both; margin:0; padding:0;}
+.ci_eiw ul li {margin:0; padding:2px; list-style:none}
+.ci_eiw ul li a, .ci_eiw ul li label {background:#ABB7C3; color:#fff; font-size:11px; font-weight:bold; margin:3px 7px 0 0; padding:5px 10px 5px 10px; display:block; text-decoration:none; text-transform:uppercase; border-radius:5px;}
+.ci_eiw ul li.current a, .dmenu li a:hover {color:#fff; font-weight:bold; background:#27343C; text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2); -moz-box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset; -webkit-box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset; -o-box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset; box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset;}
+.ci_eiw ul li.label {width:80px}
+.ci_eiw ul li.label label {background:#fff;color:#000}
+.ci_eiw ul.sizes li a {text-transform:none;text-decoration:none;}
+.ci_eiw ul.actions .disabled {cursor:default;opacity:0.3; filter:alpha(opacity=30);}
+.ci_eiw_bottombar {padding-top:10px;}
+.ci_eiw_bottombar a.submit:hover {color:#fff;}
+.ci_eiw_bottombar .loading {display:none; height:16px; background:url(img/spinner.gif) no-repeat; margin:10px 0 0 0; padding:0 0 0 22px; text-align:left; line-height:1;font-weight:bold;font-size:16px;}
+.ci_eiw .imgholder {width:80%;float:left;}
+.ci_eiw .crop_holder input {width:50px;}
+.CIField .ci_eiw a {text-decoration: none;}
+
+.cisaef .ci_eiw .submit {background:#f72a58; padding:5px 9px; color:#fff; border:0; border-radius: 5px 5px 5px 5px;}
+
+
+/* jquery.Jcrop.min.css v0.9.10 (build:20120429) */
+.jcrop-holder{direction:ltr;text-align:left;margin:0 auto;}
+.jcrop-vline,.jcrop-hline{background:#FFF url(img/jcrop.gif) top left repeat;font-size:0;position:absolute;}
+.jcrop-vline{height:100%;width:1px!important;}
+.jcrop-hline{height:1px!important;width:100%;}
+.jcrop-vline.right{right:0;}
+.jcrop-hline.bottom{bottom:0;}
+.jcrop-handle{background-color:#333;border:1px #eee solid;font-size:1px;}
+.jcrop-tracker{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;height:100%;width:100%;}
+.jcrop-handle.ord-n{left:50%;margin-left:-4px;margin-top:-4px;top:0;}
+.jcrop-handle.ord-s{bottom:0;left:50%;margin-bottom:-4px;margin-left:-4px;}
+.jcrop-handle.ord-e{margin-right:-4px;margin-top:-4px;right:0;top:50%;}
+.jcrop-handle.ord-w{left:0;margin-left:-4px;margin-top:-4px;top:50%;}
+.jcrop-handle.ord-nw{left:0;margin-left:-4px;margin-top:-4px;top:0;}
+.jcrop-handle.ord-ne{margin-right:-4px;margin-top:-4px;right:0;top:0;}
+.jcrop-handle.ord-se{bottom:0;margin-bottom:-4px;margin-right:-4px;right:0;}
+.jcrop-handle.ord-sw{bottom:0;left:0;margin-bottom:-4px;margin-left:-4px;}
+.jcrop-dragbar.ord-n,.jcrop-dragbar.ord-s{height:7px;width:100%;}
+.jcrop-dragbar.ord-e,.jcrop-dragbar.ord-w{height:100%;width:7px;}
+.jcrop-dragbar.ord-n{margin-top:-4px;}
+.jcrop-dragbar.ord-s{bottom:0;margin-bottom:-4px;}
+.jcrop-dragbar.ord-e{margin-right:-4px;right:0;}
+.jcrop-dragbar.ord-w{margin-left:-4px;}
+.jcrop-light .jcrop-vline,.jcrop-light .jcrop-hline{background:#FFF;filter:Alpha(opacity=70)!important;opacity:.70!important;}
+.jcrop-light .jcrop-handle{-moz-border-radius:3px;-webkit-border-radius:3px;background-color:#000;border-color:#FFF;border-radius:3px;}
+.jcrop-dark .jcrop-vline,.jcrop-dark .jcrop-hline{background:#000;filter:Alpha(opacity=70)!important;opacity:.7!important;}
+.jcrop-dark .jcrop-handle{-moz-border-radius:3px;-webkit-border-radius:3px;background-color:#FFF;border-color:#000;border-radius:3px;}
+.jcrop-holder img,img.jcrop-preview{max-width:none;}
+
+/* EDITOR */

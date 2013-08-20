@@ -61,7 +61,7 @@ module.exports = function(grunt) {
     },
     copy: {
         dev : {
-            files : [{ expand: true, src: ['src/js/*.js'], dest: 'build/js/', flatten: true }]
+            files : [{ expand: true, src: ['src/js/**/*.js'], dest: 'build/js/', flatten: true }]
         }
     },
     watch: {
@@ -81,10 +81,13 @@ module.exports = function(grunt) {
         tasks: ['jshint:test', 'qunit']
       },
       dev: {
-        files: ['src/**/*', 'index.php', 'templates/**/*'],
-        tasks : ['compass', 'jshint:src','copy:dev'],
+        files: ['src/**/*', 'templates/**/*'],
+        tasks : ['compass', 'jshint:src', 'copy:dev'],
       }
     },
+    clean: {
+        build : "build"
+    }
   });
 
   // These plugins provide necessary tasks.
@@ -95,8 +98,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('refresh', ['clean', 'compass', 'jshint:src', 'copy:dev']);
 
 };

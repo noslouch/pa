@@ -1,0 +1,256 @@
+/**
+ * Low Reorder CSS
+ *
+ * @package        low_reorder
+ * @author         Lodewijk Schutte <hi@gotolow.com>
+ * @link           http://gotolow.com/addons/low-reorder
+ * @copyright      Copyright (c) 2009-2012, Low
+ */
+
+/* =Display List view
+------------------------------------------------- */
+
+#reorder-instructions {
+	background:#fff;
+	border:1px solid #ddd;
+	padding:7px 10px;
+	margin-bottom:14px;
+	line-height:1.5;
+
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+}
+
+#reorder-category-select {
+	margin-bottom:14px;
+}
+
+#reorder-category-select:last-child {
+	margin-bottom:0;
+}
+
+#low-reorder {
+	list-style:none;
+/*	padding:5px;*/
+	margin:0;
+}
+
+#low-reorder li {
+	margin:0;
+	overflow:hidden;
+	border:1px solid transparent;
+
+	text-shadow:1px 1px 1px #fff;
+
+	cursor:move;
+	cursor:-moz-grab;
+	cursor:-webkit-grab;
+
+	border:1px solid transparent;
+
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+
+	zoom:1;
+}
+
+#low-reorder li div {
+	padding:5px 8px 4px;
+	float:left;
+}
+
+#low-reorder li .order {
+	width:25px;
+	text-align:right;
+	color:#bbb;
+	color:rgba(0,0,0,0.3);
+}
+
+#low-reorder li .title {
+	/* ... */
+}
+
+#low-reorder li .hidden {
+	color:rgba(0,0,0,0.3);
+	float:right;
+	display:none;
+}
+
+#low-reorder li:hover {
+	color:#000;
+	border-color:#fff;
+
+	background:#f6f6f6;
+	background:-webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.8)), to(rgba(255,255,255,0.1))); /* Saf4+, Chrome */
+	background:-webkit-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1)); /* Chrome 10+, Saf5.1+, iOS 5+ */
+	background:   -moz-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1)); /* FF3.6 */
+	background:    -ms-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1)); /* IE10 */
+	background:     -o-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1)); /* Opera 11.10+ */
+	background:        linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1));
+
+	-webkit-box-shadow:0 0 1px rgba(0,0,0,0.2);
+	-moz-box-shadow:0 0 1px rgba(0,0,0,0.2);
+	box-shadow:0 0 1px rgba(0,0,0,0.2);
+}
+
+#low-reorder li:hover .hidden {
+	display:block;
+}
+
+#low-reorder li.ui-sortable-helper {
+	margin:2px 0 0 2px;
+
+	-webkit-box-shadow:1px 1px 3px rgba(0,0,0,0.2);
+	-moz-box-shadow:1px 1px 3px rgba(0,0,0,0.2);
+	box-shadow:1px 1px 3px rgba(0,0,0,0.2);
+}
+
+#low-reorder li.ui-sortable-placeholder {
+	visibility:visible !important;
+	border:1px dashed #ddd;
+	background:rgba(255,255,255,0.5);
+
+}
+
+#low-reorder li.grabbing {
+	cursor:-moz-grabbing;
+	cursor:-webkit-grabbing;
+}
+
+#reorder-entries label {
+	cursor:pointer;
+	margin-left:1.5em;
+	font-weight:normal;
+}
+
+#reorder-entries label input {
+	margin-right:3px;
+}
+
+#reorder-entries .alert {
+	margin:14px 0 0 0 !important;
+	font-style:italic;
+}
+
+#reorder-save {
+	margin:14px 0 0 !important;
+}
+
+#reorder-save input.submit {
+	padding:5px 14px;
+}
+
+/* =Settings table
+------------------------------------------------- */
+
+#reorder-settings col.key {
+	width:30%;
+}
+
+#reorder-settings col.val {
+	width:70%;
+}
+
+#reorder-settings label,
+#reorder-settings .label {
+	cursor:pointer;
+	font-weight:bold;
+}
+
+#reorder-settings .low-notes {
+	margin-top:4px;
+	font-size:11px;
+	line-height:1.364;
+}
+
+#reorder-settings td.multi {
+	vertical-align:top;
+}
+
+#reorder-settings input.medium {
+	width:225px;
+}
+
+#reorder-settings select[multiple],
+#category-settings select,
+#search-settings select {
+	min-width:225px;
+	max-height:200px;
+}
+
+/* Category settings */
+#category-settings {
+	padding:0;
+}
+
+#category-options,
+.category-options {
+	padding:7px 10px;
+}
+
+.category-options {
+	border-top:1px dashed #ccc;
+}
+
+.category-options label span {
+	display:block;
+	font-style:italic;
+	font-weight:normal;
+	margin-bottom:7px;
+	color:rgba(0,0,0,0.4);
+	text-shadow:1px 1px 1px #fff;
+}
+
+/* Search filter settings */
+#search-settings {
+	padding:0;
+}
+
+#search-settings div {
+	padding:7px 10px;
+	border-bottom:1px dashed #ccc;
+}
+
+#search-settings button {
+	cursor:pointer;
+}
+
+#search-settings button[type=button] {
+	border:none;
+	background:none;
+	display:inline-block;
+	padding:7px 10px;
+	margin:0;
+	text-decoration:none;
+	color:#bbb;
+	color:rgba(0,0,0,0.4);
+	text-shadow:1px 1px 1px #fff;
+}
+
+#search-settings button[type=button]:hover {
+	color:#888;
+	color:rgba(0,0,0,0.6);
+}
+
+#search-settings button[type=button] b {
+	font:bold 16px/1 arial;
+	margin-right:2px;
+	position:relative;
+	top:2px;
+}
+
+/* Order settings */
+.order-option {
+	margin-left:1.5em;
+	font-style:italic;
+	color:rgba(0,0,0,0.4);
+	text-shadow:1px 1px 1px #fff;
+}
+
+/* Permissions settings */
+#reorder-settings .permissions label {
+	margin-right:1.5em;
+	font-weight:normal;
+}
