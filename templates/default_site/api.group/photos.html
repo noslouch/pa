@@ -1,10 +1,10 @@
 <?php header('Content-type: application/json'); ?>
 [
-{exp:channel:entries channel="profile_photos" limit="100" backspace="6"}
+{exp:channel:entries channel="profile_photos" limit="100" }
     {
         "Title": "{title}",
         "URLTitle": "{url_title}",
         "Image": "{exp:channel_images:images entry_id="{entry_id}" limit="1"}{image:description}{image:url:thumb}{/exp:channel_images:images}"
-    },
+    }
 {/exp:channel:entries}
 ]
