@@ -4,7 +4,7 @@
     {
         "Title": "{title}",
         "URLTitle": "{url_title}",
-        "Summary": "{if summary_awards}{summary_awards}{/if}"
+        "Summary": <?php echo json_encode('{if summary_awards}{summary_awards}{/if}'); ?>
     }
 {/exp:channel:entries}
 ]
