@@ -225,18 +225,19 @@ PA.Router = Backbone.Router.extend({
     },
 
     profileSection : function(section) {
+
         try {
             PA.profileView.toggleActive(section)
             PA.profileView.sectionLoader(section)
         } catch(err) {
             PA.profilePages = new Backbone.Collection()
             var add = function(d) { PA.profilePages.add(d) }
-            $.when( $.get('/fixtures/awardsFixture.json'),
-                    $.get('/fixtures/bioFixture.json'),
-                    $.get('/fixtures/paSubjectFixture.json'),
-                    $.get('/fixtures/paAuthorFixture.json'),
+            $.when( $.get('/fixtures/bioFixture.json'),
+                    $.get('/fixtures/pressFixture.json'),
+                    $.get('/fixtures/awardsFixture.json'),
                     $.get('/fixtures/paPhotosFixture.json'),
-                    $.get('/fixtures/pressFixture.json')
+                    $.get('/fixtures/paAuthorFixture.json'),
+                    $.get('/fixtures/paSubjectFixture.json')
             ).done( function(){
                 _.each(arguments, function(el){
                     PA.profilePages.add(el[0])
@@ -260,6 +261,7 @@ PA.Router = Backbone.Router.extend({
             })
         }
     },
+
     profileItem : function(section, urlTitle) {
         try {
             PA.profileView.contentLoader(section, urlTitle)

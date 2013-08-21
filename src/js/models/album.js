@@ -1,4 +1,6 @@
-"use strict";
+/* models/album.js - Cover/Image Gallery model */
+
+'use strict';
 var PA = PA || {}
 PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
