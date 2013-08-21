@@ -1,10 +1,26 @@
+<?php header('Content-type: application/json'); ?>
 [
     {exp:channel:entries channel="projects" limit="100" }
     {
         "Title": "{title}",
+        "URLTitle": "{url_title}",
         "url": "{url_title}",
-        "Summary": <?php echo json_encode('{if summary}{summary}{/if}'); ?>,
-        "Image": "{exp:channel_images:images entry_id="{entry_id}" limit="1"}{image:url}{/exp:channel_images:images}"
+        "Summary": "{if summary_profile}{summary_profile}{/if}",
+        "Products": 
+        {exp:playa:children field="products_project"}
+	        { 
+	        "TitleProduct": "{title}",
+	        "URLProduct": "{url_title}",
+	        {if video_id_project}
+	        "VideoID": "{video_id_project}",
+	        {/if}
+	        {if video_src_project}
+	        "VideoSRC": "{video_src_project}",
+	        {/if}
+	        "Gallery":{exp:channel_images:images entry_id="{entry_id}" limit="1"}{ "Caption"; "{image:description}","URLThumb": "{image:url:thumb}" }{/exp:channel_images:images}
+	         
+	        }
+        {/exp:playa:children}
     }
     {/exp:channel:entries}
 ]
