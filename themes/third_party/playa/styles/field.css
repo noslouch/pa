@@ -1,0 +1,28 @@
+.publish_playa { overflow: visible; }
+.publish_matrix { overflow: visible; }
+
+/*-- entries --*/
+.playa-entries ul { margin: 4px 4px 0 4px; padding: 0; list-style-type: none; }
+
+.playa-entry { position: relative; z-index: 1; padding-bottom: 1px; }
+*:first-child+html .playa-entry { position: static; }
+.playa-entry a { display: inline-block; position: relative; padding: 2px 10px 2px 18px; font-size: 12px; line-height: 14px; color: #333 !important; text-shadow: 0 1px #fff; text-decoration: none !important;
+	border-radius: 9px; -webkit-border-radius: 9px; -moz-border-radius: 9px; }
+*:first-child+html .playa-entry a { position: static; }
+.playa-entries .playa-entry a { cursor: default; }
+.playa-entry a .playa-entry-status { display: block; position: absolute; top: 50%; left: 5px; margin-top: -9px; font-size: 20px; line-height: 18px; }
+
+.playa-entry:hover a { background: #eee; }
+
+.playa-entry.playa-dp-active a { background: #ddd;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#ddd), to(#ccc)); background: -moz-linear-gradient(top, #ddd, #ccc);
+	-webkit-box-shadow: 1px 1px 0 #999; -moz-box-shadow: 1px 1px 0 #999; }
+
+/*-- scrollpane --*/
+.playa-scrollpane { overflow-y: scroll; }
+.playa-scrollpane::-webkit-scrollbar { width: 10px; height: 10px; } /* the scrollbar area */
+.playa-scrollpane::-webkit-scrollbar-thumb { -webkit-border-radius: 5px; background: #ddd; }
+.playa-scrollpane::-webkit-scrollbar-thumb:hover { background: #ccc; }
+
+/*-- hide focus --*/
+.playa-hidefocus { outline: none; }
