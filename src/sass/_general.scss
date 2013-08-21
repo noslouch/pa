@@ -19,13 +19,6 @@ html, body {
     min-width: 1000px;
 }
 
-.image.showcase img {
-    //opacity: 0;
-    //@include transition(opacity 150ms ease);
-}
-
-//.image.showcase img.loaded { opacity: 1; }
-
 .loader {
     position: absolute;
     top: 0;
@@ -627,5 +620,15 @@ iframe {
 .profile {
     .details {
         li { line-height: 1.3; }
+    }
+}
+
+@media (max-width: 1024px) {
+    .header-wrapper {
+        position: relative;
+    }
+    .page,
+    .page.projects {
+        padding-top: 1em;
     }
 }
