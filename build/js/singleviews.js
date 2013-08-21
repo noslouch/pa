@@ -108,27 +108,37 @@ PA.ProjectDetails = Backbone.View.extend({
 
 PA.ProjectViewer = Backbone.View.extend({
     tagName : "div",
+
     className : "project viewer",
+
     baseTmpl : PA.jst.viewer,
+
     back : PA.jst.backButton,
+
     initialize : function() {
+
         _.bindAll(this, 'swap')
+
         this.$el.html( this.baseTmpl() )
 
         this.showcases = this.model.get('showcases')
+
         this.listenTo( this.showcases, 'swap', this.swap  )
 
         this.details = new PA.ProjectDetails({ 
             el : this.$('#details'),
             model : this.model
         })
+
         this.viewer = new PA.ShowcaseViewer({
             el : this.$('#showcaseContainer'),
             collection : this.showcases
         })
 
     },
+
     render: function(options) {
+
         this.details.render()
 
         this.showcases.forEach( function(showcase) {

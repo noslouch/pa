@@ -1,23 +1,27 @@
-/* models/showcase.js - Showcase model */
+/* models/profilesection.js - Profile Section model */
 
 'use strict';
 var PA = PA || {}
-PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
+PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 
-PA.Showcase = Backbone.Model.extend({
+PA.ProfileSection = Backbone.Model.extend({
 
     defaults : {
         active : false
     },
 
-    initialize: function(showcase, options){
-        if ( showcase.type === 'gallery' ) {
+    initialize : function( section, options ) {
+
+        if ( section instanceof Backbone.Collection ) {
+
             this.set({
-                gallery : new PA.CoverGallery(showcase.images)
+                collection : section
             })
+
         }
+
         this.url = function() {
-            return options.path + '/' + this.get('url_title')
+            return '/profile/' + section.path
         }
     },
 

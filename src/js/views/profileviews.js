@@ -53,6 +53,7 @@ PA.ProfileViewer = Backbone.View.extend({
 
         $container.html( $layout )
     },
+
     sectionLoader : function(urlTitle) {
         var $container = this.$('#showcaseContainer'),
             data = this.collection.where({ type : urlTitle })
