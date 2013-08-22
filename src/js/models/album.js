@@ -1,4 +1,4 @@
-/* models/album.js - Cover/Image Gallery model */
+/* models/album.js - Cover/Photo Gallery model */
 
 'use strict';
 var PA = PA || {}

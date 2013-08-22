@@ -10,4 +10,3 @@ PA.PressCollection = Backbone.Collection.extend({
     path : '/press'
 })
 
-PA.pressCollection = new PA.PressCollection()
