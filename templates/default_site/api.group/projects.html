@@ -1,13 +1,14 @@
 <?php header('Content-type: application/json'); ?>
 [
-    {exp:channel:entries channel="projects" limit="100" backspace="6"}
+    {exp:channel:entries channel="projects" limit="100"}
     {
         "Title": "{title}",
         "URLTitle": "{url_title}",
         "url": "{url_title}",
         "Summary": "{if summary_profile}{summary_profile}{/if}",
-        "Products": [ 
-            {exp:playa:children field="products_project" backspace="14"}
+        "Products": 
+        [ 
+            {exp:playa:children field="products_project"}
             { 
                 "TitleProduct": "{title}",
                 "URLProduct": "{url_title}",
@@ -24,9 +25,9 @@
                     "URLThumb": "{image:url:thumb}" 
                 } 
                 {/exp:channel_images:images}
-            },
+            }
             {/exp:playa:children}
         ]
-    },
+    }
     {/exp:channel:entries}
 ]
