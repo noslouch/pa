@@ -1,6 +1,6 @@
 <?php header('Content-type: application/json'); ?>
 [
-{exp:channel:entries channel="profile_press" limit="100"}
+{exp:channel:entries channel="profile_press" limit="100" backspace="2"}
     {
         "Title": "{title}",
         "URLTitle": "{url_title}",
@@ -8,13 +8,13 @@
         "Content": <?php echo json_encode('{content_press}');?>,
         "Image": 
         	[
-				{exp:channel_images:images entry_id="{entry_id}" limit="1"}
+				{exp:channel_images:images entry_id="{entry_id}" limit="1" backspace="6"}
 					{
 						"Caption": "{image:description}",
 						"URL Thumb": "{image:url:thumb}"
-					}
+					},
 				{/exp:channel_images:images}
 			]
-    }
+    },
 {/exp:channel:entries}
 ]
