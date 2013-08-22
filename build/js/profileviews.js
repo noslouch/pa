@@ -12,11 +12,37 @@ PA.ProfileLinks = Backbone.View.extend({
 })
 
 PA.ProfileViewer = Backbone.View.extend({
+
     initialize : function() {
         _.bindAll(this, 'contentLoader', 'sectionLoader','toggleActive', 'navigate')
-        this.links = this.$('#showcaseLinks')
+        this.sections = []
+        //this.links = this.$('#showcaseLinks')
+
+        var bio = new Backbone.Model({},{
+            url : '/fixtures/bioFixture.json'
+        })
+
+        bio.parse = function(response) { return response[0] }
+
+        var press = new PA.PressCollection()
+        var awards = new PA.AwardCollection()
+        var paPhotos = new Backbone.Model({},{
+            url : '/fixtures/paPhotosFixture.json'
+        })
+        paPhotos.parse = function(r) { return r[0] }
+
+
+        this.sections.push(bio)
+        this.sections.push(press)
+        this.sections.push(awards)
+        this.sections.push(paPhotos)
     },
-    render : function() {},
+
+    render : function() {
+        this.sections.each(function(el){
+            el.fetch()
+        })
+    },
     events : {
         'click #profileLinks a' : 'navigate',
         'click .list a': 'navigate',
