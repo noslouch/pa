@@ -1,5 +1,6 @@
 {
   "asi" : true,
+  "laxcomma" : true,
   "curly": true,
   "eqeqeq": true,
   "immed": true,

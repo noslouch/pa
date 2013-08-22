@@ -1,37 +1,68 @@
-/* models/profilesection.js - Profile Section model */
+/* models/profilesection.js - All Profile Section models */
 
 'use strict';
 var PA = PA || {}
 PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 
-PA.ProfileSection = Backbone.Model.extend({
+// Profile Classes
 
-    defaults : {
-        active : false
+PA.ProfileBase = Backbone.Model.extend({
+    initialize : function() {
+        _.bindAll( this, 'activate', 'deactivate')
     },
-
-    initialize : function( section, options ) {
-
-        if ( section instanceof Backbone.Collection ) {
-
-            this.set({
-                collection : section
-            })
-
-        }
-
-        this.url = function() {
-            return '/profile/' + section.path
-        }
-    },
-
-    activate : function(){
-        this.set('active', true)
-        PA.router.navigate(this.url())
+    active : false,
+    activate : function(href){
+        this.active = true
+        PA.router.navigate( '/profile/' + this.section )
+        PA.dispatcher.trigger('profile:sectionActivate', this)
     },
 
     deactivate : function(){
-        this.set('active', false)
+        this.active = false
     }
+})
 
+PA.OneOff = PA.ProfileBase.extend({
+    parse : function(r) {
+        return r[0]
+    }
+})
+
+PA.ProfileListItem = PA.ProfileBase.extend({
+    initialize : function(item, options){
+        _.bindAll( this, 'activate', 'deactivate' )
+        this.set({
+            htmlDate : this.makeHtmlDate( this.get('date') ),
+            date : this.parseDate( this.get('date') )
+        })
+    },
+    active : false,
+    activate : function(href){
+        this.active = true
+        PA.router.navigate(href)
+        PA.dispatcher.trigger('profile:listItemActivate', this)
+    },
+
+    deactivate : function(){
+        this.active = false
+    },
+
+    url : function() {
+        return this.get('url')
+    }
+})
+
+PA.Bio = PA.OneOff.extend({
+    url : '/fixtures/bioFixture.json',
+    section : 'bio'
+})
+
+PA.PhotosOf = PA.OneOff.extend({
+    url : '/fixtures/paPhotosFixture.json',
+    section : 'photos-of-pa'
+})
+
+PA.Acknowledgements = PA.OneOff.extend({
+    url : '/fixtures/bioFixture.json',
+    section: 'acknowledgements'
 })

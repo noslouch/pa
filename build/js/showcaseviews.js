@@ -174,10 +174,40 @@ PA.TextShowcase = Backbone.View.extend({
     }
 })
 
+PA.ListItem = Backbone.View.extend({
+
+    tagName : 'li',
+
+    initialize : function(model, options) {
+        _.bindAll( this, 'toggle' )
+    },
+
+    events : {
+        'click a' : 'toggle'
+    },
+
+    toggle : function(e) {
+        e.preventDefault()
+        PA.dispatcher.trigger( 'profile:listItemActivate', this.model , e.currentTarget.pathname )
+    },
+
+    template : PA.jst.listItemPartial,
+
+    render : function() {
+        this.$el.append( this.template({
+            id : this.model.id,
+            title : this.model.get('title'),
+            summary : this.model.get('summary'),
+            url : this.options.url,
+            path : this.options.path
+        }) )
+        return this.el
+    }
+})
+
 PA.ListView = Backbone.View.extend({
     tagName : 'section',
     header : PA.jst.listHeaderPartial,
-    partial : PA.jst.listItemPartial,
 
     render : function() {
         var listItems = this.options.listItems,
@@ -192,16 +222,12 @@ PA.ListView = Backbone.View.extend({
         }) )
 
         _.each( listItems, function(listItem) {
-
             this.$('ul')
-            .append( this.partial({
-                path : path ? path : '',
-                url : url ? listItem.url() : false,
-                id : listItem.id,
-                title : listItem.get('title'),
-                summary : listItem.get('summary')
-            }) )
-
+                .append( new PA.ListItem({
+                    model : listItem,
+                    path : path ? path : '',
+                    url : url ? listItem.url() : false
+                }).render() )
         }, this )
 
         return this.el
@@ -212,6 +238,7 @@ PA.ListView = Backbone.View.extend({
 PA.ListShowcase = Backbone.View.extend({
     tagName : 'div',
     className : 'showcase list',
+
     render : function(){
 
         // groupedCollection is an object of years paired with project objects that fall within that year.
