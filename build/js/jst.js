@@ -132,20 +132,18 @@ JST.listHiddenHeaderPartial = [
 ].join('\n')
 
 JST.listItemPartial = [
-    '<li>',
-        '<% if (url) { %>',
-            '<a href="<%= path %><%= url %>" id="<%= id %>">',
-        '<% } %>',
-            '<h4>',
-                '<%= title %>',
-            '</h4>',
-            '<p>',
-                '<%= summary %>',
-            '</p>',
-        '<% if (url) { %>',
-            '</a>',
-        '<% } %>',
-    '</li>'
+    '<% if (url) { %>',
+        '<a href="<%= path %><%= url %>" id="<%= id %>">',
+    '<% } %>',
+        '<h4>',
+            '<%= title %>',
+        '</h4>',
+        '<p>',
+            '<%= summary %>',
+        '</p>',
+    '<% if (url) { %>',
+        '</a>',
+    '<% } %>',
 ].join('\n')
 
 

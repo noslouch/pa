@@ -220,45 +220,31 @@ PA.Router = Backbone.Router.extend({
 
     profile : function() {
 
-        PA.router.navigate('/profile/bio', {trigger: true})
-
+        PA.profilePage = new PA.ProfileViewer({
+            el : '#profileViewer'
+        })
+        $.when(
+            PA.profilePage.render()
+        ).done(function() {
+            PA.profilePage.bio.activate()
+        })
     },
 
     profileSection : function(section) {
 
         try {
-            PA.profileView.toggleActive(section)
-            PA.profileView.sectionLoader(section)
+
+            PA.profilePage[section].activate()
+
         } catch(err) {
-            PA.profilePages = new Backbone.Collection()
-            var add = function(d) { PA.profilePages.add(d) }
-            $.when( $.get('/fixtures/bioFixture.json'),
-                    $.get('/fixtures/pressFixture.json'),
-                    $.get('/fixtures/awardsFixture.json'),
-                    $.get('/fixtures/paPhotosFixture.json'),
-                    $.get('/fixtures/paAuthorFixture.json'),
-                    $.get('/fixtures/paSubjectFixture.json')
-            ).done( function(){
-                _.each(arguments, function(el){
-                    PA.profilePages.add(el[0])
-                    PA.groupedProfilePages = PA.profilePages.groupBy('type')
-                })
 
-                PA.profileView = new PA.ProfileViewer({
-                    el : '#profileViewer',
-                    collection : PA.profilePages
-                })
-
-                PA.profileView.toggleActive(section)
-
-                PA.app.page.render({
-                    view : PA.profileView,
-                    pageClass : 'profile',
-                    section : 'Profile Home',
-                })
-
-                PA.profileView.sectionLoader(section)
+            PA.profilePage = new PA.ProfileViewer({
+                el : '#profileViewer'
             })
+
+            PA.profilePage.render()
+
+            PA.profilePage[section].activate()
         }
     },
 
