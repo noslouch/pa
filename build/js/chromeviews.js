@@ -9,8 +9,6 @@ PA.Header = Backbone.View.extend({
     },
     events : {
         'click nav' : function(e){
-            //e.preventDefault()
-            //PA.router.navigate(e.target.pathname, {trigger: true})
         }
     },
     render : function(options) {
