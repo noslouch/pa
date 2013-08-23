@@ -7,53 +7,61 @@ var PA = PA || {}
     var SCREEN_WIDTH = window.innerWidth,
     SCREEN_HEIGHT = window.innerHeight,
     HALF_WIDTH = window.innerWidth / 2,
-    HALF_HEIGHT = window.innerHeight / 2,
-    imageLimit = SCREEN_WIDTH < 320 ? 12 : 48,
-    // images = app.randomCovers() // should return a Backbone collection of cover images
-    images = []
+    HALF_HEIGHT = window.innerHeight / 2
+    //imageLimit = SCREEN_WIDTH < 320 ? 12 : 48
 
     function randomRange(min, max) {
         return ((Math.random()*(max-min)) + min)
     }
 
+    app.randomCovers = function() {
+        var randomCoverModels = app.coverImages.shuffle()
+        var coverCollection = new Backbone.Collection()
+
+        _.each( randomCoverModels, function(cover, idx, list) {
+            coverCollection.add( cover )
+        } )
+
+        return coverCollection
+    }
+
+    PA.StarThumb = Backbone.View.extend({
+        tagName : "a",
+        initialize : function() {
+            _.bindAll( this, 'render' )
+
+            this.$el.append( $('<img>') )
+            this.$('img').css({
+                left : HALF_WIDTH + randomRange(-HALF_WIDTH, HALF_WIDTH),
+                top : HALF_HEIGHT + randomRange(-HALF_HEIGHT, HALF_HEIGHT)
+            }).attr( 'src', this.model.get('thumb') )
+        },
+        render : function() {
+
+            this.$el
+                .attr( 'href', '/projects/' + this.model.get('url') )
+                .addClass( 'fast' )
+
+            return this.el
+        }
+
+    })
+
     var $container = $('<div>').addClass('starfield').attr('id','starfield')
     function stars(){
         app.starsRunning = true
 
-        /*
-        images.forEach( function(image) {
-            image.$el.css({
-                left : HALF_WIDTH + randomRange(-HALF_WIDTH, HALF_WIDTH),
-                top : HALF_HEIGHT + randomRange(-HALF_HEIGHT, HALF_HEIGHT)
-            })
-        }
+        var images = app.randomCovers() // should return a Backbone collection of cover images
 
         function stagger() {
             var i = 0;
 
             function go() {
-                var $a = $('<a/>').attr('href', images.models[i].get('url')).append(images.models[i].el).addClass('fast')
-                $a.appendTo($container)
-                setTimeout(go, 550)
+                $container.append( new PA.StarThumb({ model : images.models[i] }).render() )
                 i++
-            }
 
-            go()
-        }
-        */
-
-        $container.on('finished', function(e){
-            stagger()
-        })
-
-        function stagger(){
-            var i = 0;
-
-            function go(){
-                var $a = $('<a/>').attr('href', '#').append(images[i]).addClass('fast')
-                $a.appendTo($container)
-                i++
-                if (i < images.length) {
+                // CHANGE TO IMAGELIMIT WHEN PROJECTS INCREASE
+                if ( i < images.length ) {
                     setTimeout(go, 550)
                 }
             }
@@ -61,18 +69,9 @@ var PA = PA || {}
             go()
         }
 
-        for (var i = 0; i < imageLimit; i++){
-            images[i] = new Image()
-            images[i].src = '/assets/img/mock-starfield/' + (i%8+1) + '.png'
-            $(images[i]).css({
-                left : HALF_WIDTH + randomRange(-HALF_WIDTH, HALF_WIDTH),
-                top : HALF_HEIGHT + randomRange(-HALF_HEIGHT, HALF_HEIGHT)
-            })
-
-            if (i === imageLimit - 1) { $container.trigger('finished') }
-        }
-
         $('.outer-wrapper').after($container)
+
+        stagger()
     }
 
     function starDestroy() {
