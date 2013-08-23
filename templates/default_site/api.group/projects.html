@@ -12,12 +12,13 @@
         {if image:category == 'landscape'}
             "thumb" : "{image:url:landscape}",
             "wide" : "true",
+            "caption" : "{if image:description}{image:description}{/if}",
         {if:else}
             "thumb" : "{image:url:portrait}",
             "wide" : "",
+            "caption" : "{if image:description}{image:description}{/if}",
         {/if}
         {/cover_projects}
-            "caption" : "{image:description}",
             "url" : "{url_title}"
         },
         "summary": "{if summary_projects}{summary_projects}{/if}",
@@ -54,7 +55,19 @@
             { 
                 "title" : "{title}",
                 "url_title": "{url_title}",
-                {if video_id_project}
+                {if gallery_project}
+                "type" : "gallery",
+                "images": [
+                    {gallery_project backspace="22"}
+                    { 
+                        "lg_thumb" : "{image:url:lg-thumb}",
+                        "thumb" : "{image:url:thumb}",
+                        "url" : "{image:url:full-size}",
+                        "caption": "{image:description}"
+                    },
+                    {/gallery_project}
+                ]
+                {if:elseif video_id_project}
                 "type" : "video",
                 "video_id": "{video_id_project}",
                 "caption" : "{video_caption_project}",
@@ -64,22 +77,12 @@
                 "video_src": "{video_src_project}",
                 "caption" : "{video_caption_project}",
                 "youtube" : "{youtube}"
-                {if:else}
-                "type" : "gallery",
-                "images": [
-                    {gallery_project backspace="21"}
-                    { 
-                        "lg_thumb" : "{image:url:lg-thumb}",
-                        "thumb" : "{image:url:thumb}",
-                        "url" : "{image:url:full-size}",
-                        "caption": "{image:description}"
-                    },
-                    {/gallery_project}
-                ]
                 {/if}
             },
             {/exp:playa:children}
-        ]
+        ],
+        "info" : <?php echo json_encode("{info_project}"); ?>,
+        "relatedLinks" : ""
     },
     {/exp:channel:entries}
 ]

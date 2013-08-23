@@ -7,7 +7,11 @@ PA.ImageThumb = Backbone.View.extend({
     template : PA.jst.thumbTemplate,
     className : function() {
         if (this.options.cover) {
-            return "thumb " + this.model.get('tags').join(' ') + (this.model.get('wide') ? " wide" : "")
+            var tags = []
+            _.each( this.model.get('tags'), function(obj) {
+                tags.push( obj.className )
+            }, this )
+            return "thumb " + tags.join(' ') + (this.model.get('wide') ? " wide" : "")
         } else {
             return "thumb" + (this.model.get('wide') ? " wide" : "")
         }
@@ -22,14 +26,7 @@ PA.ImageThumb = Backbone.View.extend({
             large : this.options.large
         }) )
         return this.el
-    },
-    events : {
-        click : "view"
-    },
-    view : function (e) {
-        //e.preventDefault()
-        //PA.router.navigate("projects/" + this.model.get('url'), {trigger : true} )
-   }
+    }
 })
 
 // instantiate with
