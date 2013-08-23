@@ -1,4 +1,6 @@
+
 [   
+
     {
         "id": "1",
         "title": "Pepsi Branding",
@@ -18,9 +20,9 @@
         "showcases": [
             {
                 "type" : "video",
+                "video_id": "70927545",
                 "title": "Pepsi Commercial",
                 "url_title" : "pepsi-commercial",
-                "video_id": "70927545",
                 "caption": "Optional Caption",
                 "youtube" : false
             },

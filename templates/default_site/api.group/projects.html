@@ -2,29 +2,81 @@
 [
     {exp:channel:entries channel="projects" limit="100" backspace="6"}
     {
-        "Title": "{title}",
-        "URLTitle": "{url_title}",
+        "id" : "{entry_id}",
+        "title": "{title}",
+        "date" : "{year_projects}",
         "url": "{url_title}",
-        "Summary": "{if summary_profile}{summary_profile}{/if}",
-        "Products": 
+        "logo" : "{logo_projects}{image:url:logo-thumb}{/logo_projects}",
+        "cover" : {
+        {cover_projects}
+        {if image:category == 'landscape'}
+            "thumb" : "{image:url:landscape}",
+            "wide" : "true",
+        {if:else}
+            "thumb" : "{image:url:portrait}",
+            "wide" : "",
+        {/if}
+        {/cover_projects}
+            "caption" : "{image:description}",
+            "url" : "{url_title}"
+        },
+        "summary": "{if summary_projects}{summary_projects}{/if}",
+        "brand_tags" : 
+        [
+            {categories show_group="21" backspace="14"}
+            { 
+                "title" : "{category_name}",
+                "className" : "{category_url_title}"
+            },
+            {/categories}
+        ],
+        "industry_tags" : 
+        [
+            {categories show_group="1" backspace="14"}
+            { 
+                "title" : "{category_name}",
+                "className" : "{category_url_title}"
+            },
+            {/categories}
+        ],
+        "type_tags" : 
+        [
+            {categories show_group="11" backspace="14"}
+            { 
+                "title" : "{category_name}",
+                "className" : "{category_url_title}"
+            },
+            {/categories}
+        ],
+        "showcases": 
         [ 
             {exp:playa:children field="products_project" backspace="14"}
             { 
-                "TitleProduct": "{title}",
-                "URLProduct": "{url_title}",
+                "title" : "{title}",
+                "url_title": "{url_title}",
                 {if video_id_project}
-                "VideoID": "{video_id_project}",
+                "type" : "video",
+                "video_id": "{video_id_project}",
+                "caption" : "{video_caption_project}",
+                "youtube" : "{youtube}"
+                {if:elseif video_src_project}
+                "type" : "video",
+                "video_src": "{video_src_project}",
+                "caption" : "{video_caption_project}",
+                "youtube" : "{youtube}"
+                {if:else}
+                "type" : "gallery",
+                "images": [
+                    {gallery_project backspace="21"}
+                    { 
+                        "lg_thumb" : "{image:url:lg-thumb}",
+                        "thumb" : "{image:url:thumb}",
+                        "url" : "{image:url:full-size}",
+                        "caption": "{image:description}"
+                    },
+                    {/gallery_project}
+                ]
                 {/if}
-                {if video_src_project}
-                "VideoSRC": "{video_src_project}",
-                {/if}
-                "Gallery": 
-                {exp:channel_images:images entry_id="{entry_id}" limit="1"} 
-                { 
-                    "Caption": "{image:description}",
-                    "URLThumb": "{image:url:thumb}" 
-                } 
-                {/exp:channel_images:images}
             },
             {/exp:playa:children}
         ]
