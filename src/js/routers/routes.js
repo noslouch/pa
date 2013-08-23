@@ -44,30 +44,6 @@ PA.Router = Backbone.Router.extend({
 
             spinner.detach()
         })
-
-                   /*
-        $.get('/fixtures/projectFixture.json').done(function(d) {
-            PA.projects = new PA.Projects(d)
-
-            PA.app.header.filterBar.render()
-
-            PA.coverImages = new PA.CoverGallery( PA.projects.pluck('coverImage') )
-            PA.coverShowcase = new PA.ImageShowcase({
-                cover : true,
-                collection : PA.coverImages,
-                path : 'projects'
-            })
-
-            PA.app.page.render({
-                view : PA.coverShowcase,
-                pageClass : 'projects',
-                section : 'Projects'
-            })
-
-            PA.starInit()
-
-        })
-        */
     },
 
     singleProject : function(project, showcase) {
