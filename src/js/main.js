@@ -12,8 +12,8 @@ $('#n-container header').click(function(e){
 })
 
 $(document).on('click', '#starfield a', function(e){
-    e.preventDefault()
-    e.stopPropagation()
+    //e.preventDefault()
+    //e.stopPropagation()
 })
 
 var filterBar = document.getElementById('filter-bar')
