@@ -1,4 +1,4 @@
-/*global SingleView, ImageShowcase, Header*/
+/*global SingleView, ImageShowcase, Header, Spinner*/
 "use strict";
 var PA = PA || {}
 PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
@@ -23,6 +23,8 @@ PA.Router = Backbone.Router.extend({
 
     projects : function() {
 
+        var spinner = new Spinner()
+
         $.when( PA.projects.fetch() ).done(function(){
             PA.app.header.filterBar.render()
             PA.coverImages = new PA.CoverGallery( PA.projects.pluck('coverImage') )
@@ -39,6 +41,8 @@ PA.Router = Backbone.Router.extend({
             })
 
             PA.starInit()
+
+            spinner.detach()
         })
 
                    /*
@@ -67,6 +71,7 @@ PA.Router = Backbone.Router.extend({
     },
 
     singleProject : function(project, showcase) {
+        var spinner = new Spinner()
         var showcases
 
         try {
@@ -76,6 +81,8 @@ PA.Router = Backbone.Router.extend({
             showcases = PA.currentModel.get('showcases')
 
             PA.router.navigate(showcases.models[0].url(), {trigger: true})
+
+            spinner.detach()
 
         } catch(err) {
             // Projects haven't loaded yet because
@@ -89,11 +96,14 @@ PA.Router = Backbone.Router.extend({
                 showcases = PA.currentModel.get('showcases')
 
                 PA.router.navigate(showcases.models[0].url(), {trigger: true})
+
+                spinner.detach()
             })
         }
     },
 
     showcaseItem : function(project, urlTitle) {
+        var spinner = new Spinner()
         var showcases
 
         try {
@@ -110,6 +120,8 @@ PA.Router = Backbone.Router.extend({
             })
 
             showcases.findWhere({ url_title : urlTitle }).activate()
+
+            spinner.detach()
 
         } catch(err) {
             //$.get('/fixtures/projectFixture.json').done(function(d) {
@@ -129,6 +141,8 @@ PA.Router = Backbone.Router.extend({
                 })
 
                 showcases.findWhere({ url_title : urlTitle }).activate()
+
+                spinner.detach()
             })
         }
     },
