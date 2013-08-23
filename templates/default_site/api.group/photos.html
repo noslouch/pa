@@ -1,10 +1,17 @@
 <?php header('Content-type: application/json'); ?>
 [
-{exp:channel:entries channel="profile_photos" limit="100" }
+{exp:channel:entries channel="profile_photos" limit="100" backspace="2"}
     {
         "Title": "{title}",
         "URLTitle": "{url_title}",
-        "Image": {exp:channel_images:images entry_id="{entry_id}" limit="1"}{ "Caption": "{image:description}", "URLThumb": "{image:url:thumb}"}{/exp:channel_images:images}
-    }
+        "Image": 
+        [
+        	{exp:channel_images:images entry_id="{entry_id}" limit="1" backspace="11"}
+	        	{ 
+	        		"Caption": "{image:description}", 
+	        		"URLThumb": "{image:url:thumb}"
+	        	},
+        	{/exp:channel_images:images}
+    },
 {/exp:channel:entries}
 ]

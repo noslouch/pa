@@ -1,12 +1,25 @@
 <?php header('Content-type: application/json'); ?>
 [
-{exp:channel:entries channel="photography" limit="100"}
+{exp:channel:entries channel="photography" limit="100" backspace="2"}
     {
         "Title": "{title}",
         "URLTitle": "{url_title}",
         "Summary": "{if summary_photography}{summary_photography}{/if}",
         "Content": <?php echo json_encode('{content_photography}'); ?>,
-        "Gallery": {exp:channel_images:images entry_id="{entry_id}" limit="1"}{{if image:cover==1}"CaptionCover":"{image:description}","URLCover": "{image:url:cover}",{/if}"Caption":{image:description}, "URLThumb": {image:url:thumb}}{/exp:channel_images:images}"
-    }
+        "Gallery": 
+        [
+        	{exp:channel_images:images entry_id="{entry_id}" limit="1" backspace="11"}
+        	{
+        		{if image:cover==1}
+        		"CaptionCover":"{image:description}",
+        		"URLCover": "{image:url:cover}",
+        		{/if}
+        		
+        		"Caption":{image:description}, 
+        		"URLThumb": {image:url:thumb}
+        	},
+        	{/exp:channel_images:images}
+        ]	
+    },
 {/exp:channel:entries}
 ]
