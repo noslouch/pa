@@ -188,7 +188,7 @@ PA.ListItem = Backbone.View.extend({
 
     toggle : function(e) {
         e.preventDefault()
-        PA.dispatcher.trigger( 'profile:listItemActivate', this.model , e.currentTarget.pathname )
+        this.model.activate()
     },
 
     template : PA.jst.listItemPartial,
