@@ -11,11 +11,6 @@ $('#n-container header').click(function(e){
     $(qContainer).toggleClass('short')
 })
 
-$(document).on('click', '#starfield a', function(e){
-    //e.preventDefault()
-    //e.stopPropagation()
-})
-
 var filterBar = document.getElementById('filter-bar')
 var $filters = $('.filter a')
 
