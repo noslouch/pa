@@ -21,9 +21,6 @@ PA.BrandControls = Backbone.View.extend({
 PA.ProjectFilterItem = Backbone.View.extend({
     tagName : 'li',
     template : PA.jst.namePartial,
-    events : {
-        'click' : 'debug'
-    },
     render : function() {
         this.$el
             .html( this.template({
@@ -120,10 +117,12 @@ PA.FilterBar = Backbone.View.extend({
     className : 'filter-bar',
     id : 'filter-bar',
     template : PA.jst.projectFilter,
+
     initialize : function() {
         _.bindAll(this, 'render', 'openMenu','debug')
         this.$el.html( this.template() )
     },
+
     events : {
         'click .filter' : function(e){
             e.preventDefault()
@@ -133,17 +132,21 @@ PA.FilterBar = Backbone.View.extend({
         'click h3' : 'openMenu'
         //'click h3' : 'debug'
     },
+
     openMenu : function(e) {
         this.$('.open').removeClass('open')
         $(e.target.parentElement).addClass('open')
     },
+
     filter : function(e) {
         PA.dispatcher.trigger('filter', e)
     },
+
     debug : function(e) { 
         //console.log($(e.currentTarget).data('filter'))
         //this.dispatcher.trigger('filter2', e)
     },
+
     render : function() {
         this.collection = PA.projects
 
