@@ -11,7 +11,7 @@ PA.ProfileBase = Backbone.Model.extend({
         _.bindAll( this, 'activate', 'deactivate')
     },
     active : false,
-    activate : function(href){
+    activate : function(){
         this.active = true
         PA.router.navigate( '/profile/' + this.section )
         PA.dispatcher.trigger('profile:sectionActivate', this)
@@ -36,15 +36,11 @@ PA.ProfileListItem = PA.ProfileBase.extend({
             date : this.parseDate( this.get('date') )
         })
     },
-    active : false,
-    activate : function(href){
-        this.active = true
-        PA.router.navigate(href)
-        PA.dispatcher.trigger('profile:listItemActivate', this)
-    },
 
-    deactivate : function(){
-        this.active = false
+    activate : function(){
+        //this.active = true
+        PA.router.navigate( '/profile/' + this.collection.section + '/' + this.url() )
+        PA.dispatcher.trigger('profile:listItemActivate', this)
     },
 
     url : function() {

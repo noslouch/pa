@@ -20,7 +20,6 @@ Backbone.Model.prototype.makeHtmlDate = function(dateString, onlyYear) {
 
 Backbone.Model.prototype.parseDate = function(dateString) {
     return moment( new Date( parseInt(dateString, 10) ) )
-
 }
 
 PA.router = new PA.Router()

@@ -223,18 +223,39 @@ PA.Router = Backbone.Router.extend({
         PA.profilePage = new PA.ProfileViewer({
             el : '#profileViewer'
         })
-        $.when(
+
+        var deferreds = []
+
+        _.each(PA.profilePage.sections, function(el){
+            deferreds.push(el.fetch())
+        })
+
+        $.when.apply($, deferreds).done(function(){
             PA.profilePage.render()
-        ).done(function() {
-            PA.profilePage.bio.activate()
+            PA.dispatcher.trigger( 'profile:swap', PA.profilePage.bio )
+            //PA.profilePage.bio.activate()
         })
     },
 
     profileSection : function(section) {
 
+        switch(section) {
+            case 'photos-of-pa':
+                section = 'photosOf'
+                break;
+            case 'articles-by-pa':
+                section = 'articlesBy'
+                break;
+            case 'articles-about-pa':
+                section = 'articlesAbout'
+                break;
+            default:
+                break;
+        }
+
         try {
 
-            PA.profilePage[section].activate()
+            PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
 
         } catch(err) {
 
@@ -242,47 +263,60 @@ PA.Router = Backbone.Router.extend({
                 el : '#profileViewer'
             })
 
-            PA.profilePage.render()
+            var deferreds = []
 
-            PA.profilePage[section].activate()
+            _.each(PA.profilePage.sections, function(el){
+                deferreds.push(el.fetch())
+            })
+
+            $.when.apply($, deferreds).done(function(){
+                PA.profilePage.render()
+                PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
+                //PA.profilePage[section].activate()
+            })
         }
     },
 
     profileItem : function(section, urlTitle) {
+        switch(section) {
+            case 'photos-of-pa':
+                section = 'photosOf'
+                break;
+            case 'articles-by-pa':
+                section = 'articlesBy'
+                break;
+            case 'articles-about-pa':
+                section = 'articlesAbout'
+                break;
+            default:
+                break;
+        }
+
         try {
-            PA.profileView.contentLoader(section, urlTitle)
-            PA.profileView.toggleActive(section)
+
+            PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
+            PA.profilePage[section].findWhere({ url : urlTitle }).activate()
+
         } catch(err) {
-            PA.profilePages = new Backbone.Collection()
-            var add = function(d) { PA.profilePages.add(d) }
-            $.when( $.get('/fixtures/awardsFixture.json'),
-                    $.get('/fixtures/bioFixture.json'),
-                    $.get('/fixtures/paSubjectFixture.json'),
-                    $.get('/fixtures/paAuthorFixture.json'),
-                    $.get('/fixtures/paPhotosFixture.json'),
-                    $.get('/fixtures/pressFixture.json')
-            ).done( function(){
-                _.each(arguments, function(el){
-                    PA.profilePages.add(el[0])
-                    PA.groupedProfilePages = PA.profilePages.groupBy('type')
-                })
 
-                PA.profileView = new PA.ProfileViewer({
-                    el : '#profileViewer',
-                    collection : PA.profilePages
-                })
+            PA.profilePage = new PA.ProfileViewer({
+                el : '#profileViewer'
+            })
 
-                PA.profileView.toggleActive(section)
+            var deferreds = []
 
-                PA.app.page.render({
-                    view : PA.profileView,
-                    pageClass : 'profile',
-                    section : 'Profile Home'
-                })
+            _.each(PA.profilePage.sections, function(el){
+                deferreds.push(el.fetch())
+            })
 
-                PA.profileView.contentLoader(section, urlTitle)
+            $.when.apply($, deferreds).done(function(){
+                PA.profilePage.render()
+                PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
+                //PA.profilePage[section].activate()
+                PA.profilePage[section].findWhere({ url : urlTitle }).activate()
             })
         }
+
     },
     contact : function() {
         $('.page').append('contact')

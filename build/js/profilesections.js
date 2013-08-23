@@ -44,13 +44,13 @@ PA.ArticlesAbout = PA.ProfileCollection.extend({
 })
 
 PA.Interviews = PA.ProfileCollection.extend({
-    model : PA.Interview,
+    model : PA.ProfileListItem,
     url : '/fixtures/pressFixture.json',
     section : 'interviews'
 })
 
 PA.Transcripts = PA.ProfileCollection.extend({
-    model : PA.Transcript,
+    model : PA.ProfileListItem,
     url : '/fixtures/pressFixture.json',
     section : 'transcripts'
 })
