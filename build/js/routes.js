@@ -233,7 +233,6 @@ PA.Router = Backbone.Router.extend({
         $.when.apply($, deferreds).done(function(){
             PA.profilePage.render()
             PA.dispatcher.trigger( 'profile:swap', PA.profilePage.bio )
-            //PA.profilePage.bio.activate()
         })
     },
 
@@ -272,7 +271,6 @@ PA.Router = Backbone.Router.extend({
             $.when.apply($, deferreds).done(function(){
                 PA.profilePage.render()
                 PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
-                //PA.profilePage[section].activate()
             })
         }
     },
@@ -312,7 +310,6 @@ PA.Router = Backbone.Router.extend({
             $.when.apply($, deferreds).done(function(){
                 PA.profilePage.render()
                 PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
-                //PA.profilePage[section].activate()
                 PA.profilePage[section].findWhere({ url : urlTitle }).activate()
             })
         }
