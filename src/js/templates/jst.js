@@ -46,7 +46,7 @@ JST.tagLinks = [
     '<div class="links" id="tagLinks"></div>'
 ].join('\n')
 
-JST.tag = '<a href="#"><%= tag %></a>'
+JST.tag = '<a href="#" data-filter="<%= className %>"><%= tag %></a>'
 
 JST.textTemplate = [
     '<article class="<%= type %>">', // .project-info, .press, .bio
@@ -226,7 +226,7 @@ JST.controlsPartial = [
 
 JST.logoPartial = [
     '<div class="icon">',
-        '<a href="#" data-filter=".<%= tag %>">',
+        '<a href="#" data-filter=".<%= tagFilter %>">',
             '<img class="has-tip tip-top" data-tooltip src="<%= logo %>" title="<%= tag %>">',
         '</a>',
     '</div>'
@@ -234,7 +234,7 @@ JST.logoPartial = [
 
 JST.namePartial = [
     '<h4 class="name">',
-        '<a href="#" data-filter=".<%= tag %>">',
+        '<a href="#" data-filter=".<%= tagFilter %>">',
             '<%= tag %>',
         '</a>',
     '</h4>'

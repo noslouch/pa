@@ -26,8 +26,9 @@ PA.ProjectFilterItem = Backbone.View.extend({
     },
     render : function() {
         this.$el
-            .html( this.template({ 
-                tag : this.options.tag
+            .html( this.template({
+                tagFilter : this.options.tagObj.className,
+                tag : this.options.tagObj.title
             }) )
         return this.el
     }
@@ -55,8 +56,11 @@ PA.ProjectFilter = Backbone.View.extend({
                 return a.concat(b) 
             }, [])
 
-        tags.forEach( function(tag) {
-            this.$el .append( new PA.ProjectFilterItem({ tag : tag }).render() )
+        tags.forEach( function(tagObj) {
+            this.$el
+                .append( new PA.ProjectFilterItem({ 
+                    tagObj : tagObj })
+                .render() )
         }, this )
 
         return this.el
@@ -70,12 +74,14 @@ PA.BrandFilterItem = Backbone.View.extend({
     logoTemplate : PA.jst.logoPartial,
     nameTemplate : PA.jst.namePartial,
     render : function() {
-        this.$el.append( this.logoTemplate({ 
-            tag : this.options.tag,
-            logo: this.options.logo 
+        this.$el.append( this.logoTemplate({
+            tagFilter : this.options.tagObj.className,
+            tag : this.options.tagObj.title,
+            logo: this.options.logo
         }) )
-        this.$el.append( this.nameTemplate({ 
-            tag : this.options.tag 
+        this.$el.append( this.nameTemplate({
+            tagFilter : this.options.tagObj.className,
+            tag : this.options.tagObj.title
         }) )
         return this.el
     }
@@ -89,14 +95,16 @@ PA.BrandFilter = Backbone.View.extend({
         var tags = this.collection
             .pluck('brand_tags')
             .reduceRight( function(a,b) {
-                return a.concat(b)
+                return b.concat(a)
             }, [] )
 
-        tags.forEach( function(tag) {
+        var logos = this.collection.pluck('logo')
+
+        tags.forEach( function(tagObj, idx) {
             this.$el
                 .append( new PA.BrandFilterItem({
-                    tag : tag,
-                    logo : 'http://placehold.it/80x45'
+                    tagObj : tagObj,
+                    logo : logos[idx]
                 })
                 .render() )
         }, this)

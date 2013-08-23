@@ -23,6 +23,25 @@ PA.Router = Backbone.Router.extend({
 
     projects : function() {
 
+        $.when( PA.projects.fetch() ).done(function(){
+            PA.app.header.filterBar.render()
+            PA.coverImages = new PA.CoverGallery( PA.projects.pluck('coverImage') )
+            PA.coverShowcase = new PA.ImageShowcase({
+                cover : true,
+                collection : PA.coverImages,
+                path : 'projects'
+            })
+
+            PA.app.page.render({
+                view : PA.coverShowcase,
+                pageClass : 'projects',
+                section : 'Projects'
+            })
+
+            PA.starInit()
+        })
+
+                   /*
         $.get('/fixtures/projectFixture.json').done(function(d) {
             PA.projects = new PA.Projects(d)
 
@@ -44,6 +63,7 @@ PA.Router = Backbone.Router.extend({
             PA.starInit()
 
         })
+        */
     },
 
     singleProject : function(project, showcase) {
@@ -62,8 +82,10 @@ PA.Router = Backbone.Router.extend({
             // A) navigate to direct URL
             // B) navigate from a different page section
 
-            $.get('/fixtures/projectFixture.json').done(function(d) {
-                PA.currentModel = new PA.Project( _.findWhere(d, {url : project}) )
+            //$.get('/fixtures/projectFixture.json').done(function(d) {
+            $.when( PA.projects.fetch() ).done( function() {
+                //PA.currentModel = new PA.Project( PA.projects.findWhere({url : project}) )
+                PA.currentModel = PA.projects.findWhere({ url : project})
                 showcases = PA.currentModel.get('showcases')
 
                 PA.router.navigate(showcases.models[0].url(), {trigger: true})
@@ -90,8 +112,11 @@ PA.Router = Backbone.Router.extend({
             showcases.findWhere({ url_title : urlTitle }).activate()
 
         } catch(err) {
-            $.get('/fixtures/projectFixture.json').done(function(d) {
-                PA.currentModel = new PA.Project( _.findWhere(d, {url : project }) )
+            //$.get('/fixtures/projectFixture.json').done(function(d) {
+            $.when( PA.projects.fetch() ).done( function() {
+                //PA.currentModel = new PA.Project( PA.projects.findWhere({ url : project }) )
+
+                PA.currentModel = PA.projects.findWhere({ url : project})
                 showcases = PA.currentModel.get('showcases')
                 PA.singleView = new PA.ProjectViewer({
                     model : PA.currentModel

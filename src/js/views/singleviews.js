@@ -11,8 +11,14 @@ PA.TagRow = Backbone.View.extend({
         this.$el.html( this.template({ 
             type : this.options.type
         }) )
-        this.options.tags.forEach( function(tag) {
-            this.$('#tagLinks').append( this.tag({ tag : tag }) )
+        this.options.tags.forEach( function(tag, index, tags) {
+            this.$('#tagLinks').append( this.tag({ 
+                tag : tag.title,
+                className : tag.className
+            }) )
+            if ( index < tags.length -1 ) { 
+                this.$('#tagLinks').append( ', ' )
+            }
         }, this )
 
         return this.el
@@ -96,8 +102,10 @@ PA.ProjectDetails = Backbone.View.extend({
     template : PA.jst.projectDetails,
     render : function(options) {
         this.$el.html( this.template({
-            htmlDate : this.model.get('htmlDate'),
-            date : this.model.get('date').year(),
+            date : this.model.get('date'),
+            htmlDate : this.model.get('date'),
+            //htmlDate : this.model.get('htmlDate'),
+            //date : this.model.get('date').year(),
             title : this.model.get('title'),
             summary : this.model.get('summary')
         }) )
