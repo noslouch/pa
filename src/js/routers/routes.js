@@ -62,7 +62,7 @@ PA.Router = Backbone.Router.extend({
             PA.currentModel = PA.projects.findWhere({ url : project })
             showcases = PA.currentModel.get('showcases')
 
-            PA.router.navigate(showcases.models[0].url(), {trigger: true})
+            PA.router.navigate(showcases.models[0].url(), {trigger: true, replace: true})
 
             spinner.detach()
 
@@ -71,13 +71,11 @@ PA.Router = Backbone.Router.extend({
             // A) navigate to direct URL
             // B) navigate from a different page section
 
-            //$.get('/fixtures/projectFixture.json').done(function(d) {
             $.when( PA.projects.fetch() ).done( function() {
-                //PA.currentModel = new PA.Project( PA.projects.findWhere({url : project}) )
                 PA.currentModel = PA.projects.findWhere({ url : project})
                 showcases = PA.currentModel.get('showcases')
 
-                PA.router.navigate(showcases.models[0].url(), {trigger: true})
+                PA.router.navigate(showcases.models[0].url(), {trigger: true, replace: true})
 
                 spinner.detach()
             })
@@ -106,9 +104,8 @@ PA.Router = Backbone.Router.extend({
             spinner.detach()
 
         } catch(err) {
-            //$.get('/fixtures/projectFixture.json').done(function(d) {
+
             $.when( PA.projects.fetch() ).done( function() {
-                //PA.currentModel = new PA.Project( PA.projects.findWhere({ url : project }) )
 
                 PA.currentModel = PA.projects.findWhere({ url : project})
                 showcases = PA.currentModel.get('showcases')

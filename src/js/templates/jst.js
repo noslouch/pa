@@ -46,7 +46,7 @@ JST.tagLinks = [
     '<div class="links" id="tagLinks"></div>'
 ].join('\n')
 
-JST.tag = '<a href="#filter=<%= className %>"><%= tag %></a>'
+JST.tag = '<a href="/projects#filter=.<%= className %>"><%= tag %></a>'
 
 JST.textTemplate = [
     '<article class="<%= type %>">', // .project-info, .press, .bio
