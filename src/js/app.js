@@ -1,5 +1,6 @@
+/*jshint -W002*/
 /*global moment*/
-"use strict";
+'use strict';
 var PA = PA || {}
 PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
@@ -26,3 +27,20 @@ PA.router = new PA.Router()
 PA.app = new PA.App({ el : document })
 Backbone.history.start({pushState: true, root: "/"})
 
+$(function(){
+    var qContainer = document.getElementById('quotes')
+
+    $('#n-container header').click(function(e){
+        e.preventDefault()
+        $('#n-container').toggleClass('open')
+        $(qContainer).toggleClass('short')
+    })
+
+    try {
+        fbLoader()
+    } catch(e) {
+        console.log('no fancybox')
+    }
+
+    checkScroll()
+})

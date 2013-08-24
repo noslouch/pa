@@ -1,4 +1,5 @@
-/* models/cover.js - Cover Image/Gallery Image model */
+/* models/cover.js - Project/Photo Album Cover Image
+ * used on /projects and /photography */
 
 'use strict';
 var PA = PA || {}
