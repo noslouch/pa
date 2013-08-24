@@ -2,7 +2,7 @@
 
 'use strict';
 var PA = PA || {}
-PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
+PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 
 PA.PhotoAlbum = Backbone.Model.extend({
     initialize : function(album, options) {
