@@ -159,14 +159,14 @@ PA.ProfileViewer = Backbone.View.extend({
         section.activate()
     },
 
-    swap : function(section) {
+    swap : function(section, replace) {
 
         // there are some situations where there isn't a disabled section
         try {
             _.findWhere( this.sections, { active : true }).deactivate()
         } catch(err) {}
 
-        section.activate()
+        section.activate(replace)
     },
 
     render : function() {

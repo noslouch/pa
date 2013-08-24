@@ -11,9 +11,9 @@ PA.ProfileBase = Backbone.Model.extend({
         _.bindAll( this, 'activate', 'deactivate')
     },
     active : false,
-    activate : function(){
+    activate : function(replace){
         this.active = true
-        PA.router.navigate( '/profile/' + this.section )
+        PA.router.navigate( '/profile/' + this.section , {replace : replace ? true : false} )
         PA.dispatcher.trigger('profile:sectionActivate', this)
     },
 

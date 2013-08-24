@@ -250,7 +250,7 @@ PA.Router = Backbone.Router.extend({
 
         $.when.apply($, deferreds).done(function(){
             PA.profilePage.render()
-            PA.dispatcher.trigger( 'profile:swap', PA.profilePage.bio )
+            PA.dispatcher.trigger( 'profile:swap', PA.profilePage.bio, 'replace' )
         })
     },
 
