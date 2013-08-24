@@ -6,11 +6,6 @@ PA.BrandControls = Backbone.View.extend({
     tagName : 'div',
     className : 'controls',
     template : PA.jst.controlsPartial,
-    events : {
-        'click #logoView' : 'toggleView',
-        'click #titleView' : 'toggleView',
-        'click #close' : 'close'
-    },
     render : function() {
         this.$el.html( this.template() )
         return this.el
@@ -119,16 +114,24 @@ PA.FilterBar = Backbone.View.extend({
     template : PA.jst.projectFilter,
 
     initialize : function() {
-        _.bindAll(this, 'render', 'openMenu','debug')
+        _.bindAll(this, 'render', 'openMenu','debug', 'filter')
+
+        $(window).on('hashchange', this.filter)
+
         this.$el.html( this.template() )
     },
 
     events : {
         'click .filter' : function(e){
             e.preventDefault()
-            e.stopPropagation() 
+            e.stopPropagation()
         },
-        'click .filter a' : 'filter',
+        'click .filter a' : function(e) {
+            var href = e.currentTarget.hash.substring(1),
+                option = $.deparam( href, true )
+
+            $.bbq.pushState( option )
+        },
         'click h3' : 'openMenu'
         //'click h3' : 'debug'
     },

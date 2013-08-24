@@ -44,25 +44,20 @@ PA.App = Backbone.View.extend({
         this.header = new PA.Header({ el : '.site-header', parent : this })
         this.page = new PA.Page({ el : '.page', parent : this})
 
-        //PA.dispatcher.on('filter', this.projectFilter)
-        //PA.dispatcher.listenTo(PA.router, 'route', this.routeHandler)
-
         this.listenTo( PA.dispatcher, 'filter', this.projectFilter )
         this.listenTo( PA.router, 'route', this.routeHandler )
     },
+
     projectFilter : function(e) {
         this.closeMenu()
 
-        var hash = e.currentTarget.hash.substring(1)
-        var filter = $.deparam( hash, true )
+        var hashObj = $.deparam.fragment()
 
         if ( PA.starsRunning ) {
             PA.starDeath()
             this.showcase.firstLoad()
         }
-
-        PA.router.navigate( '/projects/' + e.currentTarget.hash )
-        this.showcase.filter(filter.filter)
+        this.showcase.filter(hashObj)
     },
     events : {
         'click' : 'closeMenu'

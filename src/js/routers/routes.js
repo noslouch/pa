@@ -27,6 +27,7 @@ PA.Router = Backbone.Router.extend({
 
         $.when( PA.projects.fetch() ).done(function(){
             PA.app.header.filterBar.render()
+
             PA.coverImages = new PA.CoverGallery( PA.projects.pluck('coverImage') )
             PA.coverShowcase = new PA.ImageShowcase({
                 cover : true,
@@ -40,7 +41,12 @@ PA.Router = Backbone.Router.extend({
                 section : 'Projects'
             })
 
-            PA.starInit()
+            if ($.param.fragment()) {
+                PA.coverShowcase.firstLoad()
+                $(window).trigger('hashchange')
+            } else {
+                PA.starInit()
+            }
 
             spinner.detach()
         })
