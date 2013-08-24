@@ -52,7 +52,7 @@ PA.Router = Backbone.Router.extend({
         })
     },
 
-    singleProject : function(project, showcase) {
+    singleProject : function(project) {
         var spinner = new Spinner()
         var showcases
 
@@ -127,8 +127,9 @@ PA.Router = Backbone.Router.extend({
     },
 
     photography : function() {
-        $.get('/fixtures/photographyFixture.json').done(function(d) {
-            PA.albums = new PA.PhotoAlbums(d)
+        var spinner = new Spinner()
+
+        $.when( PA.albums.fetch() ).done( function(){
 
             PA.coverImages = new PA.CoverGallery( PA.albums.pluck('coverImage') )
             PA.coverShowcase = new PA.ImageShowcase({
@@ -144,15 +145,18 @@ PA.Router = Backbone.Router.extend({
             })
 
             PA.coverShowcase.firstLoad()
+
+            spinner.detach()
         })
     },
 
-    singleAlbum : function(title) {
+    singleAlbum : function(urlTitle) {
+        var spinner = new Spinner()
 
         if (PA.albums.length) {
             // Photo Galleries are loaded
 
-            var photoAlbumModel = PA.albums.findWhere({ url : title })
+            var photoAlbumModel = PA.albums.findWhere({ url : urlTitle })
 
             PA.singleAlbumView = new PA.SingleAlbumView({
                 model : photoAlbumModel
@@ -164,13 +168,15 @@ PA.Router = Backbone.Router.extend({
                 section : photoAlbumModel.get('title')
             })
 
+            spinner.detach()
+
         } else {
             // Photo Galleries haven't loaded yet because
             // A) navigate to direct URL
             // B) navigate from a different page section
 
-            $.get('/fixtures/photographyFixture.json').done(function(d) {
-                var photoAlbumModel = new PA.PhotoAlbum( _.findWhere(d, {url : title}) )
+            $.when( PA.albums.fetch() ).done( function(){
+                var photoAlbumModel = PA.albums.findWhere({ url : urlTitle })
 
                 PA.singleAlbumView = new PA.SingleAlbumView({
                     model : photoAlbumModel
@@ -181,14 +187,18 @@ PA.Router = Backbone.Router.extend({
                     pageClass : 'photography',
                     section : photoAlbumModel.get('title')
                 })
+
+                spinner.detach()
             })
         }
 
     },
 
     film : function() {
-        $.get('/fixtures/filmFixture.json').done( function(d) {
-            PA.films = new PA.Films(d)
+        var spinner = new Spinner()
+
+        $.when( PA.films.fetch() ).done( function(){
+
             PA.filmLanding = new PA.FilmThumbLayout({
                 collection : PA.films
             })
@@ -199,15 +209,18 @@ PA.Router = Backbone.Router.extend({
                 section : 'Film Home'
             })
 
+            spinner.detach()
         } )
     },
 
-    singleFilm : function(title) {
+    singleFilm : function(urlTitle) {
+
+        var spinner = new Spinner()
 
         if (PA.films.length) {
             // Films are loaded
 
-            var filmModel = PA.films.findWhere({ url : title })
+            var filmModel = PA.films.findWhere({ url : urlTitle })
 
             PA.singleFilmView = new PA.SingleFilmView({
                 model : filmModel
@@ -218,11 +231,14 @@ PA.Router = Backbone.Router.extend({
                 pageClass : 'film',
                 section : filmModel.get('title')
             })
+
+            spinner.detach()
+
         } else {
             // Films haven't loaded yet
 
-            $.get('/fixtures/filmFixture.json').done( function(d) {
-                var filmModel = new PA.PhotoAlbum( _.findWhere(d, { url : title }) )
+            $.when( PA.films.fetch() ).done( function(){
+                var filmModel = PA.films.findWhere({ url : urlTitle })
                 PA.singleFilmView = new PA.SingleFilmView({
                     model : filmModel
                 })
@@ -232,11 +248,15 @@ PA.Router = Backbone.Router.extend({
                     pageClass : 'film',
                     section : filmModel.get('title')
                 })
+
+                spinner.detach()
             })
         }
     },
 
     profile : function() {
+
+        var spinner = new Spinner()
 
         PA.profilePage = new PA.ProfileViewer({
             el : '#profileViewer'
@@ -251,10 +271,14 @@ PA.Router = Backbone.Router.extend({
         $.when.apply($, deferreds).done(function(){
             PA.profilePage.render()
             PA.dispatcher.trigger( 'profile:swap', PA.profilePage.bio, 'replace' )
+
+            spinner.detach()
         })
     },
 
     profileSection : function(section) {
+
+        var spinner = new Spinner()
 
         switch(section) {
             case 'photos-of-pa':
@@ -274,6 +298,8 @@ PA.Router = Backbone.Router.extend({
 
             PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
 
+            spinner.detach()
+
         } catch(err) {
 
             PA.profilePage = new PA.ProfileViewer({
@@ -289,11 +315,15 @@ PA.Router = Backbone.Router.extend({
             $.when.apply($, deferreds).done(function(){
                 PA.profilePage.render()
                 PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
+
+                spinner.detach()
             })
         }
     },
 
     profileItem : function(section, urlTitle) {
+        var spinner = new Spinner()
+
         switch(section) {
             case 'photos-of-pa':
                 section = 'photosOf'
@@ -313,6 +343,7 @@ PA.Router = Backbone.Router.extend({
             PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
             PA.profilePage[section].findWhere({ url : urlTitle }).activate()
 
+            spinner.detach()
         } catch(err) {
 
             PA.profilePage = new PA.ProfileViewer({
@@ -329,6 +360,8 @@ PA.Router = Backbone.Router.extend({
                 PA.profilePage.render()
                 PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
                 PA.profilePage[section].findWhere({ url : urlTitle }).activate()
+
+                spinner.detach()
             })
         }
 

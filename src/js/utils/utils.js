@@ -46,15 +46,6 @@ function isoLoader(id) {
 
 }
 
-function makeTime(date) {
-    var res = []
-    var d = new Date(date)
-    res[0] = d.getFullYear()
-    res[1] = d.getMonth() + 1
-    res[2] = d.getDate()
-    return res.join("-")
-}
-
 function fbBulletBuilder(){
     var $ul = $('<ul/>')
 }
