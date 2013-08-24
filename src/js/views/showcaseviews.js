@@ -87,8 +87,8 @@ PA.ImageShowcase = Backbone.View.extend({
             $img.addClass('loaded')
         })
     },
-    filter : function(filter) {
-        this.$el.isotope({ filter : filter })
+    filter : function(filterObj) {
+        this.$el.isotope(filterObj)
     }
 })
 
