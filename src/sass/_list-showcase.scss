@@ -11,6 +11,12 @@
         @include grid-column(12, $collapse:true);
     }
 
+    .projects & li:nth-child(n+2) { 
+        @include grid-column(6, $collapse: true);
+        
+        p { margin: 0; }
+    }
+
     h3 {
         margin-top: 1.25em;
         margin-bottom: 1.25em;

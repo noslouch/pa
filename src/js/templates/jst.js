@@ -185,35 +185,29 @@ JST.projectFilter = [
 ].join('\n')
 
 JST.jumps = [
-    '<div class="jump-to alpha">',
-        '<h3>Jump To</h3>',
-        '<div class="wrapper"></div>',
-    '</div>'
+    '<h3>Jump To</h3>',
+    '<div class="wrapper"></div>'
 ].join('\n')
 
 JST.sorts = [
-    '<div class="sorts">',
-        '<h3>Sort By</h3>',
-        '<div class="wrapper">',
-            '<ul>',
-                '<li><button id="alphaSort" type="button">Name</button></li>',
-                '<li><button id="dateSort" type="button">Date</button></li>',
-            '</ul>',
-        '</div> <!-- .wrapper -->',
-    '</div> <!-- .sorts -->'
+    '<h3>Sort By</h3>',
+    '<div class="wrapper">',
+        '<ul>',
+            '<li><button id="alpha" type="button">Name</button></li>',
+            '<li><button id="date" type="button">Date</button></li>',
+        '</ul>',
+    '</div> <!-- .wrapper -->'
 ].join('\n')
 
 JST.views = [
-    '<div class="views" id="views">',
-        '<h3>View By</h3>',
-        '<div class="wrapper">',
-            '<ul>',
-                '<li><button class="icon-view" id="mockProjectCovers" type="button">Cover Image</button></li>',
-                '<li><button class="title-view" id="mockProjectList" type="button">Project Title</button></li>',
-                '<li><button class="random-view" id="starfieldView" type="button">Random</button></li>',
-           '</ul>',
-        '</div> <!-- .wrapper -->',
-    '</div> <!-- .views -->'
+    '<h3>View By</h3>',
+    '<div class="wrapper">',
+        '<ul>',
+            '<li><button class="icon-view active" id="covers" type="button">Cover Image</button></li>',
+            '<li><button class="title-view" id="titles" type="button">Project Title</button></li>',
+            '<li><button class="random-view" id="random" type="button">Random</button></li>',
+       '</ul>',
+    '</div> <!-- .wrapper -->'
 ].join('\n')
 
 JST.controlsPartial = [

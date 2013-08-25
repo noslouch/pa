@@ -23,6 +23,17 @@ Backbone.Model.prototype.parseDate = function(dateString) {
     return moment( new Date( parseInt(dateString, 10) ) )
 }
 
+PA.randomCovers = function() {
+    var randomCoverModels = PA.coverImages.shuffle()
+    var coverCollection = new Backbone.Collection()
+
+    _.each( randomCoverModels, function(cover, idx, list) {
+        coverCollection.add( cover )
+    } )
+
+    return coverCollection
+}
+
 PA.router = new PA.Router()
 PA.app = new PA.App({ el : document })
 Backbone.history.start({pushState: true, root: "/"})
