@@ -2,6 +2,11 @@
 var PA = PA || {}
 PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
+Backbone.View.prototype.destroy = function() {
+    this.remove()
+    this.unbind()
+}
+
 PA.ImageThumb = Backbone.View.extend({
     tagName : "div",
     template : PA.jst.thumbTemplate,
@@ -37,6 +42,16 @@ PA.ImageShowcase = Backbone.View.extend({
     id : 'iso-grid',
     initialize : function() {
         _.bindAll(this, 'render', 'firstLoad', 'filter')
+
+        this.collection.forEach(function(image) {
+            var thumb = new PA.ImageThumb({
+                model : image,
+                cover : this.options.cover ? true : false,
+                large : this.collection.length < 5 && !this.options.cover,
+                path : this.options.path
+            })
+            this.$el.append( thumb.render() )
+        }, this)
     },
     className : function() {
         var classes = ['isotope-grid', 'showcase', 'image']
@@ -49,19 +64,7 @@ PA.ImageShowcase = Backbone.View.extend({
         }
     },
     render : function(options){
-        this.collection.forEach(function(image) {
-            var thumb = new PA.ImageThumb({
-                model : image,
-                cover : this.options.cover ? true : false,
-                large : this.collection.length < 5 && !this.options.cover,
-                path : this.options.path
-            })
-            this.$el.append( thumb.render() )
-        }, this)
-
-        //this.isotope()
         fbLoader()
-
         return this.el
     },
     firstLoad: function() {
@@ -235,9 +238,7 @@ PA.ListView = Backbone.View.extend({
 PA.ListShowcase = Backbone.View.extend({
     tagName : 'div',
     className : 'showcase list',
-
-    render : function(){
-
+    initialize : function() {
         // groupedCollection is an object of years paired with project objects that fall within that year.
         _.each( this.options.groupedCollection, function(v,k){
             var html = new PA.ListView({
@@ -248,6 +249,88 @@ PA.ListShowcase = Backbone.View.extend({
             })
             this.$el.append( html.render() )
         }, this )
+    },
+
+    render : function(){
         return this.el
     }
 })
+
+PA.StarThumb = Backbone.View.extend({
+    tagName : "a",
+    initialize : function() {
+        _.bindAll( this, 'render' )
+
+        this.$el.append( $('<img>') )
+        this.$('img').css({
+            left : this.options.HALF_WIDTH + this.randomRange(-this.options.HALF_WIDTH, this.options.HALF_WIDTH),
+            top : this.options.HALF_HEIGHT + this.randomRange(-this.options.HALF_HEIGHT, this.options.HALF_HEIGHT)
+        }).attr( 'src', this.model.get('thumb') )
+    },
+    render : function() {
+
+        this.$el
+            .attr( 'href', '/projects/' + this.model.get('url') )
+            .addClass( 'fast' )
+
+        return this.el
+    }
+})
+
+PA.StarThumb.prototype.randomRange = function (min, max) {
+    return ((Math.random()*(max-min)) + min)
+}
+
+PA.Starfield = Backbone.View.extend({
+    tagName : 'div',
+    className : 'starfield',
+    id : 'starfield',
+    initialize : function(){
+        var SCREEN_WIDTH = window.innerWidth,
+            SCREEN_HEIGHT = window.innerHeight,
+            HALF_WIDTH = window.innerWidth / 2,
+            HALF_HEIGHT = window.innerHeight / 2
+            //imageLimit = SCREEN_WIDTH < 320 ? 12 : 48
+
+
+        this.stagger = function() {
+            var i = 0,
+                self = this
+
+            function go(){
+                self.$el.append(
+                    new PA.StarThumb({
+                        model : self.images.models[i],
+                        HALF_HEIGHT : HALF_HEIGHT,
+                        HALF_WIDTH : HALF_WIDTH
+                    }).render() )
+                i++
+
+                // CHANGE TO IMAGELIMIT WHEN PROJECTS INCREASE
+                if ( i < self.images.length ) {
+                    setTimeout(go, 550)
+                }
+            }
+
+            go()
+        }
+
+        PA.starsRunning = false
+    },
+
+    destroy : function() {
+        PA.starsRunning = false
+        this.$el.empty()
+        this.remove()
+        this.unbind()
+    },
+
+    render : function() {
+        PA.starsRunning = true
+        this.$el.empty()
+        this.images = PA.randomCovers()
+        this.stagger()
+        return this.el
+    }
+})
+

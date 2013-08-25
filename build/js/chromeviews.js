@@ -4,15 +4,8 @@ PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
 PA.Header = Backbone.View.extend({
     initialize: function() {
-        _.bindAll(this, 'render')
         this.filterBar = new PA.FilterBar()
-    },
-    events : {
-        'click nav' : function(e){
-        }
-    },
-    render : function(options) {
-     },
+    }
 })
 
 PA.Page = Backbone.View.extend({
@@ -54,7 +47,7 @@ PA.App = Backbone.View.extend({
         var hashObj = $.deparam.fragment()
 
         if ( PA.starsRunning ) {
-            PA.starDeath()
+            PA.starfield.destroy()
             this.showcase.firstLoad()
         }
         this.showcase.filter(hashObj)

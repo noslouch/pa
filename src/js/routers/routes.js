@@ -35,17 +35,33 @@ PA.Router = Backbone.Router.extend({
                 path : 'projects'
             })
 
-            PA.app.page.render({
-                view : PA.coverShowcase,
-                pageClass : 'projects',
-                section : 'Projects'
+            PA.listShowcase = new PA.ListShowcase({
+                    groupedCollection : PA.projects.groupBy('date'),
+                    pageClass : 'projects',
+                    section : 'Projects' 
             })
 
+            PA.randomShowcase = new PA.Starfield()
+
+
             if ($.param.fragment()) {
+
+                PA.app.page.render({
+                    view : PA.coverShowcase,
+                    pageClass : 'projects',
+                    section : 'Projects'
+                })
                 PA.coverShowcase.firstLoad()
                 $(window).trigger('hashchange')
+
             } else {
-                PA.starInit()
+
+                PA.app.page.render({
+                    view : PA.randomShowcase,
+                    pageClass : 'projects',
+                    section : 'Projects'
+                })
+
             }
 
             spinner.detach()
