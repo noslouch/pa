@@ -47,7 +47,7 @@ PA.App = Backbone.View.extend({
         var hashObj = $.deparam.fragment()
 
         if ( PA.starsRunning ) {
-            PA.starfield.destroy()
+            PA.randomShowcase.destroy()
             this.showcase.firstLoad()
         }
         this.showcase.filter(hashObj)
