@@ -4,15 +4,8 @@ PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
 PA.Header = Backbone.View.extend({
     initialize: function() {
-        _.bindAll(this, 'render')
         this.filterBar = new PA.FilterBar()
-    },
-    events : {
-        'click nav' : function(e){
-        }
-    },
-    render : function(options) {
-     },
+    }
 })
 
 PA.Page = Backbone.View.extend({
@@ -23,6 +16,7 @@ PA.Page = Backbone.View.extend({
         this.$el.prepend(this.outlineTitle)
     },
     render : function(options) {
+       // NEED TO REFACTOR RENDERING SO SHOWCASES RENDER THEMSELVES TO THE PAGE 
         this.options.parent.showcase = options.view
 
         this.$el.html( options.view.render() )
@@ -53,12 +47,21 @@ PA.App = Backbone.View.extend({
 
         var hashObj = $.deparam.fragment()
 
-        if ( PA.starsRunning ) {
-            PA.starDeath()
+        if ( this.showcase !== PA.coverShowcase ) {
+            this.showcase.destroy()
+
+            PA.app.page.render({
+                view : PA.coverShowcase,
+                pageClass : 'projects',
+                section : 'Projects'
+            })
+
             this.showcase.firstLoad()
         }
+
         this.showcase.filter(hashObj)
     },
+
     events : {
         'click' : 'closeMenu'
     },
