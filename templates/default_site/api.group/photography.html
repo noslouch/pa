@@ -26,7 +26,7 @@
             {
                 "thumb" : "{image:url:thumb}",
                 "lg_thumb" : "{image:url:lg-thumb}",
-                "caption" : "{if image:description}{image:description}{/if}",
+                "caption" : <?php echo json_encode('{image:description}'); ?>,
                 "url" : "{image:url}"
         	},
             {/gallery_photography}
