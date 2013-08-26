@@ -16,21 +16,12 @@ PA.BrandControls = Backbone.View.extend({
     template : PA.jst.controlsPartial,
     initialize : function() {
         this.$el.html( this.template() )
-
-        var logoView = new Backbone.View({ el : this.$('#logoView') })
-        var titleView = new Backbone.View({ el : this.$('#titleView') })
-
-        logoView.listenTo( PA.dispatcher, 'filter:toggleView', this.toggleView )
-        titleView.listenTo( PA.dispatcher, 'filter:toggleView', this.toggleView)
     },
 
     render : function() {
         return this.el
-    },
-
-    toggleView : function(currentTarget) {
-        this.$el.toggleClass( 'active', !this.$el.hasClass('active') )
     }
+
 })
 
 
@@ -203,8 +194,15 @@ PA.FilterBar = Backbone.View.extend({
 
 
         PA.dispatcher.on('projectView', this.renderView )
+        PA.dispatcher.on('projectSort', this.renderSort )
 
         this.$el.html( this.template() )
+
+        this.$el.on('click', 'button', function(e){ 
+            var $buttons = $(this).parents('.wrapper').find('button')
+            $buttons.removeClass('active')
+            $(this).addClass('active')
+        })
     },
 
     events : {
@@ -231,13 +229,16 @@ PA.FilterBar = Backbone.View.extend({
     },
 
     filter : function(e) {
-        PA.dispatcher.trigger('filter', e)
+        if (e.fragment) {
+            PA.dispatcher.trigger('filter', e)
+        }
     },
 
     toggleView : function(e) {
         e.preventDefault()
         e.stopPropagation()
         PA.dispatcher.trigger( 'filter:toggleView', e.currentTarget )
+        this.$('.open').removeClass('open')
     },
 
     debug : function(e) { 
@@ -246,6 +247,8 @@ PA.FilterBar = Backbone.View.extend({
     },
 
     renderView : function(view) {
+        $.bbq.removeState()
+
         var toRender
 
         switch(view){
@@ -262,7 +265,7 @@ PA.FilterBar = Backbone.View.extend({
                 break;
         }
 
-        PA.app.page.last.view.destroy()
+        PA.app.showcase.destroy()
 
         PA.app.page.render({
             view : toRender,
@@ -270,7 +273,15 @@ PA.FilterBar = Backbone.View.extend({
             section : 'Projects'
         })
 
-        if (view === 'covers') { toRender.firstLoad() }
+        if (view === 'covers') { 
+            PA.coverShowcase.firstLoad()
+            PA.coverShowcase.filter({ filter : '*' })
+        }
+    },
+
+    renderSort : function(sort) {
+       // NEED TO REFACTOR RENDERING SO SHOWCASES RENDER THEMSELVES TO THE PAGE 
+       PA.app.page.$el.html( PA.listShowcase.render(sort) )
     },
 
     render : function() {
@@ -298,5 +309,6 @@ PA.FilterBar = Backbone.View.extend({
             .append( new PA.ProjectViews().render() )
 
         PA.app.header.$el.append( this.el )
+
     }
 })

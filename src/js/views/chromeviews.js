@@ -16,6 +16,7 @@ PA.Page = Backbone.View.extend({
         this.$el.prepend(this.outlineTitle)
     },
     render : function(options) {
+       // NEED TO REFACTOR RENDERING SO SHOWCASES RENDER THEMSELVES TO THE PAGE 
         this.options.parent.showcase = options.view
 
         this.$el.html( options.view.render() )
@@ -46,12 +47,21 @@ PA.App = Backbone.View.extend({
 
         var hashObj = $.deparam.fragment()
 
-        if ( PA.starsRunning ) {
-            PA.randomShowcase.destroy()
+        if ( this.showcase !== PA.coverShowcase ) {
+            this.showcase.destroy()
+
+            PA.app.page.render({
+                view : PA.coverShowcase,
+                pageClass : 'projects',
+                section : 'Projects'
+            })
+
             this.showcase.firstLoad()
         }
+
         this.showcase.filter(hashObj)
     },
+
     events : {
         'click' : 'closeMenu'
     },
