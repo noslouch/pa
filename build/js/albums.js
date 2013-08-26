@@ -7,7 +7,7 @@ PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 
 PA.PhotoAlbums = Backbone.Collection.extend({
     model : PA.PhotoAlbum,
-    url : '/fixtures/photographyFixture.json',
+    url : '/api/photography',
     path : 'photography'
 })
 
