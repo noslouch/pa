@@ -1,0 +1,6 @@
+table.playaConvertRel { margin-bottom: 3px !important; width: 100%; border-collapse: collapse; }
+table.playaConvertRel thead { background: none; }
+table.playaConvertRel thead th,
+table.playaConvertRel thead th:last-child { padding-top: 3px; padding-bottom: 7px; border: none !important; background: none; color: inherit; }
+table.playaConvertRel tbody td,
+table.playaConvertRel tbody td:last-child { border: 1px solid #B6C0C2 !important; background: #fff !important; }
