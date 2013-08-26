@@ -2,18 +2,22 @@
 [
 {exp:channel:entries channel="profile_press" limit="100" backspace="2"}
     {
-        "Title": "{title}",
-        "URLTitle": "{url_title}",
-        "Summary": "{if summary_press}{summary_press}{/if}",
-        "Content": <?php echo json_encode('{content_press}');?>,
-        "Image": 
+        "id" : "{entry_id}",
+        "type" : "press",
+        "title" : "{title}",
+        "date" : "{date_press}",
+        "url" : "{url_title}",
+        "summary": "{summary_press}",
+        "content": "{content_press}",
+        "gallery": 
         	[
-				{exp:channel_images:images entry_id="{entry_id}" limit="1" backspace="6"}
+				{gallery_press backspace="6"}
 					{
-						"Caption": "{image:description}",
-						"URL Thumb": "{image:url:thumb}"
+					    "thumb" : "{image:url:thumb}",
+                        "url" : "{image:url:full}",
+                        "caption" : <?php echo json_encode("{image:description}"); ?>
 					},
-				{/exp:channel_images:images}
+                {/gallery_press}
 			]
     },
 {/exp:channel:entries}

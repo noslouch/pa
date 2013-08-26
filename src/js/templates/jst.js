@@ -91,7 +91,7 @@ JST.backButton = [
 
 JST.videoID = [
     '<div>',
-        '<iframe src="http://<% youtube ? print("www.youtube.com/embed/") : print("player.vimeo.com/video/") %><%= videoSrc %>" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>',
+        '<iframe src="http://<% youtube ? print("www.youtube.com/embed/") : print("player.vimeo.com/video/") %><%= videoSrc %>?autoplay=1" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>',
     '</div>'
 ].join('\n')
 
