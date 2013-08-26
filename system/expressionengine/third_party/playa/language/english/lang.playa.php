@@ -39,6 +39,8 @@ $lang = array(
 
 'show_expired_entries' => 'Show expired entries?',
 'show_future_entries' => 'Show future entries?',
+'only_show_editable_entries' => 'Only show editable entries?',
+'only_show_editable_entries_info' => 'Only show entries that the current user is allowed to edit.',
 
 'channels' => 'Channels',
 'cats' => 'Categories',
@@ -75,6 +77,7 @@ $lang = array(
 'entries' => 'entries',
 'select_an_entry' => 'Select an entry…',
 
+'deprecated_tag' => 'A template loaded on <b><a href="{url}">{url}</a></b> is using the deprecated <b>{tag}</b> tag. Please use Playa’s <a href="http://pixelandtonic.com/playa/docs/templates">var_prefix</a> parameter instead.',
 
 ''=>''
 );

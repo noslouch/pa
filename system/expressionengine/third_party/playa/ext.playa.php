@@ -240,7 +240,7 @@ class Playa_ext {
 				$inner_tagdata = substr($tagdata, $otag_endpos, $ctag_pos-$otag_endpos);
 
 				// make sure that the closing tag doesn't belong to another opening tag
-				if (strpos($inner_tagdata, $match[0][0]) !== FALSE)
+				if (strpos($inner_tagdata, $match[0][0].'}') !== FALSE || strpos($inner_tagdata, $match[0][0].' ') !== FALSE)
 				{
 					$ctag_pos = FALSE;
 				}

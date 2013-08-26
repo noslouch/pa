@@ -27,6 +27,7 @@ class Playa_ft extends EE_Fieldtype {
 
 	var $row_id; // Set by Matrix
 	var $var_id; // Set by Low Variables
+	var $is_draft = FALSE; // Set by Better Workflow
 
 	/**
 	 * Fieldtype Constructor
@@ -148,9 +149,14 @@ class Playa_ft extends EE_Fieldtype {
 						'field_maxl'            => '',
 						'field_ta_rows'         => '',
 						'field_list_items'      => '',
-						'field_related_orderby' => '',
-						'field_related_max'     => ''
 					);
+
+					// 2.6 dropped these.
+					if (version_compare(APP_VER, '2.6', '<'))
+					{
+						$data['field_related_orderby'] = '';
+						$data['field_related_max'] = '';
+					}
 
 					$this->EE->db->where('field_id', $field->field_id)
 					             ->update('channel_fields', $data);
@@ -189,6 +195,7 @@ class Playa_ft extends EE_Fieldtype {
 				'parent_col_id'   => array('type' => 'int', 'constraint' => 6, 'unsigned' => TRUE),
 				'parent_row_id'   => array('type' => 'int', 'constraint' => 10, 'unsigned' => TRUE),
 				'parent_var_id'   => array('type' => 'int', 'constraint' => 6, 'unsigned' => TRUE),
+				'parent_is_draft' => array('type' => 'int', 'constraint' => 1, 'unsigned' => TRUE, 'default' => 0),
 				'child_entry_id'  => array('type' => 'int', 'constraint' => 10, 'unsigned' => TRUE),
 				'rel_order'       => array('type' => 'int', 'constraint' => 4, 'unsigned' => TRUE)
 			));
@@ -230,8 +237,9 @@ class Playa_ft extends EE_Fieldtype {
 
 					// get the Playa fields
 					$fields = $this->EE->db->select('field_id')
-					                       ->where('field_type', 'playa')
-					                       ->get('channel_fields');
+						->where('field_type', 'playa')
+						->get('channel_fields');
+
 
 					foreach ($fields->result() as $field)
 					{
@@ -241,8 +249,8 @@ class Playa_ft extends EE_Fieldtype {
 
 						// get the old Playa data
 						$entries = $this->EE->db->select('entry_id, '.$field_name)
-						                        ->where($field_name.' !=', '')
-						                        ->get('channel_data');
+												->where($field_name.' !=', '')
+												->get('channel_data');
 
 						foreach ($entries->result() as $entry)
 						{
@@ -251,23 +259,55 @@ class Playa_ft extends EE_Fieldtype {
 
 							if ($rel_ids)
 							{
-								// get the old relationships
-								$rels = $this->EE->db->select('rel_id, rel_child_id')
-								                     ->where_in('rel_id', $rel_ids)
-								                     ->get('relationships');
-
-								foreach ($rels->result() as $rel)
+								// Accomodate the schema changes
+								if (version_compare(APP_VER, '2.6', '<'))
 								{
-									$rel_order = array_search($rel->rel_id, $rel_ids);
+									// get the old relationships
+									$rels = $this->EE->db->select('rel_id, rel_child_id')
+														 ->where_in('rel_id', $rel_ids)
+														 ->get('relationships');
 
-									$rel_data[] = array(
-										'parent_entry_id' => $entry->entry_id,
-										'parent_field_id' => $field->field_id,
-										'parent_col_id'   => null,
-										'parent_row_id'   => null,
-										'child_entry_id'  => $rel->rel_child_id,
-										'rel_order'       => $rel_order
-									);
+									foreach ($rels->result() as $rel)
+									{
+										$rel_order = array_search($rel->rel_id, $rel_ids);
+
+										$rel_data[] = array(
+											'parent_entry_id' => $entry->entry_id,
+											'parent_field_id' => $field->field_id,
+											'parent_col_id'   => null,
+											'parent_row_id'   => null,
+											'child_entry_id'  => $rel->rel_child_id,
+											'rel_order'       => $rel_order
+										);
+									}
+								}
+								else
+								{
+									$entries = $this->EE->db->select('relationship_id, parent_id, child_id, field_id, order')
+										->where_in('field_id', $field->field_id)
+										->get('relationships');
+
+									// If we get no matches, try again with relationship Ids
+									if ($entries->num_rows() == 0)
+									{
+										$entries = $this->EE->db->select('relationship_id, parent_id, child_id, field_id, order')
+											->where_in('relationship_id', $rel_ids)
+											->get('relationships');
+
+									}
+
+
+									foreach ($entries->result() as $entry)
+									{
+										$rel_data[] = array(
+											'parent_entry_id' => $entry->parent_id,
+											'parent_field_id' => $field->field_id,
+											'parent_col_id'   => null,
+											'parent_row_id'   => null,
+											'child_entry_id'  => $entry->child_id,
+											'rel_order'       => $entry->order
+										);
+									}
 								}
 
 								// mark the old rel IDs for deletion
@@ -298,23 +338,46 @@ class Playa_ft extends EE_Fieldtype {
 
 								if ($rel_ids)
 								{
-									// get the old relationships
-									$rels = $this->EE->db->select('rel_id, rel_child_id')
-									                     ->where_in('rel_id', $rel_ids)
-									                     ->get('relationships');
-
-									foreach ($rels->result() as $rel)
+									// Accomodate the schema changes
+									if (version_compare(APP_VER, '2.6', '<'))
 									{
-										$rel_order = array_search($rel->rel_id, $rel_ids);
 
-										$rel_data[] = array(
-											'parent_entry_id' => $row->entry_id,
-											'parent_field_id' => $row->field_id,
-											'parent_col_id'   => $col->col_id,
-											'parent_row_id'   => $row->row_id,
-											'child_entry_id'  => $rel->rel_child_id,
-											'rel_order'       => $rel_order
-										);
+										// get the old relationships
+										$rels = $this->EE->db->select('rel_id, rel_child_id')
+															 ->where_in('rel_id', $rel_ids)
+															 ->get('relationships');
+
+										foreach ($rels->result() as $rel)
+										{
+											$rel_order = array_search($rel->rel_id, $rel_ids);
+
+											$rel_data[] = array(
+												'parent_entry_id' => $row->entry_id,
+												'parent_field_id' => $row->field_id,
+												'parent_col_id'   => $col->col_id,
+												'parent_row_id'   => $row->row_id,
+												'child_entry_id'  => $rel->rel_child_id,
+												'rel_order'       => $rel_order
+											);
+										}
+									}
+									else
+									{
+										$entries = $this->EE->db->select('relationship_id, parent_id, child_id, field_id, order')
+											->where_in('relationship_id', $rel_ids)
+											->get('relationships');
+
+										foreach ($entries->result() as $entry)
+										{
+											$rel_data[] = array(
+												'parent_entry_id' => $row->entry_id,
+												'parent_field_id' => $row->field_id,
+												'parent_col_id'   => $col->col_id,
+												'parent_row_id'   => $row->row_id,
+												'child_entry_id'  => $entry->child_id,
+												'rel_order'       => $entry->order
+											);
+										}
 									}
 
 									// mark the old rel IDs for deletion
@@ -328,7 +391,7 @@ class Playa_ft extends EE_Fieldtype {
 					//  Create the new relationships
 					// -------------------------------------------
 
-					if ($rel_data)
+					if (!empty($rel_data))
 					{
 						$this->EE->db->insert_batch('playa_relationships', $rel_data);
 					}
@@ -337,10 +400,19 @@ class Playa_ft extends EE_Fieldtype {
 					//  Delete the old relationships
 					// -------------------------------------------
 
-					if ($old_rel_ids)
+					if (!empty($old_rel_ids))
 					{
-						$this->EE->db->where_in('rel_id', $old_rel_ids)
-						             ->delete('relationships');
+						// Accomodate the schema changes
+						if (version_compare(APP_VER, '2.6', '<'))
+						{
+							$this->EE->db->where_in('rel_id', $old_rel_ids)
+								->delete('relationships');
+						}
+						else
+						{
+							$this->EE->db->where_in('relationship_id', $old_rel_ids)
+								->delete('relationships');
+						}
 					}
 				}
 			}
@@ -363,7 +435,52 @@ class Playa_ft extends EE_Fieldtype {
 				}
 			}
 
-			// update the module version number
+			if (version_compare($from, '4.4', '<'))
+			{
+				if (!$this->EE->db->field_exists('parent_is_draft', 'playa_relationships'))
+				{
+					// Just add the parent_is_draft column
+					$this->EE->db->query('ALTER TABLE exp_playa_relationships ADD parent_is_draft INT(1) UNSIGNED NOT NULL DEFAULT 0 AFTER parent_var_id');
+				}
+			}
+
+
+			if (version_compare($from, '4.4.1', '<'))
+			{
+				$result = $this->EE->db->query("SHOW FIELDS FROM exp_playa_relationships")->result();
+				$has_column = FALSE;
+
+				foreach ($result as $row)
+				{
+					if ($row->Field == "parent_is_draft")
+					{
+						$has_column = TRUE;
+						break;
+					}
+				}
+
+				if (!$has_column)
+				{
+					// Add it already.
+					$this->EE->db->query('ALTER TABLE exp_playa_relationships ADD parent_is_draft INT(1) UNSIGNED NOT NULL DEFAULT 0 AFTER parent_var_id');
+				}
+
+			}
+
+			if (version_compare($from, '4.4.4', '<'))
+			{
+				if (!$this->EE->db->field_exists('parent_is_draft', 'playa_relationships'))
+				{
+					$this->EE->db->query('ALTER TABLE exp_playa_relationships ADD parent_is_draft INT(1) UNSIGNED NOT NULL DEFAULT 0 AFTER parent_var_id');
+				}
+				else
+				{
+					$this->EE->db->query('ALTER TABLE exp_playa_relationships MODIFY parent_is_draft INT(1) UNSIGNED NOT NULL DEFAULT 0');
+				}
+				$this->EE->db->query('UPDATE exp_playa_relationships SET parent_is_draft = 0 WHERE parent_is_draft <> 1');
+			}
+
+				// update the module version number
 			$this->EE->db->where('module_name', 'Playa')
 			             ->update('modules', array('module_version' => PLAYA_VER));
 
@@ -586,10 +703,22 @@ class Playa_ft extends EE_Fieldtype {
 		//  Relationship field conversion
 		// -------------------------------------------
 
+		// Accomodate the schema changes
+		if (version_compare(APP_VER, '2.6', '<'))
+		{
+			$field_types = array('"rel"', '"mrel"');
+		}
+		else
+		{
+			$field_types = array('"relationship"');
+		}
+
+		$field_types = implode(",", $field_types);
+
 		$query = $this->EE->db->query('SELECT cf.field_id, cf.field_label, fg.group_name
 		                               FROM exp_channel_fields AS cf
 		                               INNER JOIN exp_field_groups AS fg ON cf.group_id = fg.group_id
-		                               WHERE cf.field_type IN ("rel", "mrel")');
+		                               WHERE cf.field_type IN (' . $field_types . ')');
 
 		if ($query->num_rows())
 		{
@@ -672,7 +801,7 @@ class Playa_ft extends EE_Fieldtype {
 			if ($field_ids)
 			{
 				// get the rel fields marked for conversion
-				$fields = $this->EE->db->select('field_id, site_id, field_type, field_related_id, field_related_orderby, field_related_sort, field_related_max')
+				$fields = $this->EE->db->select('*')
 				                       ->where_in('field_id', $field_ids)
 				                       ->get('channel_fields');
 
@@ -682,13 +811,27 @@ class Playa_ft extends EE_Fieldtype {
 					//  Update the field settings
 					// -------------------------------------------
 
-					$field_settings = array(
-						'multi'    => ($field->field_type == 'mrel' ? 'y' : 'n'),
-						'channels' => array($field->field_related_id),
-						'limit'    => $field->field_related_max,
-						'orderby'  => $field->field_related_orderby,
-						'sort'     => strtoupper($field->field_related_sort)
-					);
+					if (version_compare(APP_VER, '2.6', '<'))
+					{
+						$field_settings = array(
+							'multi'    => ($field->field_type == 'mrel' ? 'y' : 'n'),
+							'channels' => array($field->field_related_id),
+							'limit'    => $field->field_related_max,
+							'orderby'  => $field->field_related_orderby,
+							'sort'     => strtoupper($field->field_related_sort)
+						);
+					}
+					else
+					{
+						$current_settings = unserialize(base64_decode($field->field_settings));
+						$field_settings = array(
+							'multi'    => $current_settings['allow_multiple'] ? 'y' : 'n',
+							'channels' => $current_settings['channels'],
+							'limit'    => $current_settings['limit'],
+							'orderby'  => $current_settings['order_field'],
+							'sort'     => strtoupper($current_settings['order_dir'])
+						);
+					}
 
 					$data = array(
 						'field_type' => 'playa',
@@ -722,32 +865,66 @@ class Playa_ft extends EE_Fieldtype {
 
 						if ($rel_ids)
 						{
-							// get the old relationships
-							$rels = $this->EE->db->select('rel_id, rel_parent_id, rel_child_id')
-							                     ->where_in('rel_id', $rel_ids)
-							                     ->get('relationships');
+							if (version_compare(APP_VER, '2.6', '<'))
+							{
+								// get the old relationships
+								$rels = $this->EE->db->select('rel_id, rel_parent_id, rel_child_id')
+													 ->where_in('rel_id', $rel_ids)
+													 ->get('relationships');
+							}
+							else
+							{
+								// get the old relationships
+								$rels = $this->EE->db->select('relationship_id, parent_id, child_id')
+									->where_in('relationship_id', $rel_ids)
+									->get('relationships');
+							}
 						}
 					}
 					else
 					{
 						// get the old relationships
-						$rels = $this->EE->db->query('SELECT r.rel_id, r.rel_parent_id, r.rel_child_id
+						if (version_compare(APP_VER, '2.6', '<'))
+						{
+							$rels = $this->EE->db->query('SELECT r.rel_id, r.rel_parent_id, r.rel_child_id
 						                              FROM exp_relationships AS r
 						                              INNER JOIN exp_channel_data AS cd ON cd.'.$field_name.' = r.rel_id');
+						}
+						else
+						{
+							$rels = $this->EE->db->query('SELECT r.relationship_id, r.parent_id, r.child_id
+						                              FROM exp_relationships AS r
+						                              WHERE r.field_id = '.$field->field_id);
+
+						}
 					}
 
 					if (isset($rels) && $rels)
 					{
 						foreach ($rels->result() as $rel)
 						{
-							$rel_data[] = array(
-								'parent_entry_id' => $rel->rel_parent_id,
-								'parent_field_id' => $field->field_id,
-								'child_entry_id'  => $rel->rel_child_id
-							);
+
+							if (version_compare(APP_VER, '2.6', '<'))
+							{
+								$rel_data[] = array(
+									'parent_entry_id' => $rel->rel_parent_id,
+									'parent_field_id' => $field->field_id,
+									'child_entry_id'  => $rel->rel_child_id
+								);
+								$old_rel_ids[] = $rel->rel_id;
+							}
+							else
+							{
+								$rel_data[] = array(
+									'parent_entry_id' => $rel->parent_id,
+									'parent_field_id' => $field->field_id,
+									'child_entry_id'  => $rel->child_id
+								);
+								$old_rel_ids[] = $rel->relationship_id;
+							}
 
 							// mark the rel_id for deletion
-							$old_rel_ids[] = $rel->rel_id;
+
 						}
 					}
 				}
@@ -868,8 +1045,16 @@ class Playa_ft extends EE_Fieldtype {
 
 		if ($old_rel_ids)
 		{
-			$this->EE->db->where_in('rel_id', $old_rel_ids)
-			             ->delete('relationships');
+			if (version_compare(APP_VER, '2.6', '<'))
+			{
+				$this->EE->db->where_in('rel_id', $old_rel_ids)
+					->delete('relationships');
+			}
+			else
+			{
+				$this->EE->db->where_in('relationship_id', $old_rel_ids)
+					->delete('relationships');
+			}
 		}
 
 		// -------------------------------------------
@@ -908,18 +1093,20 @@ class Playa_ft extends EE_Fieldtype {
 
 		// merge in the default settings
 		$settings = array_merge(array(
-			'multi'    => 'y',
-			'sites'    => array(),
-			'channels' => array(),
-			'cats'     => array(),
-			'authors'  => array(),
-			'statuses' => array(),
-			'limit'    => '0',
-			'limitby'  => '',
-			'orderby'  => 'title',
-			'sort'     => 'ASC',
-			'expired'  => 'n',
-			'future'   => 'y'
+			'multi'			=> 'y',
+			'sites'			=> array(),
+			'channels'		=> array(),
+			'cats'			=> array(),
+			'member_groups'	=> array(),
+			'authors'		=> array(),
+			'statuses'		=> array(),
+			'limit'			=> '0',
+			'limitby'		=> '',
+			'orderby'		=> 'title',
+			'sort'			=> 'ASC',
+			'expired'		=> 'n',
+			'future'		=> 'y',
+			'editable'      => 'n',
 		), $settings);
 	}
 
@@ -1010,6 +1197,15 @@ class Playa_ft extends EE_Fieldtype {
 				. lang('no', 'playa_future_n')
 		);
 
+		// Only show editable entries?
+		$r[] = array(
+			lang('only_show_editable_entries', 'playa_editable') . ($is_cell ? '' : '<br/>'.lang('only_show_editable_entries_info')),
+			form_radio('playa[editable]', 'y', ($data['editable'] == 'y'), 'id="playa_editable_y"') . NL
+				. lang('yes', 'playa_editable_y') . NBS.NBS.NBS.NBS.NBS . NL
+				. form_radio('playa[editable]', 'n', ($data['editable'] != 'y'), 'id="playa_editable_n"') . NL
+				. lang('no', 'playa_editable_n')
+		);
+
 		// Sites
 		if ($this->msm)
 		{
@@ -1029,6 +1225,12 @@ class Playa_ft extends EE_Fieldtype {
 		$r[] = array(
 			lang('cats', 'playa_cats'),
 			$this->_cats_select($data['cats'])
+		);
+
+		// Member groups
+		$r[] = array(
+			lang('member_groups', 'playa_member_groups'),
+			$this->_member_groups_select($data['member_groups'])
 		);
 
 		// Authors
@@ -1195,6 +1397,27 @@ class Playa_ft extends EE_Fieldtype {
 	}
 
 	/**
+	 * Member groups Select
+	 */
+	private function _member_groups_select($selected_groups)
+	{
+		$site_id = $this->EE->config->item('site_id');
+
+		$groups = $this->EE->db->query('SELECT DISTINCT(mg.group_id) AS `id`, mg.group_title AS `title`
+		                                 FROM exp_member_groups AS mg
+		                                 WHERE mg.can_access_publish = "y"
+		                                       '.($this->msm ? '' : 'AND mg.site_id = "'.$site_id.'"').'
+		                                 ORDER BY mg.group_title')
+			->result_array();
+
+		// add Current option
+		array_unshift($groups, array('id' => 'current', 'title' => '&mdash; '.lang('current').' &mdash;'));
+
+		return $this->_field_settings_select('member_groups', $groups, $selected_groups);
+	}
+
+
+	/**
 	 * Statuses Select
 	 */
 	private function _statuses_select($selected_statuses)
@@ -1304,7 +1527,7 @@ class Playa_ft extends EE_Fieldtype {
 	private function _validate_settings(&$settings)
 	{
 		// remove any filters that have "Any" selected
-		$filters = array('sites', 'channels', 'cats', 'authors', 'statuses');
+		$filters = array('sites', 'channels', 'cats', 'member_groups', 'authors', 'statuses');
 
 		foreach ($filters as $filter)
 		{
@@ -1450,7 +1673,7 @@ class Playa_ft extends EE_Fieldtype {
 				// -------------------------------------------
 				//  'playa_field_selections_query' hook
 				//   - Override which entries should appear selected
-				// 
+				//
 					if ($this->EE->extensions->active_hook('playa_field_selections_query'))
 					{
 						$rels = $this->EE->extensions->call('playa_field_selections_query', $this, $where);
@@ -1462,7 +1685,7 @@ class Playa_ft extends EE_Fieldtype {
 						                     ->order_by('rel_order')
 						                     ->get('playa_relationships');
 					}
-				// 
+				//
 				// -------------------------------------------
 
 				foreach ($rels->result() as $rel)
@@ -1523,6 +1746,86 @@ class Playa_ft extends EE_Fieldtype {
 		}
 
 		// -------------------------------------------
+		//  Editable channel?
+		// -------------------------------------------
+
+		if ($this->settings['editable'] == 'y')
+		{
+			$group_id = $this->EE->session->userdata('group_id');
+
+			if ($group_id != 1)
+			{
+				$query = $this->EE->db->query('SELECT channel_id FROM exp_channel_member_groups
+					                           WHERE group_id = '.$group_id);
+
+				if ($query->num_rows())
+				{
+					foreach ($query->result() as $channel)
+					{
+						$group_channels[] = $channel->channel_id;
+					}
+
+					if ($this->settings['channels'])
+					{
+						$this->settings['channels'] = array_merge(array_intersect($this->settings['channels'], $group_channels));
+					}
+					else
+					{
+						$this->settings['channels'] = $group_channels;
+					}
+				}
+
+				if (empty($this->settings['channels']))
+				{
+					$this->settings['channels'] = array(0);
+				}
+			}
+		}
+
+		// -------------------------------------------
+		//  Current group?
+		// -------------------------------------------
+
+		if (($key = array_search('current', $this->settings['member_groups'])) !== FALSE)
+		{
+			// just show all authors if this is a super admin and config['playa_sa_all_authors'] is set to TRUE
+			if ($this->EE->session->userdata('group_id') == 1 && $this->EE->config->item('playa_sa_all_authors'))
+			{
+				$this->settings['member_groups'] = array();
+			}
+			else
+			{
+				// remove the 'current' value
+				array_splice($this->settings['member_groups'], $key, 1);
+
+				// if this is an existing entry, get the author's group id
+				if ($entry_id)
+				{
+					$group_id = $this->EE->db->select('group_id')
+						->from('channel_titles')
+						->where('entry_id', $entry_id)
+						->join('members', 'channel_titles.author_id = members.member_id')
+						->limit(1)
+						->get()
+						->row('group_id');
+				}
+				// otherwise use the current member's group ID
+				else
+				{
+					$group_id = $this->EE->session->userdata('group_id');
+				}
+
+				// get all groups available to this user
+
+				// add the ID if it's not already there
+				if (! in_array($group_id, $this->settings['member_groups']))
+				{
+					$this->settings['member_groups'][] = $group_id;
+				}
+			}
+		}
+
+		// -------------------------------------------
 		//  Current author?
 		// -------------------------------------------
 
@@ -1566,17 +1869,20 @@ class Playa_ft extends EE_Fieldtype {
 		// -------------------------------------------
 
 		// flatten the array settings
-		$flat_channels = implode('|', $this->settings['channels']);
-		$flat_cats     = implode('|', $this->settings['cats']);
-		$flat_authors  = implode('|', $this->settings['authors']);
-		$flat_statuses = implode('|', $this->settings['statuses']);
+		$flat_channels		= implode('|', $this->settings['channels']);
+		$flat_cats			= implode('|', $this->settings['cats']);
+		$flat_member_gorups	= implode('|', $this->settings['authors']);
+		$flat_authors		= implode('|', $this->settings['member_groups']);
+		$flat_statuses		= implode('|', $this->settings['statuses']);
 
 		// cached?
 		$cache_key = $this->settings['expired']
 		           . $this->settings['future']
+		           . $this->settings['editable']
 		           . $flat_channels . ','
-		           . $flat_cats     . ','
-		           . $flat_authors  . ','
+		           . $flat_cats          . ','
+				   . $flat_member_gorups . ','
+		           . $flat_authors       . ','
 		           . $flat_statuses;
 
 		if (isset($this->cache['total_entries'][$cache_key]))
@@ -1586,13 +1892,16 @@ class Playa_ft extends EE_Fieldtype {
 		else
 		{
 			$vars['total_entries'] = $this->helper->entries_query(array(
-				'count'               => TRUE,
-				'show_expired'        => ($this->settings['expired'] == 'y' ? 'yes' : ''),
-				'show_future_entries' => ($this->settings['future'] == 'y' ? 'yes' : ''),
-				'channel_id'          => $this->settings['channels'],
-				'category'            => $this->settings['cats'],
-				'author_id'           => $this->settings['authors'],
-				'status'              => $this->settings['statuses']
+				'count'               	     => TRUE,
+				'show_expired'        	     => ($this->settings['expired'] == 'y' ? 'yes' : ''),
+				'show_future_entries'        => ($this->settings['future'] == 'y' ? 'yes' : ''),
+				'only_show_editable_entries' => ($this->settings['editable'] == 'y' ? 'yes' : ''),
+				'channel_id'          	     => $this->settings['channels'],
+				'category'                   => $this->settings['cats'],
+				'member_groups'              => $this->settings['member_groups'],
+				'author_id'           	     => $this->settings['authors'],
+				'status'              	     => $this->settings['statuses'],
+				'site_id'                    => (isset($this->settings['sites']) ? $this->settings['sites'] : null)
 			));
 
 			// cache it for later
@@ -1627,12 +1936,15 @@ class Playa_ft extends EE_Fieldtype {
 			// -------------------------------------------
 
 			$params = array(
-				'show_expired'        => ($this->settings['expired'] == 'y' ? 'yes' : ''),
-				'show_future_entries' => ($this->settings['future'] == 'y' ? 'yes' : ''),
-				'channel_id'          => $this->settings['channels'],
-				'category'            => $this->settings['cats'],
-				'author_id'           => $this->settings['authors'],
-				'status'              => $this->settings['statuses']
+				'show_expired'        	     => ($this->settings['expired'] == 'y' ? 'yes' : ''),
+				'show_future_entries' 	     => ($this->settings['future'] == 'y' ? 'yes' : ''),
+				'only_show_editable_entries' => ($this->settings['editable'] == 'y' ? 'yes' : ''),
+				'channel_id'          	     => $this->settings['channels'],
+				'category'            	     => $this->settings['cats'],
+				'member_groups'              => $this->settings['member_groups'],
+				'author_id'           	     => $this->settings['authors'],
+				'status'              	     => $this->settings['statuses'],
+				'site_id'                    => (isset($this->settings['sites']) ? $this->settings['sites'] : null)
 			);
 
 			if ($this->settings['limit'])
@@ -1666,6 +1978,7 @@ class Playa_ft extends EE_Fieldtype {
 
 			$opts['defaults']['expired'] = $this->settings['expired'];
 			$opts['defaults']['future']  = $this->settings['future'];
+			$opts['defaults']['editable']  = $this->settings['future'];
 
 			if ($flat_channels) $opts['defaults']['channel']  = $flat_channels;
 			if ($flat_cats)     $opts['defaults']['category'] = $flat_cats;
@@ -1837,6 +2150,19 @@ class Playa_ft extends EE_Fieldtype {
 				}
 
 				// -------------------------------------------
+				// Member groups
+				// -------------------------------------------
+				$groups = $this->EE->db->query('SELECT DISTINCT(mg.group_id) AS `id`, mg.group_title AS `title`
+		                                 FROM exp_member_groups AS mg
+		                                 WHERE mg.can_access_publish = "y"
+		                                       '.($msm ? '' : 'AND mg.site_id = "'.$site_id.'"').'
+		                                 ORDER BY mg.group_title');
+				if ($groups->num_rows())
+				{
+					$opts['filters']['member_groups'] = array(lang('member_group'), $this->_field_settings_select_options($groups->result_array()));
+				}
+
+				// -------------------------------------------
 				//  Authors
 				// -------------------------------------------
 
@@ -1874,7 +2200,7 @@ class Playa_ft extends EE_Fieldtype {
 				$opts['filters']['status'] = array(lang('status'), $this->_field_settings_select_options($statuses));
 
 
-				$opts_json = $this->EE->javascript->generate_json($opts, TRUE);
+				$opts_json = $this->helper->get_json($opts);
 
 				if ($is_cell)
 				{
@@ -1956,7 +2282,7 @@ class Playa_ft extends EE_Fieldtype {
 		//  Insert the JS
 		// -------------------------------------------
 
-		$opts_json = $this->EE->javascript->generate_json($opts, TRUE);
+		$opts_json = $this->helper->get_json($opts);
 
 		if (! $is_cell)
 		{
@@ -2061,6 +2387,51 @@ class Playa_ft extends EE_Fieldtype {
 	}
 
 	/**
+	 * Discard a BWF draft.
+	 */
+	public function draft_discard()
+	{
+		$where = array(
+			'parent_entry_id' => $this->settings['entry_id'],
+			'parent_is_draft' => 1
+		);
+
+		$this->EE->db->where($where)->delete('playa_relationships');
+	}
+
+	/**
+	 * Publish a BWF draft.
+	 */
+	public function draft_publish()
+	{
+		$where = array(
+			'parent_entry_id' => $this->settings['entry_id'],
+			'parent_is_draft' => 0
+		);
+		$this->EE->db->where($where)->delete('playa_relationships');
+
+		$where['parent_is_draft'] = 1;
+		$update = array('parent_is_draft' => 0);
+		$this->EE->db->where($where)->update('playa_relationships', $update);
+
+		return;
+	}
+
+	/**
+	 * Save a BWF draft.
+	 *
+	 * @param $data
+	 * @return mixed
+	 */
+	public function draft_save($data)
+	{
+		$this->field_id = $this->settings['field_id'];
+		$this->is_draft = 1;
+		$this->post_save($data);
+		return $data;
+	}
+
+	/**
 	 * Post Save
 	 */
 	function post_save($data)
@@ -2073,7 +2444,8 @@ class Playa_ft extends EE_Fieldtype {
 
 		$data = array(
 			'parent_entry_id' => $this->settings['entry_id'],
-			'parent_field_id' => $this->field_id
+			'parent_field_id' => $this->field_id,
+			'parent_is_draft' => $this->is_draft
 		);
 
 		// save the changes
@@ -2097,12 +2469,14 @@ class Playa_ft extends EE_Fieldtype {
 
 		$data = array(
 			'parent_col_id'   => $this->settings['col_id'],
-			'parent_row_id'   => $this->settings['row_id']
+			'parent_row_id'   => $this->settings['row_id'],
+			'parent_is_draft' => $this->is_draft
 		);
 
 		if ($this->var_id)
 		{
 			$data['parent_var_id'] = $this->var_id;
+			$data['parent_is_draft'] = 0;
 		}
 		else
 		{
@@ -2171,12 +2545,12 @@ class Playa_ft extends EE_Fieldtype {
 		// -------------------------------------------
 		//  'playa_save' hook
 		//   - Update the $data array before the deletion and insert
-		// 
+		//
 			if ($this->EE->extensions->active_hook('playa_save_rels'))
 			{
 				$data = $this->EE->extensions->call('playa_save_rels', $this, $selections, $data);
 			}
-		// 
+		//
 		// -------------------------------------------
 
 		// Delete existing relationships

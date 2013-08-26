@@ -9,12 +9,18 @@
  */
 class Playa
 {
+
+	public $is_draft = FALSE;
+
 	/**
 	 * Constructor
 	 */
 	function __construct()
 	{
 		$this->EE =& get_instance();
+
+		$this->EE->load->library('logger');
+		$this->EE->lang->loadfile('playa');
 
 		// -------------------------------------------
 		//  Prepare Cache
@@ -56,6 +62,11 @@ class Playa
 			{
 				$this->entry_ids[$i] = 0;
 			}
+		}
+
+		if (isset($this->EE->session->cache['ep_better_workflow']['is_draft']) && $this->EE->session->cache['ep_better_workflow']['is_draft'])
+		{
+			$this->is_draft = 1;
 		}
 	}
 
@@ -121,6 +132,12 @@ class Playa
 		{
 			$this->EE->db->select($what.'_id AS id, '.$what.'_name AS name');
 			$this->helper->db_where($what.'_name', $get_names);
+			// If searching for variables, make sure we don't load variables form other sites.
+			if ($what == 'variable')
+			{
+				$this->helper->db_where('site_id', $site_id);
+			}
+
 			$query = $this->EE->db->get($table);
 
 			foreach ($query->result() as $row)
@@ -315,6 +332,33 @@ class Playa
 	 */
 	private function _parse_relative_entry_tags(&$tagdata, $tag_prefix)
 	{
+		static $reported_messages = array();
+		if (strpos($tagdata, $tag_prefix) !== FALSE)
+		{
+			preg_match('/\{' . $tag_prefix . '([^\}]+)\}/', $tagdata, $matches);
+
+			if (!empty($matches[1]))
+			{
+				$tag = $matches[1];
+			}
+			else
+			{
+				$tag = '*';
+			}
+
+			$https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
+			$url = 'http'.($https ? 's' : '').'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+			$message = str_replace('{url}', $url, lang('deprecated_tag'));
+			$message = str_replace('{tag}', "{".$tag_prefix.$tag."}", $message);
+
+			if (empty($reported_messages[$message]))
+			{
+				$this->EE->logger->developer($message);
+				$reported_messages[$message] = TRUE;
+			}
+		}
+
 		// only worry about this if entry_id= is set to one entry
 		if (count($this->entry_ids) != 1) return;
 
@@ -412,6 +456,17 @@ class Playa
 			$this->EE->TMPL->_fetch_site_ids();
 		}
 
+		// -------------------------------------------
+		//  'playa_parse_relationships' hook
+		//   - Make any last-minute changes ta $tagparams, etc., before we call $Channel->entries()
+		//
+			if ($this->EE->extensions->active_hook('playa_parse_relationships'))
+			{
+				$this->EE->extensions->call('playa_parse_relationships');
+			}
+		//
+		// -------------------------------------------
+
 		if (! class_exists('Channel'))
 		{
 			require PATH_MOD.'channel/mod.channel.php';
@@ -444,6 +499,8 @@ class Playa
 			'parent' => $this->EE->TMPL->fetch_param('parent_id')
 		);
 
+		$show_future_entries = $this->EE->TMPL->fetch_param('show_future_entries', 'no');
+
 		$imploded_entry_ids = implode(',', $this->entry_ids);
 
 		// cached?
@@ -455,7 +512,8 @@ class Playa
 		           . ($col_ids     ? implode(',', $col_ids)   : '*') . '|'
 		           . ($row_ids     ? implode(',', $row_ids)   : '*') . '|'
 		           . ($filter_ids['child']  ? str_replace('|', ',', $filter_ids['child']) : '*')
-		           . ($filter_ids['parent'] ? str_replace('|', ',', $filter_ids['parent']) : '*');
+		           . ($filter_ids['parent'] ? str_replace('|', ',', $filter_ids['parent']) : '*')
+				   . $show_future_entries;
 
 		// find the rels if they aren't already cached
 		if (! isset($this->cache['rels'][$cache_key]))
@@ -463,6 +521,8 @@ class Playa
 			$count_entry_ids = count($this->entry_ids);
 			$where = array();
 			$sql_end = array();
+
+			$join = '';
 
 			switch($dir)
 			{
@@ -488,8 +548,18 @@ class Playa
 							$where[] = "rel.parent_entry_id IN ({$imploded_entry_ids})";
 						}
 					}
-					
-					$sql_end[] = 'ORDER BY rel.rel_order';
+
+					$where[] = "rel.parent_is_draft = " . (int) $this->is_draft;
+
+					if (strtolower($show_future_entries) != 'yes')
+					{
+						$join = ' INNER JOIN exp_channel_titles AS ct ON ct.entry_id = rel.child_entry_id AND ct.`entry_date` < "' . time() . '" ';
+					}
+
+					if (! $this->EE->TMPL->fetch_param('orderby'))
+					{
+						$sql_end[] = 'ORDER BY rel.parent_entry_id, rel.parent_field_id, rel.parent_row_id, rel.parent_col_id, rel.parent_var_id, rel.rel_order';
+					}
 
 					break;
 
@@ -516,6 +586,12 @@ class Playa
 						}
 					}
 
+					if (strtolower($show_future_entries) != 'yes')
+					{
+						$join = ' INNER JOIN exp_channel_titles AS ct ON ct.entry_id = rel.parent_entry_id AND ct.`entry_date` < "' . time() . '" ';
+					}
+
+
 					break;
 
 				case 'siblings';
@@ -538,6 +614,11 @@ class Playa
 						}
 					}
 
+					if (strtolower($show_future_entries) != 'yes')
+					{
+						$join = ' INNER JOIN exp_channel_titles AS ct ON ct.entry_id = link.parent_entry_id AND ct.`entry_date` < "' . time() . '" ';
+					}
+
 					break;
 
 				case 'coparents':
@@ -558,6 +639,12 @@ class Playa
 							$where[] = "link.parent_entry_id IN ({$imploded_entry_ids})";
 							$where[] = "rel.parent_entry_id NOT IN ({$imploded_entry_ids})";
 						}
+						$where[] = 'rel.parent_entry_id != link.parent_entry_id';
+					}
+
+					if (strtolower($show_future_entries) != 'yes')
+					{
+						$join = ' INNER JOIN exp_channel_titles AS ct ON ct.entry_id = link.child_entry_id AND ct.`entry_date` < "' . time() . '" ';
 					}
 
 					break;
@@ -668,6 +755,11 @@ class Playa
 				}
 			}
 
+			if ($join)
+			{
+				$sql .= $join;
+			}
+
 			if ($where)
 			{
 				$sql .= ' WHERE '.implode(' AND ', $where);
@@ -683,7 +775,7 @@ class Playa
 			// -------------------------------------------
 			//  'playa_fetch_rels_query' hook
 			//   - Override or update the query
-			// 
+			//
 				if ($this->EE->extensions->active_hook('playa_fetch_rels_query'))
 				{
 					$data = array(
@@ -695,6 +787,7 @@ class Playa
 						'col_ids' => $col_ids,
 						'row_ids' => $row_ids,
 						'filter_ids' => $filter_ids,
+						'parent_is_draft' => $this->is_draft
 					);
 
 					$rels = $this->EE->extensions->call('playa_fetch_rels_query', $this, $sql, $data);
@@ -703,7 +796,7 @@ class Playa
 				{
 					$rels = $this->EE->db->query($sql);
 				}
-			// 
+			//
 			// -------------------------------------------
 
 			$rels = $rels->result_array();
@@ -742,6 +835,7 @@ class Playa
 			// cache them in case an identical request comes later
 			$this->cache['rels'][$cache_key] = $entry_ids;
 		}
+
 
 		return $this->cache['rels'][$cache_key];
 	}
@@ -899,14 +993,15 @@ class Playa
 		// -------------------------------------------
 
 		$params = array(
-			'count'               => TRUE,
-			'entry_id'            => $entry_ids,
-			'status'              => 'open',
-			'show_future_entries' => 'no',
-			'show_expired'        => 'no'
+			'count'                      => TRUE,
+			'entry_id'                   => $entry_ids,
+			'status'                     => 'open',
+			'show_expired'               => 'no',
+			'show_future_entries'        => 'no',
+			'only_show_editable_entries' => 'no',
 		);
 
-		$check_params = array('author_id', 'group_id', 'category', 'category_group', 'show_future_entries', 'show_expired', 'status', 'url_title', 'channel', 'channel_id', 'keywords', 'orderby', 'sort', 'limit', 'offset');
+		$check_params = array('author_id', 'group_id', 'category', 'category_group', 'show_expired', 'show_future_entries', 'only_show_editable_entries', 'status', 'url_title', 'channel', 'channel_id', 'keywords', 'orderby', 'sort', 'limit', 'offset');
 
 		foreach ($check_params as $param)
 		{

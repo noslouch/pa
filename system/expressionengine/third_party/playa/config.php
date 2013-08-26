@@ -3,7 +3,7 @@
 if (! defined('PLAYA_NAME'))
 {
 	define('PLAYA_NAME', 'Playa');
-	define('PLAYA_VER',  '4.3.3');
+	define('PLAYA_VER',  '4.4.5');
 	define('PLAYA_DESC', 'The proverbial multiple relationships field');
 	define('PLAYA_DOCS', 'http://pixelandtonic.com/playa/docs');
 }
