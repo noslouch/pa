@@ -7,15 +7,15 @@
         "date" : "{year_film}",
         "url": "{url_title}",
         "thumb" : "{cover_image_film}{image:url:thumb}{/cover_image_film}",
-        "summary": <?php echo json_encode("{summary_film}"); ?>,
+        "summary": <?php echo json_encode('{summary_film}'); ?>,
         {if video_id_film}
         "video_id": "{video_id_film}",
         {if:else}
         "video_src" : "{video_src_film}",
         {/if}
         "youtube" : "{youtube_film}",
-        "content": <?php echo json_encode("{content_film}"); ?>,
-        "caption" : <?php echo json_encode("{caption_film}"); ?>
+        "content": <?php echo json_encode('{content_film}'); ?>,
+        "caption" : <?php echo json_encode('{caption_film}'); ?>
     },
 {/exp:channel:entries}
 ]
