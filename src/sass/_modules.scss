@@ -182,7 +182,7 @@ button {
         @include icons-sprite(icon-view-hover);
     }
 
-    .active &:before {
+    &.active:before {
         @include icons-sprite(icon-view-selected);
     }
 }
