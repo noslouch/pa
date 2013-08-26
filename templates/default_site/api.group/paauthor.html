@@ -1,9 +1,9 @@
 <?php header('Content-type: application/json'); ?>
 [
-{exp:channel:entries channel="profile_press" limit="100" backspace="2"}
+{exp:channel:entries channel="profile_author" limit="100" backspace="2"}
     {
         "id" : "{entry_id}",
-        "type" : "press",
+        "type" : "articles-by-pa",
         "title" : "{title}",
         "date" : "{date_article}000",
         "url" : "{url_title}",

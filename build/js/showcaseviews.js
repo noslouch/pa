@@ -241,7 +241,10 @@ PA.ListShowcase = Backbone.View.extend({
     initialize : function() {
         var self = this
 
-        this.byDate = this.collection.groupBy('date')
+        this.byDate = this.collection.groupBy(function(model) {
+            return model.get('date').year()
+        })
+
         this.byFirst = (function() {
             var sorted = self.collection.sortBy('title')
             return _.groupBy(sorted, function(model) {

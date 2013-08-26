@@ -13,29 +13,30 @@ PA.ProfileContent = Backbone.View.extend({
 
     render : function(model){
 
-        var showcase
+        var showcase,
+            $layout,
+            $base,
+            album
 
         switch(model.section) {
 
             case 'bio':
                 showcase = new PA.TextShowcase()
-                var $layout = showcase.render(),
-                    $base = $( showcase.base({
-                        type : 'bio',
-                        content : model.get('content')
-                    }) )
-                    .prepend( showcase.bioImg({
-                        bioImg : model.get('bioImg')
-                    }) )
+                $layout = showcase.render()
+                $base = $( showcase.base({
+                    type : 'bio',
+                    content : model.get('content')
+                }) )
+                .prepend( showcase.bioImg({
+                    bioImg : model.get('bioImg')
+                }) )
                 $layout.append($base)
                 this.$el.html($layout)
                 break;
 
             case 'press':
                 showcase = new PA.ListShowcase({
-                    groupedCollection : model.groupBy( function(e) {
-                        return e.get('date').year()
-                    } ),
+                    collection : model,
                     path : '/profile/press/'
                 })
                 this.$el.html( showcase.render() )
@@ -43,9 +44,7 @@ PA.ProfileContent = Backbone.View.extend({
 
             case 'awards':
                 showcase = new PA.ListShowcase({
-                    groupedCollection : model.groupBy( function(e) {
-                        return e.get('date').year()
-                    } ),
+                    collection : model,
                     path : false,
                     url : false
                 })
@@ -53,12 +52,55 @@ PA.ProfileContent = Backbone.View.extend({
                 break;
 
             case 'photos-of-pa':
-                var album = new PA.PhotoAlbum( model.attributes )
+                album = new PA.PhotoAlbum( model.attributes )
                 showcase = new PA.ImageShowcase({
                     collection : album.get('photos')
                 })
                 this.$el.html( showcase.render() )
                 showcase.firstLoad()
+                break;
+
+            case 'articles-by-pa':
+                showcase = new PA.ListShowcase({
+                    collection : model,
+                    path : '/profile/articles-by-pa/'
+                })
+                this.$el.html( showcase.render() )
+                break;
+
+            case 'articles-about-pa':
+                showcase = new PA.ListShowcase({
+                    collection : model,
+                    path : '/profile/articles-by-pa/'
+                })
+                this.$el.html( showcase.render() )
+                break;
+
+            case 'interviews':
+                showcase = new PA.ListShowcase({
+                    collection : model,
+                    path : '/profile/interviews/'
+                })
+                this.$el.html( showcase.render() )
+                break;
+
+            case 'transcripts':
+                showcase = new PA.ListShowcase({
+                    collection : model,
+                    path : '/profile/transcripts/'
+                })
+                this.$el.html( showcase.render() )
+                break;
+
+            case 'acknowledgements':
+                showcase = new PA.TextShowcase()
+                $layout = showcase.render()
+                $base = $( showcase.base({
+                    type : 'bio',
+                    content : model.get('content')
+                }) )
+                $layout.append($base)
+                this.$el.html($layout)
                 break;
 
             default:
@@ -155,8 +197,24 @@ PA.ProfileViewer = Backbone.View.extend({
     back : function(e) {
         e.preventDefault()
         var sectionName = e.currentTarget.pathname
-        var section = this[sectionName.slice(9)]
-        section.activate()
+
+        switch(sectionName.slice(9)) {
+            case 'photos-of-pa':
+                this['photosOf'].activate()
+                break;
+
+            case 'articles-by-pa':
+                this['articlesBy'].activate()
+                break;
+
+            case 'articles-about-pa':
+                this['articlesAbout'].activate()
+                break;
+
+            default:
+                this[sectionName.slice(9)].activate()
+                break;
+        }
     },
 
     swap : function(section, replace) {

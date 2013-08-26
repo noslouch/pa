@@ -9,9 +9,8 @@ PA.PhotoAlbum = Backbone.Model.extend({
         this.set({
             coverImage : new PA.CoverImage( this.get('cover'), {} ),
             photos : new PA.CoverGallery(album.gallery),
-            //htmlDate : this.makeHtmlDate( this.get('date') ),
-            //date : this.parseDate( this.get('date' ) )
-            htmlDate : this.get('date')
+            htmlDate : this.makeHtmlDate( this.get('date') ),
+            date : this.parseDate( this.get('date' ) )
         })
     },
     url : function() {

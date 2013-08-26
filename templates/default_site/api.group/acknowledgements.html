@@ -1,0 +1,12 @@
+<?php header('Content-type: application/json'); ?>
+[
+{exp:channel:entries channel="profile_acknowledgements" limit="100" backspace="2"}
+    {
+        "id" : "{entry_id}",
+        "type" : "acknowledgements",
+        "title": "{title}",
+        "url" : "acknowledgements",
+        "content": <?php echo json_encode('{content_profile}'); ?>
+    },
+{/exp:channel:entries}
+]

@@ -102,10 +102,8 @@ PA.ProjectDetails = Backbone.View.extend({
     template : PA.jst.projectDetails,
     render : function(options) {
         this.$el.html( this.template({
-            date : this.model.get('date'),
-            htmlDate : this.model.get('date'),
-            //htmlDate : this.model.get('htmlDate'),
-            //date : this.model.get('date').year(),
+            htmlDate : this.model.get('htmlDate'),
+            date : this.model.get('date').year(),
             title : this.model.get('title'),
             summary : this.model.get('summary')
         }) )
@@ -196,7 +194,7 @@ PA.AlbumDetails = Backbone.View.extend({
         }) ).prepend( this.header({
             title : this.model.get('title'),
             htmlDate : this.model.get('htmlDate'),
-            date : this.model.get('date')
+            date : this.model.get('date').year()
         }) ).append( this.back({
             buttonText : 'View All Photo Albums',
             url : '/photography'
@@ -242,7 +240,7 @@ PA.FilmDetails = Backbone.View.extend({
         $article.prepend( this.header({
             title : this.model.get('title'),
             htmlDate : this.model.get('htmlDate'),
-            date : this.model.get('date'),
+            date : this.model.get('date').year()
         }) ).append( this.back({
             buttonText : 'View All Film',
             url : '/film'

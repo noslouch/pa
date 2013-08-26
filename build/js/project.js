@@ -11,9 +11,8 @@ PA.Project = Backbone.Model.extend({
                 tags : project.brand_tags.concat(project.type_tags).concat(project.industry_tags)
             }),
             showcases : new PA.Showcases(project.showcases, { path : this.url() }),
-            //htmlDate : this.makeHtmlDate( this.get('date') ),
-            //date : this.parseDate( this.get('date' ) )
-            htmlDate : this.get('date')
+            htmlDate : this.makeHtmlDate( this.get('date') ),
+            date : this.parseDate( this.get('date' ) )
         })
         /*
         this.get('showcases').add({
