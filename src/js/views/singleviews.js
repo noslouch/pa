@@ -242,7 +242,7 @@ PA.FilmDetails = Backbone.View.extend({
         $article.prepend( this.header({
             title : this.model.get('title'),
             htmlDate : this.model.get('htmlDate'),
-            date : this.model.get('date').year(),
+            date : this.model.get('date'),
         }) ).append( this.back({
             buttonText : 'View All Film',
             url : '/film'

@@ -7,7 +7,7 @@ PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 
 PA.Films = Backbone.Collection.extend({
     model : PA.Film,
-    url : '/fixtures/filmFixture.json'
+    url : '/api/films'
 })
 
 PA.films = new PA.Films()
