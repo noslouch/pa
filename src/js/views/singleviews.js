@@ -192,11 +192,11 @@ PA.AlbumDetails = Backbone.View.extend({
     render : function() {
         var $article = $( this.template({
             type : 'photo',
-            content : this.model.get('content')
+            content : this.model.get('summary')
         }) ).prepend( this.header({
             title : this.model.get('title'),
             htmlDate : this.model.get('htmlDate'),
-            date : this.model.get('date').year()
+            date : this.model.get('date')
         }) ).append( this.back({
             buttonText : 'View All Photo Albums',
             url : '/photography'
