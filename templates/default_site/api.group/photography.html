@@ -24,13 +24,9 @@
         "gallery": [
             {gallery_photography backspace="14"}
             {
-                {if image:category == 'landscape'}
-                "thumb" : "{image:url:landscape}",
+                "thumb" : "{image:url:thumb}",
+                "lg_thumb" : "{image:url:lg-thumb}",
                 "caption" : "{if image:description}{image:description}{/if}",
-                {if:else}
-                "thumb" : "{image:url:portrait}",
-                "caption" : "{if image:description}{image:description}{/if}",
-                {/if}
                 "url" : "{image:url}"
         	},
             {/gallery_photography}
