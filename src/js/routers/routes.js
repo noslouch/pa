@@ -36,7 +36,9 @@ PA.Router = Backbone.Router.extend({
             })
 
             PA.listShowcase = new PA.ListShowcase({
+                    // refactor other lists so they don't use grouped Collection
                     groupedCollection : PA.projects.groupBy('date'),
+                    collection : PA.projects,
                     pageClass : 'projects',
                     section : 'Projects' 
             })

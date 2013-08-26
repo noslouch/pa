@@ -239,8 +239,22 @@ PA.ListShowcase = Backbone.View.extend({
     tagName : 'div',
     className : 'showcase list',
     initialize : function() {
-        // groupedCollection is an object of years paired with project objects that fall within that year.
-        _.each( this.options.groupedCollection, function(v,k){
+        var self = this
+
+        this.byDate = this.collection.groupBy('date')
+        this.byFirst = (function() {
+            var sorted = self.collection.sortBy('title')
+            return _.groupBy(sorted, function(model) {
+                var t = model.get('title')
+                return t[0]
+            })
+        }())
+    },
+
+/*
+    alphaSort : function() {
+        this.$el.empty()
+        _.each( this.byFirst, function(v,k) {
             var html = new PA.ListView({
                 date : k,
                 listItems : v,
@@ -250,8 +264,22 @@ PA.ListShowcase = Backbone.View.extend({
             this.$el.append( html.render() )
         }, this )
     },
+    */
 
-    render : function(){
+    render : function(sort){
+        var group = sort === 'alpha' ? this.byFirst : this.byDate
+
+        this.$el.empty()
+        _.each( group, function(v,k){
+            var html = new PA.ListView({
+                date : k,
+                listItems : v,
+                path : this.options.path,
+                url : this.options.url
+            })
+            this.$el.append( html.render() )
+        }, this )
+
         return this.el
     }
 })
