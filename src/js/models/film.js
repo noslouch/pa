@@ -7,9 +7,8 @@ PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 PA.Film = Backbone.Model.extend({
     initialize : function() {
         this.set({
-            //htmlDate : this.makeHtmlDate( this.get('date') ),
-            //date : this.parseDate( this.get('date') )
-            htmlDate : this.get('date')
+            htmlDate : this.makeHtmlDate( this.get('date') ),
+            date : this.parseDate( this.get('date') )
         })
     },
 

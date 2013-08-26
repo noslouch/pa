@@ -2,9 +2,11 @@
 [
 {exp:channel:entries channel="profile_awards" limit="100" backspace="2"}
     {
-        "Title": "{title}",
-        "URLTitle": "{url_title}",
-        "Summary": "{if summary_awards}{summary_awards}{/if}"
+        "id" : "{entry_id}",
+        "type" : "awards",
+        "title" : "{title}",
+        "date" : "{date_awards}000",
+        "summary" : "{summary_awards}"
     },
 {/exp:channel:entries}
 ]
