@@ -1,0 +1,26 @@
+.assets-settingheader {  margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed #b6c0c2; }
+label.assets-checkbox { display: inline-block; margin-top: 1px; }
+
+.assets-filedirs .assets-settingheader { padding-bottom: 2px; }
+
+div.progress-bar { margin: 5px 0; height: 5px; border: 1px solid #b6c0c2; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+div.progress-bar div.progress-filler { float: left; width: 0; background: #98A3AD; height: 5px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+
+div.index-data-container { margin-top: 4px;}
+div.index-data-container input.delete_asset, td#index-container div.index-data-container input.delete_folder { position: relative; top: 2px;}
+
+.assets-loading { height: 25px; background: url('../images/spinner.gif') no-repeat center; }
+.assets-sync-item{ padding: 2px 0;}
+.assets-sync-item label {display: inline-block; width: 200px;}
+.assets-index.disabled { cursor: auto; ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; filter: alpha(opacity=50); opacity: 0.2;}
+
+div#assets-dialog{ display: none; margin-top: 10px;}
+div#assets-dialog div#index-message{ font-weight: bold;}
+
+#mainContent h3.assets-source-type{
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+div.assets-hidden{
+	display: none;
+}
