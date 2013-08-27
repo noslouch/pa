@@ -49,16 +49,16 @@ PA.ProfileListItem = PA.ProfileBase.extend({
 })
 
 PA.Bio = PA.OneOff.extend({
-    url : '/fixtures/bioFixture.json',
+    url : '/api/bio',
     section : 'bio'
 })
 
 PA.PhotosOf = PA.OneOff.extend({
-    url : '/fixtures/paPhotosFixture.json',
+    url : '/api/paphotos',
     section : 'photos-of-pa'
 })
 
 PA.Acknowledgements = PA.OneOff.extend({
-    url : '/fixtures/bioFixture.json',
+    url : '/api/acknowledgements',
     section: 'acknowledgements'
 })

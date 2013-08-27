@@ -4,7 +4,7 @@
     {
         "id" : "{entry_id}",
         "title": "{title}",
-        "date" : "{year_projects}",
+        "date" : "{year_projects}000",
         "url": "{url_title}",
         "logo" : "{logo_projects}{image:url:logo-thumb}{/logo_projects}",
         "cover" : {
@@ -12,16 +12,15 @@
         {if image:category == 'landscape'}
             "thumb" : "{image:url:landscape}",
             "wide" : "true",
-            "caption" : "{if image:description}{image:description}{/if}",
         {if:else}
             "thumb" : "{image:url:portrait}",
             "wide" : "",
-            "caption" : "{if image:description}{image:description}{/if}",
         {/if}
+            "caption" : "{image:description}",
         {/cover_projects}
             "url" : "{url_title}"
         },
-        "summary": "{if summary_projects}{summary_projects}{/if}",
+        "summary": <?php echo json_encode('{summary_projects}'); ?>,
         "brand_tags" : 
         [
             {categories show_group="21" backspace="14"}
@@ -81,7 +80,7 @@
             },
             {/exp:playa:children}
         ],
-        "info" : <?php echo json_encode("{info_project}"); ?>,
+        "info" : <?php echo json_encode('{info_projects}'); ?>,
         "relatedLinks" : ""
     },
     {/exp:channel:entries}

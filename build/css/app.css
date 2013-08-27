@@ -3314,9 +3314,10 @@ button {
 .text {
   max-width: 589px;
   float: right;
+  width: 100%;
 }
 
-/* line 14, ../../src/sass/_text-showcase.scss */
+/* line 15, ../../src/sass/_text-showcase.scss */
 .press header {
   width: 100%;
   margin-left: auto;
@@ -3338,7 +3339,7 @@ button {
 .press header:after {
   clear: both;
 }
-/* line 21, ../../src/sass/_text-showcase.scss */
+/* line 22, ../../src/sass/_text-showcase.scss */
 .press h3, .press time {
   position: relative;
   padding-left: 0;
@@ -3346,13 +3347,13 @@ button {
   width: 50%;
   float: left;
 }
-/* line 24, ../../src/sass/_text-showcase.scss */
+/* line 25, ../../src/sass/_text-showcase.scss */
 .press .wrapper {
   padding-top: 1em;
   border-top: 1px solid #e0e0e0;
 }
 
-/* line 29, ../../src/sass/_text-showcase.scss */
+/* line 30, ../../src/sass/_text-showcase.scss */
 .gallery {
   width: auto;
   margin-left: -0.53125em;
@@ -3372,7 +3373,7 @@ button {
 .gallery:after {
   clear: both;
 }
-/* line 33, ../../src/sass/_text-showcase.scss */
+/* line 34, ../../src/sass/_text-showcase.scss */
 .gallery .img {
   position: relative;
   padding-left: 0.53125em;
@@ -3381,41 +3382,41 @@ button {
   float: left;
 }
 
-/* line 38, ../../src/sass/_text-showcase.scss */
+/* line 39, ../../src/sass/_text-showcase.scss */
 .bio .img {
   float: left;
   margin-right: 1em;
 }
 
-/* line 47, ../../src/sass/_text-showcase.scss */
+/* line 48, ../../src/sass/_text-showcase.scss */
 .text p {
   font-size: 1.1875em;
   font-weight: 300;
 }
 
-/* line 54, ../../src/sass/_text-showcase.scss */
+/* line 55, ../../src/sass/_text-showcase.scss */
 .press h3, .press time {
   font-size: 1.1875em;
 }
-/* line 58, ../../src/sass/_text-showcase.scss */
+/* line 59, ../../src/sass/_text-showcase.scss */
 .press h3 {
   font-weight: 500;
   margin: 0;
   text-align: left;
 }
-/* line 64, ../../src/sass/_text-showcase.scss */
+/* line 65, ../../src/sass/_text-showcase.scss */
 .press time {
   font-weight: 100;
   text-align: right;
 }
-/* line 69, ../../src/sass/_text-showcase.scss */
+/* line 70, ../../src/sass/_text-showcase.scss */
 .press p {
   font-size: 0.8125em;
   font-weight: 500;
   line-height: 1.2;
 }
 
-/* line 76, ../../src/sass/_text-showcase.scss */
+/* line 77, ../../src/sass/_text-showcase.scss */
 .profile .text P {
   font-size: 0.8125em;
   font-weight: 500;

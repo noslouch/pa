@@ -5,20 +5,19 @@
         "id" : "{entry_id}",
         "type" : "press",
         "title" : "{title}",
-        "date" : "{date_press}",
+        "date" : "{date_article}000",
         "url" : "{url_title}",
-        "summary": <?php echo json_encode('{summary_press}"'); ?>,
-        "content": <?php echo json_encode('{content_press}"'); ?>,
-        "gallery": 
-        	[
-				{gallery_press backspace="6"}
-					{
-					    "thumb" : "{image:url:thumb}",
-                        "url" : "{image:url:full}",
-                        "caption" : <?php echo json_encode("{image:description}"); ?>
-					},
-                {/gallery_press}
-			]
+        "summary": <?php echo json_encode('{summary_article}'); ?>,
+        "content": <?php echo json_encode('{content_article}'); ?>,
+        "gallery": [
+        {gallery_article backspace="10"}
+            {
+                "thumb" : "{image:url:thumb}",
+                "url" : "{image:url:full}",
+                "caption" : <?php echo json_encode('{image:description}'); ?>
+            },
+        {/gallery_article}
+        ]
     },
 {/exp:channel:entries}
 ]
