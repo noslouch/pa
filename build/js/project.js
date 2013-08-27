@@ -14,6 +14,9 @@ PA.Project = Backbone.Model.extend({
             htmlDate : this.makeHtmlDate( this.get('date') ),
             date : this.parseDate( this.get('date' ) )
         })
+        _.each( this.get('brand_tags'), function(el, i) {
+            el.logo = 'http://assets.peterarnell.s3.amazonaws.com/logos/'
+        })
         /*
         this.get('showcases').add({
             type : 'info',
