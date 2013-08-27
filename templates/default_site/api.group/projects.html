@@ -82,7 +82,11 @@
             {/exp:playa:children}
         ],
         "info" : <?php echo json_encode('{info_projects}'); ?>,
-        "relatedLinks" : ""
+        "relatedLinks" : [
+            {related_links backspace="8"}
+                "{item}",
+            {/related_links}
+        ]
     },
     {/exp:channel:entries}
 ]
