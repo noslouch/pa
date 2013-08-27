@@ -21,37 +21,37 @@ PA.ProfileCollection = Backbone.Collection.extend({
 
 PA.Press = PA.ProfileCollection.extend({
     model : PA.ProfileListItem,
-    url : '/fixtures/pressFixture.json',
+    url : '/api/press',
     section : 'press'
 })
 
 PA.Awards = PA.ProfileCollection.extend({
     model : PA.ProfileListItem,
-    url : '/fixtures/awardsFixture.json',
+    url : '/api/awards',
     section : 'awards'
 })
 
 PA.ArticlesBy = PA.ProfileCollection.extend({
     model : PA.ProfileListItem,
-    url : '/fixtures/pressFixture.json',
+    url : '/api/paauthor',
     section : 'articles-by-pa'
 })
 
 PA.ArticlesAbout = PA.ProfileCollection.extend({
     model : PA.ProfileListItem,
-    url : '/fixtures/pressFixture.json',
+    url : '/api/pasubject',
     section : 'articles-about-pa'
 })
 
 PA.Interviews = PA.ProfileCollection.extend({
     model : PA.ProfileListItem,
-    url : '/fixtures/pressFixture.json',
+    url : '/api/interviews',
     section : 'interviews'
 })
 
 PA.Transcripts = PA.ProfileCollection.extend({
     model : PA.ProfileListItem,
-    url : '/fixtures/pressFixture.json',
+    url : '/api/transcripts',
     section : 'transcripts'
 })
 
