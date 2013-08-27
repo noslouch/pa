@@ -81,7 +81,7 @@ PA.BrandFilterItem = Backbone.View.extend({
         this.$el.append( this.logoTemplate({
             tagFilter : this.options.tagObj.className,
             tag : this.options.tagObj.title,
-            logo: this.options.logo
+            logo: this.options.tagObj.logo
         }) )
         this.$el.append( this.nameTemplate({
             tagFilter : this.options.tagObj.className,
@@ -108,13 +108,13 @@ PA.BrandFilter = Backbone.View.extend({
                 return b.concat(a)
             }, [] )
 
-        var logos = this.collection.pluck('logo')
+        //var logos = this.collection.pluck('logo')
 
         tags.forEach( function(tagObj, idx) {
             this.$el
                 .append( new PA.BrandFilterItem({
-                    tagObj : tagObj,
-                    logo : logos[idx]
+                    tagObj : tagObj
+                    //logo : logos[idx]
                 })
                 .render() )
         }, this)
