@@ -78,7 +78,7 @@ PA.ProfileContent = Backbone.View.extend({
         .prepend( layout.header({
             title : model.get('title'),
             htmlDate : model.get('htmlDate'),
-            date : model.get('date').format('MMMM DD, YYYY')
+            date : model.get('date').format('MMMM Do, YYYY')
         }) )
         .append( layout.gallery({
             images : model.get('gallery'),
