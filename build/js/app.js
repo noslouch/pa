@@ -54,4 +54,15 @@ $(function(){
     }
 
     checkScroll()
+
+    $('#searchIcon').click(function(e){
+        e.preventDefault()
+        $('#searchForm').addClass('active')
+        $('#searchInput').focus()
+    })
+    $('#cancelSearch').click(function(e){
+        e.preventDefault()
+        $('#searchInput').val('')
+        $('#searchForm').removeClass('active')
+    })
 })
