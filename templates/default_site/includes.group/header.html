@@ -27,7 +27,14 @@
                             <li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if}>Stream</a></li>
                             <li><a href="#" id="searchIcon" class="search-icon"></a></li>
                         </ul>
-                        <form class="search-form" action=""><input type="search" /></form>
+                        <form action="" class="search-form" id="searchForm">
+                            <div class="table-wrapper">
+                                <div class="cell-wrapper">
+                                    <input id="searchInput" class="search" type="search">
+                                    <button class="cancel-search button" id="cancelSearch" type="button">Cancel</button>
+                                </div> <!-- .cell-wrapper -->
+                            </div> <!-- .table-wrapper -->
+                        </form>
                     </nav>
                     {!-- embed="includes/filter-bar" nav="{embed:nav}" --}
                 </header> <!-- .site-header -->
