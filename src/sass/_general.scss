@@ -492,6 +492,8 @@ iframe {
         font-weight: 500;
         margin: 0;
     }
+
+    button:focus { outline: none; }
 }
 
 .views,

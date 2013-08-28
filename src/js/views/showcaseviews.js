@@ -187,8 +187,10 @@ PA.ListItem = Backbone.View.extend({
     },
 
     toggle : function(e) {
-        e.preventDefault()
-        this.model.activate()
+        if ( !$(e.currentTarget).parents('.projects').length ) {
+            e.preventDefault()
+            this.model.activate()
+        }
     },
 
     template : PA.jst.listItemPartial,
