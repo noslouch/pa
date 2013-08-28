@@ -15,8 +15,16 @@ PA.Project = Backbone.Model.extend({
             date : this.parseDate( this.get('date' ) )
         })
         _.each( this.get('brand_tags'), function(el, i) {
-            el.logo = 'http://assets.peterarnell.s3.amazonaws.com/logos/'
+            var filename = el.logo.split('/')[5]
+            el.logo = 'http://assets.peterarnell.s3.amazonaws.com/logos/' + filename
         })
+        _.each( this.get('relatedLinks'), function(item, index){
+            var split = item.split('|')
+            this.attributes.relatedLinks[index] = {
+                'text' : split[0] ? split[0].trim() : '',
+                'url' : split[1] ? split[1].trim() : ''
+            }
+        }, this)
         /*
         this.get('showcases').add({
             type : 'info',
