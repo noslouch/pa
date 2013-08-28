@@ -238,7 +238,9 @@ PA.FilterBar = Backbone.View.extend({
         e.preventDefault()
         e.stopPropagation()
         PA.dispatcher.trigger( 'filter:toggleView', e.currentTarget )
-        this.$('.open').removeClass('open')
+        if ( !$(e.currentTarget.parentElement).hasClass('views') ) {
+            this.$('.open').removeClass('open')
+        }
     },
 
     debug : function(e) { 
