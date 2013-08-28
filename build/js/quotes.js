@@ -5,10 +5,16 @@ $(function(){
     var quotes = $('.quotes h3'),
         container = document.getElementById('container')
 
-    function Slide(h1, gallery){
+    function Slide(h3, gallery){
         var self = this
-        self.blinds = h1.children
+        self.blinds = h3.children
         self.g = gallery
+
+        _.each( self.blinds, function(blind, index) {
+            if ( $(blind).html()[0] === '*' ) {
+                $(blind).empty()
+            }
+        })
 
         function open(blindIndex){
             if ( blindIndex === self.blinds.length ) {
@@ -63,7 +69,7 @@ $(function(){
 
 
         for (var i = 0; i < quotes.length; i++){
-            this.slides.push(new Slide(quotes[i],self))
+            this.slides.push( new Slide(quotes[i], self) )
             this.q.push(i)
         }
 
