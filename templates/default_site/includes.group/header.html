@@ -27,14 +27,14 @@
                             <li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if}>Stream</a></li>
                             <li><a href="#" id="searchIcon" class="search-icon"></a></li>
                         </ul>
-                        <form action="" class="search-form" id="searchForm">
-                            <div class="table-wrapper">
+                        {exp:search:simple_form channel="profile_awards" form_class="search-form" form_id="searchForm" status="published" result_page="{site_url}/api/search" where="all" search_in="titles"}
+                            <div class="table-wrapper">sdfg
                                 <div class="cell-wrapper">
-                                    <input id="searchInput" class="search" type="search">
+                                    <input id="searchInput" class="search" type="search" name="keywords">
                                     <button class="cancel-search button" id="cancelSearch" type="button">Cancel</button>
                                 </div> <!-- .cell-wrapper -->
                             </div> <!-- .table-wrapper -->
-                        </form>
+                        {/exp:search:simple_form}
                     </nav>
                     {!-- embed="includes/filter-bar" nav="{embed:nav}" --}
                 </header> <!-- .site-header -->
