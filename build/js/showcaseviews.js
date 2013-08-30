@@ -40,6 +40,7 @@ PA.ImageThumb = Backbone.View.extend({
 PA.ImageShowcase = Backbone.View.extend({
     tagName : 'div',
     id : 'iso-grid',
+
     initialize : function() {
         _.bindAll(this, 'render', 'firstLoad', 'filter')
 
@@ -52,7 +53,10 @@ PA.ImageShowcase = Backbone.View.extend({
             })
             this.$el.append( thumb.render() )
         }, this)
+
+        this.on('filter', this.filter)
     },
+
     className : function() {
         var classes = ['isotope-grid', 'showcase', 'image']
         if (this.options.cover) {
@@ -67,6 +71,7 @@ PA.ImageShowcase = Backbone.View.extend({
         fbLoader()
         return this.el
     },
+
     firstLoad: function() {
 
         var $img = this.$('img'),
@@ -90,8 +95,9 @@ PA.ImageShowcase = Backbone.View.extend({
             $img.addClass('loaded')
         })
     },
-    filter : function(filterObj) {
-        this.$el.isotope(filterObj)
+
+    filter : function(filter) {
+        this.$el.isotope({ filter : filter })
     }
 })
 
@@ -254,29 +260,18 @@ PA.ListShowcase = Backbone.View.extend({
                 return t[0]
             })
         }())
-    },
 
-/*
-    alphaSort : function() {
-        this.$el.empty()
-        _.each( this.byFirst, function(v,k) {
-            var html = new PA.ListView({
-                date : k,
-                listItems : v,
-                path : this.options.path,
-                url : this.options.url
-            })
-            this.$el.append( html.render() )
-        }, this )
+        this.on('sort', this.render)
+        this.on('jump', this.jump)
     },
-    */
 
     render : function(sort){
-        var group = sort === 'alpha' ? this.byFirst : this.byDate
+        var group = sort === 'date' ? this.byDate : this.byFirst
 
         this.$el.empty()
         _.each( group, function(v,k){
             var html = new PA.ListView({
+                id : k.toLowerCase(),
                 date : k,
                 listItems : v,
                 path : this.options.path,
@@ -286,6 +281,12 @@ PA.ListShowcase = Backbone.View.extend({
         }, this )
 
         return this.el
+    },
+
+    jump : function(jump) {
+        $('html, body').animate({
+            scrollTop : $('#' + jump).offset().top - 200
+        })
     }
 })
 
@@ -361,9 +362,8 @@ PA.Starfield = Backbone.View.extend({
     render : function() {
         PA.starsRunning = true
         this.$el.empty()
-        this.images = PA.randomCovers()
+        this.images = new Backbone.Collection( this.collection.shuffle() )
         this.stagger()
         return this.el
     }
 })
-

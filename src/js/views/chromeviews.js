@@ -4,62 +4,151 @@ PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
 PA.Header = Backbone.View.extend({
     initialize: function() {
-        this.filterBar = new PA.FilterBar()
+        this.filterBar = new PA.FilterBar({ model : this.model })
     }
 })
 
-PA.Page = Backbone.View.extend({
+PA.PageView = Backbone.View.extend({
     initialize: function() {
-        _.bindAll(this, 'render')
+        _.bindAll( this, 'render' )
 
         this.outlineTitle = $('<h2/>').addClass('visuallyhidden')
         this.$el.prepend(this.outlineTitle)
+
+        this.listenTo( this.model, 'change:showcase', this.render )
     },
-    render : function(options) {
-       // NEED TO REFACTOR RENDERING SO SHOWCASES RENDER THEMSELVES TO THE PAGE 
-        this.options.parent.showcase = options.view
 
-        this.$el.html( options.view.render() )
-        this.$el.addClass( options.pageClass )
+    semantics : function( className, outlineTitle ) {
+        this.$el.addClass( className || '' )
+        this.outlineTitle.html( outlineTitle || '' )
+        this.$el.prepend( this.outlineTitle )
+    },
 
-        if (options.section) {
-            this.outlineTitle.html( options.section )
-            this.$el.prepend( this.outlineTitle )
+    render : function(pageModel, pageView) {
+
+        this.$el.html( pageView.render() )
+        this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
+
+        if ( pageView instanceof PA.ImageShowcase ) {
+            pageView.firstLoad()
+            pageModel.set('filter', '*')
+        } else if ( pageView instanceof PA.ListShowcase ) {
+            pageModel.set( 'sort', 'alpha' )
         }
 
-        this.last = options
-    }
+    },
+
 })
 
 PA.App = Backbone.View.extend({
     initialize : function() {
-        _.bindAll(this, 'projectFilter', 'render', 'routeHandler')
+        _.bindAll(this, 'projectFilter', 'render', 'routeHandler', 'projects', 'hashHandler' )
 
-        this.header = new PA.Header({ el : '.site-header', parent : this })
-        this.page = new PA.Page({ el : '.page', parent : this})
+        this.model = new PA.PageModel()
+        this.header = new PA.Header({ 
+            el : '.site-header',
+            parent : this,
+            model : this.model
+        })
+        this.page = new PA.PageView({ 
+            el : '.page',
+            parent : this,
+            model : this.model
+        })
 
-        this.listenTo( PA.dispatcher, 'filter', this.projectFilter )
+        $(window).on('hashchange', this.hashHandler)
         this.listenTo( PA.router, 'route', this.routeHandler )
+
+        this.listenTo( this.model, 'change:filter', this.projectFilter )
+        this.listenTo( this.model, 'change:view', this.projectView )
+        this.listenTo( this.model, 'change:sort', this.projectSort )
+        this.listenTo( this.model, 'change:jump', this.projectJump )
     },
 
-    projectFilter : function(e) {
-        this.closeMenu()
-
+    hashHandler : function() {
         var hashObj = $.deparam.fragment()
 
-        if ( this.showcase !== PA.coverShowcase ) {
-            this.showcase.destroy()
+        if ( hashObj.filter ) {
+            this.model.unset('filter', {silent : true} )
+            this.model.set( 'filter', hashObj.filter )
+        } else if ( hashObj.view ) {
+            this.model.unset('view', {silent : true} )
+            this.model.set( 'view', hashObj.view )
+        } else if ( hashObj.sort ) {
+            console.log('hashchange handler')
+            this.model.unset('sort', {silent : true} )
+            this.model.set( 'sort', hashObj.sort )
+        } else if ( hashObj.jump ) {
+            this.model.unset('jump', {silent : true} )
+            this.model.set( 'jump', hashObj.jump )
+        }
+    },
 
-            PA.app.page.render({
-                view : PA.coverShowcase,
-                pageClass : 'projects',
-                section : 'Projects'
-            })
+    projects : function() {
+        // Init Projects page by caching showcase views
 
-            this.showcase.firstLoad()
+        this.model.covers = new PA.ImageShowcase({
+            cover : true,
+            collection : new PA.CoverGallery( PA.projects.pluck('coverImage') ),
+            path : 'projects'
+        })
+
+        this.model.titles = new PA.ListShowcase({
+            // refactor other lists so they don't use grouped Collection
+            groupedCollection : PA.projects.groupBy('date'),
+            collection : PA.projects,
+            pageClass : 'projects',
+            section : 'Projects' 
+        })
+
+        this.model.random = new PA.Starfield({
+            collection : this.model.covers.collection
+        })
+
+        this.model.set({ className : 'projects', outlineTitle : 'Projects' })
+        //this.model.set( 'showcase' , this.model.random )
+        $.bbq.pushState( { view : 'random' }, 2 )
+    },
+
+    projectFilter : function( pageModel, filter ) {
+
+        if ( !(pageModel.get('showcase') instanceof PA.ImageShowcase) ) {
+            pageModel.get('showcase').destroy()
+            pageModel.set( 'showcase' , this.model.covers )
         }
 
-        this.showcase.filter(hashObj)
+        pageModel.get('showcase').trigger('filter', filter)
+    },
+
+    projectView : function( pageModel, view ) {
+
+        pageModel.set( 'showcase', this.model[view] )
+        if ( pageModel.get('showcase') instanceof PA.ImageShowcase ) {
+            pageModel.get('showcase').filter('*')
+        } else if ( pageModel.get('showcase') instanceof PA.ListShowcase ) {
+            pageModel.set('sort', 'alpha')
+        }
+    },
+
+    projectSort : function( pageModel, sort ) {
+
+        console.log('change:sort handler')
+        if ( !(pageModel.get('showcase') instanceof PA.ListShowcase) ) {
+            pageModel.get('showcase').destroy()
+            pageModel.set( 'showcase' , this.model.titles )
+        }
+
+        pageModel.get('showcase').render(sort)
+    },
+
+    projectJump : function( pageModel, jump ) {
+
+        if ( !(pageModel.get('showcase') instanceof PA.ListShowcase) ) {
+            pageModel.get('showcase').destroy()
+            pageModel.set( 'showcase', this.model.titles )
+        }
+
+        pageModel.get('showcase').trigger('jump', jump)
     },
 
     events : {
