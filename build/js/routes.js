@@ -25,49 +25,14 @@ PA.Router = Backbone.Router.extend({
 
         var spinner = new Spinner()
 
-        $.when( PA.projects.fetch() ).done(function(){
+        $.when( PA.projects.fetch() )
+        .then( function() {
+            PA.app.projects()
             PA.app.header.filterBar.render()
-
-            PA.coverImages = new PA.CoverGallery( PA.projects.pluck('coverImage') )
-            PA.coverShowcase = new PA.ImageShowcase({
-                cover : true,
-                collection : PA.coverImages,
-                path : 'projects'
-            })
-
-            PA.listShowcase = new PA.ListShowcase({
-                    // refactor other lists so they don't use grouped Collection
-                    groupedCollection : PA.projects.groupBy('date'),
-                    collection : PA.projects,
-                    pageClass : 'projects',
-                    section : 'Projects' 
-            })
-
-            PA.randomShowcase = new PA.Starfield()
-
-
-            if ($.param.fragment()) {
-
-                PA.app.page.render({
-                    view : PA.coverShowcase,
-                    pageClass : 'projects',
-                    section : 'Projects'
-                })
-                PA.coverShowcase.firstLoad()
-                $(window).trigger('hashchange')
-
-            } else {
-
-                PA.app.page.render({
-                    view : PA.randomShowcase,
-                    pageClass : 'projects',
-                    section : 'Projects'
-                })
-
-            }
-
+        } ).done( function() {
             spinner.detach()
-        })
+            $(window).trigger('hashchange')
+        } )
     },
 
     singleProject : function(project) {
