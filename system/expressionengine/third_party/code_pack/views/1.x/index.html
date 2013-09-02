@@ -1,0 +1,37 @@
+<?php echo $this->view('header.html');?>
+	
+	<div class="itemWrapper">
+		<div class="tableHeading"><?=ee()->lang->line('code_packs'); ?></div>
+		<div class="tableHeadingAlt"><?=ee()->lang->line('code_packs_explanation'); ?></div>
+<?php if ( count( $code_packs ) == 0 ) : ?>
+		<div class="tableBorder">
+			<div class="tableCellOne">
+				<?=ee()->lang->line('no_code_packs'); ?>
+			</div>
+		</div>
+<?php else: ?>
+		<table class="tableBorder" style="width:100%;" cellspacing="0" cellpadding="0" border="0">
+<?php if ( empty( $code_packs ) ) : ?>
+			<tr class="odd">
+				<td style="width:100%;" colspan="3"><?=ee()->lang->line('no_code_packs'); ?></td>
+			</tr>
+<?php endif; ?>
+<?php $i = 0; foreach ( $code_packs as $key => $val ) : $i++; ?>
+<?php $switch = $this->cycle('tableCellTwo', 'tableCellOne'); ?>
+			<tr>
+				<td class="<?=$switch; ?>">
+					<?=$i; ?>
+				</td>
+				<td class="<?=$switch; ?>">
+					<a href="<?=$this->base . AMP . 'method=code_pack' . AMP . 'code_pack_name=' . $val['code_pack_name'] ; ?>"><?=$val['code_pack_label']; ?></a>
+				</td>
+				<td class="<?=$switch; ?>">
+					<?=$val['code_pack_description']; ?>
+				</td>
+			</tr>
+<?php endforeach; ?>
+		</table>
+<?php endif; ?>
+	</div>
+	
+<?php echo $this->view('footer.html'); ?>

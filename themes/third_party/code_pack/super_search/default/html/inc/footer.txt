@@ -1,0 +1,18 @@
+	</div>
+	
+	<div class="spacer"></div>
+	
+	<div id="copyrightFooter">	
+		<div id="copyright">copyright &copy; 2010-{current_time format="%Y"}</div>
+		<div id="footermenu">
+			<ul>
+				<li class="first"><a href="http://www.solspace.com/">Solspace</a></li>
+				<li class=""><a href="http://www.solspace.com/docs/addon/c/Super_Search/">Super Search Documentation</a></li>
+				<li class=""><a href="http://www.solspace.com/software/detail/super_search/">Super Search</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

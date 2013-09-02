@@ -1,0 +1,33 @@
+<?php echo $this->view('header.html');?>
+
+<div class="clear_left"></div>
+
+	
+	<table id="code_packs" class="mainTable padTable" border="0" cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+				<th colspan="2"><?=ee()->lang->line('code_packs_explanation'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+<?php if ( empty( $code_packs ) ) : ?>
+			<tr class="odd">
+				<td style="width:100%;" colspan="2"><?=ee()->lang->line('no_code_packs'); ?></td>
+			</tr>
+<?php endif; ?>
+<?php foreach ( $code_packs as $key => $val ) : ?>
+<?php $switch = $caller->cycle( 'odd', 'even' ); ?>
+			<tr class="<?=$switch; ?>">
+				<td style="width:20%;">
+					<a href="<?=$caller->output($base_uri . '&method=code_pack' . '&code_pack_name=' . $val['code_pack_name'] ); ?>"><?=$val['code_pack_label']; ?></a>
+				</td>
+				<td style="width:80%;">
+					<?=$val['code_pack_description']; ?>
+				</td>
+			</tr>
+<?php endforeach; ?>
+		</tbody>
+	</table>
+
+	
+<?php echo $this->view('footer.html'); ?>
