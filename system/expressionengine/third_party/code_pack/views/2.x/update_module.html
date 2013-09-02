@@ -1,0 +1,15 @@
+<?php echo $this->view('header.html');?>
+	
+	<form action='<?php echo $form_url;?>' method='post'>
+
+		<div>
+			<input type="hidden" name="run_update" value="y" />
+			<input type="hidden" name="XID" value="<?=$XID_SECURE_HASH?>" />
+		</div>
+
+		<p class="notice"><strong><?php echo ee()->lang->line('code_pack_update_message'); ?></strong></p>
+		<p><input  type='submit' class='submit' value='<?php echo ee()->lang->line('update');?>'  /></p>
+		
+	</form>
+	
+<?php echo $this->view('footer.html'); ?>

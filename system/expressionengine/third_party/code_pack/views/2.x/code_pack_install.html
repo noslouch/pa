@@ -1,0 +1,64 @@
+<?php echo $this->view('header.html');?>
+
+
+<?php if ( count( $errors ) > 0 ) : ?>
+	
+	<h3 class="accordion ui-accordion-header ui-helper-reset ui-state-active ui-corner-top"
+		style="padding-left:10px; margin-bottom:0;">
+		<?=$code_pack_label?>
+	</h3>
+	
+	<table id="entries" class="mainTable padTable" border="0" cellspacing="0" cellpadding="0">
+<?php $i = 0; foreach ( $errors as $val ) : $i++; ?>
+			<tr>
+				<td class="tableCellOne" style="width:10%;"><div style="color:darkred; font-weight:bold;"><?=ee()->lang->line('error'); ?> <?=$i; ?></div></td>
+				<td class="tableCellOne" style="width:20%;"><?=$val['label']; ?></td>
+				<td class="tableCellOne">
+					<?php echo str_replace(
+						array(
+							'%conflicting_groups%',
+							'%conflicting_data%',
+							'%conflicting_global_vars%'
+							),
+						array(
+							'<div class="defaultBold">'.implode( ", ", $conflicting_groups ).'</div>',
+							'<div class="defaultBold">'.implode( "<br />", $conflicting_global_vars ).'</div>'
+							),
+						$val['description']
+						); ?>
+				</td>
+			</tr>
+<?php endforeach; ?>
+		</table>
+<?php endif; ?>
+<?php if ( count( $errors ) == 0 AND count( $success ) > 0 ) : ?>
+	
+	<h3 class="accordion ui-accordion-header ui-helper-reset ui-state-active ui-corner-top"
+		style="padding-left:10px; margin-bottom:0;">
+		<?=$code_pack_label?>
+	</h3>
+	
+	<table id="entries" class="mainTable padTable" border="0" cellspacing="0" cellpadding="0">
+<?php $i = 0; foreach ( $success as $val ) : $i++; ?>
+			<tr>
+				<td class="tableCellOne" style="width:10%;"><div style="color:darkgreen; font-weight:bold;"><?=$i; ?> <?=ee()->lang->line('success'); ?></div></td>
+				<td class="tableCellOne" style="width:20%;"><?=$val['label']; ?></td>
+				<td class="tableCellOne">
+					<?php echo str_replace(
+						array(
+							'%template_count%',
+							'%global_vars%'
+						),
+						array(
+							$template_count,
+							'<div class="defaultBold">'.implode( "<br />", $global_vars ).'</div>'
+						),
+						$val['description']
+					); ?>
+				</td>
+			</tr>
+<?php endforeach; ?>
+		</table>
+<?php endif; ?>
+
+<?php echo $this->view('footer.html'); ?>
