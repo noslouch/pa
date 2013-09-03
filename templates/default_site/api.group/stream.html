@@ -4,7 +4,7 @@
     {
         "timestamp" : "{ig_created_time}",
         "thumb" : "{ig_low_resolution}",
-        "caption" : "<?php echo json_decode('{ig_caption}'); ?>",
+        "caption" : {exp:json_encode}{ig_caption}{/exp:json_encode},
         "url" : "{ig_link}"
     },
 {/exp:ig_picpuller:media_recent}
