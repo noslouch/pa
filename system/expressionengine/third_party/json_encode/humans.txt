@@ -1,0 +1,14 @@
+/* ExpressionEngine Extension */
+Site: http://ellislab.com/expressionengine
+Tested on Version: 2.4
+
+/* Technical Services */
+Author & Developer: Josh Koberstein
+Noble Studios: http://noblestudios.com
+Twitter: @JoshKoberstein @noblestudios
+Location: Reno, NV USA
+
+Lead Developer: Sterling Hamilton
+Noble Studios: http://noblestudios.com
+Twitter: @Sterlo @noblestudios
+Location: Reno, NV USA
