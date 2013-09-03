@@ -1,0 +1,134 @@
+{embed="%prefix%inc/index"}
+
+<script>
+	$(function() {
+		$("#tip1_link").click(function () {
+		$("div#tip1").show("slow");
+		});
+		$("#tip2_link").click(function () {
+		$("div#tip2").show("slow");
+		});
+		$("#tip3_link").click(function () {
+		$("div#tip3").show("slow");
+		});
+	});
+</script>
+
+</head>
+<body id="home">
+{embed="%prefix%inc/header"}
+
+		<div id="maincolumn">
+		
+			<h2>Super Search</h2>
+			
+			<h3>Search Form</h3>
+
+			<p>Below is a variety of search form examples:</p>
+
+			<div id="leftcolumn">
+
+				<h4>Simple site Search<span style="float:right;font-size:12px;"><a href="{path="%prefix%main/forget_last_search"}">forget last search?</a></span></h4>
+
+				<form method="post" action="{path=%prefix%main/keyword_results}">
+
+				{exp:super_search:search {if segment_2 == "saved"}search_id="{segment_3}"{/if}}
+				<p><label for="keywords">Keywords:</label><br />
+					<input type="text" name="keywords" id="keywords" value="{super_search_keywords}" style="font-size:25px;font-weight:bold;" /></p>
+				<p><input type="submit" name="submit" value="Search!" class="button" /></p>
+				{/exp:super_search:search}
+
+				</form>
+
+				<hr />
+
+				<h4>Search Articles on this site:</h4>
+
+				<form method="post" action="{path=%prefix%main/article_results}">
+
+				{exp:super_search:search {if segment_2 == "saved"}search_id="{segment_3}"{/if}}
+				<p><label for="keywords">Keywords:</label><br />
+					<input type="text" name="keywords" id="keywords" value="{super_search_keywords}" /></p>
+				<p><label for="author">Author:</label><br />
+					<select name="author">
+						<option value="">Any</option>
+					{exp:query sql="SELECT screen_name, username FROM exp_members WHERE group_id = '1' ORDER BY screen_name ASC LIMIT 10"}
+						<option value="{username}" {if super_search_author == "{username}"}selected="selected"{/if}>{screen_name}</option>
+					{/exp:query}
+					</select></p>
+				<p><label for="entry_date-from">Entry Date Range (between):</label><br />
+					<input type="text" name="entry_date-from" id="entry_date-from" value="{super_search_entry_date-from}" class="datepicker range" />
+					<label for="entry_date-to">to:</label> <input type="text" name="entry_date-to" id="entry_date-to" value="{super_search_entry_date-to}" class="datepicker range" /></p>
+				<p><input type="submit" name="submit" value="Search!" class="button" /></p>
+				{/exp:super_search:search}
+
+				</form>
+
+				<hr />
+
+				<h4>Search Products on this site:</h4>
+
+				<form method="post" action="{path=%prefix%main/product_results}">
+
+				{exp:super_search:search {if segment_2 == "saved"}search_id="{segment_3}"{/if}}
+				<p><label for="title">Title:</label><br />
+					<input type="text" name="title" id="title" value="{super_search_title}" /></p>
+				<p style="clear:both;"><label for="description">Description:</label><br />
+					<div id="tip1_link" class="tooltip">Help?</div>
+					<input type="text" name="description" id="description" value="{super_search_description}" /></p>
+				<div class="codepack_warning" id="tip1" style="display:none;">NOTE: You'll need to either rename this field to one that exists on your site, or create a new field called "description" and set it to searchable for this field to work.</div>
+				<p style="clear:both;"><label for="category">Category:</label><br />
+					<div id="tip2_link" class="tooltip">Help?</div>
+					<select name="category[]" multiple="multiple">
+						<option value="">All</option>
+						{exp:channel:categories style="linear" category_group="1"}
+							{exp:super_search:variables}
+							<option value="{category_url_title}" {if super_search_category_{category_url_title}}selected="selected"{/if}>{category_name}</option>
+							{/exp:super_search:variables}
+						{/exp:channel:categories}
+					</select></p>
+				<div class="codepack_warning" id="tip2" style="display:none;">NOTE: To see Categories in this list, categories must first exist on your site, and you'll need to specify the correct channel name and category group ID in the template code.</div>
+				<p style="clear:both;"><label for="price-from">Price Range (between):</label><br />
+					<div id="tip3_link" class="tooltip">Help?</div>
+					<input type="text" name="price-from" id="price-from" value="{super_search_price-from}" class="range" />
+					<label for="price-to">to:</label> <input type="text" name="price-to" id="price-to" value="{super_search_price-to}" class="range" /></p>
+				<div class="codepack_warning" id="tip3" style="display:none;">NOTE: You'll need to either rename this field to one that exists on your site, or create a new field called "price" and set it to searchable for this field to work.
+					Additionally, to get range searching working, you need to modify this field to "Decimal" type with "Precision" set to "2" in the "Fields" tab of the Super Search CP area.</div>
+				<p><input type="submit" name="submit" value="Search!" class="button" /></p>
+				{/exp:super_search:search}
+
+				</form>
+
+			</div>
+
+			<div id="rightcolumn">
+
+{embed="%prefix%inc/side_column"}
+
+				<div id="aboutcolumn">
+		
+					<h3>About This Page</h3>
+			
+					<p>The "Search Form" page displays a few different approaches to how you might tackle searching on your site. You are of course not limited to the fields shown here. The last example requires you make a few modifications to your site first, so check out the "Help?" buttons for further instruction.</p>
+
+					<p>It makes use of the following tags:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_search/">Super_Search:Search</a> to handle parsing of saved search data in the search forms.</li>
+						<li><a href="http://expressionengine.com/user_guide/modules/channel/categories.html">EE Channel:Categories</a> to populate a list of categories as the Category list in the search form.</li>
+						<li><a href="http://expressionengine.com/user_guide/modules/query/index.html">EE Query module</a> to populate a list of all members in the Super Admin group as the Authors list in the search form.</li>
+					</ul>
+
+					<p>This specific column (on the right), uses the following tag:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_history/">Super_Search:History</a> to display a list of recent saved searches for the logged in user.</li>
+					</ul>
+		
+				</div>
+
+			</div>
+	
+		</div>
+		
+{embed="%prefix%inc/footer"}
