@@ -292,6 +292,27 @@ PA.ListShowcase = Backbone.View.extend({
     }
 })
 
+PA.SimpleList = Backbone.View.extend({
+    tagName : 'div',
+    className : 'showcase list',
+    initialize : function() {},
+    render : function() {
+        this.$el.append('<ul/>')
+        _.each( this.collection, function(el, idx) {
+            var li = document.createElement('li'),
+                a = document.createElement('a'),
+                h4 = document.createElement('h4')
+
+            $(a).attr('href', el.url).text(el.title)
+            $(a).appendTo(h4)
+            $(h4).appendTo(li)
+            this.$('ul').append(li)
+        }, this )
+
+        return this.el
+    }
+
+})
 PA.StarThumb = Backbone.View.extend({
     tagName : "a",
     initialize : function() {

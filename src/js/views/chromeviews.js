@@ -46,16 +46,21 @@ PA.PageView = Backbone.View.extend({
 
     },
 
-    singleView : function( pageModel, projectModel) {
-        console.log('singleView')
-        console.log('pageModel: ', pageModel)
-        console.log('projectModel: ', projectModel)
-        console.log('this: ', this)
+    singleView : function( pageModel, projectModel, showcase ) {
 
         this.render( pageModel, new PA.ProjectViewer({
             model : projectModel
         }) )
+
+        if ( showcase.url ) {
+            projectModel.get('showcases').findWhere({
+                url_title : showcase.url
+            }).activate()
+        } else {
+            projectModel.get('showcases').first().activate()
+        }
     }
+
 })
 
 PA.App = Backbone.View.extend({
@@ -135,7 +140,16 @@ PA.App = Backbone.View.extend({
             outlineTitle : 'Projects' 
         })
 
-        $.bbq.pushState( { view : 'random' }, 2 )
+        if ( document.location.hash ) {
+            var hashObj = $.deparam.fragment()
+            if ( hashObj.filter || hashObj.view === 'covers' ) {
+                this.model.set( 'showcase' , this.model.covers )
+            } else {
+                this.model.set( 'showcase', this.model.titles )
+            }
+        } else {
+            $.bbq.pushState( { view : 'random' }, 2 )
+        }
     },
 
     projectFilter : function( pageModel, filter ) {
@@ -192,8 +206,12 @@ PA.App = Backbone.View.extend({
         pageModel.get('showcase').trigger('jump', jump)
     },
 
-    singleProject : function(project) {
-        this.model.set( 'project', PA.projects.findWhere({ url : project }) )
+    singleProject : function(project, urlTitle) {
+        this.model.set( 
+            'project',
+            PA.projects.findWhere({ url : project }),
+            { url : urlTitle } 
+        )
     },
 
     events : {
