@@ -37,8 +37,13 @@ PA.Router = Backbone.Router.extend({
 
     singleProject : function(project) {
         var spinner = new Spinner()
-        var showcases
 
+        $.when( PA.projects.fetch() )
+        .done( function() {
+            PA.app.singleProject(project)
+            spinner.detach()
+        } )
+        /*
         try {
             // Projects are loaded
 
@@ -63,6 +68,8 @@ PA.Router = Backbone.Router.extend({
                 spinner.detach()
             })
         }
+        */
+
     },
 
     showcaseItem : function(project, urlTitle) {

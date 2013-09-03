@@ -141,10 +141,6 @@ PA.ProjectViews = Backbone.View.extend({
         this.listenTo( this.model, 'change:view', this.toggleActive )
         this.listenTo( this.model, 'change:showcase', this.toggleActive )
 
-        this.$('.active').click(function(e){
-            e.preventDefault()
-            e.stopPropagation()
-        })
     },
 
     events : {
@@ -156,10 +152,18 @@ PA.ProjectViews = Backbone.View.extend({
     },
 
     viewChange : function(e){
+
+        if ( $(e.currentTarget).hasClass('active') ) {
+            e.preventDefault()
+            e.stopPropagation()
+            return false
+        }
+
         $.bbq.pushState({ view : e.currentTarget.id }, 2)
     },
 
     toggleActive : function( pageModel, view ) {
+
         this.$('button').removeClass('active')
         try {
             this.$('#' + view).addClass('active')
@@ -183,10 +187,6 @@ PA.ProjectSorts = Backbone.View.extend({
         this.$el.append( this.template() )
         this.listenTo( this.model, 'change:sort', this.toggleActive )
         this.listenTo( this.model, 'change:showcase', this.toggleActive )
-        this.$('.active').click(function(e){
-            e.preventDefault()
-            e.stopPropagation()
-        })
     },
 
     events : {
@@ -198,6 +198,13 @@ PA.ProjectSorts = Backbone.View.extend({
     },
 
     sortChange : function(e){
+
+        if ( $(e.currentTarget).hasClass('active') ) {
+            e.preventDefault()
+            e.stopPropagation()
+            return false
+        }
+
         $.bbq.pushState({ sort : e.currentTarget.id }, 2)
     },
 
@@ -243,10 +250,6 @@ PA.ProjectJumps = Backbone.View.extend({
 
         this.listenTo( this.model, 'change:sort', this.toggleActive)
 
-        this.$('.active').click(function(e){
-            e.preventDefault()
-            e.stopPropagation()
-        })
     },
 
     render : function() {

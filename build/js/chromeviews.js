@@ -10,12 +10,13 @@ PA.Header = Backbone.View.extend({
 
 PA.PageView = Backbone.View.extend({
     initialize: function() {
-        _.bindAll( this, 'render' )
+        _.bindAll( this, 'render', 'singleView' )
 
         this.outlineTitle = $('<h2/>').addClass('visuallyhidden')
         this.$el.prepend(this.outlineTitle)
 
         this.listenTo( this.model, 'change:showcase', this.render )
+        this.listenTo( this.model, 'change:project', this.singleView )
     },
 
     semantics : function( className, outlineTitle ) {
@@ -38,6 +39,16 @@ PA.PageView = Backbone.View.extend({
 
     },
 
+    singleView : function( pageModel, projectModel) {
+        console.log('singleView')
+        console.log('pageModel: ', pageModel)
+        console.log('projectModel: ', projectModel)
+        console.log('this: ', this)
+
+        this.render( pageModel, new PA.ProjectViewer({
+            model : projectModel
+        }) )
+    }
 })
 
 PA.App = Backbone.View.extend({
@@ -69,16 +80,23 @@ PA.App = Backbone.View.extend({
         var hashObj = $.deparam.fragment()
 
         if ( hashObj.filter ) {
+            console.log('hashchange:filter handler')
+
             this.model.unset('filter', {silent : true} )
             this.model.set( 'filter', hashObj.filter )
         } else if ( hashObj.view ) {
+            console.log('hashchange:view handler')
+
             this.model.unset('view', {silent : true} )
             this.model.set( 'view', hashObj.view )
         } else if ( hashObj.sort ) {
-            console.log('hashchange handler')
+            console.log('hashchange:sort handler')
+
             this.model.unset('sort', {silent : true} )
             this.model.set( 'sort', hashObj.sort )
         } else if ( hashObj.jump ) {
+            console.log('hashchange:jump handler')
+
             this.model.unset('jump', {silent : true} )
             this.model.set( 'jump', hashObj.jump )
         }
@@ -111,6 +129,7 @@ PA.App = Backbone.View.extend({
     },
 
     projectFilter : function( pageModel, filter ) {
+        console.log('change:filter handler')
 
         if ( !(pageModel.get('showcase') instanceof PA.ImageShowcase) ) {
             pageModel.get('showcase').destroy()
@@ -121,6 +140,7 @@ PA.App = Backbone.View.extend({
     },
 
     projectView : function( pageModel, view ) {
+        console.log('change:view handler')
 
         pageModel.set( 'showcase', this.model[view] )
         if ( pageModel.get('showcase') instanceof PA.ImageShowcase ) {
@@ -131,8 +151,8 @@ PA.App = Backbone.View.extend({
     },
 
     projectSort : function( pageModel, sort ) {
-
         console.log('change:sort handler')
+
         if ( !(pageModel.get('showcase') instanceof PA.ListShowcase) ) {
             pageModel.get('showcase').destroy()
             pageModel.set( 'showcase' , this.model.titles )
@@ -142,6 +162,7 @@ PA.App = Backbone.View.extend({
     },
 
     projectJump : function( pageModel, jump ) {
+        console.log('change:jump handler')
 
         if ( !(pageModel.get('showcase') instanceof PA.ListShowcase) ) {
             pageModel.get('showcase').destroy()
@@ -151,12 +172,18 @@ PA.App = Backbone.View.extend({
         pageModel.get('showcase').trigger('jump', jump)
     },
 
+    singleProject : function(project) {
+        this.model.set( 'project', PA.projects.findWhere({ url : project }) )
+    },
+
     events : {
         'click' : 'closeMenu'
     },
+
     closeMenu : function(e) { 
         this.header.$('.open').removeClass('open')
     },
+
     routeHandler : function(methodName, urlParam) {
         if (methodName !== 'projects'){
             try {

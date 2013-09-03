@@ -266,6 +266,7 @@ PA.ListShowcase = Backbone.View.extend({
     },
 
     render : function(sort){
+        console.log('ListShowcase render')
         var group = sort === 'date' ? this.byDate : this.byFirst
 
         this.$el.empty()
