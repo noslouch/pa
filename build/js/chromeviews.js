@@ -250,6 +250,12 @@ PA.App = Backbone.View.extend({
         this.model.set( 'film', PA.films.findWhere({ url : urlTitle }) )
     },
 
+    streamInit : function() {
+        this.model.set( 'showcase', new PA.Starfield({
+            collection : PA.instagrams
+        }, true ) )
+    },
+
     events : {
         'click' : 'closeMenu'
     },
