@@ -46,9 +46,16 @@ PA.ShowcaseViewer = Backbone.View.extend({
                     break;
                 case 'info':
                     showcase = new PA.TextShowcase()
+                    showcase.$el.append( showcase.base({
+                        type : '.project-info',
+                        content : model.get('content')
+                    }) )
+
                     break;
                 case 'related':
-                    showcase = new PA.ListShowcase()
+                    showcase = new PA.SimpleList({
+                        collection : model.get('links')
+                    })
                     break;
                 default:
                     break;
@@ -65,6 +72,7 @@ PA.ShowcaseViewer = Backbone.View.extend({
 
 PA.ShowcaseLink = Backbone.View.extend({
     tagName : 'li',
+    template : PA.jst.showcaseLinks,
     initialize: function() {
         _.bindAll( this, 'toggleView', 'toggleModel')
 
@@ -73,6 +81,10 @@ PA.ShowcaseLink = Backbone.View.extend({
 
     events : {
         'click a' : 'toggleModel'
+    },
+
+    toggleView : function(model, value, options) {
+        this.$('a').toggleClass('active', value)
     },
 
     toggleModel : function(e) {
@@ -88,12 +100,6 @@ PA.ShowcaseLink = Backbone.View.extend({
 
         this.$el.html(html)
         return this.el
-    },
-
-    template : PA.jst.showcaseLinks,
-
-    toggleView : function(model, value, options) {
-        this.$('a').toggleClass('active', value)
     }
 })
 
@@ -114,13 +120,9 @@ PA.ProjectDetails = Backbone.View.extend({
 
 PA.ProjectViewer = Backbone.View.extend({
     tagName : "div",
-
     className : "project viewer",
-
     baseTmpl : PA.jst.viewer,
-
     back : PA.jst.backButton,
-
     initialize : function() {
 
         _.bindAll(this, 'swap')
@@ -150,7 +152,7 @@ PA.ProjectViewer = Backbone.View.extend({
         this.showcases.forEach( function(showcase) {
             this.$('#showcaseLinks')
                 .append( new PA.ShowcaseLink({ 
-                    model : showcase 
+                    model : showcase
                 }).render() )
         }, this )
 

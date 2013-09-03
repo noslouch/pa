@@ -22,7 +22,6 @@ PA.Router = Backbone.Router.extend({
     },
 
     projects : function() {
-
         var spinner = new Spinner()
 
         $.when( PA.projects.fetch() )
@@ -43,77 +42,18 @@ PA.Router = Backbone.Router.extend({
             PA.app.singleProject(project)
             spinner.detach()
         } )
-        /*
-        try {
-            // Projects are loaded
-
-            PA.currentModel = PA.projects.findWhere({ url : project })
-            showcases = PA.currentModel.get('showcases')
-
-            PA.router.navigate(showcases.models[0].url(), {trigger: true, replace: true})
-
-            spinner.detach()
-
-        } catch(err) {
-            // Projects haven't loaded yet because
-            // A) navigate to direct URL
-            // B) navigate from a different page section
-
-            $.when( PA.projects.fetch() ).done( function() {
-                PA.currentModel = PA.projects.findWhere({ url : project})
-                showcases = PA.currentModel.get('showcases')
-
-                PA.router.navigate(showcases.models[0].url(), {trigger: true, replace: true})
-
-                spinner.detach()
-            })
-        }
-        */
 
     },
 
     showcaseItem : function(project, urlTitle) {
         var spinner = new Spinner()
-        var showcases
 
-        try {
-            showcases = PA.currentModel.get('showcases')
-
-            PA.singleView = new PA.ProjectViewer({
-                model : PA.currentModel
-            })
-
-            PA.app.page.render({
-                view : PA.singleView,
-                pageClass : 'project-single',
-                section : PA.currentModel.get('title')
-            })
-
-            showcases.findWhere({ url_title : urlTitle }).activate()
-
+        $.when( PA.projects.fetch() )
+        .done( function() {
+            PA.app.singleProject(project, urlTitle)
             spinner.detach()
+        } )
 
-        } catch(err) {
-
-            $.when( PA.projects.fetch() ).done( function() {
-
-                PA.currentModel = PA.projects.findWhere({ url : project})
-                showcases = PA.currentModel.get('showcases')
-                PA.singleView = new PA.ProjectViewer({
-                    model : PA.currentModel
-                })
-
-                PA.app.page.render({
-                    view : PA.singleView,
-                    pageClass : 'project-single',
-                    section : PA.currentModel.get('title')
-                })
-
-                showcases.findWhere({ url_title : urlTitle }).activate()
-
-                spinner.detach()
-            })
-        }
     },
 
     photography : function() {
