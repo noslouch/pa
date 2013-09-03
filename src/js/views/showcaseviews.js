@@ -54,7 +54,6 @@ PA.ImageShowcase = Backbone.View.extend({
             this.$el.append( thumb.render() )
         }, this)
 
-        this.on('filter', this.filter)
     },
 
     className : function() {
@@ -68,6 +67,7 @@ PA.ImageShowcase = Backbone.View.extend({
         }
     },
     render : function(options){
+        this.on('filter', this.filter)
         fbLoader()
         return this.el
     },
@@ -261,12 +261,13 @@ PA.ListShowcase = Backbone.View.extend({
             })
         }())
 
-        this.on('sort', this.render)
-        this.on('jump', this.jump)
     },
 
     render : function(sort){
         console.log('ListShowcase render')
+        this.on('sort', this.render)
+        this.on('jump', this.jump)
+
         var group = sort === 'date' ? this.byDate : this.byFirst
 
         this.$el.empty()
