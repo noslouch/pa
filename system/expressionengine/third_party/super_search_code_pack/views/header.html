@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>ExpressionEngine | <?=$page_title?></title>
+
+<meta http-equiv='content-type' content='text/html; charset=<?=$PREFS->ini('output_charset')?>' >
+<meta http-equiv='expires' content='-1' >
+<meta http-equiv='expires' content='Mon, 01 Jan 1970 23:59:59 GMT' >
+<meta http-equiv='pragma' content='no-cache' >
+
+<style type='text/css'>
+<?=$DSP->manual_css;?>
+</style>
+
+<?=$DSP->_menu_js();?>
+<?=$DSP->_global_javascript();?>
+<?=$DSP->extra_header;?>
+
+<script type="text/javascript">
+<!--
+
+function styleswitch(link)
+{
+	if (document.getElementById(link).className == 'altTabs')
+	{
+		document.getElementById(link).className = 'altTabsHover';
+	}
+}
+
+function stylereset(link)
+{
+	if (document.getElementById(link).className == 'altTabsHover')
+	{
+		document.getElementById(link).className = 'altTabs';
+	}
+}
+
+-->
+</script>
+
+<style type='text/css'>
+
+	.tableCellOne, .tableCellTwo, .tableCellOneHover, .tableCellTwoHover
+	{
+		padding-top: 4px;
+		padding-bottom: 4px;
+		font-size: 12px;
+	}
+
+	.tableCellOne a, .tableCellTwo a, .tableCellOneHover a, .tableCellTwoHover a,
+	.tableCellOne div, .tableCellTwo div, .tableCellOneHover div, .tableCellTwoHover div
+	{
+		font-size: 12px;
+	}
+
+	.tableCellOne a:link, .tableCellOne a:visited, .tableCellTwo a:link ,.tableCellTwo a:visited
+	{
+		font-size:12px;
+	}
+
+</style>
+
+</head>
+
+<body onload="">
+<?=$DSP->page_header();?>
+<?=$DSP->page_navigation();?>
+
+<div id='breadcrumb'>
+	<table border='0'  cellspacing='0' cellpadding='0' style='width:100%;' >
+		<tr>
+			<td class='crumbPad' ><span class='crumblinks'><?=$page_crumb;?></span></td>
+			<td  class='breadcrumbRight'  style='width:270px;' valign='bottom' align='right'>
+				<a href="<?php echo $this->output(BASE.'&C=admin&M=utilities&P=toggle_extension_confirm&which=disable&name=preparse');?>"><span class="crumblinksR" id="rcrumb"  onclick="navjump('<?php echo $this->output(BASE.'&C=admin&M=utilities&P=toggle_extension_confirm&which=disable&name=preparse');?>');this.blur();"  onmouseover="navCrumbOn();" onmouseout="navCrumbOff();" ><?php echo $LANG->line('disable_extension');?></span></a>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id='contentNB'>
+
+<div class='default' >&nbsp;</div>

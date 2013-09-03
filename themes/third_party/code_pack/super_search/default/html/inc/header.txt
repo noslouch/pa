@@ -1,0 +1,31 @@
+<div id="header">
+
+	<div id="logo"></div>
+
+	<div id="smallmenu">
+		<ul>
+{if logged_out}
+			<li class="first"><a href="{path='login'}/">Login</a></li>
+{/if}
+{if logged_in}
+			<li class="first"><a href="{path='member/profile'}/">My Profile</a> ({logged_in_screen_name})</li>
+			<li><a href="{path='LOGOUT'}">Log out</a></li>
+{/if}
+		</ul>
+	</div>
+</div>
+
+<div class="spacer"></div>
+
+<div id="wrapper">
+
+	<div id="mainmenu">
+		<ul>
+			<li><a href="{path='%prefix%main'}/">Home</a></li>
+			<li><a href="{path='%prefix%main'}/">Search Forms</a></li>
+			<li><a href="{path='%prefix%main/cloud'}/">Popular Search Terms</a></li>
+		</ul>
+	</div>
+	
+	<div id="content">
+	

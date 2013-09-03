@@ -1,0 +1,14 @@
+<?php echo $this->view('header.html');?>
+
+	<form action='<?=$form_url?>' method='post'>
+
+			<input type="hidden" name="XID" value="<?php echo $XID_SECURE_HASH;?>" />
+			<input type="hidden" name="run_update" value="y" />
+
+			<p><strong><?php echo lang('super_search_update_message'); ?></strong></p>
+
+			<input  type='submit' class='submit' value='<?php echo lang('update');?>'  />
+
+	</form>
+
+<?php echo $this->view('footer.html'); ?>

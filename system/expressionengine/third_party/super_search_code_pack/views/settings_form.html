@@ -1,0 +1,260 @@
+<?php echo $this->view('header.html');?>
+
+	<script type="text/javascript">
+	<!--
+
+	function switchSite(site_id, form_id)
+	{
+		document.getElementById('site_loader').style.display = 'inline';
+
+		// The loader image is given a second to be seen before we switch
+		// Origins of image: http://www.ajaxload.info/
+		setTimeout('switchSite_action(' + site_id + ', "' + form_id + '")', 350);
+	}
+
+	function switchSite_action(site_id, form_id)
+	{
+		jQuery("div[id*=_extension_site_weblogs]").hide();
+		jQuery("div[id="+site_id+"_extension_site_weblogs]").show();
+
+		document.getElementById('site_loader').style.display = 'none';
+
+		if (jQuery("select[name="+site_id+"_weblog_list_pulldown] option").length == 0)
+		{
+			switchWeblog('none', site_id, form_id);
+		}
+		else
+		{
+			switchWeblog(jQuery("select[name="+site_id+"_weblog_list_pulldown]").val(), site_id, form_id);
+		}
+	}
+
+
+	function switchWeblog(weblog_id, site_id, form_id)
+	{
+		document.getElementById(site_id + '_weblog_loader').style.display = 'inline';
+
+		// The loader image is given a second to be seen before we switch
+		// Origins of image: http://www.ajaxload.info/
+		setTimeout('switchWeblog_action("' + weblog_id + '",' + site_id + ', "' + form_id + '")', 350);
+	}
+
+	function switchWeblog_action(weblog_id, site_id, form_id)
+	{
+		jQuery("div[id*=_extension_weblogs_custom_fields]").hide();
+		jQuery("div[id="+weblog_id+"_extension_weblogs_custom_fields]").show();
+
+		document.getElementById(site_id + '_weblog_loader').style.display = 'none';
+
+		if (weblog_id == 'none')
+		{
+			jQuery("div[id*=_extension_field_settings]").hide();
+			jQuery("#none_weblogs_extension_field_settings").show();
+			return;
+		}
+
+		if (jQuery("select[name=" + weblog_id + "_custom_field_list_pulldown] option").length == 0)
+		{
+			switchCustomField('none', weblog_id, form_id);
+		}
+		else
+		{
+			switchCustomField(jQuery("select[name=" + weblog_id + "_custom_field_list_pulldown]").val(), weblog_id, form_id);
+		}
+	}
+
+
+	function switchCustomField(field_id, weblog_id, form_id)
+	{
+		document.getElementById(weblog_id + '_custom_field_loader').style.display = 'inline';
+
+		// The loader image is given a second to be seen before we switch
+		// Origins of image: http://www.ajaxload.info/
+		setTimeout('switchCustomField_action("' + field_id + '",' + weblog_id + ', "' + form_id + '")', 350);
+	}
+
+	function switchCustomField_action(field_id, weblog_id, form_id)
+	{
+		jQuery("div[id*=_extension_field_settings]").hide();
+
+		document.getElementById(weblog_id + '_custom_field_loader').style.display = 'none';
+
+		if (field_id == 'none')
+		{
+			jQuery("#none_custom_fields_extension_field_settings").show();
+			return;
+		}
+
+		jQuery('#'+ weblog_id + "_" + field_id + "_extension_field_settings").show();
+	}
+
+
+	//-->
+	</script>
+
+<!-- BEGIN FORM -->
+
+	<form action='<?php echo $this->output(BASE.'&C=admin&M=utilities&P=save_extension_settings');?>' method='post' id="extension_settings_form">
+		<div>
+			<input type="hidden" name="name" value="preparse" />
+		</div>
+
+		<table border='0'  cellspacing='0' cellpadding='0' style='width:100%;' >
+
+			<tr>
+				<td  class='default'  valign='top'>
+					<h1><?php echo $LANG->line('extension_settings');?></h1>
+				</td>
+
+				<td  colspan="2" class='default'  valign='middle'>
+					<div class='defaultRight' ><strong> [<a href='<?php echo $docs_url;?>'  target="_blank"><?php echo $LANG->line('documentation');?></a>]</strong>&nbsp;&nbsp;</div>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="3" class='tableHeading'></td>
+			</tr>
+
+
+			<tr>
+				<td valign='top' style='width:220px;'>
+
+					<div class='tableHeadingAlt' ><?php echo $LANG->line('sites');?></div>
+
+					<!-- Site Pulldown -->
+					<?php if ($PREFS->ini('multiple_sites_enabled') == 'y') : ?>
+					<div class='profileMenuInner' >
+
+						<select name="site_list_pulldown" class="select" onchange="switchSite(this.value, 'extension_settings_form')">
+							<?php foreach($this->output($sites) as $site_id => $site_label) : ?>
+								<option value='<?php echo $site_id;?>' <?php echo ($site_id == $display['default_site_id']) ? 'selected="selected"' : '';?>><?php echo $site_label; ?></option>
+							<?php endforeach; ?>
+						</select>
+
+						<span id="site_loader" style="display:none;"><img src="<?php echo PATH_CP_GBL_IMG;?>loader.gif" width="16" height="16" style="vertical-align:sub;" /></span>
+					</div>
+					<?php endif; ?>
+
+					<div class='tableHeadingAlt' ><?php echo ucfirst($PREFS->ini('weblog_nomenclature'));?></div>
+
+					<!-- Weblog Pulldowns -->
+					<?php foreach($this->output($sites) as $site_id => $site_label) : ?>
+					<div class='profileMenuInner' id="<?php echo $site_id;?>_extension_site_weblogs" style="display: <?php echo ($site_id == $display['default_site_id']) ? 'block' : 'none';?>;">
+
+						<select name="<?php echo $site_id;?>_weblog_list_pulldown" class="select" onchange="switchWeblog(this.value, '<?php echo $site_id;?>', 'extension_settings_form')">
+							<?php foreach($this->output($weblogs[$site_id]) as $weblog_id => $weblog_title) : ?>
+								<option value='<?php echo $weblog_id;?>' <?php echo ($weblog_id == $display['default_weblog_id']) ? 'selected="selected"' : '';?>><?php echo $weblog_title; ?></option>
+							<?php endforeach; ?>
+						</select>
+
+						<span id="<?php echo $site_id;?>_weblog_loader" style="display:none;"><img src="<?php echo PATH_CP_GBL_IMG;?>loader.gif" width="16" height="16" style="vertical-align:sub;" /></span>
+					</div>
+					<?php endforeach; ?>
+
+					<div class='tableHeadingAlt' ><?php echo $LANG->line('custom_field');?></div>
+
+					<!-- Custom Field Pulldowns -->
+					<?php foreach($this->output($sites) as $site_id => $site_label) : ?>
+						<?php foreach($this->output($weblogs[$site_id]) as $weblog_id => $weblog_title) : ?>
+						<div class='profileMenuInner' id="<?php echo $weblog_id;?>_extension_weblogs_custom_fields" style="display: <?php echo ($site_id == $display['default_site_id'] && $weblog_id == $display['default_weblog_id']) ? 'block' : 'none';?>;">
+
+							<select name="<?php echo $weblog_id;?>_custom_field_list_pulldown" class="select" onchange="switchCustomField(this.value, '<?php echo $weblog_id;?>', 'extension_settings_form')">
+								<?php foreach($this->output($custom_fields[$weblog_id]) as $field_id => $field_label) : ?>
+									<option value='<?php echo $field_id;?>' <?php echo ($field_id == $display['default_field_id']) ? 'selected="selected"' : '';?>><?php echo $field_label; ?></option>
+								<?php endforeach; ?>
+							</select>
+
+							<span id="<?php echo $weblog_id;?>_custom_field_loader" style="display:none;"><img src="<?php echo PATH_CP_GBL_IMG;?>loader.gif" width="16" height="16" style="vertical-align:sub;" /></span>
+						</div>
+					<?php endforeach; ?>
+					<?php endforeach; ?>
+
+				</td>
+
+				<td class='default' style='width:8px;'></td>
+
+				<td valign='top'>
+
+<?php foreach($this->output($sites) as $site_id => $site_label) : ?>
+<?php foreach($this->output($weblogs[$site_id]) as $weblog_id => $weblog_title) : ?>
+<?php foreach($this->output($custom_fields[$weblog_id]) as $custom_field_id => $custom_field_label) : ?>
+						<div id="<?php echo $weblog_id;?>_<?php echo $custom_field_id;?>_extension_field_settings" style="display: <?php echo ($weblog_id == $display['default_weblog_id'] && $custom_field_id == $display['default_field_id']) ? 'block' : 'none';?>; padding:0; margin: 0;">
+							<table border='0'  cellspacing='0' cellpadding='0' style='width:100%;'  class='tableBorder' >
+								<tr>
+									<td class='tableHeadingAlt' colspan='2'><?php echo $weblog_title; ?> :: <?php echo $custom_field_label;?></td>
+								</tr>
+
+
+								<?php
+								foreach($form_fields[$weblog_id][$custom_field_id] as $field_id => $field) :
+
+									$switch = $this->cycle('tableCellTwo', 'tableCellOne');
+									$valign = ($field->getAttribute('multiple') != NULL) ? 'top' : 'center';
+
+								?>
+								<tr>
+									<td class='<?php echo $switch;?>Bold' valign='<?php echo $valign;?>' style='width:35%;'>
+										<label for="<?php echo $field->getAttribute('id');?>"><?php echo $LANG->line($field_id);?></label>
+										<?php if (isset($LANG->language[$field_id.'_subtext'])) :?>
+											<div class="subtext">
+												<?php echo $LANG->line($field_id.'_subtext');?>
+											</div>
+										<?php endif;?>
+									</td>
+
+									<td class='<?php echo $switch;?>'>
+										<?php echo $field->output(); ?>
+									</td>
+								</tr>
+								<?php endforeach; ?>
+
+
+							</table>
+						</div>
+<?php endforeach; ?>
+<?php endforeach; ?>
+<?php endforeach; ?>
+
+
+					<!-- In case a Site has no Weblogs -->
+
+					<div id="none_weblogs_extension_field_settings" style="display: none; padding:0; margin: 0;">
+						<table border='0'  cellspacing='0' cellpadding='0' style='width:100%;'  class='tableBorder' >
+							<tr>
+								<td class='tableHeadingAlt'>---</td>
+							</tr>
+							<tr>
+								<td class="tableCellTwo"><?php echo $LANG->line('no_weblogs');?></td>
+							</tr>
+						</table>
+					</div>
+
+					<!-- In case a Weblog has no Custom Fields -->
+
+					<div id="none_custom_fields_extension_field_settings" style="display: none; padding:0; margin: 0;">
+						<table border='0'  cellspacing='0' cellpadding='0' style='width:100%;'  class='tableBorder' >
+							<tr>
+								<td class='tableHeadingAlt'>---</td>
+							</tr>
+							<tr>
+								<td class="tableCellTwo"><?php echo $LANG->line('no_custom_fields');?></td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2"></td>
+				<td>
+					<div class='itemWrapperTop' >
+						<input name='return' type='submit' class='submit' value='<?php echo  $LANG->line('save');?>'  />
+					</div>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+<!-- END FORM -->
+
+<?php echo $this->view('footer.html'); ?>
