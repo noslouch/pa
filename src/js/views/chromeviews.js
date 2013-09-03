@@ -17,6 +17,8 @@ PA.PageView = Backbone.View.extend({
 
         this.listenTo( this.model, 'change:showcase', this.render )
         this.listenTo( this.model, 'change:project', this.singleView )
+        this.listenTo( this.model, 'change:photoAlbum', this.singleAlbum )
+        this.listenTo( this.model, 'change:film', this.singleFilm )
     },
 
     semantics : function( className, outlineTitle ) {
@@ -59,6 +61,18 @@ PA.PageView = Backbone.View.extend({
         } else {
             projectModel.get('showcases').first().activate()
         }
+    },
+
+    singleAlbum : function( pageModel, galleryModel ) {
+        this.render( pageModel, new PA.SingleAlbumView({
+            model : galleryModel
+        }) )
+    },
+
+    singleFilm : function( pageModel, filmModel ) {
+        this.render( pageModel, new PA.SingleFilmView({
+            model : filmModel
+        }) )
     }
 
 })
@@ -212,6 +226,28 @@ PA.App = Backbone.View.extend({
             PA.projects.findWhere({ url : project }),
             { url : urlTitle } 
         )
+    },
+
+    photoHomeInit : function() {
+        this.model.set( 'showcase', new PA.ImageShowcase({
+            cover : true,
+            collection : new PA.CoverGallery( PA.albums.pluck('coverImage') ),
+            path : 'photography'
+        }) )
+    },
+
+    albumInit : function(urlTitle) {
+        this.model.set( 'photoAlbum', PA.albums.findWhere({ url : urlTitle }) )
+    },
+
+    filmHomeInit : function() {
+        this.model.set( 'showcase' , new PA.FilmThumbLayout({
+            collection : PA.films
+        }) )
+    },
+
+    singleFilmInit : function( urlTitle ) {
+        this.model.set( 'film', PA.films.findWhere({ url : urlTitle }) )
     },
 
     events : {
