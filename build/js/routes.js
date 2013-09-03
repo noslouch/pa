@@ -59,129 +59,42 @@ PA.Router = Backbone.Router.extend({
     photography : function() {
         var spinner = new Spinner()
 
-        $.when( PA.albums.fetch() ).done( function(){
-
-            PA.coverImages = new PA.CoverGallery( PA.albums.pluck('coverImage') )
-            PA.coverShowcase = new PA.ImageShowcase({
-                cover : true,
-                collection : PA.coverImages,
-                path : 'photography'
-            })
-
-            PA.app.page.render({
-                view : PA.coverShowcase,
-                pageClass : 'photography',
-                section : 'Photography'
-            })
-
-            PA.coverShowcase.firstLoad()
-
+        $.when( PA.albums.fetch() )
+        .done( function(){
+            PA.app.photoHomeInit()
             spinner.detach()
-        })
+        } )
+
     },
 
     singleAlbum : function(urlTitle) {
         var spinner = new Spinner()
 
-        if (PA.albums.length) {
-            // Photo Galleries are loaded
-
-            var photoAlbumModel = PA.albums.findWhere({ url : urlTitle })
-
-            PA.singleAlbumView = new PA.SingleAlbumView({
-                model : photoAlbumModel
-            })
-
-            PA.app.page.render({
-                view : PA.singleAlbumView,
-                pageClass : 'photography',
-                section : photoAlbumModel.get('title')
-            })
-
+        $.when( PA.albums.fetch() )
+        .done( function() {
+            PA.app.albumInit(urlTitle)
             spinner.detach()
-
-        } else {
-            // Photo Galleries haven't loaded yet because
-            // A) navigate to direct URL
-            // B) navigate from a different page section
-
-            $.when( PA.albums.fetch() ).done( function(){
-                var photoAlbumModel = PA.albums.findWhere({ url : urlTitle })
-
-                PA.singleAlbumView = new PA.SingleAlbumView({
-                    model : photoAlbumModel
-                })
-
-                PA.app.page.render({
-                    view : PA.singleAlbumView,
-                    pageClass : 'photography',
-                    section : photoAlbumModel.get('title')
-                })
-
-                spinner.detach()
-            })
-        }
-
+        } )
     },
 
     film : function() {
         var spinner = new Spinner()
 
-        $.when( PA.films.fetch() ).done( function(){
-
-            PA.filmLanding = new PA.FilmThumbLayout({
-                collection : PA.films
-            })
-
-            PA.app.page.render({
-                view : PA.filmLanding,
-                pageClass : 'film',
-                section : 'Film Home'
-            })
-
+        $.when( PA.films.fetch() )
+        .done( function(){
+            PA.app.filmHomeInit()
             spinner.detach()
         } )
     },
 
     singleFilm : function(urlTitle) {
-
         var spinner = new Spinner()
 
-        if (PA.films.length) {
-            // Films are loaded
-
-            var filmModel = PA.films.findWhere({ url : urlTitle })
-
-            PA.singleFilmView = new PA.SingleFilmView({
-                model : filmModel
-            })
-
-            PA.app.page.render({
-                view : PA.singleFilmView,
-                pageClass : 'film',
-                section : filmModel.get('title')
-            })
-
+        $.when( PA.films.fetch() )
+        .done( function() {
+            PA.app.singleFilmInit( urlTitle )
             spinner.detach()
-
-        } else {
-            // Films haven't loaded yet
-
-            $.when( PA.films.fetch() ).done( function(){
-                var filmModel = PA.films.findWhere({ url : urlTitle })
-                PA.singleFilmView = new PA.SingleFilmView({
-                    model : filmModel
-                })
-
-                PA.app.page.render({
-                    view : PA.singleFilmView,
-                    pageClass : 'film',
-                    section : filmModel.get('title')
-                })
-
-                spinner.detach()
-            })
-        }
+        } )
     },
 
     profile : function() {
