@@ -209,12 +209,19 @@ PA.Router = Backbone.Router.extend({
         }
 
     },
+
     contact : function() {
         $('.page').append('contact')
     },
 
     stream : function() {
-        $('.page').append('stream')
+        var spinner = new Spinner()
+
+        $.when( PA.instagrams.fetch() )
+        .done( function() {
+            PA.app.streamInit()
+            spinner.detach()
+        } )
     }
 
 })
