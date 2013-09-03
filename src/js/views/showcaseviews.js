@@ -328,8 +328,16 @@ PA.StarThumb = Backbone.View.extend({
     render : function(instagram) {
 
         this.$el
-            .attr( 'href', (instagram ? '' : '/projects/') + this.model.get('url') )
             .addClass( 'fast' )
+
+        if ( !!instagram ) {
+            this.$el
+            .attr( 'target' , '_blank' )
+            .attr( 'href', this.model.get('url') )
+        } else {
+            this.$el
+            .attr( 'href', '/projects/' + this.model.get('url') )
+        }
 
         return this.el
     }
@@ -343,7 +351,7 @@ PA.Starfield = Backbone.View.extend({
     tagName : 'div',
     className : 'starfield',
     id : 'starfield',
-    initialize : function(instagram){
+    initialize : function( collection, instagram ){
         var SCREEN_WIDTH = window.innerWidth,
             SCREEN_HEIGHT = window.innerHeight,
             HALF_WIDTH = window.innerWidth / 2,
