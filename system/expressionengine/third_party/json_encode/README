@@ -1,0 +1,6 @@
+Platform:  ExpressionEngine
+Tested on Version 2.4
+Description:  Returns the input string in JSON encoded form.
+How to install:  Upload files to /system/expressionengine/third_party/json_encode/ directory.
+Attribution:  See humans.txt
+Usage:  Wrap text to be JSON encoded in {exp:json_encode} template tag.

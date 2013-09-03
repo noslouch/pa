@@ -1,9 +1,11 @@
+<?php header('Content-type: application/json'); ?>
 [
-{exp:ig_picpuller:user_feed user_id="1" backspace="2"}
+{exp:ig_picpuller:media_recent user_id="1" backspace="2"}
     {
         "timestamp" : "{ig_created_time}",
-        "thumb" : "{ig_thumbnail}",
-        "caption" : "{ig_caption}"
+        "thumb" : "{ig_low_resolution}",
+        "caption" : {exp:json_encode}{ig_caption}{/exp:json_encode},
+        "url" : "{ig_link}"
     },
-{/exp:ig_picpuller:user_feed}
+{/exp:ig_picpuller:media_recent}
 ]
