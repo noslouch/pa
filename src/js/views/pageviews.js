@@ -36,4 +36,3 @@ PA.PageView = Backbone.View.extend({
 
 })
 
-PA.ProjectLanding = PA.PageView.extend({

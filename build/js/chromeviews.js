@@ -25,15 +25,22 @@ PA.PageView = Backbone.View.extend({
         this.$el.prepend( this.outlineTitle )
     },
 
-    render : function(pageModel, pageView) {
+    render : function(pageModel, pageView, filtering) {
+        console.log('rendering Page')
 
         this.$el.html( pageView.render() )
         this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
 
         if ( pageView instanceof PA.ImageShowcase ) {
+            console.log('instanceof PA.ImageShowcase: loading isotope')
+
             pageView.firstLoad()
-            pageModel.set('filter', '*')
+            if ( !filtering ) {
+                pageModel.set('filter', '*')
+            }
         } else if ( pageView instanceof PA.ListShowcase ) {
+            console.log('instanceof PA.ListShowcase: sorting by name')
+
             pageModel.set( 'sort', 'alpha' )
         }
 
@@ -80,22 +87,22 @@ PA.App = Backbone.View.extend({
         var hashObj = $.deparam.fragment()
 
         if ( hashObj.filter ) {
-            console.log('hashchange:filter handler')
+            console.log('change:hashchange:filter handler')
 
             this.model.unset('filter', {silent : true} )
             this.model.set( 'filter', hashObj.filter )
         } else if ( hashObj.view ) {
-            console.log('hashchange:view handler')
+            console.log('change:hashchange:view handler')
 
             this.model.unset('view', {silent : true} )
             this.model.set( 'view', hashObj.view )
         } else if ( hashObj.sort ) {
-            console.log('hashchange:sort handler')
+            console.log('change:hashchange:sort handler')
 
             this.model.unset('sort', {silent : true} )
             this.model.set( 'sort', hashObj.sort )
         } else if ( hashObj.jump ) {
-            console.log('hashchange:jump handler')
+            console.log('change:hashchange:jump handler')
 
             this.model.unset('jump', {silent : true} )
             this.model.set( 'jump', hashObj.jump )
@@ -123,8 +130,11 @@ PA.App = Backbone.View.extend({
             collection : this.model.covers.collection
         })
 
-        this.model.set({ className : 'projects', outlineTitle : 'Projects' })
-        //this.model.set( 'showcase' , this.model.random )
+        this.model.set({ 
+            className : 'projects',
+            outlineTitle : 'Projects' 
+        })
+
         $.bbq.pushState( { view : 'random' }, 2 )
     },
 
@@ -133,7 +143,13 @@ PA.App = Backbone.View.extend({
 
         if ( !(pageModel.get('showcase') instanceof PA.ImageShowcase) ) {
             pageModel.get('showcase').destroy()
-            pageModel.set( 'showcase' , this.model.covers )
+
+            // Don't need to call filter in PageView.render
+            pageModel.set({
+                showcase : this.model.covers
+            }, {
+                filtering : true
+            })
         }
 
         pageModel.get('showcase').trigger('filter', filter)
@@ -144,8 +160,12 @@ PA.App = Backbone.View.extend({
 
         pageModel.set( 'showcase', this.model[view] )
         if ( pageModel.get('showcase') instanceof PA.ImageShowcase ) {
+            console.log('instanceof PA.ImageShowcase: filtering for *')
+
             pageModel.get('showcase').filter('*')
         } else if ( pageModel.get('showcase') instanceof PA.ListShowcase ) {
+            console.log('instanceof PA.ListShowcase: sorting by name')
+
             pageModel.set('sort', 'alpha')
         }
     },
