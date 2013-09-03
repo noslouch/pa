@@ -1,0 +1,73 @@
+.updater-browse {
+
+    .content {
+        min-height:100px;
+    }
+
+    .status {
+        position: relative;
+
+        span {
+            font-weight: bold;
+            font-style: italic;
+            position: absolute;
+            right: 40px;
+            top: 0;
+            display: none;
+        }
+
+        .loading {
+            padding-left: 20px;
+            background: url(../img/spinner.gif) no-repeat;
+            font-size: 13px;
+        }
+
+        .error {
+            color: #B94A48;
+        }
+    }
+
+    .browse {
+        height: 300px;
+        overflow: auto;
+        margin: 0 0 20px 0;
+
+        .cdup {
+            display:block;
+            height: 16px;
+            padding: 0 0 0 20px;
+            margin: 0 0 5px;
+            background: url(../img/up.png) no-repeat;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cdup:hover {
+            color: #E11842;
+        }
+
+        li {
+            padding: 2px 0 2px 20px;
+            border-bottom: 1px solid #eee;
+            display:block;
+            height: 16px;
+        }
+
+        li:hover {
+            background-color: #F6F6F6;
+        }
+
+        .dir {
+            background: url(../img/folder.png) no-repeat;
+            cursor: pointer;
+        }
+
+        .dir:hover {
+            color: #E11842;
+        }
+
+        .file {
+            background: url(../img/file.png) no-repeat;
+        }
+    }
+}
