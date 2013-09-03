@@ -1,11 +1,19 @@
-                        {exp:search:simple_form channel="profile_awards" form_class="search-form" form_id="searchForm" where="all" search_in="titles"}
-                            <div class="table-wrapper">
-                                <div class="cell-wrapper">
-                                    <input id="searchInput" class="search" type="search" name="keywords">
-                                    <input type="submit" value="submit" class="submit">
-                                </div> <!-- .cell-wrapper -->
-                            </div> <!-- .table-wrapper -->
-                        {/exp:search:simple_form}
-                        
-                        
-                      
+<h2>{super_search_total_results} results for the keyword search: "{super_search_keywords}"</h2>
+ 
+{exp:super_search:results
+    channel="film|profile_acknowledgements|profile_subject|profile_author|profile_awards|profile_bio|profile_interviews|photography|profile_photos|profile_press|projects|projects_showcases|quotes|profile_transcripts"
+    paginate="both"
+    limit="10"
+    orderby="entry_date+desc+title+asc"
+    where="all"
+}
+    <div class="search_result">
+        <h3>{title}</h3>
+    </div>
+    {if super_search_no_results}
+        <p>No results matched your query.</p>
+    {/if}
+    {paginate}
+        <p>Page {current_page} of {total_pages} pages. {pagination_links}</p>
+    {/paginate}
+{/exp:super_search:results}
