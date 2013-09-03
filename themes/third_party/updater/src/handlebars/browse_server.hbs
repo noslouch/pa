@@ -1,0 +1,13 @@
+<div class="browse">
+    <span class="cdup">Parent Directory</span>
+    <ul>
+        {{#each dirs}}
+        <li class="dir">
+            <span class="chdir">{{this}}</span>
+        </li>
+        {{/each}}
+        {{#each files}}
+        <li class="file">{{this}}</li>
+        {{/each}}
+    </ul>
+</div>
