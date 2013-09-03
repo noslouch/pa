@@ -313,6 +313,7 @@ PA.SimpleList = Backbone.View.extend({
     }
 
 })
+
 PA.StarThumb = Backbone.View.extend({
     tagName : "a",
     initialize : function() {
@@ -324,10 +325,10 @@ PA.StarThumb = Backbone.View.extend({
             top : this.options.HALF_HEIGHT + this.randomRange(-this.options.HALF_HEIGHT, this.options.HALF_HEIGHT)
         }).attr( 'src', this.model.get('thumb') )
     },
-    render : function() {
+    render : function(instagram) {
 
         this.$el
-            .attr( 'href', '/projects/' + this.model.get('url') )
+            .attr( 'href', (instagram ? '' : '/projects/') + this.model.get('url') )
             .addClass( 'fast' )
 
         return this.el
@@ -342,7 +343,7 @@ PA.Starfield = Backbone.View.extend({
     tagName : 'div',
     className : 'starfield',
     id : 'starfield',
-    initialize : function(){
+    initialize : function(instagram){
         var SCREEN_WIDTH = window.innerWidth,
             SCREEN_HEIGHT = window.innerHeight,
             HALF_WIDTH = window.innerWidth / 2,
@@ -360,7 +361,7 @@ PA.Starfield = Backbone.View.extend({
                         model : self.images.models[i],
                         HALF_HEIGHT : HALF_HEIGHT,
                         HALF_WIDTH : HALF_WIDTH
-                    }).render() )
+                    }).render(instagram) )
                 i++
 
                 // CHANGE TO IMAGELIMIT WHEN PROJECTS INCREASE
