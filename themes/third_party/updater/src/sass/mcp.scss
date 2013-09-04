@@ -1,0 +1,119 @@
+$experimental-support-for-opera:false;
+$experimental-support-for-khtml:false;
+$experimental-support-for-microsoft : true !default;
+@import "compass/css3";
+
+@import "boostrap";
+
+#mainContent .pageContents {
+    padding:0 0 10px !important;
+    border-top:0 !important;
+    overflow: visible !important;
+}
+
+#updater {
+
+    .submit.disabled {
+        background: #DDE2E5;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .queries_exec {
+        font-size: 12px;
+        float: right;
+        display: none;
+
+        textarea {
+            width:100%;
+            height:400px;
+            padding:10px;
+        }
+    }
+}
+
+#updater_missing_themes {
+    display:none;
+}
+
+.updater-body {
+    padding:10px;
+}
+
+// Top Menu
+#umenu {
+    background-color: #c8d2d7;
+    @include background-image(linear-gradient(top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%));
+    overflow:auto;
+    padding:3px 3px 6px 17px;
+    box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset;
+
+    li {
+        float:left;
+        margin:0;
+        padding:2px;
+        a {
+            background:#ABB7C3;
+            color:#fff;
+            font-size:11px;
+            font-weight:bold;
+            margin:3px 7px 0 0;
+            padding:5px 10px 5px 10px;
+            display:block;
+            text-decoration:none;
+            text-transform:uppercase;
+            border-radius:5px;
+        }
+    }
+
+    li.current a, li a:hover {
+        color:#fff;
+        font-weight:bold;
+        background:#27343C;
+        text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2);
+        box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset;
+    }
+
+    .upd_version {
+        float: right;
+        margin-top: 7px;
+    }
+}
+
+#error_log .body {
+    padding:20px;
+}
+
+
+@import "utable";
+@import "addonlist";
+@import "browser";
+
+@import "settings";
+@import "upload";
+@import "actions";
+
+@-webkit-keyframes animate-stripes {
+    0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}
+
+@-moz-keyframes animate-stripes {
+    0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}
+
+
+// Override bootstrap_modal, when using NSM override.css it goes over the top menu
+.modal.fade {
+    top: -40%;
+}
+
+.modal-header {
+
+    h3 {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
+    }
+}
