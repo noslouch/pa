@@ -1,19 +1,229 @@
-<h2>{super_search_total_results} results for the keyword search: "{super_search_keywords}"</h2>
- 
+<?php header('Content-type: application/json'); ?>
+[
 {exp:super_search:results
-    channel="film|profile_acknowledgements|profile_subject|profile_author|profile_awards|profile_bio|profile_interviews|photography|profile_photos|profile_press|projects|projects_showcases|quotes|profile_transcripts"
+    channel="film|profile_awards|profile_subject|profile_author|profile_bio|profile_interviews|photography|profile_photos|profile_press|projects|projects_showcases|quotes|profile_transcripts"
     paginate="both"
     limit="10"
     orderby="entry_date+desc+title+asc"
     where="all"
+    backspace="2"
 }
-    <div class="search_result">
-        <h3>{title}</h3>
-    </div>
-    {if super_search_no_results}
-        <p>No results matched your query.</p>
-    {/if}
-    {paginate}
-        <p>Page {current_page} of {total_pages} pages. {pagination_links}</p>
-    {/paginate}
+    {
+		<!--FILM-->
+		{if year_film}
+			"code": "film",
+	        "id" : "{entry_id}",
+	        "title": "{title}",
+	        "date" : "{year_film}000",
+	        "url": "{url_title}",
+	        "thumb" : "{cover_image_film}{image:url:thumb}{/cover_image_film}",
+	        "summary": <?php echo json_encode('{summary_film}'); ?>,
+	        {if video_id_film}
+	        "video_id": "{video_id_film}",
+	        {if:else}
+	        "video_src" : "{video_src_film}",
+	        {/if}
+	        "youtube" : "{youtube_film}",
+	        "content": <?php echo json_encode('{content_film}'); ?>,
+	        "caption" : <?php echo json_encode('{caption_film}'); ?>
+	    {/if} 
+	    
+	    <!--AWARDS-->
+	    {if date_awards}
+	    	"code": "awards",
+	        "id" : "{entry_id}",
+	        "type" : "awards",
+	        "title" : "{title}",
+	        "date" : "{date_awards}000",
+	        "summary" : "{summary_awards}"
+	    {/if}  
+	    
+	    <!-- BIO-->
+	    {if image_bio}
+	    	"code": "bio",
+	        "id" : "{entry_id}",
+	        "type" : "bio",
+	        "title": "Bio/CV",
+	        "url" : "bio",
+	        "bioImg" : "{image_bio}{image:url:layout}{/image_bio}",
+	        "content": <?php echo json_encode('{content_profile}'); ?>	    
+	    {/if}
+	    
+	    
+	    <!--INTERVIEWS, PAAUTHOR, PASUBJECT, PRESS, TRANSCRIPTS-->
+	    {if date_article}
+	    	"code": "articles",
+	        "id" : "{entry_id}",
+	        "title" : "{title}",
+	        "date" : "{date_article}000",
+	        "url" : "{url_title}",
+	        "summary": <?php echo json_encode('{summary_article}'); ?>,
+	        "content": <?php echo json_encode('{content_article}'); ?>,
+	        "gallery": [
+	        {gallery_article backspace="10"}
+	            {
+	                "thumb" : "{image:url:thumb}",
+	                "url" : "{image:url:full}",
+	                "caption" : <?php echo json_encode('{image:description}'); ?>
+	            },
+	        {/gallery_article}
+	        ]
+        {/if}	  
+        
+        
+        <!--paPHOTOS-->
+        {if paPhotos_profile}
+        	"code": "paphotos",
+	        "id" : "{entry_id}",
+	        "type" : "photos-of-pa",
+	        "url" : "photos-of-pa",
+	        "gallery": [
+	            {paPhotos_profile backspace="14"}
+	            { 
+	                "thumb" : "{image:url:thumb}",
+	                "lg_thumb" : "{image:url:lg-thumb}",
+	                "url" : "{image:url:full}",
+	                "caption" : "{image:description}"
+	            },
+	            {/paPhotos_profile}
+	        ]  
+        {/if}   
+        
+        
+        <!--PHOTOGRAPHY-->
+        {if gallery_photography}
+	        "code": "photography",
+	        "id" : "{entry_id}",
+	        "title": "{title}",
+	        "date" : "{year_photography}000",
+	        "url": "{url_title}",
+	        "summary": <?php echo json_encode('{summary_photography}'); ?>,
+	        "cover" : {
+	        {gallery_photography cover_only="yes"}
+	            {if image:category == 'landscape'}
+	            "thumb" : "{image:url:landscape}",
+	            "wide" : "true",
+	            "caption" : "{if image:description}{image:description}{/if}",
+	            {if:else}
+	            "thumb" : "{image:url:portrait}",
+	            "wide" : "",
+	            "caption" : "{if image:description}{image:description}{/if}",
+	            {/if}
+	            "url" : "{url_title}"
+	        {/gallery_photography}
+	        },  
+	        "gallery": [
+	            {gallery_photography backspace="14"}
+	            {
+	                "thumb" : "{image:url:thumb}",
+	                "lg_thumb" : "{image:url:lg-thumb}",
+	                "caption" : <?php echo json_encode('{image:description}'); ?>,
+	                "url" : "{image:url}"
+	        	},
+	            {/gallery_photography}
+	        ]
+        {/if}	
+        
+        <!--PROJECTS-->
+        {if year_projects}
+        	"code": "projects",
+	        "id" : "{entry_id}",
+	        "title": "{title}",
+	        "date" : "{year_projects}000",
+	        "url": "{url_title}",
+	        {!--"logo" : "{logo_projects}{image:url:logo-thumb}{/logo_projects}",--}
+	        "cover" : {
+	        {cover_projects}
+	        {if image:category == 'landscape'}
+	            "thumb" : "{image:url:landscape}",
+	            "wide" : "true",
+	        {if:else}
+	            "thumb" : "{image:url:portrait}",
+	            "wide" : "",
+	        {/if}
+	            "caption" : "{image:description}",
+	        {/cover_projects}
+	            "url" : "{url_title}"
+	        },
+	        "summary": <?php echo json_encode('{summary_projects}'); ?>,
+	        "brand_tags" : 
+	        [
+	            {categories show_group="21" backspace="14"}
+	            { 
+	                "title" : "{category_name}",
+	                "className" : "{category_url_title}",
+	                "logo" : "{category_image}"
+	            },
+	            {/categories}
+	        ],
+	        "industry_tags" : 
+	        [
+	            {categories show_group="1" backspace="14"}
+	            { 
+	                "title" : "{category_name}",
+	                "className" : "{category_url_title}"
+	            },
+	            {/categories}
+	        ],
+	        "type_tags" : 
+	        [
+	            {categories show_group="11" backspace="14"}
+	            { 
+	                "title" : "{category_name}",
+	                "className" : "{category_url_title}"
+	            },
+	            {/categories}
+	        ],
+	        "showcases": 
+	        [ 
+	            {exp:playa:children field="products_project" backspace="14"}
+	            { 
+	                "title" : "{title}",
+	                "url_title": "{url_title}",
+	                {if gallery_project}
+	                "type" : "gallery",
+	                "images": [
+	                    {gallery_project backspace="22"}
+	                    { 
+	                        "lg_thumb" : "{image:url:lg-thumb}",
+	                        "thumb" : "{image:url:thumb}",
+	                        "url" : "{image:url:full-size}",
+	                        "caption": "{image:description}"
+	                    },
+	                    {/gallery_project}
+	                ]
+	                {if:elseif video_id_project}
+	                "type" : "video",
+	                "video_id": "{video_id_project}",
+	                "caption" : "{video_caption_project}",
+	                "youtube" : "{youtube}"
+	                {if:elseif video_src_project}
+	                "type" : "video",
+	                "video_src": "{video_src_project}",
+	                "caption" : "{video_caption_project}",
+	                "youtube" : "{youtube}"
+	                {/if}
+	            },
+	            {/exp:playa:children}
+	        ],
+	        "info" : <?php echo json_encode('{info_projects}'); ?>,
+	        "relatedLinks" : [
+	            {related_links backspace="8"}
+	                "{item}",
+	            {/related_links}
+	        ] 
+        {/if}      
+        
+        <!--STREAM-->
+        {if ig_created_time}
+        	"code": "stream",
+	        "timestamp" : "{ig_created_time}",
+	        "thumb" : "{ig_low_resolution}",
+	        "caption" : {exp:json_encode}{ig_caption}{/exp:json_encode},
+	        "url" : "{ig_link}" 
+        {/if}                       
+    },
 {/exp:super_search:results}
+]
+
+
