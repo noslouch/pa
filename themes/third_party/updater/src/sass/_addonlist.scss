@@ -1,0 +1,249 @@
+.addonlist {
+    margin: 20px 15px;
+    font-family: proxima-nova, sans-serif;
+    font-size: 13px;
+
+    .top, .bottom {
+        background-color: #eff1f6;
+        border: 1px solid #c4c9d8;
+        box-shadow: inset 0 1px #fff,0 1px 1px rgba(0,0,0,0.03);
+        padding: 8px;
+        border-radius: 3px 3px 0 0;
+        position: relative;
+        height: 32px;
+
+        button.active {
+            box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 3px 1px rgba(97,200,253,0.5);
+        }
+    }
+
+    .bottom {
+        border-radius: 0 0 3px 3px;
+    }
+
+    .sectionfilter {
+        float:left;
+    }
+
+    .sortby {
+        float:right;
+
+        strong {
+            padding-right: 10px;
+        }
+    }
+
+    .addons {
+        background-color: #fbfbfb;
+        border: 1px solid #c4c9d8;
+        border-width: 0 1px;
+        padding: 19px 24px;
+        //@include column-width(210px);
+
+        .native {
+            display: none;
+        }
+    }
+
+    .addon {
+        page-break-inside:avoid; // mozilla
+        @include column-break(inside, avoid);
+        padding:5px;
+
+        .inner {
+            border: 1px solid #bdc7d2;
+            border-radius: 3px;
+            color: #5e617a;
+            font-size: 13px;
+            //box-shadow: 0 1px rgba(0,0,0,0.05);
+            background-color: #f6f7f9;
+            position:relative;
+            width:200px;
+            padding:10px 10px 5px 10px;
+            margin:0 0 10px;
+            min-height:30px;
+        }
+
+        .icon {
+            float:left;
+            margin:0 7px 0 0;
+            height:100%;
+        }
+
+        .version {
+            position:absolute;
+            top:0;
+            right:0;
+            border-bottom: 1px solid #bdc7d2;
+            border-left: 1px solid #bdc7d2;
+            border-radius: 0 3px 0 7px;
+            background: #fff;
+            padding:4px
+        }
+
+        .label {
+            display: block;
+            font-weight: bold;
+            width:170px;
+        }
+
+        .status {
+            text-transform: uppercase;
+            font-size: 10px;
+            font-weight:bold;
+        }
+
+        .installed {
+            color: #7CB25C;
+            font-weight:bold;
+        }
+
+        .notinstalled {
+            color: darken(#F6F7F9, 20%);
+            font-weight:bold;
+        }
+
+        .addonoptions {
+            bottom: 5px;
+            font-size: 10px;
+            font-weight: bold;
+            position: absolute;
+            right: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .actions {
+          display: none;
+          font-size:11px;
+          font-weight: bold;
+          position: relative;
+          padding: 5px;
+          border-radius: 3px;
+          background: #FBFBFB;
+          border:1px solid #ccc;
+          margin: 10px 0 20px;
+          box-shadow: 1px 1px rgba(0,0,0,0.05) inset;
+
+          .install {
+            color:green;
+          }
+
+          .deladdon {
+            color: brown;
+            position: absolute;
+            right: 5px;
+          }
+
+          .settings {
+            font-size: 10px;
+            margin-top: 5px;
+
+            strong {
+              color: grey;
+              text-transform: uppercase;
+            }
+          }
+        }
+
+    }
+
+    button {
+        padding: 3px 4px;
+        border: 1px solid #bdc7d2;
+        border-radius: 3px;
+        color: #5e617a;
+        cursor: pointer;
+        line-height: 24px;
+        display: inline-block;
+        font-size: 13px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        box-shadow: 0 1px rgba(0,0,0,0.05);
+        position: relative;
+        z-index: 1;
+        opacity: .6;
+        background-color: #f6f7f9;
+    }
+
+    button span {
+        color: #747d94;
+        padding: 0 6px;
+        line-height: 24px;
+        text-shadow: 0 1px rgba(255,255,255,0.85);
+        max-width: 207px;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    button.active {
+        opacity: 1;
+        @include background-image(linear-gradient(top, #f9fafb, #f2f3f6));
+        background-repeat: repeat-x;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9fafb',endColorstr='#f2f3f6',GradientType=0);
+        border: 1px solid #bdbdce;
+        border-bottom-color: #b1b0b9;
+        color: #747d94;
+
+    }
+}
+
+
+/**** Isotope Filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:      -o-transform, opacity;
+          transition-property:         transform, opacity;
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+

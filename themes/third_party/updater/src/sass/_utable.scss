@@ -1,0 +1,101 @@
+.utable {
+    background:#ECF1F4;
+    border:1px solid #ccc;
+    border:1px solid rgba(0, 0, 0, 0.2);
+    border-bottom-color:rgba(0, 0, 0, 0.4);
+    margin-bottom:18px;
+    margin-top:9px;
+    box-shadow:rgba(0, 0, 0, 0.05) 0 3px 5px 0;
+
+    h2 {
+        background:#fff;
+        border-bottom:1px solid rgba(0, 0, 0, 0.2);
+        color:#37444D;
+        margin:0;
+        padding:9px;
+        font-size:16px;
+
+        small {
+            font-size:10px;
+            margin-left:10px;
+        }
+
+        .submit-right {
+            float:right;
+        }
+    }
+
+    table {
+        border-spacing:0;
+        border-collapse:collapse;
+        margin:-1px 0 0 0 !important;
+        border-bottom:1px solid #c5ced4;
+        width:100%;
+
+        thead {
+            background:#9aa9b3;
+            @include background-image(linear-gradient(top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%));
+            color:#fff;
+            font-size:12px;
+
+            th {
+                border-right:1px solid #849099;
+                border-top:1px solid #849099;
+                border-bottom:1px solid #849099;
+                text-shadow:rgba(0, 0, 0, 0.5) 0 -1px 0;
+            }
+
+            .heading th {
+                color:#5F6C74;
+                font-weight:bold;
+                background-color: #c8d2d7;
+                @include background-image(linear-gradient(top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%));
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                margin: 0 0 18px 0;
+                overflow: auto;
+                padding:7px;
+                box-shadow: rgba(255, 255, 255, 0.5) 0 1px 0 0 inset;
+                text-shadow:1px 1px 1px rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        tbody tr:nth-child(even) {
+            background-color:#F6F8FA;
+        }
+
+        label {
+            font-size:12px;
+            width:200px;
+        }
+
+        th, td {
+            border-color:#c5ced4;
+            border-width:1px 1px 0 0;
+            border-style:solid;
+            border-right-style:dotted;
+            padding:7px 9px;
+            text-align:left;
+        }
+
+        tr th:last-child, tr td:last-child {
+            border-right:none;
+        }
+
+        td.action {
+            width:200px;
+        }
+
+        td.state {
+            width:75px;
+            text-align:center;
+        }
+    }
+
+    .subtable {
+        padding:0;
+
+        table {
+            border:0;
+        }
+    }
+}

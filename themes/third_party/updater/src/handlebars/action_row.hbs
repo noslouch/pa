@@ -1,0 +1,79 @@
+<tr id="{{id}}" class="action type-{{type}} status-{{status}}">
+    <td style="width:20px">
+        {{#compare status '!=' 'done'}}
+            {{#compare type '!=' 'ee'}}
+            <div class="move">&nbsp;</div>
+            {{/compare}}
+        {{/compare}}
+    </td>
+    <td style="width:50px">
+    <strong>{{updaterAction}}</strong>
+    </td>
+    <td style="width:300px">
+    {{#ifeq type 'backup_files'}}
+    Backup Files {{info.full}}
+    {{/ifeq}}
+
+    {{#ifeq type 'backup_db'}}
+    Backup Database {{info.full}}
+    {{/ifeq}}
+
+    {{#ifeq type 'ee'}}
+    ExpressionEngine {{info.full}}
+    {{/ifeq}}
+
+    {{#ifeq type 'ee_msm'}}
+    Multiple Site Manager {{info.full}}
+    {{/ifeq}}
+
+    {{#ifeq type 'ee_forum'}}
+    ExpressionEngine Forum {{info.version}}
+    {{/ifeq}}
+
+    {{#ifeq type 'cp_theme'}}
+    CP Theme: {{info.label}} {{info.version}}
+    {{/ifeq}}
+
+    {{#ifeq type 'forum_theme'}}
+    Forum Theme: {{info.label}} {{info.version}}
+    {{/ifeq}}
+
+    {{#ifeq type 'addon'}}
+    {{info.label}} {{info.version}}
+    {{/ifeq}}
+    </td>
+
+    <td style="text-align:center;width:75px" class="status status-{{status}}">
+        <span class="queued label">Queued</span>
+        <span class="forced label label-warning">Forced</span>
+        <span class="processing label label-info">Processing</span>
+        <span class="done label label-success">Done</span>
+        <span class="error label label-important">Error</span>
+    </td>
+
+    <td class="thirdcol">
+        {{#if loadingMsg}}
+        <span class="loading">{{loadingMsg}}</span>
+        {{/if}}
+
+        {{#if progressMsg}}
+        <div class="progress" id="single_action_progress">
+            <div class="inner">
+                {{progressMsg}}
+            </div>
+        </div>
+        {{/if}}
+
+        {{#ifeq status 'error'}}
+        <div class="error">
+            {{{errorMsg}}}
+
+            {{#if errorDetail}}
+            <a href="#" class="js-show_error"><strong>Show Error</strong></a>
+            <span class="label label-invert js-retrybtn" style="float:right">Retry</span>
+            <textarea style="display:none">{{errorDetail}}</textarea>
+            {{/if}}
+        </div>
+        {{/ifeq}}
+    </td>
+</tr>

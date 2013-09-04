@@ -1,0 +1,28 @@
+<tr id="{{id}}" class="file status-{{status}}" data-filename="{{filename}}">
+    <td style="width:250px">{{filename}} ({{filesize}})</td>
+
+    <td style="text-align:center;width:75px" class="status status-{{status}}">
+        <span class="queued label">Queued</span>
+        <span class="uploading label label-info">Uploading</span>
+        <span class="done label label-success">Done</span>
+        <span class="action label label-warning">Action</span>
+        <span class="error label label-important">Error</span>
+    </td>
+
+    <td class="thirdcol">
+        {{#ifeq status 'uploading'}}
+        <div class="progress"></div>
+        {{/ifeq}}
+
+        {{#ifeq status 'error'}}
+        <div class="error">
+            {{errorMsg}}
+
+            {{#if errorDetail}}
+            <a href="#" class="js-show_error"><strong>Show Error</strong></a>
+            <textarea style="display:none">{{errorDetail}}</textarea>
+            {{/if}}
+        </div>
+        {{/ifeq}}
+    </td>
+</tr>
