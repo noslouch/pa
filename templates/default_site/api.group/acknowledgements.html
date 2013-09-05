@@ -6,7 +6,7 @@
         "type" : "acknowledgements",
         "title": "{title}",
         "url" : "acknowledgements",
-        "content": <?php echo json_encode('{content_profile}'); ?>
+        "content": {exp:json_encode}{content_profile}{/exp:json_encode}
     },
 {/exp:channel:entries}
 ]

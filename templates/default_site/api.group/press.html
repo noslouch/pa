@@ -7,14 +7,14 @@
         "title" : "{title}",
         "date" : "{date_article}000",
         "url" : "{url_title}",
-        "summary": <?php echo json_encode('{summary_article}'); ?>,
-        "content": <?php echo json_encode('{content_article}'); ?>,
+        "summary": {exp:json_encode}{summary_article}{/exp:json_encode},
+        "content": {exp:json_encode}{content_article}{/exp:json_encode},
         "gallery": [
         {gallery_article backspace="10"}
             {
                 "thumb" : "{image:url:thumb}",
                 "url" : "{image:url:full}",
-                "caption" : <?php echo json_encode('{image:description}'); ?>
+                "caption" : {exp:json_encode}{image:description}{/exp:json_encode}
             },
         {/gallery_article}
         ]

@@ -5,6 +5,11 @@ PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
 PA.Router = Backbone.Router.extend({
 
+    initialize : function() {
+        _.bindAll( this, 'debug', 'payload' )
+        //this.on('route', this.payload)
+    },
+
     routes : {
         "" : "homeLoader",
         "projects" : "projects",
@@ -21,10 +26,24 @@ PA.Router = Backbone.Router.extend({
         "stream" : "stream"
     },
 
+    debug : function() {
+        console.log('debug called')
+        console.log('this: ', this)
+        console.log('arguments: ', arguments)
+    },
+
+    payload : function(method) {
+        try {
+            PA[method].fetch({ cache: true })
+        } catch(e) {
+            console.log('error caught: ', e)
+        }
+    },
+
     projects : function() {
         var spinner = new Spinner()
 
-        $.when( PA.projects.fetch() )
+        PA.projects.fetch({ cache: true })
         .then( function() {
             PA.app.projects()
             PA.app.header.filterBar.render()
@@ -37,7 +56,8 @@ PA.Router = Backbone.Router.extend({
     singleProject : function(project) {
         var spinner = new Spinner()
 
-        $.when( PA.projects.fetch() )
+        //$.when( PA.projects.fetch() )
+        PA.projects.fetch({ cache: true })
         .done( function() {
             PA.app.singleProject(project)
             spinner.detach()
@@ -48,7 +68,8 @@ PA.Router = Backbone.Router.extend({
     showcaseItem : function(project, urlTitle) {
         var spinner = new Spinner()
 
-        $.when( PA.projects.fetch() )
+        //$.when( PA.projects.fetch() )
+        PA.projects.fetch({ cache: true })
         .done( function() {
             PA.app.singleProject(project, urlTitle)
             spinner.detach()
@@ -59,7 +80,7 @@ PA.Router = Backbone.Router.extend({
     photography : function() {
         var spinner = new Spinner()
 
-        $.when( PA.albums.fetch() )
+        PA.albums.fetch({ cache : true })
         .done( function(){
             PA.app.photoHomeInit()
             spinner.detach()
@@ -70,7 +91,7 @@ PA.Router = Backbone.Router.extend({
     singleAlbum : function(urlTitle) {
         var spinner = new Spinner()
 
-        $.when( PA.albums.fetch() )
+        PA.albums.fetch({ cache : true })
         .done( function() {
             PA.app.albumInit(urlTitle)
             spinner.detach()
@@ -80,7 +101,7 @@ PA.Router = Backbone.Router.extend({
     film : function() {
         var spinner = new Spinner()
 
-        $.when( PA.films.fetch() )
+        PA.films.fetch({ cache : true })
         .done( function(){
             PA.app.filmHomeInit()
             spinner.detach()
@@ -90,7 +111,7 @@ PA.Router = Backbone.Router.extend({
     singleFilm : function(urlTitle) {
         var spinner = new Spinner()
 
-        $.when( PA.films.fetch() )
+        PA.films.fetch({ cache : true })
         .done( function() {
             PA.app.singleFilmInit( urlTitle )
             spinner.detach()
@@ -108,7 +129,7 @@ PA.Router = Backbone.Router.extend({
         var deferreds = []
 
         _.each(PA.profilePage.sections, function(el){
-            deferreds.push(el.fetch())
+            deferreds.push( el.fetch({ cache : true }) )
         })
 
         $.when.apply($, deferreds).done(function(){
@@ -145,6 +166,8 @@ PA.Router = Backbone.Router.extend({
 
         } catch(err) {
 
+            console.log('in catch')
+
             PA.profilePage = new PA.ProfileViewer({
                 el : '#profileViewer'
             })
@@ -152,7 +175,7 @@ PA.Router = Backbone.Router.extend({
             var deferreds = []
 
             _.each(PA.profilePage.sections, function(el){
-                deferreds.push(el.fetch())
+                deferreds.push(el.fetch({ cache : true }))
             })
 
             $.when.apply($, deferreds).done(function(){
@@ -217,7 +240,7 @@ PA.Router = Backbone.Router.extend({
     stream : function() {
         var spinner = new Spinner()
 
-        $.when( PA.instagrams.fetch() )
+        PA.instagrams.fetch({ cache: true })
         .done( function() {
             PA.app.streamInit()
             spinner.detach()

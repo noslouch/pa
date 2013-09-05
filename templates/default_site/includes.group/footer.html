@@ -6,6 +6,8 @@
         <script src="{site_url}/lib/vendor/json2.js"></script>
         <script src="{site_url}/lib/vendor/jquery.js"></script>
         <script src="{site_url}/lib/vendor/backbone.js"></script>
+        <!--<script src="{site_url}/lib/vendor/backbone.localStorage-min.js"></script>-->
+        <script src="{site_url}/lib/vendor/backbone.fetch-cache.min.js"></script>
         <script src="{site_url}/lib/isotope/jquery.isotope.min.js"></script>
         <script src="{site_url}/lib/fancybox/jquery.fancybox.js"></script>
         <script src="{site_url}/lib/bbq/jquery.ba-bbq.no-legacy.js"></script>
@@ -79,6 +81,12 @@
 
         <!-- INIT -->
         <script src="{site_url}/build/js/app.js"></script>
+
+        {if segment_1=='projects'}
+        <script>
+            PA.projects.reset({embed='/api/projects/'})
+        </script>
+        {/if}
 
         <script src="http://localhost:35729/livereload.js"></script>
     </body>
