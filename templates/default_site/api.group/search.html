@@ -9,7 +9,6 @@
     backspace="2"
 }
     {
-		<!--FILM-->
 		{if year_film}
 			"code": "film",
 	        "id" : "{entry_id}",
@@ -28,7 +27,6 @@
 	        "caption" : <?php echo json_encode('{caption_film}'); ?>
 	    {/if} 
 	    
-	    <!--AWARDS-->
 	    {if date_awards}
 	    	"code": "awards",
 	        "id" : "{entry_id}",
@@ -38,7 +36,6 @@
 	        "summary" : "{summary_awards}"
 	    {/if}  
 	    
-	    <!-- BIO-->
 	    {if image_bio}
 	    	"code": "bio",
 	        "id" : "{entry_id}",
@@ -50,7 +47,6 @@
 	    {/if}
 	    
 	    
-	    <!--INTERVIEWS, PAAUTHOR, PASUBJECT, PRESS, TRANSCRIPTS-->
 	    {if date_article}
 	    	"code": "articles",
 	        "id" : "{entry_id}",
@@ -71,7 +67,6 @@
         {/if}	  
         
         
-        <!--paPHOTOS-->
         {if paPhotos_profile}
         	"code": "paphotos",
 	        "id" : "{entry_id}",
@@ -90,7 +85,6 @@
         {/if}   
         
         
-        <!--PHOTOGRAPHY-->
         {if gallery_photography}
 	        "code": "photography",
 	        "id" : "{entry_id}",
@@ -113,7 +107,7 @@
 	        {/gallery_photography}
 	        },  
 	        "gallery": [
-	            {gallery_photography backspace="14"}
+	            {gallery_photography backspace="15"}
 	            {
 	                "thumb" : "{image:url:thumb}",
 	                "lg_thumb" : "{image:url:lg-thumb}",
@@ -124,7 +118,6 @@
 	        ]
         {/if}	
         
-        <!--PROJECTS-->
         {if year_projects}
         	"code": "projects",
 	        "id" : "{entry_id}",
@@ -148,7 +141,7 @@
 	        "summary": <?php echo json_encode('{summary_projects}'); ?>,
 	        "brand_tags" : 
 	        [
-	            {categories show_group="21" backspace="14"}
+	            {categories show_group="21" backspace="15"}
 	            { 
 	                "title" : "{category_name}",
 	                "className" : "{category_url_title}",
@@ -158,7 +151,7 @@
 	        ],
 	        "industry_tags" : 
 	        [
-	            {categories show_group="1" backspace="14"}
+	            {categories show_group="1" backspace="15"}
 	            { 
 	                "title" : "{category_name}",
 	                "className" : "{category_url_title}"
@@ -167,7 +160,7 @@
 	        ],
 	        "type_tags" : 
 	        [
-	            {categories show_group="11" backspace="14"}
+	            {categories show_group="11" backspace="15"}
 	            { 
 	                "title" : "{category_name}",
 	                "className" : "{category_url_title}"
@@ -176,7 +169,7 @@
 	        ],
 	        "showcases": 
 	        [ 
-	            {exp:playa:children field="products_project" backspace="14"}
+	            {exp:playa:children field="products_project" backspace="15"}
 	            { 
 	                "title" : "{title}",
 	                "url_title": "{url_title}",
@@ -214,7 +207,6 @@
 	        ] 
         {/if}      
         
-        <!--STREAM-->
         {if ig_created_time}
         	"code": "stream",
 	        "timestamp" : "{ig_created_time}",
