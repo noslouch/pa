@@ -20,6 +20,9 @@
         limit="10"
         orderby="entry_date+desc+title+asc"
         search_words_within_words="no"
+        category_indicator="category_url_title"
+        inclusive_keywords="no"
+        keyword_search_category_name="yes"
     }
 
     {if super_search_no_results}
@@ -52,7 +55,7 @@
 
             if ( !empty($images) ) {
                 $json = array();
-                $json['code'] = 'images';
+                $json['type'] = 'images';
                 $json['images'] = $images;
                 echo json_encode($json);
                 echo ',';
@@ -61,7 +64,7 @@
     {/if}
     {if year_film}
     {
-        "code": "film",
+        "type": "film",
         "id" : "{entry_id}",
         "title": "{title}",
         "date" : "{year_film}000",
@@ -80,9 +83,8 @@
     {/if} 
     {if date_awards}
     {
-        "code": "awards",
+        "type": "awards",
         "id" : "{entry_id}",
-        "type" : "awards",
         "title" : "{title}",
         "date" : "{date_awards}000",
         "summary" : "{summary_awards}"
@@ -90,9 +92,8 @@
     {/if}  
     {if image_bio}
     {
-        "code": "bio",
+        "type": "bio",
         "id" : "{entry_id}",
-        "type" : "bio",
         "title": "Bio/CV",
         "url" : "bio",
         "bioImg" : "{image_bio}{image:url:layout}{/image_bio}",
@@ -101,7 +102,7 @@
     {/if}
     {if date_article}
     {
-        "code": "articles",
+        "type": "articles",
         "id" : "{entry_id}",
         "title" : "{title}",
         "date" : "{date_article}000",
@@ -122,9 +123,8 @@
     {/if}	  
     {if paPhotos_profile}
     {
-        "code": "paphotos",
-        "id" : "{entry_id}",
         "type" : "photos-of-pa",
+        "id" : "{entry_id}",
         "url" : "photos-of-pa",
         "gallery": [
             {paPhotos_profile backspace="14"}
@@ -141,7 +141,7 @@
     {/if}   
     {if gallery_photography}
     {
-        "code": "album",
+        "type": "album",
         "id" : "{entry_id}",
         "title": "{title}",
         "date" : "{year_photography}000",
@@ -176,7 +176,7 @@
     {/if}	
     {if year_projects}
     {
-        "code": "projects",
+        "type": "projects",
         "id" : "{entry_id}",
         "title": "{title}",
         "date" : "{year_projects}000",
@@ -261,7 +261,7 @@
     {/if}      
     {if gallery_project}
     {
-        "code" : "image showcase",
+        "type" : "project_gallery",
         "title" : "{title}",
         "url_title": "{url_title}",
         "gallery" : {
@@ -279,9 +279,28 @@
         }
     },
     {/if}
+    {if video_id_project}
+    {
+        "type" : "project_video",
+        "title" : "{title}",
+        "url_title": "{url_title}",
+        "video_id": "{video_id_project}",
+        "caption" : "{video_caption_project}",
+        "youtube" : "{youtube}"
+    },
+    {if:elseif video_src_project}
+    {
+        "type" : "project_video",
+        "title" : "{title}",
+        "url_title": "{url_title}",
+        "video_src": "{video_src_project}",
+        "caption" : "{video_caption_project}",
+        "youtube" : "{youtube}"
+    },
+    {/if}
     {if lines}
     {
-        "code" : "quotes",
+        "type" : "quotes",
         "title" : "{title}",
         "lines" : [
         {lines backspace="12"}
