@@ -30,8 +30,21 @@
                         <form method="post" action="{path='api/search'}" class="search-form" id="searchForm">
                             <div class="table-wrapper">
                                 <div class="cell-wrapper">
-                                    <input id="searchInput" class="search" type="search" name="keywords" id="keywords" />
+                                    <input id="keywords" class="search" type="search" name="keywords" id="keywords" />
+                                    <button class="submit-search button" id="submitSearch" type="button">Search</button>
                                     <button class="cancel-search button" id="cancelSearch" type="button">Cancel</button>
+                                    <fieldset>
+                                        <legend>Advanced Search</legend>
+                                        <label><input type="checkbox" id="projects">Projects</label>
+                                        <label><input type="checkbox" id="photography">Photography</label>
+                                        <label><input type="checkbox" id="film">Film</label>
+                                        <label><input type="checkbox" id="press">Press</label>
+                                        <label><input type="checkbox" id="paAuthor">Articles by Peter</label>
+                                        <label><input type="checkbox" id="paSubject">Articles about Peter</label>
+                                        <label><input type="checkbox" id="allArticles">All Articles</label>
+                                        <label><input type="checkbox" id="interviews">Interviews</label>
+                                        <label><input type="checkbox" id="transcripts">Transcripts</label>
+                                    </fieldset>
                                 </div> <!-- .cell-wrapper -->
                             </div> <!-- .table-wrapper -->
                         </form> 
@@ -41,4 +54,4 @@
             </div> <!-- .inner-header -->
         </div> <!-- .header-wrapper -->
         <div class="outer-wrapper">
-            <div class="page">
+            <div class="page">                         

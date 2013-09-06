@@ -170,6 +170,7 @@ button {
         @include appearance(none);
     }
 
+    .submit-search,
     .cancel-search {
         outline: none;
         background: #e0e0e0;
