@@ -1,13 +1,48 @@
-<?php header('Content-type: application/json'); ?>
+<?php 
+    header('Content-type: application/json');
+    $keywords = '{super_search_keywords}'; 
+    $tags = explode( ', ', $keywords);
+?>
 [
+    {
+        "keywords" : {exp:json_encode}{super_search_keywords}{/exp:json_encode}
+    },
 {exp:super_search:results
-    channel="film|profile_awards|profile_subject|profile_author|profile_bio|profile_interviews|photography|profile_photos|profile_press|projects|projects_showcases|quotes|profile_transcripts"
     paginate="both"
     limit="10"
     orderby="entry_date+desc+title+asc"
-    where="all"
+    where="any"
     backspace="2"
 }
+    {if super_search_no_results}
+        "no results"
+    {/if}
+    {if gallery_photography}
+    {
+        "code" : "images",
+        "images" : [
+            <?php
+                foreach( $tags as $tag ) {
+            ?>
+            {gallery_photography backspace="0"}
+                <?php 
+                    $pos = strpos( '{image:field:1}', $tag );
+                    if ( $pos !== false ) {
+                ?>
+            { 
+                "id" : "{image:id}",
+                "lg_thumb" : "{image:url:lg-thumb}",
+                "thumb" : "{image:url:thumb}",
+                "url" : "{image:url:full-size}",
+                "caption": "{image:description}",
+                "keywords" : "{image:field:1}"
+            },
+                <?php } ?>
+            {/gallery_photography}
+            <?php } ?>
+        ]
+    },
+    {/if}
     {
 		{if year_film}
 			"code": "film",
@@ -16,15 +51,15 @@
 	        "date" : "{year_film}000",
 	        "url": "{url_title}",
 	        "thumb" : "{cover_image_film}{image:url:thumb}{/cover_image_film}",
-	        "summary": <?php echo json_encode('{summary_film}'); ?>,
+	        "summary": {exp:json_encode}{summary_film}{/exp:json_encode},
 	        {if video_id_film}
 	        "video_id": "{video_id_film}",
 	        {if:else}
 	        "video_src" : "{video_src_film}",
 	        {/if}
 	        "youtube" : "{youtube_film}",
-	        "content": <?php echo json_encode('{content_film}'); ?>,
-	        "caption" : <?php echo json_encode('{caption_film}'); ?>
+	        "content": {exp:json_encode}{content_film}{/exp:json_encode},
+	        "caption" : {exp:json_encode}{caption_film}{/exp:json_encode}
 	    {/if} 
 	    
 	    {if date_awards}
@@ -43,7 +78,7 @@
 	        "title": "Bio/CV",
 	        "url" : "bio",
 	        "bioImg" : "{image_bio}{image:url:layout}{/image_bio}",
-	        "content": <?php echo json_encode('{content_profile}'); ?>	    
+	        "content": {exp:json_encode}{content_profile}{/exp:json_encode}
 	    {/if}
 	    
 	    
@@ -53,14 +88,15 @@
 	        "title" : "{title}",
 	        "date" : "{date_article}000",
 	        "url" : "{url_title}",
-	        "summary": <?php echo json_encode('{summary_article}'); ?>,
-	        "content": <?php echo json_encode('{content_article}'); ?>,
+	        "summary": {exp:json_encode}{summary_article}{/exp:json_encode},
+	        "content": {exp:json_encode}{content_article}{/exp:json_encode},
 	        "gallery": [
-	        {gallery_article backspace="10"}
+	        {gallery_article backspace="11"}
 	            {
 	                "thumb" : "{image:url:thumb}",
 	                "url" : "{image:url:full}",
-	                "caption" : <?php echo json_encode('{image:description}'); ?>
+	                "caption" : {exp:json_encode}{image:description}{/exp:json_encode},
+                    "keywords" : "{image:field:1}"
 	            },
 	        {/gallery_article}
 	        ]
@@ -78,7 +114,8 @@
 	                "thumb" : "{image:url:thumb}",
 	                "lg_thumb" : "{image:url:lg-thumb}",
 	                "url" : "{image:url:full}",
-	                "caption" : "{image:description}"
+	                "caption" : "{image:description}",
+                    "keywords" : "{image:field:1}"
 	            },
 	            {/paPhotos_profile}
 	        ]  
@@ -86,12 +123,12 @@
         
         
         {if gallery_photography}
-	        "code": "photography",
+	        "code": "album",
 	        "id" : "{entry_id}",
 	        "title": "{title}",
 	        "date" : "{year_photography}000",
 	        "url": "{url_title}",
-	        "summary": <?php echo json_encode('{summary_photography}'); ?>,
+	        "summary": {exp:json_encode}{summary_photography}{/exp:json_encode},
 	        "cover" : {
 	        {gallery_photography cover_only="yes"}
 	            {if image:category == 'landscape'}
@@ -111,13 +148,14 @@
 	            {
 	                "thumb" : "{image:url:thumb}",
 	                "lg_thumb" : "{image:url:lg-thumb}",
-	                "caption" : <?php echo json_encode('{image:description}'); ?>,
-	                "url" : "{image:url}"
+	                "caption" : {exp:json_encode}{image:description}{/exp:json_encode},
+	                "url" : "{image:url}",
+                    "keywords" : "{image:field:1}"
 	        	},
 	            {/gallery_photography}
 	        ]
         {/if}	
-        
+
         {if year_projects}
         	"code": "projects",
 	        "id" : "{entry_id}",
@@ -138,7 +176,7 @@
 	        {/cover_projects}
 	            "url" : "{url_title}"
 	        },
-	        "summary": <?php echo json_encode('{summary_projects}'); ?>,
+	        "summary": {exp:json_encode}{summary_projects}{/exp:json_encode},
 	        "brand_tags" : 
 	        [
 	            {categories show_group="21" backspace="15"}
@@ -176,12 +214,13 @@
 	                {if gallery_project}
 	                "type" : "gallery",
 	                "images": [
-	                    {gallery_project backspace="22"}
+	                    {gallery_project backspace="23"}
 	                    { 
 	                        "lg_thumb" : "{image:url:lg-thumb}",
 	                        "thumb" : "{image:url:thumb}",
 	                        "url" : "{image:url:full-size}",
-	                        "caption": "{image:description}"
+	                        "caption": "{image:description}",
+                            "keywords" : "{image:field:1}"
 	                    },
 	                    {/gallery_project}
 	                ]
@@ -199,23 +238,42 @@
 	            },
 	            {/exp:playa:children}
 	        ],
-	        "info" : <?php echo json_encode('{info_projects}'); ?>,
+	        "info" : {exp:json_encode}{info_projects}{/exp:json_encode},
 	        "relatedLinks" : [
-	            {related_links backspace="8"}
+                {related_links backspace="13"}
 	                "{item}",
 	            {/related_links}
 	        ] 
         {/if}      
         
-        {if ig_created_time}
-        	"code": "stream",
-	        "timestamp" : "{ig_created_time}",
-	        "thumb" : "{ig_low_resolution}",
-	        "caption" : {exp:json_encode}{ig_caption}{/exp:json_encode},
-	        "url" : "{ig_link}" 
-        {/if}                       
+        {if gallery_project}
+            "code" : "image showcase",
+            "title" : "{title}",
+            "url_title": "{url_title}",
+            "gallery" : {
+                "images": [
+                    {gallery_project backspace="22"}
+                    { 
+                        "lg_thumb" : "{image:url:lg-thumb}",
+                        "thumb" : "{image:url:thumb}",
+                        "url" : "{image:url:full-size}",
+                        "caption": "{image:description}",
+                        "keywords" : "{image:field:1}"
+                    },
+                    {/gallery_project}
+                ]
+            }
+        {/if}
+
+        {if lines}
+            "code" : "quotes",
+            "title" : "{title}",
+            "lines" : [
+            {lines backspace="12"}
+                "{item}",
+            {/lines}
+            ]
+        {/if}
     },
 {/exp:super_search:results}
 ]
-
-
