@@ -19,12 +19,19 @@ PA.PageView = Backbone.View.extend({
         this.listenTo( this.model, 'change:project', this.singleView )
         this.listenTo( this.model, 'change:photoAlbum', this.singleAlbum )
         this.listenTo( this.model, 'change:film', this.singleFilm )
+
+        this.listenTo( this.model, 'change:page', this.pageRender )
     },
 
     semantics : function( className, outlineTitle ) {
         this.$el.addClass( className || '' )
         this.outlineTitle.html( outlineTitle || '' )
         this.$el.prepend( this.outlineTitle )
+    },
+
+    pageRender : function( pageModel, newPageView ) {
+        this.$el.html( newPageView.render() )
+        this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
     },
 
     render : function(pageModel, pageView, filtering) {
@@ -79,7 +86,7 @@ PA.PageView = Backbone.View.extend({
 
 PA.App = Backbone.View.extend({
     initialize : function() {
-        _.bindAll(this, 'projectFilter', 'render', 'routeHandler', 'projects', 'hashHandler' )
+        _.bindAll(this, 'projectFilter', 'render', 'routeHandler', 'projects', 'hashHandler', 'showSearch' )
 
         this.model = new PA.PageModel()
         this.header = new PA.Header({ 
@@ -87,10 +94,14 @@ PA.App = Backbone.View.extend({
             parent : this,
             model : this.model
         })
-        this.page = new PA.PageView({ 
+        this.pageView = new PA.PageView({ 
             el : '.page',
             parent : this,
             model : this.model
+        })
+        this.search = new PA.SearchForm({ 
+            el : '#searchForm',
+            page : this.model
         })
 
         $(window).on('hashchange', this.hashHandler)
@@ -257,7 +268,13 @@ PA.App = Backbone.View.extend({
     },
 
     events : {
-        'click' : 'closeMenu'
+        'click' : 'closeMenu',
+        'click #searchIcon' : 'showSearch'
+    },
+
+    showSearch : function(e){
+        e.preventDefault()
+        this.search.render()
     },
 
     closeMenu : function(e) { 

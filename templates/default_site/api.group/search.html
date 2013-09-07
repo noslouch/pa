@@ -55,7 +55,7 @@
 
             if ( !empty($images) ) {
                 $json = array();
-                $json['type'] = 'images';
+                $json['type'] = 'image';
                 $json['images'] = $images;
                 echo json_encode($json);
                 echo ',';
@@ -68,7 +68,7 @@
         "id" : "{entry_id}",
         "title": "{title}",
         "date" : "{year_film}000",
-        "url": "{url_title}",
+        "url": "{path='film'}/{url_title}",
         "thumb" : "{cover_image_film}{image:url:thumb}{/cover_image_film}",
         "summary": {exp:json_encode}{summary_film}{/exp:json_encode},
         {if video_id_film}
@@ -102,11 +102,11 @@
     {/if}
     {if date_article}
     {
-        "type": "articles",
+        "type": "article",
         "id" : "{entry_id}",
         "title" : "{title}",
         "date" : "{date_article}000",
-        "url" : "{url_title}",
+        "url" : "{path='{channel_short_name}'}/{url_title}",
         "summary": {exp:json_encode}{summary_article}{/exp:json_encode},
         "content": {exp:json_encode}{content_article}{/exp:json_encode},
         "gallery": [
@@ -123,9 +123,9 @@
     {/if}	  
     {if paPhotos_profile}
     {
-        "type" : "photos-of-pa",
+        "type" : "gallery",
         "id" : "{entry_id}",
-        "url" : "photos-of-pa",
+        "url" : "{path='{channel_short_name}'}",
         "gallery": [
             {paPhotos_profile backspace="14"}
             { 
@@ -141,11 +141,11 @@
     {/if}   
     {if gallery_photography}
     {
-        "type": "album",
+        "type": "gallery",
         "id" : "{entry_id}",
         "title": "{title}",
         "date" : "{year_photography}000",
-        "url": "{url_title}",
+        "url": "{path='photography'}/{url_title}",
         "summary": {exp:json_encode}{summary_photography}{/exp:json_encode},
         "cover" : {
         {gallery_photography cover_only="yes"}
@@ -176,11 +176,11 @@
     {/if}	
     {if year_projects}
     {
-        "type": "projects",
+        "type": "project",
         "id" : "{entry_id}",
         "title": "{title}",
         "date" : "{year_projects}000",
-        "url": "{url_title}",
+        "url": "{path='projects'}/{url_title}",
         {!--"logo" : "{logo_projects}{image:url:logo-thumb}{/logo_projects}",--}
         "cover" : {
         {cover_projects}
@@ -261,9 +261,9 @@
     {/if}      
     {if gallery_project}
     {
-        "type" : "project_gallery",
+        "type" : "gallery",
         "title" : "{title}",
-        "url_title": "{url_title}",
+        "url": "{path='projects'}/{exp:playa:parents}{url_title}{/exp:playa:parents}/{url_title}",
         "gallery" : {
             "images": [
                 {gallery_project backspace="18"}
@@ -281,18 +281,18 @@
     {/if}
     {if video_id_project}
     {
-        "type" : "project_video",
+        "type" : "video",
         "title" : "{title}",
-        "url_title": "{url_title}",
+        "url": "{path='projects'}/{exp:playa:parents}{url_title}{/exp:playa:parents}/{url_title}",
         "video_id": "{video_id_project}",
         "caption" : "{video_caption_project}",
         "youtube" : "{youtube}"
     },
     {if:elseif video_src_project}
     {
-        "type" : "project_video",
+        "type" : "video",
         "title" : "{title}",
-        "url_title": "{url_title}",
+        "url": "{path='projects'}/{exp:playa:parents}{url_title}{/exp:playa:parents}/{url_title}",
         "video_src": "{video_src_project}",
         "caption" : "{video_caption_project}",
         "youtube" : "{youtube}"
@@ -311,6 +311,7 @@
     {/if}
     {/exp:super_search:results}
     {
+        "type" : "keywords",
         "keywords" : <?php echo json_encode($keywords); ?>
     }
 ]
