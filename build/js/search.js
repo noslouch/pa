@@ -1,3 +1,5 @@
+/*global Spinner*/
+
 /* views/search.js - Search view
  *
  * searchForm
@@ -20,10 +22,12 @@ var PA = PA || {}
 PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 
 PA.SearchForm = Backbone.View.extend({
-    initialize : function() {
+    initialize : function(options) {
         this.model = new PA.SearchQuery()
-        this.render()
+        this.page = options.page
+        _.bindAll(this, 'submit', 'close')
     },
+
     render : function() {
         this.keywords = this.$('#keywords')
         this.$el.addClass('active')
@@ -31,22 +35,133 @@ PA.SearchForm = Backbone.View.extend({
     },
     events : {
         'submit' : 'submit',
-        'click #cancelSearch' : 'cancel'
+        'click #cancelSearch' : 'close'
     },
     submit : function(e) {
         e.preventDefault()
-        var keywords = this.keywords.val().trim()
+
+        // FIND A BETTER METHOD FOR THIS
+        PA.app.pageView.$el.empty()
+
+        var spinner = new Spinner()
+        var keywords = this.keywords.val().trim(),
+            self = this
+
         this.model.set( 'keywords' , keywords )
         this.model.search()
         .done(function(d){
-            console.log(JSON.parse(d))
+            self.page.set( { 
+                page : new PA.SearchResults({
+                    collection : new Backbone.Collection(JSON.parse(d))
+                }),
+                className : 'search-page',
+                outlineTitle : 'Search Results'
+            })
+            PA.router.navigate('/search/results')
+            spinner.detach()
         })
+        this.close()
     },
-    cancel : function(e) {
-        e.preventDefault()
+    close : function(e) {
+        if (e) { e.preventDefault() }
         this.keywords.val('')
         this.$el.removeClass('active')
-        this.remove()
+    }
+})
+
+PA.SearchResults = Backbone.View.extend({
+    tagName : 'div',
+    className : 'search-results',
+    initialize : function(){
+        this.groups = this.collection.groupBy('type')
+
+        this.on('change:collection', function(){
+            this.groups = this.collection.groupBy('type')
+        })
+    },
+
+    render : function() {
+        _.each( this.groups, function( modelsArray, type ) {
+            var sec = document.createElement('section')
+
+            switch (type) {
+                case 'gallery':
+                    $(sec).append('<h3>Galleries</h3>')
+                    _.each( modelsArray, function( model, idx) {
+                        var a = document.createElement('a'),
+                            p = document.createElement('p')
+                        $(a).attr('href', model.get('url')).html(model.get('title'))
+                        $(p).append(a)
+                        $(sec).append(p)
+                    } )
+                break;
+
+                case 'image':
+                    $(sec).append('<h3>Images</h3>')
+                    _.each( modelsArray, function( model, idx) {
+                        _.each( model.get('images'), function(image, idx) {
+                            var img = document.createElement('img')
+                            $(img).attr('src', image.thumb)
+                            $(sec).append(img)
+                        } )
+                    } )
+                break;
+
+                case 'project':
+                    $(sec).append('<h3>Projects</h3>')
+                    _.each( modelsArray, function( model, idx ) {
+                        var a = document.createElement('a'),
+                            p = document.createElement('p')
+                        $(a).attr('href', model.get('url')).html(model.get('title'))
+                        $(p).append(a)
+                        $(sec).append(p)
+                    } )
+                break;
+
+                case 'article':
+                    $(sec).append('<h3>Articles</h3>')
+                    _.each( modelsArray, function( model, idx ) {
+                        var a = document.createElement('a'),
+                            p = document.createElement('p'),
+                            p2 = document.createElement('p')
+                        $(a).attr('href', model.get('url')).html(model.get('title'))
+                        $(p).append(a)
+                        $(p2).append(model.get('summary'))
+                        $(sec).append(p)
+                        $(sec).append(p2)
+                    } )
+                break;
+
+                case 'film':
+                    $(sec).append('<h3>Films</h3>')
+                    _.each( modelsArray, function( model, idx) {
+                        var img = document.createElement('img'),
+                            a = document.createElement('a'),
+                            p = document.createElement('p'),
+                            p2 = document.createElement('p')
+                        $(img).attr('src', model.thumb)
+                        $(a).attr('href', model.get('url')).html(model.get('title'))
+                        $(p).append(a)
+                        $(p2).append( model.get('summary') )
+                        $(sec).append(img).append(p).append(p2)
+                    } )
+                break;
+
+                case 'video':
+                    $(sec).append('<h3>Project Videos</h3>')
+                    _.each( modelsArray, function( model, idx) {
+                        var a = document.createElement('a'),
+                            p = document.createElement('p'),
+                            p2 = document.createElement('p')
+                        $(a).attr('href', model.get('url')).html(model.get('title'))
+                        $(p).append(a)
+                        $(p2).append( model.get('summary') )
+                        $(sec).append(p).append(p2)
+                    } )
+            }
+            this.$el.append(sec)
+        }, this)
+        return this.el
     }
 })
 

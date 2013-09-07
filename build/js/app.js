@@ -44,15 +44,4 @@ $(function(){
 
     checkScroll()
 
-    $('#searchIcon').click(function(e){
-        e.preventDefault()
-        //$('#searchForm').addClass('active')
-        //$('#searchInput').focus()
-        PA.searchForm = new PA.SearchForm({ el : '#searchForm' })
-    })
-    $('#cancelSearch').click(function(e){
-        //e.preventDefault()
-        //$('#searchInput').val('')
-        //$('#searchForm').removeClass('active')
-    })
 })
