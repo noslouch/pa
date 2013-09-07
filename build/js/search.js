@@ -86,7 +86,7 @@ PA.SearchResults = Backbone.View.extend({
 
             switch (type) {
                 case 'gallery':
-                    $(sec).append('<h3>Galleries</h3>')
+                    $(sec).append('<h2>Galleries</h2>')
                     _.each( modelsArray, function( model, idx) {
                         var a = document.createElement('a'),
                             p = document.createElement('p')
@@ -97,7 +97,7 @@ PA.SearchResults = Backbone.View.extend({
                 break;
 
                 case 'image':
-                    $(sec).append('<h3>Images</h3>')
+                    $(sec).append('<h2>Images</h2>')
                     _.each( modelsArray, function( model, idx) {
                         _.each( model.get('images'), function(image, idx) {
                             var img = document.createElement('img')
@@ -108,7 +108,7 @@ PA.SearchResults = Backbone.View.extend({
                 break;
 
                 case 'project':
-                    $(sec).append('<h3>Projects</h3>')
+                    $(sec).append('<h2>Projects</h2>')
                     _.each( modelsArray, function( model, idx ) {
                         var a = document.createElement('a'),
                             p = document.createElement('p')
@@ -119,7 +119,7 @@ PA.SearchResults = Backbone.View.extend({
                 break;
 
                 case 'article':
-                    $(sec).append('<h3>Articles</h3>')
+                    $(sec).append('<h2>Articles</h2>')
                     _.each( modelsArray, function( model, idx ) {
                         var a = document.createElement('a'),
                             p = document.createElement('p'),
@@ -133,7 +133,7 @@ PA.SearchResults = Backbone.View.extend({
                 break;
 
                 case 'film':
-                    $(sec).append('<h3>Films</h3>')
+                    $(sec).append('<h2>Films</h2>')
                     _.each( modelsArray, function( model, idx) {
                         var img = document.createElement('img'),
                             a = document.createElement('a'),
@@ -148,7 +148,7 @@ PA.SearchResults = Backbone.View.extend({
                 break;
 
                 case 'video':
-                    $(sec).append('<h3>Project Videos</h3>')
+                    $(sec).append('<h2>Project Videos</h2>')
                     _.each( modelsArray, function( model, idx) {
                         var a = document.createElement('a'),
                             p = document.createElement('p'),
