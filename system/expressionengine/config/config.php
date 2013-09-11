@@ -14,7 +14,7 @@ $admin_url  = $base_url . '/admin.php';
 // $env = strpos($base_url, 'heroku') ? 'heroku' : 'dev';
 
 // develop and staging share the same DB, production on separate DB
-$env = (( strpos($base_url, 'local') || strpos($base_url, 'staging') ) ? 'dev' : 'heroku');
+$env = (( strpos($base_url, 'local') || strpos($base_url, 'staging') ) ? 'staging' : 'production');
 $env = strpos($base_url, 'develop') ? 'dev' : $env;
 
 $config['app_version'] = '261';
@@ -69,16 +69,16 @@ $config['time_reference'] = 'local';
 $active_group = $env;
 $active_record = TRUE;
 
-$db['dev']['hostname'] =  'us-cdbr-east-04.cleardb.com';
-$db['dev']['username'] =  'b86903d8fe453c';
-$db['dev']['password'] =  '4376d9be';
-$db['dev']['database'] = 'heroku_f0ff3901de97924';
-$db['dev']['dbprefix'] = 'exp_';
-$db['heroku']['hostname'] = 'us-cdbr-east-04.cleardb.com';
-$db['heroku']['username'] = 'bea2dd643b849b';
-$db['heroku']['password'] = 'ed8c3ec7';
-$db['heroku']['database'] = 'heroku_a097090bd82144f';
-$db['heroku']['dbprefix'] = "exp_";
+$db['staging']['hostname'] =  'us-cdbr-east-04.cleardb.com';
+$db['staging']['username'] =  'b86903d8fe453c';
+$db['staging']['password'] =  '4376d9be';
+$db['staging']['database'] = 'heroku_f0ff3901de97924';
+$db['staging']['dbprefix'] = 'exp_';
+$db['production']['hostname'] =  '127.0.0.1';
+$db['production']['username'] =  'dbuser';
+$db['production']['password'] =  '#098sdbA';
+$db['production']['database'] = 'arnell';
+$db['production']['dbprefix'] = 'exp_';
 
 $db[$active_group]['dbdriver'] = "mysql";
 $db[$active_group]['pconnect'] = FALSE;
