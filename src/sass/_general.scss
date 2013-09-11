@@ -546,7 +546,10 @@ iframe {
     position: fixed;
     max-width: 298px;
     min-width: 275px;
+    height: 100%;
     padding-left: 0;
+    padding-bottom: 7em;
+    overflow-y: scroll;
 
     // .type and .links are nested in .row defined in the markup
     .tags > li { line-height: 1.2; }
