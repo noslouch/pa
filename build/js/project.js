@@ -10,8 +10,8 @@ PA.Project = Backbone.Model.extend({
         response.htmlDate = this.makeHtmlDate( response.timestamp )
 
         _.each( response.brand_tags, function(el, i) {
-            var filename = el.logo.split('/')[5]
-            el.logo = 'http://assets.peterarnell.s3.amazonaws.com/logos/' + filename
+            //var filename = el.logo.split('/')[5]
+            //el.logo = 'http://assets.peterarnell.s3.amazonaws.com/logos/' + filename
         })
 
         _.each( response.relatedLinks, function(item, index){
