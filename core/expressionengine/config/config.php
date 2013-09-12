@@ -69,14 +69,14 @@ $config['time_reference'] = 'local';
 $active_group = $env;
 $active_record = TRUE;
 
-$db['staging']['hostname'] =  'us-cdbr-east-04.cleardb.com';
-$db['staging']['username'] =  'b86903d8fe453c';
-$db['staging']['password'] =  '4376d9be';
-$db['staging']['database'] = 'heroku_f0ff3901de97924';
-$db['staging']['dbprefix'] = 'exp_';
-$db['production']['hostname'] =  '127.0.0.1';
-$db['production']['username'] =  'dbuser';
-$db['production']['password'] =  '#098sdbA';
+$db['staging']['hostname'] = '127.0.0.1';
+$db['staging']['username'] = 'dbuser';   
+$db['staging']['password'] = '#098sdbA'; 
+$db['staging']['database'] = 'staging';   
+$db['staging']['dbprefix'] = 'exp_';     
+$db['production']['hostname'] = '127.0.0.1';
+$db['production']['username'] = 'dbuser';
+$db['production']['password'] = '#098sdbA';
 $db['production']['database'] = 'arnell';
 $db['production']['dbprefix'] = 'exp_';
 
