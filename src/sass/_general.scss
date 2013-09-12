@@ -548,7 +548,6 @@ iframe {
     min-width: 275px;
     height: 100%;
     padding-left: 0;
-    padding-bottom: 7em;
     overflow-y: auto;
 
     // .type and .links are nested in .row defined in the markup
@@ -558,6 +557,10 @@ iframe {
     }
     .links { 
         @include grid-column(8, $collapse: true);
+    }
+
+    .wrapper {
+        margin-bottom: 7em;
     }
 
 }
