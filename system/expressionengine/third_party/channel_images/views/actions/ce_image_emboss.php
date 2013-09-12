@@ -1,1 +1,0 @@
-<small><?=lang('ce:emboss:exp')?></small>
