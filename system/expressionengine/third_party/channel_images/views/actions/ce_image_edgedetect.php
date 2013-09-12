@@ -1,1 +1,0 @@
-<small><?=lang('ce:edgedetect:exp')?></small>
