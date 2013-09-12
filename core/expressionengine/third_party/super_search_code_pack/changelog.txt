@@ -1,0 +1,5 @@
+Solspace - Super Search Code Pack - Change Log
+
+
+1.0.0 (August 8, 2011)
+ - Initial release.

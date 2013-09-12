@@ -1,0 +1,49 @@
+<?php echo $this->view('header.html');?>
+	
+	<div class="itemWrapper">
+<?php if ( isset( $error ) === TRUE ) : ?>
+		<div class="tableHeading"><?=ee()->lang->line('code_packs'); ?></div>
+		<div class="tableHeadingAlt"><?=ee()->lang->line('code_packs_explanation'); ?></div>
+		<div class="tableBorder">
+			<div class="tableCellOne">
+				<?=$error; ?>
+			</div>
+		</div>
+<?php else: ?>
+		<div class="tableHeading"><?=$code_pack_label; ?></div>
+		<div class="tableHeadingAlt"><?=ee()->lang->line('choose_a_theme'); ?></div>
+		<form method="post" action="<?php echo $this->output($base_uri.'&method=code_pack_install');?>">
+		<input type="hidden" name="code_pack_name" value="<?=$code_pack_name; ?>" />
+		<input type="hidden" name="code_pack_label" value="<?=$code_pack_label; ?>" />
+		<input type="hidden" name="code_pack_theme_folder" value="<?=$code_pack_theme_folder; ?>" />
+		<table class="tableBorder" style="width:100%;" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td class="tableCellOne" style="width:10%;"><?=ee()->lang->line('prefix'); ?></td>
+				<td class="tableCellOne" style="width:20%;">
+					<input name="prefix" />
+				</td>
+				<td class="tableCellOne"><?=ee()->lang->line('prefix_exp'); ?></td>
+			</tr>
+<?php foreach ( $code_packs as $key => $val ) : ?>
+<?php $switch = $this->cycle('tableCellTwo', 'tableCellOne'); ?>
+			<tr>
+				<td class="<?=$switch; ?>">
+					<input type="radio" name="code_pack_theme" <?=(($key == 'default') ? 'checked="checked"' : '')?>value="<?=$key; ?>" id="<?=$key; ?>" /> <label for="<?=$key; ?>"><?=$val['name']; ?></label>
+				</td>
+				<td class="<?=$switch; ?>">
+<?php if ( ! empty( $val['img_url'] ) ) : ?>
+					<img src="<?=$val['img_url']; ?>" alt="<?=$val['name'] ?>" border="0" style="width:200px;height:auto;" />
+<?php endif; ?>
+				</td>
+				<td class="<?=$switch; ?>">
+					<?=$val['description']; ?>
+				</td>
+			</tr>
+<?php endforeach; ?>
+		</table>
+		<input type="submit" value="<?=ee()->lang->line('submit'); ?>" />
+		</form>
+<?php endif; ?>
+	</div>
+	
+<?php echo $this->view('footer.html'); ?>

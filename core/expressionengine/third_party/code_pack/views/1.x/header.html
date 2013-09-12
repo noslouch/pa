@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>ExpressionEngine | <?=$page_title?></title>
+
+<meta http-equiv='content-type' content='text/html; charset=<?php echo (ee()->config->item('charset') != '') ? ee()->config->item('charset') : 'utf-8';?>' >
+<meta http-equiv='expires' content='-1' >
+<meta http-equiv='expires' content='Mon, 01 Jan 1970 23:59:59 GMT' >
+<meta http-equiv='pragma' content='no-cache' >
+
+<style type='text/css'>
+<?=$this->fetch_stylesheet();?>
+<?=$DSP->manual_css;?>
+</style>
+
+<?=$DSP->_menu_js();?>
+<?=$DSP->_global_javascript();?>
+<?=$DSP->extra_header;?>
+
+<?=$this->js_magic_checkboxes()?>
+
+<script type="text/javascript"> 
+<!--
+
+function styleswitch(link)
+{                 
+	if (document.getElementById(link).className == 'altTabs')
+	{
+		document.getElementById(link).className = 'altTabsHover';
+	}
+}
+
+function stylereset(link)
+{                 
+	if (document.getElementById(link).className == 'altTabsHover')
+	{
+		document.getElementById(link).className = 'altTabs';
+	}
+}
+
+-->
+</script>
+
+<style type='text/css'>
+
+	.tableCellOne, .tableCellTwo, .tableCellOneHover, .tableCellTwoHover
+	{
+		padding-top: 4px;
+		padding-bottom: 4px;
+		font-size: 12px;
+	}
+	
+	.tableCellOne a, .tableCellTwo a, .tableCellOneHover a, .tableCellTwoHover a,
+	.tableCellOne div, .tableCellTwo div, .tableCellOneHover div, .tableCellTwoHover div
+	{
+		font-size: 12px;
+	}
+	
+	.tableCellOne a:link, .tableCellOne a:visited, .tableCellTwo a:link ,.tableCellTwo a:visited
+	{
+		font-size:12px;
+	}
+	
+</style>
+
+</head>
+
+<body onload="create_magic_checkboxes();">
+
+<?=$DSP->page_header();?>
+<?=$DSP->page_navigation();?>
+
+<div id='breadcrumbNoLine'>
+	<table border='0'  cellspacing='0' cellpadding='0' style='width:100%;' >
+		<tr>
+			<td class='crumbPad' ><span class='crumblinks'><?=$page_crumb;?></span></td>
+			<td  class='breadcrumbRight'  style='width:270px;' valign='bottom' align='right'>&nbsp;</td>
+		</tr>
+	</table>
+</div>
+
+<div id='contentNB'>
+
+<table style='width:100%;'  cellspacing='0'  cellpadding='0'  border='0' >
+<tr>
+
+<?php foreach ($module_menu as $id => $item) : ?>
+
+<td><a href='<?php echo $item['link'];?>' ><div class="<?php echo ($module_menu_highlight == $id) ? 'altTabSelected' : 'altTabs';?>" id="<?php echo $id;?>"  onClick="navjump('<?php echo $id;?>');" onmouseover="styleswitch('<?php echo $id;?>');" onmouseout="stylereset('<?php echo $id;?>');">&nbsp;&nbsp;&nbsp;<?php echo $item['title'];?>&nbsp;&nbsp;&nbsp;</div></a></td>
+
+<?php endforeach; ?>
+</tr>
+</table>
+
+<div class='default' >&nbsp;</div>

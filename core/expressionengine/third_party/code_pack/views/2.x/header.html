@@ -1,0 +1,27 @@
+
+ <?php if ($message != ''):?>
+	<script type="text/javascript">
+		jQuery(function($){
+			$.ee_notice('<?php echo addslashes($message);?>',{open: true, type:"success"});
+			setTimeout(function(){ $.ee_notice.destroy(); }, 3000);
+		});
+	</script>
+<?php endif;?>
+
+<style type="text/css">
+	*:focus {
+		outline: none;
+	}
+</style>
+
+<p style="float:right; margin-top:10px;"><strong><?=$lang_module_version?>: <?=$module_version?></strong></p>
+
+<ul class="tab_menu" id="tab_menu_tabs"> 
+<?php foreach($module_menu AS $menu_name => $menu_item) : ?>
+	<li class="content_tab<?=($menu_name == $module_menu_highlight) ? ' current': ''?>"> 
+		<a href="<?php echo $menu_item['link'];?>"><?php echo $menu_item['title'];?></a>  
+	</li> 
+<?php endforeach; ?>
+</ul>  
+
+<div class="clear_left shun"></div>

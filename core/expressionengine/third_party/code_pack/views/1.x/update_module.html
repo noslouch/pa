@@ -1,0 +1,24 @@
+<?php echo $this->view('header.html');?>
+	
+	<form action="<?php echo $form_url;?>" method="post">
+
+		<div class="alertHeading"><?php echo ee()->lang->line('update_code_pack');?></div>
+		<div>
+			<input type="hidden" name="run_update" value="y" />
+		</div>
+
+		<div class="box">
+
+			<div class="itemWrapper">
+				<p><strong><?php echo ee()->lang->line('code_pack_update_message'); ?></strong></p>
+			</div>
+
+			<div class="itemWrapper">
+				<input  type="submit" class="submit" value="<?php echo ee()->lang->line('update');?>" />
+			</div>
+			
+		</div>
+		
+	</form>
+	
+<?php echo $this->view('footer.html'); ?>
