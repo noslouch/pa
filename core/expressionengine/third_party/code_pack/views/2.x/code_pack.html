@@ -1,0 +1,54 @@
+<?php echo $this->view('header.html');?>
+
+<?php if ( isset( $error ) === TRUE ) : ?>
+	<h3 class="accordion ui-accordion-header ui-helper-reset ui-state-active ui-corner-top"
+		style="padding-left:10px; margin-bottom:0;">
+		<?=$code_pack_label?>
+	</h3>
+	<p class="notice"><?=$error?></p>
+<?php else: ?>
+	<form method="post" action="<?php echo $caller->output($base_uri.'&method=code_pack_install');?>">
+	<input type="hidden" name="XID" value="<?php echo XID_SECURE_HASH;?>" />
+	<input type="hidden" name="code_pack_name" value="<?=$code_pack_name; ?>" />
+	<input type="hidden" name="code_pack_label" value="<?=$code_pack_label; ?>" />
+	<input type="hidden" name="code_pack_theme_folder" value="<?=$code_pack_theme_folder; ?>" />
+	
+	<h3 class="accordion ui-accordion-header ui-helper-reset ui-state-active ui-corner-top"
+		style="padding-left:10px; margin-bottom:0;">
+		<?=$code_pack_label?>
+	</h3>
+	
+	<table id="entries" class="mainTable padTable" border="0" cellspacing="0" cellpadding="0">
+			
+		<tbody>
+			<tr class="odd">
+				<td style="width:10%;"><?=ee()->lang->line('prefix'); ?></td>
+				<td style="width:30%;">
+					<input name="prefix" value="<?=$prefix_default?>" />
+				</td>
+				<td><?=ee()->lang->line('prefix_exp'); ?></td>
+			</tr>
+<?php $i = 0; foreach ( $code_packs as $key => $val ) : $i++; ?>
+<?php $switch = $caller->cycle( 'even', 'odd' ); ?>
+			<tr class="<?=$switch; ?>">
+				<td >
+					<input type="radio" name="code_pack_theme" <?=(($key == 'default') ? 'checked="checked"' : '')?>value="<?=$key; ?>" id="<?=$key; ?>" /> <label for="<?=$key; ?>"><?=$val['name']; ?></label>
+				</td>
+				<td >
+<?php if ( ! empty( $val['img_url'] ) ) : ?>
+					<img src="<?=$val['img_url']; ?>" alt="<?=$val['name'] ?>" border="0" style="width:200px;height:auto;" />
+<?php endif; ?>
+				</td>
+				<td >
+					<?=$val['description']; ?>
+				</td>
+			</tr>
+<?php endforeach; ?>
+		</tbody>
+	</table>
+	<input type="submit" type="submit" class="submit" value="<?=ee()->lang->line('submit'); ?>" />
+	</form>
+<?php endif; ?>	
+
+	
+<?php echo $this->view('footer.html'); ?>
