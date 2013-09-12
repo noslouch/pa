@@ -4370,7 +4370,7 @@ iframe {
   height: 100%;
   padding-left: 0;
   padding-bottom: 7em;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 /* line 555, ../../src/sass/_general.scss */
 .details .tags > li {
