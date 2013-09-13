@@ -54,7 +54,7 @@ $(function(){
 
     Slide.prototype.animate = function(){
         this.g.openSlide = this
-        setTimeout(this.staggerClose, 2500)
+        setTimeout(this.staggerClose, 4500)
         this.staggerOpen()
     }
 
