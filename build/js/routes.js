@@ -43,7 +43,7 @@ PA.Router = Backbone.Router.extend({
     projects : function() {
         var spinner = new Spinner()
 
-        PA.projects.fetch({ cache: true })
+        $.when( PA.projects.fetch() )
         .then( function() {
             PA.app.projects()
             PA.app.header.filterBar.render()
@@ -56,8 +56,7 @@ PA.Router = Backbone.Router.extend({
     singleProject : function(project) {
         var spinner = new Spinner()
 
-        //$.when( PA.projects.fetch() )
-        PA.projects.fetch({ cache: true })
+        $.when( PA.projects.fetch() )
         .done( function() {
             PA.app.singleProject(project)
             spinner.detach()
@@ -68,8 +67,7 @@ PA.Router = Backbone.Router.extend({
     showcaseItem : function(project, urlTitle) {
         var spinner = new Spinner()
 
-        //$.when( PA.projects.fetch() )
-        PA.projects.fetch({ cache: true })
+        $.when( PA.projects.fetch() )
         .done( function() {
             PA.app.singleProject(project, urlTitle)
             spinner.detach()
@@ -80,7 +78,7 @@ PA.Router = Backbone.Router.extend({
     photography : function() {
         var spinner = new Spinner()
 
-        PA.albums.fetch({ cache : true })
+        $.when( PA.albums.fetch() )
         .done( function(){
             PA.app.photoHomeInit()
             spinner.detach()
@@ -91,7 +89,7 @@ PA.Router = Backbone.Router.extend({
     singleAlbum : function(urlTitle) {
         var spinner = new Spinner()
 
-        PA.albums.fetch({ cache : true })
+        $.when( PA.albums.fetch() )
         .done( function() {
             PA.app.albumInit(urlTitle)
             spinner.detach()
@@ -101,7 +99,7 @@ PA.Router = Backbone.Router.extend({
     film : function() {
         var spinner = new Spinner()
 
-        PA.films.fetch({ cache : true })
+        $.when( PA.films.fetch() )
         .done( function(){
             PA.app.filmHomeInit()
             spinner.detach()
@@ -111,7 +109,7 @@ PA.Router = Backbone.Router.extend({
     singleFilm : function(urlTitle) {
         var spinner = new Spinner()
 
-        PA.films.fetch({ cache : true })
+        $.when( PA.films.fetch() )
         .done( function() {
             PA.app.singleFilmInit( urlTitle )
             spinner.detach()
@@ -129,7 +127,7 @@ PA.Router = Backbone.Router.extend({
         var deferreds = []
 
         _.each(PA.profilePage.sections, function(el){
-            deferreds.push( el.fetch({ cache : true }) )
+            deferreds.push(el.fetch())
         })
 
         $.when.apply($, deferreds).done(function(){
@@ -166,8 +164,6 @@ PA.Router = Backbone.Router.extend({
 
         } catch(err) {
 
-            console.log('in catch')
-
             PA.profilePage = new PA.ProfileViewer({
                 el : '#profileViewer'
             })
@@ -175,7 +171,7 @@ PA.Router = Backbone.Router.extend({
             var deferreds = []
 
             _.each(PA.profilePage.sections, function(el){
-                deferreds.push(el.fetch({ cache : true }))
+                deferreds.push(el.fetch())
             })
 
             $.when.apply($, deferreds).done(function(){
@@ -240,7 +236,7 @@ PA.Router = Backbone.Router.extend({
     stream : function() {
         var spinner = new Spinner()
 
-        PA.instagrams.fetch({ cache: true })
+        $.when( PA.instagrams.fetch() )
         .done( function() {
             PA.app.streamInit()
             spinner.detach()
