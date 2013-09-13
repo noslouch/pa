@@ -64,7 +64,7 @@
 }
 @-moz-keyframes starfield {
     from {
-        -moz-transform: translate3d(0,0,1000px);
+        -moz-transform: translate3d(0,0,150px);
         opacity: 0;
         z-index: 100;
     }
@@ -75,13 +75,13 @@
         opacity: 1;
     }
     to {
-        -moz-transform: translate3d(0,0,-4000px);
+        -moz-transform: translate3d(0,0,-1750px);
         z-index: 0;
     }
 }
 @keyframes starfield {
     from {
-        transform: translate3d(0,0,1000px);
+        transform: translate3d(0,0,150px);
         opacity: 0;
         z-index: 100;
     }
@@ -92,7 +92,7 @@
         opacity: 1;
     }
     to {
-        transform: translate3d(0,700px,-4000px);
+        transform: translate3d(0,700px,-1750px);
         z-index: 0;
     }
 }
