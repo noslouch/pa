@@ -11,7 +11,7 @@ PA.Router = Backbone.Router.extend({
     },
 
     routes : {
-        "" : "homeLoader",
+        "" : "home",
         "projects" : "projects",
         "projects/:project" : "singleProject",
         "projects/:project/:showcase" : "showcaseItem",
@@ -38,6 +38,10 @@ PA.Router = Backbone.Router.extend({
         } catch(e) {
             console.log('error caught: ', e)
         }
+    },
+
+    homeLoader : function() {
+        PA.app.home()
     },
 
     projects : function() {

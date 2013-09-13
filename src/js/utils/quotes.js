@@ -177,6 +177,8 @@ $(function(){
         this.els = $('#bullets li')
 
         this.getCurrent().animate()
+
+        $('#bullets').addClass('loaded')
     }
 
     var g = new Gallery(container)
