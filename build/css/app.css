@@ -3962,9 +3962,9 @@ iframe {
 /* line 219, ../../src/sass/_general.scss */
 .n-container .brick:hover .copy {
   background: white;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
 }
 /* line 224, ../../src/sass/_general.scss */
 .n-container .brick:hover .img {
