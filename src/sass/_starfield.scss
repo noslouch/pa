@@ -8,7 +8,7 @@
 }
 
 .starfield {
-    @include perspective(850px);
+    @include perspective(150px);
     position: fixed;
     top: 0;
     left: 0;
@@ -17,29 +17,37 @@
     overflow: hidden;
     z-index: 0;
     
-    img { position : absolute; }
-   .fast {
+   .star {
+        position: absolute;
         @include animation-props(10s, starfield, infinite);
         @include translate3d(0,0,0);
         opacity: 0;
         @include transition(box-shadow 250ms ease-out);
         display: block;
     }
+
 } 
 
 //.loader { text-align: center; margin-top: 400px; }
 
-.fast:hover{
+.star:hover {
     -webkit-animation-play-state:paused;
     -moz-animation-play-state:paused;
     -o-animation-play-state:paused; 
     animation-play-state:paused;
     @include single-box-shadow(rgba(105, 105, 105, 0.3), 5px, 5px, 40px, 0px);
+
+    .caption {
+        opacity: 1;
+        p {
+            font-size: emCalc(18); 
+        }
+    }
 }
 
 @-webkit-keyframes starfield {
     from {
-        -webkit-transform: translate3d(0,0,1000px);
+        -webkit-transform: translate3d(0,0,150px);
         opacity: 0;
         z-index: 100;
     }
@@ -50,7 +58,7 @@
         opacity: 1;
     }
     to {
-        -webkit-transform: translate3d(0,0,-4000px);
+        -webkit-transform: translate3d(0,0,-1750px);
         z-index: 0;
     }
 }

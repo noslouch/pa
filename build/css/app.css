@@ -2950,11 +2950,11 @@ button {
 
 /* line 10, ../../src/sass/_starfield.scss */
 .starfield {
-  -webkit-perspective: 850px;
-  -moz-perspective: 850px;
-  -ms-perspective: 850px;
-  -o-perspective: 850px;
-  perspective: 850px;
+  -webkit-perspective: 150px;
+  -moz-perspective: 150px;
+  -ms-perspective: 150px;
+  -o-perspective: 150px;
+  perspective: 150px;
   position: fixed;
   top: 0;
   left: 0;
@@ -2964,11 +2964,8 @@ button {
   z-index: 0;
 }
 /* line 20, ../../src/sass/_starfield.scss */
-.starfield img {
+.starfield .star {
   position: absolute;
-}
-/* line 21, ../../src/sass/_starfield.scss */
-.starfield .fast {
   -webkit-animation-duration: 10s;
   -webkit-animation-name: starfield;
   -webkit-animation-iteration-count: infinite;
@@ -2988,8 +2985,8 @@ button {
   display: block;
 }
 
-/* line 32, ../../src/sass/_starfield.scss */
-.fast:hover {
+/* line 33, ../../src/sass/_starfield.scss */
+.star:hover {
   -webkit-animation-play-state: paused;
   -moz-animation-play-state: paused;
   -o-animation-play-state: paused;
@@ -2998,51 +2995,59 @@ button {
   -moz-box-shadow: 5px 5px 40px 0px rgba(105, 105, 105, 0.3);
   box-shadow: 5px 5px 40px 0px rgba(105, 105, 105, 0.3);
 }
+/* line 40, ../../src/sass/_starfield.scss */
+.star:hover .caption {
+  opacity: 1;
+}
+/* line 42, ../../src/sass/_starfield.scss */
+.star:hover .caption p {
+  font-size: 1.125em;
+}
 
 @-webkit-keyframes starfield {
-  /* line 41, ../../src/sass/_starfield.scss */
+  /* line 49, ../../src/sass/_starfield.scss */
   from {
-    -webkit-transform: translate3d(0, 0, 1000px);
+    -webkit-transform: translate3d(0, 0, 150px);
     opacity: 0;
     z-index: 100;
   }
 
-  /* line 46, ../../src/sass/_starfield.scss */
+  /* line 54, ../../src/sass/_starfield.scss */
   15% {
     opacity: 1;
   }
 
-  /* line 49, ../../src/sass/_starfield.scss */
+  /* line 57, ../../src/sass/_starfield.scss */
   50% {
     opacity: 1;
   }
 
-  /* line 52, ../../src/sass/_starfield.scss */
+  /* line 60, ../../src/sass/_starfield.scss */
   to {
-    -webkit-transform: translate3d(0, 0, -4000px);
+    -webkit-transform: translate3d(0, 0, -1750px);
     z-index: 0;
   }
 }
 
 @-moz-keyframes starfield {
-  /* line 58, ../../src/sass/_starfield.scss */
+  /* line 66, ../../src/sass/_starfield.scss */
   from {
     -moz-transform: translate3d(0, 0, 1000px);
     opacity: 0;
     z-index: 100;
   }
 
-  /* line 63, ../../src/sass/_starfield.scss */
+  /* line 71, ../../src/sass/_starfield.scss */
   15% {
     opacity: 1;
   }
 
-  /* line 66, ../../src/sass/_starfield.scss */
+  /* line 74, ../../src/sass/_starfield.scss */
   50% {
     opacity: 1;
   }
 
-  /* line 69, ../../src/sass/_starfield.scss */
+  /* line 77, ../../src/sass/_starfield.scss */
   to {
     -moz-transform: translate3d(0, 0, -4000px);
     z-index: 0;
@@ -3050,24 +3055,24 @@ button {
 }
 
 @keyframes starfield {
-  /* line 75, ../../src/sass/_starfield.scss */
+  /* line 83, ../../src/sass/_starfield.scss */
   from {
     transform: translate3d(0, 0, 1000px);
     opacity: 0;
     z-index: 100;
   }
 
-  /* line 80, ../../src/sass/_starfield.scss */
+  /* line 88, ../../src/sass/_starfield.scss */
   15% {
     opacity: 1;
   }
 
-  /* line 83, ../../src/sass/_starfield.scss */
+  /* line 91, ../../src/sass/_starfield.scss */
   50% {
     opacity: 1;
   }
 
-  /* line 86, ../../src/sass/_starfield.scss */
+  /* line 94, ../../src/sass/_starfield.scss */
   to {
     transform: translate3d(0, 700px, -4000px);
     z-index: 0;

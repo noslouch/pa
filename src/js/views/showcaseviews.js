@@ -319,24 +319,32 @@ PA.StarThumb = Backbone.View.extend({
     initialize : function() {
         _.bindAll( this, 'render' )
 
-        this.$el.append( $('<img>') )
-        this.$('img').css({
+        $('<img>').appendTo( this.$el )
+            .attr( 'src', this.model.get('thumb') )
+
+        this.$el.css({
             left : this.options.HALF_WIDTH + this.randomRange(-this.options.HALF_WIDTH, this.options.HALF_WIDTH),
             top : this.options.HALF_HEIGHT + this.randomRange(-this.options.HALF_HEIGHT, this.options.HALF_HEIGHT)
-        }).attr( 'src', this.model.get('thumb') )
+        })
     },
     render : function(instagram) {
 
         this.$el
-            .addClass( 'fast' )
+            .addClass( 'star' )
 
         if ( !!instagram ) {
             this.$el
             .attr( 'target' , '_blank' )
             .attr( 'href', this.model.get('url') )
         } else {
+            var caption = document.createElement('div'),
+                p = document.createElement('p')
+            $(p).html( this.model.get('caption') )
+            $(caption).addClass('caption').append(p)
+
             this.$el
             .attr( 'href', '/projects/' + this.model.get('url') )
+            .prepend(caption)
         }
 
         return this.el
