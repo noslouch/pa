@@ -14,6 +14,7 @@ PA.Header = Backbone.View.extend({
             setTimeout( function(){
                 $('.site-header').removeClass('home')
                 $('.n-wrapper').removeClass('home')
+                $('#bullets').addClass('loaded')
             }, 2000 )
         }
     }
