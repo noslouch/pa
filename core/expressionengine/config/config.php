@@ -10,12 +10,9 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" :
 $base_url .= "://".$_SERVER['HTTP_HOST'];
 $admin_url  = $base_url . '/admin.php';
 
-// staging and production share the same DB, develop on separate DB
-// $env = strpos($base_url, 'heroku') ? 'heroku' : 'dev';
-
 // develop and staging share the same DB, production on separate DB
-$env = (( strpos($base_url, 'local') || strpos($base_url, 'staging') ) ? 'staging' : 'production');
-$env = strpos($base_url, 'develop') ? 'dev' : $env;
+$env = strpos($base_url, 'staging') ? 'staging' : 'production';
+$env = strpos($base_url, 'local') ? 'local' : $env;
 
 $config['app_version'] = '261';
 $config['install_lock'] = "";
@@ -69,6 +66,11 @@ $config['time_reference'] = 'local';
 $active_group = $env;
 $active_record = TRUE;
 
+$db['local']['hostname'] = '70.32.107.106';
+$db['local']['username'] = 'dbuser';   
+$db['local']['password'] = '#098sdbA'; 
+$db['local']['database'] = 'staging';   
+$db['local']['dbprefix'] = 'exp_';     
 $db['staging']['hostname'] = '127.0.0.1';
 $db['staging']['username'] = 'dbuser';   
 $db['staging']['password'] = '#098sdbA'; 
