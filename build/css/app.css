@@ -3044,7 +3044,7 @@ button {
 @-moz-keyframes starfield {
   /* line 66, ../../src/sass/_starfield.scss */
   from {
-    -moz-transform: translate3d(0, 0, 1000px);
+    -moz-transform: translate3d(0, 0, 150px);
     opacity: 0;
     z-index: 100;
   }
@@ -3061,7 +3061,7 @@ button {
 
   /* line 77, ../../src/sass/_starfield.scss */
   to {
-    -moz-transform: translate3d(0, 0, -4000px);
+    -moz-transform: translate3d(0, 0, -1750px);
     z-index: 0;
   }
 }
@@ -3069,7 +3069,7 @@ button {
 @keyframes starfield {
   /* line 83, ../../src/sass/_starfield.scss */
   from {
-    transform: translate3d(0, 0, 1000px);
+    transform: translate3d(0, 0, 150px);
     opacity: 0;
     z-index: 100;
   }
@@ -3086,7 +3086,7 @@ button {
 
   /* line 94, ../../src/sass/_starfield.scss */
   to {
-    transform: translate3d(0, 700px, -4000px);
+    transform: translate3d(0, 700px, -1750px);
     z-index: 0;
   }
 }
