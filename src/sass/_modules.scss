@@ -30,6 +30,9 @@ button {
     height: 88%;
     @include transition(height 150ms ease);
 
+    &.short { height: 66%; }
+    &.small h3 { font-size: emCalc(10); }
+
     .container {
         position: relative;
         width: 100%;
@@ -50,11 +53,15 @@ button {
         vertical-align: middle;
         font-size: emCalc(10);
         @include transition(font-size 150ms ease);
-
     }
 
-    &.short { height: 66%; }
-    &.small h3 { font-size: emCalc(10); }
+    .indicators {
+        opacity: 0;
+        @include transition( opacity 300ms ease-in );
+
+        &.loaded { opacity: 1; }
+    }
+
 }
 
 

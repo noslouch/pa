@@ -5,6 +5,17 @@ PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 PA.Header = Backbone.View.extend({
     initialize: function() {
         this.filterBar = new PA.FilterBar({ model : this.model })
+
+        this.listenTo( PA.router, 'route', this.toggle )
+    },
+
+    toggle : function( methodName, urlParam ){
+        if ( methodName === 'home' ) {
+            setTimeout( function(){
+                $('.site-header').removeClass('home')
+                $('.n-wrapper').removeClass('home')
+            }, 2000 )
+        }
     }
 })
 
@@ -137,6 +148,10 @@ PA.App = Backbone.View.extend({
             this.model.unset('jump', {silent : true} )
             this.model.set( 'jump', hashObj.jump )
         }
+    },
+
+    home : function() {
+        
     },
 
     projects : function() {
