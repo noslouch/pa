@@ -12,6 +12,24 @@ module.exports = function(grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.dev %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
     // Task configuration.
+    replace : {
+      build_replace : {
+        options : {
+          variables : {
+            'hash' : '<%= ( (new Date()).valueOf().toString() ) + ( Math.floor( (Math.random()*1000000)+1 ).toString() ) %>'
+          }
+        },
+        files : [
+          {
+            flatten : true,
+            expand : true,
+            src: ['src/html/footer.html', 'src/html/header.html'],
+            dest: 'templates/default_site/includes.group/'
+          }
+        ]
+      }
+    },
+
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -82,7 +100,7 @@ module.exports = function(grunt) {
       },
       dev: {
         files: ['src/**/*', 'templates/**/*'],
-        tasks : ['compass', 'jshint:src', 'copy:dev'],
+        tasks : ['compass', 'jshint:src', 'copy:dev', 'replace'],
       }
     },
     clean: {
@@ -99,6 +117,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-replace');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
