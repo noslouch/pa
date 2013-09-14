@@ -17,15 +17,7 @@
   "globalstrict": true,
   "devel" : true,
   "globals" : {
-    "isoLoader" : true,
-    "fbLoader" : true,
-    "stars" : true,
-    "checkScroll": true,
-    "Backbone" : true,
-    "makeTime" : true,
-    "projects" : true,
-    "Project" : true,
-    "PA" : true,
-    "_" : true
+    "define" : true,
+    "require" : true
   }
 }

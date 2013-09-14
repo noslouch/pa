@@ -12,6 +12,7 @@ module.exports = function(grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.dev %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
     // Task configuration.
+
     replace : {
       build_replace : {
         options : {
@@ -23,7 +24,7 @@ module.exports = function(grunt) {
           {
             flatten : true,
             expand : true,
-            src: ['src/html/footer.html', 'src/html/header.html'],
+            src: ['assets/html/header.html'],
             dest: 'templates/default_site/includes.group/'
           }
         ]
@@ -40,6 +41,7 @@ module.exports = function(grunt) {
         dest: 'build/<%= pkg.name %>.js'
       },
     },
+
     uglify: {
       options: {
         banner: '<%= banner %>'
@@ -49,9 +51,11 @@ module.exports = function(grunt) {
         dest: 'build/<%= pkg.name %>.min.js'
       },
     },
+
     qunit: {
       files: ['test/**/*.html']
     },
+
     jshint: {
       gruntfile: {
         options: {
@@ -61,27 +65,24 @@ module.exports = function(grunt) {
       },
       src: {
         options: {
-          jshintrc: 'src/.jshintrc'
+          jshintrc: 'js/.jshintrc'
         },
-        src: ['src/**/*.js']
-      },
-      test: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/**/*.js']
-      },
+        src: ['js/app/**/*.js', 'js/app.js', 'js/utils/**/*.js']
+      }
     },
+
     compass : {
         create : {
             config: '/config.rb'
         }
     },
+
     copy: {
         dev : {
-            files : [{ expand: true, src: ['src/js/**/*.js'], dest: 'build/js/', flatten: true }]
+            //files : [{ expand: true, src: ['src/js/**/*.js'], dest: 'build/js/', flatten: true }]
         }
     },
+
     watch: {
       options : {
         livereload: true
@@ -94,18 +95,16 @@ module.exports = function(grunt) {
         files: '<%= jshint.src.src %>',
         tasks: ['jshint:src', 'qunit']
       },
-      test: {
-        files: ['<%= jshint.test.src %>', '<%= qunit.files %>'],
-        tasks: ['jshint:test', 'qunit']
-      },
       dev: {
-        files: ['src/**/*', 'templates/**/*'],
-        tasks : ['compass', 'jshint:src', 'copy:dev', 'replace'],
+        files: ['js/**/*', 'css/sass/**/*', 'templates/**/*', 'assets/html/**/*'],
+        tasks : ['compass', 'jshint:src']
       }
     },
+
     clean: {
         build : "build"
     }
+
   });
 
   // These plugins provide necessary tasks.

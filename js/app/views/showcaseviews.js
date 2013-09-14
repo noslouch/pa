@@ -1,43 +1,54 @@
+/* app/views/showcaseviews.js
+ * the many showcases of Peter Arnell */
 'use strict';
-var PA = PA || {}
-PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
 
-Backbone.View.prototype.destroy = function() {
-    this.remove()
-    this.unbind()
-}
+define([
+    'module',
+    'jquery',
+    'backbone',
+    'underscore',
+    'tpl/jst',
+    'utils/fbLoader'
+], function( $, Backbone, _, templates, fbLoader ) {
 
-PA.ImageThumb = Backbone.View.extend({
-    tagName : "div",
-    template : PA.jst.thumbTemplate,
-    className : function() {
-        if (this.options.cover) {
-            var tags = []
-            _.each( this.model.get('tags'), function(obj) {
-                tags.push( obj.className )
-            }, this )
-            return "thumb " + tags.join(' ') + (this.model.get('wide') ? " wide" : "")
-        } else {
-            return "thumb" + (this.model.get('wide') ? " wide" : "")
-        }
-    },
-    render : function(){
-        this.$el.html( this.template({
-            url : this.options.path ? this.options.path + '/' + this.model.get('url') : this.model.get('url'),
-            cover : this.options.cover,
-            caption : this.model.get('caption'),
-            thumb : this.model.get('thumb'),
-            lg_thumb : this.model.get('lg_thumb'),
-            large : this.options.large
-        }) )
-        return this.el
+    var cases = {}
+
+    Backbone.View.prototype.destroy = function() {
+        this.remove()
+        this.unbind()
     }
-})
+
+    cases.ImageThumb = Backbone.View.extend({
+        tagName : "div",
+        template : templates.thumbTemplate,
+        className : function() {
+            if (this.options.cover) {
+                var tags = []
+                _.each( this.model.get('tags'), function(obj) {
+                    tags.push( obj.className )
+                }, this )
+                return "thumb " + tags.join(' ') + (this.model.get('wide') ? " wide" : "")
+            } else {
+                return "thumb" + (this.model.get('wide') ? " wide" : "")
+            }
+        },
+        render : function(){
+            this.$el.html( this.template({
+                url : this.options.path ? this.options.path + '/' + this.model.get('url') : this.model.get('url'),
+                cover : this.options.cover,
+                caption : this.model.get('caption'),
+                thumb : this.model.get('thumb'),
+                lg_thumb : this.model.get('lg_thumb'),
+                large : this.options.large
+            }) )
+            return this.el
+        }
+    })
 
 // instantiate with
 // cover : boolean
 // collection/model : of images
-PA.ImageShowcase = Backbone.View.extend({
+cases.ImageShowcase = Backbone.View.extend({
     tagName : 'div',
     id : 'iso-grid',
 
@@ -45,7 +56,7 @@ PA.ImageShowcase = Backbone.View.extend({
         _.bindAll(this, 'render', 'firstLoad', 'filter')
 
         this.collection.forEach(function(image) {
-            var thumb = new PA.ImageThumb({
+            var thumb = new cases.ImageThumb({
                 model : image,
                 cover : this.options.cover ? true : false,
                 large : this.collection.length < 5 && !this.options.cover,
@@ -101,9 +112,9 @@ PA.ImageShowcase = Backbone.View.extend({
     }
 })
 
-PA.FilmThumb = Backbone.View.extend({
+cases.FilmThumb = Backbone.View.extend({
     tagName : 'div',
-    template : PA.jst.filmThumb,
+    template : templates.filmThumb,
     render : function() {
         var html = this.template({
             url : this.model.url(),
@@ -116,10 +127,10 @@ PA.FilmThumb = Backbone.View.extend({
     }
 })
 
-PA.FilmThumbLayout = Backbone.View.extend({
+cases.FilmThumbLayout = Backbone.View.extend({
     tagName : 'div',
     className: 'film-container',
-    rowTmpl : PA.jst.filmRow,
+    rowTmpl : templates.filmRow,
     $row : undefined,
     render : function() {
 
@@ -128,7 +139,7 @@ PA.FilmThumbLayout = Backbone.View.extend({
                 this.$row = $( this.rowTmpl() )
                 this.$el.append(this.$row)
             }
-            this.$row.append( new PA.FilmThumb({ 
+            this.$row.append( new cases.FilmThumb({ 
                 model : model 
             }).render() )
         }, this )
@@ -141,12 +152,12 @@ PA.FilmThumbLayout = Backbone.View.extend({
     }
 })
 
-PA.VideoShowcase = Backbone.View.extend({
+cases.VideoShowcase = Backbone.View.extend({
     tagname : 'div',
     className : 'showcase video',
-    videoCaption : PA.jst.videoCaption,
+    videoCaption : templates.videoCaption,
     initialize : function() {
-        this.videoTmpl = this.model.get('video_id') ? PA.jst.videoID : PA.jst.iframeVideo
+        this.videoTmpl = this.model.get('video_id') ? templates.videoID : templates.iframeVideo
         this.videoSrc = this.model.get('video_id') ? this.model.get('video_id') : this.model.get('video_src')
     },
     render : function() {
@@ -167,20 +178,20 @@ PA.VideoShowcase = Backbone.View.extend({
     }
 })
 
-PA.TextShowcase = Backbone.View.extend({
+cases.TextShowcase = Backbone.View.extend({
     tagName : 'div',
     className : 'showcase text',
-    base : PA.jst.textTemplate,
-    header : PA.jst.textTemplateHeader,
-    bioImg : PA.jst.bioImage,
-    gallery : PA.jst.textGallery,
-    back : PA.jst.backButton,
+    base : templates.textTemplate,
+    header : templates.textTemplateHeader,
+    bioImg : templates.bioImage,
+    gallery : templates.textGallery,
+    back : templates.backButton,
     render : function() {
         return this.$el
     }
 })
 
-PA.ListItem = Backbone.View.extend({
+cases.ListItem = Backbone.View.extend({
 
     tagName : 'li',
 
@@ -199,7 +210,7 @@ PA.ListItem = Backbone.View.extend({
         }
     },
 
-    template : PA.jst.listItemPartial,
+    template : templates.listItemPartial,
 
     render : function() {
         this.$el.append( this.template({
@@ -213,9 +224,9 @@ PA.ListItem = Backbone.View.extend({
     }
 })
 
-PA.ListView = Backbone.View.extend({
+cases.ListView = Backbone.View.extend({
     tagName : 'section',
-    header : PA.jst.listHeaderPartial,
+    header : templates.listHeaderPartial,
 
     render : function() {
         var listItems = this.options.listItems,
@@ -231,7 +242,7 @@ PA.ListView = Backbone.View.extend({
 
         _.each( listItems, function(listItem) {
             this.$('ul')
-                .append( new PA.ListItem({
+                .append( new cases.ListItem({
                     model : listItem,
                     path : path ? path : '',
                     url : url ? listItem.url() : false
@@ -243,7 +254,7 @@ PA.ListView = Backbone.View.extend({
 
 })
 
-PA.ListShowcase = Backbone.View.extend({
+cases.ListShowcase = Backbone.View.extend({
     tagName : 'div',
     className : 'showcase list',
     initialize : function() {
@@ -272,7 +283,7 @@ PA.ListShowcase = Backbone.View.extend({
 
         this.$el.empty()
         _.each( group, function(v,k){
-            var html = new PA.ListView({
+            var html = new cases.ListView({
                 id : k.toLowerCase(),
                 date : k,
                 listItems : v,
@@ -292,7 +303,7 @@ PA.ListShowcase = Backbone.View.extend({
     }
 })
 
-PA.SimpleList = Backbone.View.extend({
+cases.SimpleList = Backbone.View.extend({
     tagName : 'div',
     className : 'showcase list',
     initialize : function() {},
@@ -314,7 +325,7 @@ PA.SimpleList = Backbone.View.extend({
 
 })
 
-PA.StarThumb = Backbone.View.extend({
+cases.StarThumb = Backbone.View.extend({
     tagName : "a",
     initialize : function() {
         _.bindAll( this, 'render' )
@@ -351,11 +362,11 @@ PA.StarThumb = Backbone.View.extend({
     }
 })
 
-PA.StarThumb.prototype.randomRange = function (min, max) {
+cases.StarThumb.prototype.randomRange = function (min, max) {
     return ((Math.random()*(max-min)) + min)
 }
 
-PA.Starfield = Backbone.View.extend({
+cases.Starfield = Backbone.View.extend({
     tagName : 'div',
     className : 'starfield',
     id : 'starfield',
@@ -373,7 +384,7 @@ PA.Starfield = Backbone.View.extend({
 
             function go(){
                 self.$el.append(
-                    new PA.StarThumb({
+                    new cases.StarThumb({
                         model : self.images.models[i],
                         HALF_HEIGHT : HALF_HEIGHT,
                         HALF_WIDTH : HALF_WIDTH
@@ -389,21 +400,24 @@ PA.Starfield = Backbone.View.extend({
             go()
         }
 
-        PA.starsRunning = false
+        this.starsRunning = false
     },
 
     destroy : function() {
-        PA.starsRunning = false
+        this.starsRunning = false
         this.$el.empty()
         this.remove()
         this.unbind()
     },
 
     render : function() {
-        PA.starsRunning = true
+        this.starsRunning = true
         this.$el.empty()
         this.images = new Backbone.Collection( this.collection.shuffle() )
         this.stagger()
         return this.el
     }
 })
+    return {}
+})
+
