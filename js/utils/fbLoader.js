@@ -3,7 +3,8 @@
 'use strict';
 
 define([
-    'jquery'
+    'jquery',
+    'fancybox'
 ], function( $ ) {
 
     function fbLoader(){

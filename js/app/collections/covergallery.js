@@ -4,7 +4,7 @@
 
 define([
     'backbone',
-    'models/cover'
+    'app/models/cover'
 ], function( Backbone, CoverImage ) {
 
     var CoverGallery = Backbone.Collection.extend({

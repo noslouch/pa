@@ -1,11 +1,13 @@
-/* collections/showcases.js - Showcases collection */
+/* app/collections/showcases.js - Showcases collection */
+'use strict';
 
-"use strict";
-var PA = PA || {}
-PA.dispatcher = PA.dispatcher || _.extend({}, Backbone.Events)
+define([
+    'backbone',
+    'app/models/showcase'
+], function( Backbone, ShowcaseModel ) {
+    var Showcases = Backbone.Collection.extend({
+        model : ShowcaseModel
+    })
 
-PA.Showcases = Backbone.Collection.extend({
-    model : PA.Showcase
+    return Showcases
 })
-
-PA.showcases = new PA.Showcases()

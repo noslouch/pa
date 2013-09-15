@@ -3,10 +3,15 @@
 'use strict';
 
 define([
-    'js/lib/backbone/backbone-amd.min.js',
-    'js/lib/moment/moment.min.js',
+    'lib/backbone/backbone-amd.min',
+    'moment',
     'underscore'
 ], function( Backbone, moment, _ ) {
+
+    Backbone.View.prototype.destroy = function() {
+        this.remove()
+        this.unbind()
+    }
 
     Backbone.Model.prototype.makeHtmlDate = function(dateString, onlyYear) {
         var res = [],
