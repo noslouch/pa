@@ -10,7 +10,7 @@ define([
       $.Isotope.prototype._getMasonryGutterColumns = function() {
         var gutter = this.options.masonry && this.options.masonry.gutterWidth || 0,
             containerWidth = this.element.width();
-      
+
         this.masonry.columnWidth = this.options.masonry && this.options.masonry.columnWidth ||
                       // or use the size of the first item
                       this.$filteredAtoms.outerWidth(true) ||
