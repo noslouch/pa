@@ -19,6 +19,7 @@ require.config({
         'jquery': {
             exports: '$'
         },
+        'isotope' : ['jquery'],
         'bbq' : {
             deps : ['jquery']
         },
