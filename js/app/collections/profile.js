@@ -25,6 +25,9 @@ define([
     })
 
     var Profile = {}
+    Profile.Bio = Models.Bio
+    Profile.PhotosOf = Models.PhotosOf
+    Profile.Acknowledgements = Models.Acknowledgements
 
     Profile.Press = Collection.extend({
         model : Models.ListItem,
@@ -62,7 +65,7 @@ define([
         section : 'transcripts'
     })
 
-    return new Profile()
+    return Profile
 })
 
 

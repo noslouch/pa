@@ -6,11 +6,8 @@ define([
     'backbone',
     'underscore',
     'app/views/showcaseviews',
-    //'app/collections/photography',
-    'tpl/jst',
-    //'app/collections/profilesections',
-    //'app/models/profilesections'
-], function( $, Backbone, _, S, TPL, Collections, Models ) {
+    'tpl/jst'
+], function( $, Backbone, _, S, TPL ) {
 
     var Content = Backbone.View.extend({
         initialize : function() {
@@ -60,13 +57,15 @@ define([
                     break;
 
                 case 'photos-of-pa':
-                    
-                    album = new Album( model.attributes )
-                    showcase = new S.Image({
-                        collection : album.get('photos')
+                    var self = this
+                    require(['app/models/album'], function(Album){
+                        album = new Album( model.attributes )
+                        showcase = new S.Image({
+                            collection : album.get('photos')
+                        })
+                        self.$el.html( showcase.render() )
+                        showcase.firstLoad()
                     })
-                    this.$el.html( showcase.render() )
-                    showcase.firstLoad()
                     break;
 
                 case 'articles-by-pa':
@@ -169,26 +168,26 @@ define([
 
     var Page = Backbone.View.extend({
 
-        initialize : function() {
+        initialize : function(options) {
             _.bindAll( this, 'swap', 'back' )
-            this.bio = new Models.Bio() // model
-            this.press = new Collections.Press()
-            this.awards = new Collections.Awards()
-            this.photosOf = new Models.PhotosOf() // model
-            this.articlesBy = new Collections.ArticlesBy()
-            this.articlesAbout = new Collections.ArticlesAbout()
-            this.interviews = new Collections.Interviews()
-            this.transcripts = new Collections.Transcripts()
-            this.acknowledgements = new Models.Acknowledgements() // model
+            this.bio = new options.sections.Bio() // model
+            this.press = new options.sections.Press()
+            this.awards = new options.sections.Awards()
+            this['photos-of-pa'] = new options.sections.PhotosOf() // model
+            this['articles-by-pa'] = new options.sections.ArticlesBy()
+            this['articles-about-pa'] = new options.sections.ArticlesAbout()
+            this.interviews = new options.sections.Interviews()
+            this.transcripts = new options.sections.Transcripts()
+            this.acknowledgements = new options.sections.Acknowledgements() // model
 
             this.sections = []
             this.sections.push(
                 this.bio
                 , this.press
                 , this.awards
-                , this.photosOf
-                , this.articlesBy
-                , this.articlesAbout
+                , this['photos-of-pa']
+                , this['articles-by-pa']
+                , this['articles-about-pa']
                 , this.interviews
                 , this.transcripts
                 , this.acknowledgements
@@ -207,6 +206,7 @@ define([
             e.preventDefault()
             var sectionName = e.currentTarget.pathname
 
+            /*
             switch(sectionName.slice(9)) {
                 case 'photos-of-pa':
                     this['photosOf'].activate()
@@ -217,13 +217,16 @@ define([
                     break;
 
                 case 'articles-about-pa':
-                    this['articlesAbout'].activate()
+                    this['artAiclesAbout'].activate()
                     break;
 
                 default:
                     this[sectionName.slice(9)].activate()
                     break;
             }
+            */
+
+            this[sectionName.slice(9)].activate()
         },
 
         swap : function(section, replace) {

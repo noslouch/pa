@@ -31,8 +31,8 @@ define([
             "film" : "film",
             "film/:title" : "singleFilm",
             "profile" : "profile",
-            "profile/:section" : "profileSection",
-            "profile/:section/:urlTitle" : "profileItem",
+            "profile/:section" : "profile",
+            "profile/:section/:urlTitle" : "profile",
             "contact" : "contact",
             "stream" : "stream"
         },
@@ -151,89 +151,38 @@ define([
             })
         },
 
-        profile : function() {
+        profile : function( segment, urlTitle ) {
             var spinner = new Spinner()
 
-            //PA.profilePage = new PA.ProfileViewer({
-            //    el : '#profileViewer'
-            //})
+            require(['app/collections/profile','app/views/profileviews'], function(Profile, Page) {
+                var promiseStack = []
 
-            var deferreds = []
+                var profile = new Page({
+                    el : '#profileViewer',
+                    sections : Profile
+                })
 
-            _.each(PA.profilePage.sections, function(el){
-                deferreds.push(el.fetch())
-            })
+                _.each( profile.sections, function( section ) {
+                    promiseStack.push( section.fetch() )
+                })
 
-            $.when.apply($, deferreds).done(function(){
-                PA.profilePage.render()
-                PA.dispatcher.trigger( 'profile:swap', PA.profilePage.bio, 'replace' )
+                $.when.apply( $, promiseStack ).done(function(){
+                    var c = require('app/views/chrome')
+                    c.chrome.profileInit( profile )
 
-                spinner.detach()
+                    Backbone.dispatcher.trigger( 'profile:swap', profile[ segment ? segment : 'bio' ], segment ? false : true )
+                    if ( urlTitle ) {
+                        profile[segment].findWhere({ url : urlTitle }).activate()
+                    }
+
+                    spinner.detach()
+                })
             })
         },
 
         /*
-        profileSection : function(section) {
-
-            var spinner = new Spinner()
-
-            switch(section) {
-                case 'photos-of-pa':
-                    section = 'photosOf'
-                    break;
-                case 'articles-by-pa':
-                    section = 'articlesBy'
-                    break;
-                case 'articles-about-pa':
-                    section = 'articlesAbout'
-                    break;
-                default:
-                    break;
-            }
-
-            try {
-
-                PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
-
-                spinner.detach()
-
-            } catch(err) {
-
-                PA.profilePage = new PA.ProfileViewer({
-                    el : '#profileViewer'
-                })
-
-                var deferreds = []
-
-                _.each(PA.profilePage.sections, function(el){
-                    deferreds.push(el.fetch())
-                })
-
-                $.when.apply($, deferreds).done(function(){
-                    PA.profilePage.render()
-                    PA.dispatcher.trigger( 'profile:swap', PA.profilePage[section] )
-
-                    spinner.detach()
-                })
-            }
-        },
-
         profileItem : function(section, urlTitle) {
             var spinner = new Spinner()
-
-            switch(section) {
-                case 'photos-of-pa':
-                    section = 'photosOf'
-                    break;
-                case 'articles-by-pa':
-                    section = 'articlesBy'
-                    break;
-                case 'articles-about-pa':
-                    section = 'articlesAbout'
-                    break;
-                default:
-                    break;
-            }
 
             try {
 
