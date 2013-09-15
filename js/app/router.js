@@ -151,7 +151,6 @@ define([
             })
         },
 
-        /*
         profile : function() {
             var spinner = new Spinner()
 
@@ -173,6 +172,7 @@ define([
             })
         },
 
+        /*
         profileSection : function(section) {
 
             var spinner = new Spinner()

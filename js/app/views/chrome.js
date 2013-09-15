@@ -75,7 +75,7 @@ define([
 
             this.model.titles = new S.List({
                 // refactor other lists so they don't use grouped Collection
-                groupedCollection : Projects.groupBy('date'),
+                //groupedCollection : Projects.groupBy('date'),
                 collection : Projects,
                 pageClass : 'projects',
                 section : 'Projects'
@@ -112,24 +112,18 @@ define([
                 model.get('showcases')
                     .findWhere({ url_title : urlTitle }).activate()
             } else {
-                //define(function(require) {
-                    var detailView = require('app/views/singleviews')
-                    var view = new detailView.Project({ model : model })
-                    this.model.set('project', view)
+                var detailView = require('app/views/singleviews')
+                var view = new detailView.Project({ model : model })
+                this.model.set('page', view)
 
-                    if (urlTitle) {
-                        model.get('showcases')
-                            .findWhere({ url_title : urlTitle }).activate()
-                    } else {
-                        model.get('showcases').first().activate(true)
-                    }
-                //})
+                if (urlTitle) {
+                    model.get('showcases')
+                        .findWhere({ url_title : urlTitle }).activate()
+                } else {
+                    model.get('showcases').first().activate(true)
+                }
             }
 
-        },
-
-        singleView : function(project, urlTitle) {
-            //Projects.findWhere({ url : project }).get('showcases')
         },
 
         photoHomeInit : function( Albums ) {

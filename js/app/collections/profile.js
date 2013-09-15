@@ -15,7 +15,8 @@ define([
         active: false,
         activate : function(href){
             this.active = true
-            Router.navigate( '/profile/' + this.section )
+            var r = require( 'app/router' )
+            r.router.navigate( '/profile/' + this.section )
             Backbone.dispatcher.trigger('profile:sectionActivate', this)
         },
         deactivate : function() {

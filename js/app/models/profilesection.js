@@ -3,18 +3,18 @@
 
 define([
     'backbone',
-    'underscore',
-    'app/router'
-], function( Backbone, _, Router ) {
+    'underscore'
+], function( Backbone, _ ) {
 
     var Model = Backbone.Model.extend({
         initialize : function() {
             _.bindAll( this, 'activate', 'deactivate')
         },
         active : false,
-        activate : function(replace){
+        activate : function(first){
             this.active = true
-            Router.navigate( '/profile/' + this.section , {replace : replace ? true : false} )
+            var r = require( 'app/router' )
+            r.router.navigate( '/profile/' + this.section, {replace : first} )
             Backbone.dispatcher.trigger('profile:sectionActivate', this)
         },
 
@@ -42,7 +42,8 @@ define([
 
         activate : function(){
             //this.active = true
-            Router.navigate( '/profile/' + this.collection.section + '/' + this.url() )
+            var r = require( 'app/router' )
+            r.router.navigate( '/profile/' + this.collection.section + '/' + this.url() )
             Backbone.dispatcher.trigger('profile:listItemActivate', this)
         },
 
