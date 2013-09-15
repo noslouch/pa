@@ -1,15 +1,16 @@
-/* collections/albums.js - Photography Albums collection
+/* app/collections/albums.js - Photography Albums collection
  * used on /photography */
-
 'use strict';
-var PA = PA || {}
-PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 
-PA.PhotoAlbums = Backbone.Collection.extend({
-    model : PA.PhotoAlbum,
-    url : '/api/photography',
-    path : 'photography'
+define([
+    'backbone',
+    'app/models/album'
+], function( Backbone, PhotoAlbum ) {
+    var PhotoAlbums = Backbone.Collection.extend({
+        model : PhotoAlbum,
+        url : '/api/photography',
+        path : 'photography'
+    })
+
+    return new PhotoAlbums()
 })
-
-PA.albums = new PA.PhotoAlbums()
-

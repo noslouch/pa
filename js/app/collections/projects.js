@@ -12,5 +12,5 @@ define([
         url : '/api/projects/'
     })
 
-    return Projects
+    return new Projects()
 })

@@ -1,69 +1,63 @@
 /* app/views/projects.js
- * projects landing page */
+ * projects landing page - shit is complex! */
 'use strict';
 
 define([
     'jquery',
     'backbone',
     'underscore',
-    'bbq',
-    'app/views/filterviews',
     'app/views/showcaseviews',
-    'app/collections/projects',
-    'app/collections/covergallery'
-], function( $, Backbone, _, bbq, FilterBar, cases, Projects, CoverGallery ) {
+    'app/views/filterviews'
+], function( $, Backbone, _, S ) {
 
-    var ProjectsLanding = Backbone.View.extend({ 
-        initialize: function() {
-            _.bindAll( this, 'render', 'singleView' )
+    var ProjectLanding = Backbone.View.extend({
+        initialize : function() {
+            this.setElement('.page')
+            this.outlineTitle = this.$('h2')
+            var FilterBar = require('app/views/filterviews')
 
-            this.outlineTitle = $('<h2/>').addClass('visuallyhidden')
-            this.$el.prepend(this.outlineTitle)
+            this.filter = new FilterBar({
+                el : '#filter-bar',
+                model : this.model
+            })
 
-            this.filterBar = new FilterBar({ model : this.model })
+            _.bindAll( this, 'hashHandler', 'projectFilter', 'projectView', 'projectSort', 'projectJump' )
 
             this.listenTo( this.model, 'change:showcase', this.render )
-
-            this.listenTo( this.model, 'change:filter', this.filter )
-            this.listenTo( this.model, 'change:view', this.view )
-            this.listenTo( this.model, 'change:sort', this.sort )
-            this.listenTo( this.model, 'change:jump', this.jump )
+            this.listenTo( this.model, 'change:filter', this.projectFilter )
+            this.listenTo( this.model, 'change:view', this.projectView )
+            this.listenTo( this.model, 'change:sort', this.projectSort )
+            this.listenTo( this.model, 'change:jump', this.projectJump )
 
             $(window).on('hashchange', this.hashHandler)
+            Backbone.dispatcher.on('hashchange', this.hashHandler)
+        },
 
-            this.model.covers = new cases.ImageShowcase({
-                cover : true,
-                collection : new CoverGallery( Projects.pluck('coverImage') ),
-                path : 'projects'
-            })
+        semantics : function( className, outlineTitle ) {
+            this.$el.addClass( className || '' )
+            this.outlineTitle.html( outlineTitle || '' )
+            this.$el.prepend( this.outlineTitle )
+        },
 
-            this.model.titles = new cases.ListShowcase({
-                // refactor other lists so they don't use grouped Collection
-                groupedCollection : Projects.groupBy('date'),
-                collection : Projects,
-                pageClass : 'projects',
-                section : 'Projects'
-            })
+        render : function( pageModel, pageView, filtering ) {
+            this.$el.html( pageView.render() )
+            this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
 
-            this.model.random = new cases.Starfield({
-                collection : this.model.covers.collection
-            })
+            require(['app/views/showcaseviews'], function(S) {
+                if ( pageModel.get('showcase') instanceof S.Image ) {
+                    console.log('instanceof S.Image: loading isotope')
 
-            this.model.set({
-                className : 'projects',
-                outlineTitle : 'Projects'
-            })
+                    pageModel.get('showcase').firstLoad()
+                    if ( !filtering ) {
+                        pageModel.set('filter', '*')
+                    }
+                } else if ( pageModel.get('showcase') instanceof S.List ) {
+                    console.log('instanceof S.List: sorting by name')
 
-            if ( document.location.hash ) {
-                var hashObj = $.deparam.fragment()
-                if ( hashObj.filter || hashObj.view === 'covers' ) {
-                    this.model.set( 'showcase' , this.model.covers )
-                } else {
-                    this.model.set( 'showcase', this.model.titles )
+                    //pageModel.get('showcase').set( 'sort', 'alpha' )
+                    //pageModel.set( 'sort', 'alpha' )
                 }
-            } else {
-                //$.bbq.pushState( { view : 'random' }, 2 )
-            }
+            })
         },
 
         hashHandler : function() {
@@ -92,15 +86,14 @@ define([
             }
         },
 
-        render : function() {
-
-        },
-
-        filter : function( pageModel, filter ) {
+        projectFilter : function( pageModel, filter ) {
             console.log('change:filter handler')
 
-            if ( !(pageModel.get('showcase') instanceof cases.ImageShowcase) ) {
-                pageModel.get('showcase').destroy()
+            if ( !(pageModel.get('showcase') instanceof S.Image) ) {
+                try {
+                    pageModel.get('showcase').destroy()
+                } catch(e) { }
+                // catching for page loads with a hash 
 
                 // Don't need to call filter in PageView.render
                 pageModel.set({
@@ -113,25 +106,25 @@ define([
             pageModel.get('showcase').trigger('filter', filter)
         },
 
-        view : function( pageModel, view ) {
+        projectView : function( pageModel, view ) {
             console.log('change:view handler')
 
             pageModel.set( 'showcase', this.model[view] )
-            if ( pageModel.get('showcase') instanceof cases.ImageShowcase ) {
-                console.log('instanceof ImageShowcase: filtering for *')
+            if ( pageModel.get('showcase') instanceof S.Image ) {
+                console.log('instanceof S.Image: filtering for *')
 
                 pageModel.get('showcase').filter('*')
-            } else if ( pageModel.get('showcase') instanceof cases.ListShowcase ) {
-                console.log('instanceof ListShowcase: sorting by name')
+            } else if ( pageModel.get('showcase') instanceof S.List ) {
+                console.log('instanceof S.List: sorting by name')
 
                 pageModel.set('sort', 'alpha')
             }
         },
 
-        sort : function( pageModel, sort ) {
+        projectSort : function( pageModel, sort ) {
             console.log('change:sort handler')
 
-            if ( !(pageModel.get('showcase') instanceof cases.ListShowcase) ) {
+            if ( !(pageModel.get('showcase') instanceof S.List) ) {
                 pageModel.get('showcase').destroy()
                 pageModel.set( 'showcase' , this.model.titles )
             }
@@ -139,10 +132,10 @@ define([
             pageModel.get('showcase').render(sort)
         },
 
-        jump : function( pageModel, jump ) {
+        projectJump : function( pageModel, jump ) {
             console.log('change:jump handler')
 
-            if ( !(pageModel.get('showcase') instanceof cases.ListShowcase) ) {
+            if ( !(pageModel.get('showcase') instanceof S.List) ) {
                 pageModel.get('showcase').destroy()
                 pageModel.set( 'showcase', this.model.titles )
             }
@@ -151,5 +144,5 @@ define([
         },
     })
 
-    return ProjectsLanding
+    return ProjectLanding
 })

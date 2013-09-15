@@ -5,10 +5,11 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'app/router'
-], function( $, _, Backbone, Router ) {
+    'app/router',
+    'app/views/chromeviews'
+], function( $, _, Backbone, Router, Chrome ) {
     var init = function() {
-        Router.init()
+        Backbone.history.start({ pushState : true, root : '/' })
     }
 
     return { init : init }

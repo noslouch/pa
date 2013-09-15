@@ -1,13 +1,15 @@
-/* collections/films.js - All Films
+/* app/collections/films.js - All Films
  * used on /films */
-
 'use strict';
-var PA = PA || {}
-PA.dispatcher = PA.dispatcher || _.extend( {}, Backbone.Events )
 
-PA.Films = Backbone.Collection.extend({
-    model : PA.Film,
-    url : '/api/films'
+define([
+    'backbone',
+    'app/models/film'
+], function( Backbone, Film ) {
+    var Films = Backbone.Collection.extend({
+        model : Film,
+        url : '/api/films'
+    })
+
+    return new Films()
 })
-
-PA.films = new PA.Films()
