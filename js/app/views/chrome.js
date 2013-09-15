@@ -155,6 +155,10 @@ define([
             }) )
         },
 
+        profileInit : function( Page ) {
+            this.model.set( 'page', Page  )
+        },
+
         streamInit : function( Instagrams ) {
             this.model.set( 'showcase', new S.Starfield({
                 collection : Instagrams
