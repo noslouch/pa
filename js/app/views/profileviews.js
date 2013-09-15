@@ -6,11 +6,11 @@ define([
     'backbone',
     'underscore',
     'app/views/showcaseviews',
-    'app/collections/photography',
+    //'app/collections/photography',
     'tpl/jst',
-    'app/collections/profilesections',
-    'app/models/profilesections'
-], function( $, Backbone, _, S, Album, TPL, Collections, Models ) {
+    //'app/collections/profilesections',
+    //'app/models/profilesections'
+], function( $, Backbone, _, S, TPL, Collections, Models ) {
 
     var Content = Backbone.View.extend({
         initialize : function() {
@@ -60,6 +60,7 @@ define([
                     break;
 
                 case 'photos-of-pa':
+                    
                     album = new Album( model.attributes )
                     showcase = new S.Image({
                         collection : album.get('photos')
