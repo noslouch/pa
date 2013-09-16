@@ -5,6 +5,7 @@
 // LAYOUT
 .list {
 
+    section { overflow: auto; }
     ul { margin: 0; }
     li {
         border-bottom: 1px solid $light-gray;
