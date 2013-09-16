@@ -27,7 +27,7 @@ require.config({
             deps : ['jquery']
         },
         'tooltips' : {
-            deps : ['jquery']
+            deps : ['jquery', 'foundation']
         },
         'fancybox' : {
             deps : ['jquery']
