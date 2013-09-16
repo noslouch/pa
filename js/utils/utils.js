@@ -10,14 +10,5 @@ function checkScroll(){
     setTimeout(inspect, 150) 
 }
 
-function checkQuoteHeight(){
-
-    function inspect() {
-        $('#quotes').toggleClass('small', $('#quotes').height() < 370)
-        setTimeout(inspect, 150)
-    }
-
-    inspect()
-}
 
 

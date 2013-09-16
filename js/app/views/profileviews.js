@@ -170,6 +170,7 @@ define([
 
         initialize : function(options) {
             _.bindAll( this, 'swap', 'back' )
+        /*
             this.bio = new options.sections.Bio() // model
             this.press = new options.sections.Press()
             this.awards = new options.sections.Awards()
@@ -179,8 +180,10 @@ define([
             this.interviews = new options.sections.Interviews()
             this.transcripts = new options.sections.Transcripts()
             this.acknowledgements = new options.sections.Acknowledgements() // model
+            */
 
-            this.sections = []
+            this.sections = options.sections
+        /*
             this.sections.push(
                 this.bio
                 , this.press
@@ -192,6 +195,7 @@ define([
                 , this.transcripts
                 , this.acknowledgements
             )
+            */
 
             this.listenTo( Backbone.dispatcher, 'profile:swap', this.swap )
 
@@ -226,7 +230,7 @@ define([
             }
             */
 
-            this[sectionName.slice(9)].activate()
+            this.sections[sectionName.slice(9)].activate()
         },
 
         swap : function(section, replace) {
@@ -241,10 +245,10 @@ define([
 
         render : function() {
 
-            _.each( this.links, function(aTag, index) {
+            _.each( this.sections, function(section, name, sections) {
                 new Link({
-                    el : '#' + aTag.id,
-                    model : this.sections[index] // IMPORTANT: these rely on the profile page links being in a specific order
+                    el : '#' + name,
+                    model : section
                 })
             }, this )
 
