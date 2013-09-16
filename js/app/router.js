@@ -176,7 +176,6 @@ define([
         },
 
         contact : function() {
-            $('.page').append('contact')
         },
 
         stream : function() {

@@ -2962,11 +2962,11 @@ button {
 
 /* line 10, sass/_starfield.scss */
 .starfield {
-  -webkit-perspective: 150px;
-  -moz-perspective: 150px;
-  -ms-perspective: 150px;
-  -o-perspective: 150px;
-  perspective: 150px;
+  -webkit-perspective: 350px;
+  -moz-perspective: 350px;
+  -ms-perspective: 350px;
+  -o-perspective: 350px;
+  perspective: 350px;
   position: fixed;
   top: 0;
   left: 0;
@@ -3966,9 +3966,9 @@ iframe {
 /* line 219, sass/_general.scss */
 .n-container .brick:hover .copy {
   background: white;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 30px 0px rgba(0, 0, 0, 0.1);
 }
 /* line 224, sass/_general.scss */
 .n-container .brick:hover .img {
@@ -3981,9 +3981,9 @@ iframe {
 /* line 227, sass/_general.scss */
 .n-container .brick:hover img {
   opacity: 1;
-  -webkit-box-shadow: 0px 0px 5px #333333;
-  -moz-box-shadow: 0px 0px 5px #333333;
-  box-shadow: 0px 0px 5px #333333;
+  -webkit-box-shadow: 0 5px 30px 2px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 5px 30px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 30px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* line 239, sass/_general.scss */
@@ -4417,7 +4417,7 @@ iframe {
   position: relative;
   padding-left: 0;
   padding-right: 0;
-  width: 33.33333%;
+  width: 37.5%;
   float: left;
 }
 /* line 563, sass/_general.scss */
@@ -4425,7 +4425,7 @@ iframe {
   position: relative;
   padding-left: 0;
   padding-right: 0;
-  width: 66.66667%;
+  width: 62.5%;
   float: left;
 }
 /* line 567, sass/_general.scss */
@@ -4482,7 +4482,7 @@ iframe {
 .details h3 {
   margin: 0;
   margin-bottom: 0.5em;
-  line-height: 0.7;
+  line-height: 1;
 }
 /* line 617, sass/_general.scss */
 .details time {

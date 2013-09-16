@@ -8,7 +8,7 @@
 }
 
 .starfield {
-    @include perspective(150px);
+    @include perspective(350px);
     position: fixed;
     top: 0;
     left: 0;

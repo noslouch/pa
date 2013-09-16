@@ -102,9 +102,22 @@ define([
         },
 
         render : function() {
+            var title
+            switch( this.model.get('type') ) {
+                case 'gallery':
+                    title = 'Gallery'
+                    break;
+                case 'video':
+                    title = 'Video'
+                    break;
+                default:
+                    title = this.model.get('title')
+                    break;
+            }
+
             var html = this.template({
                 cid : this.model.cid,
-                title : this.model.get('title')
+                title : title
             })
 
             this.$el.html(html)
