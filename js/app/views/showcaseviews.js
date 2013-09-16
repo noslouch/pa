@@ -226,7 +226,7 @@ define([
             this.$el.append( this.template({
                 id : this.model.id,
                 title : this.model.get('title'),
-                summary : this.model.get('summary'),
+                summary : this.model.get('showcases') ? '' : this.model.get('summary'),
                 url : this.options.url,
                 path : this.options.path
             }) )
