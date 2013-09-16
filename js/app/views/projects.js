@@ -7,7 +7,10 @@ define([
     'backbone',
     'underscore',
     'app/views/showcaseviews',
-    'app/views/filterviews'
+    'app/views/filterviews',
+    'foundation',
+    'tooltips',
+    'lib/requirejs/domReady!'
 ], function( $, Backbone, _, S ) {
 
     var ProjectLanding = Backbone.View.extend({
@@ -144,5 +147,6 @@ define([
         },
     })
 
+    $(document).foundation()
     return ProjectLanding
 })

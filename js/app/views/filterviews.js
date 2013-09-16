@@ -11,6 +11,20 @@ define([
     'app/collections/projects'
 ], function( $, Backbone, _, bbq, TPL, S, Projects ) {
 
+    var FilterMenu = Backbone.View.extend({
+        reduce : function(filter) {
+            var flat = this.collection
+                .pluck(filter)
+                .reduceRight( function(a,b) {
+                    return b.concat(a)
+                }, [] )
+
+            var grouped = _.groupBy(flat, 'title')
+            var tags = _.map( grouped, function(tag){ return tag[0] })
+            return tags
+        }
+    })
+
     var LogoBtns = Backbone.View.extend({
         tagName : 'div',
         className : 'controls',
@@ -58,7 +72,7 @@ define([
         }
     })
 
-    var LogoUl = Backbone.View.extend({
+    var LogoUl = FilterMenu.extend({
         tagName : 'ul',
         id : 'brandList',
         className : 'icons',
@@ -69,14 +83,8 @@ define([
             })
         },
         render : function() {
-            var tags = this.collection
-                .pluck('brand_tags')
-                .reduceRight( function(a,b) {
-                    return b.concat(a)
-                }, [] )
-
             //var logos = this.collection.pluck('logo')
-
+            var tags = this.reduce('brand_tags')
             tags.forEach( function(tagObj, idx) {
                 this.$el
                     .append( new LogoLi({
@@ -103,7 +111,7 @@ define([
         }
     })
 
-    var ProjectUl = Backbone.View.extend({
+    var ProjectUl = FilterMenu.extend({
         tagName : 'ul',
         className : 'names',
         render : function() {
@@ -119,11 +127,7 @@ define([
                     break;
             }
 
-            var tags = this.collection
-                .pluck(filter)
-                .reduceRight(function(a,b) {
-                    return a.concat(b) 
-                }, [])
+            var tags = this.reduce(filter)
 
             tags.forEach( function(tagObj) {
                 this.$el
