@@ -218,7 +218,7 @@ iframe {
 
             .copy {
                 background: white;
-                @include box-shadow(0 5px 10px rgba(0,0,0,0.25));
+                @include box-shadow(0 5px 30px 0px rgba(0,0,0,0.1));
             }
 
             .img {
@@ -226,7 +226,7 @@ iframe {
             }
             img {
                 opacity: 1;
-                @include box-shadow;
+                @include box-shadow(0 5px 30px 2px rgba(0,0,0,0.1));
             }
         }
     }
@@ -558,10 +558,10 @@ iframe {
     // .type and .links are nested in .row defined in the markup
     .tags > li { line-height: 1.2; }
     .type {
-        @include grid-column(4, $collapse: true);
+        @include grid-column(4.5, $collapse: true);
     }
     .links { 
-        @include grid-column(8, $collapse: true);
+        @include grid-column(7.5, $collapse: true);
     }
 
     .wrapper {
@@ -611,7 +611,7 @@ iframe {
     h3 { 
         margin: 0;
         margin-bottom: 0.5em;
-        line-height: 0.7;
+        line-height: 1;
     }
 
     time { 
