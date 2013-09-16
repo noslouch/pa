@@ -1,7 +1,13 @@
-"use strict";
-/*jshint -W002*/
+/* utils/quotes.js
+ * Homepage quotes */
+'use strict';
 
-$(function(){
+define([
+    'jquery',
+    'underscore',
+    'lib/requirejs/domReady!'
+], function( $, _ ) {
+
     var quotes = $('.quotes h3'),
         container = document.getElementById('container')
 
@@ -179,6 +185,19 @@ $(function(){
         this.getCurrent().animate()
     }
 
+    function checkQuoteHeight(){
+
+        function inspect() {
+            $('#quotes').toggleClass('small', $('#quotes').height() < 370)
+            setTimeout(inspect, 150)
+        }
+
+        inspect()
+    }
     var g = new Gallery(container)
-    g.bulletBuilder()
+
+    return {
+        slideshow : g,
+        inspector : checkQuoteHeight
+    }
 })

@@ -7,10 +7,20 @@ define([
     'app/router',
     'app/models/profilesection'
 ], function( Backbone, _, Router, Models ) {
+    console.log(Models)
 
     var Collection = Backbone.Collection.extend({
-        initialize : function() {
+        parse : function( response, options ) {
+            _.each( response, function( model ) {
+                model.htmlDate = Backbone.Model.prototype.makeHtmlDate( model.timestamp )
+                model.date = Backbone.Model.prototype.parseDate( model.timestamp )
+                //model.segment = model.url
+            } )
+            return response
+        },
+        initialize : function(model, options) {
             _.bindAll( this, 'activate', 'deactivate' )
+            this.section = options.section
         },
         active: false,
         activate : function(href){
@@ -25,44 +35,50 @@ define([
     })
 
     var Profile = {}
-    Profile.Bio = Models.Bio
-    Profile.PhotosOf = Models.PhotosOf
-    Profile.Acknowledgements = Models.Acknowledgements
+    Profile.bio = new Models.Bio()
+    Profile['photos-of-pa'] = new Models.PhotosOf()
+    Profile.acknowledgements = new Models.Acknowledgements()
 
-    Profile.Press = Collection.extend({
+    Profile.press = new Collection({
+    }, {
         model : Models.ListItem,
-        url : '/api/press',
-        section : 'press'
+        section : 'press',
+        url : '/api/press'
     })
 
-    Profile.Awards = Collection.extend({
+    Profile.awards = new Collection({
+    }, {
         model : Models.ListItem,
-        url : '/api/awards',
-        section : 'awards'
+        section : 'awards',
+        url : '/api/awards'
     })
 
-    Profile.ArticlesBy = Collection.extend({
+    Profile['articles-by-pa'] = new Collection({
+    }, {
         model : Models.ListItem,
-        url : '/api/paauthor',
-        section : 'articles-by-pa'
+        section : 'articles-by-pa',
+        url : '/api/paauthor'
     })
 
-    Profile.ArticlesAbout = Collection.extend({
+    Profile['articles-about-pa'] = new Collection({
+    }, {
         model : Models.ListItem,
-        url : '/api/pasubject',
-        section : 'articles-about-pa'
+        section : 'articles-about-pa',
+        url : '/api/pasubject'
     })
 
-    Profile.Interviews = Collection.extend({
+    Profile.interviews = new Collection({
+    }, {
         model : Models.ListItem,
-        url : '/api/interviews',
-        section : 'interviews'
+        section : 'interviews',
+        url : '/api/interviews'
     })
 
-    Profile.Transcripts = Collection.extend({
+    Profile.transcripts = new Collection({
+    }, {
         model : Models.ListItem,
-        url : '/api/transcripts',
-        section : 'transcripts'
+        section : 'transcripts',
+        url : '/api/transcripts'
     })
 
     return Profile

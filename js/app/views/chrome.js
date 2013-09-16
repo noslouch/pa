@@ -8,16 +8,16 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'app/views/showcaseviews',
-    'bbq',
-    'app/views/search',
-    'app/router',
-    'app/views/header',
+    //'app/views/header',
     'app/views/page',
-    'app/collections/covergallery',
+    'app/views/search',
+    'bbq',
+    //'app/router',
+    //'app/collections/covergallery',
     'app/views/projects',
+    'app/views/profileviews',
     'app/views/singleviews'
-], function( require, exports, $, Backbone, _, S ) {
+], function( require, exports, $, Backbone, _, PageView, Search ) {
 
     var App = Backbone.View.extend({
         initialize : function() {
@@ -26,28 +26,27 @@ define([
 
             this.model = new Backbone.Model()
 
-            var Header = require('app/views/header')
+        /*
             this.header = new Header({
                 el : '.site-header',
                 parent : this,
                 model : this.model
             })
+            */
 
-            var PageView = require('app/views/page')
             this.pageView = new PageView({
                 el : '.page',
                 parent : this,
                 model : this.model
             })
 
-            var Search = require('app/views/search')
             this.search = new Search.Form({
                 el : '#searchForm',
                 page : this.model
             })
 
-            var r = require( 'app/router' )
-            this.listenTo( r.router, 'route', this.routeHandler )
+            //var r = require( 'app/router' )
+            //this.listenTo( r.router, 'route', this.routeHandler )
 
             this.listenTo( this.search, 'submit', function() {
                 this.pageView.$el.empty()
@@ -55,6 +54,9 @@ define([
         },
 
         home : function() {
+            require(['app/views/home'], function( home ) {
+                home()
+            })
         },
 
         projects : function(Projects) {
@@ -74,8 +76,6 @@ define([
             })
 
             this.model.titles = new S.List({
-                // refactor other lists so they don't use grouped Collection
-                //groupedCollection : Projects.groupBy('date'),
                 collection : Projects,
                 pageClass : 'projects',
                 section : 'Projects'
@@ -127,7 +127,8 @@ define([
         },
 
         photoHomeInit : function( Albums ) {
-            var CoverGallery = require('app/collections/covergallery')
+            var CoverGallery = require('app/collections/covergallery'),
+                S = require('app/views/showcaseviews')
             this.model.set( 'page', new S.Image({
                 cover : true,
                 collection : new CoverGallery( Albums.pluck('coverImage') ),
@@ -143,6 +144,7 @@ define([
         },
 
         filmHomeInit : function( Films ) {
+            var S = require('app/views/showcaseviews')
             this.model.set( 'page' , new S.FilmGrid({
                 collection : Films
             }) )
@@ -155,12 +157,17 @@ define([
             }) )
         },
 
-        profileInit : function( Page ) {
-            this.model.set( 'page', Page  )
+        profileInit : function( Profile ) {
+            var Page = require('app/views/profileviews')
+            this.model.set( 'page', new Page({
+                el : '#profileViewer',
+                sections : Profile
+            }) )
         },
 
         streamInit : function( Instagrams ) {
-            this.model.set( 'showcase', new S.Starfield({
+            var S = require('app/views/showcaseviews')
+            this.model.set( 'page', new S.Starfield({
                 collection : Instagrams
             }, true ) )
         },
@@ -176,7 +183,7 @@ define([
         },
 
         closeMenu : function(e) {
-            this.header.$('.open').removeClass('open')
+            $('#filter-bar .open').removeClass('open')
         },
 
         routeHandler : function(methodName, urlParam) {
@@ -191,6 +198,9 @@ define([
         }
     })
 
+    /*
     var app = new App({ el : document })
     exports.chrome = app
+    */
+    return new App({ el : document })
 })

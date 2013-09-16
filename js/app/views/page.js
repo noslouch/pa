@@ -8,7 +8,7 @@ define([
     'backbone',
     'underscore',
     'app/views/showcaseviews'
-], function( exports, $, Backbone, _ ) {
+], function( exports, $, Backbone, _, S ) {
 
     var PageView = Backbone.View.extend({
         initialize: function() {
@@ -38,7 +38,7 @@ define([
             this.$el.html( pageView.render() )
             this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
 
-            require(['app/views/showcaseviews'], function(S) {
+            //require(['app/views/showcaseviews'], function(S) {
                 if ( pageModel.get('page') instanceof S.Image ) {
                     console.log('instanceof S.Image: loading isotope')
 
@@ -52,7 +52,7 @@ define([
                     //pageModel.get('showcase').set( 'sort', 'alpha' )
                     pageModel.set('sort','alpha')
                 }
-            })
+            //})
         }
 
     })

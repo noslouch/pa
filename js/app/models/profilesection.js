@@ -32,11 +32,17 @@ define([
     var Profile = {}
 
     Profile.ListItem = Model.extend({
+        parse : function( response, options ) {
+            response.htmlDate = this.makeHtmlDate( response.timestamp )
+            response.date = this.parseDate( response.timestamp )
+            return response
+        },
+
         initialize : function(item, options){
             _.bindAll( this, 'activate', 'deactivate' )
             this.set({
-                htmlDate : this.makeHtmlDate( this.get('date') ),
-                date : this.parseDate( this.get('date') )
+                //htmlDate : this.makeHtmlDate( this.get('date') ),
+                //date : this.parseDate( this.get('date') )
             })
         },
 
