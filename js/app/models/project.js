@@ -13,13 +13,17 @@ define([
 
             response.htmlDate = this.makeHtmlDate( response.timestamp )
 
-            _.each( response.relatedLinks, function(item, index){
-                var split = item.split('|')
-                response.relatedLinks[index] = {
-                    'title' : split[0] ? split[0].trim() : '',
-                    'url' : split[1] ? split[1].trim() : ''
-                }
-            } )
+            if ( response.relatedLinks[0] ) {
+                _.each( response.relatedLinks, function(item, index){
+                    var split = item.split('|')
+                    response.relatedLinks[index] = {
+                        'title' : split[0] ? split[0].trim() : '',
+                        'url' : split[1] ? split[1].trim() : ''
+                    }
+                } )
+            } else {
+                response.relatedLinks = false
+            }
 
             return response
         },
