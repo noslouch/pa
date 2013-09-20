@@ -36,6 +36,7 @@ define([
                 url : this.options.path ? this.options.path + '/' + this.model.get('url') : this.model.get('url'),
                 cover : this.options.cover,
                 caption : this.model.get('caption'),
+                year : this.options.path === 'projects' ? this.model.get('year') : '',
                 thumb : this.model.get('thumb'),
                 lg_thumb : this.model.get('lg_thumb'),
                 large : this.options.large
@@ -367,9 +368,12 @@ define([
                 .attr( 'href', this.model.get('url') )
             } else {
                 var caption = document.createElement('div'),
-                    p = document.createElement('p')
+                    p = document.createElement('p'),
+                    span = document.createElement('span')
+
                 $(p).html( this.model.get('caption') )
-                $(caption).addClass('caption').append(p)
+                $(span).addClass('year').html( this.model.get('year') )
+                $(caption).addClass('caption').append(p).append(span)
 
                 this.$el
                 .attr( 'href', '/projects/' + this.model.get('url') )

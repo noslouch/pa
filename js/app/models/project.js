@@ -32,7 +32,8 @@ define([
                 coverImage : new CoverImage( this.get('cover'), {
                     tags : this.get('brand_tags')
                             .concat( this.get('type_tags') )
-                            .concat( this.get('industry_tags') )
+                            .concat( this.get('industry_tags') ),
+                    year : this.parseDate( this.get('timestamp') ).year(),
                 } ),
 
                 showcases : new Showcases( this.get('showcases'), {

@@ -3012,7 +3012,7 @@ button {
   opacity: 1;
 }
 /* line 42, sass/_starfield.scss */
-.star:hover .caption p {
+.star:hover .caption p, .star:hover .caption .year {
   font-size: 1.125em;
 }
 
@@ -3382,8 +3382,13 @@ button {
   font-weight: 500;
   line-height: 1;
 }
+/* line 89, sass/_image-showcase.scss */
+.caption .year {
+  font-weight: 300;
+  font-size: 0.6875em;
+}
 
-/* line 91, sass/_image-showcase.scss */
+/* line 96, sass/_image-showcase.scss */
 .thumb img {
   max-height: 100%;
   max-width: 100%;
