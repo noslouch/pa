@@ -40,22 +40,27 @@ define([
                 } )
             })
 
-            this.get('showcases').add([
-                {
+            if ( this.get('info') ) {
+                this.get('showcases').add({
                     type : 'info',
                     title : 'Info',
                     url_title : 'info',
                     content : this.get('info')
-                },
-                {
+                }, {
+                    path : this.url()
+                })
+            }
+
+            if ( this.get('relatedLinks') ) {
+                this.get('showcases').add({
                     type : 'related',
                     title : 'Related',
                     url_title : 'related',
                     links : this.get('relatedLinks')
-                }
-            ], {
-                path : this.url()
-            })
+                }, {
+                    path : this.url()
+                })
+            }
         },
 
         url : function() {
