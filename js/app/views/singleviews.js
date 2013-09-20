@@ -50,22 +50,25 @@ define([
                             collection : model.get('gallery')
                         })
                         break;
+
                     case 'video':
                         showcase = new S.Video({ model : model })
                         break;
+
                     case 'info':
                         showcase = new S.Text()
                         showcase.$el.append( showcase.base({
                             type : '.project-info',
                             content : model.get('content')
                         }) )
-
                         break;
+
                     case 'related':
                         showcase = new S.SmallList({
                             collection : model.get('links')
                         })
                         break;
+
                     default:
                         break;
                 }

@@ -8,7 +8,10 @@ define([
 
     var CoverImage = Backbone.Model.extend({
         initialize: function(image, options) {
-            this.set({ tags : options.tags || [] })
+            this.set({ 
+                tags : options.tags || [],
+                year : options.year
+            })
         }
     })
 

@@ -1,4 +1,4 @@
-/* app/views/chromeviews.js
+/* app/views/page.js - Generic Page View/Controller
  * outer most appviews */
 'use strict';
 
