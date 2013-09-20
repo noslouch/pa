@@ -15,7 +15,7 @@ function( _ ){
             '<h3><%= title %></h3>',
             '<time datetime="<%= htmlDate %>"><%= date %></time>',
         '</header>',
-        '<p class="summary"><%= summary %></p>',
+        '<div class="summary"><%= summary %></div>',
         '<ul class="showcase-links" id="showcaseLinks">',
         '</ul>',
         '<ul class="tags" id="tags"></ul>'
