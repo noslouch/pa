@@ -271,6 +271,28 @@ button {
     }
 }
 
+.random-view {
+    
+    &:before {
+        @include icons-sprite(random-view);
+        width: 15px;
+        height: 15px;
+        content: '';
+        display: inline-block;
+        margin-top: 4px;
+        position: absolute;
+        left: 0;
+    }
+
+    &:hover:before {
+        @include icons-sprite(random-view-hover);
+    }
+
+    &.active:before {
+        @include icons-sprite(random-view-selected);
+    }
+}
+
 .alpha-sort {
     @include icons-sprite(alpha-sort);
     width: 26px;
