@@ -2661,7 +2661,7 @@ button {
 .sorts h3:after,
 .jump-to h3:after, .filter h3:hover:after,
 .filter.open h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, .close span, .close:hover span, .film-row .img:before, .film-row > div:hover .img:before, .fancybox-next span, .fancybox-next:hover span, .fancybox-prev span, .fancybox-prev:hover span {
-  background: url('../assets/img/icons-s43252cb3e8.png') no-repeat;
+  background: url('img/icons-s43252cb3e8.png') no-repeat;
 }
 
 /* line 205, sass/_modules.scss */
