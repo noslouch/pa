@@ -3710,7 +3710,7 @@ html, body {
 }
 /* line 42, sass/_general.scss */
 .loader span {
-  background: url(/assets/img/loader.gif) no-repeat;
+  background: url('img/loader.gif?1378224688') no-repeat;
   width: 32px;
   height: 32px;
   display: inline-block;
