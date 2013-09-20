@@ -19,8 +19,12 @@ define([
                     return b.concat(a)
                 }, [] )
 
-            var grouped = _.groupBy(flat, 'title')
-            var tags = _.map( grouped, function(tag){ return tag[0] })
+            var tags = _.chain( flat )
+                .groupBy('title')
+                .sortBy('title')
+                .map(function(tag){ return tag[0] })
+                .value()
+
             return tags
         }
     })
