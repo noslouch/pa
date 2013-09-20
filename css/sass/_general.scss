@@ -556,6 +556,10 @@ iframe {
     padding-left: 0;
     overflow-y: auto;
 
+    header,
+    .summary,
+    ul { margin-bottom: 1.5rem; }
+
     // .type and .links are nested in .row defined in the markup
     .tags > li { line-height: 1.2; }
     .type {
@@ -607,11 +611,11 @@ iframe {
 // type
 .details {
 
-    header { margin-bottom: 1.75em; }
+    //header { margin-bottom: 1.75em; }
     h3, time { font-size: emCalc(19); }
     h3 { 
         margin: 0;
-        margin-bottom: 0.5em;
+        margin-bottom: 0.25em;
         line-height: 1;
     }
 
