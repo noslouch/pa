@@ -304,7 +304,7 @@ iframe {
 
     .controls {
         overflow: hidden;
-        margin-bottom: 1em;
+        margin: 0.3rem 0.75rem;
     }
     
     .close { float: right; }
@@ -312,7 +312,7 @@ iframe {
     .wrapper {
         min-width: 330px;
         position: absolute;
-        padding: 0.5em 1em 1em 0.75em;
+        padding: 0.5rem 0 1rem;
         opacity: 0;
         z-index: -1;
         pointer-events: none;
@@ -326,7 +326,7 @@ iframe {
         overflow-x: hidden;
         max-height: 390px;
         margin: 0;
-        padding: 0;
+        padding: 0 1em 0 0.75em;
     }
 
     &.open {
@@ -466,6 +466,7 @@ iframe {
     .wrapper {
         right: 0;
         min-width: 85px;
+        padding-top: 0.3rem;
     }
 
     .alphas,
