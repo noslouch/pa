@@ -2561,7 +2561,7 @@ button {
 }
 /* line 108, sass/_modules.scss */
 .indicators li {
-  background: url(../../assets/img/mask.png);
+  background: url('img/mask.png?1379703840');
   width: 20px;
   height: 25px;
 }
