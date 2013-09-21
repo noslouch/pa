@@ -3710,7 +3710,7 @@ html, body {
 }
 /* line 42, sass/_general.scss */
 .loader span {
-  background: url('img/loader.gif?1378224688') no-repeat;
+  background: url('img/loader.gif?1379703840') no-repeat;
   width: 32px;
   height: 32px;
   display: inline-block;
@@ -4099,7 +4099,7 @@ iframe {
 .sorts .controls,
 .jump-to .controls {
   overflow: hidden;
-  margin-bottom: 1em;
+  margin: 0.3rem 0.75rem;
 }
 /* line 310, sass/_general.scss */
 .filter .close, .view-all .close, .views .close,
@@ -4113,7 +4113,7 @@ iframe {
 .jump-to .wrapper {
   min-width: 330px;
   position: absolute;
-  padding: 0.5em 1em 1em 0.75em;
+  padding: 0.5rem 0 1rem;
   opacity: 0;
   z-index: -1;
   pointer-events: none;
@@ -4134,7 +4134,7 @@ iframe {
   overflow-x: hidden;
   max-height: 390px;
   margin: 0;
-  padding: 0;
+  padding: 0 1em 0 0.75em;
 }
 /* line 333, sass/_general.scss */
 .filter.open h3, .open.view-all h3, .open.views h3,
@@ -4293,22 +4293,23 @@ iframe {
 .jump-to .wrapper {
   right: 0;
   min-width: 85px;
+  padding-top: 0.3rem;
 }
-/* line 472, sass/_general.scss */
+/* line 473, sass/_general.scss */
 .jump-to .alphas,
 .jump-to .dates {
   display: none;
 }
-/* line 474, sass/_general.scss */
+/* line 475, sass/_general.scss */
 .jump-to.alpha .alphas {
   display: block;
 }
-/* line 475, sass/_general.scss */
+/* line 476, sass/_general.scss */
 .jump-to.date .dates {
   display: block;
 }
 
-/* line 481, sass/_general.scss */
+/* line 482, sass/_general.scss */
 .filter h3, .view-all h3, .views h3,
 .sorts h3,
 .jump-to h3 {
@@ -4320,19 +4321,19 @@ iframe {
   -o-transition: color 150ms ease;
   transition: color 150ms ease;
 }
-/* line 487, sass/_general.scss */
+/* line 488, sass/_general.scss */
 .filter h3:hover, .view-all h3:hover, .views h3:hover,
 .sorts h3:hover,
 .jump-to h3:hover {
   color: red;
 }
-/* line 490, sass/_general.scss */
+/* line 491, sass/_general.scss */
 .filter.open h3, .open.view-all h3, .open.views h3,
 .open.sorts h3,
 .open.jump-to h3 {
   color: red;
 }
-/* line 495, sass/_general.scss */
+/* line 496, sass/_general.scss */
 .filter .name, .view-all .name, .views .name,
 .sorts .name,
 .jump-to .name,
@@ -4355,13 +4356,13 @@ iframe {
   font-weight: 500;
   margin: 0;
 }
-/* line 501, sass/_general.scss */
+/* line 502, sass/_general.scss */
 .filter button:focus, .view-all button:focus, .views button:focus,
 .sorts button:focus,
 .jump-to button:focus {
   outline: none;
 }
-/* line 504, sass/_general.scss */
+/* line 505, sass/_general.scss */
 .filter button.active:focus, .view-all button.active:focus, .views button.active:focus,
 .sorts button.active:focus,
 .jump-to button.active:focus {
@@ -4371,37 +4372,37 @@ iframe {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2) inset;
 }
 
-/* line 512, sass/_general.scss */
+/* line 513, sass/_general.scss */
 .views button,
 .sorts button {
   font-size: 0.875em;
   background: none;
 }
-/* line 515, sass/_general.scss */
+/* line 516, sass/_general.scss */
 .views button:hover,
 .sorts button:hover {
   color: red;
 }
 
-/* line 523, sass/_general.scss */
+/* line 524, sass/_general.scss */
 .contact {
   display: table;
   height: 100%;
   width: 100%;
 }
-/* line 528, sass/_general.scss */
+/* line 529, sass/_general.scss */
 .contact .wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-/* line 533, sass/_general.scss */
+/* line 534, sass/_general.scss */
 .contact h3 {
   margin: 0px;
   line-height: 1;
   font-size: 3.125em;
 }
 
-/* line 544, sass/_general.scss */
+/* line 545, sass/_general.scss */
 .viewer {
   width: 100%;
   margin: 0;
@@ -4420,7 +4421,7 @@ iframe {
   clear: both;
 }
 
-/* line 550, sass/_general.scss */
+/* line 551, sass/_general.scss */
 .details {
   position: relative;
   padding-left: 0.53125em;
@@ -4434,17 +4435,17 @@ iframe {
   padding-left: 0;
   overflow-y: auto;
 }
-/* line 561, sass/_general.scss */
+/* line 562, sass/_general.scss */
 .details header,
 .details .summary,
 .details ul {
   margin-bottom: 1.5rem;
 }
-/* line 564, sass/_general.scss */
+/* line 565, sass/_general.scss */
 .details .tags > li {
   line-height: 1.2;
 }
-/* line 565, sass/_general.scss */
+/* line 566, sass/_general.scss */
 .details .type {
   position: relative;
   padding-left: 0;
@@ -4452,7 +4453,7 @@ iframe {
   width: 37.5%;
   float: left;
 }
-/* line 568, sass/_general.scss */
+/* line 569, sass/_general.scss */
 .details .links {
   position: relative;
   padding-left: 0;
@@ -4460,12 +4461,12 @@ iframe {
   width: 62.5%;
   float: left;
 }
-/* line 572, sass/_general.scss */
+/* line 573, sass/_general.scss */
 .details .wrapper {
   margin-bottom: 7em;
 }
 
-/* line 578, sass/_general.scss */
+/* line 579, sass/_general.scss */
 .container {
   position: relative;
   padding-left: 0;
@@ -4475,13 +4476,13 @@ iframe {
   max-width: 854px;
 }
 
-/* line 591, sass/_general.scss */
+/* line 592, sass/_general.scss */
 .viewer .button,
 .container .button {
   background: #e0e0e0;
   padding-bottom: 13px;
 }
-/* line 595, sass/_general.scss */
+/* line 596, sass/_general.scss */
 .viewer .button:before,
 .container .button:before {
   content: "<";
@@ -4490,41 +4491,41 @@ iframe {
   vertical-align: text-top;
   margin-right: 0.5em;
 }
-/* line 603, sass/_general.scss */
+/* line 604, sass/_general.scss */
 .viewer .button:hover,
 .container .button:hover {
   background: red;
   color: white;
 }
-/* line 606, sass/_general.scss */
+/* line 607, sass/_general.scss */
 .viewer .button:hover:before,
 .container .button:hover:before {
   color: black;
 }
 
-/* line 615, sass/_general.scss */
+/* line 616, sass/_general.scss */
 .details h3, .details time {
   font-size: 1.1875em;
 }
-/* line 616, sass/_general.scss */
+/* line 617, sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
 }
-/* line 622, sass/_general.scss */
+/* line 623, sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 627, sass/_general.scss */
+/* line 628, sass/_general.scss */
 .details p {
   font-size: 1.1875em;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 635, sass/_general.scss */
+/* line 636, sass/_general.scss */
 .showcase-links,
 .profile-links {
   font-size: 1.1875em;
@@ -4532,33 +4533,33 @@ iframe {
   line-height: 1.2;
 }
 
-/* line 641, sass/_general.scss */
+/* line 642, sass/_general.scss */
 .tags {
   font-size: 0.8125em;
 }
 
-/* line 645, sass/_general.scss */
+/* line 646, sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 649, sass/_general.scss */
+/* line 650, sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 655, sass/_general.scss */
+/* line 656, sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }
 
 @media (max-width: 1024px) {
-  /* line 660, sass/_general.scss */
+  /* line 661, sass/_general.scss */
   .header-wrapper {
     position: relative;
   }
 
-  /* line 664, sass/_general.scss */
+  /* line 665, sass/_general.scss */
   .page,
   .page.projects {
     padding-top: 1em;
