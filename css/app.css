@@ -2887,19 +2887,21 @@ button {
   left: 39px;
   margin: 0;
   line-height: 0.8;
-  font-size: 1.125em;
   z-index: 1;
   cursor: pointer;
+  font-size: 1.1875em;
+  font-weight: 500;
+  line-height: 1;
 }
-/* line 434, sass/_modules.scss */
+/* line 436, sass/_modules.scss */
 .fancybox-wrap .logo a {
   color: red;
 }
-/* line 435, sass/_modules.scss */
+/* line 437, sass/_modules.scss */
 .fancybox-wrap .logo a:hover {
-  color: black;
+  color: #999999;
 }
-/* line 438, sass/_modules.scss */
+/* line 440, sass/_modules.scss */
 .fancybox-wrap .close {
   position: fixed;
   top: 0;
@@ -2907,21 +2909,21 @@ button {
   z-index: 2;
   padding: 39px;
 }
-/* line 445, sass/_modules.scss */
+/* line 447, sass/_modules.scss */
 .fancybox-wrap .fancybox-skin {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 448, sass/_modules.scss */
+/* line 450, sass/_modules.scss */
 .fancybox-nav {
   position: fixed;
   width: 20%;
   z-index: 0;
 }
 
-/* line 455, sass/_modules.scss */
+/* line 457, sass/_modules.scss */
 .fancybox-next span,
 .fancybox-prev span {
   width: 21px;
@@ -2929,27 +2931,27 @@ button {
   visibility: visible;
 }
 
-/* line 462, sass/_modules.scss */
+/* line 464, sass/_modules.scss */
 .fancybox-next span {
   background-position: 0 -159px;
   right: 39px;
 }
-/* line 466, sass/_modules.scss */
+/* line 468, sass/_modules.scss */
 .fancybox-next:hover span {
   background-position: 0 -131px;
 }
 
-/* line 470, sass/_modules.scss */
+/* line 472, sass/_modules.scss */
 .fancybox-prev span {
   background-position: 0 -187px;
   left: 39px;
 }
-/* line 474, sass/_modules.scss */
+/* line 476, sass/_modules.scss */
 .fancybox-prev:hover span {
   background-position: 0 -103px;
 }
 
-/* line 477, sass/_modules.scss */
+/* line 479, sass/_modules.scss */
 .fancybox-overlay .indicators {
   position: fixed;
   bottom: 2.6em;
@@ -2957,20 +2959,20 @@ button {
   height: auto;
   z-index: 8040;
 }
-/* line 484, sass/_modules.scss */
+/* line 486, sass/_modules.scss */
 .fancybox-overlay .indicators li {
   background: url('img/small-mask.png?1379880013');
   float: left;
   width: 17px;
   height: 12px;
 }
-/* line 491, sass/_modules.scss */
+/* line 493, sass/_modules.scss */
 .fancybox-overlay .indicators .dot {
   width: 12px;
   height: 12px;
 }
 
-/* line 497, sass/_modules.scss */
+/* line 499, sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;
