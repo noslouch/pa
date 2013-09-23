@@ -14,7 +14,7 @@ define([
 
         initialize : function() {
             _.bindAll( this, 'debug', 'payload' )
-            this.on('route', this.debug)
+            //this.on('route', this.debug)
         },
 
         routes : {
