@@ -125,8 +125,10 @@ iframe {
 
 .page {
     padding: 110px emCalc(37) emCalc(35);
-    height: 100%;
+    //height: 100%;
     position: relative;
+
+    &.home { height: 100%; }
 }
 
 .page.projects { padding-top: 192px; }
