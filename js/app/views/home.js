@@ -21,6 +21,7 @@ define([
             this.$noteworthy = $('#n-container')
             this.$quotes = $('#quotes')
             $('#n-container header').click(this.open)
+
         },
 
         events : {
@@ -38,18 +39,19 @@ define([
             this.slideshow()
             this.poll()
 
+            setTimeout( function(){
+                $('.site-header').removeClass('home')
+                $('.n-wrapper').removeClass('home')
+                $('#bullets').addClass('loaded')
+            }, 2000 )
         }
     })
 
-    var home = new Home()
+    //var home = new Home()
 
     var go = function(){
-        home.render()
-        setTimeout( function(){
-            $('.site-header').removeClass('home')
-            $('.n-wrapper').removeClass('home')
-            $('#bullets').addClass('loaded')
-        }, 2000 )
+        //home.render()
     }
-    return go
+
+    return Home
 })
