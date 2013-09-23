@@ -60,7 +60,7 @@ define([
                         path : false,
                         url : false
                     })
-                    this.$el.html( showcase.render() )
+                    this.$el.html( showcase.render('date') )
                     break;
 
                 case 'photos-of-pa':
