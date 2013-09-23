@@ -34,7 +34,7 @@ define([
         },
 
         debug : function() {
-            console.log('updated')
+            console.log('updated again')
         },
 
         payload : function(method) {
