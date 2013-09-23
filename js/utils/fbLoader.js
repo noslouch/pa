@@ -11,6 +11,7 @@ define([
         $('.fancybox').fancybox({
             margin: [75, 0, 75, 0],
             padding: 0,
+            scrolling: 'no',
             type : 'image',
             closeClick: true,
             //nextEffect : 'fade',
