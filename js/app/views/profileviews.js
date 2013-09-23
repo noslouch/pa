@@ -2,12 +2,14 @@
 'use strict';
 
 define([
+    'require',
     'jquery',
     'backbone',
     'underscore',
     'app/views/showcaseviews',
-    'tpl/jst'
-], function( $, Backbone, _, S, TPL ) {
+    'tpl/jst',
+    'utils/fbLoader'
+], function( require, $, Backbone, _, S, TPL ) {
 
     var Content = Backbone.View.extend({
         initialize : function() {
@@ -140,6 +142,11 @@ define([
             }) ).appendTo( $layout )
 
             this.$el.html( $layout )
+
+            if ( model.get('gallery').length ) {
+                var fbLoader = require('utils/fbLoader')
+                fbLoader()
+            }
         },
 
     })
