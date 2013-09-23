@@ -63,7 +63,7 @@ require.config({
             deps : ['jquery']
         }
     },
-    waitSeconds : 10
+    waitSeconds : 20
 })
 
 require( ['jquery', 'underscore', 'backbone', 'app/router', 'app/views/chrome'],
