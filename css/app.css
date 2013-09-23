@@ -2561,7 +2561,7 @@ button {
 }
 /* line 108, sass/_modules.scss */
 .indicators li {
-  background: url('img/mask.png?1379703840');
+  background: url('img/mask.png?1379880013');
   width: 20px;
   height: 25px;
 }
@@ -2959,7 +2959,7 @@ button {
 }
 /* line 484, sass/_modules.scss */
 .fancybox-overlay .indicators li {
-  background: url(../../assets/img/small-mask.png);
+  background: url('img/small-mask.png?1379880013');
   float: left;
   width: 17px;
   height: 12px;
@@ -3710,7 +3710,7 @@ html, body {
 }
 /* line 42, sass/_general.scss */
 .loader span {
-  background: url('img/loader.gif?1379703840') no-repeat;
+  background: url('img/loader.gif?1379880013') no-repeat;
   width: 32px;
   height: 32px;
   display: inline-block;
