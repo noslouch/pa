@@ -5,7 +5,7 @@
 define([
     'jquery',
     'underscore',
-    //'lib/requirejs/domReady!'
+    'lib/requirejs/domReady!'
 ], function( $, _ ) {
 
     var quotes = $('.quotes h3'),
