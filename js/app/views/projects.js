@@ -10,7 +10,7 @@ define([
     'app/views/filterviews',
     'foundation',
     'tooltips',
-    //'lib/requirejs/domReady!'
+    'lib/requirejs/domReady!'
 ], function( $, Backbone, _, S ) {
 
     var ProjectLanding = Backbone.View.extend({
@@ -46,16 +46,14 @@ define([
             this.$el.html( pageView.render() )
             this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
 
-            require(['lib/requirejs/domReady','app/views/showcaseviews'], function(domReady, S) {
+            require(['app/views/showcaseviews'], function(S) {
                 if ( pageModel.get('showcase') instanceof S.Image ) {
                     console.log('instanceof S.Image: loading isotope')
 
-                    domReady(function() {
-                        pageModel.get('showcase').firstLoad()
-                        if ( !filtering ) {
-                            pageModel.set('filter', '*')
-                        }
-                    })
+                    pageModel.get('showcase').firstLoad()
+                    if ( !filtering ) {
+                        pageModel.set('filter', '*')
+                    }
                 } else if ( pageModel.get('showcase') instanceof S.List ) {
                     console.log('instanceof S.List: sorting by name')
 
