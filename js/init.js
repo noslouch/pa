@@ -14,7 +14,7 @@ require.config({
         tooltips : 'lib/foundation/foundation.tooltips',
         fancybox : 'lib/fancybox/jquery.fancybox.pack',
         json : 'lib/json/json2',
-        'app/router' : 'app/router.@@hash'
+        'app/router' : 'app/router.1379940119914501596'
     },
     shim : {
         'jquery': {
