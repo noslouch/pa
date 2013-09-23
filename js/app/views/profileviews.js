@@ -56,8 +56,7 @@ define([
 
                 case 'awards':
                     showcase = new S.List({
-                        collection : model,
-                        path : false,
+                        collection : model, path : false,
                         url : false
                     })
                     this.$el.html( showcase.render('date') )
@@ -124,6 +123,8 @@ define([
         },
 
         contentController : function(model){
+            $('html, body').animate({ scrollTop : 0 })
+
             var layout = new S.Text(),
                 $layout = layout.render(),
                 type = model.get('type'),
