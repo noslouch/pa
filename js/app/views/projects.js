@@ -107,6 +107,9 @@ define([
             }
 
             pageModel.get('showcase').trigger('filter', filter)
+
+            // MIGHT BE A BETTER WAY TO DO THIS
+            $('html, body').animate({ scrollTop : 0 })
         },
 
         projectView : function( pageModel, view ) {
@@ -122,6 +125,9 @@ define([
 
                 pageModel.set('sort', 'alpha')
             }
+
+            // MIGHT BE A BETTER WAY TO DO THIS
+            $('html, body').animate({ scrollTop : 0 })
         },
 
         projectSort : function( pageModel, sort ) {
@@ -133,6 +139,9 @@ define([
             }
 
             pageModel.get('showcase').render(sort)
+
+            // MIGHT BE A BETTER WAY TO DO THIS
+            $('html, body').animate({ scrollTop : 0 })
         },
 
         projectJump : function( pageModel, jump ) {

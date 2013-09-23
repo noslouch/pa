@@ -56,11 +56,10 @@ define([
 
                 case 'awards':
                     showcase = new S.List({
-                        collection : model,
-                        path : false,
+                        collection : model, path : false,
                         url : false
                     })
-                    this.$el.html( showcase.render() )
+                    this.$el.html( showcase.render('date') )
                     break;
 
                 case 'photos-of-pa':
@@ -124,9 +123,33 @@ define([
         },
 
         contentController : function(model){
+            $('html, body').animate({ scrollTop : 0 })
+
             var layout = new S.Text(),
                 $layout = layout.render(),
+                type = model.get('type'),
+                back,
                 $base
+
+            switch (type) {
+                case 'press':
+                    back = 'Press'
+                    break;
+                case 'articles-by-pa':
+                    back = 'Articles by PA'
+                    break;
+                case 'articles-about-pa':
+                    back = 'Articles about PA'
+                    break;
+                case 'interviews':
+                    back = 'Interviews with PA'
+                    break;
+                case 'transcripts':
+                    back = 'Transcripts'
+                    break;
+                default:
+                    break;
+            }
 
             $base = $( layout.base({
                 type : 'press',
@@ -143,7 +166,7 @@ define([
             }) )
             .append( layout.back({
                 url : '/profile/' + model.collection.section,
-                buttonText : 'See All Items'
+                buttonText : 'Back to All ' + back
             }) ).appendTo( $layout )
 
             this.$el.html( $layout )

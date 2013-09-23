@@ -317,7 +317,7 @@ iframe {
     .close { float: right; }
 
     .wrapper {
-        min-width: 330px;
+        min-width: 250px;
         position: absolute;
         padding: 0.5rem 0 1rem;
         opacity: 0;
@@ -351,12 +351,12 @@ iframe {
 }
 
 .brand {
-    .wrapper {
-        max-width: 500px;
-    }
-    
     .name { opacity: 0; }
-    .icon { opacity: 0; }
+    .icon { 
+        opacity: 0;
+        
+        a { display: block; }
+    }
 
     .name,
     .icon {
@@ -374,8 +374,8 @@ iframe {
     .icons {
         h4 { display: none; }
 
-        //width: 500px;
-        width: 100%;
+        width: 508px;
+        //width: 100%;
         li {
             width: 80px;
             height: 45px;
