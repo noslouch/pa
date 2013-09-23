@@ -3417,12 +3417,12 @@ button {
   -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
 }
-/* line 70, sass/_image-showcase.scss */
-.isotope-grid .thumb:hover .caption {
+/* line 69, sass/_image-showcase.scss */
+.isotope-grid .thumb:hover img.loaded + .caption {
   opacity: 1;
 }
 
-/* line 75, sass/_image-showcase.scss */
+/* line 77, sass/_image-showcase.scss */
 .caption {
   color: red;
   background: white;
@@ -3438,20 +3438,20 @@ button {
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
 }
-/* line 87, sass/_image-showcase.scss */
+/* line 89, sass/_image-showcase.scss */
 .caption p {
   margin: 0;
   font-size: 0.6875em;
   font-weight: 500;
   line-height: 1;
 }
-/* line 94, sass/_image-showcase.scss */
+/* line 96, sass/_image-showcase.scss */
 .caption .year {
   font-weight: 300;
   font-size: 0.6875em;
 }
 
-/* line 101, sass/_image-showcase.scss */
+/* line 103, sass/_image-showcase.scss */
 .thumb img {
   max-height: 100%;
   max-width: 100%;
