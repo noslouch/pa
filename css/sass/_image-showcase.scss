@@ -65,10 +65,12 @@
 
         img.loaded {
             @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
+
+            + .caption {
+                opacity: 1;
+            }
         }
 
-        .caption {
-            opacity: 1; }
     }
 }
 

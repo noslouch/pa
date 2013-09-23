@@ -109,6 +109,7 @@ function( _ ){
     JST.thumbTemplate = [
         '<div class="wrapper">',
             '<a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %> title="<%= caption %>">',
+                '<img src="<% large ? print(lg_thumb) : print(thumb) %>">',
                 '<% if (caption) { %>',
                     '<div class="caption">',
                         '<p><%= caption %></p>',
@@ -117,7 +118,6 @@ function( _ ){
                         '<% } %>',
                     '</div>',
                 '<% } %>',
-                '<img src="<% large ? print(lg_thumb) : print(thumb) %>">',
             '</a>',
         '</div>'
     ].join('\n')
