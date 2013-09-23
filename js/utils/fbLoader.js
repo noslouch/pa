@@ -9,7 +9,7 @@ define([
 
     function fbLoader(){
         $('.fancybox').fancybox({
-            margin: [75, 0, 75, 0],
+            margin: 75,
             padding: 0,
             scrolling: 'no',
             type : 'image',
