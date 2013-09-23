@@ -19,7 +19,7 @@
 
     .wrapper { 
         @include transition(transform 150ms ease);
-        overflow: hidden;
+        //overflow: hidden;
     }
 
     .thumb  {
@@ -60,6 +60,10 @@
         
         .wrapper {
             @include scale(1.2);
+            //@include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
+        }
+
+        img.loaded {
             @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
         }
 

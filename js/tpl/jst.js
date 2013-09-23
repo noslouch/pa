@@ -225,8 +225,8 @@ function( _ ){
 
     JST.logoPartial = [
         '<div class="icon">',
-            '<a href="#filter=.<%= tagFilter %>">',
-                '<img class="has-tip tip-top" data-tooltip src="<%= logo %>" title="<%= tag %>">',
+            '<a href="#filter=.<%= tagFilter %>" class="has-tip tip-top" data-tooltip title="<%= tag %>">',
+                '<img src="<%= logo %>" title="<%= tag %>">',
             '</a>',
         '</div>'
     ].join('\n')
