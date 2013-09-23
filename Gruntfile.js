@@ -24,7 +24,7 @@ module.exports = function(grunt) {
           {
             flatten : true,
             expand : true,
-            src: ['assets/html/header.html'],
+            src: ['build/html/header.html'],
             dest: 'templates/default_site/includes.group/'
           }
         ]
