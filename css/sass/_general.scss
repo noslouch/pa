@@ -356,7 +356,11 @@ iframe {
     }
     
     .name { opacity: 0; }
-    .icon { opacity: 0; }
+    .icon { 
+        opacity: 0;
+        
+        a { display: block; }
+    }
 
     .name,
     .icon {
