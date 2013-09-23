@@ -167,9 +167,13 @@ iframe {
 
     header { 
         @include grid-row(collapse);
-        margin-top: 1em;
-        margin-bottom: 1em;
+        padding-top: 1em;
+        padding-bottom: 1em;
 
+        &:hover { 
+            a,
+            h2:before { color: red; }
+        }
     }
 
     h2 { 
@@ -178,6 +182,7 @@ iframe {
             content: "+";
             display: inline-block;
             margin-right: 5px;
+            @include transition(color 450ms ease-out);
         }
     }
 
