@@ -427,12 +427,14 @@ button {
         left: 39px;
         margin: 0;
         line-height: 0.8;
-        font-size: emCalc(18);
         z-index: 1;
         cursor: pointer;
+        font-size: emCalc(19);
+        font-weight: 500;
+        line-height: 1;
 
         a { color: $secondary-color; }
-        a:hover { color: $primary-color; }
+        a:hover { color: $gray; }
     }
 
     .close {
