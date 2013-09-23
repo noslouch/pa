@@ -482,12 +482,40 @@ button {
     left: 3em;
     height: auto;
     z-index: 8040;
+    background: black;
+
+    ul {
+        background: none;
+        overflow: visible;
+    }
 
     li { 
         background: image-url('small-mask.png');
         float: left; 
         width: 17px;
         height: 12px;
+
+        &:hover {
+            background: white;
+        }
+        &:hover a {
+            opacity: 1;
+            @include translate3d(0, -5px, 0);
+        }
+
+        &.active-slide:hover a {
+            background: red;
+        }
+    }
+
+    a {
+        background: black;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        opacity: 0;
+        @include translate3d(0,0,0);
+        @include transition(transform 100ms ease);
     }
 
     .dot {
