@@ -39,6 +39,11 @@ define([
                     }) )
                     $layout.append($base)
                     this.$el.html($layout)
+                    require(['imagesLoaded'], function() {
+                        $('.bio').imagesLoaded(function(){
+                            $('.bio').addClass('loaded')
+                        })
+                    })
                     break;
 
                 case 'press':

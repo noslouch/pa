@@ -87,10 +87,11 @@ define([
 
             var $img = this.$('img'),
                 rtl = this.$el.hasClass('rtl'),
-                fixed = this.$el.hasClass('fixed')
+                fixed = this.$el.hasClass('fixed'),
+                $el = this.$el
 
             this.$el.imagesLoaded( function() {
-                this.isotope({
+                $el.isotope({
                     transformsEnabled: !rtl,
                     itemSelector: '.thumb',
                     layoutMode : fixed ? 'masonry' : 'fitRows',
