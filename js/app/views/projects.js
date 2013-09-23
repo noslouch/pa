@@ -10,7 +10,7 @@ define([
     'app/views/filterviews',
     'foundation',
     'tooltips',
-    'lib/requirejs/domReady!'
+    //'lib/requirejs/domReady!'
 ], function( $, Backbone, _, S ) {
 
     var ProjectLanding = Backbone.View.extend({
