@@ -126,7 +126,29 @@ define([
         contentController : function(model){
             var layout = new S.Text(),
                 $layout = layout.render(),
+                type = model.get('type'),
+                back,
                 $base
+
+            switch (type) {
+                case 'press':
+                    back = 'Press'
+                    break;
+                case 'articles-by-pa':
+                    back = 'Articles by PA'
+                    break;
+                case 'articles-about-pa':
+                    back = 'Articles about PA'
+                    break;
+                case 'interviews':
+                    back = 'Interviews with PA'
+                    break;
+                case 'transcripts':
+                    back = 'Transcripts'
+                    break;
+                default:
+                    break;
+            }
 
             $base = $( layout.base({
                 type : 'press',
@@ -143,7 +165,7 @@ define([
             }) )
             .append( layout.back({
                 url : '/profile/' + model.collection.section,
-                buttonText : 'See All Items'
+                buttonText : 'Back to All ' + back
             }) ).appendTo( $layout )
 
             this.$el.html( $layout )
