@@ -3489,40 +3489,52 @@ button {
 }
 
 /* line 39, sass/_text-showcase.scss */
+.bio {
+  opacity: 0;
+  -webkit-transition: opacity 300ms ease-in;
+  -moz-transition: opacity 300ms ease-in;
+  -o-transition: opacity 300ms ease-in;
+  transition: opacity 300ms ease-in;
+}
+/* line 43, sass/_text-showcase.scss */
+.bio.loaded {
+  opacity: 1;
+}
+/* line 45, sass/_text-showcase.scss */
 .bio .img {
   float: left;
   margin-right: 1em;
 }
 
-/* line 48, sass/_text-showcase.scss */
+/* line 55, sass/_text-showcase.scss */
 .text p {
   font-size: 1.1875em;
   font-weight: 300;
 }
 
-/* line 55, sass/_text-showcase.scss */
+/* line 62, sass/_text-showcase.scss */
 .press h3, .press time {
   font-size: 1.1875em;
 }
-/* line 59, sass/_text-showcase.scss */
+/* line 66, sass/_text-showcase.scss */
 .press h3 {
   font-weight: 500;
   margin: 0;
   text-align: left;
 }
-/* line 65, sass/_text-showcase.scss */
+/* line 72, sass/_text-showcase.scss */
 .press time {
   font-weight: 100;
   text-align: right;
 }
-/* line 70, sass/_text-showcase.scss */
+/* line 77, sass/_text-showcase.scss */
 .press p {
   font-size: 0.8125em;
   font-weight: 500;
   line-height: 1.2;
 }
 
-/* line 77, sass/_text-showcase.scss */
+/* line 84, sass/_text-showcase.scss */
 .profile .text P {
   font-size: 0.8125em;
   font-weight: 500;
