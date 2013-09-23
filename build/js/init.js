@@ -38,7 +38,9 @@ require.config({
         'app/views/projects' : 'app/views/projects.@@hash',
         'app/views/search' : 'app/views/search.@@hash',
         'app/views/showcaseviews' : 'app/views/showcaseviews.@@hash',
-        'app/views/singleviews' : 'app/views/singleviews.@@hash'
+        'app/views/singleviews' : 'app/views/singleviews.@@hash',
+        'utils/spinner' : 'utils/spinner.@@hash',
+        'tpl/jst' : 'tpl/jst.@@hash'
     },
     shim : {
         'jquery': {
