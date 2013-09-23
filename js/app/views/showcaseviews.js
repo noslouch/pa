@@ -276,7 +276,8 @@ define([
         initialize : function() {
             var self = this
 
-            this.byDate = this.collection.groupBy(function(model) {
+            var sorted = this.collection.sortBy('title')
+            this.byDate = _.groupBy( sorted, function(model) {
                 return model.get('date').year()
             })
 
