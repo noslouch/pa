@@ -14,7 +14,7 @@ define([
 
         initialize : function() {
             _.bindAll( this, 'debug', 'payload' )
-            //this.on('route', this.payload)
+            this.on('route', this.debug)
         },
 
         routes : {
@@ -34,9 +34,7 @@ define([
         },
 
         debug : function() {
-            console.log('debug called')
-            console.log('this: ', this)
-            console.log('arguments: ', arguments)
+            console.log('updated')
         },
 
         payload : function(method) {
