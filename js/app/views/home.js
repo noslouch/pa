@@ -6,8 +6,8 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'utils/quotes',
-    'lib/requirejs/domReady!'
+    'utils/quotes'
+    //'lib/requirejs/domReady!'
 ], function( $, Backbone, _, quotes ) {
 
     var Home = Backbone.View.extend({
