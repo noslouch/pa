@@ -57,7 +57,6 @@ define([
             var self = this
 
             this.model.set({
-                className : 'home',
                 outlineTitle : 'Home'
             })
 
@@ -68,7 +67,6 @@ define([
 
         projects : function(Projects) {
             this.model.set({
-                className : 'projects',
                 outlineTitle : 'Projects'
             })
 
@@ -113,6 +111,7 @@ define([
         },
 
         singleProject : function(Projects, project, urlTitle) {
+            $('.page').removeClass('projects')
             var model = Projects.findWhere({ url : project })
 
             if ( this.model.get('project') ) {
