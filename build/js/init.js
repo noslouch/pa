@@ -62,7 +62,8 @@ require.config({
         'json' : {
             deps : ['jquery']
         }
-    }
+    },
+    waitSeconds : 10
 })
 
 require( ['jquery', 'underscore', 'backbone', 'app/router', 'app/views/chrome'],
