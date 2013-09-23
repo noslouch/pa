@@ -355,7 +355,10 @@ iframe {
     .icon { 
         opacity: 0;
         
-        a { display: block; }
+        a {
+            display: block; 
+            text-align: center; 
+        }
     }
 
     .name,
