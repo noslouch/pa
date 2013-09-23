@@ -54,8 +54,15 @@ define([
         },
 
         home : function() {
-            require(['app/views/home'], function( home ) {
-                home()
+            var self = this
+
+            this.model.set({
+                className : 'home',
+                outlineTitle : 'Home'
+            })
+
+            require(['app/views/home'], function( Home ) {
+                self.model.set( 'page', new Home() )
             })
         },
 
