@@ -2958,21 +2958,61 @@ button {
   left: 3em;
   height: auto;
   z-index: 8040;
+  background: black;
 }
-/* line 486, sass/_modules.scss */
+/* line 487, sass/_modules.scss */
+.fancybox-overlay .indicators ul {
+  background: none;
+  overflow: visible;
+}
+/* line 492, sass/_modules.scss */
 .fancybox-overlay .indicators li {
   background: url('img/small-mask.png?1379880013');
   float: left;
   width: 17px;
   height: 12px;
 }
-/* line 493, sass/_modules.scss */
+/* line 498, sass/_modules.scss */
+.fancybox-overlay .indicators li:hover {
+  background: white;
+}
+/* line 501, sass/_modules.scss */
+.fancybox-overlay .indicators li:hover a {
+  opacity: 1;
+  -webkit-transform: translate3d(0, -5px, 0);
+  -moz-transform: translate3d(0, -5px, 0);
+  -ms-transform: translate3d(0, -5px, 0);
+  -o-transform: translate3d(0, -5px, 0);
+  transform: translate3d(0, -5px, 0);
+}
+/* line 506, sass/_modules.scss */
+.fancybox-overlay .indicators li.active-slide:hover a {
+  background: red;
+}
+/* line 511, sass/_modules.scss */
+.fancybox-overlay .indicators a {
+  background: black;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 100ms ease;
+  -moz-transition: -moz-transform 100ms ease;
+  -o-transition: -o-transform 100ms ease;
+  transition: transform 100ms ease;
+}
+/* line 521, sass/_modules.scss */
 .fancybox-overlay .indicators .dot {
   width: 12px;
   height: 12px;
 }
 
-/* line 499, sass/_modules.scss */
+/* line 527, sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;
