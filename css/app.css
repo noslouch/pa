@@ -3331,39 +3331,39 @@ button {
   width: auto;
   height: 216px;
 }
-/* line 37, sass/_image-showcase.scss */
+/* line 38, sass/_image-showcase.scss */
 .isotope-grid.rtl .thumb a {
-  height: 323px;
+  height: auto;
 }
-/* line 39, sass/_image-showcase.scss */
+/* line 40, sass/_image-showcase.scss */
 .isotope-grid.fixed .thumb {
   margin-left: 0;
 }
-/* line 42, sass/_image-showcase.scss */
+/* line 43, sass/_image-showcase.scss */
 .isotope-grid.fixed .thumb a {
   width: 164px;
 }
-/* line 46, sass/_image-showcase.scss */
+/* line 47, sass/_image-showcase.scss */
 .isotope-grid.fixed.rtl .thumb a {
   width: 246px;
 }
-/* line 48, sass/_image-showcase.scss */
+/* line 49, sass/_image-showcase.scss */
 .isotope-grid.fixed .wide.thumb {
   margin-left: 0;
 }
-/* line 49, sass/_image-showcase.scss */
+/* line 50, sass/_image-showcase.scss */
 .isotope-grid.fixed .wide.thumb a {
   width: 334px;
 }
-/* line 55, sass/_image-showcase.scss */
+/* line 56, sass/_image-showcase.scss */
 .isotope-grid.fixed.rtl .wide.thumb a {
   width: 501px;
 }
-/* line 57, sass/_image-showcase.scss */
+/* line 58, sass/_image-showcase.scss */
 .isotope-grid .thumb:hover {
   z-index: 4;
 }
-/* line 60, sass/_image-showcase.scss */
+/* line 61, sass/_image-showcase.scss */
 .isotope-grid .thumb:hover .wrapper {
   -webkit-transform: scale(1.2, 1.2);
   -moz-transform: scale(1.2, 1.2);
@@ -3374,12 +3374,12 @@ button {
   -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
 }
-/* line 65, sass/_image-showcase.scss */
+/* line 66, sass/_image-showcase.scss */
 .isotope-grid .thumb:hover .caption {
   opacity: 1;
 }
 
-/* line 70, sass/_image-showcase.scss */
+/* line 71, sass/_image-showcase.scss */
 .caption {
   color: red;
   background: white;
@@ -3395,20 +3395,20 @@ button {
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
 }
-/* line 82, sass/_image-showcase.scss */
+/* line 83, sass/_image-showcase.scss */
 .caption p {
   margin: 0;
   font-size: 0.6875em;
   font-weight: 500;
   line-height: 1;
 }
-/* line 89, sass/_image-showcase.scss */
+/* line 90, sass/_image-showcase.scss */
 .caption .year {
   font-weight: 300;
   font-size: 0.6875em;
 }
 
-/* line 96, sass/_image-showcase.scss */
+/* line 97, sass/_image-showcase.scss */
 .thumb img {
   max-height: 100%;
   max-width: 100%;

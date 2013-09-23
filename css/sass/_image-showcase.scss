@@ -34,7 +34,8 @@
         }
     }
 
-    &.rtl .thumb a { height: 323px; }
+    //&.rtl .thumb a { height: 323px; }
+    &.rtl .thumb a { height: auto; }
 
     &.fixed .thumb { 
         margin-left: 0;
