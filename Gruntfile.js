@@ -26,6 +26,12 @@ module.exports = function(grunt) {
             expand : true,
             src: ['build/html/header.html'],
             dest: 'templates/default_site/includes.group/'
+          },
+          {
+            flatten : true,
+            expand : true,
+            src: ['build/js/init.js'],
+            dest: 'js/'
           }
         ]
       }
