@@ -44,8 +44,14 @@ $config['prv_msg_upload_path'] = $config['server_path']."/uploads/system/pm_atta
 
 // END EE config items
 
-/* CodeIgniter Configuration
--------------------------------------------------------------------*/
+/* 
+ * CE Cache Config
+ ------------------------------------------------------------------*/
+$config['ce_cache_static_enabled'] = 'yes';
+
+/* 
+ * CodeIgniter Configuration
+ ------------------------------------------------------------------*/
 $config['base_url'] = $config['site_url'];
 $config['uri_protocol'] = 'AUTO';
 $config['language'] = 'english';
@@ -61,8 +67,9 @@ $config['log_path'] = '';
 $config['log_date_format'] = 'Y-m-d H:i:s';
 $config['time_reference'] = 'local';
 
-/* Universal database connection settings
--------------------------------------------------------------------*/
+/* 
+ * Universal database connection settings
+ -------------------------------------------------------------------*/
 $active_group = $env;
 $active_record = TRUE;
 
