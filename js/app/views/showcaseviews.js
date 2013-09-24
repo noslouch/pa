@@ -303,9 +303,9 @@ define([
             this.$el.empty()
             _.each( group, function(v,k){
                 var html = new showcases.ListSect({
-                    id : sort ? v[0] : k.toLowerCase(),
-                    date : sort ? v[0] : k,
-                    listItems : sort ? v[1] : v,
+                    id : sort === 'date' ? v[0] : k.toLowerCase(),
+                    date : sort === 'date' ? v[0] : k,
+                    listItems : sort === 'date' ? v[1] : v,
                     path : this.options.path,
                     url : this.options.url
                 })
