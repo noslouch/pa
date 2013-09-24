@@ -22,8 +22,8 @@ define([
     'underscore',
     'app/models/searchQuery',
     'utils/spinner',
-    'json',
-    'app/router'
+    'json'
+    //'app/router'
 ], function( $, Backbone, _, Q, Spinner ) {
 
     var search = {}

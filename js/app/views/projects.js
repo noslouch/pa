@@ -3,26 +3,31 @@
 'use strict';
 
 define([
+    'require',
     'jquery',
     'backbone',
     'underscore',
     'app/views/showcaseviews',
-    'app/views/filterviews',
+    //'app/views/filterviews',
     'foundation',
     'tooltips',
     'lib/requirejs/domReady!'
-], function( $, Backbone, _, S ) {
+], function( require, $, Backbone, _, S ) {
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
+            var self = this
+
+            require(['app/views/filterviews'],
+            function( FilterBar ) {
+                self.filter = new FilterBar({
+                    el : '#filter-bar',
+                    model : self.model
+                })
+            })
+
             this.setElement('.page')
             this.outlineTitle = this.$('h2')
-            var FilterBar = require('app/views/filterviews')
-
-            this.filter = new FilterBar({
-                el : '#filter-bar',
-                model : this.model
-            })
 
             _.bindAll( this, 'hashHandler', 'projectFilter', 'projectView', 'projectSort', 'projectJump' )
 
@@ -46,7 +51,6 @@ define([
             this.$el.html( pageView.render() )
             this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
 
-            require(['app/views/showcaseviews'], function(S) {
                 if ( pageModel.get('showcase') instanceof S.Image ) {
                     console.log('instanceof S.Image: loading isotope')
 
@@ -57,10 +61,7 @@ define([
                 } else if ( pageModel.get('showcase') instanceof S.List ) {
                     console.log('instanceof S.List: sorting by name')
 
-                    //pageModel.get('showcase').set( 'sort', 'alpha' )
-                    //pageModel.set( 'sort', 'alpha' )
                 }
-            })
         },
 
         hashHandler : function() {
