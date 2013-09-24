@@ -3,14 +3,14 @@
     {exp:channel:entries channel="quotes" limit="10"}
         <div class="slide">
             <h3>
-            {lines}
+                {lines}
                 <div class="blind closed">{item}</div>
-            {/lines}
-            </h3>
+                {/lines}
 
-            {if button_quotes}
-            <a href="{link-url_quotes}" class="button closed"{if external_quote} target="_blank"{/if}>{button_quotes}</a>
-            {/if}
+                {if button_quotes}
+                <a href="{link-url_quotes}" class="button closed"{if external_quote} target="_blank"{/if}>{button_quotes}</a>
+                {/if}
+            </h3>
         </div> <!--slide-->
     {/exp:channel:entries}
     <div class="indicators" id="bullets"></div>
