@@ -245,7 +245,7 @@ define([
             _.each( byDate, function( model, date ) {
                 var li = document.createElement('li'),
                     $tag = $('<a />')
-                $tag.attr('href', '#jump=' + date).html(date)
+                $tag.attr('href', '#jump=' + model[0]).html(model[0])
                 $tag.appendTo(li)
                 $date.append(li)
             } )
