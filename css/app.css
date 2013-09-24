@@ -4201,7 +4201,7 @@ iframe {
 .filter .wrapper, .view-all .wrapper, .views .wrapper,
 .sorts .wrapper,
 .jump-to .wrapper {
-  min-width: 250px;
+  min-width: 268px;
   position: absolute;
   padding: 0.5rem 0 1rem;
   opacity: 0;
