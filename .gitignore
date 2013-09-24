@@ -8,3 +8,4 @@ php_files
 #system/expressionengine/config/config.php
 cgi-bin
 assets
+static
