@@ -1,4 +1,4 @@
-﻿CodeMirror.defineMode("javascript", function(config, parserConfig) {
+CodeMirror.defineMode("javascript", function(config, parserConfig) {
   var indentUnit = config.indentUnit;
   var jsonMode = parserConfig.json;
 

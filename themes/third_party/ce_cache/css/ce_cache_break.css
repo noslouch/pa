@@ -1,0 +1,97 @@
+/************************************************
+* Basics *
+************************************************/
+code {
+	background-color: #fff;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.ce_cache_break_item_examples {
+	list-style: square outside;
+	margin-left: 15px;
+	margin-bottom: 15px;
+}
+
+/************************************************
+* Tags/Items *
+************************************************/
+/********************* Layout *********************/
+#ce_cache_tag {
+	float: left;
+	width: 48%;
+	margin-top: 20px;
+}
+
+#ce_cache_items {
+	float: right;
+	width: 48%;
+	margin-top: 20px;
+}
+
+#ce_cache_variables {
+	margin-top: 25px;
+}
+
+.ce_cache_clear {
+	clear: both;
+}
+
+.ce_cache_tag_wrapper,
+.ce_cache_item_wrapper {
+	width: 350px;
+	display: block;
+	clear: both;
+	margin-bottom: 5px;
+}
+
+.ce_cache_tag_wrapper input,
+.ce_cache_item_wrapper input {
+	width: 300px;
+	float: left;
+}
+
+/********************* Remove Icons *********************/
+.ce_cache_tag_wrapper a.ce_cache_remove_tag,
+.ce_cache_item_wrapper a.ce_cache_remove_item {
+	width: 16px;
+	height: 16px;
+	display: block;
+	background: transparent url(../images/delete-1.png) no-repeat center bottom;
+	float: left;
+	position: relative;
+	top: 5px;
+	margin-left: 10px;
+}
+
+.ce_cache_tag_wrapper:after,
+.ce_cache_item_wrapper:after,
+a.ce_cache_add_tag:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+/********************* Add Icons *********************/
+a.ce_cache_add_tag,
+a.ce_cache_add_item {
+	width: 16px;
+	height: 16px;
+	display: block;
+	background: transparent url(../images/add.png) no-repeat center bottom;
+
+	position: relative;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+/********************* Add Icons *********************/
+.ce_cache_tag_wrapper span.error,
+.ce_cache_item_wrapper span.error {
+display: block;
+clear: both;
+padding-top: 2px;
+color: #f00;
+}
