@@ -1,4 +1,4 @@
-﻿CodeMirror.defineMode("css", function(config) {
+CodeMirror.defineMode("css", function(config) {
   var indentUnit = config.indentUnit, type;
   function ret(style, tp) {type = tp; return style;}
 
