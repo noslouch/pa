@@ -13,8 +13,12 @@ define([
 
     function Slide(h3, gallery){
         var self = this
-        self.blinds = h3.children
+        self.blinds = _.toArray( h3.children )
         self.g = gallery
+
+        if ( h3.nextElementSibling instanceof HTMLAnchorElement ) {
+            self.blinds.push( h3.nextElementSibling )
+        }
 
         _.each( self.blinds, function(blind, index) {
             if ( $(blind).html()[0] === '*' ) {
@@ -119,7 +123,7 @@ define([
         $(c).on('transitionEnd', galleryHandler)
         $(c).on('transitionend', galleryHandler)
 
-        $(c).on('click', 'a', function(e){
+        $(c).on('click', '.indicators a', function(e){
             e.preventDefault()
             self.update(e.target.id)
             dotHandler()
