@@ -11,12 +11,12 @@ define([
     //'app/views/header',
     'app/views/page',
     'app/views/search',
-    'bbq',
+    'bbq'
     //'app/router',
     //'app/collections/covergallery',
-    'app/views/projects',
-    'app/views/profileviews',
-    'app/views/singleviews'
+    //'app/views/projects',
+    //'app/views/profileviews',
+    //'app/views/singleviews'
 ], function( require, exports, $, Backbone, _, PageView, Search ) {
 
     var App = Backbone.View.extend({
@@ -25,14 +25,6 @@ define([
             _.bindAll(this, 'render', 'routeHandler', 'projects', 'showSearch', 'singleProject' )
 
             this.model = new Backbone.Model()
-
-        /*
-            this.header = new Header({
-                el : '.site-header',
-                parent : this,
-                model : this.model
-            })
-            */
 
             this.pageView = new PageView({
                 el : '.page',
@@ -44,9 +36,6 @@ define([
                 el : '#searchForm',
                 page : this.model
             })
-
-            //var r = require( 'app/router' )
-            //this.listenTo( r.router, 'route', this.routeHandler )
 
             this.listenTo( this.search, 'submit', function() {
                 this.pageView.$el.empty()
@@ -66,48 +55,48 @@ define([
         },
 
         projects : function(Projects) {
+            var self = this
             this.model.set({
                 outlineTitle : 'Projects'
             })
 
-            var S = require('app/views/showcaseviews'),
-                CoverGallery = require('app/collections/covergallery'),
-                ProjectLanding = require('app/views/projects')
+            require(['app/views/showcaseviews', 'app/collections/covergallery', 'app/views/projects'],
+            function( S, CoverGallery, ProjectLanding ) {
 
-            this.model.covers = new S.Image({
-                cover : true,
-                collection : new CoverGallery( Projects.pluck('coverImage') ),
-                path : 'projects'
-            })
+                self.model.covers = new S.Image({
+                    cover : true,
+                    collection : new CoverGallery( Projects.pluck('coverImage') ),
+                    path : 'projects'
+                })
 
-            this.model.titles = new S.List({
-                collection : Projects,
-                pageClass : 'projects',
-                section : 'Projects'
-            })
+                self.model.titles = new S.List({
+                    collection : Projects,
+                    pageClass : 'projects',
+                    section : 'Projects'
+                })
 
-            this.model.random = new S.Starfield({
-                collection : this.model.covers.collection
-            })
+                self.model.random = new S.Starfield({
+                    collection : self.model.covers.collection
+                })
 
-            this.pageView.undelegateEvents()
-            this.pageView.stopListening()
+                self.pageView.undelegateEvents()
+                self.pageView.stopListening()
 
-            this.model.set( 'page', new ProjectLanding({ model : this.model }) )
+                self.model.set( 'page', new ProjectLanding({ model : self.model }) )
 
-
-            if ( document.location.hash ) {
-                var hashObj = $.deparam.fragment()
-                if ( hashObj.filter || hashObj.view === 'covers' ) {
-                    this.model.set( 'showcase' , this.model.covers )
-                } else if ( hashObj.view === 'random' ) {
-                    this.model.set( 'showcase', this.model.random )
+                if ( document.location.hash ) {
+                    var hashObj = $.deparam.fragment()
+                    if ( hashObj.filter || hashObj.view === 'covers' ) {
+                        self.model.set( 'showcase' , self.model.covers )
+                    } else if ( hashObj.view === 'random' ) {
+                    self.model.set( 'showcase', self.model.random )
+                    } else {
+                        self.model.set( 'showcase', self.model.titles )
+                    }
                 } else {
-                    this.model.set( 'showcase', this.model.titles )
+                    $.bbq.pushState( { view : 'random' }, 2 )
                 }
-            } else {
-                $.bbq.pushState( { view : 'random' }, 2 )
-            }
+            })
         },
 
         singleProject : function(Projects, project, urlTitle) {
@@ -118,64 +107,94 @@ define([
                 model.get('showcases')
                     .findWhere({ url_title : urlTitle }).activate()
             } else {
-                var detailView = require('app/views/singleviews')
-                var view = new detailView.Project({ model : model })
-                this.model.set('page', view)
+                //var detailView = require('app/views/singleviews')
+                var self = this
+                require(['app/views/singleviews'],
+                function(detailView) {
+                    var view = new detailView.Project({ model : model })
+                    self.model.set('page', view)
 
-                if (urlTitle) {
-                    model.get('showcases')
-                        .findWhere({ url_title : urlTitle }).activate()
-                } else {
-                    model.get('showcases').first().activate(true)
-                }
+                    if (urlTitle) {
+                        model.get('showcases')
+                            .findWhere({ url_title : urlTitle }).activate()
+                    } else {
+                        model.get('showcases').first().activate(true)
+                    }
+                })
             }
 
         },
 
         photoHomeInit : function( Albums ) {
-            var CoverGallery = require('app/collections/covergallery'),
-                S = require('app/views/showcaseviews')
-            this.model.set( 'page', new S.Image({
-                cover : true,
-                collection : new CoverGallery( Albums.pluck('coverImage') ),
-                path : 'photography'
-            }) )
+            var self = this
+
+            require(['app/views/showcaseviews', 'app/collections/covergallery'],
+            function( S, CoverGallery ) {
+            //var CoverGallery = require('app/collections/covergallery'),
+            //    S = require('app/views/showcaseviews')
+
+                self.model.set( 'page', new S.Image({
+                    cover : true,
+                    collection : new CoverGallery( Albums.pluck('coverImage') ),
+                    path : 'photography'
+                }) )
+            })
         },
 
         albumInit : function(Albums, urlTitle) {
-            var views = require('app/views/singleviews')
-            this.model.set( 'page', new views.Album({
-                model : Albums.findWhere({ url : urlTitle })
-            }) )
+            //var views = require('app/views/singleviews')
+            var self = this
+            require(['app/views/singleviews'],
+            function( views ) {
+                self.model.set( 'page', new views.Album({
+                    model : Albums.findWhere({ url : urlTitle })
+                }) )
+            })
         },
 
         filmHomeInit : function( Films ) {
-            var S = require('app/views/showcaseviews')
-            this.model.set( 'page' , new S.FilmGrid({
-                collection : Films
-            }) )
+            //var S = require('app/views/showcaseviews')
+            var self = this
+            require(['app/views/showcaseviews'],
+            function( S ) {
+                self.model.set( 'page' , new S.FilmGrid({
+                    collection : Films
+                }) )
+            })
         },
 
         singleFilmInit : function( Films, urlTitle ) {
-            var views = require('app/views/singleviews')
-            this.model.set( 'page', new views.Film({
-                model : Films.findWhere({ url : urlTitle })
-            }) )
+            //var views = require('app/views/singleviews')
+            var self = this
+            require(['app/views/singleviews'],
+            function( views ) {
+                self.model.set( 'page', new views.Film({
+                    model : Films.findWhere({ url : urlTitle })
+                }) )
+            })
         },
 
-        profileInit : function( Profile ) {
-            var Page = require('app/views/profileviews')
-            this.model.set( 'page', new Page({
-                el : '#profileViewer',
-                sections : Profile
-            }) )
+        profileInit : function( Profile, Page ) {
+            //var Page = require('app/views/profileviews')
+            //var self = this
+            //require(['app/views/profileviews'],
+            //function( Page ) {
+                this.model.set( 'page', new Page({
+                    el : '#profileViewer',
+                    sections : Profile
+                }) )
+            //})
         },
 
         streamInit : function( Instagrams ) {
-            var S = require('app/views/showcaseviews')
-            this.model.set( 'page', new S.Starfield({
-                collection : Instagrams
-            }, true ) )
+            //var S = require('app/views/showcaseviews')
+            var self = this
+            require(['app/views/showcaseviews'],
+            function( S ) {
+                self.model.set( 'page', new S.Starfield({
+                    collection : Instagrams
+                }, true ) )
+            })
         },
 
         events : {
@@ -204,9 +223,5 @@ define([
         }
     })
 
-    /*
-    var app = new App({ el : document })
-    exports.chrome = app
-    */
     return new App({ el : document })
 })

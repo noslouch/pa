@@ -1,4 +1,6 @@
-/* app/views/pageviews.js - Page Views */
+/* DEPRECATED
+ * *****************************************************
+/* app/views/pageviews.js - Page Views 
 'use strict';
 
 define([
@@ -42,3 +44,4 @@ define([
 
     return PageView
 })
+*/

@@ -7,6 +7,10 @@
                 <div class="blind closed">{item}</div>
             {/lines}
             </h3>
+
+            {if button_quotes}
+            <a href="{link-url_quotes}" class="button closed"{if external_quote} target="_blank"{/if}>{button_quotes}</a>
+            {/if}
         </div> <!--slide-->
     {/exp:channel:entries}
     <div class="indicators" id="bullets"></div>
