@@ -205,32 +205,8 @@ define([
 
         initialize : function(options) {
             _.bindAll( this, 'swap', 'back' )
-        /*
-            this.bio = new options.sections.Bio() // model
-            this.press = new options.sections.Press()
-            this.awards = new options.sections.Awards()
-            this['photos-of-pa'] = new options.sections.PhotosOf() // model
-            this['articles-by-pa'] = new options.sections.ArticlesBy()
-            this['articles-about-pa'] = new options.sections.ArticlesAbout()
-            this.interviews = new options.sections.Interviews()
-            this.transcripts = new options.sections.Transcripts()
-            this.acknowledgements = new options.sections.Acknowledgements() // model
-            */
 
             this.sections = options.sections
-        /*
-            this.sections.push(
-                this.bio
-                , this.press
-                , this.awards
-                , this['photos-of-pa']
-                , this['articles-by-pa']
-                , this['articles-about-pa']
-                , this.interviews
-                , this.transcripts
-                , this.acknowledgements
-            )
-            */
 
             this.listenTo( Backbone.dispatcher, 'profile:swap', this.swap )
 
@@ -244,26 +220,6 @@ define([
         back : function(e) {
             e.preventDefault()
             var sectionName = e.currentTarget.pathname
-
-            /*
-            switch(sectionName.slice(9)) {
-                case 'photos-of-pa':
-                    this['photosOf'].activate()
-                    break;
-
-                case 'articles-by-pa':
-                    this['articlesBy'].activate()
-                    break;
-
-                case 'articles-about-pa':
-                    this['artAiclesAbout'].activate()
-                    break;
-
-                default:
-                    this[sectionName.slice(9)].activate()
-                    break;
-            }
-            */
 
             this.sections[sectionName.slice(9)].activate()
         },
