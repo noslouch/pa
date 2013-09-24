@@ -17,7 +17,7 @@ define([
         self.g = gallery
 
         if ( h3.nextElementSibling instanceof HTMLAnchorElement ) {
-            self.blinds.push( h3.nextElementSibling )
+            //self.blinds.push( h3.nextElementSibling )
         }
 
         _.each( self.blinds, function(blind, index) {
