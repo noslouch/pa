@@ -22,7 +22,7 @@ class Ce_cache_static_handler
 	private $debug = false;
 
 	//show execution time?
-	private $show_time = true;
+	private $show_time = false;
 
 
 	//---------------- no need to change anything below ----------------
