@@ -1,4 +1,4 @@
-﻿CKEDITOR.plugins.add('channelimages',
+CKEDITOR.plugins.add('channelimages',
 {
 	requires : ['dialog'],
 	
