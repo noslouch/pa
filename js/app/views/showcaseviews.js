@@ -277,9 +277,11 @@ define([
             var self = this
 
             var sorted = this.collection.sortBy('title')
-            this.byDate = _.groupBy( sorted, function(model) {
+            var dateObj = _.groupBy( sorted, function(model) {
                 return model.get('date').year()
             })
+            var dateArray = _.pairs( dateObj )
+            this.byDate = _.sortBy(dateArray, function(item) { return item[0] } )
 
             this.byFirst = (function() {
                 var sorted = self.collection.sortBy('title')
@@ -301,9 +303,9 @@ define([
             this.$el.empty()
             _.each( group, function(v,k){
                 var html = new showcases.ListSect({
-                    id : k.toLowerCase(),
-                    date : k,
-                    listItems : v,
+                    id : sort ? v[0] : k.toLowerCase(),
+                    date : sort ? v[0] : k,
+                    listItems : sort ? v[1] : v,
                     path : this.options.path,
                     url : this.options.url
                 })
