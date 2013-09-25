@@ -170,6 +170,8 @@ iframe {
     &.open { 
         @include translate3d( 0, 25%, 0 );
         h2:before { content:"-"; }
+
+        .row { opacity: 1; }
     }
 
     header { 
@@ -194,7 +196,9 @@ iframe {
     }
 
     .row {
+        opacity: 0;
         padding-bottom: emCalc(35);
+        @include transition(opacity 150ms ease);
     }
 
     .row.one .brick { @include grid-column(6, $center: true); }
