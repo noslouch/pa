@@ -7,38 +7,33 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'app/views/showcaseviews',
-    //'app/views/filterviews',
+    //'app/views/showcaseviews',
+    'app/views/filterviews',
     'foundation',
     'tooltips',
     'lib/requirejs/domReady!'
-], function( require, $, Backbone, _, S ) {
+], function( require, $, Backbone, _, FilterBar ) {
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
             var self = this
 
-            require(['app/views/filterviews'],
-            function( FilterBar ) {
+            //require(['app/views/filterviews'],
+            //function( FilterBar ) {
                 self.filter = new FilterBar({
                     el : '#filter-bar',
                     model : self.model
                 })
-            })
+            //})
 
             this.setElement('.page')
             this.outlineTitle = this.$('h2')
 
-            _.bindAll( this, 'hashHandler', 'projectFilter', 'projectView', 'projectSort', 'projectJump' )
+            _.bindAll( this, 'render' )
 
-            this.listenTo( this.model, 'change:showcase', this.render )
-            this.listenTo( this.model, 'change:filter', this.projectFilter )
-            this.listenTo( this.model, 'change:view', this.projectView )
-            this.listenTo( this.model, 'change:sort', this.projectSort )
-            this.listenTo( this.model, 'change:jump', this.projectJump )
-
-            $(window).on('hashchange', this.hashHandler)
-            Backbone.dispatcher.on('hashchange', this.hashHandler)
+            $(window).on('hashchange', this.render)
+            Backbone.dispatcher.on('hashchange', this.render)
+            this.debug()
         },
 
         semantics : function( className, outlineTitle ) {
@@ -47,26 +42,37 @@ define([
             this.$el.prepend( this.outlineTitle )
         },
 
-        render : function( pageModel, pageView, filtering ) {
-            this.$el.html( pageView.render() )
+        render : function() {
+            var hashObj = $.deparam.fragment()
+            hashObj.filter = hashObj.filter || '*'
+            hashObj.view = hashObj.view || 'cover'
+            hashObj.sort = hashObj.sort || 'name'
+
+            this.model.set( hashObj )
+
+            this.$el.html( this.model[hashObj.view].render() )
+
             this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
 
-                if ( pageModel.get('showcase') instanceof S.Image ) {
-                    console.log('instanceof S.Image: loading isotope')
+        },
 
-                    pageModel.get('showcase').firstLoad()
-                    if ( !filtering ) {
-                        pageModel.set('filter', '*')
-                    }
-                } else if ( pageModel.get('showcase') instanceof S.List ) {
-                    console.log('instanceof S.List: sorting by name')
+        debug : function() {
+            window.projects = this.model.get('projects')
+            window.chrome = this.model
+        },
 
-                }
+        eventWatcher : function() {
+            console.log('event triggered')
+            console.log('this: ', this)
+            console.log('arguments: ', arguments)
         },
 
         hashHandler : function() {
             var hashObj = $.deparam.fragment()
-
+            this.model.set( hashObj )
+            this.render( this.model, this.model[hashObj.view] )
+        }
+            /*
             if ( hashObj.filter ) {
                 console.log('change:hashchange:filter handler')
 
@@ -155,6 +161,7 @@ define([
 
             pageModel.get('showcase').trigger('jump', jump)
         },
+        */
     })
 
     $(document).foundation()

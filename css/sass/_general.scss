@@ -479,10 +479,10 @@ iframe {
         padding-top: 0.3rem;
     }
 
-    .alphas,
+    .names,
     .dates { display: none; }
 
-    &.alpha .alphas { display: block; }
+    &.name .names { display: block; }
     &.date .dates { display: block; }
 }
 
@@ -500,10 +500,8 @@ iframe {
 
     &.open h3 { color: $secondary-color; }
 
-    .name,
     .icon,
-    .alphas,
-    .dates {
+    .name {
         font-size: emCalc(19);
         font-weight: 500;
         margin: 0;
@@ -516,6 +514,12 @@ iframe {
         color: $gray;
         @include box-shadow(0 1px 0 rgba(0, 0, 0, 0.2) inset);
     }
+}
+
+.jump-to a {
+    font-size: emCalc(19);
+    font-weight: 500;
+    margin: 0;
 }
 
 .views,

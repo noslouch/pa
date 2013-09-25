@@ -138,7 +138,7 @@ function( _ ){
 
     JST.listItemPartial = [
         '<% if (url) { %>',
-            '<a href="<%= path %><%= url %>" id="<%= id %>">',
+            '<a href="<%= path %>/<%= url %>" id="<%= id %>">',
         '<% } %>',
             '<h4>',
                 '<%= title %>',
@@ -185,34 +185,8 @@ function( _ ){
             '<div class="wrapper"></div>',
         '</div>',
         '<div class="filter view-all">',
-            '<h3><a href="#filter=*">View All</a></h3>',
+            '<h3><a href="#" data-hash="filter=*">View All</a></h3>',
         '</div>'
-    ].join('\n')
-
-    JST.jumps = [
-        '<h3>Jump To</h3>',
-        '<div class="wrapper"></div>'
-    ].join('\n')
-
-    JST.sorts = [
-        '<h3>Sort By</h3>',
-        '<div class="wrapper">',
-            '<ul>',
-                '<li><button id="alpha" type="button">Name</button></li>',
-                '<li><button id="date" type="button">Date</button></li>',
-            '</ul>',
-        '</div> <!-- .wrapper -->'
-    ].join('\n')
-
-    JST.views = [
-        '<h3>View By</h3>',
-        '<div class="wrapper">',
-            '<ul>',
-                '<li><button class="icon-view active" id="covers" type="button">Cover Image</button></li>',
-                '<li><button class="title-view" id="titles" type="button">Project Title</button></li>',
-                '<li><button class="random-view" id="random" type="button">Random</button></li>',
-           '</ul>',
-        '</div> <!-- .wrapper -->'
     ].join('\n')
 
     JST.controlsPartial = [
@@ -225,7 +199,7 @@ function( _ ){
 
     JST.logoPartial = [
         '<div class="icon">',
-            '<a href="#filter=.<%= tagFilter %>" class="has-tip tip-top" data-tooltip title="<%= tag %>">',
+            '<a href="#" data-hash="filter=.<%= tagFilter %>" class="has-tip tip-top" data-tooltip title="<%= tag %>">',
                 '<img src="<%= logo %>" title="<%= tag %>">',
             '</a>',
         '</div>'
@@ -233,10 +207,36 @@ function( _ ){
 
     JST.namePartial = [
         '<h4 class="name">',
-            '<a href="#filter=.<%= tagFilter %>">',
+            '<a href="#" data-hash="filter=.<%= tagFilter %>">',
                 '<%= tag %>',
             '</a>',
         '</h4>'
+    ].join('\n')
+
+    JST.jumps = [
+        '<h3>Jump To</h3>',
+        '<div class="wrapper"></div>'
+    ].join('\n')
+
+    JST.sorts = [
+        '<h3>Sort By</h3>',
+        '<div class="wrapper">',
+            '<ul>',
+                '<li><button data-hash="sort=name" id="name" type="button">Name</button></li>',
+                '<li><button data-hash="sort=date" id="date" type="button">Date</button></li>',
+            '</ul>',
+        '</div> <!-- .wrapper -->'
+    ].join('\n')
+
+    JST.views = [
+        '<h3>View By</h3>',
+        '<div class="wrapper">',
+            '<ul>',
+                '<li><button class="icon-view active" data-hash="view=cover" id="cover" type="button">Cover Image</button></li>',
+                '<li><button class="title-view" data-hash="view=list" id="list" type="button">Project Title</button></li>',
+                '<li><button class="random-view" data-hash="view=random" id="random" type="button">Random</button></li>',
+           '</ul>',
+        '</div> <!-- .wrapper -->'
     ].join('\n')
 
     for (var tmpl in JST) {
