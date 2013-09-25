@@ -112,7 +112,7 @@ function( _ ){
                 '<img src="<% large ? print(lg_thumb) : print(thumb) %>">',
                 '<% if (caption) { %>',
                     '<div class="caption">',
-                        '<p><%= caption %></p>',
+                        '<p class="title"><%= caption %></p>',
                         '<% if (year) { %>',
                             '<span class="year"><%= year %></span>',
                         '<% } %>',
