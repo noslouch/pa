@@ -33,9 +33,11 @@ define([
 
         render : function(pageModel, pageView, filtering) {
 
+            this.model.set('view')
             this.$el.html( pageView.render() )
             this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
 
+            /*
             if ( pageModel.get('page') instanceof S.Image ) {
                 console.log('instanceof S.Image: loading isotope')
 
@@ -48,6 +50,7 @@ define([
 
                 pageModel.set('sort','alpha')
             }
+            */
         }
 
     })
