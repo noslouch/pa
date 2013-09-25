@@ -136,6 +136,7 @@ define([
                             $el.isotope( 'updateSortData', $('.thumb') )
                             self.filter( self.model.get('filter') )
                             self.sort( self.model.get('sort') )
+                            self.model.trigger('layout')
                         }
                     })
                 }

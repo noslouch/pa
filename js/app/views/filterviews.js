@@ -242,7 +242,7 @@ define([
             e.stopPropagation()
             this.$('.open').removeClass('open')
             $('html, body').animate({
-                scrollTop : $(e.currentTarget.hash).offset().top - 200
+                scrollTop : $(e.currentTarget.hash).offset().top - (this.model.get('view') === 'list' ? 200 : 400)
             })
         },
 
