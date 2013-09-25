@@ -49,6 +49,7 @@ $config['prv_msg_upload_path'] = $config['server_path']."/uploads/system/pm_atta
  ------------------------------------------------------------------*/
 $config['ce_cache_static_enabled'] = 'yes';
 $config['ce_cache_static_path'] = $config['server_path'] . "/static/";
+//$config['ce_cache_off'] = 'yes';
 
 /* 
  * CodeIgniter Configuration
