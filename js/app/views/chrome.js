@@ -95,7 +95,7 @@ define([
                 if ( document.location.hash ) {
                     $(window).trigger('hashchange')
                 } else {
-                    $.bbq.pushState( { view : 'random', filter : '*', sort : 'name' }, 2 )
+                    $.bbq.pushState({ view : 'random' })
                 }
             })
         },

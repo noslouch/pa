@@ -70,7 +70,7 @@ define([
                             collection : album.get('photos'),
                             model : model
                         })
-                        model.set('view', 'photos-of-pa')
+                        model.set('type', 'gallery')
                         self.$el.html( showcase.render({ container : self.$el }) )
                     })
                     break;

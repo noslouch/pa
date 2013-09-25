@@ -7,7 +7,6 @@ define([
     'app/router',
     'app/models/profilesection'
 ], function( Backbone, _, Router, Models ) {
-    console.log(Models)
 
     var Collection = Backbone.Collection.extend({
         parse : function( response, options ) {
