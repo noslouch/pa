@@ -46,8 +46,10 @@ define([
                 var showcase
                 switch( model.get('type') ) {
                     case 'gallery':
+                        model.set('page', this)
                         showcase = new S.Image({
-                            collection : model.get('gallery')
+                            collection : model.get('gallery'),
+                            model : model
                         })
                         break;
 
@@ -240,11 +242,13 @@ define([
 
         render : function(options) {
             this.details.render()
+            this.model.set('type', 'gallery')
             var gallery = new S.Image({
-                collection : this.model.get('photos')
+                collection : this.model.get('photos'),
+                model : this.model
             })
-            this.$('#showcaseContainer').html( gallery.render() )
-            gallery.firstLoad()
+            this.$('#showcaseContainer').html( gallery.render({ container : this.$('#showcaseContainer') }) )
+            //gallery.firstLoad()
 
             return this.el
         }

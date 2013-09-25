@@ -4387,12 +4387,12 @@ iframe {
   padding-top: 0.3rem;
 }
 /* line 483, sass/_general.scss */
-.jump-to .alphas,
+.jump-to .names,
 .jump-to .dates {
   display: none;
 }
 /* line 485, sass/_general.scss */
-.jump-to.alpha .alphas {
+.jump-to.name .names {
   display: block;
 }
 /* line 486, sass/_general.scss */
@@ -4424,36 +4424,26 @@ iframe {
 .open.jump-to h3 {
   color: red;
 }
-/* line 506, sass/_general.scss */
-.filter .name, .view-all .name, .views .name,
-.sorts .name,
-.jump-to .name,
-.filter .icon,
-.view-all .icon,
-.views .icon,
+/* line 504, sass/_general.scss */
+.filter .icon, .view-all .icon, .views .icon,
 .sorts .icon,
 .jump-to .icon,
-.filter .alphas,
-.view-all .alphas,
-.views .alphas,
-.sorts .alphas,
-.jump-to .alphas,
-.filter .dates,
-.view-all .dates,
-.views .dates,
-.sorts .dates,
-.jump-to .dates {
+.filter .name,
+.view-all .name,
+.views .name,
+.sorts .name,
+.jump-to .name {
   font-size: 1.1875em;
   font-weight: 500;
   margin: 0;
 }
-/* line 512, sass/_general.scss */
+/* line 510, sass/_general.scss */
 .filter button:focus, .view-all button:focus, .views button:focus,
 .sorts button:focus,
 .jump-to button:focus {
   outline: none;
 }
-/* line 515, sass/_general.scss */
+/* line 513, sass/_general.scss */
 .filter button.active:focus, .view-all button.active:focus, .views button.active:focus,
 .sorts button.active:focus,
 .jump-to button.active:focus {
@@ -4463,37 +4453,44 @@ iframe {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2) inset;
 }
 
-/* line 523, sass/_general.scss */
+/* line 519, sass/_general.scss */
+.jump-to a {
+  font-size: 1.1875em;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* line 527, sass/_general.scss */
 .views button,
 .sorts button {
   font-size: 0.875em;
   background: none;
 }
-/* line 526, sass/_general.scss */
+/* line 530, sass/_general.scss */
 .views button:hover,
 .sorts button:hover {
   color: red;
 }
 
-/* line 534, sass/_general.scss */
+/* line 538, sass/_general.scss */
 .contact {
   display: table;
   height: 100%;
   width: 100%;
 }
-/* line 539, sass/_general.scss */
+/* line 543, sass/_general.scss */
 .contact .wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-/* line 544, sass/_general.scss */
+/* line 548, sass/_general.scss */
 .contact h3 {
   margin: 0px;
   line-height: 1;
   font-size: 3.125em;
 }
 
-/* line 555, sass/_general.scss */
+/* line 559, sass/_general.scss */
 .viewer {
   width: 100%;
   margin: 0;
@@ -4512,7 +4509,7 @@ iframe {
   clear: both;
 }
 
-/* line 561, sass/_general.scss */
+/* line 565, sass/_general.scss */
 .details {
   position: relative;
   padding-left: 0.53125em;
@@ -4526,17 +4523,17 @@ iframe {
   padding-left: 0;
   overflow-y: auto;
 }
-/* line 572, sass/_general.scss */
+/* line 576, sass/_general.scss */
 .details header,
 .details .summary,
 .details ul {
   margin-bottom: 1.5rem;
 }
-/* line 575, sass/_general.scss */
+/* line 579, sass/_general.scss */
 .details .tags > li {
   line-height: 1.2;
 }
-/* line 576, sass/_general.scss */
+/* line 580, sass/_general.scss */
 .details .type {
   position: relative;
   padding-left: 0;
@@ -4544,7 +4541,7 @@ iframe {
   width: 37.5%;
   float: left;
 }
-/* line 579, sass/_general.scss */
+/* line 583, sass/_general.scss */
 .details .links {
   position: relative;
   padding-left: 0;
@@ -4552,12 +4549,12 @@ iframe {
   width: 62.5%;
   float: left;
 }
-/* line 583, sass/_general.scss */
+/* line 587, sass/_general.scss */
 .details .wrapper {
   margin-bottom: 7em;
 }
 
-/* line 589, sass/_general.scss */
+/* line 593, sass/_general.scss */
 .container {
   position: relative;
   padding-left: 0;
@@ -4567,13 +4564,13 @@ iframe {
   max-width: 854px;
 }
 
-/* line 602, sass/_general.scss */
+/* line 606, sass/_general.scss */
 .viewer .button,
 .container .button {
   background: #e0e0e0;
   padding-bottom: 13px;
 }
-/* line 606, sass/_general.scss */
+/* line 610, sass/_general.scss */
 .viewer .button:before,
 .container .button:before {
   content: "<";
@@ -4582,41 +4579,41 @@ iframe {
   vertical-align: text-top;
   margin-right: 0.5em;
 }
-/* line 614, sass/_general.scss */
+/* line 618, sass/_general.scss */
 .viewer .button:hover,
 .container .button:hover {
   background: red;
   color: white;
 }
-/* line 617, sass/_general.scss */
+/* line 621, sass/_general.scss */
 .viewer .button:hover:before,
 .container .button:hover:before {
   color: black;
 }
 
-/* line 626, sass/_general.scss */
+/* line 630, sass/_general.scss */
 .details h3, .details time {
   font-size: 1.1875em;
 }
-/* line 627, sass/_general.scss */
+/* line 631, sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
 }
-/* line 633, sass/_general.scss */
+/* line 637, sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 638, sass/_general.scss */
+/* line 642, sass/_general.scss */
 .details p {
   font-size: 1.1875em;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 646, sass/_general.scss */
+/* line 650, sass/_general.scss */
 .showcase-links,
 .profile-links {
   font-size: 1.1875em;
@@ -4624,33 +4621,33 @@ iframe {
   line-height: 1.2;
 }
 
-/* line 652, sass/_general.scss */
+/* line 656, sass/_general.scss */
 .tags {
   font-size: 0.8125em;
 }
 
-/* line 656, sass/_general.scss */
+/* line 660, sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 660, sass/_general.scss */
+/* line 664, sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 666, sass/_general.scss */
+/* line 670, sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }
 
 @media (max-width: 1024px) {
-  /* line 671, sass/_general.scss */
+  /* line 675, sass/_general.scss */
   .header-wrapper {
     position: relative;
   }
 
-  /* line 675, sass/_general.scss */
+  /* line 679, sass/_general.scss */
   .page,
   .page.projects {
     padding-top: 1em;

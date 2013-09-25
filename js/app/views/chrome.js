@@ -57,26 +57,34 @@ define([
         projects : function(Projects) {
             var self = this
             this.model.set({
-                outlineTitle : 'Projects'
+                outlineTitle : 'Projects',
+                projects : Projects
             })
 
-            require(['app/views/showcaseviews', 'app/collections/covergallery', 'app/views/projects'],
+            require([
+                'app/views/showcaseviews',
+                'app/collections/covergallery',
+                'app/views/projects'],
             function( S, CoverGallery, ProjectLanding ) {
 
-                self.model.covers = new S.Image({
+                self.model.cover = new S.Image({
                     cover : true,
                     collection : new CoverGallery( Projects.pluck('coverImage') ),
-                    path : 'projects'
+                    path : 'projects',
+                    model : self.model
                 })
 
-                self.model.titles = new S.List({
-                    collection : Projects,
+                self.model.list = new S.List({
+                    //collection : Projects,
+                    collection : new CoverGallery( Projects.pluck('coverImage') ),
                     pageClass : 'projects',
-                    section : 'Projects'
+                    path : 'projects',
+                    section : 'Projects',
+                    model : self.model
                 })
 
                 self.model.random = new S.Starfield({
-                    collection : self.model.covers.collection
+                    collection : self.model.cover.collection
                 })
 
                 self.pageView.undelegateEvents()
@@ -85,16 +93,9 @@ define([
                 self.model.set( 'page', new ProjectLanding({ model : self.model }) )
 
                 if ( document.location.hash ) {
-                    var hashObj = $.deparam.fragment()
-                    if ( hashObj.filter || hashObj.view === 'covers' ) {
-                        self.model.set( 'showcase' , self.model.covers )
-                    } else if ( hashObj.view === 'random' ) {
-                    self.model.set( 'showcase', self.model.random )
-                    } else {
-                        self.model.set( 'showcase', self.model.titles )
-                    }
+                    $(window).trigger('hashchange')
                 } else {
-                    $.bbq.pushState( { view : 'random' }, 2 )
+                    $.bbq.pushState( { view : 'random', filter : '*', sort : 'name' }, 2 )
                 }
             })
         },
@@ -136,7 +137,8 @@ define([
                 self.model.set( 'page', new S.Image({
                     cover : true,
                     collection : new CoverGallery( Albums.pluck('coverImage') ),
-                    path : 'photography'
+                    path : 'photography',
+                    model : self.model
                 }) )
             })
         },
