@@ -197,10 +197,13 @@ iframe {
         padding-bottom: emCalc(35);
     }
 
+    .row.one .brick { @include grid-column(6, $center: true); }
+    .row.two .brick { @include grid-column(6); }
+    .row.three .brick { @include grid-column(4); }
+    .row.four .brick { @include grid-column(3); }
     // bricks are in an html defined row
     .brick {
         height: 150px;
-        @include grid-column(3);
         @include rotate(0);
 
         .copy {
