@@ -8,8 +8,9 @@ define([
     'underscore',
     'tpl/jst',
     'utils/fbLoader',
+    'utils/spinner',
     'isotope'
-], function( $, Backbone, _, TPL, fbLoader ) {
+], function( $, Backbone, _, TPL, fbLoader, Spinner ) {
 
     var showcases = {}
 
@@ -124,8 +125,11 @@ define([
                     this.filter( this.model.get('filter') )
                     this.sort( this.model.get('sort') )
                 } else {
+                    var spinner = new Spinner()
                     this.$el.imagesLoaded( function() {
                         $el.isotope(isoOps)
+
+                        spinner.detach()
                         $img.addClass('loaded')
 
                         if ( self.model.has('filter') ) {
@@ -429,7 +433,7 @@ define([
                     p = document.createElement('p'),
                     span = document.createElement('span')
 
-                $(p).html( this.model.get('caption') )
+                $(p).html( this.model.get('title') )
                 $(span).addClass('year').html( this.model.get('year') )
                 $(caption).addClass('caption').append(p).append(span)
 
