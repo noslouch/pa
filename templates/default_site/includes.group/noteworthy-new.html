@@ -1,0 +1,22 @@
+    <div class="n-wrapper{if segment_1==''} home{/if}">
+        <section class="n-container" id="n-container">
+            <header>
+                <h2><a href="#n-container">Noteworthy</a></h2>
+            </header>
+            <div class="row">
+                {exp:channel_entries channel="noteworthy" limit="4" disable="categories|member_data"}
+                <article class="brick">
+                    <div class="img">
+                        {image_noteworthy:image}
+                    </div>
+                    <a href="{link_url}"{if external_noteworthy} target="_blank"{/if}>
+                        <div class="copy">
+                            <h3>{title}</h3>
+                            <p>{summary}</p>
+                        </div>
+                    </a>
+                </article>
+            {/exp:channel:entries}
+            </div>
+        </section> <!-- .n-container -->
+    </div> <!-- .n-wrapper -->
