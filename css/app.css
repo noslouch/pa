@@ -2694,7 +2694,7 @@ button {
 .sorts h3:after,
 .jump-to h3:after, .filter h3:hover:after,
 .filter.open h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, .close span, .close:hover span, .film-row .img:before, .film-row > div:hover .img:before, .fancybox-next span, .fancybox-next:hover span, .fancybox-prev span, .fancybox-prev:hover span {
-  background: url('img/icons-s43252cb3e8.png') no-repeat;
+  background: url('img/icons-s46e8adcd5d.png') no-repeat;
 }
 
 /* line 228, sass/_modules.scss */
@@ -2736,7 +2736,7 @@ button {
 
 /* line 255, sass/_modules.scss */
 .icon-view:before {
-  background-position: 0 -386px;
+  background-position: 0 -263px;
   width: 16px;
   height: 15px;
   content: '';
@@ -2751,12 +2751,12 @@ button {
 }
 /* line 270, sass/_modules.scss */
 .icon-view.active:before {
-  background-position: 0 -263px;
+  background-position: 0 -386px;
 }
 
 /* line 277, sass/_modules.scss */
 .title-view:before {
-  background-position: 0 -328px;
+  background-position: 0 -315px;
   width: 25px;
   height: 13px;
   content: '';
@@ -2771,7 +2771,7 @@ button {
 }
 /* line 292, sass/_modules.scss */
 .title-view.active:before {
-  background-position: 0 -315px;
+  background-position: 0 -328px;
 }
 
 /* line 299, sass/_modules.scss */
@@ -3798,7 +3798,7 @@ html, body {
 }
 /* line 42, sass/_general.scss */
 .loader span {
-  background: url('img/loader.gif?1379880013') no-repeat;
+  background: url('img/loader.gif?1380128459') no-repeat;
   width: 32px;
   height: 32px;
   display: inline-block;
