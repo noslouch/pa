@@ -67,10 +67,11 @@ define([
                     require(['app/models/album'], function(Album){
                         album = new Album( model.attributes )
                         showcase = new S.Image({
-                            collection : album.get('photos')
+                            collection : album.get('photos'),
+                            model : model
                         })
-                        self.$el.html( showcase.render() )
-                        showcase.firstLoad()
+                        model.set('view', 'photos-of-pa')
+                        self.$el.html( showcase.render({ container : self.$el }) )
                     })
                     break;
 
