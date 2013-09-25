@@ -135,7 +135,7 @@ define([
 
             tags.forEach( function(tagObj) {
                 this.$el
-                    .append( new ProjectLi({ 
+                    .append( new ProjectLi({
                         tagObj : tagObj })
                     .render() )
             }, this )
@@ -144,124 +144,59 @@ define([
         }
     })
 
-    var ViewMenu = Backbone.View.extend({
+    var ViewSort = Backbone.View.extend({
         tagName : 'div',
-        id : 'views',
-        className : 'views',
-        template: TPL.views,
-        initialize : function() {
+        initialize : function(options) {
+            this.id = options.id
+            this.$el.addClass(this.id)
+            this.template = options.template
             this.$el.append( this.template() )
-            this.listenTo( this.model, 'change:view', this.toggleActive )
-            this.listenTo( this.model, 'change:showcase', this.toggleActive )
+            this.listenTo( this.model, 'change:' + options.type, this.toggleActive )
         },
-
-        events : {
-            'click button' : 'viewChange'
-        },
-
         render : function() {
             return this.el
         },
-
-        viewChange : function(e){
-
-            if ( $(e.currentTarget).hasClass('active') ) {
-                e.preventDefault()
-                e.stopPropagation()
-                return false
-            }
-
-            $.bbq.pushState({ view : e.currentTarget.id }, 2)
-        },
-
-        toggleActive : function( pageModel, view ) {
-
+        toggleActive : function(model, set){
             this.$('button').removeClass('active')
-            try {
-                this.$('#' + view).addClass('active')
-            } catch(e) {
-                if ( view instanceof S.Image ) {
-                    this.$('#covers').addClass('active')
-                } else {
-                    this.$('#titles').addClass('active')
-                }
-            }
-        }
-    })
-
-    var SortMenu = Backbone.View.extend({
-        tagName : 'div',
-        id : 'sorts',
-        className : 'sorts',
-        template: TPL.sorts,
-
-        initialize : function() {
-            this.$el.append( this.template() )
-            this.listenTo( this.model, 'change:sort', this.toggleActive )
-            this.listenTo( this.model, 'change:showcase', this.toggleActive )
-        },
-
-        events : {
-            'click button' : 'sortChange'
-        },
-
-        render : function() {
-            return this.el
-        },
-
-        sortChange : function(e){
-
-            if ( $(e.currentTarget).hasClass('active') ) {
-                e.preventDefault()
-                e.stopPropagation()
-                return false
-            }
-
-            $.bbq.pushState({ sort : e.currentTarget.id }, 2)
-        },
-
-        toggleActive : function( pageModel, sort ) {
-            this.$('button').removeClass('active')
-            try {
-                this.$('#' + sort).addClass('active')
-            } catch(e) {
-                this.$('#alpha').addClass('active')
-            }
+            this.$('#' + set).addClass('active')
         }
     })
 
     var JumpMenu = Backbone.View.extend({
         tagName : 'div',
         id : 'jump-to',
-        className : 'jump-to alpha',
+        className : 'jump-to name',
         template: TPL.jumps,
 
         initialize : function() {
-            var $alpha = $('<ul />').attr('class', 'alphas'),
+            var $name = $('<ul />').attr('class', 'names'),
                 $date = $('<ul />').attr('class', 'dates'),
-                byDate = this.model.titles.byDate,
-                byFirst = this.model.titles.byFirst
+                byDate = this.collection.groupBy(function(model) {
+                    return model.get('date').year()
+                }),
+                byFirst = this.collection.groupBy(function(model) {
+                    return model.get('title')[0]
+                })
 
             _.each( byDate, function( model, date ) {
                 var li = document.createElement('li'),
                     $tag = $('<a />')
-                $tag.attr('href', '#jump=' + model[0]).html(model[0])
+                $tag.attr('href', '#' + date).html(date)
                 $tag.appendTo(li)
                 $date.append(li)
             } )
             _.each( byFirst, function( model, first) {
                 var li = document.createElement('li'),
                     $tag = $('<a />')
-                $tag.attr('href', '#jump=' + first.toLowerCase() ).html(first)
+                $tag.attr('href', '#' + first).html(first)
                 $tag.appendTo(li)
-                $alpha.append(li)
+                $name.append(li)
             } )
 
             this.$el.append( this.template() )
-            this.$('.wrapper').append($alpha).append($date)
+            this.$('.wrapper').append($name).append($date)
 
             this.listenTo( this.model, 'change:sort', this.toggleActive)
-
         },
 
         render : function() {
@@ -269,8 +204,8 @@ define([
         },
 
         toggleActive : function( pageModel, sort ) {
-            this.$el.toggleClass( 'alpha', sort === 'alpha' )
-            this.$el.toggleClass('date', sort === 'date' )
+            this.$el.toggleClass( 'name', sort === 'name' )
+            this.$el.toggleClass( 'date', sort === 'date' )
         }
     })
 
@@ -279,29 +214,36 @@ define([
         template : TPL.projectFilter,
 
         initialize : function() {
-            _.bindAll(this, 'toggleView', 'openMenu', 'render' )
+            _.bindAll(this, 'filter', 'openMenu', 'render' )
             this.$el.html( this.template() )
             this.render()
         },
 
         events : {
-            'click .filter a' : function(e) {
-                var href = e.currentTarget.hash.substring(1),
-                    option = $.deparam( href, true )
-
-                $.bbq.pushState( option, 2 )
-            },
-
+            'click .filter a' : 'filter',
+            'click .sorts button' : 'filter',
+            'click .views button' : 'filter',
+            'click .jump-to a' : 'jump',
             'click h3' : 'openMenu'
         },
 
-        toggleView : function(e) {
+        filter : function(e) {
+            var hash = e.currentTarget.dataset.hash,
+                option = $.deparam( hash, true )
+
             e.preventDefault()
             e.stopPropagation()
-            Backbone.dispatcher.trigger( 'filter:toggleView', e.currentTarget )
-            if ( !$(e.currentTarget.parentElement).hasClass('views') ) {
-                this.$('.open').removeClass('open')
-            }
+            $.bbq.pushState( option )
+            this.$('.open').removeClass('open')
+        },
+
+        jump : function(e) {
+            e.preventDefault()
+            e.stopPropagation()
+            this.$('.open').removeClass('open')
+            $('html, body').animate({
+                scrollTop : $(e.currentTarget.hash).offset().top - 200
+            })
         },
 
         openMenu : function(e) {
@@ -341,14 +283,18 @@ define([
                     model : this.model,
                     collection : this.collection
                 }).render() )
-                .append( new SortMenu({
-                    model : this.model
+                .append( new ViewSort({
+                    model : this.model,
+                    id : 'sorts',
+                    type : 'sort',
+                    template : TPL.sorts
                 }).render() )
-                .append( new ViewMenu({
-                    model : this.model
+                .append( new ViewSort({
+                    model : this.model,
+                    id : 'views',
+                    type : 'view',
+                    template : TPL.views
                 }).render() )
-
-            //return this.el
         }
     })
 

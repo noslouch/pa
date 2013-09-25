@@ -8,8 +8,9 @@ define([
     'underscore',
     'tpl/jst',
     'utils/fbLoader',
+    'utils/spinner',
     'isotope'
-], function( $, Backbone, _, TPL, fbLoader ) {
+], function( $, Backbone, _, TPL, fbLoader, Spinner ) {
 
     var showcases = {}
 
@@ -25,9 +26,9 @@ define([
                 _.each( this.model.get('tags'), function(obj) {
                     tags.push( obj.className )
                 }, this )
-                return "thumb " + tags.join(' ') + (this.model.get('wide') ? " wide" : "")
+                return "thumb " + tags.join(' ') + (this.model.get('wide') ? " wide" : "") + " " + this.model.get('year')
             } else {
-                return "thumb" + (this.model.get('wide') ? " wide" : "")
+                return "thumb" + (this.model.get('wide') ? " wide" : "") + " " + this.model.get('year')
             }
         },
 
@@ -35,7 +36,7 @@ define([
             this.$el.html( this.template({
                 url : this.options.path ? this.options.path + '/' + this.model.get('url') : this.model.get('url'),
                 cover : this.options.cover,
-                caption : this.model.get('caption'),
+                caption : this.options.path === 'projects' ? this.model.get('title') : this.model.get('caption'),
                 year : this.options.path === 'projects' ? this.model.get('year') : '',
                 thumb : this.model.get('thumb'),
                 lg_thumb : this.model.get('lg_thumb'),
@@ -52,7 +53,7 @@ define([
         id : 'iso-grid',
 
         initialize : function() {
-            _.bindAll(this, 'render', 'firstLoad', 'filter')
+            _.bindAll(this, 'render', 'filter')
 
             this.collection.forEach(function(image) {
                 var thumb = new showcases.Thumb({
@@ -78,38 +79,78 @@ define([
         },
 
         render : function(options){
-            this.on('filter', this.filter)
-            fbLoader()
-            return this.el
-        },
-
-        firstLoad: function() {
-
-            var $img = this.$('img'),
+            var self = this,
+                $img = this.$('img'),
                 rtl = this.$el.hasClass('rtl'),
                 fixed = this.$el.hasClass('fixed'),
-                $el = this.$el
-
-            this.$el.imagesLoaded( function() {
-                $el.isotope({
-                    transformsEnabled: !rtl,
-                    itemSelector: '.thumb',
-                    layoutMode : fixed ? 'masonry' : 'fitRows',
-                    masonry : {
-                        gutterWidth: 7,
-                        columnWidth: rtl ? 164*1.5 : 164
+                $el = this.$el,
+                isoOps = {
+                transformsEnabled: !rtl,
+                itemSelector: '.thumb',
+                layoutMode : fixed ? 'masonry' : 'fitRows',
+                masonry : {
+                    gutterWidth: 7,
+                    columnWidth: rtl ? 164*1.5 : 164
+                },
+                onLayout : function() {
+                    $(this).css('overflow', 'visible')
+                },
+                getSortData : {
+                    name : function($el) {
+                        return $el.find('.caption p').text()
                     },
-                    onLayout : function() {
-                        $(this).css('overflow', 'visible')
+                    date : function($el) {
+                        return parseInt( $el.find('.year').text(), 10 )
                     }
-                })
+                }
+            }
 
-                $img.addClass('loaded')
-            })
+            if (this.options.path === 'photography' ||
+                this.model.get('type') === 'gallery' ||
+                this.model.hasChanged( 'view' ) ) {
+                fbLoader()
+                if ( this.options.path === 'photography' ) {
+                    $('.page').html( this.el )
+                } else {
+                    try {
+                        this.model.get('page').$el.html( this.el )
+                    } catch(e) {
+                        options.container.html( this.el )
+                    }
+                }
+
+                if ( this.$el.hasClass('isotope') ) {
+                this.$el.isotope(isoOps)
+                this.$el.isotope( 'updateSortData', $('.thumb') )
+                    this.filter( this.model.get('filter') )
+                    this.sort( this.model.get('sort') )
+                } else {
+                    var spinner = new Spinner()
+                    this.$el.imagesLoaded( function() {
+                        $el.isotope(isoOps)
+
+                        spinner.detach()
+                        $img.addClass('loaded')
+
+                        if ( self.model.has('filter') ) {
+                            $el.isotope( 'updateSortData', $('.thumb') )
+                            self.filter( self.model.get('filter') )
+                            self.sort( self.model.get('sort') )
+                        }
+                    })
+                }
+            } else {
+                this.filter( this.model.get('filter') )
+                this.sort( this.model.get('sort') )
+            }
         },
 
         filter : function(filter) {
             this.$el.isotope({ filter : filter })
+        },
+
+        sort : function(sort) {
+            this.$el.isotope({ sortBy : sort })
         }
     })
 
@@ -259,7 +300,7 @@ define([
                     .append( new showcases.Li({
                         model : listItem,
                         path : path ? path : '',
-                        url : url ? listItem.url() : false
+                        url : url ? listItem.get('url') : false
                     }).render() )
             }, this )
 
@@ -274,38 +315,25 @@ define([
         tagName : 'div',
         className : 'showcase list',
         initialize : function() {
-            var self = this
-
-            var sorted = this.collection.sortBy('title')
-            var dateObj = _.groupBy( sorted, function(model) {
-                return model.get('date').year()
-            })
-            var dateArray = _.pairs( dateObj )
-            this.byDate = _.sortBy(dateArray, function(item) { return item[0] } )
-
-            this.byFirst = (function() {
-                var sorted = self.collection.sortBy('title')
-                return _.groupBy(sorted, function(model) {
-                    var t = model.get('title')
-                    return t[0]
-                })
-            }())
-
+            _.bindAll( this, 'filter', 'groupSort', 'render' )
         },
 
-        render : function(sort){
-            console.log('List render')
-            this.on('sort', this.render)
-            this.on('jump', this.jump)
-
-            var group = sort === 'date' ? this.byDate : this.byFirst
+        render : function(){
+            var filtered,
+                group
+            try {
+                filtered = this.filter( this.model.get('filter') )
+                group = this.groupSort( this.model.get('sort'), filtered )
+            } catch(e) {
+                group = this.groupSort( 'date', this.collection.models )
+            }
 
             this.$el.empty()
             _.each( group, function(v,k){
                 var html = new showcases.ListSect({
-                    id : sort === 'date' ? v[0] : k.toLowerCase(),
-                    date : sort === 'date' ? v[0] : k,
-                    listItems : sort === 'date' ? v[1] : v,
+                    id : v[0],
+                    date : v[0],
+                    listItems : v[1],
                     path : this.options.path,
                     url : this.options.url
                 })
@@ -313,6 +341,36 @@ define([
             }, this )
 
             return this.el
+        },
+
+        filter : function( filter ) {
+            if ( filter === '*' ) {
+                return this.collection.models
+            }
+            // filter project cover
+            return this.collection.filter( function( cover ){
+                return _.find( cover.get('tags'), function(tag) {
+                    return tag.className === filter.slice(1)
+                } )
+            } )
+        },
+
+        groupSort : function( method, toGroup )  {
+            // sort project covers according to specified dimension
+            var groupObj = _.groupBy( toGroup, function(model) {
+                if ( method === 'date' ) {
+                    return model.get('year') || model.get('date').year()
+                } else if ( method === 'name' ) {
+                    return model.get('title')[0]
+                } else {
+                    throw 'Invalid sort dimension'
+                }
+            })
+            var groupArray = _.pairs( groupObj )
+            var grouped =  _.sortBy( groupArray, function(item){
+                return item[0]
+            } )
+            return grouped
         },
 
         jump : function(jump) {
@@ -375,7 +433,7 @@ define([
                     p = document.createElement('p'),
                     span = document.createElement('span')
 
-                $(p).html( this.model.get('caption') )
+                $(p).html( this.model.get('title') )
                 $(span).addClass('year').html( this.model.get('year') )
                 $(caption).addClass('caption').append(p).append(span)
 
