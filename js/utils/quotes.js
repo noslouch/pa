@@ -13,12 +13,9 @@ define([
 
     function Slide(h3, gallery){
         var self = this
+        self.$el = $(h3).parent()
         self.blinds = _.toArray( h3.children )
         self.g = gallery
-
-        if ( h3.nextElementSibling instanceof HTMLAnchorElement ) {
-            //self.blinds.push( h3.nextElementSibling )
-        }
 
         _.each( self.blinds, function(blind, index) {
             if ( $(blind).html()[0] === '*' ) {
@@ -66,6 +63,7 @@ define([
         this.g.openSlide = this
         setTimeout(this.staggerClose, 4500)
         this.staggerOpen()
+        this.$el.removeClass('closed')
     }
 
     function Gallery(c){
@@ -107,6 +105,7 @@ define([
                     // which would just load whatever is sequentially next.
                     self.getNext().animate()
                     self.q.userChoice = false
+                    openSlide.$el.addClass('closed')
                 } else {
                     // otherwise call update(), which updates the queue with the
                     // following slide in sequential order
@@ -114,6 +113,7 @@ define([
                     // there's probably a way to refactor this so we can respect
                     // user choices without needing to force an override.
                     self.update().animate()
+                    openSlide.$el.addClass('closed')
                 }
                 dotHandler()
             }

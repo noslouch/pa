@@ -106,6 +106,14 @@ button {
     z-index: 0;
 }
 
+.slide.closed {
+    z-index: -1;
+}
+
+.button.opened {
+    z-index: auto;
+}
+
 .indicators {
     position: absolute;
     right: 0;
