@@ -55,7 +55,8 @@
 
     &.fixed.rtl .wide.thumb a { width: 334px*1.5; }
 
-    .thumb:hover {
+    .thumb:hover,
+    .thumb.bounce {
         z-index: 4;
         
         .wrapper {
