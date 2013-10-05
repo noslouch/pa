@@ -84,8 +84,14 @@ class CI_Location_local extends Image_Location
 	{
 		$loc = $this->get_location_prefs($this->lsettings['location']);
 
+		$full_target = $loc['server_path'] . $dest_folder . '/' . $dest_filename;
+
+		if (file_exists($full_target) === true) {
+			@chmod($full_target, 0777);
+		}
+
 		// Move file
-		if (copy($source_file, $loc['server_path'] . $dest_folder . '/' . $dest_filename) === FALSE)
+		if (copy($source_file, $full_target) === FALSE)
     	{
     		$o['body'] = $this->EE->lang->line('ci:file_upload_error');
 	   		exit( $this->EE->image_helper->generate_json($o) );

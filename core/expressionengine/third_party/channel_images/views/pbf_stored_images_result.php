@@ -4,7 +4,7 @@
 
 	<div class="Image">
 		<a href='#' class='ImgUrl' title="<?=$img->title?>" rel="<?=$img->filename?>" id="<?=$ID?>" data="<?=$img->entry_id?>"><img src='<?=$img->small_img_url?>' width='<?=$this->config->item('ci_image_preview_size')?>'/></a>
-		<div class="hidden"><?php echo base64_encode($this->view('pbf_field_single_image', $img, TRUE)); ?></div>
+		<div class="cihidden"><?php echo base64_encode($this->view('pbf_field_single_image', $img, TRUE)); ?></div>
 	</div>
 <?php endforeach;?>
 

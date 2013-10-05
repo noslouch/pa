@@ -17,7 +17,7 @@
 				<?php if ($settings['show_import_files'] == 'yes'):?><div class="block ImportImages"><?=lang('ci:import_files')?></div><?php endif;?>
 				<div class="block">&nbsp;</div>
 				<div class="block_long">
-					<div class="UploadProgress hidden">
+					<div class="UploadProgress cihidden">
 						<div class="progress">
 							<div class="inner">
 								<span class="percent"></span>&nbsp;&nbsp;&nbsp;
@@ -94,7 +94,7 @@
 				<?php endif;?>
 			</th>
 		</tr>
-		<tr class="ImageQueue hidden"><th colspan="99"></th></tr>
+		<tr class="ImageQueue cihidden"><th colspan="99"></th></tr>
 <?php if ($settings['view_mode'] == 'table'):?>
 		<tr>
 			<?php foreach ($settings['columns'] as $type => $val):?>
@@ -130,7 +130,7 @@
 
 	<input name="<?=$field_name?>[key]" type="hidden" value="<?=$temp_key?>" class="temp_key"/>
 	<?php if (isset($actions) == TRUE):?>
-	<div class="PerImageActionHolder hidden"><?=base64_encode($this->load->view('pbf_per_image_action', array(), TRUE))?></div>
+	<div class="PerImageActionHolder cihidden"><?=base64_encode($this->load->view('pbf_per_image_action', array(), TRUE))?></div>
 	<?php endif;?>
 </div>
 

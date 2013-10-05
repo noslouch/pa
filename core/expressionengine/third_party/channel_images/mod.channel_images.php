@@ -158,8 +158,7 @@ class Channel_images
 			}
 
 			// Get Field Settings!
-			$settings = $this->EE->channel_images_model->get_field_settings($image->field_id);
-			$settings = $settings['channel_images'];
+			$settings = $this->EE->image_helper->grabFieldSettings($image->field_id);
 
 			//----------------------------------------
 			// Load Location
@@ -432,8 +431,7 @@ class Channel_images
 				}
 
 				// Get Field Settings!
-				$settings = $this->EE->channel_images_model->get_field_settings($image->field_id);
-				$settings = $settings['channel_images'];
+				$settings = $this->EE->image_helper->grabFieldSettings($image->field_id);
 
 				//----------------------------------------
 				// Load Location
@@ -792,8 +790,7 @@ class Channel_images
 		}
 
 		// Get Field Settings!
-		$settings = $this->EE->channel_images_model->get_field_settings($image->field_id);
-		$settings = $settings['channel_images'];
+		$settings = $this->EE->image_helper->grabFieldSettings($image->field_id);
 
 		//----------------------------------------
 		// Load Location
@@ -915,11 +912,17 @@ class Channel_images
 		// Increase all types of limits!
 		// -----------------------------------------
 		@set_time_limit(0);
-		@ini_set('memory_limit', '64M');
-		@ini_set('memory_limit', '96M');
-		@ini_set('memory_limit', '128M');
-		@ini_set('memory_limit', '160M');
-		@ini_set('memory_limit', '192M');
+		$conf = $this->EE->config->item('channel_images');
+		if (is_array($conf) === false) $conf = array();
+
+		if (isset($conf['infinite_memory']) === FALSE || $conf['infinite_memory'] == 'yes')
+		{
+			@ini_set('memory_limit', '64M');
+			@ini_set('memory_limit', '96M');
+			@ini_set('memory_limit', '128M');
+			@ini_set('memory_limit', '160M');
+			@ini_set('memory_limit', '192M');
+		}
 
 		error_reporting(E_ALL);
 		@ini_set('display_errors', 1);
@@ -1021,8 +1024,7 @@ class Channel_images
 		foreach ($tfields as $field_id)
 		{
 			// Get Field Settings!
-			$settings = $this->EE->image_helper->grab_field_settings($field_id);
-			$settings = $settings['channel_images'];
+			$settings = $this->EE->image_helper->grabFieldSettings($field_id);
 
 			if ($settings['upload_location'] != 'local') continue;
 
@@ -1150,8 +1152,9 @@ class Channel_images
 		@header('Access-Control-Allow-Credentials: true');
         @header('Access-Control-Max-Age: 86400');
         @header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-        @header('Access-Control-Allow-Headers: Keep-Alive, Content-Type, User-Agent, Cache-Control, X-Requested-With, X-File-Name, X-File-Size');
+        @header('Access-Control-Allow-Headers: Keep-Alive, Content-Type, User-Agent, Cache-Control, Origin, X-Requested-With, X-File-Name, X-File-Size');
 
+        if ($this->EE->input->server('REQUEST_METHOD') == 'OPTIONS') exit();
 
 		// -----------------------------------------
 		// Ajax Request?
@@ -1237,8 +1240,7 @@ class Channel_images
 		// -----------------------------------------
 		// Get Field Settings
 		// -----------------------------------------
-		$settings = $this->EE->channel_images_model->get_field_settings($image->field_id);
-		$settings = $settings['channel_images'];
+		$settings = $this->EE->image_helper->grabFieldSettings($image->field_id);
 
 		//----------------------------------------
 		// Load Location
@@ -1330,10 +1332,14 @@ class Channel_images
 
 	public function simple_image_url()
 	{
+		error_reporting(E_ALL);
+		@ini_set('display_errors', 1);
+
 		$field_id = $this->EE->input->get('fid');
 		$dir = $this->EE->input->get('d');
 		$file = $this->EE->security->sanitize_filename($this->EE->input->get('f'));
 		$temp_dir = $this->EE->input->get('temp_dir');
+
 
 		// Must be an INT
 		if ($this->EE->image_helper->is_natural_number($dir) == FALSE || $this->EE->image_helper->is_natural_number($field_id) == FALSE)
@@ -1392,9 +1398,11 @@ class Channel_images
 
 			header('Content-Length: ' . @filesize($file));
 
-			@ob_clean();
-    		@flush();
     		@readfile($file);
+    		@ob_flush();
+			@flush();
+			@ob_end_flush();
+			@ob_start();
 
 			exit;
 		}
@@ -1402,16 +1410,15 @@ class Channel_images
 		// -----------------------------------------
 		// Load Settings
 		// -----------------------------------------
-		$settings = $this->EE->channel_images_model->get_field_settings($field_id);
+		$settings = $this->EE->image_helper->grabFieldSettings($field_id);
 
-		if (isset($settings['channel_images']) == FALSE)
+
+		if (empty($settings) == true)
 		{
 			$this->EE->output->set_status_header(404);
 			echo '<html><head><title>404 Page Not Found</title></head><body><h1>Status: 404 Page Not Found</h1></body></html>';
 			exit();
 		}
-
-		$settings = $settings['channel_images'];
 
 		// -----------------------------------------
 		// Load Location
@@ -1490,10 +1497,12 @@ class Channel_images
 
 			header('Content-Length: ' . @filesize($file));
 
-			@ob_clean();
-    		@flush();
-    		@readfile($file);
 
+			@readfile($file);
+	    	@ob_flush();
+			@flush();
+			@ob_end_flush();
+			@ob_start();
 			exit;
 		}
 
