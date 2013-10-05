@@ -62,13 +62,16 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="4">
+			<td colspan="3">
 				<select>
 				<option value=""><?=lang('ci:add_action')?></option>
 				<?php foreach($actions as $action_name => &$actionobj):?>
 					<option value="<?=$actionobj->info['name']?>"><?=$actionobj->info['title']?></option>
 				<?php endforeach;?>
 				</select>
+			</td>
+			<td>
+
 			</td>
 		</tr>
 	</tfoot>

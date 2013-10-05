@@ -97,11 +97,45 @@ class Channel_images_model
 			if (strpos($cat, '|') !== FALSE)
 			{
 				$cats = explode('|', $cat);
+				foreach ($cats as &$cat){
+					if ($cat == 'IS_EMPTY') {
+						$cat = '';
+					}
+				}
 				$this->EE->db->where_in('category', $cats);
 			}
 			else
 			{
+				if ($cat == 'IS_EMPTY') {
+					$cat = '';
+				}
 				$this->EE->db->where('category', $cat);
+			}
+		}
+
+		// Exclude Category
+		if (isset($params['exclude_category']) === TRUE)
+		{
+			$cat = $params['exclude_category'];
+
+			// Multiple Categories?
+			if (strpos($cat, '|') !== FALSE)
+			{
+				$cats = explode('|', $cat);
+				foreach ($cats as &$cat){
+					if ($cat == 'IS_EMPTY') {
+						$cat = '';
+					}
+				}
+				$this->EE->db->where_not_in('category', $cats);
+			}
+			else
+			{
+				if ($cat == 'IS_EMPTY') {
+					$cat = '';
+				}
+
+				$this->EE->db->where('category !=', $cat);
 			}
 		}
 
@@ -221,15 +255,17 @@ class Channel_images_model
 			}
 		}
 
-		// Better Workflow Draft?
-		if (isset($this->EE->session->cache['ep_better_workflow']['is_draft']) && $this->EE->session->cache['ep_better_workflow']['is_draft'])
-		{
-			$this->EE->db->where('is_draft', 1);
-		}
-		else
-		{
-			$this->EE->db->where('is_draft', 0);
-		}
+		$is_draft = 0;
+
+		if (isset($this->EE->publisher_lib) === true && isset($this->EE->publisher_lib->status) ==- true) {
+            if ($this->EE->publisher_lib->status == 'draft')  {
+                $is_draft = 1;
+            }
+        } else if (isset($this->EE->session->cache['ep_better_workflow']['is_draft']) && $this->EE->session->cache['ep_better_workflow']['is_draft']) {
+            $is_draft = 1;
+        }
+
+		$this->EE->db->where('is_draft', $is_draft);
 
 		//----------------------------------------
 		// Shoot the Query
@@ -258,6 +294,13 @@ class Channel_images_model
 		if (isset($this->session->cache['ep_better_workflow']['is_draft']) && $this->session->cache['ep_better_workflow']['is_draft'])
 		{
 			$is_draft = 1;
+		}
+
+		// Params can override this
+		if (isset($params['is_draft']) === TRUE)
+		{
+			if ($params['is_draft'] == 'yes') $is_draft = 1;
+			elseif ($params['is_draft'] == 'no') $is_draft = 0;
 		}
 
 		$temp_params = $params;

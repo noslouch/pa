@@ -2,12 +2,12 @@
 <table cellspacing="0" cellpadding="0" border="0" class="CITable" rel="<?=$field_id?>">
 	<thead>
 		<tr>
-			<th></th>
+			<th><input type="checkbox" class="checkall" checked></th>
 			<th><?=lang('ci:filename')?></th>
 			<th><?=lang('ci:filesize')?></th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="fileslist">
 	<?php foreach ($files as $filename => $size):?>
 		<tr>
 			<td><input type="checkbox" value="<?=$filename?>" checked></td>

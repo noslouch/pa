@@ -195,11 +195,11 @@ class CF_Http
         # variable.
         $OS_CAFILE_NONUPDATED=array(
             "win","dar"
-        ); 
+        );
 
         if (in_array((strtolower (substr(PHP_OS, 0,3))), $OS_CAFILE_NONUPDATED))
             $this->ssl_use_cabundle();
-        
+
     }
 
     function ssl_use_cabundle($path=NULL)
@@ -245,7 +245,10 @@ class CF_Http
             curl_setopt($curl_ch, CURLOPT_CAINFO, $this->cabundle_path);
         }
         curl_setopt($curl_ch, CURLOPT_VERBOSE, $this->dbug);
-        curl_setopt($curl_ch, CURLOPT_FOLLOWLOCATION, 1);
+        if (!ini_get('safe_mode') && !ini_get('open_basedir'))
+        {
+            curl_setopt($curl_ch, CURLOPT_FOLLOWLOCATION, 1);
+        }
         curl_setopt($curl_ch, CURLOPT_MAXREDIRS, 4);
         curl_setopt($curl_ch, CURLOPT_HEADER, 0);
         curl_setopt($curl_ch, CURLOPT_HTTPHEADER, $headers);
@@ -271,7 +274,7 @@ class CF_Http
         $this->_write_callback_type = "TEXT_LIST";
         if ($enabled_only)
         {
-            $return_code = $this->_send_request($conn_type, $url_path . 
+            $return_code = $this->_send_request($conn_type, $url_path .
             '/?enabled_only=true');
         }
         else
@@ -361,7 +364,7 @@ class CF_Http
 
         if ($container_name != "0" and !isset($container_name))
             throw new SyntaxException("Container name not set.");
-        
+
         $url_path = $this->_make_path("CDN", $container_name);
         $hdrs = array(
             CDN_ENABLED => "True",
@@ -389,7 +392,7 @@ class CF_Http
 
         if ($container_name != "0" and !isset($container_name))
             throw new SyntaxException("Container name not set.");
-        
+
         $url_path = $this->_make_path("CDN", $container_name);
         $hdrs = array(CDN_ENABLED => "False");
         $return_code = $this->_send_request("DEL_POST",$url_path,$hdrs,"POST");
@@ -417,7 +420,7 @@ class CF_Http
 
         if ($container_name != "0" and !isset($container_name))
             throw new SyntaxException("Container name not set.");
-        
+
         $conn_type = "HEAD";
         $url_path = $this->_make_path("CDN", $container_name);
         $return_code = $this->_send_request($conn_type, $url_path, NULL, "GET", True);
@@ -636,7 +639,7 @@ class CF_Http
         if (!empty($params)) {
             $url_path .= "?" . implode("&", $params);
         }
- 
+
         $conn_type = "GET_CALL";
         $this->_write_callback_type = "TEXT_LIST";
         $return_code = $this->_send_request($conn_type,$url_path);
@@ -654,7 +657,7 @@ class CF_Http
             return array($return_code,$this->error_str,array());
         }
         if ($return_code == 200) {
-	    $this->create_array();	
+	    $this->create_array();
             return array($return_code,$this->response_reason, $this->_text_list);
         }
         $this->error_str = "Unexpected HTTP response code: $return_code";
@@ -692,7 +695,7 @@ class CF_Http
         if (!empty($params)) {
             $url_path .= "?" . implode("&", $params);
         }
- 
+
         $conn_type = "GET_CALL";
         $this->_write_callback_type = "OBJECT_STRING";
         $return_code = $this->_send_request($conn_type,$url_path);
@@ -727,12 +730,12 @@ class CF_Http
             $this->error_str = "Container name not set.";
             return False;
         }
-        
+
         if ($container_name != "0" and !isset($container_name)) {
             $this->error_str = "Container name not set.";
             return False;
         }
-    
+
         $conn_type = "HEAD";
 
         $url_path = $this->_make_path("STORAGE", $container_name);
@@ -1075,12 +1078,12 @@ class CF_Http
             $this->error_str = "Container name not set.";
             return 0;
         }
-        
+
         if ($container_name != "0" and !isset($container_name)) {
             $this->error_str = "Container name not set.";
             return 0;
         }
-        
+
         if (!$object_name) {
             $this->error_str = "Object name not set.";
             return 0;
@@ -1499,7 +1502,7 @@ class CF_Http
 
         return $hdrs;
     }
-    
+
     private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False)
     {
         $this->_init($conn_type, $force_new);
@@ -1510,7 +1513,7 @@ class CF_Http
             throw new ConnectionNotOpenException (
                 "Connection is not open."
                 );
-        
+
         switch ($method) {
         case "COPY":
             curl_setopt($this->connections[$conn_type],
@@ -1525,7 +1528,7 @@ class CF_Http
                 CURLOPT_CUSTOMREQUEST, "POST");
         default:
             break;
-        }        
+        }
 
         curl_setopt($this->connections[$conn_type],
                     CURLOPT_HTTPHEADER, $headers);
@@ -1541,7 +1544,7 @@ class CF_Http
         }
         return curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE);
     }
-    
+
     function close()
     {
         foreach ($this->connections as $cnx) {
