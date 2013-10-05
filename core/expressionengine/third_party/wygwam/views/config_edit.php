@@ -30,7 +30,7 @@ $this->table->add_row(
 
 $tb_helper_vars = array(
 	'tb_groups'          => Wygwam_helper::tb_groups(),
-	'tb_selects'         => Wygwam_helper::tb_selects(),
+	'tb_combos'          => Wygwam_helper::tb_combos(),
 	'tb_label_overrides' => Wygwam_helper::tb_label_overrides()
 );
 

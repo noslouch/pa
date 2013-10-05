@@ -116,21 +116,52 @@ class Wygwam_mcp {
 		//  Upload Directory
 		// -------------------------------------------
 
-		$dir_query = $this->EE->db->query('SELECT u.id, u.name, s.site_label
-		                                   FROM exp_upload_prefs u, exp_sites s
-		                                   WHERE u.site_id = s.site_id
-		                                   ORDER BY site_label, name');
+		$wygwam_settings = Wygwam_helper::get_global_settings();
+		$msm = ($this->EE->config->item('multiple_sites_enabled') == 'y');
 
-		if ($dir_query->num_rows())
+		// If we're using Assets and it is installed, let's show Assets sources instead of just EE filedirs.
+		if (isset($wygwam_settings['file_browser']) && $wygwam_settings['file_browser'] == 'assets' && Wygwam_helper::is_assets_installed())
 		{
-			$msm = ($this->EE->config->item('multiple_sites_enabled') == 'y');
+			// Initialize the Assets lib
+			require_once PATH_THIRD.'assets/helper.php';
+			$assets_helper = new Assets_helper();
 
-			$upload_dirs = array('' => '--');
-			foreach($dir_query->result_array() as $row)
+			if ($msm)
 			{
-				$upload_dirs[$row['id']] = ($msm ? $row['site_label'].' - ' : '') . $row['name'];
+				$query = $this->EE->db->query("SELECT site_id, site_label FROM exp_sites")->result();
+				foreach ($query as $row)
+				{
+					$site_map[$row->site_id] = $row->site_label;
+				}
 			}
 
+			$upload_dirs = array('' => '--');
+			$all_sources = ee()->assets_lib->get_all_sources();
+			foreach ($all_sources as $source)
+			{
+				$upload_dirs[$source->type.':'.$source->id] = ($msm && $source->type == 'ee' ? $site_map[$source->site_id] . ' - ' : '') . $source->name;
+			}
+		}
+		else
+		{
+			$dir_query = $this->EE->db->query('SELECT u.id, u.name, s.site_label
+											   FROM exp_upload_prefs u, exp_sites s
+											   WHERE u.site_id = s.site_id
+											   ORDER BY site_label, name');
+
+			if ($dir_query->num_rows())
+			{
+
+				$upload_dirs = array('' => '--');
+				foreach($dir_query->result_array() as $row)
+				{
+					$upload_dirs[$row['id']] = ($msm ? $row['site_label'].' - ' : '') . $row['name'];
+				}
+			}
+		}
+
+		if (!empty($upload_dirs))
+		{
 			$vars['upload_dir'] = form_dropdown('settings[upload_dir]', $upload_dirs, $config['settings']['upload_dir'], 'id="upload_dir"');
 		}
 		else
