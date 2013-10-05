@@ -18,6 +18,10 @@ class Wygwam_helper
 	private static $_site_pages;
 	private static $_page_data;
 
+	private static $_tb_groups;
+	private static $_tb_combos;
+	private static $_tb_label_overrides;
+
 	/**
 	 * Gets Wygwam's global settings.
 	 *
@@ -66,40 +70,76 @@ class Wygwam_helper
 	 */
 	public static function tb_groups()
 	{
-		return array(
-			array('Source'),
-			array('Templates'),
-			array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'),
-			array('Undo', 'Redo'),
-			array('Scayt'),
-			array('Bold', 'Italic', 'Underline', 'Strike'),
-			array('Subscript', 'Superscript'),
-			array('RemoveFormat'),
-			array('NumberedList', 'BulletedList'),
-			array('Outdent', 'Indent'),
-			array('JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'),
-			array('Blockquote', 'CreateDiv'),
-			array('Link', 'Unlink', 'Anchor'),
-			array('Image', 'Table', 'HorizontalRule', 'SpecialChar', 'MediaEmbed'),
-			array('ReadMore'),
-			array('Styles'),
-			array('Format'),
-			array('TextColor', 'BGColor'),
-			array('Maximize', 'ShowBlocks'),
-		);
+		if (!isset(self::$_tb_groups))
+		{
+			self::$_tb_groups = array(
+				array('Source'),
+				array('Templates'),
+				array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'),
+				array('Undo', 'Redo'),
+				array('Scayt'),
+				array('Bold', 'Italic', 'Underline', 'Strike'),
+				array('Subscript', 'Superscript'),
+				array('RemoveFormat'),
+				array('NumberedList', 'BulletedList'),
+				array('Outdent', 'Indent'),
+				array('JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'),
+				array('Blockquote', 'CreateDiv'),
+				array('Link', 'Unlink', 'Anchor'),
+				array('Image', 'Table', 'HorizontalRule', 'SpecialChar', 'MediaEmbed'),
+				array('ReadMore'),
+				array('Styles'),
+				array('Format'),
+				array('TextColor', 'BGColor'),
+				array('Maximize', 'ShowBlocks'),
+			);
+
+			$EE = get_instance();
+
+			// -------------------------------------------
+			//  'wygwam_tb_groups' hook
+			//   - Allow extensions to modify the available toolbar groups
+			//
+				if ($EE->extensions->active_hook('wygwam_tb_groups'))
+				{
+					self::$_tb_groups = $EE->extensions->call('wygwam_tb_groups', self::$_tb_groups);
+				}
+			//
+			// -------------------------------------------
+		}
+
+		return self::$_tb_groups;
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * Returns which toolbar items are selects.
+	 * Returns which toolbar items are combos.
 	 *
 	 * @static
 	 * @return array
 	 */
-	public static function tb_selects()
+	public static function tb_combos()
 	{
-		return array('Styles', 'Format');
+		if (!isset(self::$_tb_combos))
+		{
+			self::$_tb_combos = array('Styles', 'Format');
+
+			$EE = get_instance();
+
+			// -------------------------------------------
+			//  'wygwam_tb_combos' hook
+			//   - Allow extensions to modify which toolbar items should be considered selects.
+			//
+				if ($EE->extensions->active_hook('wygwam_tb_combos'))
+				{
+					self::$_tb_combos = $EE->extensions->call('wygwam_tb_combos', self::$_tb_combos);
+				}
+			//
+			// -------------------------------------------
+		}
+
+		return self::$_tb_combos;
 	}
 
 	/**
@@ -110,23 +150,41 @@ class Wygwam_helper
 	 */
 	public static function tb_label_overrides()
 	{
-		return array(
-			'PasteText'      => 'Paste As Plain Text',
-			'PasteFromWord'  => 'Paste from Word',
-			'Scayt'          => 'Spell Check As You Type',
-			'RemoveFormat'   => 'Remove Format',
-			'Strike'         => 'Strike Through',
-			'NumberedList'   => 'Insert/Remove Numbered List',
-			'BulletedList'   => 'Insert/Remove Bulleted List',
-			'Outdent'        => 'Decrease Indent',
-			'Indent'         => 'Increase Indent',
-			'CreateDiv'      => 'Create Div Container',
-			'HorizontalRule' => 'Insert Horizontal Line',
-			'About'          => 'About CKEditor',
-			'MediaEmbed'     => 'Embed Media',
-			'ReadMore'       => 'Read More',
-			'ShowBlocks'     => 'Show Blocks',
-		);
+		if (!isset(self::$_tb_label_overrides))
+		{
+			self::$_tb_label_overrides = array(
+				'PasteText'      => 'Paste As Plain Text',
+				'PasteFromWord'  => 'Paste from Word',
+				'Scayt'          => 'Spell Check As You Type',
+				'RemoveFormat'   => 'Remove Format',
+				'Strike'         => 'Strike Through',
+				'NumberedList'   => 'Insert/Remove Numbered List',
+				'BulletedList'   => 'Insert/Remove Bulleted List',
+				'Outdent'        => 'Decrease Indent',
+				'Indent'         => 'Increase Indent',
+				'CreateDiv'      => 'Create Div Container',
+				'HorizontalRule' => 'Insert Horizontal Line',
+				'About'          => 'About CKEditor',
+				'MediaEmbed'     => 'Embed Media',
+				'ReadMore'       => 'Read More',
+				'ShowBlocks'     => 'Show Blocks',
+			);
+
+			$EE = get_instance();
+
+			// -------------------------------------------
+			//  'wygwam_tb_label_overrides' hook
+			//   - Allow extensions to modify which toolbar items should be considered selects.
+			//
+				if ($EE->extensions->active_hook('wygwam_tb_label_overrides'))
+				{
+					self::$_tb_label_overrides = $EE->extensions->call('wygwam_tb_label_overrides', self::$_tb_label_overrides);
+				}
+			//
+			// -------------------------------------------
+		}
+
+		return self::$_tb_label_overrides;
 	}
 
 	// --------------------------------------------------------------------
@@ -659,6 +717,11 @@ class Wygwam_helper
 					// if no upload directory was set, just default to "all"
 					if (! $upload_dir) $upload_dir = '"all"';
 
+					// If this has a source type passed in as well, wrap it in quotes.
+					if (strpos($upload_dir, ":"))
+					{
+						$upload_dir = '"'.$upload_dir.'"';
+					}
 					$config['filebrowserBrowseFunc']      = 'function(params) { Wygwam.loadAssetsSheet(params, '.$upload_dir.', "any"); }';
 					$config['filebrowserImageBrowseFunc'] = 'function(params) { Wygwam.loadAssetsSheet(params, '.$upload_dir.', "image"); }';
 					$config['filebrowserFlashBrowseFunc'] = 'function(params) { Wygwam.loadAssetsSheet(params, '.$upload_dir.', "flash"); }';
