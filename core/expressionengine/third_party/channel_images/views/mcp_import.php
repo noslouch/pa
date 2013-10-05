@@ -1,3 +1,6 @@
+<?php echo $this->view('mcp/_menu'); ?>
+<div class="ci-body">
+
 <?php foreach($matrix as $matrix_field):?>
 
 <?=form_open($base_url_short.AMP.'method=import_images')?>
@@ -56,20 +59,25 @@
 			</td>
 		</tr>
 		<tr>
-			<td><?=lang('ci:import_entries')?></td>
+			<td style="width:300px"><?=lang('ci:import_entries')?></td>
 			<td class="CI_IMAGES">
 				<?php foreach($matrix_field['entries'] as $row):?>
-					<div class="Image Queued" rel="<?=$row->entry_id?>"><?=$row->entry_id?></div>
+					<div class="Image Queued label" rel="<?=$row->entry_id?>" style="float:left;margin:0 5px 5px 0;"><?=$row->entry_id?></div>
 				<?php endforeach;?>
+				<br clear="all">
 			</td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="3"><input class="submit" type="submit" value="Import"/></td>
+			<td><button class="submit">Import</button></td>
+			<td class="errormsg"></td>
 		</tr>
 	</tfoot>
 </table>
 <?=form_close()?>
 
 <?php endforeach;?>
+
+</div> <!-- </ci-body> -->
+<?php echo $this->view('mcp/_footer'); ?>

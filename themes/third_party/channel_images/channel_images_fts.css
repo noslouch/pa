@@ -19,7 +19,8 @@
 .ChannelImagesField .ChannelImagesTabs li a {color:#646464; padding:0 5px; font-size:11px; font-weight:bold; float:left; text-decoration:none; outline:none;}
 .ChannelImagesField .ChannelImagesTabs li.ui-tabs-selected {border-bottom:none;}
 .ChannelImagesField .ChannelImagesTabs li.ui-tabs-selected a {color:#B22447;}
-.ChannelImagesField .ChannelImagesTabsHolder {background:#FFFFFF; border-bottom:1px solid #B8B8B8; border-left:1px solid #B8B8B8; border-right:1px solid #B8B8B8;}
+.ChannelImagesField .ChannelImagesTabsHolder {background:#FFFFFF; border-bottom:1px solid #B8B8B8; border-left:1px solid #B8B8B8; border-right:1px solid #B8B8B8; position:relative;}
+.ChannelImagesField .ChannelImagesTabsHolder .imagick {position:absolute; right:5px; bottom:5px;}
 
 /* TABLE */
 .ChannelImagesField .ChannelImagesTable {width:100%; border:1px solid #b6c0c2; border-radius:3px; -webkit-border-radius: 3px; -moz-border-radius:4px;}

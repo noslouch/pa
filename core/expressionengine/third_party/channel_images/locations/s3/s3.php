@@ -145,6 +145,8 @@ class CI_Location_s3 extends Image_Location
 		// Subdirectory?
 		$subdir = (isset($this->lsettings['directory']) == TRUE && $this->lsettings['directory'] != FALSE) ? $this->lsettings['directory'] . '/' : '';
 
+		$this->S3->set_region($this->lsettings['region']);
+
 		if ($this->lsettings['acl'] == 'public-read')
 		{
 			if (isset($this->lsettings['cloudfront_domain']) == TRUE && $this->lsettings['cloudfront_domain'] != FALSE)

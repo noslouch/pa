@@ -45,8 +45,7 @@ class Channel_Images_API
 		if (isset($image->field_id) == FALSE) return FALSE;
 
 		// Grab the field settings
-		$settings = $this->EE->channel_images_model->get_field_settings($image->field_id);
-		$settings = $settings['channel_images'];
+		$settings = $this->EE->image_helper->grabFieldSettings($image->field_id);
 
 		// Location
 		$location_type = $settings['upload_location'];
@@ -184,16 +183,13 @@ class Channel_Images_API
    		// -----------------------------------------
 		// Load Settings
 		// -----------------------------------------
-		$settings = $this->EE->channel_images_model->get_field_settings($data['field_id']);
-		if (isset($settings['channel_images']['upload_location']) == FALSE)
+		$settings = $this->EE->image_helper->grabFieldSettings($data['field_id']);
+		if (isset($settings['upload_location']) == FALSE)
 		{
 			$error = "Couldn't Find Upload Location?? It's Not Set.";
 			return false;
 			return FALSE;
 		}
-
-		$settings = $settings['channel_images'];
-		$settings = $this->EE->image_helper->array_extend($this->EE->config->item('ci_defaults'), $settings);
 
 		//----------------------------------------
 		// Image URL
@@ -359,14 +355,11 @@ class Channel_Images_API
 		// -----------------------------------------
 		// Load Settings
 		// -----------------------------------------
-		$settings = $this->EE->channel_images_model->get_field_settings($field_id);
-		if (isset($settings['channel_images']['upload_location']) == FALSE)
+		$settings = $this->EE->image_helper->grabFieldSettings($field_id);
+		if (isset($settings['upload_location']) == FALSE)
 		{
 			return FALSE;
 		}
-
-		$settings = $settings['channel_images'];
-		$settings = $this->EE->image_helper->array_extend($this->EE->config->item('ci_defaults'), $settings);
 
 		// -----------------------------------------
 		// Load Actions :O
@@ -433,14 +426,11 @@ class Channel_Images_API
 		// -----------------------------------------
 		// Load Settings
 		// -----------------------------------------
-		$settings = $this->EE->channel_images_model->get_field_settings($field_id);
-		if (isset($settings['channel_images']['upload_location']) == FALSE)
+		$settings = $this->EE->image_helper->grabFieldSettings($field_id);
+		if (isset($settings['upload_location']) == FALSE)
 		{
 			return FALSE;
 		}
-
-		$settings = $settings['channel_images'];
-		$settings = $this->EE->image_helper->array_extend($this->EE->config->item('ci_defaults'), $settings);
 
 		// Tempdir?
 		if ($temp_dir != FALSE) $this->temp_dir = $temp_dir;

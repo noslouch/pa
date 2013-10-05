@@ -26,8 +26,8 @@
 				<tr>
 					<td>
 						<a href="#" class="AddImage">&nbsp;</a>
-						<span class='imagetd hidden'><?php echo base64_encode($this->view('pbf_field_single_image', $image, TRUE)); ?></span>
-						<span class='imageinfo hidden'><?=$this->channel_images_helper->generate_json($image);?></span>
+						<span class='imagetd cihidden'><?php echo base64_encode($this->view('pbf_field_single_image', $image, TRUE)); ?></span>
+						<span class='imageinfo cihidden'><?=$this->channel_images_helper->generate_json($image);?></span>
 					</td>
 					<td><a href='<?=$image->big_img_url?>' class='ImgUrl' rel='CISearchResult' title="<?=$image->title?>"><img src='<?=$image->small_img_url?>' width='<?=$this->config->item('ci_image_preview_size')?>'/></a></td>
 					<td><?=$image->title?></td>

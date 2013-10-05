@@ -214,6 +214,39 @@ class ImageAction
 
 	// ********************************************************************************* //
 
+	public function getImageDetails($file)
+	{
+		$info = array();
+
+		$data = @getimagesize($file);
+		if (!$data) return FALSE;
+
+		$info['width'] = $data[0];
+		$info['height'] = $data[1];
+
+		// Get the image extension
+		$this->EE->channel_images->image_ext = '';
+
+		switch ($data[2])
+		{
+			case IMAGETYPE_GIF:
+				$info['ext'] = 'gif';
+				break;
+			case IMAGETYPE_PNG:
+				$info['ext'] = 'png';
+				break;
+			case IMAGETYPE_JPEG:
+				$info['ext'] = 'jpg';
+				break;
+			default:
+				return FALSE;
+		}
+
+		return $info;
+	}
+
+	// ********************************************************************************* //
+
 } // END CLASS
 
 /* End of file imageaction.php  */
