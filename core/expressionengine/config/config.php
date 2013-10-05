@@ -10,7 +10,6 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" :
 $base_url .= "://".$_SERVER['HTTP_HOST'];
 $admin_url  = $base_url . '/admin.php';
 
-// develop and staging share the same DB, production on separate DB
 $env = strpos($base_url, 'staging') ? 'staging' : 'production';
 $env = strpos($base_url, 'local') ? 'local' : $env;
 
@@ -75,10 +74,10 @@ $config['time_reference'] = 'local';
 $active_group = $env;
 $active_record = TRUE;
 
-$db['local']['hostname'] = '70.32.107.106';
-$db['local']['username'] = 'dbuser';   
-$db['local']['password'] = '#098sdbA'; 
-$db['local']['database'] = 'staging';   
+$db['local']['hostname'] = '127.0.0.1';
+$db['local']['username'] = 'root';   
+$db['local']['password'] = 'root'; 
+$db['local']['database'] = 'arnell_clone';   
 $db['local']['dbprefix'] = 'exp_';     
 $db['staging']['hostname'] = '127.0.0.1';
 $db['staging']['username'] = 'dbuser';   
