@@ -1,13 +1,10 @@
 <?php echo $this->view('header.html'); ?>
 
-
-
 <?php if( $total_results == 0 AND !isset( $terms ) ) : ?>
 
 	<div class="super_search_notification">
 		<p><?=$no_searches_recorded?></p>
 	</div>
-
 
 <?php else : ?>
 
@@ -26,7 +23,7 @@
 					<?php if( isset( $search_term ) !== FALSE ) : ?>value="<?=$search_term?>"<?php endif; ?>/>
 			</label>
 
-			<input type="submit" class="submit" value="<?=lang('filter')?>" name="submit" id="search_button"/>
+			<input type="submit" class="submit" value="<?=lang('filter')?>" name="submit" id="search_button" />
 		</form>
 	</fieldset>
 </div>
@@ -76,7 +73,7 @@
 					<td>
 
 						<img src="http://chart.apis.google.com/chart?cht=lc&
-								chs=250x30&
+								chs=210x30&
 								chd=t:<?=$term['sparkline']?>&
 								chco=336699&
 								chls=1,1,0&
@@ -156,7 +153,7 @@
 				<td class="search_item_more">
 					<?php
 					$first = TRUE;
-					foreach( $log_item['extra'] as $extra => $val ) :
+					foreach( $log_item['extra'] as $extra => $val ) : 
 						if( !$first )
 						{
 							echo( ', ' );
@@ -202,6 +199,13 @@
 
 	<?=$pagination?>
 	<span class="pagination" id="filter_pagination"></span>
+	<form action="<?=$form_url?>" method="POST">
+		<input type="hidden" name="XID" value="<?=XID_SECURE_HASH?>"/>
+		<input type="hidden" name="clear_log" value="y" />
+		<p><input style="float:right;" 
+					type="submit" name="submit" 
+					value="<?=lang('clear_log')?>" class="submit"  /></p>
+	</form>
 
 	<?php endif; ?>
 

@@ -1,0 +1,119 @@
+{embed="%prefix%inc/index" page_title="Results"}
+</head>
+<body id="home">
+{embed="%prefix%inc/header"}
+
+		<div id="maincolumn">
+		
+			<h2>Super Search</h2>
+			
+			<h3>Results (product search)</h3>
+			
+			<p></p>
+
+			<div id="leftcolumn">
+
+				<h4>{super_search_total_results} results for the search:</h4>
+				<ul>
+					{if super_search_title}<li>Title: "<b>{super_search_title}</b>"</li>{/if}
+					{if super_search_description}<li>Author: "<b>{super_search_description}</b>"</li>{/if}
+					{if super_search_category}<li>Category: "<b>{super_search_category}</b>"</li>{/if}
+					{if super_search_price-from OR super_search_price-to}<li>Price Range: "<b>{super_search_price-from}</b>" to "<b>{super_search_price-to}</b>"</li>{/if}
+				</ul>
+
+				<hr />
+
+				{exp:super_search:save_search_form}
+					<p>Save this Search? <input type="text" name="super_search_name" value="{super_search_name}" class="save_search" /> <input type="submit" name="submit" value="Save!" class="button" /></p>
+					<hr />
+				{/exp:super_search:save_search_form}
+
+				{exp:super_search:results
+					orderby="date"
+					paginate="both"
+					limit="20"
+					category_indicator="category_id"
+				}
+
+					<h3><a href="{url_title_path='%prefix%main/entry'}">{title}</a></h3>
+					<p>Category: {categories backspace="2"}<b>{category_name}</b>, {/categories}</p>
+					<p>Price: {if price}<b>${price}</b>{if:else}No price available. This template is looking for a field named "price". Either the field does not exist, or there is no value for this entry.{/if}</p>
+					<p>{if excerpt}{excerpt}{if:else}No excerpt available. Either the channel does not have the except field configured correctly, or the designated field contains no value for this entry.{/if}</p>
+					<hr />
+
+				{if super_search_no_results}
+					<p>Sorry, no results matched the search terms you provided. If you continue to have trouble finding results, make sure:</p>
+					<ul>
+						<li>that Channel entries exist for your site</li>
+						<li>that the field you're searching on (if applicable) exists for your site</li>
+						<li>that the Fields you wish to be searched on are marked as searchable for the custom field preference</li>
+						<li>you are not searching on closed entries, future entries, expired entries, etc. Just like the Channel:Entries loop, Super Search respects those settings as well. Be sure to include the necessary parameters on the Results loop for this template.</li>
+					</ul>
+				{/if}
+
+				{paginate}
+					<p>Page {current_page} of {total_pages} pages. {pagination_links}</p>
+				{/paginate}
+
+				{/exp:super_search:results}
+
+				<hr />
+
+				<h4>Refine Your Search:</h4>
+
+				<form method="post" action="{path=%prefix%main/product_results}">
+				
+				{exp:super_search:search}
+				<p><label for="title">Title:</label><br />
+					<input type="text" name="title" id="title" value="{super_search_title}" /></p>
+				<p><label for="description">Description:</label><br />
+					<input type="text" name="description" id="description" value="{super_search_description}" /></p>
+				<p><label for="category">Category:</label><br />
+					<select name="category[]" multiple="multiple">
+						<option value="">All</option>
+						{exp:channel:categories style="linear" category_group="1"}
+							{exp:super_search:variables}
+							<option value="{category_url_title}" {if super_search_category_{category_url_title}}selected="selected"{/if}>{category_name}</option>
+							{/exp:super_search:variables}
+						{/exp:channel:categories}
+					</select></p>
+				<p><label for="price-from">Price Range (between):</label><br />
+					<input type="text" name="price-from" id="price-from" value="{super_search_price-from}" class="range" />
+					<label for="price-to">to:</label> <input type="text" name="price-to" id="price-to" value="{super_search_price-to}" class="range" /></p>
+				<p><input type="submit" name="submit" value="Search!" class="button" /></p>
+				{/exp:super_search:search}
+
+				</form>
+ 
+			</div>
+
+			<div id="rightcolumn">
+
+{embed="%prefix%inc/side_column"}
+
+				<div id="aboutcolumn">
+		
+					<h3>About This Page</h3>
+		
+					<p>The "Search Results" page displays the results for a given search query. The search query is also loaded into the URI, allowing users to bookmark the URL of the search, etc.</p>
+
+					<p>It makes use of the following tags:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_results/">Super_Search:Results</a> to display a list of results from the search query.</li>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_save_search_form/">Super_Search:Save_Search_Form</a> to allow the user to save their search query and perform that search again at a later date.</li>
+					</ul>
+
+					<p>This specific column (on the right), uses the following tag:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_history/">Super_Search:History</a> to display a list of recent saved searches for the logged in user.</li>
+					</ul>
+
+				</div>
+
+			</div>
+	
+		</div>
+		
+{embed="%prefix%inc/footer"}

@@ -1,0 +1,12 @@
+				<div id="sidecolumn">
+
+					<h5>Your Recently Saved Searches</h5>
+
+					<ul>
+						{exp:super_search:history limit="10"}
+						<li><a href="{path="%prefix%main/saved"}/{super_search_id}/">{super_search_name}</a>: {super_search_results} results (searched on {super_search_date format="%F %j, %Y at %g:%i %a"})</li>
+						{if super_search_no_results}<li>You have not saved any searches yet.</li>{/if}
+						{/exp:super_search:history}
+					</ul>
+
+				</div>

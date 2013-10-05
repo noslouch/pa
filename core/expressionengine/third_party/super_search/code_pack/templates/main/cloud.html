@@ -1,0 +1,83 @@
+{embed="%prefix%inc/index" page_title="Popular Search Terms"}
+</head>
+<body id="home">
+{embed="%prefix%inc/header"}
+
+		<div id="maincolumn">
+		
+			<h2>Super Search</h2>
+			
+			<h3>Popular Search Terms</h3>
+
+			<p>Below is a list of popular search terms:</p>
+
+			<div id="leftcolumn">
+
+				<h4>Popular Search Terms in Cloud format</h4>
+
+				<div id="cloud">
+					{exp:super_search:cloud
+						start="15"
+						groups="10"
+						step="3"
+						limit="25"
+						orderby="term"
+						sort="asc"
+					}
+						<a href="{path='%prefix%main/keyword_results/search&keywords={super_search_term}'}" style="font-size:{super_search_step}px;">{super_search_term}</a> 
+						{if super_search_no_results}
+							<p>Sorry, no results were found. To see any results, you must have performed keyword searches on your site, the <b>Log Site Searches?</b> option in the Super Search Preferences must be set to <b>Yes</b>, and the Super Search Lexicon must be run for the first time.</p>
+						{/if} 
+					{/exp:super_search:cloud}
+				</div> 
+
+				<hr />
+
+				<h4>Popular Search Terms in List format</h4>
+
+				<ul>
+					{exp:super_search:cloud
+						limit="25"
+						paginate="both"
+					}
+						<li><a href="{path='%prefix%main/keyword_results/search&keywords={super_search_term}'}">{super_search_term}</a> ({super_search_total_searches} searches)</li>
+						{if super_search_no_results}
+							<li>Sorry, no results were found. To see any results, you must have performed keyword searches on your site, the <b>Log Site Searches?</b> option in the Super Search Preferences must be set to <b>Yes</b>, and the Super Search Lexicon must be run for the first time.</li>
+						{/if} 
+						{super_search_paginate}
+							<li>Page {super_search_current_page} of {super_search_total_pages} pages &nbsp; {super_search_pagination_links}</li>
+						{/super_search_paginate}
+					{/exp:super_search:cloud}
+</ul>
+
+			</div>
+
+			<div id="rightcolumn">
+
+{embed="%prefix%inc/side_column"}
+
+				<div id="aboutcolumn">
+		
+					<h3>About This Page</h3>
+			
+					<p>The "Popular Search Terms" page allows you to display the most popular terms searched upon on your site.</p>
+
+					<p>It makes use of the following tags:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_cloud/">Super_Search:cloud</a> to display most popular terms searched upon on your site.</li>
+					</ul>
+
+					<p>This specific column (on the right), uses the following tag:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_history/">Super_Search:History</a> to display a list of recent saved searches for the logged in user.</li>
+					</ul>
+		
+				</div>
+
+			</div>
+	
+		</div>
+		
+{embed="%prefix%inc/footer"}
