@@ -1,0 +1,55 @@
+{embed="%prefix%inc/index" page_title="Entry"}
+</head>
+<body id="home">
+{embed="%prefix%inc/header"}
+
+		<div id="maincolumn">
+		
+			<h2>Super Search</h2>
+			
+			<h3>Entry Details</h3>
+			
+			<p></p>
+
+			<div id="leftcolumn">
+			
+				{exp:channel:entries require_entry="yes"}
+				<h3>{title}</h3>
+				<p>Author: <b>{author}</b></p>
+				<p>Entry Date: <b>{entry_date format="%F %j, %Y"}</b></p>
+				<p>Category: {categories backspace="2"}<b>{category_name}</b>, {/categories}</p>
+				{if price}<p>Price: <b>${price}</b></p>{/if}
+				<p>Description: {description}</p>
+				{/exp:channel:entries}
+ 
+			</div>
+
+			<div id="rightcolumn">
+
+{embed="%prefix%inc/side_column"}
+
+				<div id="aboutcolumn">
+		
+					<h3>About This Page</h3>
+			
+					<p>The "Entry Details" page displays info for the selected channel entry.</p>
+
+					<p>It makes use of the following tag:</p>
+
+					<ul>
+						<li><a href="http://expressionengine.com/user_guide/modules/channel/channel_entries.html">EE Channel:Entries</a> to display info for a channel entry.</li>
+					</ul>
+
+					<p>This specific column (on the right), uses the following tag:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_history/">Super_Search:History</a> to display a list of recent saved searches for the logged in user.</li>
+					</ul>
+		
+				</div>
+
+			</div>
+	
+		</div>
+		
+{embed="%prefix%inc/footer"}

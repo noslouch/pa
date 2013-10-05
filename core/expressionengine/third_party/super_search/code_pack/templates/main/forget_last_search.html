@@ -1,0 +1,57 @@
+{embed="%prefix%inc/index" page_title="Forget Last Search"}
+</head>
+<body id="home">
+{embed="%prefix%inc/header"}
+
+		<div id="maincolumn">
+		
+			<h2>Super Search</h2>
+			
+			<h3>Forget Last Search</h3>
+
+			<div id="leftcolumn">
+
+				{exp:super_search:forget_last_search}
+
+				{if success}
+					<h4>Successful!</h4>
+				{/if}
+				{if failure}
+					<h4>Error!</h4>
+				{/if}
+ 
+				<p>{message}</p>
+
+				{/exp:super_search:forget_last_search}
+
+			</div>
+
+			<div id="rightcolumn">
+
+{embed="%prefix%inc/side_column"}
+
+				<div id="aboutcolumn">
+		
+					<h3>About This Page</h3>
+			
+					<p>The "Forget Last Search" page displays whether the action to clear the users previous search was successful or not.</p>
+
+					<p>It makes use of the following tag:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_forget_last_search/">Super_Search:Forget_Last_Search</a> to display whether the action to clear the users previous search was successful or not.</li>
+					</ul>
+
+					<p>This specific column (on the right), uses the following tag:</p>
+
+					<ul>
+						<li><a href="http://www.solspace.com/docs/detail/super_search_history/">Super_Search:History</a> to display a list of recent saved searches for the logged in user.</li>
+					</ul>
+		
+				</div>
+
+			</div>
+	
+		</div>
+		
+{embed="%prefix%inc/footer"}

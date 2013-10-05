@@ -1,14 +1,9 @@
 <?php echo $this->view('header.html'); ?>
 
-
-
 <form action="<?=$form_url?>" method="post">
 <input type="hidden" name="XID" value="<?=$XID_SECURE_HASH?>" />
 
-
 	<?php $i = 0; ?>
-
-
 
 	<table 	class="mainTable padTable siteTable"
 			style='width:100%;'
@@ -21,7 +16,6 @@
 			</tr>
 		</thead>
 		<tbody>
-
 			<tr class="<?=(++$i % 2 ? 'odd' : 'even')?>">
 				<td style="width: 50%;" colspan="2">
 					<label for="separator">
@@ -121,7 +115,6 @@
 				</td>
 			</tr>
 
-
 			<tr class="<?=(++$i % 2 ? 'odd' : 'even')?>">
 				<td style="width: 50%;" colspan="2">
 					<label for="separator">
@@ -141,7 +134,6 @@
 						</label>
 				</td>
 			</tr>
-
 
 			<tr class="<?=(++$i % 2 ? 'odd' : 'even')?>">
 				<td style="width : 4%; text-align : center">
@@ -235,7 +227,7 @@
 					<div><?=lang('refresh_explanation'); ?></div>
 				</td>
 				<td style="vertical-align:top;">
-					<div><input dir="ltr" style="width:5%" type="text" name="refresh" id="refresh" value="<?=$refresh; ?>" size="35" maxlength="6" class="input" /> &nbsp; <?=lang('in_minutes'); ?>
+					<div><input dir="ltr" style="width:10%" type="text" name="refresh" id="refresh" value="<?=$refresh; ?>" size="35" maxlength="6" class="input" /> &nbsp; <?=lang('in_minutes'); ?>
 					</div>
 				</td>
 			</tr>
@@ -275,16 +267,9 @@
 		</tbody>
 	</table>
 
-
 <p><input style="float:right;"
 			type="submit" name="submit"
 			value="Update" class="submit"  /></p>
-			<?php if (APP_VER < '2.2.1'):?>
-					<div class="clearfix shun">&nbsp;</div>
-			<?php endif;?>
 </form>
 
 <?php echo $this->view('footer.html'); ?>
-
-
-

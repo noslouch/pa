@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS `exp_super_search_cache` (
 PRIMARY KEY (`cache_id`),
 KEY `site_id` (`site_id`),
 KEY `type` (`type`),
-KEY `hash` (`hash`)) ;;
+KEY `hash` (`hash`)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ;;
 
 CREATE TABLE IF NOT EXISTS `exp_super_search_history` (
 `history_id` 	int(15) 		unsigned NOT NULL AUTO_INCREMENT,
@@ -31,7 +32,8 @@ PRIMARY KEY (`history_id`),
 UNIQUE KEY `search_key` (`member_id`,`cookie_id`,`site_id`,`search_name`,`saved`),
 KEY `cache_id` (`cache_id`),
 KEY `member_id` (`member_id`),
-KEY `site_id` (`site_id`));;
+KEY `site_id` (`site_id`)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ;;
 
 CREATE TABLE IF NOT EXISTS `exp_super_search_refresh_rules` (
 `rule_id` 			int(10) 	unsigned NOT NULL auto_increment,
@@ -46,18 +48,20 @@ PRIMARY KEY (rule_id),
 KEY `site_id` (site_id),
 KEY `template_id` (template_id),
 KEY `channel_id` (channel_id),
-KEY `category_group_id` (category_group_id)) ;;
+KEY `category_group_id` (category_group_id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ;;
 
 
 CREATE TABLE IF NOT EXISTS `exp_super_search_log` (
 `log_id` 		int(15) 		unsigned NOT NULL AUTO_INCREMENT,
-`site_id` 		varchar(10)		NOT NULL DEFAULT 1,
+`site_id` 		varchar(20)		NOT NULL DEFAULT 1,
 `results` 		smallint(7) 	unsigned NOT NULL DEFAULT 0,
 `search_date` 	int(10) 		unsigned NOT NULL DEFAULT 0,
 `term` 			varchar(200) 	NOT NULL DEFAULT '',
 `query` 		mediumtext,
 PRIMARY KEY (`log_id`),
-KEY `site_id` (`site_id`));;
+KEY `site_id` (`site_id`)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ;;
 
 
 CREATE TABLE IF NOT EXISTS `exp_super_search_terms` (
@@ -72,7 +76,8 @@ CREATE TABLE IF NOT EXISTS `exp_super_search_terms` (
 `entry_count` 	int(10)			unsigned NOT NULL DEFAULT 0,
 `suggestions`	varchar(255) 	NOT NULL DEFAULT '',
 PRIMARY KEY (`term`),
-KEY `term_id` (`term_id`));;
+KEY `term_id` (`term_id`)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ;;
 
 
 CREATE TABLE IF NOT EXISTS `exp_super_search_lexicon_log` (
@@ -84,7 +89,8 @@ CREATE TABLE IF NOT EXISTS `exp_super_search_lexicon_log` (
 `action_date` 	int(10)			unsigned NOT NULL DEFAULT 0,
 PRIMARY KEY (`lexicon_id`),
 KEY `type` (`type`),
-KEY `member_id` (`member_id`));;
+KEY `member_id` (`member_id`)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ;;
 
 
 CREATE TABLE IF NOT EXISTS `exp_super_search_indexes` (
@@ -92,4 +98,5 @@ CREATE TABLE IF NOT EXISTS `exp_super_search_indexes` (
 `site_id`		int(10)			unsigned NOT NULL DEFAULT 1,
 `index_date`	int(10)			unsigned NOT NULL DEFAULT 0,
 PRIMARY KEY (`entry_id`),
-KEY `site_id` (`site_id`));;
+KEY `site_id` (`site_id`)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ;;

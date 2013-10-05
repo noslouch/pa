@@ -8,7 +8,7 @@
  * @copyright	Copyright (c) 2009-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/super_search
  * @license		http://www.solspace.com/license_agreement
- * @version		2.0.6
+ * @version		2.1.3
  * @filesource	super_search/tab.super_search.php
  */
 
@@ -42,7 +42,8 @@ class Super_search_tab extends Module_builder_super_search
 
 		return $settings;
 	}
-	/* END publish_tabs() */
+	
+	//	END publish_tabs()
 
 	// --------------------------------------------------------------------
 
@@ -61,8 +62,9 @@ class Super_search_tab extends Module_builder_super_search
 	{
 		return FALSE;
 	}
-	/* END validate_publish() */
+	
+	//	END validate_publish()
 }
-/* END Tag_tab CLASS */
+//	END Tag_tab CLASS
 
-/* End of file tab.tag.php */
+//	End of file tab.tag.php

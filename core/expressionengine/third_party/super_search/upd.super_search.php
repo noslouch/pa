@@ -10,19 +10,17 @@
  * @copyright	Copyright (c) 2009-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/super_search
  * @license		http://www.solspace.com/license_agreement
- * @version		2.0.6
+ * @version		2.1.3
  * @filesource	super_search/constants.super_search.php
  */
-
-if ( ! defined('APP_VER')) define('APP_VER', '2.0'); // EE 2.0's Wizard doesn't like CONSTANTs
 
 require_once 'addon_builder/module_builder.php';
 
 class Super_search_upd extends Module_builder_super_search
-{
-	public $actions			= array();
-	public $hooks				= array();
-
+{   
+    public $actions	= array();
+    public $hooks	= array();
+    
 	// --------------------------------------------------------------------
 
 	/**
@@ -81,16 +79,7 @@ class Super_search_upd extends Module_builder_super_search
 			array_merge(
 				$default,
 				array(
-					'method'	=> 'refresh_cache_from_weblog',
-					'hook'		=> 'submit_new_entry_end'
-				)
-			),
-
-			//	EE 2 version of 'submit_new_entry_end'
-			array_merge(
-				$default,
-				array(
-					'method'	=> 'refresh_cache_from_weblog',
+					'method'	=> 'refresh_cache_from_channel',
 					'hook'		=> 'entry_submission_end'
 				)
 			),
@@ -164,6 +153,22 @@ class Super_search_upd extends Module_builder_super_search
 					'priority'	=> 5
 				)
 			),
+			array_merge(
+				$default,
+				array(
+					'method'	=> 'super_search_do_search_and_array_rating',
+					'hook'		=> 'super_search_do_search_and_array',
+					'priority'	=> 6
+				)
+			),
+			array_merge(
+				$default,
+				array(
+					'method'	=> 'super_search_prep_order',
+					'hook'		=> 'super_search_prep_order',
+					'priority'	=> 5
+				)
+			),
 		);
 	}
 
@@ -215,13 +220,8 @@ class Super_search_upd extends Module_builder_super_search
 						'module_version'		=> constant(strtoupper($this->lower_name).'_VERSION'),
 						'has_publish_fields'	=> 'y',
 						'has_cp_backend'		=> 'y');
-
-		if (APP_VER < 2.0)
-		{
-			unset($data['has_publish_fields']);
-		}
-
-		$sql[] = $this->EE->db->insert_string('exp_modules', $data);
+        
+        $sql[] = ee()->db->insert_string('exp_modules', $data);
 
 		// --------------------------------------------
 		// Create the levenshtein mysql level function
@@ -232,24 +232,21 @@ class Super_search_upd extends Module_builder_super_search
 
 		//install it
 		$sql[] = $this->data->define_levenshtein();
-
-		foreach ($sql as $query)
-		{
-			$this->EE->db->query($query);
-		}
-
+		
+        foreach ($sql as $query)
+        {
+            ee()->db->query($query);
+        }
+		
 		// --------------------------------------------
-		//	Show silly ass flash message for no earthly reason.
-		// --------------------------------------------
-
-		if (APP_VER >= 2.0)
-		{
-			$this->EE->session->set_flashdata( 'message_success', lang( 'module_has_been_installed' ) . NBS . lang( 'super_search_module_name' ) );
-		}
-
-		return TRUE;
-	}
-
+        //	Show silly ass flash message for no earthly reason.
+        // --------------------------------------------
+        
+		ee()->session->set_flashdata( 'message_success', ee()->lang->line( 'module_has_been_installed' ) . NBS . ee()->lang->line( 'super_search_module_name' ) );
+        
+        return TRUE;
+    }
+    
 	// END install()
 
 	// --------------------------------------------------------------------
@@ -281,16 +278,13 @@ class Super_search_upd extends Module_builder_super_search
 		// --------------------------------------------
 		//	Show silly ass flash message for no earthly reason.
 		// --------------------------------------------
-
-		if (APP_VER >= 2.0)
-		{
-			$this->EE->session->set_flashdata( 'message_success', lang( 'module_has_been_removed' ) . NBS . lang( 'super_search_module_name' ) );
-		}
-
-		return TRUE;
-	}
-
-	//	END uninstall
+		
+		ee()->session->set_flashdata( 'message_success', ee()->lang->line( 'module_has_been_removed' ) . NBS . ee()->lang->line( 'super_search_module_name' ) );
+        
+        return TRUE;
+    }
+    
+    //	END uninstall
 
 	// --------------------------------------------------------------------
 
@@ -301,16 +295,9 @@ class Super_search_upd extends Module_builder_super_search
 	 * @return	bool
 	 */
 
-	function update()
+	function update($current = "")
 	{
-		// --------------------------------------------
-		//  ExpressionEngine 2.x attempts to do automatic updates.
-		//		- Mitchell questioned clients/customers and discovered that the majority preferred to update
-		//		themselves, especially on higher traffic sites. So, we forbid EE 2.x from doing updates
-		//		unless it comes through our update form.
-		// --------------------------------------------
-
-		if ( ! isset($_POST['run_update']) OR $_POST['run_update'] != 'y')
+		if ($current == $this->version)
 		{
 			return FALSE;
 		}
@@ -326,7 +313,7 @@ class Super_search_upd extends Module_builder_super_search
 
 		$sql = preg_split("/;;\s*(\n+|$)/", file_get_contents($this->addon_path.strtolower($this->lower_name).'.sql'), -1, PREG_SPLIT_NO_EMPTY);
 
-		if (sizeof($sql) == 0)
+		if (count($sql) == 0)
 		{
 			return FALSE;
 		}
@@ -335,54 +322,54 @@ class Super_search_upd extends Module_builder_super_search
 		{
 			$sql[$i] = trim($query);
 		}
-
-		// --------------------------------------------
-		//  Super Search History needs a query field
-		// --------------------------------------------
-
-		if ( $this->column_exists( 'query', 'exp_super_search_history' ) === FALSE )
-		{
-			$sql[]	= "ALTER TABLE exp_super_search_history ADD `query` mediumtext NOT NULL";
-		}
-
-		// --------------------------------------------
-		//  Super Search History needs a query field
-		// --------------------------------------------
-
-		if ( $this->column_exists( 'hash', 'exp_super_search_history' ) === FALSE )
-		{
-			$sql[]	= "ALTER TABLE exp_super_search_history ADD `hash` varchar(32) NOT NULL";
-		}
-
-		// --------------------------------------------
-		//  Super Search History needs a unique key for some insert magic
-		// --------------------------------------------
-
-		if ( $this->EE->db->table_exists('exp_super_search_history') === TRUE )
-		{
-			$query	= $this->EE->db->query( "SHOW indexes FROM exp_super_search_history WHERE Key_name = 'search_key'" );
-
-			if ( $query->num_rows() == 0 )
-			{
-				$sql[]	= "ALTER TABLE `exp_super_search_history` ADD UNIQUE KEY `search_key` (`member_id`,`cookie_id`,`site_id`,`search_name`,`saved`)";
-			}
-		}
-
-		// --------------------------------------------
-		//	Change the name of the weblog_id field to channel_id
-		// --------------------------------------------
-
-		if ( $this->version_compare($this->database_version(), '<', '1.1.0.b3') )
-		{
-			$sql[]	= "ALTER TABLE exp_super_search_refresh_rules CHANGE `weblog_id` `channel_id` int(10) unsigned NOT NULL default '0'";
-		}
-
-		// --------------------------------------------
-		//	Change the name of the weblog_id field to channel_id
-		// --------------------------------------------
-
-		if ( $this->EE->db->table_exists('exp_super_search_preferences') === FALSE)
-		{
+        
+        // --------------------------------------------
+        //  Super Search History needs a query field
+        // --------------------------------------------
+        
+        if ( $this->column_exists( 'query', 'exp_super_search_history' ) === FALSE )
+        {
+        	$sql[]	= "ALTER TABLE exp_super_search_history ADD `query` mediumtext NOT NULL";
+        }
+        
+        // --------------------------------------------
+        //  Super Search History needs a query field
+        // --------------------------------------------
+        
+        if ( $this->column_exists( 'hash', 'exp_super_search_history' ) === FALSE )
+        {
+        	$sql[]	= "ALTER TABLE exp_super_search_history ADD `hash` varchar(32) NOT NULL";
+        }
+        
+        // --------------------------------------------
+        //  Super Search History needs a unique key for some insert magic
+        // --------------------------------------------
+        
+        if ( ee()->db->table_exists('exp_super_search_history') === TRUE )
+        {
+        	$query	= ee()->db->query( "SHOW indexes FROM exp_super_search_history WHERE Key_name = 'search_key'" );
+        	
+        	if ( $query->num_rows() == 0 )
+        	{
+        		$sql[]	= "ALTER TABLE `exp_super_search_history` ADD UNIQUE KEY `search_key` (`member_id`,`cookie_id`,`site_id`,`search_name`,`saved`)";
+        	}
+        }
+        
+        // --------------------------------------------
+        //	Change the name of the weblog_id field to channel_id
+        // --------------------------------------------
+        
+        if ( $this->version_compare($this->database_version(), '<', '1.1.0.b3') )
+        {
+        	$sql[]	= "ALTER TABLE exp_super_search_refresh_rules CHANGE `weblog_id` `channel_id` int(10) unsigned NOT NULL default '0'";
+        }
+		
+        // --------------------------------------------
+        //	Change the name of the weblog_id field to channel_id
+        // --------------------------------------------
+        
+        if ( ee()->db->table_exists('exp_super_search_preferences') === FALSE)
+		{			
 			$module_install_sql = file_get_contents($this->addon_path . strtolower($this->lower_name) . '.sql');
 
 			//gets JUST the prefs table from the sql
@@ -399,13 +386,13 @@ class Super_search_upd extends Module_builder_super_search
 		}
 
 
-
-		// --------------------------------------------
-		// Create the log table if it doesn't exist
-		// --------------------------------------------
-
-		if ( $this->EE->db->table_exists('exp_super_search_log') === FALSE)
-		{
+		
+        // --------------------------------------------
+        // Create the log table if it doesn't exist
+        // --------------------------------------------
+        
+        if ( ee()->db->table_exists('exp_super_search_log') === FALSE)
+		{			
 			$module_install_sql = file_get_contents($this->addon_path . strtolower($this->lower_name) . '.sql');
 
 			//gets JUST the prefs table from the sql
@@ -422,11 +409,11 @@ class Super_search_upd extends Module_builder_super_search
 		}
 
 		// --------------------------------------------
-		// Create the terms table if it doesn't exist
-		// --------------------------------------------
-
-		if ( $this->EE->db->table_exists('exp_super_search_terms') === FALSE)
-		{
+        // Create the terms table if it doesn't exist
+        // --------------------------------------------
+        
+        if ( ee()->db->table_exists('exp_super_search_terms') === FALSE)
+		{			
 			$module_install_sql = file_get_contents($this->addon_path . strtolower($this->lower_name) . '.sql');
 
 			//gets JUST the prefs table from the sql
@@ -455,63 +442,113 @@ class Super_search_upd extends Module_builder_super_search
 			$this->data->set_preference( array('ignore_word_list' => 'a||and||of||or||the' ));
 		}
 
-
-		// --------------------------------------------
-		// Add the term_length col to the search lexicon table
-		// --------------------------------------------
-
-		if ( $this->version_compare($this->database_version(), '<', '2.0.0.b3') )
-		{
-			if ( $this->EE->db->table_exists('exp_super_search_terms') === TRUE )
-			{
+        // --------------------------------------------
+        // Add the term_length col to the search lexicon table
+        // --------------------------------------------
+        
+        if ( $this->version_compare($this->database_version(), '<', '2.0.0.b3') )
+        {
+        	if ( ee()->db->table_exists('exp_super_search_terms') === TRUE )
+        	{
 				if ( $this->column_exists( 'term_length', 'exp_super_search_terms', FALSE ) === FALSE )
 				{
 					$sql[]	= "ALTER TABLE exp_super_search_terms ADD `term_length` int(10) unsigned NOT NULL default '0'";
 				}
+        	}
+        }
+
+        // --------------------------------------------
+        // Fix for table collation and foreign characters
+        // --------------------------------------------
+        
+        if ( $this->version_compare($this->database_version(), '<', '2.1.0') )
+        {
+        	// Undo primary key on exp_super_search_terms temporarily
+        	$query	= ee()->db->query("SHOW KEYS FROM exp_super_search_terms");
+        	
+        	if ( $query->num_rows > 0 )
+        	{
+        		foreach ( $query->result_array() as $row )
+        		{
+        			if ( ! empty( $row['Key_name'] ) AND $row['Key_name'] == 'PRIMARY' )
+        			{
+        				$key_exists	= TRUE;
+        			}
+        		}
+        	}
+        	
+        	if ( isset( $key_exists ))
+        	{
+				ee()->db->query("ALTER TABLE exp_super_search_terms DROP PRIMARY KEY");
+        	}
+        
+			// make sure STRICT MODEs aren't in use
+			@mysql_query("SET SESSION sql_mode=''", ee()->db->conn_id);
+			
+			$tables = array('exp_super_search_cache', 'exp_super_search_history', 'exp_super_search_log', 'exp_super_search_terms', 'exp_super_search_lexicon_log');
+			
+			foreach ($tables as $table)
+			{
+				$query = ee()->db->query("SHOW COLUMNS FROM `{$table}`");
+				
+				foreach($query->result_array() as $row)
+				{
+					$field = $row['Field'];
+					ee()->db->query("UPDATE `{$table}` SET `{$field}` = CONVERT(CONVERT(`{$field}` USING binary) USING utf8)");
+				}
+				
+				ee()->db->query("ALTER TABLE `{$table}` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci");
 			}
-		}
+        	
+        	// Re-establish primary key on exp_super_search_terms
+        	if ( isset( $key_exists ))
+        	{
+				ee()->db->query("ALTER TABLE exp_super_search_terms ADD KEY `term` (term)");
+        	}			
+        }
 
 		// --------------------------------------------
-		//  Run module SQL - dependent on CREATE TABLE IF NOT EXISTS syntax
-		// --------------------------------------------
+        //  Run module SQL - dependent on CREATE TABLE IF NOT EXISTS syntax
+        // --------------------------------------------
+		
+        foreach ($sql as $query)
+        {
+        	if( $query != '' ) ee()->db->query($query);
+        }
+        
+        // --------------------------------------------
+        //  Set default cache prefs
+        // --------------------------------------------
+        
+        // $this->data->set_default_cache_prefs();
 
-		foreach ($sql as $query)
-		{
-			if( $query != '' ) $this->EE->db->query($query);
-		}
-
-		// --------------------------------------------
-		//  Set default cache prefs
-		// --------------------------------------------
-
-		// $this->data->set_default_cache_prefs();
-
-		// --------------------------------------------
-		//  Set default super search prefs
-		// --------------------------------------------
-
-		// $this->data->set_default_search_preferences();
-
-		// --------------------------------------------
-		//  Default Module Update
-		// --------------------------------------------
-
-		$this->default_module_update();
-
-		// --------------------------------------------
-		//  Version Number Update - LAST!
-		// --------------------------------------------
-
-		$this->EE->db->query(
-			$this->EE->db->update_string(
+        // --------------------------------------------
+        //  Set default super search prefs
+        // --------------------------------------------
+        
+        // $this->data->set_default_search_preferences();        
+    	
+    	// --------------------------------------------
+        //  Default Module Update
+        // --------------------------------------------
+    
+    	$this->default_module_update();
+        
+        // --------------------------------------------
+        //  Version Number Update - LAST!
+        // --------------------------------------------
+    	
+    	ee()->db->query(
+    		ee()->db->update_string(
 				'exp_modules',
-				array('module_version'	=> SUPER_SEARCH_VERSION),
+				array('module_version'	=> SUPER_SEARCH_VERSION), 
 				array('module_name'		=> $this->class_name)
 			)
 		);
 
 		return TRUE;
-	}
-	//	END update()
+    }
+    
+    //	END update()
 }
 //END Super_search_upd
