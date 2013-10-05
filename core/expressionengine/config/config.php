@@ -13,7 +13,7 @@ $admin_url  = $base_url . '/admin.php';
 $env = strpos($base_url, 'staging') ? 'staging' : 'production';
 $env = strpos($base_url, 'local') ? 'local' : $env;
 
-$config['app_version'] = '261';
+$config['app_version'] = "270";
 $config['install_lock'] = "";
 $config['license_number'] = 'CORE LICENSE';
 $config['debug'] = '1';

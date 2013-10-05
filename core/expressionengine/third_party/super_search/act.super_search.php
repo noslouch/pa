@@ -10,7 +10,7 @@
  * @copyright	Copyright (c) 2009-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/super_search
  * @license		http://www.solspace.com/license_agreement
- * @version		2.0.6
+ * @version		2.1.3
  * @filesource	super_search/act.super_search.php
  */
 
@@ -37,19 +37,19 @@ class Super_search_actions extends Addon_builder_super_search
     {
 		do
 		{
-			$this->EE->db->query(
+			ee()->db->query(
 				"DELETE FROM exp_super_search_cache
-				WHERE site_id = ".$this->EE->config->item( 'site_id' )."
+				WHERE site_id = ".ee()->db->escape_str(ee()->config->item( 'site_id' ))."
 				LIMIT 1000 /* Super Search act.super_search.php clear_cache() */"
 			);
-		}
-		while ( $this->EE->db->affected_rows() == 1000 );
-
+		} 
+		while ( ee()->db->affected_rows() == 1000 );
+		
 		do
-		{
-			$this->EE->db->query(
+		{			
+			ee()->db->query(
 				"DELETE FROM exp_super_search_history
-				WHERE site_id = ".$this->EE->config->item( 'site_id' )."
+				WHERE site_id = ".ee()->db->escape_str(ee()->config->item( 'site_id' ))."
 				AND saved = 'n'
 				AND cache_id NOT IN (
 					SELECT cache_id
@@ -57,35 +57,13 @@ class Super_search_actions extends Addon_builder_super_search
 				)
 				LIMIT 1000 /* Super Search act.super_search.php clear_cache() clear history */"
 			);
-		}
-		while ( $this->EE->db->affected_rows() == 1000 );
-
+		} 
+		while ( ee()->db->affected_rows() == 1000 );
+		
 		return TRUE;
     }
 
 	//	End clear cache
-
-	// --------------------------------------------------------------------
-
-	/**
-	 *	Database Character Set Switch
-	 *
-	 *	Used because the EE 1.x database was not UTF-8,
-	 *	which was causing a problem with international
-	 *	character support.  EE 2.x is magically delicious and UTF-8
-	 *
-	 * 	@deprecated this is just here until we remove all calls
-	 *	@access		public
-	 *	@param		string
-	 *	@return		null
-	 */
-
-	public function db_charset_switch($type = 'utf-8')
-	{
-
-	}
-
-	// End DB UTF-8 Switch
 
 	// --------------------------------------------------------------------
 

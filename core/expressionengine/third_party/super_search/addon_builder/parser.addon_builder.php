@@ -13,17 +13,27 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/
  * @license		http://www.solspace.com/license_agreement/
- * @version		1.3.2
+ * @version		1.4.4
  * @filesource 	addon_builder/parser.addon_builder.php
  */
 
 get_instance()->load->library('template');
 
-require_once 'addon_builder.php';
+if ( ! class_exists('Addon_builder_super_search'))
+{
+	require_once 'addon_builder.php';
+}
 
 class Addon_builder_parser_super_search extends EE_Template
 {
 	private $old_get = '';
+
+	/**
+	 * Addon builder instance for helping
+	 *
+	 * @var object
+	 */
+	protected $aob;
 
 	// --------------------------------------------------------------------
 
@@ -40,6 +50,7 @@ class Addon_builder_parser_super_search extends EE_Template
 		parent::__construct();
 
 		$this->EE =& get_instance();
+		$this->aob = new Addon_builder_super_search();
 
 		// --------------------------------------------
 		//  Solves the problem of redirect links (?URL=)
@@ -58,11 +69,11 @@ class Addon_builder_parser_super_search extends EE_Template
 		// --------------------------------------------
 
 		// load up any Snippets
-		$this->EE->db->select('snippet_name, snippet_contents');
-		$this->EE->db->where(
-			'(site_id = ' . $this->EE->config->item('site_id').' OR site_id = 0)'
+		ee()->db->select('snippet_name, snippet_contents');
+		ee()->db->where(
+			'(site_id = ' . ee()->config->item('site_id').' OR site_id = 0)'
 		);
-		$fresh = $this->EE->db->get('snippets');
+		$fresh = ee()->db->get('snippets');
 
 		if ($fresh->num_rows() > 0)
 		{
@@ -75,7 +86,7 @@ class Addon_builder_parser_super_search extends EE_Template
 
 			$var_keys = array();
 
-			foreach ($this->EE->config->_global_vars as $k => $v)
+			foreach (ee()->config->_global_vars as $k => $v)
 			{
 				$var_keys[] = LD.$k.RD;
 			}
@@ -84,13 +95,13 @@ class Addon_builder_parser_super_search extends EE_Template
 			{
 				$snippets[$name] = str_replace(
 					$var_keys,
-					array_values($this->EE->config->_global_vars),
+					array_values(ee()->config->_global_vars),
 					$content
 				);
 			}
 
-			$this->EE->config->_global_vars = array_merge(
-				$this->EE->config->_global_vars,
+			ee()->config->_global_vars = array_merge(
+				ee()->config->_global_vars,
 				$snippets
 			);
 		}
@@ -136,11 +147,11 @@ class Addon_builder_parser_super_search extends EE_Template
 		// standardize newlines
 		$str	= preg_replace("/(\015\012)|(\015)|(\012)/", "\n", $str);
 
-		$this->EE->load->helper('text');
+		ee()->load->helper('text');
 
 		// convert high ascii
 		$str	= (
-			$this->EE->config->item('auto_convert_high_ascii') == 'y'
+			ee()->config->item('auto_convert_high_ascii') == 'y'
 		) ? ascii_to_entities($str): $str;
 
 		// -------------------------------------
@@ -164,14 +175,14 @@ class Addon_builder_parser_super_search extends EE_Template
 		foreach (array('site_id', 'site_label', 'site_short_name') as $site_var)
 		{
 			$this->global_vars[$site_var] = stripslashes(
-				$this->EE->config->item($site_var)
+				ee()->config->item($site_var)
 			);
 		}
 
 		// Parse {last_segment} variable
-		$seg_array = $this->EE->uri->segment_array();
+		$seg_array = ee()->uri->segment_array();
 
-		$this->EE->config->_global_vars['last_segment'] = end($seg_array);;
+		ee()->config->_global_vars['last_segment'] = end($seg_array);;
 
 		// --------------------------------------------
 		//  Parse Global Vars - EE 2.x
@@ -179,14 +190,14 @@ class Addon_builder_parser_super_search extends EE_Template
 
 		$this->log_item(
 			"Snippets (Keys): " .
-			implode('|', array_keys($this->EE->config->_global_vars))
+			implode('|', array_keys(ee()->config->_global_vars))
 		);
 		$this->log_item(
 			"Snippets (Values): " .
-			trim(implode('|', $this->EE->config->_global_vars))
+			trim(implode('|', ee()->config->_global_vars))
 		);
 
-		foreach ($this->EE->config->_global_vars as $key => $val)
+		foreach (ee()->config->_global_vars as $key => $val)
 		{
 			$this->template = str_replace(LD.$key.RD, $val, $this->template);
 		}
@@ -224,10 +235,10 @@ class Addon_builder_parser_super_search extends EE_Template
 		{
 			$this->template = str_replace(
 				LD.'segment_'.$i.RD,
-				$this->EE->uri->segment($i),
+				ee()->uri->segment($i),
 				$this->template
 			);
-			$this->segment_vars['segment_'.$i] = $this->EE->uri->segment($i);
+			$this->segment_vars['segment_'.$i] = ee()->uri->segment($i);
 		}
 
 		/** -------------------------------------
@@ -262,7 +273,7 @@ class Addon_builder_parser_super_search extends EE_Template
 
 		$this->template = str_replace(
 			LD.'current_time'.RD,
-			$this->EE->localize->now,
+			ee()->localize->now,
 			$this->template
 		);
 
@@ -275,7 +286,20 @@ class Addon_builder_parser_super_search extends EE_Template
 		{
 			for ($j = 0; $j < count($matches['0']); $j++)
 			{
-				$this->template = preg_replace("/".preg_quote($matches['0'][$j], '/')."/", $this->EE->localize->decode_date($matches['2'][$j], $this->EE->localize->now), $this->template, 1);
+				//EE2.6+ support
+				$func = (is_callable(array(ee()->localize, 'format_date'))) ?
+							'format_date' :
+							'decode_date';
+
+				$this->template = preg_replace(
+					"/".preg_quote($matches['0'][$j], '/')."/",
+					ee()->localize->$func(
+						$matches['2'][$j],
+						ee()->localize->now
+					),
+					$this->template,
+					1
+				);
 			}
 		}
 
@@ -309,7 +333,7 @@ class Addon_builder_parser_super_search extends EE_Template
 
 		$this->template = $this->parse_simple_segment_conditionals($this->template);
 		$this->template = $this->simple_conditionals($this->template, $this->embed_vars);
-		$this->template = $this->simple_conditionals($this->template, $this->EE->config->_global_vars);
+		$this->template = $this->simple_conditionals($this->template, ee()->config->_global_vars);
 
 		// -------------------------------------
 		//  Set global variable assignment
@@ -474,7 +498,7 @@ class Addon_builder_parser_super_search extends EE_Template
 				{
 					$this->log_item("Invalid Tag");
 
-					if ($this->EE->config->item('debug') < 1)
+					if (ee()->config->item('debug') < 1)
 					{
 						return FALSE;
 					}
@@ -493,7 +517,7 @@ class Addon_builder_parser_super_search extends EE_Template
 					$error .= '<br /><br />';
 					$error .= lang('error_fix_syntax');
 
-					$this->EE->output->fatal_error($error);
+					ee()->output->fatal_error($error);
 				}
 				else
 				{
@@ -545,7 +569,7 @@ class Addon_builder_parser_super_search extends EE_Template
 		if (count($this->module_data) == 0 AND
 			count(array_intersect($this->modules, $classes)) > 0)
 		{
-			$query = $this->EE->db->query(
+			$query = ee()->db->query(
 				"SELECT module_version, module_name FROM exp_modules"
 			);
 
@@ -657,8 +681,11 @@ class Addon_builder_parser_super_search extends EE_Template
 			// variables in the tag so it doesn't
 			// get confused as to which entry the variables belong to.
 
-			if (($lower_class_name == 'weblog' AND $method == 'entries') OR
-				($lower_class_name == 'search' AND $method == 'search_results'))
+			if (version_compare($this->aob->ee_version, '2.6.0', '<') AND
+				(
+					($lower_class_name == 'weblog' AND $method == 'entries') OR
+					($lower_class_name == 'search' AND $method == 'search_results'))
+				)
 			{
 				$this->tagdata = $this->assign_relationship_data($this->tagdata);
 			}
@@ -667,7 +694,7 @@ class Addon_builder_parser_super_search extends EE_Template
 			//  Assign Variables for Tags - Improve!
 			// --------------------------------------------
 
-			$vars = $this->EE->functions->assign_variables(
+			$vars = ee()->functions->assign_variables(
 				$this->tag_data[$i]['block']
 			);
 
@@ -686,7 +713,7 @@ class Addon_builder_parser_super_search extends EE_Template
 
 			if ( ! in_array($lower_class_name, $this->native_modules))
 			{
-				$this->var_cond = $this->EE->functions->assign_conditional_variables(
+				$this->var_cond = ee()->functions->assign_conditional_variables(
 					$this->tag_data[$i]['block'],
 					SLASH,
 					LD,
@@ -717,7 +744,7 @@ class Addon_builder_parser_super_search extends EE_Template
 			{
 				$this->log_item("Tag Not Processed: Method Non-Existent or Module Not Installed");
 
-				if ($this->EE->config->item('debug') < 1)
+				if (ee()->config->item('debug') < 1)
 				{
 					return FALSE;
 				}
@@ -735,7 +762,7 @@ class Addon_builder_parser_super_search extends EE_Template
 				$error .= '<br /><br />';
 				$error .= str_replace('%x', $lower_class_name, str_replace('%y', $method, lang('error_fix_module_processing')));
 
-				$this->EE->output->fatal_error($error);
+				ee()->output->fatal_error($error);
 			}
 
 			/*
@@ -812,7 +839,7 @@ class Addon_builder_parser_super_search extends EE_Template
 		$this->fetch_modules();
 		$this->fetch_plugins();
 
-		$this->EE->load->helper('directory');
+		ee()->load->helper('directory');
 		$ext_len = strlen(EXT);
 
 		if (($map = directory_map(PATH_THIRD)) !== FALSE)
@@ -875,9 +902,9 @@ class Addon_builder_parser_super_search extends EE_Template
 			return;
 		}
 
-		if ( isset($this->EE->session->cache['modules']['morsel']['template']['fetch_modules']))
+		if ( isset(ee()->session->cache['modules']['morsel']['template']['fetch_modules']))
 		{
-			$this->modules = $this->EE->session->cache['modules']['morsel']['template']['fetch_modules'];
+			$this->modules = ee()->session->cache['modules']['morsel']['template']['fetch_modules'];
 			return;
 		}
 
@@ -897,7 +924,7 @@ class Addon_builder_parser_super_search extends EE_Template
 			}
 		}
 
-		$this->modules = $this->EE->session->cache['modules']['morsel']['template']['fetch_modules']= array_unique($this->modules);
+		$this->modules = ee()->session->cache['modules']['morsel']['template']['fetch_modules']= array_unique($this->modules);
 	}
 	/* END fetch_modules() */
 
@@ -918,9 +945,9 @@ class Addon_builder_parser_super_search extends EE_Template
 			return;
 		}
 
-		if ( isset($this->EE->session->cache['modules']['morsel']['template']['fetch_plugins']))
+		if ( isset(ee()->session->cache['modules']['morsel']['template']['fetch_plugins']))
 		{
-			$this->plugins = $this->EE->session->cache['modules']['morsel']['template']['fetch_plugins'];
+			$this->plugins = ee()->session->cache['modules']['morsel']['template']['fetch_plugins'];
 			return;
 		}
 
@@ -940,7 +967,7 @@ class Addon_builder_parser_super_search extends EE_Template
 			}
 		}
 
-		$this->plugins = $this->EE->session->cache['modules']['morsel']['template']['fetch_plugins'] = array_unique($this->plugins);
+		$this->plugins = ee()->session->cache['modules']['morsel']['template']['fetch_plugins'] = array_unique($this->plugins);
 	}
 	/* END fetch_plugins() */
 
@@ -956,28 +983,28 @@ class Addon_builder_parser_super_search extends EE_Template
 
 	public function nested_processing($parse_string)
 	{
-		$TMPL2 = $this->EE->functions->clone_object($this);
+		$TMPL2 = ee()->functions->clone_object($this);
 
 		while (is_int(strpos($parse_string, LD.'exp:')))
 		{
 			unset($TMPL, $GLOBALS['TMPL']);
 
-			$this->EE->TMPL = $GLOBALS['TMPL'] = $TMPL = new Template();
-			$this->EE->TMPL->start_microtime = $this->start_microtime;
-			$this->EE->TMPL->template = $parse_string;
-			$this->EE->TMPL->tag_data	= array();
-			$this->EE->TMPL->var_single = array();
-			$this->EE->TMPL->var_cond	= array();
-			$this->EE->TMPL->var_pair	= array();
-			$this->EE->TMPL->plugins = $TMPL2->plugins;
-			$this->EE->TMPL->modules = $TMPL2->modules;
+			ee()->TMPL = $GLOBALS['TMPL'] = $TMPL = new Template();
+			ee()->TMPL->start_microtime = $this->start_microtime;
+			ee()->TMPL->template = $parse_string;
+			ee()->TMPL->tag_data	= array();
+			ee()->TMPL->var_single = array();
+			ee()->TMPL->var_cond	= array();
+			ee()->TMPL->var_pair	= array();
+			ee()->TMPL->plugins = $TMPL2->plugins;
+			ee()->TMPL->modules = $TMPL2->modules;
 
-			$this->EE->TMPL->parse_tags();
-			$this->EE->TMPL->process_tags();
+			ee()->TMPL->parse_tags();
+			ee()->TMPL->process_tags();
 
-			$this->EE->TMPL->loop_count = 0;
-			$parse_string = $this->EE->TMPL->template;
-			$TMPL2->log = array_merge($TMPL2->log, $this->EE->TMPL->log);
+			ee()->TMPL->loop_count = 0;
+			$parse_string = ee()->TMPL->template;
+			$TMPL2->log = array_merge($TMPL2->log, ee()->TMPL->log);
 		}
 
 		foreach (get_object_vars($TMPL2) as $key => $value)
@@ -987,7 +1014,7 @@ class Addon_builder_parser_super_search extends EE_Template
 
 		unset($TMPL2);
 
-		$this->EE->TMPL = $GLOBALS['TMPL'] = $TMPL = $this;
+		ee()->TMPL = $GLOBALS['TMPL'] = $TMPL = $this;
 
 		return $parse_string;
 	}

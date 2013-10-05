@@ -10,7 +10,7 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/
  * @license		http://www.solspace.com/license_agreement/
- * @version		1.3.2
+ * @version		1.4.4
  * @filesource 	addon_builder/data.addon_builder.php
  */
 
@@ -26,32 +26,6 @@ class Addon_builder_data_super_search
 	 * @var array
 	 */
 	public $cached			= array();
-
-	/**
-	 * converts EE 1.x nomenclature to EE 2.x
-	 * @deprecated no longer used, but some addons call it
-	 * @var array
-	 * @see translate_keys
-	 */
-	public $nomenclature	= array(
-		'site_weblog_preferences'	=> 'site_channel_preferences',
-		'can_admin_weblogs'			=> 'can_admin_channels',
-		'weblog_id'					=> 'channel_id',
-		'blog_name'					=> 'channel_name',
-		'blog_title'				=> 'channel_title',
-		'blog_url'					=> 'channel_url',
-		'blog_description'			=> 'channel_description',
-		'blog_lang'					=> 'channel_lang',
-		'weblog_max_chars'			=> 'channel_max_chars',
-		'weblog_notify'				=> 'channel_notify',
-		'weblog_require_membership'	=> 'channel_require_membership',
-		'weblog_html_formatting'	=> 'channel_html_formatting',
-		'weblog_allow_img_urls'		=> 'channel_allow_img_urls',
-		'weblog_auto_link_urls'		=> 'channel_auto_link_urls',
-		'weblog_notify_emails'		=> 'channel_notify_emails',
-		'field_pre_blog_id'			=> 'field_pre_channel_id'
-	);
-
 
 	/**
 	 * names of methods from AOB that should NOT be used by call
@@ -92,7 +66,7 @@ class Addon_builder_data_super_search
 	 * @return	null
 	 */
 
-	function __construct($parent_aob_instance = FALSE)
+	public function __construct($parent_aob_instance = FALSE)
 	{
 		//this way we have a pointer to AOB
 		//however, since this gets called from the child constructor,
@@ -124,8 +98,8 @@ class Addon_builder_data_super_search
 		$a = 'addon';
 
 		//no sessions? lets use global until we get here again
-		if ( ! isset($this->EE->session) OR
-			! is_object($this->EE->session))
+		if ( ! isset(ee()->session) OR
+			! is_object(ee()->session))
 		{
 			if ( ! isset($GLOBALS[$s][$c][$b][$a][$this->lower_name]))
 			{
@@ -145,12 +119,12 @@ class Addon_builder_data_super_search
 		else
 		{
 			//been here before?
-			if ( ! isset($this->EE->session->cache[$s][$b][$a][$this->lower_name]))
+			if ( ! isset(ee()->session->cache[$s][$b][$a][$this->lower_name]))
 			{
 				//grab pre-session globals, and only unset the ones for this addon
 				if ( isset($GLOBALS[$s][$c][$b][$a][$this->lower_name]))
 				{
-					$this->EE->session->cache[$s][$b][$a][$this->lower_name] =
+					ee()->session->cache[$s][$b][$a][$this->lower_name] =
 						$GLOBALS[$s][$c][$b][$a][$this->lower_name];
 
 					//cleanup, isle 5
@@ -158,27 +132,27 @@ class Addon_builder_data_super_search
 				}
 				else
 				{
-					$this->EE->session->cache[$s][$b][$a][$this->lower_name] = array();
+					ee()->session->cache[$s][$b][$a][$this->lower_name] = array();
 				}
 			}
 
 			//check for solspace-wide globals
-			if ( ! isset($this->EE->session->cache[$s][$b][$g]) )
+			if ( ! isset(ee()->session->cache[$s][$b][$g]) )
 			{
 				if (isset($GLOBALS[$s][$c][$b][$g]))
 				{
-					$this->EE->session->cache[$s][$b][$g] = $GLOBALS[$s][$c][$b][$g];
+					ee()->session->cache[$s][$b][$g] = $GLOBALS[$s][$c][$b][$g];
 
 					unset($GLOBALS[$s][$c][$b][$g]);
 				}
 				else
 				{
-					$this->EE->session->cache[$s][$b][$g] = array();
+					ee()->session->cache[$s][$b][$g] = array();
 				}
 			}
 
-			$this->global_cache =& $this->EE->session->cache[$s][$b][$g];
-			$this->cache 		=& $this->EE->session->cache[$s][$b][$a][$this->lower_name];
+			$this->global_cache =& ee()->session->cache[$s][$b][$g];
+			$this->cache 		=& ee()->session->cache[$s][$b][$a][$this->lower_name];
 		}
 	}
 	// END __construct
@@ -219,24 +193,6 @@ class Addon_builder_data_super_search
 	// --------------------------------------------------------------------
 
 	/**
-	 * Translate Keys from 2.0 to 1.0
-	 *
-	 * @access	public
-	 * @param	array
-	 * @return	array
-	 * @deprecated		was just for EE 1.x usage
-	 */
-
-	function translate_keys($data = array())
-	{
-		return $data;
-	}
-	/* END translate_keys() */
-
-
-	// --------------------------------------------------------------------
-
-	/**
 	 * Get author id from entry id
 	 *
 	 * @access	public
@@ -271,7 +227,7 @@ class Addon_builder_data_super_search
 
 		return $this->cached[$cache_name][$cache_hash];
 	}
-	/*	End get author id from entry id */
+	// End get author id from entry id
 
 
 	// --------------------------------------------------------------------
@@ -306,14 +262,13 @@ class Addon_builder_data_super_search
 		//  Grab from DB
 		// --------------------------------------------
 
-		$query	= $this->EE->db->query(
-			"SELECT author_id, " . $this->sc->db->channel_id . " AS channel_id
-			 FROM	" . $this->sc->db->channel_titles . "
-			 WHERE	entry_id = '" . $this->EE->db->escape_str( $entry_id ) . "'
-			 LIMIT 1"
-		);
+		$query	= ee()->db
+						->select('author_id, channel_id')
+						->where('entry_id', $entry_id)
+						->limit(1)
+						->get('channel_titles');
 
-		if ( $query->num_rows > 0 )
+		if ( $query->num_rows() > 0 )
 		{
 			$this->cached[$cache_name][$cache_hash]	= $query->row('channel_id');
 			$this->cached['get_author_id_from_entry_id'][$cache_hash]	= $query->row('author_id');
@@ -321,8 +276,8 @@ class Addon_builder_data_super_search
 
 		return $this->cached[$cache_name][$cache_hash];
 	}
+	// End get channel id from entry id
 
-	/*	End get channel id from entry id */
 
 	// --------------------------------------------------------------------
 
@@ -340,14 +295,14 @@ class Addon_builder_data_super_search
 		// SuperAdmins Alredy Have All Sites
 		//--------------------------------------------
 
-		if (isset($this->EE->session) AND
-			is_object($this->EE->session) AND
-			isset($this->EE->session->userdata['group_id']) AND
-			$this->EE->session->userdata['group_id'] == 1 AND
-			isset($this->EE->session->userdata['assigned_sites']) AND
-			is_array($this->EE->session->userdata['assigned_sites']))
+		if (isset(ee()->session) AND
+			is_object(ee()->session) AND
+			isset(ee()->session->userdata['group_id']) AND
+			ee()->session->userdata['group_id'] == 1 AND
+			isset(ee()->session->userdata['assigned_sites']) AND
+			is_array(ee()->session->userdata['assigned_sites']))
 		{
-			return $this->EE->session->userdata['assigned_sites'];
+			return ee()->session->userdata['assigned_sites'];
 		}
 
 		//--------------------------------------------
@@ -368,22 +323,20 @@ class Addon_builder_data_super_search
 		// Perform the Actual Work
 		//--------------------------------------------
 
-		if ($this->EE->config->item('multiple_sites_enabled') == 'y')
+		ee()->db
+			->select('site_id, site_label')
+			->from('exp_sites');
+
+		if (ee()->config->item('multiple_sites_enabled') == 'y')
 		{
-			$sites_query = $this->EE->db->query(
-				"SELECT 	site_id, site_label
-				 FROM 		exp_sites
-				 ORDER BY 	site_label"
-			);
+			ee()->db->order_by('site_label');
 		}
 		else
 		{
-			$sites_query = $this->EE->db->query(
-				"SELECT site_id, site_label
-				 FROM 	exp_sites
-				 WHERE 	site_id = '1'"
-			);
+			ee()->db->where('site_id', 1);
 		}
+
+		$sites_query = ee()->db->get();
 
 		foreach($sites_query->result_array() as $row)
 		{
@@ -428,19 +381,18 @@ class Addon_builder_data_super_search
 		// Perform the Actual Work
 		//--------------------------------------------
 
-
-		$query = $this->EE->db->query(
-			"/* Solspace mfields */
-			SELECT	m_field_id,
-					m_field_name,
-					m_field_label,
-					m_field_type,
-					m_field_list_items,
-					m_field_required,
-					m_field_public,
-					m_field_fmt
-			FROM exp_member_fields
-		");
+		$query = ee()->db
+					->select(
+						'm_field_id,
+						m_field_name,
+						m_field_label,
+						m_field_type,
+						m_field_list_items,
+						m_field_required,
+						m_field_public,
+						m_field_fmt'
+					)
+					->get('member_fields');
 
 		foreach ($query->result_array() as $row)
 		{

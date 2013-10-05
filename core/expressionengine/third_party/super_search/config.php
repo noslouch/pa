@@ -10,7 +10,7 @@
  * @copyright	Copyright (c) 2009-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/super_search
  * @license		http://www.solspace.com/license_agreement
- * @version		2.0.6
+ * @version		2.1.3
  * @filesource	super_search/config.php
  */
 
