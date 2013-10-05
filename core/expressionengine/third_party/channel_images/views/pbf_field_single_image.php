@@ -17,7 +17,7 @@
 		<a href='javascript:void(0)' class='gIcon ImageMove' title='Move' ></a>
 		<a href='#' class='gIcon <?php if ($cover == 1) echo 'StarIcon'; else echo 'StarGreyIcon';?> ImageCover' title='Cover'></a>
 		<a href='#' <?php if (isset($linked) == TRUE && $linked == TRUE):?>class='gIcon ImageDel ImageLinked' title='Unlink'<?php else:?> class='gIcon ImageDel' title='Delete'<?php endif;?>></a>
-		<div class='hidden inputs'>
+		<div class='cihidden inputs'>
 		<?php if ($image_id > 0 OR (isset($form_error) == TRUE && $form_error == TRUE)):?>
 			<input name="field_id_<?=$field_id?>[images][<?=$image_order?>][title]" value="<?=$title?>" class="title">
 			<input name="field_id_<?=$field_id?>[images][<?=$image_order?>][url_title]" value="<?=$url_title?>" class="url_title">

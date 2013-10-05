@@ -11,6 +11,13 @@ $.expr[':'].Contains = function(a,i,m){
 
 $(document).ready(function() {
 
+	ChannelImages.Init();
+
+});
+
+//********************************************************************************* //
+
+ChannelImages.Init = function(){
 	// If you have multiple saef fields we only need to do this once
 	if (typeof(ChannelImages.initfields_done) == 'undefined'){
 		ChannelImages.initfields_done = 'yes';
@@ -58,7 +65,7 @@ $(document).ready(function() {
 			ChannelImages.RefreshImages(Bwf._transitionInstance.draftExists);
 		});
 	}
-});
+};
 
 //********************************************************************************* //
 
@@ -121,16 +128,16 @@ ChannelImages.ActivateUploadHandlers = function(FIELD_ID){
 		input.type = 'file';
 
 		if ('multiple' in input && typeof File != "undefined" && typeof (new XMLHttpRequest()).upload != "undefined" ) {
-			ChannelImages.Debug('CHANNEL_IMAGES: We can use HTML5 File Upload!');
+			//ChannelImages.Debug('CHANNEL_IMAGES: We can use HTML5 File Upload!');
 			ChannelImages.HTML5.Init(FIELD_ID);
 		}
 		else {
-			ChannelImages.Debug('CHANNEL_IMAGES: HTML5 File Upload is not available, using flash now.');
+			//ChannelImages.Debug('CHANNEL_IMAGES: HTML5 File Upload is not available, using flash now.');
 			ChannelImages.SWFUPLOAD.Init(FIELD_ID);
 		}
 	}
 	else {
-		ChannelImages.Debug('CHANNEL_IMAGES: HTML5 File Upload is disabled, using flash now.');
+		//ChannelImages.Debug('CHANNEL_IMAGES: HTML5 File Upload is disabled, using flash now.');
 		ChannelImages.SWFUPLOAD.Init(FIELD_ID);
 	}
 };
@@ -222,6 +229,10 @@ ChannelImages.AddNewFile = function(JSONOBJ, FIELD_ID, Sync){
 
 	if (JSONOBJ.is_linked == true) {
 		JSONOBJ.show_image_replace = false;
+	}
+
+	if (ChannelImages.Fields['Field_'+FIELD_ID].settings.keep_original == 'no') {
+		JSONOBJ['show_image_edit'] = false;
 	}
 
 	// Kill Titles and url_titles!
@@ -486,7 +497,7 @@ ChannelImages.OpenImportFiles = function(Event){
 				Params.files = [];
 
 				// Loop over all checkboxes
-				jQuery('#cboxContent').find('input[type=checkbox]:checked').each(function(i, el){
+				jQuery('#cboxContent').find('.fileslist').find('input[type=checkbox]:checked').each(function(i, el){
 					Params.files.push(el.value);
 				});
 
@@ -501,6 +512,14 @@ ChannelImages.OpenImportFiles = function(Event){
 
 					jQuery.colorbox.close();
 				}, 'json');
+			});
+
+			Elem.find('.checkall').click(function(eve){
+				if ($(eve.target).is(':checked')) {
+					Elem.find('.fileslist input[type=checkbox]').attr('checked', 'checked');
+				} else {
+					Elem.find('.fileslist input[type=checkbox]').removeAttr('checked');
+				}
 			});
 		}
 	});
@@ -662,6 +681,12 @@ ChannelImages.HTML5.UploadStart = function(FIELD_ID) {
 	if (window.FormData) {
 		var f = new FormData();
 		f.append('channel_images_file', File);
+
+		// Get all files
+		ChannelImages.CFields.find('.Image').each(function(index, imgelem){
+			f.append('filenames[]', imgelem.getAttribute('data-filename'));
+		});
+
 		xhr.send(f);
 	}
 	else if (File.getAsBinary || window.FileReader) {
@@ -1633,20 +1658,7 @@ ChannelImages.OpenImageReplace = function(e){
 
 //********************************************************************************* //
 
-ChannelImages.EditorOpenModal = function(obj, event, key){
-
-	var handler = $.proxy(function(){
-		var Modal = $('#redactor_modal');
-
-		Modal.find('.WCI_Images').tabs().find('.CImage').click($.proxy(function(e){ ChannelImages.EditorSelectImage(obj, e); }, obj));
-		Modal.find('.redactor_btn_modal_insert').click($.proxy(function(e){ ChannelImages.EditorInsertImage(obj, e); }, obj));
-
-	}, obj);
-
-	var endCallback = function(url){
-
-	};
-
+ChannelImages.EditorOpenModal = function(redactor, buttonName, buttonDOM, buttonObject){
 	var HTML = [];
 	HTML.push('<div class="WCI_Images">');
 
@@ -1668,7 +1680,7 @@ ChannelImages.EditorOpenModal = function(obj, event, key){
 			HTML.push('<div class="imageholder">');
 			for (var i = 0; i < ChannelImages.Fields[FIELD].wimages.length; i++) {
 				var IMG = ChannelImages.Fields[FIELD].wimages[i];
-				HTML.push('<div class="CImage"><img src="'+IMG.big_img_url+'" title="'+IMG.title+'" alt="'+IMG.description+'" data-filename="'+IMG.filename+'"></div>');
+				HTML.push('<div class="CImage"><img src="'+IMG.big_img_url+'" title="'+IMG.title+'" alt="'+IMG.description+'" data-filename="'+IMG.filename+'" data-field_id="'+IMG.field_id+'" data-index="'+(i+1)+'"></div>');
 			}
 
 			HTML.push('</div>');
@@ -1708,20 +1720,33 @@ ChannelImages.EditorOpenModal = function(obj, event, key){
 	HTML.push('</div>'); // WCI Images
 	HTML.push('<br>');
 
-	var ModalContent = '<div id="redactor_modal_content">' + HTML.join('') +
-				'<div id="redactor_modal_footer">' +
-					'<span class="redactor_btns_box">' +
-						'<a href="javascript:void(null);" class="redactor_modal_btn redactor_btn_modal_close">' + RLANG.cancel + '</a>' +
-						'<input type="button" class="redactor_modal_btn redactor_btn_modal_insert" value="' + RLANG.insert + '" />' +
-					'</span>' +
-				'</div></div>';
+	var ModalContent = '<div id="redactor_modal_content">' +
+				'<div id="redactor_modal_inner">' +
+					'<section>'+
+					HTML.join('')+
+					'</section>'+
+					'<footer>' +
+						'<a href="javascript:void(null);" class="redactor_modal_btn redactor_btn_modal_close">' + redactor.opts.curLang.cancel + '</a>' +
+						'<input type="button" class="redactor_modal_btn redactor_btn_modal_insert" value="' + redactor.opts.curLang.insert + '" />' +
+					'</footer>' +
+				'</div>';
 
-	obj.modalInit('Channel Images', ModalContent, 600, handler, endCallback);
+	redactor.modalInit('Channel Images', ModalContent, 600, function(){
+		var Modal = $('#redactor_modal');
+
+		Modal.find('.WCI_Images').tabs().find('.CImage').click(function(e){
+			ChannelImages.EditorSelectImage(redactor, e);
+		});
+
+		Modal.find('.redactor_btn_modal_insert').click(function(e){
+			ChannelImages.EditorInsertImage(redactor, e);
+		});
+	});
 };
 
 //********************************************************************************* //
 
-ChannelImages.EditorSelectImage = function(obj, e){
+ChannelImages.EditorSelectImage = function(redactor, e){
 
 	if (typeof(e.target) == 'undefined') return;
 
@@ -1735,7 +1760,7 @@ ChannelImages.EditorSelectImage = function(obj, e){
 
 //********************************************************************************* //
 
-ChannelImages.EditorInsertImage = function(obj, e){
+ChannelImages.EditorInsertImage = function(redactor, e){
 	var Wrapper = $('#redactor_modal').find('.tabcontent:visible');
 
 	if ( Wrapper.find('.Selected').length === 0) return;
@@ -1745,6 +1770,17 @@ ChannelImages.EditorInsertImage = function(obj, e){
 	var IMGSRC = Selected.attr('src');
 
 	var filename = Selected.data('filename');
+	var field_id = Selected.data('field_id');
+	var image_index = Selected.data('index');
+
+	var output_type = 'image_url';
+	if (typeof(ChannelImages.Fields['Field_'+field_id]) != 'undefined') {
+		var settings = ChannelImages.Fields['Field_'+field_id].settings;
+		if (typeof(settings.wysiwyg_output) != 'undefined') {
+			output_type = settings.wysiwyg_output;
+		}
+	}
+
 	var dot = filename.lastIndexOf('.');
 	var extension = filename.substr(dot,filename.length);
 
@@ -1764,10 +1800,18 @@ ChannelImages.EditorInsertImage = function(obj, e){
 
 	Selected.parent().removeClass('Selected');
 
-	obj.insertHtml(img);
-	obj.syncCode();
-	obj.modalClose();
-	obj.observeImages();
+	if (output_type == 'static_image') {
+		if (Size == 'original') {
+			img = '{image:'+image_index+'}';
+		} else {
+			img = '{image:'+image_index+':'+Size+'}';
+		}
+	}
+
+	redactor.insertHtml(img);
+	redactor.sync();
+	redactor.modalClose();
+	redactor.observeImages();
 };
 
 //********************************************************************************* //

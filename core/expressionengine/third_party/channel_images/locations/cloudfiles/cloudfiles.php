@@ -160,6 +160,8 @@ class CI_Location_cloudfiles extends Image_Location
 			$url = '';
 		}
 
+		// TODO: If SSL, CDN URI is different!
+
 		return $url;
 	}
 

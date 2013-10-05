@@ -32,8 +32,8 @@ ChannelImages.Init = function(){
 		return false;
 	});
 
-	ChannelImages.CIField.find('.ci_upload_type').live('change', ChannelImages.ToggleLocation);
-	ChannelImages.CIField.find('.ci_upload_type').trigger('change');
+	ChannelImages.CIField.find('.ci_upload_type').delegate('input', 'click', ChannelImages.ToggleLocation);
+	ChannelImages.ToggleLocation();
 
 	ChannelImages.CIField.find('.AddActionGroup').click(ChannelImages.AddActionGroup);
 	ChannelImages.CIField.find('.DelActionGroup').live('click', function(Event){
@@ -149,7 +149,7 @@ ChannelImages.AddNewAction = function(Event){
 
 ChannelImages.ToggleLocation = function(Event){
 
-	Value = jQuery(Event.target).val();
+	var Value = ChannelImages.CIField.find('.ci_upload_type input:checked').val();
 
 	ChannelImages.CIField.find('.CILocSettings').find('.CIUpload_local,.CIUpload_s3,.CIUpload_cloudfiles').hide();
 	ChannelImages.CIField.find('.CILocSettings .CIUpload_' + Value).show();
@@ -173,19 +173,15 @@ ChannelImages.AddActionGroup = function(Event){
 
 //********************************************************************************* //
 
-ChannelImages.TestLocation = function(Event){
-	Event.preventDefault();
+ChannelImages.TestLocation = function(e){
+	e.preventDefault();
 
-	var Params = {};
-	Params.ajax_method = 'test_location';
-
-	ChannelImages.CIField.find('.CILocSettings').find('input,select').each(function(index, elem){
-		Params[$(elem).attr('name')] = $(elem).val();
-	});
+	var params = ChannelImages.CIField.find('.CILocSettings').find(':input').serializeArray();
+	params.push({name:'ajax_method', value:'test_location'});
 
 	$.colorbox({
 		href: ChannelImages.AJAX_URL,
-		data: Params
+		data: params
 	});
 };
 

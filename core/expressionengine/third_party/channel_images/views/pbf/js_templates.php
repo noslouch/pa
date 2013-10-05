@@ -4,7 +4,7 @@ ChannelImages.LANG = <?=$langjson?>;
 
 <script id="ChannelImagesSingleField" type="text/x-jquery-tmpl">
 {{#table_view}}
-<tr class="Image image-table {{#is_cover}}PrimaryImage{{/is_cover}}">
+<tr class="Image image-table {{#is_cover}}PrimaryImage{{/is_cover}}" data-filename="{{{filename}}}">
 	{{#show_row_num}}<td class="num"></td>{{/show_row_num}}
 	{{#show_id}}<td>{{{image_id}}}</td>{{/show_id}}
 	{{#show_image}}<td>
@@ -29,13 +29,13 @@ ChannelImages.LANG = <?=$langjson?>;
 		{{#show_image_edit}}<a href='#' class='gIcon ImageEdit' title='<?=lang('ci:actions:edit')?>'></a>{{/show_image_edit}}
 		{{#show_image_replace}}<a href='#' class='gIcon ImageReplace' title='<?=lang('ci:actions:replace')?>'></a>{{/show_image_replace}}
 		<a href="#" {{#is_linked}}class="gIcon ImageDel ImageLinked" title="<?=lang('ci:actions:unlink')?>"{{/is_linked}} {{^is_linked}}class="gIcon ImageDel" title="<?=lang('ci:actions:del')?>"{{/is_linked}}></a>
-		<textarea name="{{{field_name}}}[images][][data]" class="ImageData hidden">{{{json_data}}}</textarea>
+		<textarea name="{{{field_name}}}[images][][data]" class="ImageData cihidden">{{{json_data}}}</textarea>
 	</td>
 </tr>
 {{/table_view}}
 
 {{#tile_view}}
-<li class="Image image-tile {{#is_cover}}PrimaryImage{{/is_cover}}">
+<li class="Image image-tile {{#is_cover}}PrimaryImage{{/is_cover}}" data-filename="{{{filename}}}">
 	<a href='{{{big_img_url}}}' class='ImgUrl' rel='ChannelImagesGal' title='{{{image_title}}}'>
 		<img src="{{{small_img_url}}}" width='<?=$this->config->item('ci_image_preview_size')?>' alt='{{{image_title}}}'>
 	</a>
@@ -49,7 +49,7 @@ ChannelImages.LANG = <?=$langjson?>;
 		{{#show_image_replace}}<span class="abtn btn-replace ImageReplace" title='<?=lang('ci:actions:replace')?>'></span>{{/show_image_replace}}
 	</div>
 
-	<textarea name="{{{field_name}}}[images][][data]" class="ImageData hidden">{{{json_data}}}</textarea>
+	<textarea name="{{{field_name}}}[images][][data]" class="ImageData cihidden">{{{json_data}}}</textarea>
 </li>
 {{/tile_view}}
 </script>

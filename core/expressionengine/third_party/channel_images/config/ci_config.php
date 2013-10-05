@@ -25,6 +25,7 @@ $config['ci_defaults']['no_sizes'] = 'no';
 $config['ci_defaults']['keep_original'] = 'yes';
 $config['ci_defaults']['upload_location'] = 'local';
 $config['ci_defaults']['categories'] = array();
+$config['ci_defaults']['default_category'] = '';
 $config['ci_defaults']['show_stored_images'] = 'no';
 $config['ci_defaults']['stored_images_by_author'] = 'no';
 $config['ci_defaults']['stored_images_search_type'] = 'entry';
@@ -46,6 +47,7 @@ $config['ci_defaults']['parse_exif'] = 'no';
 $config['ci_defaults']['parse_xmp'] = 'no';
 $config['ci_defaults']['parse_iptc'] = 'no';
 $config['ci_defaults']['cover_first'] = 'yes';
+$config['ci_defaults']['wysiwyg_output'] = 'image_url';
 $config['ci_defaults']['locations']['local']['location'] = 0;
 $config['ci_defaults']['locations']['s3']['key'] = '';
 $config['ci_defaults']['locations']['s3']['secret_key'] = '';
@@ -60,12 +62,7 @@ $config['ci_defaults']['locations']['cloudfiles']['api'] = '';
 $config['ci_defaults']['locations']['cloudfiles']['container'] = '';
 $config['ci_defaults']['locations']['cloudfiles']['region'] = 'us';
 $config['ci_defaults']['locations']['cloudfiles']['cdn_uri'] = '';
-
-
-// Upload Locations
-$config['ci_upload_locs']['local']	= $this->EE->lang->line('ci:local');
-$config['ci_upload_locs']['s3']		= $this->EE->lang->line('ci:s3');
-$config['ci_upload_locs']['cloudfiles'] = $this->EE->lang->line('ci:cloudfiles');
+$config['ci_defaults']['columns'] = $config['ci_columns'];
 
 // S3
 $config['ci_s3_regions']['us-east-1']   = 'REGION_US_E1';
@@ -86,6 +83,10 @@ $config['ci_s3_storage']['reduced']	= 'STORAGE_REDUCED';
 // S3 Request Headers
 //$config['ci_s3_headers']['Cache-Control'] = 'max-age=' . (30* 24 * 60 * 60);
 //$config['ci_s3_headers']['Expires'] = gmdate("D, d M Y H:i:s T", strtotime('+1 month') );
+
+// Special Config
+//$config['channel_images']['infinite_memory'] = 'yes';
+//$config['channel_images']['ascii_filename'] = 'yes';
 
 // Cloudfiles
 $config['ci_cloudfiles_regions']['us']	= 'US_AUTHURL';

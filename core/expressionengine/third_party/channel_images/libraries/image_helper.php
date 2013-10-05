@@ -22,9 +22,14 @@ class Image_helper
 	{
 		// Creat EE Instance
 		$this->EE =& get_instance();
+		$this->EE->load->library('firephp');
 
 		$this->site_id = $this->EE->config->item('site_id');
-		if (isset($this->EE->channel_images) == FALSE) $this->EE->channel_images = new stdClass();
+
+		if (isset($this->EE->channel_images) === false) {
+			$this->EE->channel_images = new stdClass();
+			$this->EE->channel_images->config = $this->EE->config->item('channel_images');
+		}
 	}
 
 	// ********************************************************************************* //
@@ -104,7 +109,14 @@ class Image_helper
 	public function get_theme_url()
 	{
 		$theme_url = $this->EE->config->item('theme_folder_url').'third_party/' . $this->package . '/';
+
+		if (defined('URL_THIRD_THEMES') === TRUE)
+		{
+			$theme_url = URL_THIRD_THEMES.$this->package.'/';
+		}
+
 		$theme_url = str_replace(array('http://','https://'), '//', $theme_url);
+
 		return $theme_url;
 	}
 
@@ -248,17 +260,43 @@ class Image_helper
 	 * Grab File Module Settings
 	 * @return array
 	 */
-	public function grab_field_settings($field_id)
+	public function grabFieldSettings($field_id=0, $settings=array())
 	{
-		if (isset($this->EE->session->cache['channel_images']['fiels_settings'][$field_id]) == FALSE)
-		{
-			$query = $this->EE->db->select('field_settings')->from('exp_channel_fields')->where('field_id', $field_id)->get();
-			$settings = unserialize(base64_decode($query->row('field_settings')));
-			$this->EE->session->cache['channel_images']['fiels_settings'][$field_id] = $settings;
-		}
-		else
-		{
-			$settings = $this->EE->session->cache['channel_images']['fiels_settings'][$field_id];
+		$default_settings = $this->EE->config->item('ci_defaults');
+
+		if (isset($this->EE->session->cache['channel_images']['field_settings'][$field_id]) === false) {
+
+			if ($settings == false) {
+				$query = $this->EE->db->select('field_settings')->from('exp_channel_fields')->where('field_id', $field_id)->get();
+				$settings = @unserialize(base64_decode($query->row('field_settings')));
+			}
+
+			// Empty? Let's make it then
+			if (is_array($settings) === false) {
+				$settings = array('channel_images' => array());
+			}
+
+			if (isset($settings['channel_images']) === true) {
+				$settings = $settings['channel_images'];
+			}
+
+
+			$settings = $this->array_extend($default_settings, $settings);
+
+			// Any overrides?
+			if (isset($this->EE->channel_images->config['fields'][$field_id]) === true && is_array($this->EE->channel_images->config['fields'][$field_id]) === true) {
+				$settings = $this->array_extend($settings, $this->EE->channel_images->config['fields'][$field_id]);
+				$settings['override'] = $this->EE->channel_images->config['fields'][$field_id];
+			}
+
+			// Categories
+			if (is_array($settings['categories']) === false) {
+				$settings['categories'] = explode(',', $settings['categories']);
+			}
+
+			$this->EE->session->cache['channel_images']['field_settings'][$field_id] = $settings;
+		} else {
+			$settings = $this->EE->session->cache['channel_images']['field_settings'][$field_id];
 		}
 
 		return $settings;
@@ -990,7 +1028,7 @@ class Image_helper
 		{
 			if (isset($this->EE->session->cache['css'][$package][$name]) === FALSE)
 			{
-				$this->EE->cp->add_to_head('<link rel="stylesheet" href="' . $url . '" type="text/css" media="print, projection, screen" />');
+				$this->EE->cp->add_to_foot('<link rel="stylesheet" href="' . $url . '" type="text/css" media="print, projection, screen" />');
 				$this->EE->session->cache['css'][$package][$name] = TRUE;
 			}
 		}
@@ -1000,7 +1038,7 @@ class Image_helper
 		{
 			if (isset($this->EE->session->cache['javascript'][$package][$name]) === FALSE)
 			{
-				$this->EE->cp->add_to_head('<script src="' . $url . '" type="text/javascript"></script>');
+				$this->EE->cp->add_to_foot('<script src="' . $url . '" type="text/javascript"></script>');
 				$this->EE->session->cache['javascript'][$package][$name] = TRUE;
 			}
 		}
@@ -1018,7 +1056,7 @@ class Image_helper
 						ChannelImages.site_id = '" . $this->site_id . "';
 					";
 
-				$this->EE->cp->add_to_head('<script type="text/javascript">' . $js . '</script>');
+				$this->EE->cp->add_to_foot('<script type="text/javascript">' . $js . '</script>');
 				$this->EE->session->cache['inline_js'][$this->package] = TRUE;
 			}
 		}
@@ -1035,7 +1073,7 @@ class Image_helper
 		{
 			if ( isset($this->EE->session->cache['DevDemon']['CSS'][$name]) == FALSE )
 			{
-				$this->EE->cp->add_to_head('<link rel="stylesheet" href="' . $url . '" type="text/css" media="print, projection, screen" />');
+				$this->EE->cp->add_to_foot('<link rel="stylesheet" href="' . $url . '" type="text/css" media="print, projection, screen" />');
 				$this->EE->session->cache['DevDemon']['CSS'][$name] = TRUE;
 			}
 		}
@@ -1047,7 +1085,7 @@ class Image_helper
 		{
 			if ( isset($this->EE->session->cache['DevDemon']['JS'][$name]) == FALSE )
 			{
-				$this->EE->cp->add_to_head('<script src="' . $url . '" type="text/javascript"></script>');
+				$this->EE->cp->add_to_foot('<script src="' . $url . '" type="text/javascript"></script>');
 				$this->EE->session->cache['DevDemon']['JS'][$name] = TRUE;
 			}
 		}
@@ -1067,7 +1105,7 @@ class Image_helper
 						ChannelImages.site_id = '" . $this->site_id . "';
 					";
 
-				$this->EE->cp->add_to_head('<script type="text/javascript">' . $js . '</script>');
+				$this->EE->cp->add_to_foot('<script type="text/javascript">' . $js . '</script>');
 				$this->EE->session->cache['DevDemon']['GJS'][$name] = TRUE;
 			}
 		}

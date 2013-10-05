@@ -48,7 +48,13 @@ class Channel_images_mcp
 		$this->mcp_globals();
 
 		$this->site_id = $this->EE->config->item('site_id');
-		$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('channel_images'));
+
+		if (function_exists('ee')) {
+			ee()->view->cp_page_title = $this->EE->lang->line('channel_images');
+		} else {
+			$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('channel_images'));
+		}
+
 
 		// Debug
 		//$this->EE->db->save_queries = TRUE;
@@ -59,26 +65,45 @@ class Channel_images_mcp
 
 	public function index()
 	{
-		return $this->regenerate_sizes();
+		return $this->batch_actions();
 	}
 
 	// ********************************************************************************* //
 
-	public function regenerate_sizes()
+	public function batch_actions()
 	{
 		// Page Title & BreadCumbs
-		$this->vData['section'] = 'regen';
+		$this->vData['section'] = 'actions';
 
-		// Grab all fieldtypes
+		// -----------------------------------------
+		// Grab all channels
+		// -----------------------------------------
+		$this->vData['channels'] = array();
+
+		$this->EE->db->select('channel_id, channel_title');
+		$this->EE->db->from('exp_channels');
+		$this->EE->db->where('site_id', $this->site_id);
+		$query = $this->EE->db->get();
+
+		foreach ($query->result() as $row)
+		{
+			$this->vData['channels'][$row->channel_id] = $row->channel_title;
+		}
+
+		// -----------------------------------------
+		// Grab all fields
+		// -----------------------------------------
 		$this->vData['fields'] = array();
 
-		$this->EE->db->select('field_id, field_label');
-		$this->EE->db->where('site_id', $this->site_id);
-		$this->EE->db->where('field_type', 'channel_images');
-		$query = $this->EE->db->get('exp_channel_fields');
-		foreach ($query->result() as $row) $this->vData['fields'][$row->field_id] = $row->field_label;
+		$this->EE->db->select('cf.field_id, cf.field_label, fg.group_name');
+		$this->EE->db->from('exp_channel_fields cf');
+		$this->EE->db->where('cf.site_id', $this->site_id);
+		$this->EE->db->where('cf.field_type', 'channel_images');
+		$this->EE->db->join('exp_field_groups fg', 'fg.group_id = cf.group_id', 'left');
+		$query = $this->EE->db->get('');
+		foreach ($query->result() as $row) $this->vData['fields'][$row->group_name][$row->field_id] = $row->field_label;
 
-		return $this->EE->load->view('mcp/regen', $this->vData, TRUE);
+		return $this->EE->load->view('mcp/actions', $this->vData, TRUE);
 	}
 
 	// ********************************************************************************* //
@@ -86,7 +111,13 @@ class Channel_images_mcp
 	public function legacy_settings()
 	{
 		// Page Title & BreadCumbs
-		$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('ci:legacy_settings'));
+		$this->vData['section'] = 'actions';
+
+		if (function_exists('ee')) {
+			ee()->view->cp_page_title = $this->EE->lang->line('ci:legacy_settings');
+		} else {
+			$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('ci:legacy_settings'));
+		}
 
 		$this->EE->load->helper('path');
 
@@ -113,7 +144,16 @@ class Channel_images_mcp
 	{
 		// TODO: the import script should have inserted our place holder in the custom_field so that conditional would work
 		// Page Title & BreadCumbs
-		$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('ci:import'));
+
+		$this->vData['section'] = 'import';
+		if (function_exists('ee')) {
+			ee()->view->cp_page_title = $this->EE->lang->line('ci:import');
+		} else {
+			$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('ci:import'));
+		}
+
+		$this->EE->image_helper->mcp_js_css('js', 'channel_images_mcp.js?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'mcp_old');
+		$this->EE->image_helper->mcp_js_css('css', 'channel_images_mcp.css?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'mcp_old');
 
 		$this->vData['matrix'] = array();
 
@@ -169,16 +209,14 @@ class Channel_images_mcp
 	{
 		$this->EE->cp->set_breadcrumb($this->base, $this->EE->lang->line('channel_images'));
 
-		$this->EE->cp->add_js_script(array('plugin' => 'fancybox'));
-		$this->EE->cp->add_to_head('<link type="text/css" rel="stylesheet" href="'.BASE.AMP.'C=css'.AMP.'M=fancybox" />');
-
-
 		// Add Global JS & CSS & JS Scripts
-		$this->EE->image_helper->mcp_meta_parser('gjs', '', 'ChannelImages');
-		$this->EE->image_helper->mcp_meta_parser('css', CHANNELIMAGES_THEME_URL . 'channel_images_mcp.css', 'ci-pbf');
-		//$this->EE->image_helper->mcp_meta_parser('js', CHANNELIMAGES_THEME_URL . 'jquery.editable.js', 'jquery.editable', 'jquery');
-		$this->EE->image_helper->mcp_meta_parser('js',  CHANNELIMAGES_THEME_URL . 'channel_images_mcp.js', 'ci-pbf');
-
+		$this->EE->image_helper->mcp_js_css('gjs');
+		$this->EE->image_helper->mcp_js_css('css', 'css/select2.css', 'select2', 'main');
+		$this->EE->image_helper->mcp_js_css('css', 'css/mcp_fts.css?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'main');
+		$this->EE->image_helper->mcp_js_css('js', 'js/select2.min.js', 'select2', 'main');
+		$this->EE->image_helper->mcp_js_css('js', 'js/handlebars.runtime-1.0.0.min.js', 'handlebars', 'runtime');
+		$this->EE->image_helper->mcp_js_css('js', 'js/hbs-templates.js?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'templates');
+		$this->EE->image_helper->mcp_js_css('js', 'js/mcp.min.js?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'main');
 	}
 
 	// ********************************************************************************* //
