@@ -4,9 +4,13 @@
 // Set the icon backgrounds
 $('#settings .cke_button_icon').each(function() {
 	var $icon = $(this),
-		icon = $icon.attr('data-icon');
+		icon = $icon.attr('data-icon'),
+		iconStyle = CKEDITOR.skin.getIconStyle(icon);
 
-	$icon.attr('style', CKEDITOR.skin.getIconStyle(icon));
+	if (iconStyle)
+	{
+		$icon.attr('style', iconStyle);
+	}
 });
 
 

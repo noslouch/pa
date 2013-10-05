@@ -13,8 +13,8 @@
 			<span id="<?php echo $id ?>-placeholder" class="tb-placeholder"></span>
 		<?php else: ?>
 			<span id="<?php echo $id ?>" class="cke_toolbar tb-option <?php if ($selections_pane) echo 'tb-selected' ?>">
-				<?php $is_select = in_array($first, $vars['tb_selects']); ?>
-				<?php if ($is_select): ?>
+				<?php $is_combo = in_array($first, $vars['tb_combos']); ?>
+				<?php if ($is_combo): ?>
 					<?php
 						$button = $group[0];
 						$lc_class = strtolower($button);
