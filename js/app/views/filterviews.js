@@ -233,7 +233,7 @@ define([
 
             e.preventDefault()
             e.stopPropagation()
-            $.bbq.pushState( option )
+            $.bbq.pushState( option, option.view === 'random' ? 2 : 0 )
             this.$('.open').removeClass('open')
         },
 
