@@ -1,0 +1,84 @@
+/*
+
+                __/---\__
+ ,___     ___  /___o--\  \
+  \_ o---/ _/          )--)
+    \-----/           ______
+                      |    |
+                      |    |
+---_    ---_    ---_  |    |
+|   \__ |   \__ |   \__    |
+|      \__     \__     \__ o
+|         `       `      \__
+|                          |
+|                          |
+|__________________________|
+
+| ) |_´ | ) | | |_) |  | / '
+| \ |_, |´  \_/ |_) |_,| \_,
+        F A C T O R Y
+
+*/
+
+body { background: #fff; color: #333; font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif; }
+
+#branding { display: none; }
+#content { background: url(../images/ee_login_bg.gif) top center no-repeat; width: 450px; margin: 0 auto; padding: 150px 20px 0 20px; }
+
+a:link, a:visited { color: #900; }
+a:hover { color: #f00; }
+
+dt { font-size: 12px; font-weight: bold; color: #333; }
+dd { margin: 5px 0 20px 0; }
+
+span { display: block; padding-top: 20px; font-size: 10px; }
+
+.error {
+  display: block;
+  color: #900;
+  margin: 0 0 40px 0;
+  font-style: italic;
+  font-size: 17px;
+  font-family: georgia, sans-serif;
+}
+
+input {
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  outline: none;
+  text-shadow: 0 1px 0 #fff;
+  background-image: -moz-linear-gradient(top, #f5f5f5, #ffffff); /* FF3.6 */
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f5f5f5),color-stop(1, #ffffff)); /* Saf4+, Chrome */
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -ms-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+
+input.submit {
+  float: right;
+  font-size: 14px;
+  margin: 15px 32px 0 0;
+  padding: 5px 30px;
+  background: #ccc;
+  background-image: -moz-linear-gradient(top, #ccc, #bbb); /* FF3.6 */
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ccc),color-stop(1, #bbb)); /* Saf4+, Chrome */
+  color: #333;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+
+input.submit:hover,
+input.submit:focus,
+input:focus {
+  outline: 0;
+  box-shadow: 0 0 3px #FFE46D;
+  -webkit-box-shadow: 0 0 3px #FFE46D;
+  -moz-box-shadow: 0 0 3px #FFE46D;
+}
