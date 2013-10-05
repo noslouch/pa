@@ -10,7 +10,7 @@
  * @copyright	Copyright (c) 2009-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/super_search
  * @license		http://www.solspace.com/license_agreement
- * @version		2.0.6
+ * @version		2.1.3
  * @filesource	super_search/ext.super_search.php
  */
 
@@ -54,14 +54,14 @@ class Super_search_ext extends Extension_builder_super_search
 		// -------------------------------------
 
 		//have to check for session here because if it doesn't exist, we set off a clobbering commotion
-		if ( isset( $this->EE->session->cache ) )
+		if ( isset( ee()->session->cache ) )
 		{
-			if ( isset( $this->EE->session->cache['extensions']['super_search'] ) === FALSE )
+			if ( isset( ee()->session->cache['extensions']['super_search'] ) === FALSE )
 			{
-				$this->EE->session->cache['extensions']['super_search']	= array();
+				ee()->session->cache['extensions']['super_search']	= array();
 			}
 
-			$this->sess	=& $this->EE->session->cache['extensions']['super_search'];
+			$this->sess	=& ee()->session->cache['extensions']['super_search'];			
 		}
 	}
 
@@ -79,16 +79,16 @@ class Super_search_ext extends Extension_builder_super_search
 	 */
 
 	function channel_entries_query_result( $ths, $query_result )
-	{
-		$query_result = ( $this->EE->extensions->last_call !== FALSE ) ? $this->EE->extensions->last_call : $query_result;
+    {    	
+		$query_result = ( ee()->extensions->last_call !== FALSE ) ? ee()->extensions->last_call : $query_result;
 
 		// -------------------------------------
 		//	If we have any data AND we are in the context of a $$ instance of the $channel object, proceed. Otherwise we will end up overwriting future calls to exp:channel:entries within the same session call.
 		// -------------------------------------
-
-		if ( isset( $this->EE->session->cache['modules']['super_search']['channel_query_object'] ) === TRUE AND isset( $ths->is_super_search ) )
+		
+		if ( isset( ee()->session->cache['modules']['super_search']['channel_query_object'] ) === TRUE AND isset( $ths->is_super_search ) )
 		{
-			$query_result	= $this->EE->session->cache['modules']['super_search']['channel_query_object']->result;
+			$query_result	= ee()->session->cache['modules']['super_search']['channel_query_object']->result;
 		}
 
 		return $query_result;
@@ -110,16 +110,6 @@ class Super_search_ext extends Extension_builder_super_search
 	function _field_frame_exists()
 	{
 		return FALSE;	// As of $$ 2.0 and EE 2.4, let's just bail out of this
-
-		if ( ! empty( $this->sess['ff_exists'] ) OR APP_VER >= 2.0 ) return TRUE;
-
-		if ( $this->EE->db->table_exists( 'exp_ff_fieldtypes' ) === TRUE )
-		{
-			$this->sess['ff_exists']	= TRUE;
-			return TRUE;
-		}
-
-		return FALSE;
 	}
 
 	// End field frame exists
@@ -136,36 +126,36 @@ class Super_search_ext extends Extension_builder_super_search
 	 */
 
 	function _field_frame_multi_field_helper($ths, $type)
-	{
-		// -------------------------------------
-		//	Access the Super Search session cache for convenience
-		// -------------------------------------
-
-		$sess	=& $this->EE->session->cache['modules']['super_search'];
-
-		// -------------------------------------
-		//	Get field data
-		// -------------------------------------
-
-		if ( ( $fields = $this->_get_additional_ff_field_data( $type ) ) === FALSE )
-		{
-			return FALSE;
-		}
-
-		// -------------------------------------
-		//	Handle exact field searching
-		// -------------------------------------
-
-		if ( ! empty( $sess['search']['q']['exactfield'] ) )
-		{
-			$handy	=& $sess['search']['q']['exactfield'];
-
+    {
+    	// -------------------------------------
+        //	Access the Super Search session cache for convenience
+        // -------------------------------------
+    	
+    	$sess	=& ee()->session->cache['modules']['super_search'];
+    	
+    	// -------------------------------------
+        //	Get field data
+        // -------------------------------------
+        
+        if ( ( $fields = $this->_get_additional_ff_field_data( $type ) ) === FALSE )
+        {
+        	return FALSE;
+        }
+    	
+    	// -------------------------------------
+        //	Handle exact field searching
+        // -------------------------------------
+        
+        if ( ! empty( $sess['search']['q']['exactfield'] ) )
+        {
+        	$handy	=& $sess['search']['q']['exactfield'];
+        
 			// -------------------------------------
 			//	For each correct FF field type, let's change the query to be a serialized array so that we can get a perfect DB match.
 			// -------------------------------------
-
-			foreach ( $fields as $key => $val )
-			{
+        
+        	foreach ( $fields as $key => $val )
+        	{
 				// -------------------------------------
 				//	If we're searching a single value, we can serialize and be ready for FF. If the 'or' array has more than one term, we can't bother trying to test all of the serialized permutations of the terms. We skip that case.
 				// -------------------------------------
@@ -218,72 +208,34 @@ class Super_search_ext extends Extension_builder_super_search
 		}
 
 		// -------------------------------------
-		//	Are we in EE2?
+		//	Get data
 		// -------------------------------------
 
-		if ( APP_VER >= 2.0 )
+		if ( empty( $this->sess['ff_fields_query'] ) )
 		{
-			// -------------------------------------
-			//	Get data
-			// -------------------------------------
+			$sql	= "/* Super Search Extension FieldFrame / Playa code */ SELECT cf.field_id, cf.field_name, cf.field_settings, cf.site_id, cf.group_id
+				FROM exp_channel_fields cf
+				WHERE cf.field_type = '" . ee()->db->escape_str( $type ) . "'";
 
-			if ( empty( $this->sess['ff_fields_query'] ) )
-			{
-				$sql	= "/* Super Search Extension FieldFrame / Playa code */ SELECT cf.field_id, cf.field_name, cf.field_settings, cf.site_id, cf.group_id
-					FROM " . $this->sc->db->channel_fields . " cf
-					WHERE cf.field_type = '" . $this->EE->db->escape_str( $type ) . "'";
+			$query	= $this->EE->db->query( $sql );
 
-				$query	= $this->EE->db->query( $sql );
-
-				$this->sess['ff_fields_query']	= $query;
-			}
-			else
-			{
-				$query	= $this->sess['ff_fields_query'];
-			}
-
-			foreach ( $query->result_array() as $row )
-			{
-				$this->sess['ff_fields'][$type][$row['field_name']]	= $row;
-
-				if ( ! empty( $row['field_settings'] ) )
-				{
-					$this->sess['ff_fields'][$type][$row['field_name']]['ff_settings']	= unserialize( base64_decode( $row['field_settings'] ) );
-				}
-			}
+			$this->sess['ff_fields_query']	= $query;
 		}
 		else
 		{
-			// -------------------------------------
-			//	Get data
-			// -------------------------------------
+			$query	= $this->sess['ff_fields_query'];
+		}
 
-			if ( empty( $this->sess['ff_fields_query'] ) )
+		foreach ( $query->result_array() as $row )
+		{
+			$this->sess['ff_fields'][$type][$row['field_name']]	= $row;
+
+			if ( ! empty( $row['field_settings'] ) )
 			{
-				$sql	= "/* Super Search Extension FieldFrame code */ SELECT wf.field_id, wf.field_name, wf.ff_settings, wf.site_id, wf.group_id, ff.class
-					FROM " . $this->sc->db->channel_fields . " wf
-					LEFT JOIN exp_ff_fieldtypes ff ON CONCAT( 'ftype_id_', ff.fieldtype_id ) = wf.field_type
-					WHERE ff.enabled = 'y'";
-
-				$query	= $this->EE->db->query( $sql );
-
-				$this->sess['ff_fields_query']	= $query;
-			}
-			else
-			{
-				$query	= $this->sess['ff_fields_query'];
-			}
-
-			foreach ( $query->result_array() as $row )
-			{
-				$this->sess['ff_fields'][$row['class']][$row['field_name']]	= $row;
-
-				if ( ! empty( $row['ff_settings'] ) AND strpos( $row['ff_settings'], '{s:' ) !== FALSE )
-				{
-					$this->sess['ff_fields'][$row['class']][$row['field_name']]['ff_settings']	= unserialize( $row['ff_settings'] );
-				}
+				$this->sess['ff_fields'][$type][$row['field_name']]['ff_settings']	= unserialize( base64_decode( $row['field_settings'] ) );
 			}
 		}
+
 
 		// -------------------------------------
 		//	Return
@@ -367,12 +319,12 @@ class Super_search_ext extends Extension_builder_super_search
 
 				if ( $exact != 'exact' )
 				{
-					$temp[]	= $field." LIKE '%".$this->EE->db->escape_str( $val )."%'";
-					// $temp[]	= $field." REGEXP '[[:<:]]".$this->EE->db->escape_str( $val )."'";
+					$temp[]	= $field." LIKE '%".ee()->db->escape_str( $val )."%'";
+					// $temp[]	= $field." REGEXP '[[:<:]]".ee()->db->escape_str( $val )."'";
 				}
 				else
 				{
-					$temp[]	= $field." = '".$this->EE->db->escape_str( $val )."'";
+					$temp[]	= $field." = '".ee()->db->escape_str( $val )."'";
 				}
 			}
 
@@ -401,12 +353,12 @@ class Super_search_ext extends Extension_builder_super_search
 
 				if ( $exact != 'exact' )
 				{
-					$temp[]	= $field." LIKE '%".$this->EE->db->escape_str( $val )."%'";
-					// $temp[]	= $field." NOT REGEXP '[[:<:]]".$this->EE->db->escape_str( $val )."'";
+					$temp[]	= $field." LIKE '%".ee()->db->escape_str( $val )."%'";
+					// $temp[]	= $field." NOT REGEXP '[[:<:]]".ee()->db->escape_str( $val )."'";
 				}
 				else
 				{
-					$temp[]	= $field." = '".$this->EE->db->escape_str( $val )."'";
+					$temp[]	= $field." = '".ee()->db->escape_str( $val )."'";
 				}
 			}
 
@@ -432,30 +384,30 @@ class Super_search_ext extends Extension_builder_super_search
 				{
 					$val	= str_replace( $this->spaces, ' ', $val );
 				}
-
+				
 				if ( $exact != 'exact' )
 				{
-					$temp[]	= $field." LIKE '%".$this->EE->db->escape_str( $val )."%'";
-					// $temp[]	= $field." REGEXP '[[:<:]]".$this->EE->db->escape_str( $val )."'";
+					$temp[]	= $field." LIKE '%".ee()->db->escape_str( $val )."%'";
+					// $temp[]	= $field." REGEXP '[[:<:]]".ee()->db->escape_str( $val )."'";
 				}
 				else
 				{
-					$temp[]	= $field." = '".$this->EE->db->escape_str( $val )."'";
+					$temp[]	= $field." = '".ee()->db->escape_str( $val )."'";
 				}
 			}
-
+			
 			if ( count( $temp ) > 0 )
 			{
 				$arr[]	= '('.implode( ' OR ', $temp ).')';
-			}
+			}			
 		}
-
-		// -------------------------------------
+        
+        // -------------------------------------
 		//	Glue
 		// -------------------------------------
-
+		
 		if ( empty( $arr ) === TRUE ) return FALSE;
-
+		
 		if ( $type == 'not' )
 		{
 			return '(' . implode( ' AND ', $arr ) . ')';
@@ -463,9 +415,9 @@ class Super_search_ext extends Extension_builder_super_search
 
 		return implode( ' AND ', $arr );
 	}
-
+	
 	//	End prep sql
-
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -476,35 +428,35 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function refresh_cache_from_category()
-	{
-		if ( ! empty( $_POST['group_id'] ) )
-		{
-			$group_id = $_POST['group_id'];
-		}
-		else
-		{
-			return FALSE;
-		}
-
-		// -------------------------------------
-		//  Should we refresh?
-		// -------------------------------------
-
-		if ( $this->data->get_refresh_rule_by_category_group_id( $group_id ) === FALSE ) return FALSE;
-
-		// -------------------------------------
-		//  Refresh
-		// -------------------------------------
-
-		$this->actions();
-
-		$this->actions->clear_cache();
-	}
-
-	//	End refresh cache from category
-
+    {    
+    	if ( ! empty( $_POST['group_id'] ) )
+    	{
+    		$group_id = $_POST['group_id'];
+    	}
+    	else
+    	{
+    		return FALSE;
+    	}
+    	
+    	// -------------------------------------
+        //  Should we refresh?
+        // -------------------------------------
+    	
+    	if ( $this->data->get_refresh_rule_by_category_group_id( $group_id ) === FALSE ) return FALSE;
+    	
+    	// -------------------------------------
+        //  Refresh
+        // -------------------------------------
+        
+        $this->actions();
+        
+        $this->actions->clear_cache();
+    }
+    
+    //	End refresh cache from category
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -515,36 +467,36 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function refresh_cache_from_template( $query, $template_id )
-	{
-		$output = ($this->EE->extensions->last_call !== FALSE) ? $this->EE->extensions->last_call : '';
-
-		// -------------------------------------
-		//  Get morsels to be refreshed
-		// -------------------------------------
-
-		if ( $this->data->get_refresh_rule_by_template_id( $template_id ) === FALSE ) return $output;
-
-		// -------------------------------------
-		//  Refresh
-		// -------------------------------------
-
-		$this->actions();
-
-		$this->actions->clear_cache();
-
-		return $output;
-	}
-
-	//	End refresh cache from template
-
+    {
+    	$output = (ee()->extensions->last_call !== FALSE) ? ee()->extensions->last_call : '';
+    	
+    	// -------------------------------------
+        //  Get morsels to be refreshed
+        // -------------------------------------
+    	
+    	if ( $this->data->get_refresh_rule_by_template_id( $template_id ) === FALSE ) return $output;
+    	
+    	// -------------------------------------
+        //  Refresh
+        // -------------------------------------
+        
+        $this->actions();
+        
+        $this->actions->clear_cache();
+        
+        return $output;
+    }
+    
+    //	End refresh cache from template
+	
 	// -------------------------------------------------------------
 
 
-	/**
+	/** 
 	 * entry_submission_absolute_end
-	 *
+	 * 
 	 * Regreshes our lexicon with the new terms from the entry just published
 	 *
 	 * @access public
@@ -557,51 +509,54 @@ class Super_search_ext extends Extension_builder_super_search
 	function entry_submission_absolute_end( $entry_id, $meta, $data )
 	{
 		// Only keep the leicon up to date for ee2.x
-		if( APP_VER >= 2.0 )
-		{
-			$this->data->build_lexicon( 'single', $entry_id );
-		}
+
+		$this->data->build_lexicon( 'single', $entry_id );
 	}
 
 	//	End entry_submission_absolute_end hook
 
 	/**
-	 * Refresh cache from weblog
+	 * Refresh cache from channel
 	 *
-	 * Refresh caches when a weblog entry is edited or published
+	 * Refresh caches when a channel entry is edited or published
 	 *
 	 * @access	public
 	 * @return	null
 	 */
-
-	function refresh_cache_from_weblog( $entry_id, $data, $ping_message )
+	 
+	function refresh_cache_from_weblog( $entry_id = '', $data = array(), $ping_message = '' )
 	{
-		if ( empty( $data[ $this->sc->db->channel_id ] ) === TRUE )
-		{
-			return FALSE;
-		}
-		else
-		{
-			$channel_id	= $data[ $this->sc->db->channel_id ];
-		}
-
-		// -------------------------------------
-		//  Get morsels to be refreshed
-		// -------------------------------------
-
-		if ( $this->data->get_refresh_rule_by_channel_id( $channel_id ) === FALSE ) return FALSE;
-
-		// -------------------------------------
-		//  Refresh
-		// -------------------------------------
-
-		$this->actions();
-
-		$this->actions->clear_cache();
+		$this->refresh_cache_from_channel( $entry_id, $data, $ping_message );
 	}
-
-	//	End refresh cache from weblog
-
+    
+	function refresh_cache_from_channel( $entry_id, $data, $ping_message )
+    {
+    	if ( empty( $data[ $this->sc->db->channel_id ] ) === TRUE )
+    	{
+    		return FALSE;
+    	}
+    	else
+    	{
+    		$channel_id	= $data[ $this->sc->db->channel_id ];
+    	}
+    	
+    	// -------------------------------------
+        //  Get morsels to be refreshed
+        // -------------------------------------
+    	
+    	if ( $this->data->get_refresh_rule_by_channel_id( $channel_id ) === FALSE ) return FALSE;
+    	
+    	// -------------------------------------
+        //  Refresh
+        // -------------------------------------
+        
+        $this->actions();
+        
+        $this->actions->clear_cache();
+    }
+    
+    //	End refresh cache from channel
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -612,15 +567,9 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function sessions_end_processor( $object )
 	{
-		// -------------------------------------
-		//	We're using this approach only in EE 2
-		// -------------------------------------
-
-		if ( APP_VER < 2.0 ) return FALSE;
-
 		// -------------------------------------
 		//	Are we editing a category in the CP?
 		// -------------------------------------
@@ -630,52 +579,52 @@ class Super_search_ext extends Extension_builder_super_search
 			// -------------------------------------
 			//  Should we refresh?
 			// -------------------------------------
-
+			
 			if ( $this->data->get_refresh_rule_by_category_group_id( $_POST['group_id'] ) === FALSE ) return FALSE;
-
+			
 			// -------------------------------------
 			//  Refresh
 			// -------------------------------------
-
+			
 			$this->actions();
-
+			
 			$this->actions->clear_cache();
-
-			return TRUE;
-		}
-
-		// -------------------------------------
-		//	Are we editing a template in the CP?
-		// -------------------------------------
-
-		if ( ! empty( $_POST['group_id'] ) AND ! empty( $_POST['template_name'] ) AND ( ! empty( $_POST['update'] ) OR ! empty( $_POST['create'] ) ) )
-		{
+        
+        	return TRUE;
+        }
+        
+    	// -------------------------------------
+        //	Are we editing a template in the CP?
+        // -------------------------------------
+        
+        if ( ! empty( $_POST['group_id'] ) AND ! empty( $_POST['template_name'] ) AND ( ! empty( $_POST['update'] ) OR ! empty( $_POST['create'] ) ) )
+        {
 			// -------------------------------------
 			//  Are we editing a template? We may in the future execute an action even when someone is creating a new template.
 			// -------------------------------------
-
+			
 			if ( empty( $_POST['template_id'] ) ) return FALSE;
-
+			
 			// -------------------------------------
 			//  Get morsels to be refreshed
 			// -------------------------------------
-
+			
 			if ( $this->data->get_refresh_rule_by_template_id( $_POST['template_id'] ) === FALSE ) return FALSE;
-
+			
 			// -------------------------------------
 			//  Refresh
 			// -------------------------------------
-
+			
 			$this->actions();
-
+			
 			$this->actions->clear_cache();
-
-			return TRUE;
-		}
-	}
-
-	//	End sessions end processor
-
+        	
+        	return TRUE;
+        }
+    }
+    
+    //	End sessions end processor
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -686,92 +635,212 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function super_search_do_search_and_array_playa( $ths, $arr = array() )
-	{
-		$arr	= ( is_array( $this->EE->extensions->last_call ) === TRUE ) ? $this->EE->extensions->last_call: $arr;
+    {
+    	$arr	= ( is_array( ee()->extensions->last_call ) === TRUE ) ? ee()->extensions->last_call: $arr;
+    	
+    	if ( $this->_field_frame_exists() === FALSE ) return $arr;
+    	
+    	// -------------------------------------
+        //	Get field data
+        // -------------------------------------
+        
+        if ( ( $fields = $this->_get_additional_ff_field_data( 'playa' ) ) === FALSE )
+        {
+        	return $arr;
+        }
+    	
+    	// -------------------------------------
+        //	Access the Super Search session cache for convenience
+        // -------------------------------------
+    	
+    	$sess	=& ee()->session->cache['modules']['super_search'];
+    	
+    	// -------------------------------------
+        //	Kill Playa fields when we can detect keyword or simple field searching
+        // -------------------------------------
+        
+        if ( empty( $sess['search']['q']['keywords'] ) AND empty( $sess['search']['q']['field'] ) ) return $arr;
+        
+        if ( ! empty( $sess['search']['q']['keywords'] ) AND ee()->config->item( 'allow_keyword_search_on_playa_fields' ) !== FALSE AND ee()->config->item( 'allow_keyword_search_on_playa_fields' ) == 'y' )
+        {
+        	return $arr;
+        }
+    	
+    	// -------------------------------------
+        //	Loop and slay fields
+        // -------------------------------------
+        
+        foreach ( $fields as $field_name => $field_data )
+        {
+        	if ( isset( $sess['search']['q']['field'][$field_name] ) === TRUE ) continue;
+        
+        	$test	= 'wd.field_id_' . $field_data['field_id'];
+        
+        	if ( isset( $arr['and'] ) === TRUE )
+        	{
+        		foreach ( $arr['and'] as $k => $v )
+        		{
+        			if ( strpos( $v, $test . ' LIKE' ) !== FALSE )
+        			{
+        				unset( $arr['and'][$k] );
+        			}
+        		}
+        	}
+        
+        	if ( isset( $arr['or'] ) === TRUE )
+        	{
+        		foreach ( $arr['or'] as $k => $v )
+        		{
+        			if ( strpos( $v, $test . ' LIKE' ) !== FALSE )
+        			{
+        				unset( $arr['or'][$k] );
+        			}
+        		}
+        	}
+        
+        	if ( isset( $arr['not'] ) === TRUE )
+        	{
+        		foreach ( $arr['not'] as $k => $v )
+        		{
+        			if ( strpos( $v, $test . ' NOT LIKE' ) !== FALSE )
+        			{
+        				unset( $arr['not'][$k] );
+        			}
+        		}
+        	}
+        }
+    	
+    	// -------------------------------------
+        //	Return
+        // -------------------------------------
+        
+        return $arr;
+    }
+    
+    //	End do search and array playa
+    
+	// -------------------------------------------------------------
 
-		if ( $this->_field_frame_exists() === FALSE ) return $arr;
+	/**
+	 * Super Search do search and array rating
+	 * @access	public
+	 * @return	null
+	 */
+    
+	function super_search_do_search_and_array_rating($ths, $arr)
+    {
+    	// -------------------------------------
+        //	Been here before?
+        // -------------------------------------
+        
+    	$arr	= ( is_array( ee()->extensions->last_call ) === TRUE ) ? ee()->extensions->last_call: $arr;
+    	
+    	// -------------------------------------
+        //	Rating module running?
+        // -------------------------------------
+        
+        if ( ! empty( ee()->TMPL->module_data['Rating'] ) AND isset( $ths->sess['search']['q']['order'] ) AND strpos( $ths->sess['search']['q']['order'], 'r.entry_id' ) !== FALSE)
+        {
+        	$arr['from'][]	= "LEFT JOIN exp_rating_stats r ON r.entry_id = t.entry_id";
+        }
+    	
+    	// -------------------------------------
+        //	Return
+        // -------------------------------------
+       
+       return $arr;
+    }
+    
+    //	End super_search_do_search_and_array_rating()
+	
+	// -------------------------------------------------------------
 
-		// -------------------------------------
-		//	Get field data
-		// -------------------------------------
-
-		if ( ( $fields = $this->_get_additional_ff_field_data( 'playa' ) ) === FALSE )
+	/**
+	 * Super Search prep order
+	 *
+	 * @access	public
+	 * @return	null
+	 */
+    
+	function super_search_prep_order($ths, $arr, $ord)
+    {
+    	// -------------------------------------
+        //	Been here before?
+        // -------------------------------------
+        
+    	$arr	= ( is_array( ee()->extensions->last_call ) === TRUE ) ? ee()->extensions->last_call: $arr;
+    	
+    	// -------------------------------------
+        //	Rating module running?
+        // -------------------------------------
+        
+        if ( empty( ee()->TMPL->module_data['Rating'] )) return $arr;
+    	
+    	// -------------------------------------
+        //	Are we being called?
+        // -------------------------------------
+        
+        if ( strpos( $ord[0], 'rating' ) === FALSE ) return $arr;
+    	
+    	// -------------------------------------
+        //	Spinny uppy
+        // -------------------------------------
+        
+		if ( class_exists('Rating') === FALSE )
 		{
-			return $arr;
+			require PATH_THIRD.'/rating/mod.rating'.EXT;
 		}
 
-		// -------------------------------------
-		//	Access the Super Search session cache for convenience
-		// -------------------------------------
-
-		$sess	=& $this->EE->session->cache['modules']['super_search'];
-
-		// -------------------------------------
-		//	Kill Playa fields when we can detect keyword or simple field searching
-		// -------------------------------------
-
-		if ( empty( $sess['search']['q']['keywords'] ) AND empty( $sess['search']['q']['field'] ) ) return $arr;
-
-		if ( ! empty( $sess['search']['q']['keywords'] ) AND $this->EE->config->item( 'allow_keyword_search_on_playa_fields' ) !== FALSE AND $this->EE->config->item( 'allow_keyword_search_on_playa_fields' ) == 'y' )
+		$rating = new Rating;
+    	
+    	// -------------------------------------
+        //	Which field?
+        // -------------------------------------
+        
+        if ( isset( $ord[0] ) AND ( $ord[0] == 'rating' OR $ord[0] == 'ratings' ))
+        {
+        	$field	= 'bayesian:overall';
+        }
+        elseif ( isset( $ord[0] ) AND strpos( $ord[0], 'rating_field' . $ths->modifier_separator ) !== FALSE )
+        {
+        	$ord[0]	= str_replace( 'rating_field' . $ths->modifier_separator, '', $ord[0] );
+        	
+        	$field	= $ord[0];
+        }
+    	
+    	// -------------------------------------
+        //	And take it away Paul...
+        // -------------------------------------
+        
+		$bayesian	= $rating->bayesian_rating_field( $field, " AND r.status != 'closed'" );
+		
+		if ( ! empty( $bayesian ))
 		{
-			return $arr;
+			//	Our default is to sort entries by descending Bayesian ranking, but you can flip it if you must.
+			if ( ! empty( $ord[1] ) AND $ord[1] == 'asc' )
+			{
+				if ( preg_match_all( '/(\d+)/s', $bayesian, $match ))
+				{
+					$bayesian	= 'FIELD(r.entry_id,' . implode( ',', ee()->db->escape_str( array_reverse( $match[0] ))) . ')';
+				}
+			}
+			
+			$arr[]	= "CASE WHEN r.entry_id IS null THEN 1 else 0 END, " . $bayesian;	
 		}
-
-		// -------------------------------------
-		//	Loop and slay fields
-		// -------------------------------------
-
-		foreach ( $fields as $field_name => $field_data )
-		{
-			if ( isset( $sess['search']['q']['field'][$field_name] ) === TRUE ) continue;
-
-			$test	= 'wd.field_id_' . $field_data['field_id'];
-
-			if ( isset( $arr['and'] ) === TRUE )
-			{
-				foreach ( $arr['and'] as $k => $v )
-				{
-					if ( strpos( $v, $test . ' LIKE' ) !== FALSE )
-					{
-						unset( $arr['and'][$k] );
-					}
-				}
-			}
-
-			if ( isset( $arr['or'] ) === TRUE )
-			{
-				foreach ( $arr['or'] as $k => $v )
-				{
-					if ( strpos( $v, $test . ' LIKE' ) !== FALSE )
-					{
-						unset( $arr['or'][$k] );
-					}
-				}
-			}
-
-			if ( isset( $arr['not'] ) === TRUE )
-			{
-				foreach ( $arr['not'] as $k => $v )
-				{
-					if ( strpos( $v, $test . ' NOT LIKE' ) !== FALSE )
-					{
-						unset( $arr['not'][$k] );
-					}
-				}
-			}
-		}
-
-		// -------------------------------------
-		//	Return
-		// -------------------------------------
-
-		return $arr;
-	}
-
-	//	End do search and array playa
-
+    	
+    	// -------------------------------------
+        //	Return
+        // -------------------------------------
+        
+       // print_r( $arr );
+       
+       return $arr;
+    }
+    
+    //	End super search prep order
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -780,32 +849,32 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function super_search_extra_basic_fields_tag($ths)
-	{
+    {
 		$arr[]	= 'tags';
 		$arr[]	= 'tags-like';
-
-		// -------------------------------------
+    
+        // -------------------------------------
 		// Add tags to $this->basic
 		// -------------------------------------
-
+		
 		foreach ( $arr as $val )
 		{
 			$ths->basic[]	= $val;
 		}
-
-		// -------------------------------------
+    
+        // -------------------------------------
 		// Return
 		// -------------------------------------
-
-		$basic	= ( ! empty( $this->EE->extensions->last_call ) ) ? $this->EE->extensions->last_call: array();
-
+		
+		$basic	= ( ! empty( ee()->extensions->last_call ) ) ? ee()->extensions->last_call: array();
+		
 		return array_merge( $basic, $arr );
 	}
-
+	
 	//	End super search extra basic fields tag
-
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -814,98 +883,104 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function super_search_alter_ids_tag($ids, $ths)
-	{
-		// -------------------------------------
+    {
+        // -------------------------------------
 		// Respect other calls on this hook
 		// -------------------------------------
-
-		if ( ! empty( $this->EE->extensions->last_call ) AND is_array( $this->EE->extensions->last_call ) === TRUE )
+		
+		if ( ! empty( ee()->extensions->last_call ) AND is_array( ee()->extensions->last_call ) === TRUE )
 		{
-			$ids	= $this->EE->extensions->last_call;
+			$ids	= ee()->extensions->last_call;
 		}
-
+    	
+    	// -------------------------------------
+        //	Is Tag running?
+        // -------------------------------------
+        
+        if ( empty( ee()->TMPL->module_data['Tag'] ) ) return $ids;
+    	
+    	// -------------------------------------
+        //	Save a clean version for ordering
+        // -------------------------------------
+        
+        $ids_order	= $ids;
+		
+        // -------------------------------------
+		// Prepare for ee()->session->cache
 		// -------------------------------------
-		//	Is Tag running?
-		// -------------------------------------
-
-		if ( empty( $this->EE->TMPL->module_data['Tag'] ) ) return $ids;
-
-		// -------------------------------------
-		// Prepare for $this->EE->session->cache
-		// -------------------------------------
-
-		if ( isset( $this->EE->session->cache ) === TRUE )
+		
+		if ( isset( ee()->session->cache ) === TRUE )
 		{
-			if ( isset( $this->EE->session->cache['modules']['super_search'] ) === FALSE )
+			if ( isset( ee()->session->cache['modules']['super_search'] ) === FALSE )
 			{
-				$this->EE->session->cache['modules']['super_search']	= array();
+				ee()->session->cache['modules']['super_search']	= array();
 			}
-
-			$sess	=& $this->EE->session->cache['modules']['super_search'];
+			
+			$sess	=& ee()->session->cache['modules']['super_search'];
 		}
-
+		
 		if ( isset( $sess ) === FALSE ) return $ids;
-
-		// -------------------------------------
-		//	Keyword search?
-		// -------------------------------------
-
-		$and	= array();
-		$or		= array();
-		$not	= array();
-
-		/*
-
-		We are no longer allowing this form of keyword tag search. Tags are loaded into the exp_channel_data table and are searchable as keywords there. So that's enough. As long as a field is marked as searchable.
-
-		if ( ! empty( $sess['search']['q']['keywords'] ) AND $this->check_yes( $this->EE->TMPL->fetch_param('ignore_tags_in_keywords') ) !== TRUE )
-		{
+    	
+    	// -------------------------------------
+        //	Keyword search?
+        // -------------------------------------
+        
+        $and	= array();
+        $or		= array();
+        $not	= array();
+        
+        /*
+        
+    	We are no longer allowing this form of keyword tag search. Tags are loaded into the exp_channel_data table and are searchable as keywords there. So that's enough. As long as a field is marked as searchable.
+        
+        if ( ! empty( $sess['search']['q']['keywords'] ) AND $this->check_yes( ee()->TMPL->fetch_param('ignore_tags_in_keywords') ) !== TRUE )
+        {
 			// -------------------------------------
 			//	Prep tag for keyword search
 			// -------------------------------------
 			//	Add a fourth argument 'exact' to match exact words.
 			// -------------------------------------
-
+			
 			$exact	= '';
-
+		
 			if ( ( $temp = $this->_prep_sql( 'not', 't.tag_name', $sess['search']['q']['keywords'], $exact ) ) !== FALSE )
 			{
 				$not[]	= $temp;
 			}
-
+			
 			if ( ( $temp = $this->_prep_sql( 'or', 't.tag_name', $sess['search']['q']['keywords'], $exact ) ) !== FALSE )
 			{
 				$or[]	= $temp;
 			}
-		}
-
-		*/
-
-		// -------------------------------------
-		//	Build SQL
-		// -------------------------------------
-
+        }
+        
+        */
+    	
+    	// -------------------------------------
+        //	Build SQL
+        // -------------------------------------
+        
 		$sql	= "/* Super Search Extension: " . __FUNCTION__ . "*/
 					SELECT e.entry_id, e.tag_id
 					FROM exp_tag_entries e
 					LEFT JOIN exp_tag_tags t ON t.tag_id = e.tag_id
-					WHERE e.type = '" . $this->sc->channel . "'";
-
+					WHERE e.type = '" . ee()->db->escape_str( $this->sc->channel ) . "'";
+					
 		$funkql	= "/* Super Search Extension: " . __FUNCTION__ . "*/
 					SELECT COUNT(*) AS count FROM exp_tag_tags t WHERE";
-
-		// -------------------------------------
-		//	Add filters
-		// -------------------------------------
-
+    	
+    	// -------------------------------------
+        //	Add filters
+        // -------------------------------------
+        
 		if ( ! empty( $sess['search']['q']['channel_ids'] ) )
 		{
-			$sql	.= " AND e." . $this->sc->db->id . " IN (" . implode( ",", $sess['search']['q']['channel_ids'] ) . ")";
+			$sql	.= " AND e." . ee()->db->escape_str( $this->sc->db->id ) . " IN (" . implode( ",", ee()->db->escape_str( $sess['search']['q']['channel_ids'] ) ) . ")";
 		}
-
-		// -------------------------------------
+   	
+	  	// -------------------------------------
 		//	Are we working with categories?
 		// -------------------------------------
 
@@ -915,189 +990,180 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( ( $subids = $super_search->_get_ids_by_category( $sess['search']['q']['category'] ) ) !== FALSE )
 			{
-				$sql .= " AND e.entry_id IN (". implode(',', $subids) .")";
+				$sql .= " AND e.entry_id IN (". implode(',', ee()->db->escape_str( $subids )) .")";				
 			}
 		}
 
 		// -------------------------------------
 		//	Are we looking for authors?
 		// -------------------------------------
-
+		
 		if ( empty( $sess['search']['q']['author'] ) === FALSE )
 		{
 			$super_search = new Super_search();
 
 			if ( ( $author = $super_search->_prep_author( $sess['search']['q']['author'] ) ) !== FALSE )
 			{
-				$sql	.= ' AND t.author_id IN ('.implode( ',', $author ).')';
+				$sql	.= ' AND t.author_id IN ('.implode( ',', ee()->db->escape_str( $author )).')';
 			}
 			else
 			{
 				// For an inclusive author search, if we have none, stop here
 				return $ids;
-			}
+			}			
 		}
-
-		// -------------------------------------
-		//	If we're excluding a tag
-		// -------------------------------------
-		//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
-		// -------------------------------------
-
-		if ( ! empty( $not ) )
-		{
-			$notsql	= $sql . " AND (" . implode( ' OR ', $not ) . ")";
-
-			$query	= $this->EE->db->query( $notsql );
-
-			if ( $query->num_rows() > 0 )
-			{
+			
+    	// -------------------------------------
+        //	If we're excluding a tag
+    	// -------------------------------------
+    	//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
+        // -------------------------------------
+        
+        if ( ! empty( $not ) )
+        {
+        	$notsql	= $sql . " AND (" . implode( ' OR ', ee()->db->escape_str( $not )) . ")";
+        	
+        	$query	= ee()->db->query( $notsql );
+        	
+        	if ( $query->num_rows() > 0 )
+        	{
 				$notids	= $this->prepare_keyed_result( $query, 'entry_id', 'entry_id' );
-
+				
 				$ids	= array_diff( $ids, $notids );
-			}
-		}
-
-		// -------------------------------------
-		//	If we're including a tag
-		// -------------------------------------
-		//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
-		// -------------------------------------
-
-		if ( ! empty( $or ) )
-		{
-			$orsql	= $sql . " AND (" . implode( ' OR ', $or ) . ")";
-
-			$query	= $this->EE->db->query( $orsql );
-
-			if ( $query->num_rows() > 0 )
-			{
+        	}        	
+        }
+    	
+    	// -------------------------------------
+        //	If we're including a tag
+    	// -------------------------------------
+    	//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
+        // -------------------------------------
+        
+        if ( ! empty( $or ) )
+        {
+        	$orsql	= $sql . " AND (" . implode( ' OR ', ee()->db->escape_str( $or )) . ")";
+        	
+        	$query	= ee()->db->query( $orsql );
+        	
+        	if ( $query->num_rows() > 0 )
+        	{
 				$orids	= $this->prepare_keyed_result( $query, 'entry_id', 'entry_id' );
-
+				
 				$ids	= array_merge( $ids, $orids );
-			}
-		}
+        	}
+        }
 
-		// -------------------------------------
-		//	Exact tags search?
-		// -------------------------------------
-
-		$and	= array();
-		$or		= array();
-		$not	= array();
-
-		if ( ! empty( $sess['search']['q']['tags'] ) )
-		{
+    	// -------------------------------------
+        //	Exact tags search?
+        // -------------------------------------
+        
+        $and	= array();
+        $or		= array();
+        $not	= array();
+        
+        if ( ! empty( $sess['search']['q']['tags'] ) )
+        {			
 			$exact	= 'exact';
-
+		
 			if ( ( $temp = $this->_prep_sql( 'not', 't.tag_name', $sess['search']['q']['tags'], $exact ) ) !== FALSE )
 			{
 				$not[]	= $temp;
 			}
-
+			
 			if ( ( $temp = $this->_prep_sql( 'or', 't.tag_name', $sess['search']['q']['tags'], $exact ) ) !== FALSE )
 			{
 				$or[]	= $temp;
 			}
-		}
-
-		// -------------------------------------
-		//	If we're excluding a tag
-		// -------------------------------------
-		//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
-		// -------------------------------------
-
-		if ( ! empty( $not ) )
-		{
-			$notsql	= $sql . " AND (" . implode( ' OR ', $not ) . ")";
-
-			$query	= $this->EE->db->query( $notsql );
-
-			if ( $query->num_rows() > 0 )
-			{
+        }
+    	
+    	// -------------------------------------
+        //	If we're excluding a tag
+    	// -------------------------------------
+    	//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
+        // -------------------------------------
+        
+        if ( ! empty( $not ) )
+        {
+        	$notsql	= $sql . " AND (" . implode(' OR ', $not) . ")";
+        	
+        	$query	= ee()->db->query( $notsql );
+        	
+        	if ( $query->num_rows() > 0 )
+        	{
 				$notids	= $this->prepare_keyed_result( $query, 'entry_id', 'entry_id' );
-
+				
 				$ids	= array_diff( $ids, $notids );
-			}
-		}
-
-		// -------------------------------------
-		//	If we're including a tag
-		// -------------------------------------
-		//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
-		// -------------------------------------
-
-		if ( ! empty( $or ) )
-		{
-			$orsql	= $sql . " AND (" . implode( ' OR ', $or ) . ")";
-
-			if ( count( $ids ) > 0 )
-			{
-				$orsql	.= " AND e.entry_id IN (" . implode( ",", $ids ) . ")";
-			}
-
-			$query	= $this->EE->db->query( $orsql );
-
-			if ( $query->num_rows() > 0 )
-			{
+        	}
+        }
+    	
+    	// -------------------------------------
+        //	If we're including a tag
+    	// -------------------------------------
+    	//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
+        // -------------------------------------
+        
+        if ( ! empty( $or ) )
+        {
+        	$orsql	= $sql . " AND (" . implode( ' OR ', $or) . ")";
+        	
+        	if ( count( $ids ) > 0 )
+        	{
+        		$orsql	.= " AND e.entry_id IN (" . implode( ",", ee()->db->escape_str( $ids )) . ")";
+        	}
+        	
+        	$query	= ee()->db->query( $orsql );
+        	
+        	if ( $query->num_rows() > 0 )
+        	{
 				$ids	= $this->prepare_keyed_result( $query, 'entry_id', 'entry_id' );
-			}
-			else
-			{
-				// -------------------------------------
-				//	If there are no such tags, we fail completely.
-				// -------------------------------------
-
-				$query	= $this->EE->db->query( $funkql . " (" . implode( ' OR ', $or ) . ")" );
-
-				if ( $query->row('count') == 0 )
-				{
-					$this->EE->extensions->end_script	= TRUE;
-					return FALSE;
-				}
-			}
-		}
-
-		// -------------------------------------
-		//	Conjoined search
-		// -------------------------------------
-
-		if ( ! empty( $sess['search']['q']['tags']['and'] ) )
-		{
+        	}
+        	else
+        	{
+				ee()->extensions->end_script	= TRUE;
+				return FALSE;
+        	}
+        }
+    	
+    	// -------------------------------------
+        //	Conjoined search
+        // -------------------------------------
+        
+        if ( ! empty( $sess['search']['q']['tags']['and'] ) )
+        {			
 			$exact	= '';
-
+			
 			if ( ( $temp = $this->_prep_sql( 'and', 't.tag_name', $sess['search']['q']['tags'], $exact ) ) !== FALSE )
 			{
 				$and[]	= $temp;
 			}
-
+			
 			// -------------------------------------
 			//	If there are no such tags, we fail completely.
 			// -------------------------------------
-
-			$query	= $this->EE->db->query( $funkql . " (" . implode( ' OR ', $and ) . ")" );
-
+	
+			$query	= ee()->db->query( $funkql . " (" . implode(' OR ', $and) . ")" );
+			
 			if ( $query->row('count') == 0 )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
-
-			$andsql	= $sql . " AND (" . implode( ' OR ', $and ) . ")";
-
-			if ( count( $ids ) > 0 )
-			{
-				$andsql	.= " AND e.entry_id IN (" . implode( ",", $ids ) . ")";
-			}
+			
+        	$andsql	= $sql . " AND (" . implode( ' OR ', $and) . ")";
+        	
+        	if ( count( $ids ) > 0 )
+        	{
+        		$andsql	.= " AND e.entry_id IN (" . implode( ",", ee()->db->escape_str( $ids )) . ")";
+        	}
 
 			$arr	= array();
-
-			$query	= $this->EE->db->query( $andsql );
-
-			if ( $query->num_rows() == 0 )
-			{
-				return $arr;
-			}
+        	
+        	$query	= ee()->db->query( $andsql );
+        	
+        	if ( $query->num_rows() == 0 )
+        	{
+        		return $arr;
+        	}
 
 			foreach ( $query->result_array() as $row )
 			{
@@ -1117,93 +1183,97 @@ class Super_search_ext extends Extension_builder_super_search
 			{
 				return array();
 			}
-
+			
 			$ids	= $chosen;
-		}
-
-		// print_r( $ids );
-
-		// -------------------------------------
-		//	Tags like search?
-		// -------------------------------------
-
-		$and	= array();
-		$or		= array();
-		$not	= array();
-
-		if ( ! empty( $sess['search']['q']['tags-like'] ) )
-		{
+        }
+    	
+    	// -------------------------------------
+        //	Tags like search?
+        // -------------------------------------
+        
+        $and	= array();
+        $or		= array();
+        $not	= array();
+        
+        if ( ! empty( $sess['search']['q']['tags-like'] ) )
+        {			
 			$exact	= '';
-
+		
 			if ( ( $temp = $this->_prep_sql( 'not', 't.tag_name', $sess['search']['q']['tags-like'], $exact ) ) !== FALSE )
 			{
 				$not[]	= $temp;
 			}
-
+			
 			if ( ( $temp = $this->_prep_sql( 'or', 't.tag_name', $sess['search']['q']['tags-like'], $exact ) ) !== FALSE )
 			{
 				$or[]	= $temp;
 			}
-		}
-
-		// -------------------------------------
-		//	If we're excluding a tag
-		// -------------------------------------
-		//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
-		// -------------------------------------
-
-		if ( ! empty( $not ) )
-		{
-			$notsql	= $sql . " AND (" . implode( ' OR ', $not ) . ")";
-
-			$query	= $this->EE->db->query( $notsql );
-
-			if ( $query->num_rows() > 0 )
-			{
+        }
+    	
+    	// -------------------------------------
+        //	If we're excluding a tag
+    	// -------------------------------------
+    	//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
+        // -------------------------------------
+        
+        if ( ! empty( $not ) )
+        {
+        	$notsql	= $sql . " AND (" . implode( ' OR ', $not) . ")";
+        	
+        	$query	= ee()->db->query( $notsql );
+        	
+        	if ( $query->num_rows() > 0 )
+        	{
 				$notids	= $this->prepare_keyed_result( $query, 'entry_id', 'entry_id' );
-
+				
 				$ids	= array_diff( $ids, $notids );
-			}
-		}
-
-		// -------------------------------------
-		//	If we're including a tag
-		// -------------------------------------
-		//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
-		// -------------------------------------
-
-		if ( ! empty( $or ) )
-		{
-			$orsql	= $sql . " AND (" . implode( ' OR ', $or ) . ")";
-
-			if ( count( $ids ) > 0 )
-			{
-				$orsql	.= " AND e.entry_id IN (" . implode( ",", $ids ) . ")";
-			}
-
-			$query	= $this->EE->db->query( $orsql );
-
-			if ( $query->num_rows() > 0 )
-			{
+        	}        	
+        }
+    	
+    	// -------------------------------------
+        //	If we're including a tag
+    	// -------------------------------------
+    	//	We want to find entries that have the tag and then we exclude those from the grand list of $ids.
+        // -------------------------------------
+        
+        if ( ! empty( $or ) )
+        {
+        	$orsql	= $sql . " AND (" . implode( ' OR ', $or) . ")";
+        	
+        	if ( count( $ids ) > 0 )
+        	{
+        		$orsql	.= " AND e.entry_id IN (" . implode( ",", ee()->db->escape_str( $ids )) . ")";
+        	}
+        	
+        	$query	= ee()->db->query( $orsql );
+        	
+        	if ( $query->num_rows() > 0 )
+        	{
 				$ids	= $this->prepare_keyed_result( $query, 'entry_id', 'entry_id' );
-			}
-		}
-
-		// -------------------------------------
-		//	Conjoined tags-like search
-		// -------------------------------------
-
-		//	Even though this one makes intuitive sense, it's actually pretty hard to code for. So we'll punt.
-
-		// -------------------------------------
-		//	Return
-		// -------------------------------------
-
+        	}
+        }
+    	
+    	// -------------------------------------
+        //	Conjoined tags-like search
+        // -------------------------------------
+        
+        //	Even though this one makes intuitive sense, it's actually pretty hard to code for. So we'll punt.
+			
+    	// -------------------------------------
+        //	Let's fit this new $ids array against the initial $ids array so that we can preserve ordering.
+        // -------------------------------------
+        
+        $ids	= array_unique( array_intersect( $ids_order, $ids ));
+			
+    	// -------------------------------------
+        //	Return
+        // -------------------------------------
+		
 		return $ids;
-	}
-
-	//	End alter super search ids array for the tag module
-
+    }
+    
+    //	End alter super search ids array for the tag module
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -1214,23 +1284,23 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function super_search_alter_search_check_group($ths)
-	{
-		if ( $this->_field_frame_exists() === FALSE ) return FALSE;
-
-		// -------------------------------------
-		//	Just use the multi field helper
-		// -------------------------------------
-
-		if ( $this->_field_frame_multi_field_helper( $ths, 'ff_checkbox_group' ) )
-		{
-			return FALSE;
-		}
-	}
-
-	//	End alter search for FF check groups
-
+    {
+    	if ( $this->_field_frame_exists() === FALSE ) return FALSE;
+    	
+    	// -------------------------------------
+        //	Just use the multi field helper
+        // -------------------------------------
+        
+        if ( $this->_field_frame_multi_field_helper( $ths, 'ff_checkbox_group' ) )
+        {
+        	return FALSE;
+        }        
+    }
+    
+    //	End alter search for FF check groups
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -1241,23 +1311,23 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function super_search_alter_search_multiselect($ths)
-	{
-		if ( $this->_field_frame_exists() === FALSE ) return FALSE;
-
-		// -------------------------------------
-		//	Just use the multi field helper
-		// -------------------------------------
-
-		if ( $this->_field_frame_multi_field_helper( $ths, 'ff_multiselect' ) )
-		{
-			return FALSE;
-		}
-	}
-
-	//	End alter search for FF multiselect
-
+    {
+    	if ( $this->_field_frame_exists() === FALSE ) return FALSE;
+    	
+    	// -------------------------------------
+        //	Just use the multi field helper
+        // -------------------------------------
+        
+        if ( $this->_field_frame_multi_field_helper( $ths, 'ff_multiselect' ) )
+        {
+        	return FALSE;
+        }        
+    }
+    
+    //	End alter search for FF multiselect
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -1268,87 +1338,87 @@ class Super_search_ext extends Extension_builder_super_search
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function super_search_alter_search_playa($ths)
-	{
-		if ( $this->_field_frame_exists() === FALSE ) return FALSE;
-
-		if ( empty( $this->EE->TMPL->module_data['Playa'] ) ) return FALSE;
-
-		// -------------------------------------
-		//	Access the Super Search session cache for convenience
-		// -------------------------------------
-
-		$sess	=& $this->EE->session->cache['modules']['super_search'];
-
-		// -------------------------------------
-		//	Get field data
-		// -------------------------------------
-
-		if ( ( $fields = $this->_get_additional_ff_field_data( 'playa' ) ) === FALSE )
-		{
-			return FALSE;
-		}
-
-		// -------------------------------------
-		//	Handle field searching
-		// -------------------------------------
-
-		if ( ! empty( $sess['search']['q']['field'] ) )
-		{
-			$handy	=& $sess['search']['q']['field'];
-
+    {
+    	if ( $this->_field_frame_exists() === FALSE ) return FALSE;
+        
+        if ( empty( ee()->TMPL->module_data['Playa'] ) ) return FALSE;
+    	
+    	// -------------------------------------
+        //	Access the Super Search session cache for convenience
+        // -------------------------------------
+    	
+    	$sess	=& ee()->session->cache['modules']['super_search'];
+    	
+    	// -------------------------------------
+        //	Get field data
+        // -------------------------------------
+        
+        if ( ( $fields = $this->_get_additional_ff_field_data( 'playa' ) ) === FALSE )
+        {
+        	return FALSE;
+        }
+    	
+    	// -------------------------------------
+        //	Handle field searching
+        // -------------------------------------
+        
+        if ( ! empty( $sess['search']['q']['field'] ) )
+        {
+        	$handy	=& $sess['search']['q']['field'];
+        
 			// -------------------------------------
 			//	For each correct Playa field type, let's determine how the relationship is being provided to us. We accept entry id's, titles or url_titles.
 			// -------------------------------------
-
+			
 			$related			= array();
 			$conjoined_related	= array();
-
-			foreach ( $fields as $key => $val )
-			{
+        
+        	foreach ( $fields as $key => $val )
+        	{
 				// -------------------------------------
 				//	Super Search stores the exact field queries in the 'or' array, just to follow the overall data model. If 'or' is not empty and it's element count is = 1 we'll search for that value.
 				// -------------------------------------
-
+			
 				if ( ! empty( $handy[$key]['or'] ) )
 				{
 					if ( count( $handy[$key]['or'] ) == 1 )
 					{
 						$related	= array( $handy[$key]['or'][0] );
-					}
+					}						
 					else
 					{
 						$related	= $handy[$key]['or'];
 					}
 				}
-
+				
 				// -------------------------------------
 				//	Super Search also stores conjoined exact searches in the 'and' array. We have to do a more complex search on those.
 				// -------------------------------------
-
+			
 				if ( ! empty( $handy[$key]['and'] ) )
 				{
 					$conjoined_related	= $handy[$key]['and'];
 				}
-			}
-
+        	}
+			
 			// -------------------------------------
 			//	Are Playa fields even being invoked?
 			// -------------------------------------
-
+			
 			if ( empty( $related ) AND empty( $conjoined_related ) )
 			{
 				return FALSE;
 			}
-
+        
 			// -------------------------------------
 			//	Prepare arrays
 			// -------------------------------------
-
+			
 			$entry_ids	= array();
 			$titles		= array();
-
+			
 			foreach ( $related as $val )
 			{
 				if ( is_numeric( $val ) === TRUE )
@@ -1360,7 +1430,7 @@ class Super_search_ext extends Extension_builder_super_search
 					$titles[]	= $val;
 				}
 			}
-
+			
 			foreach ( $conjoined_related as $val )
 			{
 				if ( is_numeric( $val ) === TRUE )
@@ -1372,95 +1442,95 @@ class Super_search_ext extends Extension_builder_super_search
 					$titles[]	= $val;
 				}
 			}
-
+			
 			// -------------------------------------
 			//	We need to fail if the supplied related entries are bunk
 			// -------------------------------------
-
+			
 			if ( empty( $entry_ids ) AND empty( $titles ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
-
+			
 			// -------------------------------------
 			//	Get pure entry ids
 			// -------------------------------------
-
+			
 			$sql	= "SELECT entry_id, title, url_title
 				FROM exp_weblog_titles
 				WHERE weblog_id != ''
 				AND (";
-
+				
 			if ( ! empty( $entry_ids ) )
 			{
-				$sql	.= "entry_id IN (" . implode( ',', $entry_ids ) . ")";
-
+				$sql	.= "entry_id IN (" . implode( ',', ee()->db->escape_str( $entry_ids )) . ")";
+				
 				if ( ! empty( $titles ) )
 				{
 					$sql	.= " OR (";
 				}
 			}
-
+				
 			if ( ! empty( $titles ) )
 			{
 				foreach ( $titles as $t )
 				{
-					$sql	.= " url_title LIKE '%" . $this->EE->db->escape_str( $t ) . "%'";
-					$sql	.= " OR title LIKE '%" . $this->EE->db->escape_str( $t ) . "%' OR";
+					$sql	.= " url_title LIKE '%" . ee()->db->escape_str( $t ) . "%'";
+					$sql	.= " OR title LIKE '%" . ee()->db->escape_str( $t ) . "%' OR";
 				}
-
+				
 				$sql	= rtrim( $sql, 'OR' );
 			}
-
+			
 			$sql	.= ")";
-
-			$query	= $this->EE->db->query( $sql );
-
+			
+			$query	= ee()->db->query( $sql );
+			
 			$related_entry_ids	= array();
-
+			
 			foreach ( $query->result_array() as $row )
 			{
 				$related_entry_ids[]	= $row['entry_id'];
 				$related_entry_titles[]	= $row['title'];
 				$related_entry_titles[]	= $row['url_title'];
 			}
-
+        
 			// -------------------------------------
 			//	If we are testing for related , we need to fail if the supplied related entries are not valid
 			// -------------------------------------
-
+			
 			if ( ( ! empty( $related ) OR ! empty( $conjoined_related ) ) AND empty( $related_entry_ids ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
-
+        
 			// -------------------------------------
 			//	Here's a quick validity test to help us skip nonsense.
 			// -------------------------------------
-
+			
 			if ( ! empty( $conjoined_related ) AND ! empty( $related_entry_ids ) AND count( $conjoined_related ) > count( $related_entry_ids ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
-
+        
 			// -------------------------------------
 			//	If we are testing for conjoined related entries, we need to make sure that all of our terms are represented in the search results.
 			// -------------------------------------
-
+			
 			if ( ! empty( $conjoined_related ) )
 			{
 				$test_string	= implode( '||', $related_entry_titles );
-
+			
 				foreach ( $conjoined_related as $r )
 				{
 					if ( is_numeric( $r ) === TRUE )
 					{
 						if ( in_array( $r, $related_entry_ids ) === FALSE )
 						{
-							$this->EE->extensions->end_script	= TRUE;
+							ee()->extensions->end_script	= TRUE;
 							return FALSE;
 						}
 					}
@@ -1468,60 +1538,60 @@ class Super_search_ext extends Extension_builder_super_search
 					{
 						if ( strpos( $test_string, $r ) === FALSE )
 						{
-							$this->EE->extensions->end_script	= TRUE;
+							ee()->extensions->end_script	= TRUE;
 							return FALSE;
 						}
 					}
 				}
 			}
-
+        
 			// -------------------------------------
 			//	After validation, do we still have related entries?
 			// -------------------------------------
-
+			
 			if ( ! empty( $related_entry_ids ) )
 			{
 				// -------------------------------------
 				//	Get parent entries
 				// -------------------------------------
-
+				
 				$sql	= "SELECT r.rel_parent_id, r.rel_child_id
 					FROM exp_relationships r
 					LEFT JOIN exp_weblog_data wd ON wd.entry_id = r.rel_parent_id
-					WHERE r.rel_child_id IN (" . implode( ',', $related_entry_ids ) . ")
-					AND r.rel_id != wd.field_id_" . $sess['fields']['searchable'][$key];	// We need a way to know that this record in exp_relationships is being used by a playa field and not a regular EE relationship field since Brandon thought it was such a good idea to piggy back and pollute the data.
-
-				$query	= $this->EE->db->query( $sql );
-
+					WHERE r.rel_child_id IN (" . implode( ',', ee()->db->escape_str( $related_entry_ids )) . ")
+					AND r.rel_id != wd.field_id_" . ee()->db->escape_str( $sess['fields']['searchable'][$key] );	// We need a way to know that this record in exp_relationships is being used by a playa field and not a regular EE relationship field since Brandon thought it was such a good idea to piggy back and pollute the data.
+					
+				$query	= ee()->db->query( $sql );
+        
 				// -------------------------------------
 				//	We need to fail if no related parents were found
 				// -------------------------------------
-
+				
 				if ( $query->num_rows() == 0 )
 				{
-					$this->EE->extensions->end_script	= TRUE;
+					ee()->extensions->end_script	= TRUE;
 					return FALSE;
 				}
-
+        
 				// -------------------------------------
 				//	Are we doing a conjoined test?
 				// -------------------------------------
-
+				
 				if ( ! empty( $conjoined_related ) )
 				{
 					foreach ( $query->result_array() as $row )
 					{
 						$entry_array[ $row['rel_child_id'] ][]	= $row['rel_parent_id'];
 					}
-
+				
 					if ( count( $entry_array ) < 2 )
 					{
-						$this->EE->extensions->end_script	= TRUE;
+						ee()->extensions->end_script	= TRUE;
 						return FALSE;
 					}
-
+					
 					$chosen = call_user_func_array('array_intersect', $entry_array);
-
+					
 					$sess['search']['q']['include_entry_ids']	= $chosen;
 				}
 				else
@@ -1532,71 +1602,71 @@ class Super_search_ext extends Extension_builder_super_search
 					}
 				}
 			}
-		}
-
-		// -------------------------------------
-		//	Handle exact field searching
-		// -------------------------------------
-
-		if ( ! empty( $sess['search']['q']['exactfield'] ) )
-		{
-			$handy	=& $sess['search']['q']['exactfield'];
-
+        }
+    	
+    	// -------------------------------------
+        //	Handle exact field searching
+        // -------------------------------------
+        
+        if ( ! empty( $sess['search']['q']['exactfield'] ) )
+        {
+        	$handy	=& $sess['search']['q']['exactfield'];
+        
 			// -------------------------------------
 			//	For each correct Playa field type, let's determine how the relationship is being provided to us. We accept entry id's, titles or url_titles.
 			// -------------------------------------
-
+			
 			$related			= array();
 			$conjoined_related	= array();
-
-			foreach ( $fields as $key => $val )
-			{
+        
+        	foreach ( $fields as $key => $val )
+        	{
 				// -------------------------------------
 				//	Super Search stores the exact field queries in the 'or' array, just to follow the overall data model. If 'or' is not empty and it's element count is = 1 we'll search for that value.
 				// -------------------------------------
-
+			
 				if ( ! empty( $handy[$key]['or'] ) )
 				{
 					if ( count( $handy[$key]['or'] ) == 1 )
 					{
 						$related	= array( $handy[$key]['or'][0] );
-					}
+					}						
 					else
 					{
 						$related	= $handy[$key]['or'];
 					}
-
+					
 					unset( $handy[$key]['or'] );
 				}
-
+				
 				// -------------------------------------
 				//	Super Search also stores conjoined exact searches in the 'and' array. We have to do a more complex search on those.
 				// -------------------------------------
-
+			
 				if ( ! empty( $handy[$key]['and'] ) )
 				{
 					$conjoined_related	= $handy[$key]['and'];
-
+					
 					unset( $handy[$key]['and'] );
 				}
-			}
-
+        	}
+			
 			// -------------------------------------
 			//	Are Playa fields even being invoked?
 			// -------------------------------------
-
+			
 			if ( empty( $related ) AND empty( $conjoined_related ) )
 			{
 				return FALSE;
 			}
-
+        
 			// -------------------------------------
 			//	Prepare arrays
 			// -------------------------------------
-
+			
 			$entry_ids	= array();
 			$titles		= array();
-
+			
 			foreach ( $related as $val )
 			{
 				if ( is_numeric( $val ) === TRUE )
@@ -1608,7 +1678,7 @@ class Super_search_ext extends Extension_builder_super_search
 					$titles[]	= $val;
 				}
 			}
-
+			
 			foreach ( $conjoined_related as $val )
 			{
 				if ( is_numeric( $val ) === TRUE )
@@ -1620,14 +1690,14 @@ class Super_search_ext extends Extension_builder_super_search
 					$titles[]	= $val;
 				}
 			}
-
+			
 			// -------------------------------------
 			//	We need to fail if the supplied related entries are bunk
 			// -------------------------------------
-
+			
 			if ( empty( $entry_ids ) AND empty( $titles ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
 
@@ -1642,7 +1712,7 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( ! empty( $entry_ids ) )
 			{
-				$sql	.= "entry_id IN (" . implode( ',', $entry_ids ) . ")";
+				$sql	.= "entry_id IN (" . implode( ',', ee()->db->escape_str( $entry_ids )) . ")";
 
 				if ( ! empty( $titles ) )
 				{
@@ -1652,15 +1722,15 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( ! empty( $titles ) )
 			{
-				$sql	.= "url_title IN ('" . implode( "','", $titles ) . "')";
-				$sql	.= " OR title IN ('" . implode( "','", $titles ) . "')";
+				$sql	.= "url_title IN ('" . implode( "','", ee()->db->escape_str( $titles )) . "')";
+				$sql	.= " OR title IN ('" . implode( "','", ee()->db->escape_str( $titles )) . "')";
 				// $sql	.= ")";
 			}
 
 			$sql	.= ")";
-
-			$query	= $this->EE->db->query( $sql );
-
+			
+			$query	= ee()->db->query( $sql );
+			
 			$related_entry_ids	= array();
 
 			foreach ( $query->result_array() as $row )
@@ -1674,7 +1744,7 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( ( ! empty( $related ) OR ! empty( $conjoined_related ) ) AND empty( $related_entry_ids ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
 
@@ -1684,7 +1754,7 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( ! empty( $conjoined_related ) AND ! empty( $related_entry_ids ) AND count( $related_entry_ids ) < count( $conjoined_related ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
 
@@ -1701,18 +1771,18 @@ class Super_search_ext extends Extension_builder_super_search
 				$sql	= "SELECT r.rel_parent_id, r.rel_child_id
 					FROM exp_relationships r
 					LEFT JOIN exp_weblog_data wd ON wd.entry_id = r.rel_parent_id
-					WHERE r.rel_child_id IN (" . implode( ',', $related_entry_ids ) . ")
-					AND r.rel_id != wd.field_id_" . $sess['fields']['searchable'][$key];	// We need a way to know that this record in exp_relationships is being used by a playa field and not a regular EE relationship field since Brandon thought it was such a good idea to piggy back and pollute the data.
-
-				$query	= $this->EE->db->query( $sql );
-
+					WHERE r.rel_child_id IN (" . implode( ',', ee()->db->escape_str( $related_entry_ids )) . ")
+					AND r.rel_id != wd.field_id_" . ee()->db->escape_str( $sess['fields']['searchable'][$key] );	// We need a way to know that this record in exp_relationships is being used by a playa field and not a regular EE relationship field since Brandon thought it was such a good idea to piggy back and pollute the data.
+					
+				$query	= ee()->db->query( $sql );
+        
 				// -------------------------------------
 				//	We need to fail if no related parents were found
 				// -------------------------------------
 
 				if ( $query->num_rows() == 0 )
 				{
-					$this->EE->extensions->end_script	= TRUE;
+					ee()->extensions->end_script	= TRUE;
 					return FALSE;
 				}
 
@@ -1739,20 +1809,20 @@ class Super_search_ext extends Extension_builder_super_search
 					}
 				}
 			}
-		}
-
-		// -------------------------------------
-		//	We want to kill keyword searching on Playa related fields somehow.
-		// -------------------------------------
-
-		if ( ! empty( $sess['search']['q']['keywords'] ) )
-		{
-			$handy	=& $sess['search']['q']['keywords'];
-		}
-	}
-
-	//	End alter search for FF playa
-
+        }
+    	
+    	// -------------------------------------
+        //	We want to kill keyword searching on Playa related fields somehow.
+        // -------------------------------------
+        
+        if ( ! empty( $sess['search']['q']['keywords'] ) )
+        {
+        	$handy	=& $sess['search']['q']['keywords'];
+        }
+    }
+    
+    //	End alter search for FF playa
+	
 	// -------------------------------------------------------------
 
 	/**
@@ -1763,49 +1833,49 @@ class Super_search_ext extends Extension_builder_super_search
 	 */
 
 	function super_search_alter_search_relationship($ths)
-	{
+    {
+        // -------------------------------------
+		// Prepare for ee()->session->cache
 		// -------------------------------------
-		// Prepare for $this->EE->session->cache
-		// -------------------------------------
-
-		if ( isset( $this->EE->session->cache ) === TRUE )
+		
+		if ( isset( ee()->session->cache ) === TRUE )
 		{
-			if ( isset( $this->EE->session->cache['modules']['super_search'] ) === FALSE )
+			if ( isset( ee()->session->cache['modules']['super_search'] ) === FALSE )
 			{
-				$this->EE->session->cache['modules']['super_search']	= array();
+				ee()->session->cache['modules']['super_search']	= array();
 			}
-
-			$sess	=& $this->EE->session->cache['modules']['super_search'];
+			
+			$sess	=& ee()->session->cache['modules']['super_search'];
 		}
 
 		if ( isset( $sess ) === FALSE ) return FALSE;
-
-		// -------------------------------------
-		//	Handle exact field searching
-		// -------------------------------------
-
-		if ( ! empty( $sess['search']['q']['field'] ) )
-		{
-			$handy	=& $sess['search']['q']['field'];
-
-			$fields	= array();
-
-			foreach ( $sess['general_field_data']['searchable'] as $field_name => $field_data )
-			{
-				if ( isset( $handy[$field_name] ) === TRUE AND ! empty( $field_data['field_type'] ) AND $field_data['field_type'] == 'rel' )
-				{
-					$fields[$field_name]	= $handy[$field_name];
-				}
-			}
-
+    	
+    	// -------------------------------------
+        //	Handle exact field searching
+        // -------------------------------------
+        
+        if ( ! empty( $sess['search']['q']['field'] ) )
+        {
+        	$handy	=& $sess['search']['q']['field'];
+        	
+        	$fields	= array();
+        	
+        	foreach ( $sess['general_field_data']['searchable'] as $field_name => $field_data )
+        	{
+        		if ( isset( $handy[$field_name] ) === TRUE AND ! empty( $field_data['field_type'] ) AND $field_data['field_type'] == 'relationship' )
+        		{
+        			$fields[$field_name]	= $handy[$field_name];
+        		}
+        	}
+        
 			// -------------------------------------
 			//	For each correct field type, let's determine how the relationship is being provided to us. We accept entry id's or url_titles.
 			// -------------------------------------
-
-			foreach ( $fields as $key => $val )
-			{
-				$related			= array();
-
+        
+        	foreach ( $fields as $key => $val )
+        	{
+        		$related	= array();
+        	
 				// -------------------------------------
 				//	Super Search stores the exact field queries in the 'or' array, just to follow the overall data model. If 'or' is not empty and it's element count is = 1 we'll search for that value.
 				// -------------------------------------
@@ -1859,7 +1929,7 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( empty( $entry_ids ) AND empty( $titles ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
 
@@ -1868,13 +1938,13 @@ class Super_search_ext extends Extension_builder_super_search
 			// -------------------------------------
 
 			$sql	= "SELECT entry_id
-				FROM " . $this->sc->db->channel_titles . "
-				WHERE " . $this->sc->db->channel_id . " != ''
+				FROM exp_channel_titles
+				WHERE channel_id != ''
 				AND (";
 
 			if ( ! empty( $entry_ids ) )
 			{
-				$sql	.= "entry_id IN (" . implode( ',', $entry_ids ) . ")";
+				$sql	.= "entry_id IN (" . implode( ',', ee()->db->escape_str( $entry_ids )) . ")";
 
 				if ( ! empty( $titles ) )
 				{
@@ -1886,17 +1956,17 @@ class Super_search_ext extends Extension_builder_super_search
 			{
 				foreach ( $titles as $t )
 				{
-					$sql	.= " url_title LIKE '%" . $this->EE->db->escape_str( str_replace( $ths->spaces, ' ', $t ) ) . "%'";
-					$sql	.= " OR title LIKE '%" . $this->EE->db->escape_str( str_replace( $ths->spaces, ' ', $t ) ) . "%' OR";
+					$sql	.= " url_title LIKE '%" . ee()->db->escape_str( str_replace( $ths->spaces, ' ', $t ) ) . "%'";
+					$sql	.= " OR title LIKE '%" . ee()->db->escape_str( str_replace( $ths->spaces, ' ', $t ) ) . "%' OR";
 				}
 
 				$sql	= rtrim( $sql, 'OR' );
 			}
 
 			$sql	.= ")";
-
-			$query	= $this->EE->db->query( $sql );
-
+			
+			$query	= ee()->db->query( $sql );
+			
 			$related_entry_ids	= array();
 
 			foreach ( $query->result_array() as $row )
@@ -1910,7 +1980,7 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( ! empty( $related ) AND empty( $related_entry_ids ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
 
@@ -1924,57 +1994,57 @@ class Super_search_ext extends Extension_builder_super_search
 				//	Get parent entries
 				// -------------------------------------
 
-				$sql	= "SELECT r.rel_parent_id, r.rel_child_id
+				$sql	= "SELECT r.parent_id, r.child_id
 					FROM exp_relationships r
-					LEFT JOIN " . $this->sc->db->channel_data . " cd ON cd.entry_id = r.rel_parent_id
-					WHERE r.rel_child_id IN (" . implode( ',', $related_entry_ids ) . ")
-					AND r.rel_id = cd.field_id_" . $sess['fields']['searchable'][$key];
-
-				$query	= $this->EE->db->query( $sql );
-
+					LEFT JOIN exp_channel_data cd ON cd.entry_id = r.parent_id
+					WHERE r.child_id IN (" . implode( ',', ee()->db->escape_str( $related_entry_ids )) . ")
+					AND r.field_id = " . ee()->db->escape_str( $sess['fields']['searchable'][$key] );
+					
+				$query	= ee()->db->query( $sql );
+        
 				// -------------------------------------
 				//	We need to fail if no related parents were found
 				// -------------------------------------
 
 				if ( $query->num_rows() == 0 )
 				{
-					$this->EE->extensions->end_script	= TRUE;
+					ee()->extensions->end_script	= TRUE;
 					return FALSE;
 				}
 
 				foreach ( $query->result_array() as $row )
 				{
-					$sess['search']['q']['include_entry_ids'][$row['rel_parent_id']]	= $row['rel_parent_id'];
-				}
+					$sess['search']['q']['include_entry_ids'][$row['parent_id']]	= $row['parent_id'];
+				}				
 			}
-		}
-
-		// -------------------------------------
-		//	Handle exact field searching
-		// -------------------------------------
-
-		if ( ! empty( $sess['search']['q']['exactfield'] ) )
-		{
-			$handy	=& $sess['search']['q']['exactfield'];
-
-			$fields	= array();
-
-			foreach ( $sess['general_field_data']['searchable'] as $field_name => $field_data )
-			{
-				if ( isset( $handy[$field_name] ) === TRUE AND ! empty( $field_data['field_type'] ) AND $field_data['field_type'] == 'rel' )
-				{
-					$fields[$field_name]	= $handy[$field_name];
-				}
-			}
-
+        }
+    	
+    	// -------------------------------------
+        //	Handle exact field searching
+        // -------------------------------------
+        
+        if ( ! empty( $sess['search']['q']['exactfield'] ) )
+        {
+        	$handy	=& $sess['search']['q']['exactfield'];
+        	
+        	$fields	= array();
+        	
+        	foreach ( $sess['general_field_data']['searchable'] as $field_name => $field_data )
+        	{
+        		if ( isset( $handy[$field_name] ) === TRUE AND ! empty( $field_data['field_type'] ) AND $field_data['field_type'] == 'relationship' )
+        		{
+        			$fields[$field_name]	= $handy[$field_name];
+        		}
+        	}
+        
 			// -------------------------------------
 			//	For each correct Playa field type, let's determine how the relationship is being provided to us. We accept entry id's or url_titles.
 			// -------------------------------------
-
-			foreach ( $fields as $key => $val )
-			{
-				$related			= array();
-
+        
+        	foreach ( $fields as $key => $val )
+        	{
+        		$related	= array();
+        	
 				// -------------------------------------
 				//	Super Search stores the exact field queries in the 'or' array, just to follow the overall data model. If 'or' is not empty and it's element count is = 1 we'll search for that value.
 				// -------------------------------------
@@ -2028,7 +2098,7 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( empty( $entry_ids ) AND empty( $titles ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
 
@@ -2037,13 +2107,13 @@ class Super_search_ext extends Extension_builder_super_search
 			// -------------------------------------
 
 			$sql	= "SELECT entry_id
-				FROM " . $this->sc->db->channel_titles . "
-				WHERE " . $this->sc->db->channel_id . " != ''
+				FROM exp_channel_titles
+				WHERE channel_id != ''
 				AND (";
 
 			if ( ! empty( $entry_ids ) )
 			{
-				$sql	.= "entry_id IN (" . implode( ',', $entry_ids ) . ")";
+				$sql	.= "entry_id IN (" . implode( ',', ee()->db->escape_str( $entry_ids )) . ")";
 
 				if ( ! empty( $titles ) )
 				{
@@ -2053,31 +2123,30 @@ class Super_search_ext extends Extension_builder_super_search
 
 			if ( ! empty( $titles ) )
 			{
-				$sql	.= "url_title IN ('" . str_replace( $ths->spaces, ' ', implode( "','", $titles ) ) . "')";
-				$sql	.= " OR title IN ('" . str_replace( $ths->spaces, ' ', implode( "','", $titles ) ) . "')";
-				// $sql	.= ")";
+				$sql	.= "url_title IN ('" . str_replace( $ths->spaces, ' ', implode( "','", ee()->db->escape_str( $titles ))) . "')";
+				$sql	.= " OR title IN ('" . str_replace( $ths->spaces, ' ', implode( "','", ee()->db->escape_str( $titles ))) . "')";
 			}
 
 			$sql	.= ")";
-
-			$query	= $this->EE->db->query( $sql );
-
+			
+			$query	= ee()->db->query( $sql );
+			
 			$related_entry_ids	= array();
 
 			foreach ( $query->result_array() as $row )
 			{
 				$related_entry_ids[]	= $row['entry_id'];
 			}
-
-			// print_r( $sql );
-
+        	
+        	// print_r( $sql );
+        
 			// -------------------------------------
 			//	If we are testing for related , we need to fail if the supplied related entries are not valid
 			// -------------------------------------
 
 			if ( ! empty( $related ) AND empty( $related_entry_ids ) )
 			{
-				$this->EE->extensions->end_script	= TRUE;
+				ee()->extensions->end_script	= TRUE;
 				return FALSE;
 			}
 
@@ -2091,27 +2160,27 @@ class Super_search_ext extends Extension_builder_super_search
 				//	Get parent entries
 				// -------------------------------------
 
-				$sql	= "SELECT r.rel_parent_id, r.rel_child_id
+				$sql	= "SELECT r.parent_id, r.child_id
 					FROM exp_relationships r
-					LEFT JOIN " . $this->sc->db->channel_data . " cd ON cd.entry_id = r.rel_parent_id
-					WHERE r.rel_child_id IN (" . implode( ',', $related_entry_ids ) . ")
-					AND r.rel_id = cd.field_id_" . $sess['fields']['searchable'][$key];
-
-				$query	= $this->EE->db->query( $sql );
-
+					LEFT JOIN exp_channel_data cd ON cd.entry_id = r.parent_id
+					WHERE r.child_id IN (" . implode( ',', ee()->db->escape_str( $related_entry_ids )) . ")
+					AND r.field_id = " . ee()->db->escape_str( $sess['fields']['searchable'][$key] );
+					
+				$query	= ee()->db->query( $sql );
+        
 				// -------------------------------------
 				//	We need to fail if no related parents were found
 				// -------------------------------------
 
 				if ( $query->num_rows() == 0 )
 				{
-					$this->EE->extensions->end_script	= TRUE;
+					ee()->extensions->end_script	= TRUE;
 					return FALSE;
 				}
 
 				foreach ( $query->result_array() as $row )
 				{
-					$sess['search']['q']['include_entry_ids'][$row['rel_parent_id']]	= $row['rel_parent_id'];
+					$sess['search']['q']['include_entry_ids'][$row['parent_id']]	= $row['parent_id'];
 				}
 			}
 		}
@@ -2122,78 +2191,11 @@ class Super_search_ext extends Extension_builder_super_search
 	// -------------------------------------------------------------
 
 	/**
-	 * Activate Extension
-	 *
-	 * A required method that we actually ignore because this extension is installed by its module
-	 * and no other place.  If they want the extension enabled, they have to install the module.
-	 *
-	 * @access	public
-	 * @return	null
+	 *	required functions for extensions
 	 */
-
-	function activate_extension()
-	{
-		if (APP_VER < 2.0)
-		{
-			return $this->EE->output->show_user_error(
-				'general', str_replace(
-					'%url%',
-					BASE.AMP.'C=modules',
-					lang('enable_module_to_enable_extension')
-				)
-			);
-		}
-	}
-
-	//	END activate_extension()
-
-	// -------------------------------------------------------------
-
-	/**
-	 * Disable Extension
-	 *
-	 * A required method that we actually ignore because this extension is installed by its module
-	 * and no other place.  If they want the extension disabled, they have to uninstall the module.
-	 *
-	 * @access	public
-	 * @return	null
-	 */
-
-	function disable_extension()
-	{
-		if (APP_VER < 2.0)
-		{
-			return $this->EE->output->show_user_error(
-				'general', str_replace(
-					'%url%',
-					BASE.AMP.'C=modules',
-					lang('disable_module_to_disable_extension')
-				)
-			);
-		}
-	}
-
-	//	END disable_extension()
-
-	// -------------------------------------------------------------
-
-	/**
-	 * Update Extension
-	 *
-	 * A required method that we actually ignore because this extension is updated by its module
-	 * and no other place.  We cannot redirect to the module upgrade script because we require a
-	 * confirmation dialog, whereas extensions were designed to update automatically as they will try
-	 * to call the update script on both the User and CP side.
-	 *
-	 * @access	public
-	 * @return	null
-	 */
-
-	function update_extension()
-	{
-	}
-
-	//	END update_extension()
+	public function activate_extension(){}
+	public function disable_extension(){}
+	public function update_extension(){}
 
 	// -------------------------------------------------------------
 

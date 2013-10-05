@@ -414,6 +414,12 @@ class Filemanager {
 		// Check to see if its an editable image, if it is, try and create the thumbnail
 		if ($this->is_editable_image($file_path, $mime))
 		{
+			// Check to see if we have GD and can resize images
+			if ( ! (extension_loaded('gd') && function_exists('gd_info')))
+			{
+				return $this->_save_file_response(FALSE, lang('gd_not_installed'));
+			}
+
 		 	$prefs = $this->max_hw_check($file_path, $prefs);
 		
 			if ( ! $prefs)
@@ -632,6 +638,9 @@ class Filemanager {
 	 */
 	function frontend_filebrowser($endpoint_url, $include_jquery_base = TRUE)
 	{
+		ee()->load->library('logger');
+		ee()->logger->deprecated('2.7');
+
 		ee()->lang->loadfile('filebrowser');
 
 		$ret = array();
@@ -665,9 +674,9 @@ class Filemanager {
 			$ret['str'] .= '<script type="text/javascript" charset="utf-8" src="'.$script_base.'"></script>';
 		}
 
-		$live_url =  (ee()->TMPL->fetch_param('use_live_url') != 'no') ? AMP.'use_live_url=y' : '';
+	//	$live_url =  (ee()->TMPL->fetch_param('use_live_url') != 'no') ? AMP.'use_live_url=y' : '';
 
-		$ret['str'] .= '<script type="text/javascript" charset="utf-8" src="'.ee()->functions->fetch_site_index(0,0).QUERY_MARKER.'ACT=saef'.$live_url.'"></script>';
+	//	$ret['str'] .= '<script type="text/javascript" charset="utf-8" src="'.ee()->functions->fetch_site_index(0,0).QUERY_MARKER.'ACT=saef'.$live_url.'"></script>';
 
 		return $ret;
 	}
@@ -980,8 +989,7 @@ class Filemanager {
 		
 		if ( ! is_array($dirs))
 		{
-			$dirs = call_user_func($this->config['directories_callback']);
-
+			$dirs = call_user_func($this->config['directories_callback'], array('ignore_site_id' => FALSE));
 		}
 		
 		
@@ -1761,15 +1769,17 @@ class Filemanager {
 	 * @access	private
 	 * @return	mixed	directory list
 	 */
-	function _directories()
+	function _directories($params = array())
 	{
 		$dirs = array();
+		$ignore_site_id = (isset($params['ignore_site_id']) && $params['ignore_site_id'] == FALSE) ? FALSE : TRUE;
+				
 		ee()->load->model('file_upload_preferences_model');
 		
 		$directories = ee()->file_upload_preferences_model->get_file_upload_preferences(
 			ee()->session->userdata('group_id'),
 			NULL,
-			TRUE
+			$ignore_site_id
 		);
 		
 		foreach($directories as $dir)
@@ -1904,6 +1914,25 @@ class Filemanager {
 		}
 
 		return form_dropdown('category', $category_dropdown_array);
+	}
+
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Validate Post Data
+	 *
+	 * Validates that the POST data did not get dropped, this happens when
+	 * the content-length of the request is larger than PHP's post_max_size
+	 *
+	 *
+	 * @return	bool
+	 */
+	public function validate_post_data()
+	{
+		ee()->load->helper('number_helper');
+		$post_limit = get_bytes(ini_get('post_max_size'));
+		return $_SERVER['CONTENT_LENGTH'] <= $post_limit;
 	}
 
 	
@@ -2607,14 +2636,14 @@ class Filemanager {
 	 *
 	 * @return array
 	 */
-	public function fetch_upload_dirs()
+	public function fetch_upload_dirs($params = array())
 	{
 		if ( ! empty($this->_upload_dirs))
 		{
 			return $this->_upload_dirs;
 		}
 		
-		return $this->_directories();
+		return $this->_directories($params);
 	}
 
 	// --------------------------------------------------------------------	

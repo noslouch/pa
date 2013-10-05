@@ -8,7 +8,7 @@
  * @copyright	Copyright (c) 2009-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/super_search
  * @license		http://www.solspace.com/license_agreement
- * @version		2.0.6
+ * @version		2.1.3
  * @filesource	super_search/data.super_search.php
  */
 
@@ -17,81 +17,80 @@ require_once 'addon_builder/data.addon_builder.php';
 class Super_search_data extends Addon_builder_data_super_search
 {
 	var $plural = array(
-			'/(quiz)$/i'               => '$1zes',
-			'/^(ox)$/i'                => '$1en',
-			'/([m|l])ouse$/i'          => '$1ice',
-			'/(matr|vert|ind)ix|ex$/i' => '$1ices',
-			'/(x|ch|ss|sh)$/i'         => '$1es',
-			'/([^aeiouy]|qu)y$/i'      => '$1ies',
-			'/(hive)$/i'               => '$1s',
-			'/(?:([^f])fe|([lr])f)$/i' => '$1$2ves',
-			'/(shea|lea|loa|thie)f$/i' => '$1ves',
-			'/sis$/i'                  => 'ses',
-			'/([ti])um$/i'             => '$1a',
-			'/(tomat|potat|ech|her|vet)o$/i'=> '$1oes',
-			'/(bu)s$/i'                => '$1ses',
-			'/(alias)$/i'              => '$1es',
-			'/(octop)us$/i'            => '$1i',
-			'/(ax|test)is$/i'          => '$1es',
-			'/(us)$/i'                 => '$1es',
-			'/s$/i'                    => 's',
-			'/$/'                      => 's'
-		);
+	        '/(quiz)$/i'               => '$1zes',
+	        '/^(ox)$/i'                => '$1en',
+	        '/([m|l])ouse$/i'          => '$1ice',
+	        '/(matr|vert|ind)ix|ex$/i' => '$1ices',
+	        '/(x|ch|ss|sh)$/i'         => '$1es',
+	        '/([^aeiouy]|qu)y$/i'      => '$1ies',
+	        '/(hive)$/i'               => '$1s',
+	        '/(?:([^f])fe|([lr])f)$/i' => '$1$2ves',
+	        '/(shea|lea|loa|thie)f$/i' => '$1ves',
+	        '/sis$/i'                  => 'ses',
+	        '/([ti])um$/i'             => '$1a',
+	        '/(tomat|potat|ech|her|vet)o$/i'=> '$1oes',
+	        '/(bu)s$/i'                => '$1ses',
+	        '/(alias)$/i'              => '$1es',
+	        '/(octop)us$/i'            => '$1i',
+	        '/(ax|test)is$/i'          => '$1es',
+	        '/(us)$/i'                 => '$1es',
+	        '/s$/i'                    => 's',
+	        '/$/'                      => 's'
+	    );
 
 	var $singular = array(
-			'/(quiz)zes$/i'             => '$1',
-			'/(matr)ices$/i'            => '$1ix',
-			'/(vert|ind)ices$/i'        => '$1ex',
-			'/^(ox)en$/i'               => '$1',
-			'/(alias)es$/i'             => '$1',
-			'/(octop|vir)i$/i'          => '$1us',
-			'/(cris|ax|test)es$/i'      => '$1is',
-			'/(shoe)s$/i'               => '$1',
-			'/(o)es$/i'                 => '$1',
-			'/(bus)es$/i'               => '$1',
-			'/([m|l])ice$/i'            => '$1ouse',
-			'/(x|ch|ss|sh)es$/i'        => '$1',
-			'/(m)ovies$/i'              => '$1ovie',
-			'/(s)eries$/i'              => '$1eries',
-			'/([^aeiouy]|qu)ies$/i'     => '$1y',
-			'/([lr])ves$/i'             => '$1f',
-			'/(tive)s$/i'               => '$1',
-			'/(hive)s$/i'               => '$1',
-			'/(li|wi|kni)ves$/i'        => '$1fe',
-			'/(shea|loa|lea|thie)ves$/i'=> '$1f',
-			'/(^analy)ses$/i'           => '$1sis',
-			'/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i'  => '$1$2sis',
-			'/([ti])a$/i'               => '$1um',
-			'/(n)ews$/i'                => '$1ews',
-			'/(h|bl)ouses$/i'           => '$1ouse',
-			'/(corpse)s$/i'             => '$1',
-			'/(us)es$/i'                => '$1',
-			'/s$/i'                     => ''
-		);
+	        '/(quiz)zes$/i'             => '$1',
+	        '/(matr)ices$/i'            => '$1ix',
+	        '/(vert|ind)ices$/i'        => '$1ex',
+	        '/^(ox)en$/i'               => '$1',
+	        '/(alias)es$/i'             => '$1',
+	        '/(octop|vir)i$/i'          => '$1us',
+	        '/(cris|ax|test)es$/i'      => '$1is',
+	        '/(shoe)s$/i'               => '$1',
+	        '/(o)es$/i'                 => '$1',
+	        '/(bus)es$/i'               => '$1',
+	        '/([m|l])ice$/i'            => '$1ouse',
+	        '/(x|ch|ss|sh)es$/i'        => '$1',
+	        '/(m)ovies$/i'              => '$1ovie',
+	        '/(s)eries$/i'              => '$1eries',
+	        '/([^aeiouy]|qu)ies$/i'     => '$1y',
+	        '/([lr])ves$/i'             => '$1f',
+	        '/(tive)s$/i'               => '$1',
+	        '/(hive)s$/i'               => '$1',
+	        '/(li|wi|kni)ves$/i'        => '$1fe',
+	        '/(shea|loa|lea|thie)ves$/i'=> '$1f',
+	        '/(^analy)ses$/i'           => '$1sis',
+	        '/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i'  => '$1$2sis',
+	        '/([ti])a$/i'               => '$1um',
+	        '/(n)ews$/i'                => '$1ews',
+	        '/(h|bl)ouses$/i'           => '$1ouse',
+	        '/(corpse)s$/i'             => '$1',
+	        '/(us)es$/i'                => '$1',
+	        '/s$/i'                     => ''
+	    );
 
 	var $irregular = array(
-			'move'   => 'moves',
-			'foot'   => 'feet',
-			'goose'  => 'geese',
-			'sex'    => 'sexes',
-			'child'  => 'children',
-			'man'    => 'men',
-			'tooth'  => 'teeth',
-			'person' => 'people'
-		);
+	        'move'   => 'moves',
+	        'foot'   => 'feet',
+	        'goose'  => 'geese',
+	        'sex'    => 'sexes',
+	        'child'  => 'children',
+	        'man'    => 'men',
+	        'tooth'  => 'teeth',
+	        'person' => 'people'
+	    );
 
 	var $uncountable = array(
-			'sheep',
-			'fish',
-			'deer',
-			'series',
-			'species',
-			'money',
-			'rice',
-			'information',
-			'equipment'
-		);
-
+	        'sheep',
+	        'fish',
+	        'deer',
+	        'series',
+	        'species',
+	        'money',
+	        'rice',
+	        'information',
+	        'equipment'
+	    );
 
 	// Fields encountered that impliment third_party_search_index
 	private $fields = array();
@@ -133,154 +132,158 @@ class Super_search_data extends Addon_builder_data_super_search
 
 		$sql = "/* Super Search data.super_search.php caching_is_enabled() */ SELECT date, refresh
 				FROM exp_super_search_refresh_rules
-				WHERE ( refresh != 0 OR template_id != 0 OR channel_id != 0 OR category_group_id != 0 ) AND site_id = ".$this->EE->db->escape_str( $site_id );
-
-		$query = $this->EE->db->query( $sql );
-
-		if ( $query->num_rows() == 0 )
-		{
+				WHERE ( refresh != 0 OR template_id != 0 OR channel_id != 0 OR category_group_id != 0 ) AND site_id = ".ee()->db->escape_str( $site_id );
+		
+		$query = ee()->db->query( $sql );
+        
+        if ( $query->num_rows() == 0 )
+        {
 			$this->cached['get_refresh_by_site_id'][$cache_hash]		= 0;
 			$this->cached['get_refresh_date_by_site_id'][$cache_hash]	= 0;
-			return FALSE;
-		}
-
-		// --------------------------------------------
-		//  Set refresh for later just in case. Any of the returned rows will work since date and refresh are the same for all rows in a site.
-		// --------------------------------------------
-
-		$this->cached['get_refresh_by_site_id'][$cache_hash]		= $query->row('refresh');
-		$this->cached['get_refresh_date_by_site_id'][$cache_hash]	= $query->row('date');
-
-		// --------------------------------------------
-		//	If we made it this far, caching is enabled.
-		// --------------------------------------------
-
+        	return FALSE;
+        }
+        
+        if ( $query->row('refresh') == 0 )
+        {
+			$this->cached['get_refresh_by_site_id'][$cache_hash]		= 0;
+			$this->cached['get_refresh_date_by_site_id'][$cache_hash]	= 0;
+        	return FALSE;
+        }
+ 		
+ 		// --------------------------------------------
+        //  Set refresh for later just in case. Any of the returned rows will work since date and refresh are the same for all rows in a site.
+        // --------------------------------------------
+        
+        $this->cached['get_refresh_by_site_id'][$cache_hash]		= $query->row('refresh');
+        $this->cached['get_refresh_date_by_site_id'][$cache_hash]	= $query->row('date');
+ 		
+ 		// --------------------------------------------
+        //	If we made it this far, caching is enabled.
+        // --------------------------------------------
+        
 		$this->cached[$cache_name][$cache_hash] = TRUE;
-
-		// --------------------------------------------
-		//  Return Data
-		// --------------------------------------------
-
-		return $this->cached[$cache_name][$cache_hash];
-	}
-
-	//	End caching is enabled
-
+        
+ 		// --------------------------------------------
+        //  Return Data
+        // --------------------------------------------
+ 		
+ 		return $this->cached[$cache_name][$cache_hash];	
+    }
+    
+    //	End caching is enabled
+    
 	// --------------------------------------------------------------------
-
+	
 	/**
 	 * Get category groups
 	 *
 	 * @access	public
 	 * @return	array
 	 */
-
+    
 	function get_category_groups()
-	{
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder(func_get_args());
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = array();
-
-		// --------------------------------------------
-		//  Grab category groups
-		// --------------------------------------------
-
+    {
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder(func_get_args());
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = array();
+ 		
+ 		// --------------------------------------------
+        //  Grab category groups
+        // --------------------------------------------
+		
 		$sql = "/* Super Search data.super_search.php get_category_groups() */ SELECT group_id, group_name
 				FROM exp_category_groups
-				WHERE site_id = ".$this->EE->db->escape_str( $this->EE->config->item('site_id') )."
+				WHERE site_id = ".ee()->db->escape_str( ee()->config->item('site_id') )."
 				ORDER BY group_name ASC";
-
-		$query = $this->EE->db->query( $sql );
-
+		
+		$query = ee()->db->query( $sql );
+		
 		foreach($query->result_array() as $row)
 		{
 			$this->cached[$cache_name][$cache_hash][$row['group_id']] = $row['group_name'];
 		}
-
-		// --------------------------------------------
-		//  Return Data
-		// --------------------------------------------
-
-		return $this->cached[$cache_name][$cache_hash];
-	}
-
-	//	End get category groups
+        
+ 		// --------------------------------------------
+        //  Return Data
+        // --------------------------------------------
+ 		
+ 		return $this->cached[$cache_name][$cache_hash];	
+    }
+    
+    //	End get category groups
 
 	// --------------------------------------------------------------------
-
+	
 	/**
 	 * Get channels
 	 *
 	 * @access	public
 	 * @return	array
 	 */
-
+    
 	function get_channels()
-	{
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder(func_get_args());
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = array();
-
-		// --------------------------------------------
-		//  Grab channels
-		// --------------------------------------------
-
+    { 		
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder(func_get_args());
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = array();
+ 		
+ 		// --------------------------------------------
+        //  Grab channels
+        // --------------------------------------------
+		
 		$sql	= "/* Super Search data.super_search.php get_channels() */
-			SELECT site_id,
-			" . $this->sc->db->channel_id . " AS channel_id,
-			" . $this->sc->db->channel_name . " AS channel_name,
-			" . $this->sc->db->channel_title . " AS channel_title,
-			cat_group,
-			field_group,
-			" . $this->sc->channel . "_html_formatting,
-			" . $this->sc->channel . "_allow_img_urls,
-			" . $this->sc->channel . "_auto_link_urls, comment_url,
-			" . $this->sc->db->channel_url . ",
-			search_results_url,
-			search_excerpt
-			FROM " . $this->sc->db->channels . "
-			ORDER BY blog_title ASC";
-
-		if (APP_VER >= 2.0)
-		{
-			$sql	= str_replace( array_keys( $this->nomenclature ), $this->nomenclature, $sql );
-		}
-
-		$query = $this->EE->db->query( $sql );
-
+			SELECT
+				site_id,
+				channel_id,
+				channel_name,
+				channel_title,
+				cat_group,
+				field_group,
+				channel_html_formatting,
+				channel_allow_img_urls,
+				channel_auto_link_urls,
+				comment_url,
+				channel_url,
+				search_results_url,
+				search_excerpt
+			FROM exp_channels
+			ORDER BY channel_title ASC";
+		
+		$query = ee()->db->query( $sql );
+		
 		foreach($query->result_array() as $row)
 		{
 			$this->cached[$cache_name][$cache_hash][$row['channel_id']] = $row;
 		}
-
-		// --------------------------------------------
-		//  Return Data
-		// --------------------------------------------
-
-		return $this->cached[$cache_name][$cache_hash];
-	}
-
-	//	End get channels
+        
+ 		// --------------------------------------------
+        //  Return Data
+        // --------------------------------------------
+ 		
+ 		return $this->cached[$cache_name][$cache_hash];	
+    }
+    
+    //	End get channels
 
 	// --------------------------------------------------------------------
 
@@ -292,46 +295,46 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function get_channels_by_site_id( $site_id = '' )
-	{
-		// --------------------------------------------
-		//  Set site id
-		// --------------------------------------------
-
-		$site_id	= ( is_string( $site_id ) === TRUE AND $site_id == '' ) ? $this->EE->config->item('site_id'): $site_id;
-
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder(func_get_args());
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = array();
-
-		// --------------------------------------------
-		//  Site ids
-		// --------------------------------------------
-
-		$site_ids	= array();
-
-		if ( is_array( $site_id ) === TRUE AND ! empty( $site_id ) )
-		{
-			$site_ids	= $site_id;
-		}
-		elseif ( is_string( $site_id ) === TRUE AND $site_id != '' )
-		{
-			$site_ids[]	= $site_id;
-		}
-
-		// --------------------------------------------
-		//  Grab channels
-		// --------------------------------------------
-
+    {
+ 		// --------------------------------------------
+        //  Set site id
+        // --------------------------------------------
+        
+        $site_id	= ( is_string( $site_id ) === TRUE AND $site_id == '' ) ? ee()->config->item('site_id'): $site_id;
+ 		
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder(func_get_args());
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = array();
+ 		
+ 		// --------------------------------------------
+        //  Site ids
+        // --------------------------------------------
+        
+        $site_ids	= array();
+        
+        if ( is_array( $site_id ) === TRUE AND ! empty( $site_id ) )
+        {
+        	$site_ids	= $site_id;
+        }
+        elseif ( is_string( $site_id ) === TRUE AND $site_id != '' )
+        {
+        	$site_ids[]	= $site_id;
+        }
+ 		
+ 		// --------------------------------------------
+        //  Grab channels
+        // --------------------------------------------
+		
 		foreach ( $this->get_channels() as $row )
 		{
 			if ( ! count( $site_ids ) AND in_array( $row['site_id'], $site_ids ) === FALSE ) continue;
@@ -359,55 +362,55 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function get_channels_by_site_id_and_channel_id( $site_id = '', $channel_id = '' )
-	{
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder(func_get_args());
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = array();
-
-		// --------------------------------------------
-		//  Site ids
-		// --------------------------------------------
-
-		$site_ids	= array();
-
-		if ( is_array( $site_id ) === TRUE AND ! empty( $site_id ) )
-		{
-			$site_ids	= $site_id;
-		}
-		elseif ( is_string( $site_id ) === TRUE AND $site_id != '' )
-		{
-			$site_ids[]	= $site_id;
-		}
-
-		// --------------------------------------------
-		//  Channel ids
-		// --------------------------------------------
-
-		$channel_ids	= array();
-
-		if ( is_array( $channel_id ) === TRUE AND ! empty( $channel_id ) )
-		{
-			$channel_ids	= $channel_id;
-		}
-		elseif ( is_string( $channel_id ) === TRUE AND $channel_id != '' )
-		{
-			$channel_ids[]	= $channel_id;
-		}
-
-		// --------------------------------------------
-		//  Grab channels
-		// --------------------------------------------
-
+    {
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder(func_get_args());
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = array();
+ 		
+ 		// --------------------------------------------
+        //  Site ids
+        // --------------------------------------------
+        
+        $site_ids	= array();
+        
+        if ( is_array( $site_id ) === TRUE AND ! empty( $site_id ) )
+        {
+        	$site_ids	= $site_id;
+        }
+        elseif ( is_string( $site_id ) === TRUE AND $site_id != '' )
+        {
+        	$site_ids[]	= $site_id;
+        }
+ 		
+ 		// --------------------------------------------
+        //  Channel ids
+        // --------------------------------------------
+        
+        $channel_ids	= array();
+        
+        if ( is_array( $channel_id ) === TRUE AND ! empty( $channel_id ) )
+        {
+        	$channel_ids	= $channel_id;
+        }
+        elseif ( is_string( $channel_id ) === TRUE AND $channel_id != '' )
+        {
+        	$channel_ids[]	= $channel_id;
+        }
+ 		
+ 		// --------------------------------------------
+        //  Grab channels
+        // --------------------------------------------
+		
 		foreach ( $this->get_channels() as $row )
 		{
 			if ( ! empty( $site_ids ) AND in_array( $row['site_id'], $site_ids ) === FALSE ) continue;
@@ -436,46 +439,46 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function get_channels_by_site_id_keyed_to_name( $site_id = '' )
-	{
-		// --------------------------------------------
-		//  Set site id
-		// --------------------------------------------
-
-		$site_id	= ( is_string( $site_id ) === TRUE AND $site_id == '' ) ? $this->EE->config->item('site_id'): $site_id;
-
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder(func_get_args());
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = array();
-
-		// --------------------------------------------
-		//  Site ids
-		// --------------------------------------------
-
-		$site_ids	= array();
-
-		if ( is_array( $site_id ) === TRUE AND ! empty( $site_id ) )
-		{
-			$site_ids	= $site_id;
-		}
-		elseif ( is_string( $site_id ) === TRUE AND $site_id != '' )
-		{
-			$site_ids[]	= $site_id;
-		}
-
-		// --------------------------------------------
-		//  Grab channels
-		// --------------------------------------------
-
+    { 		
+ 		// --------------------------------------------
+        //  Set site id
+        // --------------------------------------------
+        
+        $site_id	= ( is_string( $site_id ) === TRUE AND $site_id == '' ) ? ee()->config->item('site_id'): $site_id;
+ 		
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder(func_get_args());
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = array();
+ 		
+ 		// --------------------------------------------
+        //  Site ids
+        // --------------------------------------------
+        
+        $site_ids	= array();
+        
+        if ( is_array( $site_id ) === TRUE AND ! empty( $site_id ) )
+        {
+        	$site_ids	= $site_id;
+        }
+        elseif ( is_string( $site_id ) === TRUE AND $site_id != '' )
+        {
+        	$site_ids[]	= $site_id;
+        }
+ 		
+ 		// --------------------------------------------
+        //  Grab channels
+        // --------------------------------------------
+		
 		foreach ( $this->get_channels() as $row )
 		{
 			if ( ! empty( $site_ids ) AND in_array( $row['site_id'], $site_ids ) === FALSE ) continue;
@@ -586,10 +589,10 @@ class Super_search_data extends Addon_builder_data_super_search
 
 		$sql = "/* Super Search data.super_search.php get_refresh_rule_by_template_id() */ SELECT COUNT(*) AS count
 				FROM exp_super_search_refresh_rules
-				WHERE template_id = ".$this->EE->db->escape_str( $template_id );
-
-		$query = $this->EE->db->query( $sql );
-
+				WHERE template_id = ".ee()->db->escape_str( $template_id );
+		
+		$query = ee()->db->query( $sql );
+		
 		if ( $query->num_rows() > 0 AND $query->row('count') > 0 )
 		{
 			$this->cached[$cache_name][$cache_hash] = TRUE;
@@ -637,10 +640,10 @@ class Super_search_data extends Addon_builder_data_super_search
 
 		$sql = "/* Super Search data.super_search.php get_refresh_rule_by_channel_id() */ SELECT COUNT(*) AS count
 				FROM exp_super_search_refresh_rules
-				WHERE channel_id = ".$this->EE->db->escape_str( $channel_id );
-
-		$query = $this->EE->db->query( $sql );
-
+				WHERE channel_id = ".ee()->db->escape_str( $channel_id );
+		
+		$query = ee()->db->query( $sql );
+		
 		if ( $query->num_rows() > 0 AND $query->row('count') > 0 )
 		{
 			$this->cached[$cache_name][$cache_hash] = TRUE;
@@ -688,10 +691,10 @@ class Super_search_data extends Addon_builder_data_super_search
 
 		$sql = "/* Super Search data.super_search.php get_refresh_rule_by_category_group_id() */ SELECT COUNT(*) AS count
 				FROM exp_super_search_refresh_rules
-				WHERE category_group_id = ".$this->EE->db->escape_str( $group_id );
-
-		$query = $this->EE->db->query( $sql );
-
+				WHERE category_group_id = ".ee()->db->escape_str( $group_id );
+		
+		$query = ee()->db->query( $sql );
+		
 		if ( $query->num_rows() > 0 AND $query->row('count') > 0 )
 		{
 			$this->cached[$cache_name][$cache_hash] = TRUE;
@@ -716,38 +719,38 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function get_refresh_by_site_id( $site_id = '' )
-	{
-		// --------------------------------------------
-		//  Set site id
-		// --------------------------------------------
-
-		$site_id	= ( $site_id == '' ) ? $this->EE->config->item('site_id'): $site_id;
-
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder( array( $site_id ) );
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = 0;
-
-		// --------------------------------------------
-		//  Grab refresh rule
-		// --------------------------------------------
-
+    {
+ 		// --------------------------------------------
+        //  Set site id
+        // --------------------------------------------
+        
+        $site_id	= ( $site_id == '' ) ? ee()->config->item('site_id'): $site_id;
+ 		
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder( array( $site_id ) );
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = 0;
+ 		
+ 		// --------------------------------------------
+        //  Grab refresh rule
+        // --------------------------------------------
+		
 		$sql = "/* Super Search data.super_search.php get_refresh_by_site_id() */ SELECT date, refresh
 				FROM exp_super_search_refresh_rules
-				WHERE site_id = ".$this->EE->db->escape_str( $site_id )."
+				WHERE site_id = ".ee()->db->escape_str( $site_id )."
 				LIMIT 1";
-
-		$query = $this->EE->db->query( $sql );
-
+		
+		$query = ee()->db->query( $sql );
+		
 		if ( $query->num_rows() == 0 OR $query->row('refresh') === FALSE )
 		{
 			$this->cached['get_refresh_date_by_site_id'][$cache_hash]	= 0;
@@ -776,38 +779,38 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function get_refresh_date_by_site_id( $site_id = '' )
-	{
-		// --------------------------------------------
-		//  Set site id
-		// --------------------------------------------
-
-		$site_id	= ( $site_id == '' ) ? $this->EE->config->item('site_id'): $site_id;
-
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder( array( $site_id ) );
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = 0;
-
-		// --------------------------------------------
-		//  Grab refresh rule
-		// --------------------------------------------
-
+    {
+ 		// --------------------------------------------
+        //  Set site id
+        // --------------------------------------------
+        
+        $site_id	= ( $site_id == '' ) ? ee()->config->item('site_id'): $site_id;
+ 		
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder( array( $site_id ) );
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = 0;
+ 		
+ 		// --------------------------------------------
+        //  Grab refresh rule
+        // --------------------------------------------
+		
 		$sql = "/* Super Search data.super_search.php get_refresh_date_by_site_id() */ SELECT date, refresh
 				FROM exp_super_search_refresh_rules
-				WHERE site_id = ".$this->EE->db->escape_str( $site_id )."
+				WHERE site_id = ".ee()->db->escape_str( $site_id )."
 				LIMIT 1";
-
-		$query = $this->EE->db->query( $sql );
-
+		
+		$query = ee()->db->query( $sql );
+		
 		if ( $query->num_rows() == 0 OR $query->row('date') === FALSE )
 		{
 			$this->cached['get_refresh_by_site_id'][$cache_hash]	= 0;
@@ -860,10 +863,10 @@ class Super_search_data extends Addon_builder_data_super_search
 		$sql = "/* Super Search data.super_search.php get_selected_category_groups_by_site_id() */ SELECT category_group_id
 				FROM exp_super_search_refresh_rules
 				WHERE category_group_id != 0
-				AND site_id = ".$this->EE->db->escape_str( $site_id );
-
-		$query = $this->EE->db->query( $sql );
-
+				AND site_id = ".ee()->db->escape_str( $site_id );
+		
+		$query = ee()->db->query( $sql );
+		
 		foreach($query->result_array() as $row)
 		{
 			$this->cached[$cache_name][$cache_hash][] = $row['category_group_id'];
@@ -915,10 +918,10 @@ class Super_search_data extends Addon_builder_data_super_search
 				SELECT template_id
 				FROM exp_super_search_refresh_rules
 				WHERE template_id != 0
-				AND site_id = ".$this->EE->db->escape_str( $site_id ).")";
-
-		$query = $this->EE->db->query( $sql );
-
+				AND site_id = ".ee()->db->escape_str( $site_id ).")";
+		
+		$query = ee()->db->query( $sql );
+		
 		foreach($query->result_array() as $row)
 		{
 			$this->cached[$cache_name][$cache_hash][] = $row['group_id'];
@@ -967,10 +970,10 @@ class Super_search_data extends Addon_builder_data_super_search
 		$sql = "/* Super Search data.super_search.php get_selected_templates_by_site_id() */ SELECT template_id
 				FROM exp_super_search_refresh_rules
 				WHERE template_id != 0
-				AND site_id = ".$this->EE->db->escape_str( $site_id );
-
-		$query = $this->EE->db->query( $sql );
-
+				AND site_id = ".ee()->db->escape_str( $site_id );
+		
+		$query = ee()->db->query( $sql );
+		
 		foreach($query->result_array() as $row)
 		{
 			$this->cached[$cache_name][$cache_hash][] = $row['template_id'];
@@ -1019,10 +1022,10 @@ class Super_search_data extends Addon_builder_data_super_search
 		$sql = "/* Super Search data.super_search.php get_selected_channels_by_site_id() */ SELECT channel_id
 				FROM exp_super_search_refresh_rules
 				WHERE channel_id != 0
-				AND site_id = ".$this->EE->db->escape_str( $site_id );
-
-		$query = $this->EE->db->query( $sql );
-
+				AND site_id = ".ee()->db->escape_str( $site_id );
+		
+		$query = ee()->db->query( $sql );
+		
 		foreach($query->result_array() as $row)
 		{
 			$this->cached[$cache_name][$cache_hash][] = $row['channel_id'];
@@ -1069,11 +1072,11 @@ class Super_search_data extends Addon_builder_data_super_search
 		$sql = "/* Super Search data.super_search.php get_template_groups() */ SELECT tg.group_id, tg.group_name, t.template_id, t.template_name
 				FROM exp_template_groups tg
 				LEFT JOIN exp_templates t ON t.group_id = tg.group_id
-				WHERE tg.site_id = ".$this->EE->db->escape_str( $this->EE->config->item('site_id') )."
+				WHERE tg.site_id = ".ee()->db->escape_str( ee()->config->item('site_id') )."
 				ORDER BY tg.group_order, t.template_name ASC";
-
-		$query = $this->EE->db->query( $sql );
-
+		
+		$query = ee()->db->query( $sql );
+		
 		foreach($query->result_array() as $row)
 		{
 			$this->cached[ $cache_name ][ $cache_hash ][ $row['group_id'] ]	= $row['group_name'];
@@ -1121,206 +1124,163 @@ class Super_search_data extends Addon_builder_data_super_search
 
 		$sql = "/* Super Search data.super_search.php get_templates_by_group_id() */ SELECT t.template_id, t.template_name
 				FROM exp_templates t
-				WHERE t.group_id = ".$this->EE->db->escape_str( $group_id )."
+				WHERE t.group_id = ".ee()->db->escape_str( $group_id )."
 				ORDER BY t.template_name ASC";
-
-		$query = $this->EE->db->query( $sql );
-
+		
+		$query = ee()->db->query( $sql );
+		
 		foreach($query->result_array() as $row)
 		{
 			$this->cached[ $cache_name ][ $cache_hash ][ $row['template_id'] ]	= $row['template_name'];
 		}
-
-		// --------------------------------------------
-		//  Return Data
-		// --------------------------------------------
-
-		return $this->cached[$cache_name][$cache_hash];
-	}
-
-	//	End get templates by group id
-
+        
+ 		// --------------------------------------------
+        //  Return Data
+        // --------------------------------------------
+ 		
+ 		return $this->cached[$cache_name][$cache_hash];	
+    }
+    
+    //	End get templates by group id
+	
 	// --------------------------------------------------------------------
-
+	
 	/**
 	 * Playa is installed
 	 *
 	 * @access	public
 	 * @return	boolean
 	 */
-
+    
 	function playa_is_installed()
-	{
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder(func_get_args());
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = FALSE;
-
-		// --------------------------------------------
-		//	Get out if we are in EE 2.x. Brandon's not ready yet.
-		// --------------------------------------------
-
-		if ( APP_VER >= 2.0 )
-		{
-			return FALSE;
-		}
-
-		// --------------------------------------------
-		//	FieldFrame installed?
-		// --------------------------------------------
-
-		if ( $this->EE->db->table_exists( 'exp_ff_fieldtypes' ) === FALSE )
-		{
-			return FALSE;
-		}
-
-		// --------------------------------------------
-		//	Check DB
-		// --------------------------------------------
-
-		$query	= $this->EE->db->query( "SELECT COUNT(*) AS count FROM exp_ff_fieldtypes WHERE class = 'playa' AND enabled = 'y'" );
-
-		if ( $query->row('count') > 0 )
-		{
-			return $this->cached[$cache_name][$cache_hash] = TRUE;
-		}
-
-		return FALSE;
-	}
-
-	//	End playa is installed
+    {        
+        return FALSE;
+ 	}
+ 	
+ 	//	End playa is installed
 
 	// --------------------------------------------------------------------
-
+	
 	/**
 	 * Set default cache prefs
 	 *
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function set_default_cache_prefs()
-	{
-		$sites	= $this->get_sites();
-
-		// --------------------------------------------
-		//	Get existing prefs
-		// --------------------------------------------
-
-		$sql	= "SELECT site_id FROM exp_super_search_refresh_rules";
-
-		$query	= $this->EE->db->query( $sql );
-
-		$prefs	= array();
-
-		foreach ( $query->result_array() as $row )
-		{
-			$prefs[]	= $row['site_id'];
-		}
-
-		// --------------------------------------------
-		//	Loop and load
-		// --------------------------------------------
-
-		$refresh		= 10;
-		$next_refresh	= $this->EE->localize->now + ( $refresh * 60 );
-
-		foreach ( array_keys( $sites ) as $site )
-		{
-			if ( in_array( $site, $prefs ) === TRUE ) continue;
-
-			$sql	= $this->EE->db->insert_string( 'exp_super_search_refresh_rules', array( 'site_id' => $site, 'refresh' => $refresh, 'date' => $next_refresh, 'member_id' => $this->EE->session->userdata('member_id') ) );
-
-			$this->EE->db->query( $sql );
-		}
-	}
-
-	//	End set default cache prefs
+    { 		
+ 		$sites	= $this->get_sites();
+        
+ 		// --------------------------------------------
+        //	Get existing prefs
+        // --------------------------------------------
+        
+        $sql	= "SELECT site_id FROM exp_super_search_refresh_rules";
+        
+        $query	= ee()->db->query( $sql );
+        
+        $prefs	= array();
+        
+        foreach ( $query->result_array() as $row )
+        {
+        	$prefs[]	= $row['site_id'];
+        }
+        
+ 		// --------------------------------------------
+        //	Loop and load
+        // --------------------------------------------
+        
+        $refresh		= 10;
+        $next_refresh	= ee()->localize->now + ( $refresh * 60 );
+        
+        foreach ( array_keys( $sites ) as $site )
+        {
+        	if ( in_array( $site, $prefs ) === TRUE ) continue;
+        	
+        	$sql	= ee()->db->insert_string( 'exp_super_search_refresh_rules', array( 'site_id' => $site, 'refresh' => $refresh, 'date' => $next_refresh, 'member_id' => ee()->session->userdata('member_id') ) );
+        	
+        	ee()->db->query( $sql );
+        }
+ 	}
+ 	
+ 	//	End set default cache prefs
 
 	// --------------------------------------------------------------------
-
+	
 	/**
 	 * Set default cache prefs
 	 *
 	 * @access	public
 	 * @return	null
 	 */
-
+    
 	function set_default_search_preferences()
-	{
-		// --------------------------------------------
-		//	Prep
-		// --------------------------------------------
-
-		$defaults = array(
-			'use_ignore_word_list'	=> 'y',
+    { 		
+ 		// --------------------------------------------
+        //	Prep
+        // --------------------------------------------
+        
+        $defaults = array( 
+        	'use_ignore_word_list'	=> 'y', 
 			'ignore_word_list'		=> 'a||and||of||or||the',
 			'enable_search_log'		=> 'n'
 		);
-
-		// --------------------------------------------
-		//	Loop
-		// --------------------------------------------
-
-		foreach ( $this->get_sites() as $site_id => $site_name )
-		{
+		
+ 		// --------------------------------------------
+        //	Loop
+        // --------------------------------------------
+        
+        foreach ( $this->get_sites() as $site_id => $site_name )
+        {
 			// --------------------------------------------
 			//	Load
 			// --------------------------------------------
-
-			$this->set_preference( $defaults, $site_id );
-		}
-
+        
+        	$this->set_preference( $defaults, $site_id );
+        }
+        
 		// --------------------------------------------
 		//	Return
 		// --------------------------------------------
-
+		
 		return TRUE;
-	}
-
-	//	End set default cache prefs
+ 	}
+ 	
+ 	//	End set default cache prefs
 
 	// --------------------------------------------------------------------
-
+	
 	/**
 	 * Set new refresh date
 	 *
 	 * @access	public
 	 * @return	boolean
 	 */
-
+    
 	function set_new_refresh_date( $site_id = '' )
-	{
-		// --------------------------------------------
-		//  Set site id
-		// --------------------------------------------
-
-		$site_id	= ( $site_id == '' ) ? $this->EE->config->item('site_id'): $site_id;
-
-		// --------------------------------------------
-		//  Update
-		// --------------------------------------------
-
-		$refresh	= $this->get_refresh_by_site_id( $site_id );
-
-		$sql	= $this->EE->db->update_string( 'exp_super_search_refresh_rules', array( 'date' => $this->EE->localize->now + ( $refresh * 60 ) ), array( 'site_id' => $site_id ) );
-
-		$this->EE->db->query( $sql );
-	}
-
-	//	End set new refresh date
-
+    { 		
+ 		// --------------------------------------------
+        //  Set site id
+        // --------------------------------------------
+        
+        $site_id	= ( $site_id == '' ) ? ee()->config->item('site_id'): $site_id;
+ 		
+ 		// --------------------------------------------
+        //  Update
+        // --------------------------------------------
+        
+        $refresh	= $this->get_refresh_by_site_id( $site_id );
+        
+        $sql	= ee()->db->update_string( 'exp_super_search_refresh_rules', array( 'date' => ee()->localize->now + ( $refresh * 60 ) ), array( 'site_id' => $site_id ) );
+        
+        ee()->db->query( $sql );
+ 	}
+ 	
+ 	//	End set new refresh date
+	
 	// --------------------------------------------------------------------
-
+	
 	/**
 	 * Set preference
 	 *
@@ -1329,79 +1289,65 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function set_preference( $preferences = array(), $site_id = '' )
-	{
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
+    {    
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder(func_get_args());
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = array();
+    
+ 		// --------------------------------------------
+        //	Grab prefs from DB
+        // --------------------------------------------
+        
+        if( $site_id == '' ) $site_id = ee()->config->item('site_id');
 
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder(func_get_args());
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = array();
-
-		// --------------------------------------------
-		//	Grab prefs from DB
-		// --------------------------------------------
-
-		if( $site_id == '' ) $site_id = $this->EE->config->item('site_id');
-
-		$sql	= "SELECT site_system_preferences
+        $sql	= "SELECT site_system_preferences
 					FROM exp_sites
-					WHERE site_id = " . $this->EE->db->escape_str( $site_id );
+					WHERE site_id = " . ee()->db->escape_str( $site_id );
+        	
+        $query	= ee()->db->query( $sql );
 
-		$query	= $this->EE->db->query( $sql );
+        if ( $query->num_rows() == 0 ) return FALSE;
+        
+        ee()->load->helper('string');
+        
+		$this->cached[$cache_name][$cache_hash] = unserialize( base64_decode( $query->row('site_system_preferences') ) );
 
-		if ( $query->num_rows() == 0 ) return FALSE;
-
-		$this->EE->load->helper('string');
-
-		if( APP_VER < 2.0 )
-		{
-			$this->cached[$cache_name][$cache_hash] = unserialize( $query->row('site_system_preferences') );
-		}
-		else
-		{
-			$this->cached[$cache_name][$cache_hash] = unserialize( base64_decode( $query->row('site_system_preferences') ) );
-		}
-
-		// --------------------------------------------
-		//	Add our prefs
-		// --------------------------------------------
-
-		$prefs	= array();
-
-		foreach ( explode( "|", SUPER_SEARCH_PREFERENCES ) as $val )
-		{
-			if ( isset( $preferences[$val] ) === TRUE )
-			{
-				$this->cached[$cache_name][$cache_hash][$val]	= $preferences[$val];
-			}
-		}
-
+ 		// --------------------------------------------
+        //	Add our prefs
+        // --------------------------------------------
+        
+        $prefs	= array();
+        
+        foreach ( explode( "|", SUPER_SEARCH_PREFERENCES ) as $val )
+        {
+        	if ( isset( $preferences[$val] ) === TRUE )
+        	{
+        		$this->cached[$cache_name][$cache_hash][$val]	= $preferences[$val];
+        	}
+        }
+			
 
 		$prefs = '';
+		
+		$prefs = base64_encode( serialize( $this->cached[$cache_name][$cache_hash] ) );
 
-		if( APP_VER < 2.0 )
-		{
-			$prefs = addslashes( serialize( $this->cached[$cache_name][$cache_hash] ) );
-		}
-		else
-		{
-			$prefs = base64_encode( serialize( $this->cached[$cache_name][$cache_hash] ) );
-		}
-
-		$this->EE->db->query( $this->EE->db->update_string(
+		ee()->db->query( ee()->db->update_string(
 					'exp_sites',
 					array(
 						'site_system_preferences' => $prefs
 					),
 					array(
-						'site_id'	=> $this->EE->db->escape_str( $site_id )
+						'site_id'	=> ee()->db->escape_str( $site_id )
 					)
 				)
 			);
@@ -1421,45 +1367,38 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function reload_preferences()
-	{
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
+    {    
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder(func_get_args());
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = array();
+    
+ 		// --------------------------------------------
+        //	Grab prefs from DB
+        // --------------------------------------------
 
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder(func_get_args());
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = array();
-
-		// --------------------------------------------
-		//	Grab prefs from DB
-		// --------------------------------------------
-
-		$sql	= "SELECT site_system_preferences
+        $sql	= "SELECT site_system_preferences
 					FROM exp_sites
-					WHERE site_id = " . $this->EE->db->escape_str( $this->EE->config->item('site_id') );
+					WHERE site_id = " . ee()->db->escape_str( ee()->config->item('site_id') );
+        	
+        $query	= ee()->db->query( $sql );
 
-		$query	= $this->EE->db->query( $sql );
+        if ( $query->num_rows() == 0 ) return FALSE;
+        
+        ee()->load->helper('string');
+        
+		$this->cached[$cache_name][$cache_hash] = unserialize( base64_decode( $query->row('site_system_preferences') ) );
 
-		if ( $query->num_rows() == 0 ) return FALSE;
-
-		$this->EE->load->helper('string');
-
-		if( APP_VER < 2.0 )
-		{
-			$this->cached[$cache_name][$cache_hash] = unserialize( $query->row('site_system_preferences') );
-		}
-		else
-		{
-			$this->cached[$cache_name][$cache_hash] = unserialize( base64_decode( $query->row('site_system_preferences') ) );
-		}
-
-		return $this->cached[$cache_name][$cache_hash];
+ 		return $this->cached[$cache_name][$cache_hash];
 	}
 
 	//	End set preference
@@ -1474,33 +1413,33 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function time_to_refresh_cache( $site_id = '' )
-	{
-		// --------------------------------------------
-		//  Set site id
-		// --------------------------------------------
-
-		$site_id	= ( $site_id == '' ) ? $this->EE->config->item('site_id'): $site_id;
-
-		// --------------------------------------------
-		//  Prep Cache, Return if Set
-		// --------------------------------------------
-
-		$cache_name = __FUNCTION__;
-		$cache_hash = $this->_imploder( array( $site_id ) );
-
-		if (isset($this->cached[$cache_name][$cache_hash]))
-		{
-			return $this->cached[$cache_name][$cache_hash];
-		}
-
-		$this->cached[$cache_name][$cache_hash] = FALSE;
-
-		// --------------------------------------------
-		//  Should we refresh?
-		// --------------------------------------------
-
-		if ( $this->get_refresh_date_by_site_id( $site_id ) > 0 AND $this->get_refresh_date_by_site_id( $site_id ) <= $this->EE->localize->now )
-		{
+    { 		
+ 		// --------------------------------------------
+        //  Set site id
+        // --------------------------------------------
+        
+        $site_id	= ( $site_id == '' ) ? ee()->config->item('site_id'): $site_id;
+ 		
+ 		// --------------------------------------------
+        //  Prep Cache, Return if Set
+        // --------------------------------------------
+ 		
+ 		$cache_name = __FUNCTION__;
+ 		$cache_hash = $this->_imploder( array( $site_id ) );
+ 		
+ 		if (isset($this->cached[$cache_name][$cache_hash]))
+ 		{
+ 			return $this->cached[$cache_name][$cache_hash];
+ 		}
+ 		
+ 		$this->cached[$cache_name][$cache_hash] = FALSE;
+ 		
+ 		// --------------------------------------------
+        //  Should we refresh?
+        // --------------------------------------------
+        
+        if ( $this->get_refresh_date_by_site_id( $site_id ) > 0 AND $this->get_refresh_date_by_site_id( $site_id ) <= ee()->localize->now )
+        {
 			$this->cached[$cache_name][$cache_hash] = TRUE;
 		}
 
@@ -1519,45 +1458,47 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function log_search( $uri = array(), $results = 0)
-	{
-		// --------------------------------------------
-		//  Prep
-		// --------------------------------------------
-
-		$site_id	= ( isset( $uri['uri']['site'] ) ) ? $uri['uri']['site'] : $this->EE->config->item('site_id');
+    {
+ 		// --------------------------------------------
+        //  Prep
+        // --------------------------------------------
+ 		
+ 		$site_id	= ( isset( $uri['uri']['site'] ) ) ? $uri['uri']['site'] : ee()->config->item('site_id');
 
 		$keywords	= ( isset( $uri['uri']['keywords'] ) ) ? $uri['uri']['keywords'] : '';
-
+		
 		$uri		= ( isset( $uri['uri'] ) ) ? $uri['uri']: array();
-
-		// --------------------------------------------
-		//  We don't log searches by default. They gobble DB.
-		// --------------------------------------------
-
-		if ( $this->EE->config->item('enable_search_log') != 'n' )
+		
+ 		// --------------------------------------------
+        //  We don't log searches by default. They gobble DB.
+        // --------------------------------------------
+		
+		if ( ee()->config->item('enable_search_log') != 'n' )
 		{
 			$arr = array(
 					'site_id' 		=> $site_id,
 					'results'		=> $results,
-					'search_date'	=> $this->EE->localize->now,
-					'term'			=> $keywords,
-					'query' 		=> serialize( $uri ) );
-
-			$sql	= $this->EE->db->insert_string( 'exp_super_search_log', $arr );
-
-			$this->EE->db->query( $sql );
+					'search_date'	=> ee()->localize->now,
+					'term'			=> ( $keywords ),
+					'query' 		=> base64_encode( serialize( $uri )));
+	
+			$sql	= ee()->db->insert_string( 'exp_super_search_log', $arr );
+			
+			ee()->db->insert('exp_super_search_log',$arr);
+			
+			// ee()->db->query( $sql );
 		}
+		
+ 		// --------------------------------------------
+        //  Log terms
+        // --------------------------------------------
 
-		// --------------------------------------------
-		//  Log terms
-		// --------------------------------------------
+        $this->log_terms( $keywords );
 
-		$this->log_terms( $keywords );
-
-		return TRUE;
-	}
-
-	//	End save search to log
+        return TRUE;
+ 	}
+ 	
+ 	//	End save search to log
 
 	// --------------------------------------------------------------------
 
@@ -1567,40 +1508,40 @@ class Super_search_data extends Addon_builder_data_super_search
 	 * @access	public
 	 * @return	boolean
 	 */
-
+    
 	function log_terms( $keywords = '' )
-	{
-		if( $keywords == '' ) return TRUE;
+    {
+        if( $keywords == '' ) return TRUE;
 
-		// --------------------------------------------
-		//  Prep the terms, update if set
-		// --------------------------------------------
+ 		// --------------------------------------------
+        //  Prep the terms, update if set
+        // --------------------------------------------
 
-		$sql = " INSERT INTO exp_super_search_terms ( term, term_soundex, site_id, first_seen, last_seen, count )
-					VALUES ";
+        $sql = " INSERT INTO exp_super_search_terms ( term, term_soundex, site_id, first_seen, last_seen, count )
+        			VALUES ";
 
-		$sql_block = array();
+        $sql_block = array();
 
-		$keywords = explode( ' ', $keywords );
+       	$keywords = ( explode( ' ', $keywords ));
 
-		if( count( $keywords ) > 0 )
-		{
-			foreach( $keywords AS $term )
-			{
-				$sql_block[] = "( '" . $this->EE->db->escape_str( $term ) . "', soundex('" . $this->EE->db->escape_str( $term ) . "'), " . $this->EE->config->item('site_id') . ", '" . $this->EE->localize->now . "', '". $this->EE->localize->now . "', 1 )";
-			}
-		}
+       	if( count( $keywords ) > 0 ) 
+       	{
+       		foreach( $keywords AS $term )
+       		{       			
+       			$sql_block[] = "( '" . ee()->db->escape_str( $term ) . "', soundex('" . ee()->db->escape_str( $term ) . "'), " . ee()->db->escape_str( ee()->config->item('site_id') ) . ", '" . ee()->db->escape_str( ee()->localize->now ) . "', '". ee()->db->escape_str( ee()->localize->now ) . "', 1 )";
+       		}
+       	}
 
-		$sql .= implode( ', ', $sql_block );
+       	$sql .= implode( ', ', $sql_block );
 
-		$sql .= " ON DUPLICATE KEY UPDATE last_seen = '" . $this->EE->localize->now . "', count = count + 1 , first_seen = IF( first_seen = 0, '". $this->EE->localize->now . "', first_seen ) ";
+       	$sql .= " ON DUPLICATE KEY UPDATE last_seen = '" . ee()->db->escape_str( ee()->localize->now ) . "', count = count + 1 , first_seen = IF( first_seen = 0, '". ee()->db->escape_str( ee()->localize->now ) . "', first_seen ) ";
 
-		$this->EE->db->query( $sql );
+       	ee()->db->query( $sql );
 
-		return TRUE;
-	}
-
-	//	End save search to terms
+        return TRUE;
+ 	}
+ 	
+ 	//	End save search to terms
 
 	// --------------------------------------------------------------------
 
@@ -1613,7 +1554,7 @@ class Super_search_data extends Addon_builder_data_super_search
 	 * @param 	int
 	 * @return	bool
 	 */
-
+	 
 	function _build_index_single( $entry_id = 0 )
 	{
 		if( $entry_id <= 0 OR ! is_numeric( $entry_id ) ) return false;
@@ -1621,33 +1562,50 @@ class Super_search_data extends Addon_builder_data_super_search
 		$data = $this->sess['lexicon']['entries'][ $entry_id ];
 
 		$terms = array();
+		
+		ee()->load->library('api');
+		ee()->api->instantiate('channel_fields');
+		ee()->api_channel_fields->fetch_all_fieldtypes();
 
 		foreach( $data as $key => $row )
 		{
 			if( $key == 'entry_id' ) continue;
 
-			if( isset( $this->sess['index']['fields'][$key] ) === TRUE AND method_exists( $this->fields[$key], 'third_party_search_index' ) === TRUE )
+			if (isset($this->sess['index']['fields'][$key]))
 			{
-				$terms[ $key ] = $this->EE->db->escape_str( $this->fields[$key]->third_party_search_index($row) );
+				$id	= str_replace('field_id_', '', $key);
+				$meta	= $this->sess['index']['fields'][$key];
+				ee()->api_channel_fields->set_settings(
+					$id,
+					array(
+						'field_id'		=> $id,
+						'field_type'	=> $meta['name']
+					)
+				);
+				ee()->api_channel_fields->setup_handler($id);
+					
+				if (ee()->api_channel_fields->check_method_exists('third_party_search_index'))
+				{
+					$terms[$key]	= ee()->db->escape_str(ee()->api_channel_fields->apply('third_party_search_index', array($row)));
+				}
 			}
 		}
 
 		$insert = array(
 			'entry_id'      => $entry_id,
-			'site_id'       => $this->EE->config->item('site_id'),
-			'index_date'    => $this->EE->localize->now
+			'site_id'       => ee()->config->item('site_id'),
+			'index_date'    => ee()->localize->now
 		);
 
 		$insert = array_merge( $insert, $terms );
 
-
-		$sql = $this->EE->db->insert_string('exp_super_search_indexes', $insert );
+		$sql = ee()->db->insert_string('exp_super_search_indexes', $insert );
 
 		// --------------------------------------
 		// Change insert to replace to update existing entry
 		// --------------------------------------
 
-		$this->EE->db->query( preg_replace('/^INSERT/', 'REPLACE', $sql) );
+		ee()->db->query( preg_replace('/^INSERT/', 'REPLACE', $sql) );
 
 		return true;
 	}
@@ -1705,7 +1663,7 @@ class Super_search_data extends Addon_builder_data_super_search
 		if( $type == 'build' AND $batch == 0 )
 		{
 			// This is a full rebuild, first zero out all the counts
-			$this->EE->db->query( 'UPDATE exp_super_search_terms SET entry_count = 0');
+			ee()->db->query( 'UPDATE exp_super_search_terms SET entry_count = 0');
 		}
 
 		// This is the build lexicon
@@ -1732,9 +1690,9 @@ class Super_search_data extends Addon_builder_data_super_search
 
 			$sql = " SELECT entry_id FROM exp_channel_titles ORDER BY entry_id ASC ";
 
-			$sql .= " LIMIT " . $batch . ", " . $batch_size;
+			$sql .= " LIMIT " . ee()->db->escape_str( $batch ) . ", " . ee()->db->escape_str( $batch_size );
 
-			$query = $this->EE->db->query( $sql );
+			$query = ee()->db->query( $sql );
 
 			$ret['batch'] 	= $batch + $batch_size;
 
@@ -1772,7 +1730,7 @@ class Super_search_data extends Addon_builder_data_super_search
 
 		$entries_str = '0';
 
-		// Call the build function with entry_id, one at a time --> GO!
+		// Call the build function with entry_id, one at a time --> GO!		
 		foreach( $this->sess['lexicon']['entries'] as $entry_id => $row )
 		{
 			$this->_build_index_single( $entry_id );
@@ -1783,11 +1741,11 @@ class Super_search_data extends Addon_builder_data_super_search
 		// Mark as batch/entry processed in log
 
 		//TODO MEMBER_ID hardcoded
-		$this->EE->db->query(" INSERT INTO exp_super_search_lexicon_log ( type, entry_ids, member_id, origin, action_date )
-					VALUES ( 'build', '" . $entries_str . "', 0, 'manual', " . $this->EE->localize->now . " ) ");
+		ee()->db->query(" INSERT INTO exp_super_search_lexicon_log ( type, entry_ids, member_id, origin, action_date ) 
+					VALUES ( 'build', '" . ee()->db->escape_str( $entries_str ) . "', 0, 'manual', " . ee()->db->escape_str( ee()->localize->now ) . " ) ");
 
 		// Cleanup - optimize that babby
-		$this->EE->db->query( " OPTIMIZE TABLE exp_super_search_terms ");
+		ee()->db->query( " OPTIMIZE TABLE exp_super_search_terms ");
 
 		return $ret;
 	}
@@ -1856,9 +1814,9 @@ class Super_search_data extends Addon_builder_data_super_search
 
 			$sql = " SELECT term_id FROM exp_super_search_terms WHERE count > 0 AND entry_count = 0 AND suggestions = '' ORDER BY term_id ASC ";
 
-			$sql .= " LIMIT " . $batch . ", " . $batch_size;
+			$sql .= " LIMIT " . ee()->db->escape_str( $batch ) . ", " . ee()->db->escape_str( $batch_size );
 
-			$query = $this->EE->db->query( $sql );
+			$query = ee()->db->query( $sql );
 
 			$ret['batch'] 	= $batch + $batch_size;
 
@@ -1890,7 +1848,7 @@ class Super_search_data extends Addon_builder_data_super_search
 			return false;
 		}
 
-		// Call the build function with entry_id, one at a time --> GO!
+		// Call the build function with entry_id, one at a time --> GO!		
 		foreach( $this->sess['spelling']['terms'] as $term_id => $row )
 		{
 			$this->_suggest_spelling( $entry_id );
@@ -1947,11 +1905,11 @@ class Super_search_data extends Addon_builder_data_super_search
 			if ( empty( $term ) ) continue;
 
 			$sql = " INSERT INTO exp_super_search_terms
-				( term, term_soundex, term_length, entry_count )
-				VALUES ( '" . $this->EE->db->escape_str( $term ) . "', soundex('" . $this->EE->db->escape_str( $term ) . "'), " . strlen( $this->EE->db->escape_str( $term ) ) . ", 1 )
-				ON DUPLICATE KEY UPDATE entry_count = entry_count + 1, term_soundex = soundex(term), term_length = " . strlen( $this->EE->db->escape_str( $term ) );
-
-			$query = $this->EE->db->query( $sql );
+				( term, term_soundex, term_length, entry_count ) 
+				VALUES ( '" . ee()->db->escape_str( $term ) . "', soundex('" . ee()->db->escape_str( $term ) . "'), " . strlen( ee()->db->escape_str( $term ) ) . ", 1 )
+				ON DUPLICATE KEY UPDATE entry_count = entry_count + 1, term_soundex = soundex(term), term_length = " . strlen( ee()->db->escape_str( $term ) );
+	
+			$query = ee()->db->query( $sql );
 		}
 
 		return true;
@@ -1979,11 +1937,11 @@ class Super_search_data extends Addon_builder_data_super_search
 			$sql .= ", " . implode( ', ', $this->sess['lexicon']['fields']['searchable'] );
 		}
 
-		$sql .= " FROM " . $this->sc->db->channel_data . " AS d
-					LEFT JOIN " . $this->sc->db->channel_titles . " t ON t.entry_id = d.entry_id
-					WHERE d.entry_id IN ( '" . implode("','", $this->sess['lexicon']['entry_ids'] ) . "') ";
-
-		$query = $this->EE->db->query( $sql );
+		$sql .= " FROM exp_channel_data AS d 
+					LEFT JOIN exp_channel_titles t ON t.entry_id = d.entry_id 
+				 	WHERE d.entry_id IN ( '" . implode("','", ee()->db->escape_str( $this->sess['lexicon']['entry_ids'] ) ) . "') ";
+				
+		$query = ee()->db->query( $sql );
 
 		foreach( $query->result_array() as $row )
 		{
@@ -2028,7 +1986,7 @@ class Super_search_data extends Addon_builder_data_super_search
 			);
 
 			// Load the necessary stuff
-			$this->EE->load->library('addons');
+			ee()->load->library('addons');
 
 			// Include EE Fieldtype class
 			if ( ! class_exists('EE_Fieldtype'))
@@ -2042,19 +2000,18 @@ class Super_search_data extends Addon_builder_data_super_search
 			// Set fieldtypes
 			if ($fieldtypes === NULL)
 			{
-				$fieldtypes = $this->EE->addons->get_installed('fieldtypes');
+				$fieldtypes = ee()->addons->get_installed('fieldtypes');
 			}
-
 
 			// --------------------------------------------
 			//	Begin SQL
 			// --------------------------------------------
 
 			$sql	= "/* Super Search get fields */ SELECT " . implode( ',', $columns ) . "
-						FROM " . $this->sc->db->fields . " cf
+						FROM exp_channel_fields cf
 						WHERE field_search = 'y' ";
 
-			$query = $this->EE->db->query( $sql );
+			$query = ee()->db->query( $sql );
 
 			$third_party_fields = FALSE;
 
@@ -2076,10 +2033,7 @@ class Super_search_data extends Addon_builder_data_super_search
 					if (method_exists($fieldtypes[$row['field_type']]['class'],'low_search_index')
 						OR method_exists($fieldtypes[$row['field_type']]['class'],'third_party_search_index'))
 					{
-						// Initiate this fieldtype
-						$this->fields['field_id_'.$row['field_id']] = new $fieldtypes[$row['field_type']]['class'];
-
-						$this->sess['index']['fields']['field_id_'.$row['field_id']][] = $fieldtypes[$row['field_type']]['class'];
+						$this->sess['index']['fields']['field_id_'.$row['field_id']] = $fieldtypes[$row['field_type']];
 
 						$third_party_fields = TRUE;
 					}
@@ -2089,13 +2043,13 @@ class Super_search_data extends Addon_builder_data_super_search
 			if( $third_party_fields )
 			{
 				// Make sure we have all the needed columns ready in our exp_super_search_indexes table
-				$query = $this->EE->db->query( " SHOW COLUMNS FROM exp_super_search_indexes WHERE Field IN( '" . implode( array_keys( $this->sess['index']['fields'] ), "','" ) . " ') ");
+				$query = ee()->db->query( " SHOW COLUMNS FROM exp_super_search_indexes WHERE Field IN( '" . implode( array_keys( ee()->db->escape_str( $this->sess['index']['fields'] ) ), "','" ) . " ') ");
 
 				$sql = array();
 
 				$pref_cols = array();
 
-				foreach( $this->sess['index']['fields'] AS $field_id => $class )
+				foreach( $this->sess['index']['fields'] AS $field_id => $meta )
 				{
 					$col_exists = FALSE;
 
@@ -2107,7 +2061,7 @@ class Super_search_data extends Addon_builder_data_super_search
 					if( !$col_exists )
 					{
 						// This column doesnt exist in our _indexes table, create it
-						$sql[] = " ALTER TABLE  exp_super_search_indexes ADD COLUMN " . $field_id . " longtext ";
+						$sql[] = " ALTER TABLE  exp_super_search_indexes ADD COLUMN " . ee()->db->escape_str( $field_id ) . " longtext ";
 
 						//Update this site's prefs array to allow us to hook onto these new columns during the main search loop w/out
 						// incuring any additional costs for sites w/out any 3rd party field indexes
@@ -2121,7 +2075,7 @@ class Super_search_data extends Addon_builder_data_super_search
 					// We have missing cols. Exectue the querys to add them
 					foreach( $sql AS $s )
 					{
-						$this->EE->db->query( $s );
+						ee()->db->query( $s );
 					}
 				}
 
@@ -2143,7 +2097,7 @@ class Super_search_data extends Addon_builder_data_super_search
 
 					// Re-sync them to the db
 
-					$this->set_preference( $prefs, $this->EE->config->item('site_id') );
+					$this->set_preference( $prefs, ee()->config->item('site_id') );
 				}
 			}
 		}
@@ -2162,36 +2116,36 @@ class Super_search_data extends Addon_builder_data_super_search
 	 */
 
 	function get_plural( $word )
-	{
+    {
 
-		// Don't bother if we've only got a 2 character string
-		if( strlen( $word ) < 3 AND $word != 'ox' )
-			return $word;
+    	// Don't bother if we've only got a 2 character string
+    	if( strlen( $word ) < 3 AND $word != 'ox' )
+    		return $word;
 
 
-		// save some time in the case that singular and plural are the same
-		if ( in_array( strtolower( $word ), $this->uncountable ) )
-			return $word;
+        // save some time in the case that singular and plural are the same
+        if ( in_array( strtolower( $word ), $this->uncountable ) )
+            return $word;
 
-		// check for irregular singular forms
-		foreach ( $this->irregular as $pattern => $result )
-		{
-			$pattern = '/' . $pattern . '$/i';
+        // check for irregular singular forms
+        foreach ( $this->irregular as $pattern => $result )
+        {
+            $pattern = '/' . $pattern . '$/i';
 
-			if ( preg_match( $pattern, $word ) )
-				return preg_replace( $pattern, $result, $word);
-		}
+            if ( preg_match( $pattern, $word ) )
+                return preg_replace( $pattern, $result, $word);
+        }
 
-		// check for matches using regular expressions
-		foreach ( $this->plural as $pattern => $result )
-		{
-			if ( preg_match( $pattern, $word ) )
-				return preg_replace( $pattern, $result, $word );
-		}
+        // check for matches using regular expressions
+        foreach ( $this->plural as $pattern => $result )
+        {
+            if ( preg_match( $pattern, $word ) )
+                return preg_replace( $pattern, $result, $word );
+        }
 
-		return $word;
-	}
-
+        return $word;
+    }
+    
 	//	END Pluralize
 
 	// --------------------------------------------------------------------
@@ -2204,36 +2158,36 @@ class Super_search_data extends Addon_builder_data_super_search
 	 * @return	string
 	 */
 
-	function get_singular( $word )
-	{
-		// Don't bother if we've only got a 3 character string
-		if( strlen( $word ) < 4 )
-			return $word;
+    function get_singular( $word )
+    {
+    	// Don't bother if we've only got a 3 character string
+    	if( strlen( $word ) < 4 )
+    		return $word;
 
-		// save some time in the case that singular and plural are the same
-		if ( in_array( strtolower( $word ), $this->uncountable ) )
-			return $word;
+        // save some time in the case that singular and plural are the same
+        if ( in_array( strtolower( $word ), $this->uncountable ) )
+            return $word;
 
-		// check for irregular plural forms
-		foreach ( $this->irregular as $result => $pattern )
-		{
-			$pattern = '/' . $pattern . '$/i';
+        // check for irregular plural forms
+        foreach ( $this->irregular as $result => $pattern )
+        {
+            $pattern = '/' . $pattern . '$/i';
 
-			if ( preg_match( $pattern, $word ) )
-				return preg_replace( $pattern, $result, $word);
-		}
+            if ( preg_match( $pattern, $word ) )
+                return preg_replace( $pattern, $result, $word);
+        }
 
-		// check for matches using regular expressions
-		foreach ( $this->singular as $pattern => $result )
-		{
-			if ( preg_match( $pattern, $word ) )
-				return preg_replace( $pattern, $result, $word );
-		}
+        // check for matches using regular expressions
+        foreach ( $this->singular as $pattern => $result )
+        {
+            if ( preg_match( $pattern, $word ) )
+                return preg_replace( $pattern, $result, $word );
+        }
 
-		return $word;
-	}
-
-	//	END Singularize
+        return $word;
+    }
+    
+    //	END Singularize
 
 	// --------------------------------------------------------------------
 
@@ -2322,13 +2276,27 @@ class Super_search_data extends Addon_builder_data_super_search
 		{
 			foreach ( $field_map as $key => $val )
 			{
-				if ( is_numeric( $val ) === TRUE )
+				if (is_numeric($val))
 				{
 					$this->cache['flag_state_field_map']['field_id_'.$val]	= $key;
 				}
-				else
+				elseif (is_string($val))
 				{
 					$this->cache['flag_state_field_map'][$val]	= $key;
+				}
+				elseif (is_array($val) AND $key == 'supersearch_msm_duplicate_fields')
+				{
+					// We may have our msm duplicate fields array here, in which case we need to add duplicated field names into our search, ouch
+					foreach ($val as $name => $msm)
+					{
+						foreach ($msm as $id)
+						{
+							if (is_numeric($id) AND ! in_array('field_id_' . $id, $this->cache['flag_state_field_map']))
+							{
+								$this->cache['flag_state_field_map']['field_id_'.$id]	= $name;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -2416,42 +2384,42 @@ class Super_search_data extends Addon_builder_data_super_search
 	 * Checks a potentially invalid bit of sql, for validity before running unprotected
 	 *
 	 * Helper function to check if a sql string is bad before running it.
-	 * This was added in SuperSearch 2.0 for the magical feature where we
-	 * allow regex searching on fields.
-	 *
+	 * This was added in SuperSearch 2.0 for the magical feature where we 
+	 * allow regex searching on fields. 
+	 * 
 	 * We don't trust users, so lets be safe about it.
 	 *
 	 * @access	public
 	 * @param 	string
 	 * @return	string
 	 */
+	 
+    function check_sql( $sql )
+    {
+    	if( $sql == '' ) return FALSE;
 
-	function check_sql( $sql )
-	{
-		if( $sql == '' ) return FALSE;
+    	$db_error_state = ee()->db->db_debug; 
 
-		$db_error_state = $this->EE->db->db_debug;
+		ee()->db->trans_start( TRUE );
 
-		$this->EE->db->trans_start( TRUE );
+		ee()->db->db_debug = FALSE;
 
-		$this->EE->db->db_debug = FALSE;
+    	$query = ee()->db->query( $sql );
 
-		$query = $this->EE->db->query( $sql );
+		ee()->db->trans_complete();
 
-		$this->EE->db->trans_complete();
-
-		if ($this->EE->db->trans_status() === FALSE)
+		if (ee()->db->trans_status() === FALSE)
 		{
-			$this->EE->db->trans_rollback();
-			// Revert the db_error state
-			$this->EE->db->db_debug = $db_error_state;
+		    ee()->db->trans_rollback();
+			// Revert the db_error state 
+			ee()->db->db_debug = $db_error_state;
 
 			return FALSE;
 		}
 		else
 		{
-			// Revert the db_error state
-			$this->EE->db->db_debug = $db_error_state;
+			// Revert the db_error state 
+			ee()->db->db_debug = $db_error_state;
 
 			return $query;
 		}
@@ -2468,9 +2436,9 @@ class Super_search_data extends Addon_builder_data_super_search
 	 * @param 	string
 	 * @return	string
 	 */
-
-	function spelling_suggestions( $words = array(), $build = TRUE )
-	{
+	 
+    function spelling_suggestions( $words = array(), $fuzzy_distance = 2, $build = TRUE )
+    {
 		if( count($words) < 1 ) return;
 
 		$possible = array();
@@ -2478,11 +2446,11 @@ class Super_search_data extends Addon_builder_data_super_search
 
 		// Check our caches
 		$sql = " SELECT term, suggestions, entry_count FROM exp_super_search_terms
-					WHERE term IN ('" . implode( "','", $words ) . "') ";
+					WHERE term IN ('" . implode( "','", ee()->db->escape_str( $words ) ) . "') ";
 
-		$query = $this->check_sql( $sql );
-
-		if( $query === FALSE ) return;
+	    $query = $this->check_sql( $sql );
+	    	
+    	if( $query === FALSE ) return;
 
 		if( $query->num_rows > 0 )
 		{
@@ -2498,10 +2466,14 @@ class Super_search_data extends Addon_builder_data_super_search
 					// This is an invalid term, but we have cached suggestions for it
 					// Decode our suggestions array
 					$suggestion = unserialize( $row['suggestions'] );
-
-					$possible[ $row['term'] ] = $suggestion[0][ 'term' ];
-
-					// unset( $words[ $row['term'] ] );
+					
+					foreach ( $suggestion as $key => $val )
+					{
+						if ( $val['distance'] > $fuzzy_distance ) continue;
+	
+						$possible[ $row['term'] ] = $val[ 'term' ];
+					}
+					
 				}
 			}
 		}
@@ -2519,15 +2491,15 @@ class Super_search_data extends Addon_builder_data_super_search
 	// --------------------------------------------------------------------
 
 	/**
-	 *
+	 * 
 	 *
 	 * @access	public
 	 * @param 	string
 	 * @return	string
 	 */
-
-	function _suggest_spelling( $words = array() )
-	{
+	 
+    function _suggest_spelling( $words = array() )
+    {
 		if( count($words) < 1 ) return;
 
 		foreach( $words as $word )
@@ -2536,15 +2508,15 @@ class Super_search_data extends Addon_builder_data_super_search
 
 			$l = strlen( $word );
 
-			$this->EE->TMPL->log_item( 'Super Search: fuzzy spelling. Running full levenshtein calculation for the term : \'' . $word . '\'');
+			ee()->TMPL->log_item( 'Super Search: fuzzy spelling. Running full levenshtein calculation for the term : \'' . $word . '\'');
 
-			$sql = " SELECT term, entry_count, LEVENSHTEIN( term, '" . $this->EE->db->escape_str( $word ) . "' ) distance
-					FROM exp_super_search_terms
-							WHERE entry_count > 0
+			$sql = " SELECT term, entry_count, LEVENSHTEIN( term, '" . ee()->db->escape_str( $word ) . "' ) distance 
+					FROM exp_super_search_terms 
+							WHERE entry_count > 0 
 							AND length(term) > 2
-							AND term_length >= " . ( $l-1 ) . "
-							AND term_length <= " . ( $l+1 ) . "
-							AND term != '" . $this->EE->db->escape_str( $word ). "'
+							AND term_length >= " . ( ee()->db->escape_str( $l-1 ) ) . "
+							AND term_length <= " . ( ee()->db->escape_str( $l+2 ) ) . "
+							AND term != '" . ee()->db->escape_str( $word ). "'
 					ORDER BY distance, entry_count DESC
 					LIMIT 5 ";
 
@@ -2614,13 +2586,13 @@ class Super_search_data extends Addon_builder_data_super_search
 				);
 
 				$where = array(
-					'term' 	=> $key
+					'term' 	=> ee()->db->escape_str( $key )
 				);
 
-				$sql	= $this->EE->db->update_string( 'exp_super_search_terms', $arr, $where );
-
-				$this->EE->db->query( $sql );
-			}
+				$sql	= ee()->db->update_string( 'exp_super_search_terms', $arr, $where );
+				
+				ee()->db->query( $sql );
+       		}
 		}
 
 		return;

@@ -10,7 +10,7 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/
  * @license		http://www.solspace.com/license_agreement/
- * @version		1.3.2
+ * @version		1.4.4
  * @filesource 	addon_builder/extension_builder.php
  */
 
@@ -50,8 +50,8 @@ class Extension_builder_super_search extends Addon_builder_super_search
 		// --------------------------------------------
 
 		//lang loader not loaded?
-		if ( ! isset($this->EE->lang) AND
-			! is_object($this->EE->lang))
+		if ( ! isset(ee()->lang) AND
+			! is_object(ee()->lang))
 		{
 			$this->fetch_language_file($this->lower_name);
 		}
@@ -114,10 +114,14 @@ class Extension_builder_super_search extends Addon_builder_super_search
 			$this->cached_vars['extension_menu'] = array();
 			$this->cached_vars['extension_menu_highlight'] = '';
 
-			$this->add_crumb(
-				lang($this->lower_name.'_label'),
-				$this->cached_vars['base_uri']
-			);
+			//install wizard doesn't load lang shortcut
+			if (function_exists('lang'))
+			{
+				$this->add_crumb(
+					lang($this->lower_name.'_label'),
+					$this->cached_vars['base_uri']
+				);
+			}
 		}
 	}
 	//END __construct
@@ -162,7 +166,7 @@ class Extension_builder_super_search extends Addon_builder_super_search
 	/**
 	 * Last Extension Call Variable
 	 *
-	 * You know that annoying $this->EE->extensions->last_call
+	 * You know that annoying ee()->extensions->last_call
 	 * class variable that some moron put into the Extensions
 	 * class for when multiple extensions call the same hook?
 	 *  This will take the possible default
@@ -183,9 +187,9 @@ class Extension_builder_super_search extends Addon_builder_super_search
 
 	function get_last_call($argument, $default = NULL)
 	{
-		if ($this->EE->extensions->last_call !== FALSE)
+		if (ee()->extensions->last_call !== FALSE)
 		{
-			return $this->EE->extensions->last_call;
+			return ee()->extensions->last_call;
 		}
 		elseif ($argument !== NULL)
 		{
