@@ -27,7 +27,6 @@ define([
             this.outlineTitle = this.$('h2')
             this.model.on( 'layout', this.jumpSet )
 
-
             $(window).on('hashchange', this.render)
             Backbone.dispatcher.on('hashchange', this.render)
         },
@@ -36,6 +35,8 @@ define([
             var hashObj = $.deparam.fragment()
             if ( this.model.get('view') === 'random' && hashObj.view === 'random' ) {
                 // random view is currently running
+                // and a filter of another dimension has been chosen
+                // use cover view as default
                 $.bbq.pushState({ view : 'cover' })
                 return
             } else {
