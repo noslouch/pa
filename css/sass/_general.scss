@@ -217,7 +217,6 @@ iframe {
     // bricks are in an html defined row
     .brick {
         height: 150px;
-        @include rotate(0);
 
         .copy {
             padding: 1em;
@@ -279,6 +278,9 @@ iframe {
 
     p, h3 {
         color: white;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        @include rotate(0);
     }
 
     p { 
