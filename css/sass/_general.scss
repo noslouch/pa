@@ -210,8 +210,8 @@ iframe {
         @include transition(opacity 150ms ease);
     }
 
-    .row.one .brick { @include grid-column(6, $center: true); }
-    .row.two .brick { @include grid-column(6); }
+    //.row.one .brick { @include grid-column(6, $center: true); }
+    .row.one, .row.two .brick { @include grid-column(6); }
     .row.three .brick { @include grid-column(4); }
     .row.four .brick { @include grid-column(3); }
     // bricks are in an html defined row
