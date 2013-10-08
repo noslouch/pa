@@ -134,7 +134,9 @@ iframe {
     position: relative;
     overflow: hidden;
 
-    &.home { height: 100%; }
+    &.home { 
+        z-index: 4;
+        height: 100%; }
 }
 
 .page.projects { padding-top: 192px; }
