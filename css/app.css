@@ -4052,19 +4052,8 @@ iframe {
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
 }
-/* line 213, sass/_general.scss */
-.n-container .row.one .brick {
-  position: relative;
-  padding-left: 0.53125em;
-  padding-right: 0.53125em;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  float: none !important;
-  float: left;
-}
 /* line 214, sass/_general.scss */
-.n-container .row.two .brick {
+.n-container .row.one, .n-container .row.two .brick {
   position: relative;
   padding-left: 0.53125em;
   padding-right: 0.53125em;
