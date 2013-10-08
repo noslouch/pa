@@ -1,42 +1,50 @@
-    <div class="n-wrapper{if segment_1==''} home{/if}">
-        <section class="n-container" id="n-container">
-            <header>
-                <h2><a href="#n-container">Noteworthy</a></h2>
-            </header>
-            <div class="row three">
-                <!--<article class="brick">-->
-                    <!--<div class="img">-->
-                      <!--[> <img src="http://placekitten.com/80/250" alt="" /><]-->
-                    <!--</div>-->
-                    <!--<div class="copy">-->
-                        <!--<h3>Headline Goes here</h3>-->
-                        <!--<p>Some summary text about this post</p>-->
-                    <!--</div>-->
-                <!--</article>-->
-                <article class="brick">
-                    <div class="img">
-                    </div>
+{exp:channel:entries channel="noteworthy" limit="4" disable="categories|member_data|pagination"}
+
+{if count == '1'}
+<div class="n-wrapper home">
+    <section class="n-container" id="n-container">
+        <header>
+            <h2><a href="#n-container">Noteworthy</a></h2>
+        </header>
+        <div class="row" id="brickRow">
+            <?php
+                $total = '{total_results}';
+            ?>
+            {/if}
+
+            <article class="brick">
+                <div class="img">
+                    {noteworthy-image}
+                    <?php
+                        switch($total) {
+                            case "4":
+                                echo '<img src="{image:url:one-quarter}">';
+                                break;
+                            case "3":
+                                echo '<img src="{image:url:one-third}">';
+                                break;
+                            case "2":
+                            case "1":
+                                echo '<img src="{image:url:one-half}">';
+                                break;
+                            default:
+                                break;
+                        }
+                    ?>
+                    {/noteworthy-image}
+                </div> <!-- .img -->
+                <a href="{noteworthy-link}"{if noteworthy-external} target="_blank"{/if}>
                     <div class="copy">
-                        <h3>Headline Goes Here</h3>
-                        <p>Longer summary text so we can seee how long summary text ought to go. Theq uick brown fox jumped over the lazy sleeping dog.</p>
-                    </div>
-                </article>
-                <article class="brick">
-                    <div class="img">
-                    </div>
-                    <div class="copy">
-                        <h3>A Headline that goes pretty long just so we can see.</h3>
-                        <p>Short summary.</p>
-                    </div>
-                </article>
-                <article class="brick">
-                    <div class="img">
-                    </div>
-                    <div class="copy">
-                        <h3>Short Headline.</h3>
-                        <p>Short summary.</p>
-                    </div>
-                </article>
-            </div>
-        </section> <!-- .n-container -->
-    </div> <!-- .n-wrapper -->
+                        <h3>{title}</h3>
+                        <p>{summary}</p>
+                    </div> <!-- .copy -->
+                </a>
+            </article> <!-- .brick -->
+
+        {if count == total_results}        
+        </div> <!-- .row -->
+    </section> <!-- .n-container -->
+</div> <!-- .n-wrapper -->
+{/if}
+
+{/exp:channel:entries}

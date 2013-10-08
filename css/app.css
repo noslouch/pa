@@ -4108,6 +4108,11 @@ iframe {
 }
 /* line 227, sass/_general.scss */
 .n-container .brick .img {
+  position: relative;
+  padding-left: 0.53125em;
+  padding-right: 0.53125em;
+  width: 100%;
+  float: left;
   position: absolute;
   text-align: center;
   left: 0;
@@ -4128,9 +4133,9 @@ iframe {
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-/* line 238, sass/_general.scss */
+/* line 239, sass/_general.scss */
 .n-container .brick img {
-  max-width: 280px;
+  max-width: 100%;
   opacity: 0;
   -webkit-transition: box-shadow 150ms ease, opacity 150ms ease;
   -moz-transition: box-shadow 150ms ease, opacity 150ms ease;

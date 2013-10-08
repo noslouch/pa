@@ -1,3 +1,5 @@
+/* DEPRECATED
+ * *********************************************
 /* app/views/chromeviews.js
  * outer most appviews */
 'use strict';
