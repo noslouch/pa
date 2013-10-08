@@ -57,9 +57,12 @@ class Channel_images_ext
 		}
 
 		// Check just to be sure!
-		if (isset($config['extraPlugins']) != FALSE)
+		//if (isset($config['extraPlugins']) != FALSE)
+        // adding Channel images to certain channels only
+        if (isset($config['extraPlugins']) != FALSE && strpos($config['extraPlugins'],'channelimages') !== FALSE )
 		{
-			$config['extraPlugins'] .= ',channelimages';
+            //plugin is added via the toolbar configuration, don't add it here
+			//$config['extraPlugins'] .= ',channelimages';
 			$config['toolbar'][] = array('ChannelImages');
 		}
 
