@@ -225,6 +225,7 @@ iframe {
         }
 
         .img { 
+            @include grid-column(12);
             position: absolute;
             text-align: center;
             left: 0;
@@ -236,8 +237,7 @@ iframe {
         }
 
         img {
-            // for now; update to work with variable brick widths
-            max-width: 280px;
+            max-width: 100%;
             opacity: 0;
             @include transition(box-shadow 150ms ease, opacity 150ms ease);
         }

@@ -39,6 +39,27 @@ define([
             this.slideshow()
             this.poll()
 
+            var brickClass
+
+            switch( $('.brick').length ) {
+                case 4:
+                    brickClass = 'four'
+                    break;
+                case 3:
+                    brickClass = 'three'
+                    break;
+                case 2:
+                    brickClass = 'two'
+                    break;
+                case 1:
+                    brickClass = 'one'
+                    break;
+                default:
+                    break;
+            }
+
+            $('#brickRow').addClass(brickClass)
+
             setTimeout( function(){
                 $('.site-header').removeClass('home')
                 $('.n-wrapper').removeClass('home')
