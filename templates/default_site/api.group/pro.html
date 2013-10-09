@@ -1,7 +1,6 @@
 <?php header('Content-type: application/json'); ?>
-{exp:ce_cache:stat:ic seconds="86400"}
 [
-{exp:channel:entries channel="projects" limit="100" backspace="6" orderby="title" sort="asc" status="open"}
+{exp:channel:entries channel="projects" limit="1" backspace="6" status="open|private"}
     {
         "id" : "{entry_id}",
         "title": "{title}",

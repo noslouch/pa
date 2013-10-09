@@ -1,5 +1,36 @@
-{embed="includes/header" nav="projects"}
+{if segment_2 != ''}
+    {exp:channel:entries url_title="{segment_2}" channel="projects" status="open|private"}
+        {if status == 'Private'}
+        <?php if ( !$pw = ee()->input->post('pw', true) ) { ?>
+            <form action="" method="post">
+                <input type="hidden" name="XID" value="{XID_HASH}" /> 
+                <label>Enter your password
+                    <input type="password" name="pw" id="pw"></label>
+                <input type="submit" value="Submit">
+            </form>
+        <?php } else if ( $pw == '{project-password}' ) { ?>
+            {embed="includes/header" nav="projects"}
+            </div> <!-- .page -->
+            {embed="includes/footer"}
+        <?php } else { ?>
+            <p>Incorrect password. Would you like to try again?</p>
+            <form action="" method="post">
+                <input type="hidden" name="XID" value="{XID_HASH}" /> 
+                <label>Enter your password
+                    <input type="password" name="pw" id="pw"></label>
+                <input type="submit" value="Submit">
+            </form>
+        <?php } ?>
+        {if:else}
 
+            {embed="includes/header" nav="projects"}
+            </div> <!-- .page -->
+            {embed="includes/footer"}
+
+        {/if}
+    {/exp:channel:entries}
+{if:else}
+    {embed="includes/header" nav="projects"}
     </div> <!-- .page -->
-
-{embed="includes/footer"}
+    {embed="includes/footer"}
+{/if}
