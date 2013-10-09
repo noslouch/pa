@@ -34,7 +34,7 @@ define([
 
         render : function(){
             this.$el.html( this.template({
-                url : this.options.path ? this.options.path + '/' + this.model.get('url') : this.model.get('url'),
+                url : this.options.path ? this.options.path + '/' + this.model.get('url-title') : this.model.get('url'),
                 cover : this.options.cover,
                 caption : this.options.path === 'projects' ? this.model.get('title') : this.model.get('caption'),
                 year : this.options.path === 'projects' ? this.model.get('year') : '',
@@ -301,7 +301,7 @@ define([
                     .append( new showcases.Li({
                         model : listItem,
                         path : path ? path : '',
-                        url : url ? listItem.get('url') : false
+                        url : url ? listItem.get('url-title') : false
                     }).render() )
             }, this )
 
@@ -439,7 +439,7 @@ define([
                 $(caption).addClass('caption').append(p).append(span)
 
                 this.$el
-                .attr( 'href', '/projects/' + this.model.get('url') )
+                .attr( 'href', '/projects/' + this.model.get('url-title') )
                 .prepend(caption)
             }
 
