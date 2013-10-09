@@ -68,7 +68,7 @@ define([
             var spinner = new Spinner()
             require(['app/collections/projects'],
             function(Projects){
-                $.when( Projects.fetch() )
+                $.when( Projects.fetch({url : '/api/pro/' + project}) )
                 .done( function() {
                     Chrome.singleProject(Projects, project)
                     spinner.detach()

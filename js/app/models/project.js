@@ -41,7 +41,7 @@ define([
                 } ),
 
                 showcases : new Showcases( this.get('showcases'), {
-                    path : this.get('url-title')
+                    path : '/projects/' + this.get('url-title')
                 } )
             })
 
@@ -52,7 +52,7 @@ define([
                     url_title : 'info',
                     content : this.get('info')
                 }, {
-                    path : this.url()
+                    path : '/projects/' + this.get('url-title')
                 })
             }
 
@@ -63,7 +63,7 @@ define([
                     url_title : 'related',
                     links : this.get('relatedLinks')
                 }, {
-                    path : this.get('url-title')
+                    path : '/projects/' + this.get('url-title')
                 })
             }
         },
