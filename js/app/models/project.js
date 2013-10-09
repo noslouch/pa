@@ -18,7 +18,7 @@ define([
                     var split = item.split('|')
                     response.relatedLinks[index] = {
                         'title' : split[0] ? split[0].trim() : '',
-                        'url' : split[1] ? split[1].trim() : ''
+                        'url-title' : split[1] ? split[1].trim() : ''
                     }
                 } )
             } else {
@@ -41,7 +41,7 @@ define([
                 } ),
 
                 showcases : new Showcases( this.get('showcases'), {
-                    path : this.url()
+                    path : this.get('url-title')
                 } )
             })
 
@@ -63,13 +63,13 @@ define([
                     url_title : 'related',
                     links : this.get('relatedLinks')
                 }, {
-                    path : this.url()
+                    path : this.get('url-title')
                 })
             }
         },
 
-        url : function() {
-            return '/projects/' + this.get('url')
+        path : function() {
+            return '/projects/' + this.get('url-title')
         }
     })
 

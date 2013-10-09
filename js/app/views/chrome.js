@@ -102,7 +102,7 @@ define([
 
         singleProject : function(Projects, project, urlTitle) {
             $('.page').removeClass('projects')
-            var model = Projects.findWhere({ url : project })
+            var model = Projects.findWhere({ 'url-title' : project })
 
             if ( this.model.get('project') ) {
                 model.get('showcases')
