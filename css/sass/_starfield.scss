@@ -8,7 +8,7 @@
 }
 
 .starfield {
-    @include perspective(350px);
+    @include perspective(1350px);
     position: fixed;
     top: 0;
     left: 0;
@@ -19,7 +19,7 @@
     
    .star {
         position: absolute;
-        @include animation-props(10s, starfield, infinite);
+        @include animation-props(15s, starfield, infinite);
         @include translate3d(0,0,0);
         opacity: 0;
         @include transition(box-shadow 250ms ease-out);
@@ -58,7 +58,7 @@
         opacity: 1;
     }
     to {
-        -webkit-transform: translate3d(0,0,-1750px);
+        -webkit-transform: translate3d(0,0,-1250px);
         z-index: 0;
     }
 }
@@ -75,7 +75,7 @@
         opacity: 1;
     }
     to {
-        -moz-transform: translate3d(0,0,-1750px);
+        -moz-transform: translate3d(0,0,-1250px);
         z-index: 0;
     }
 }
@@ -92,7 +92,7 @@
         opacity: 1;
     }
     to {
-        transform: translate3d(0,700px,-1750px);
+        transform: translate3d(0,0,-1250px);
         z-index: 0;
     }
 }
