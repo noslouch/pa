@@ -69,6 +69,8 @@ iframe {
     max-width: 1280px;
     margin: 0 auto;
     padding: emCalc(37);
+
+    &.profile { padding-bottom: 0; }
 }
 
 .site-header {
@@ -321,8 +323,8 @@ iframe {
     }
 }
 
-.profile .filter-bar {
-    margin: 0;
+.profile.filter-bar {
+    padding: 0;
 }
 
 .filter {
@@ -696,6 +698,7 @@ iframe {
 
 .profile {
     .details {
+        -webkit-transform: translateZ(0); // fixes disappearing links after animation
         li { line-height: 1.3; }
     }
 }
