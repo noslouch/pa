@@ -146,11 +146,12 @@ define([
                 default:
                     break;
             }
+
+            $('html, body').animate({ scrollTop : 0 })
         },
 
         contentController : function(model){
             $('#filter-bar').empty()
-            $('html, body').animate({ scrollTop : 0 })
 
             var layout = new S.Text(),
                 $layout = layout.render(),
@@ -202,8 +203,9 @@ define([
                 var fbLoader = require('utils/fbLoader')
                 fbLoader()
             }
-        },
 
+            $('html, body').animate({ scrollTop : 0 })
+        }
     })
 
     var Link = Backbone.View.extend({
