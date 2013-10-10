@@ -30,10 +30,10 @@
                             <li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if}>Stream</a></li>
                             <li><a href="#" id="searchIcon" class="search-icon"></a></li>
                         </ul>
-                        <form method="post" action="{path='api/search'}" class="search-form" id="searchForm">
+                        <form method="post" action="" class="search-form" id="searchForm">
                             <div class="table-wrapper">
                                 <div class="cell-wrapper">
-                                    <input id="keywords" class="search" type="search" name="keywords" id="keywords" />
+                                    <input autofocus id="keywords" class="search" type="search" name="keywords" id="keywords" />
                                     <button class="submit-search button" id="submitSearch" type="submit">Search</button>
                                     <button class="cancel-search button" id="cancelSearch" type="button">Cancel</button>
                                     <fieldset>
