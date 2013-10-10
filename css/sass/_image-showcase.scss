@@ -12,13 +12,14 @@
     
     img {
         opacity: 0;
-        @include transition(opacity 150ms ease);
+        @include transition(opacity 150ms ease, box-shadow 150ms ease 150ms);
 
         &.loaded { opacity: 1; }
     }
 
     .wrapper { 
-        @include transition(transform 150ms ease);
+        @include scale(1);
+        @include transition(transform 150ms linear);
         //overflow: hidden;
     }
 
@@ -68,6 +69,9 @@
 
             + .caption {
                 opacity: 1;
+                @include translate3d(0,-2%,0);
+                @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
+                @include transition(opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms);
             }
         }
 
@@ -78,13 +82,15 @@
     color: $secondary-color;
     background: white;
     position: absolute;
-    bottom: -1px;
     left: 0;
     right: 0;
     padding: 12px 10px;
     opacity: 0;
     z-index: 1;
-    @include transition(opacity 150ms ease);
+    @include translate3d(0,-100%,0);
+    @include box-shadow(0 0 0 0 rgba(0,0,0,0));
+    @include backface-visibility(hidden);
+    @include transition(opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms);
 
     p {
         margin: 0;

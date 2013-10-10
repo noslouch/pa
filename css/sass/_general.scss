@@ -134,19 +134,21 @@ iframe {
     padding: 110px emCalc(37) emCalc(35);
     //height: 100%;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 
     &.home { 
         //z-index: 4;
         padding-top: 70px;
         padding-bottom: 55px;
         height: 100%;
+        overflow: hidden;
         @include transition(padding 150ms ease);
     }
+
+    &.projects {
+        padding-top: 192px;
+    }
 }
-
-.page.projects { padding-top: 192px; }
-
 
 //
 // HOME
