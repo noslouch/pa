@@ -30,9 +30,8 @@ define([
 
         open : function(e) {
             e.preventDefault()
+            this.$el.css({ 'padding-bottom' :  this.$noteworthy.hasClass('open') ? '' : 245 })
             this.$noteworthy.toggleClass('open')
-            this.$quotes.toggleClass('short')
-
         },
 
         render : function() {

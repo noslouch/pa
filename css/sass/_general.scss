@@ -136,7 +136,11 @@ iframe {
 
     &.home { 
         //z-index: 4;
-        height: 100%; }
+        padding-top: 70px;
+        padding-bottom: 55px;
+        height: 100%;
+        @include transition(padding 150ms ease);
+    }
 }
 
 .page.projects { padding-top: 192px; }
@@ -171,13 +175,13 @@ iframe {
     background: white;
 
     @include grid-row(collapse);
-    @include translate3d( 0, 77%, 0 );
+    @include translate3d( 0, 189px, 0 );
     @include transition(transform 150ms ease);
 
     margin: 0 auto;
 
     &.open { 
-        @include translate3d( 0, 0, 0 );
+        @include translate3d( 0, 0px, 0 );
         h2:before { content:"-"; }
 
         .row { opacity: 1; }
