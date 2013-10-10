@@ -199,6 +199,14 @@ define([
             })
         },
 
+        searchInit : function() {
+            this.pageSearch = new Search.Form({
+                el : '#pageSearchForm',
+                page : this.model
+            })
+            this.pageSearch.render()
+        },
+
         events : {
             'click' : 'closeMenu',
             'click #searchIcon' : 'showSearch'

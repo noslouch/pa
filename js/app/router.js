@@ -31,7 +31,9 @@ define([
             "profile/:section" : "profile",
             "profile/:section/:urlTitle" : "profile",
             "contact" : "contact",
-            "stream" : "stream"
+            "stream" : "stream",
+            "search" : "search",
+            "search/*any" : "search"
         },
 
         debug : function() {
@@ -187,6 +189,10 @@ define([
                     spinner.detach()
                 } )
             })
+        },
+
+        search : function() {
+            Chrome.searchInit()
         }
     })
 
