@@ -1,4 +1,4 @@
-/* views/filterviews.js - Filter Bar View */
+/* views/jumplist.js - Jump To List for use on Profile section */
 'use strict';
 
 define([
@@ -17,15 +17,12 @@ define([
         initialize : function() {
             _.bindAll( this, 'jump', 'openMenu' )
 
-            var $date = $('<ul />').attr('class', 'dates'),
-                byDate = this.collection.groupBy(function(model) {
-                    return model.get('date').year()
-                })
+            var $date = $('<ul />').attr('class', 'dates')
 
-            _.each( byDate, function( model, date ) {
+            $('.list section').each(function( idx, el ) {
                 var li = document.createElement('li'),
                     $tag = $('<a />')
-                $tag.attr('href', '#' + date).html(date)
+                $tag.attr('href', '#' + el.id).html(el.id)
                 $tag.appendTo(li)
                 $date.append(li)
             } )
@@ -48,7 +45,7 @@ define([
             e.stopPropagation()
             $('.open').removeClass('open')
             $('html, body').animate({
-                scrollTop : $(e.currentTarget.hash).offset().top - 100
+                scrollTop : $(e.currentTarget.hash).offset().top - 115
             })
         },
 
