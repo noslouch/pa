@@ -1,4 +1,4 @@
-/* app/views/profileviews.js - Profile Page Views and Section Views */
+/* app/views/profile.js - Profile Page Views and Section Views */
 'use strict';
 
 define([
@@ -8,10 +8,12 @@ define([
     'underscore',
     'app/views/showcaseviews',
     'tpl/jst',
+    'app/collections/profile',
     'utils/fbLoader'
-], function( require, $, Backbone, _, S, TPL ) {
+], function( require, $, Backbone, _, S, TPL, Sections ) {
 
     var Content = Backbone.View.extend({
+        id : 'showcaseContainer',
         initialize : function() {
             _.bindAll( this, 'render', 'contentController' )
             this.listenTo( Backbone.dispatcher, 'profile:sectionActivate', this.render )
@@ -202,16 +204,23 @@ define([
 
     })
 
-    var Page = Backbone.View.extend({
-
+    var Profile = Backbone.View.extend({
+        className : 'profile viewer',
+        id : 'profileViewer',
         initialize : function(options) {
+            // initialized with options:
+            //   options.segment string, first url segment
+            //   options.urlTitle string, second url segment, optional
             _.bindAll( this, 'swap', 'back' )
+            this.collection = Sections
+            this.loadSeg = options.segment
+            this.loadUrl = options.urlTitle
 
-            this.sections = options.sections
-
+            this.$el.append( TPL.profileLinks() )
             this.listenTo( Backbone.dispatcher, 'profile:swap', this.swap )
 
-            this.links = this.$('#profileLinks a')
+            //this.sections = options.sections
+            //this.links = this.$('#profileLinks a')
         },
 
         events : {
@@ -236,19 +245,29 @@ define([
         },
 
         render : function() {
+            var promiseStack = []
+            _.each( this.collection, function( section ) {
+                promiseStack.push( section.fetch() )
+            })
 
-            _.each( this.sections, function(section, name, sections) {
+            $.when.apply( $, promiseStack ).done(function(){
+                Backbone.dispatcher.trigger( 'profile:swap', this.collection[ this.loadSeg ? this.loadSeg : 'bio' ], this.loadSeg ? false : true )
+                if ( this.loadUrl ) {
+                    this.collection[this.loadSeg].findWhere({ url : this.loadUrl }).activate()
+                }
+            })
+
+            _.each( this.collection, function(section, name, sections) {
                 new Link({
-                    el : '#' + name,
+                    el : this.$el('#' + name)[0],
                     model : section
                 })
             }, this )
 
             this.viewer = new Content({
-                el : this.$('#showcaseContainer')
             })
         }
     })
 
-    return Page
+    return Profile
 })
