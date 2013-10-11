@@ -17,16 +17,15 @@ define([
     //'app/views/projects',
     //'app/views/profileviews',
     //'app/views/singleviews'
-], function( require, exports, $, Backbone, _, PageView, Search ) {
+], function( require, exports, $, Backbone, _, Page, Search ) {
 
     var App = Backbone.View.extend({
         initialize : function() {
-
             _.bindAll(this, 'render', 'routeHandler', 'projects', 'showSearch', 'singleProject' )
 
             this.model = new Backbone.Model()
 
-            this.pageView = new PageView({
+            this.page = new Page({
                 el : '.page',
                 parent : this,
                 model : this.model
@@ -36,19 +35,14 @@ define([
                 el : '#searchForm',
                 page : this.model
             })
-
             this.listenTo( this.search, 'submit', function() {
-                this.pageView.$el.empty()
+                this.page.$el.empty()
             } )
         },
 
         home : function() {
             var self = this
-
-            this.model.set({
-                outlineTitle : 'Home'
-            })
-
+            this.model.set({ outlineTitle : 'Home' })
             require(['app/views/home'], function( Home ) {
                 self.model.set( 'page', new Home() )
             })
@@ -87,8 +81,8 @@ define([
                     collection : self.model.cover.collection
                 })
 
-                self.pageView.undelegateEvents()
-                self.pageView.stopListening()
+                self.page.undelegateEvents()
+                self.page.stopListening()
 
                 self.model.set( 'page', new ProjectLanding({ model : self.model }) )
 
@@ -176,13 +170,24 @@ define([
             })
         },
 
+        profile : function( segment, urlTitle) {
+            var self = this
+            this.model.set({ outlineTitle : 'Profile', className : 'profile' })
+            require(['app/views/profile'], function( Profile ) {
+                self.model.set( 'page', new Profile({ 
+                    segment : segment,
+                    urlTitle : urlTitle
+                }) )
+            })
+        },
+
         profileInit : function( Profile, Page ) {
             //var Page = require('app/views/profileviews')
             //var self = this
             //require(['app/views/profileviews'],
             //function( Page ) {
                 this.model.set( 'page', new Page({
-                    el : '#profileViewer',
+                    id : 'profileViewer',
                     sections : Profile
                 }) )
             //})

@@ -10,29 +10,22 @@ define([
 ], function( $, Backbone, _, quotes ) {
 
     var Home = Backbone.View.extend({
-        el : '.page',
         initialize : function() {
             _.bindAll( this, 'open' )
             this.slideshow = quotes.slideshow.bulletBuilder
-            this.poll = quotes.inspector
-
             this.slideshow = _.bind( this.slideshow, quotes.slideshow )
+
+            this.poll = quotes.inspector
 
             this.$noteworthy = $('#n-container')
             this.$quotes = $('#quotes')
             $('#n-container header').click(this.open)
-
-        },
-
-        events : {
-            //'click #n-container header' : 'open'
         },
 
         open : function(e) {
             e.preventDefault()
             this.$noteworthy.toggleClass('open')
             this.$quotes.toggleClass('short')
-
         },
 
         render : function() {
@@ -67,12 +60,5 @@ define([
             }, 2000 )
         }
     })
-
-    //var home = new Home()
-
-    var go = function(){
-        //home.render()
-    }
-
     return Home
 })

@@ -35,7 +35,7 @@ define([
         },
 
         debug : function() {
-            console.log('updated again')
+            console.log('navigated to ', arguments[0])
         },
 
         payload : function(method) {
@@ -147,30 +147,33 @@ define([
         },
 
         profile : function( segment, urlTitle ) {
-            require(['app/collections/profile', 'app/views/profileviews'],
-            function( Profile, Page ) {
-                try {
-                    Profile[segment].findWhere({ url : urlTitle }).activate()
-                    return
-                } catch(e) { console.log(e) }
+            Chrome.profile( segment, urlTitle )
+            //
+            //require(['app/collections/profile', 'app/views/profileviews'],
+            //function( Profile, Page ) {
+            //    try {
+            //        Profile[segment].findWhere({ url : urlTitle }).activate()
+            //        return
+            //    } catch(e) { console.log(e) }
 
-                var spinner = new Spinner()
-                var promiseStack = []
-                _.each( Profile, function( section ) {
-                    promiseStack.push( section.fetch() )
-                })
+            //    var spinner = new Spinner()
+                // var promiseStack = []
+                // _.each( Profile, function( section ) {
+                //     promiseStack.push( section.fetch() )
+                // })
 
-                $.when.apply( $, promiseStack ).done(function(){
-                    Chrome.profileInit( Profile, Page )
+                // $.when.apply( $, promiseStack ).done(function(){
+                //     Chrome.profileInit( Profile, Page )
 
-                    Backbone.dispatcher.trigger( 'profile:swap', Profile[ segment ? segment : 'bio' ], segment ? false : true )
-                    if ( urlTitle ) {
-                        Profile[segment].findWhere({ url : urlTitle }).activate()
-                    }
+                //     Backbone.dispatcher.trigger( 'profile:swap', Profile[ segment ? segment : 'bio' ], segment ? false : true )
+                //     if ( urlTitle ) {
+                //         Profile[segment].findWhere({ url : urlTitle }).activate()
+                //     }
 
-                    spinner.detach()
-                })
-            })
+                // })
+
+                //spinner.detach()
+            //})
         },
 
         contact : function() {
