@@ -28,12 +28,6 @@ define([
             this.$el.prepend( this.outlineTitle )
         },
 
-    /*
-        pageRender : function( pageModel, newPageView ) {
-            this.$el.html( newPageView.render() )
-            this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
-        },
-    */
 
         render : function(appModel, page, filtering) {
             // called in response to change:page event

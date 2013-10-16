@@ -40,11 +40,22 @@ define([
             } )
         },
 
+        semantics : function( className, outlineTitle ) {
+            this.$el.addClass( className || '' )
+            this.outlineTitle.html( outlineTitle || '' )
+            this.$el.prepend( this.outlineTitle )
+        },
+
         home : function() {
-            var self = this
+            var self = this,
+                bootstrap = !!$('#n-container').length
+
             this.model.set({ outlineTitle : 'Home' })
-            require(['app/views/home'], function( Home ) {
-                self.model.set( 'page', new Home() )
+            require(['app/views/home'], function( home ) {
+                //self.model.set( 'page', new Home({ page : self.page.$el }) )
+                home.setElement('.page')
+                home.render()
+                //self.semantics( self.model.get('className'), self.model.get('outlineTitle') )
             })
         },
 
@@ -174,23 +185,11 @@ define([
             var self = this
             this.model.set({ outlineTitle : 'Profile', className : 'profile' })
             require(['app/views/profile'], function( Profile ) {
-                self.model.set( 'page', new Profile({ 
+                self.model.set( 'page', new Profile({
                     segment : segment,
                     urlTitle : urlTitle
                 }) )
             })
-        },
-
-        profileInit : function( Profile, Page ) {
-            //var Page = require('app/views/profileviews')
-            //var self = this
-            //require(['app/views/profileviews'],
-            //function( Page ) {
-                this.model.set( 'page', new Page({
-                    id : 'profileViewer',
-                    sections : Profile
-                }) )
-            //})
         },
 
         streamInit : function( Instagrams ) {
