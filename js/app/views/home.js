@@ -8,18 +8,42 @@ define([
     'underscore',
     'utils/quotes',
     'tpl/jst'
-], function( $, Backbone, _, quotes, TPL ) {
+], function( $, Backbone, _, Q, TPL ) {
 
     var Home = Backbone.View.extend({
         initialize : function() {
             _.bindAll( this, 'open' )
 
-            this.slideshow = quotes.slideshow.bulletBuilder
-            this.slideshow = _.bind( this.slideshow, quotes.slideshow )
-            this.poll = quotes.inspector
+            //this.slideshow = quotes.slideshow.bulletBuilder
+            //this.slideshow = _.bind( this.slideshow, quotes.slideshow )
+            //this.slideshow = new Q.Quotes()
+            //this.poll = Q.inspector
         },
 
-        quoteBuilder : function(quotes) {
+        render : function() {
+            this.$el.addClass( 'home' )
+
+            if ( !$('#n-container').length ) {
+                var q = new Backbone.Collection({}, { url : '/api/quotes' }),
+                    n = new Backbone.Collection({}, { url : '/api/noteworthy' }),
+                    promiseStack = [],
+                    self = this
+
+                promiseStack.push(q.fetch(), n.fetch())
+                $.when.apply( $, promiseStack ).done(function(quotesRes, bricksRes){
+                    self.quoteTemplate(quotesRes[0])
+                    self.noteworthyTemplate(bricksRes[0])
+                    self.init()
+                })
+
+                //this.noteworthyBuilder()
+                //this.init()
+            } else {
+                this.init()
+            }
+        },
+
+        quoteTemplate : function(quotes) {
             var $quotes = $(TPL.quotes()),
                 container = $quotes.find('#qContainer'),
                 self = this
@@ -44,12 +68,39 @@ define([
                 }
                 $(container).append($slide)
             } )
-            self.$el.html($quotes)
+            this.$el.html($quotes)
         },
 
-        noteworthyBuilder : function() {
-            var n = new Backbone.Collection({}, { url : '/api/noteworthy' })
-            n.fetch().done(function() {})
+        noteworthyTemplate : function(bricks) {
+            var $noteworthy = $(TPL.noteworthy()),
+                row = $noteworthy.find('#brickRow'),
+                imgSize
+
+            switch(bricks.length) {
+                case '4':
+                    imgSize = 'one-quarter'
+                    break;
+                case '3':
+                    imgSize = 'one-third'
+                    break;
+                case '2':
+                case '1':
+                    imgSize = 'one-half'
+                    break;
+                default:
+                    break;
+            }
+
+            _.each( bricks, function(brick) {
+                $(row).append( TPL.brick({
+                    src : brick.imgSize,
+                    link : brick.link,
+                    external : brick.external ? ' target="_blank"' : '',
+                    title : brick.title,
+                    summary : brick.summary
+                }) )
+            } )
+            this.$el.append($noteworthy)
         },
 
         open : function(e) {
@@ -58,19 +109,18 @@ define([
             this.$noteworthy.toggleClass('open')
         },
 
-        render : function() {
-            if ( !$('#n-container').length ) {
-                var q = new Backbone.Collection({}, { url : '/api/quotes' })
-                q.fetch().done(this.quoteBuilder(this))
-                this.noteworthyBuilder()
-            }
-
+        init : function() {
             this.$noteworthy = $('#n-container')
-            this.$quotes = $('#quotes')
             $('#n-container header').click(this.open)
 
+            this.slideshow = (function(){
+                var c = document.getElementById('qContainer')
+                var i = new Q.Quotes(c)
+                return _.bind( i.init, i )
+            }())
+
             this.slideshow()
-            this.poll()
+            Q.inspector()
 
             var brickClass
 

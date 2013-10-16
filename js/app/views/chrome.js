@@ -21,7 +21,7 @@ define([
 
     var App = Backbone.View.extend({
         initialize : function() {
-            _.bindAll(this, 'render', 'routeHandler', 'projects', 'showSearch', 'singleProject' )
+            _.bindAll( this, 'render', 'routeHandler', 'projects', 'showSearch', 'singleProject' )
 
             this.model = new Backbone.Model()
 
@@ -40,31 +40,44 @@ define([
             } )
         },
 
-        semantics : function( className, outlineTitle ) {
-            this.$el.addClass( className || '' )
-            this.outlineTitle.html( outlineTitle || '' )
-            this.$el.prepend( this.outlineTitle )
+        events : {
+            'click' : 'closeMenu',
+            'click #searchIcon' : 'showSearch',
+            'click #nav a' : 'navigate'
+        },
+
+        showSearch : function(e){
+            e.preventDefault()
+            this.search.render()
+        },
+
+        closeMenu : function(e) {
+            $('#filter-bar .open').removeClass('open')
+        },
+
+        navigate : function(e) {
+            e.preventDefault()
+            Backbone.dispatcher.trigger('navigate', e)
+            this.$('#nav a').removeClass( 'active' )
+            $(e.target).addClass( 'active' )
         },
 
         home : function() {
             var self = this,
                 bootstrap = !!$('#n-container').length
 
-            this.model.set({ outlineTitle : 'Home' })
             require(['app/views/home'], function( home ) {
-                //self.model.set( 'page', new Home({ page : self.page.$el }) )
                 home.setElement('.page')
                 home.render()
-                //self.semantics( self.model.get('className'), self.model.get('outlineTitle') )
             })
         },
 
         projects : function(Projects) {
             var self = this
-            this.model.set({
-                outlineTitle : 'Projects',
-                projects : Projects
-            })
+            //this.model.set({
+            //    outlineTitle : 'Projects',
+            //    projects : Projects
+            //})
 
             require([
                 'app/views/showcaseviews',
@@ -95,7 +108,11 @@ define([
                 self.page.undelegateEvents()
                 self.page.stopListening()
 
-                self.model.set( 'page', new ProjectLanding({ model : self.model }) )
+                //self.model.set( 'page', new ProjectLanding({ model : self.model }) )
+
+                self.$('.page').append( new ProjectLanding({
+                    model : self.model
+                })
 
                 if ( document.location.hash ) {
                     $(window).trigger('hashchange')
@@ -183,12 +200,11 @@ define([
 
         profile : function( segment, urlTitle) {
             var self = this
-            this.model.set({ outlineTitle : 'Profile', className : 'profile' })
             require(['app/views/profile'], function( Profile ) {
-                self.model.set( 'page', new Profile({
+                self.$('.page').append( new Profile({
                     segment : segment,
                     urlTitle : urlTitle
-                }) )
+                }).render() )
             })
         },
 
@@ -209,20 +225,6 @@ define([
                 page : this.model
             })
             this.pageSearch.render()
-        },
-
-        events : {
-            'click' : 'closeMenu',
-            'click #searchIcon' : 'showSearch'
-        },
-
-        showSearch : function(e){
-            e.preventDefault()
-            this.search.render()
-        },
-
-        closeMenu : function(e) {
-            $('#filter-bar .open').removeClass('open')
         },
 
         routeHandler : function(methodName, urlParam) {

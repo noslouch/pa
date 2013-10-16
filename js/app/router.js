@@ -16,6 +16,7 @@ define([
         initialize : function() {
             _.bindAll( this, 'debug', 'payload' )
             //this.on('route', this.debug)
+            //this.on('route', this.semantics)
         },
 
         routes : {
@@ -174,6 +175,12 @@ define([
     })
 
     var router = new Router()
+
+    Backbone.dispatcher.on('navigate', function(e) {
+        $('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
+        router.navigate(e.target.pathname, { trigger: true })
+    })
+
     exports.router = router
 })
 
