@@ -5,6 +5,31 @@ function( _ ){
 
     var JST = {}
 
+    JST.noteworthy = [
+        '<div class="n-wrapper home">',
+            '<section class="n-container" id="n-container">',
+                '<header>',
+                    '<h2><a href="#n-container">Noteworthy</a></h2>',
+                '</header>',
+                '<div class="row" id="brickRow"></div>',
+            '</section>',
+        '</div>'
+    ].join('\n')
+
+    JST.quotes = [
+        '<div class="quotes" id="quotes">',
+            '<div class="container" id="qContainer">',
+                '<div class="indicators" id="bullets"></div>',
+            '</div>',
+        '</div>'
+    ].join('\n')
+
+    JST.quoteSlide = [
+        '<div class="slide closed">',
+            '<h3></h3>',
+        '</div>'
+    ].join('\n')
+
     JST.viewer = [
         '<div class="details" id="details"></div>',
         '<div class="container" id="showcaseContainer"></div>'

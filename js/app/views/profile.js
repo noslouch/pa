@@ -14,6 +14,7 @@ define([
 
     var Content = Backbone.View.extend({
         id : 'showcaseContainer',
+        className : 'container',
         initialize : function() {
             _.bindAll( this, 'render', 'contentController' )
             this.listenTo( Backbone.dispatcher, 'profile:sectionActivate', this.render )
@@ -216,11 +217,15 @@ define([
             this.loadSeg = options.segment
             this.loadUrl = options.urlTitle
 
-            this.$el.append( TPL.profileLinks() )
             this.listenTo( Backbone.dispatcher, 'profile:swap', this.swap )
 
-            //this.sections = options.sections
-            //this.links = this.$('#profileLinks a')
+            this.$el.append( TPL.profileLinks() ).append( new Content().el )
+            _.each( this.collection, function(section, name, sections) {
+                new Link({
+                    el : this.$('#' + name)[0],
+                    model : section
+                })
+            }, this )
         },
 
         events : {
@@ -231,41 +236,34 @@ define([
             e.preventDefault()
             var sectionName = e.currentTarget.pathname
 
-            this.sections[sectionName.slice(9)].activate()
+            this.collection[sectionName.slice(9)].activate()
         },
 
         swap : function(section, replace) {
 
             // there are some situations where there isn't a disabled section
             try {
-                _.findWhere( this.sections, { active : true }).deactivate()
+                _.findWhere( this.collection, { active : true }).deactivate()
             } catch(err) {}
 
             section.activate(replace)
         },
 
         render : function() {
-            var promiseStack = []
+            var promiseStack = [],
+                self = this
             _.each( this.collection, function( section ) {
                 promiseStack.push( section.fetch() )
             })
 
             $.when.apply( $, promiseStack ).done(function(){
-                Backbone.dispatcher.trigger( 'profile:swap', this.collection[ this.loadSeg ? this.loadSeg : 'bio' ], this.loadSeg ? false : true )
-                if ( this.loadUrl ) {
-                    this.collection[this.loadSeg].findWhere({ url : this.loadUrl }).activate()
+                Backbone.dispatcher.trigger( 'profile:swap', self.collection[ self.loadSeg ? self.loadSeg : 'bio' ], self.loadSeg ? false : true )
+                if ( self.loadUrl ) {
+                    self.collection[self.loadSeg].findWhere({ url : self.loadUrl }).activate()
                 }
             })
 
-            _.each( this.collection, function(section, name, sections) {
-                new Link({
-                    el : this.$el('#' + name)[0],
-                    model : section
-                })
-            }, this )
-
-            this.viewer = new Content({
-            })
+            return this.el
         }
     })
 

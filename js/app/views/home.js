@@ -6,20 +6,50 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'utils/quotes'
-], function( $, Backbone, _, quotes ) {
+    'utils/quotes',
+    'tpl/jst'
+], function( $, Backbone, _, quotes, TPL ) {
 
     var Home = Backbone.View.extend({
         initialize : function() {
             _.bindAll( this, 'open' )
+
             this.slideshow = quotes.slideshow.bulletBuilder
             this.slideshow = _.bind( this.slideshow, quotes.slideshow )
-
             this.poll = quotes.inspector
+        },
 
-            this.$noteworthy = $('#n-container')
-            this.$quotes = $('#quotes')
-            $('#n-container header').click(this.open)
+        quoteBuilder : function(quotes) {
+            var $quotes = $(TPL.quotes()),
+                container = $quotes.find('#qContainer'),
+                self = this
+
+            _.each( quotes, function(quote) {
+                var $slide = $(TPL.quoteSlide()),
+                    h3 = $slide.find('h3')
+
+                _.each( quote.lines, function(lineObj) {
+                    var blind = document.createElement('div')
+                    $(blind).addClass('blind closed')
+                    $(blind).html(lineObj.line)
+                    $(h3).append(blind)
+                } )
+                if ( quote.link ){
+                    var a = document.createElement('a')
+                    $(a).attr({
+                        href : quote.link,
+                        class : 'button closed',
+                        target : quote.external ? '_blank' : ''
+                    })
+                }
+                $(container).append($slide)
+            } )
+            self.$el.html($quotes)
+        },
+
+        noteworthyBuilder : function() {
+            var n = new Backbone.Collection({}, { url : '/api/noteworthy' })
+            n.fetch().done(function() {})
         },
 
         open : function(e) {
@@ -29,6 +59,16 @@ define([
         },
 
         render : function() {
+            if ( !$('#n-container').length ) {
+                var q = new Backbone.Collection({}, { url : '/api/quotes' })
+                q.fetch().done(this.quoteBuilder(this))
+                this.noteworthyBuilder()
+            }
+
+            this.$noteworthy = $('#n-container')
+            this.$quotes = $('#quotes')
+            $('#n-container header').click(this.open)
+
             this.slideshow()
             this.poll()
 
@@ -60,5 +100,5 @@ define([
             }, 2000 )
         }
     })
-    return Home
+    return new Home()
 })
