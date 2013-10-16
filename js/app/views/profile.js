@@ -9,8 +9,9 @@ define([
     'app/views/showcaseviews',
     'tpl/jst',
     'app/collections/profile',
+    'app/views/jumplist',
     'utils/fbLoader'
-], function( require, $, Backbone, _, S, TPL, Sections ) {
+], function( require, $, Backbone, _, S, TPL, Sections, Jumps ) {
 
     var Content = Backbone.View.extend({
         id : 'showcaseContainer',
@@ -22,12 +23,12 @@ define([
         },
 
         render : function(model){
-
             var showcase,
                 $layout,
                 $base,
                 album
 
+            $('#filter-bar').empty()
             switch(model.section) {
 
                 case 'bio':
@@ -55,6 +56,10 @@ define([
                         path : '/profile/press/'
                     })
                     this.$el.html( showcase.render() )
+
+                    $('#filter-bar').html( new Jumps({
+                        collection : model
+                    }).render() ).addClass('filter-bar profile')
                     break;
 
                 case 'awards':
@@ -63,6 +68,10 @@ define([
                         url : false
                     })
                     this.$el.html( showcase.render('date') )
+
+                    $('#filter-bar').html( new Jumps({
+                        collection : model
+                    }).render() ).addClass('filter-bar profile')
                     break;
 
                 case 'photos-of-pa':
@@ -84,6 +93,10 @@ define([
                         path : '/profile/articles-by-pa/'
                     })
                     this.$el.html( showcase.render() )
+
+                    $('#filter-bar').html( new Jumps({
+                        collection : model
+                    }).render() ).addClass('filter-bar profile')
                     break;
 
                 case 'articles-about-pa':
@@ -92,6 +105,10 @@ define([
                         path : '/profile/articles-by-pa/'
                     })
                     this.$el.html( showcase.render() )
+
+                    $('#filter-bar').html( new Jumps({
+                        collection : model
+                    }).render() ).addClass('filter-bar profile')
                     break;
 
                 case 'interviews':
@@ -100,6 +117,10 @@ define([
                         path : '/profile/interviews/'
                     })
                     this.$el.html( showcase.render() )
+
+                    $('#filter-bar').html( new Jumps({
+                        collection : model
+                    }).render() ).addClass('filter-bar profile')
                     break;
 
                 case 'transcripts':
@@ -108,6 +129,10 @@ define([
                         path : '/profile/transcripts/'
                     })
                     this.$el.html( showcase.render() )
+
+                    $('#filter-bar').html( new Jumps({
+                        collection : model
+                    }).render() ).addClass('filter-bar profile')
                     break;
 
                 case 'acknowledgements':
@@ -124,10 +149,12 @@ define([
                 default:
                     break;
             }
+
+            $('html, body').animate({ scrollTop : 0 })
         },
 
         contentController : function(model){
-            $('html, body').animate({ scrollTop : 0 })
+            $('#filter-bar').empty()
 
             var layout = new S.Text(),
                 $layout = layout.render(),
@@ -179,8 +206,9 @@ define([
                 var fbLoader = require('utils/fbLoader')
                 fbLoader()
             }
-        },
 
+            $('html, body').animate({ scrollTop : 0 })
+        }
     })
 
     var Link = Backbone.View.extend({

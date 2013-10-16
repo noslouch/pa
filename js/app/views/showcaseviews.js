@@ -440,7 +440,7 @@ define([
 
                 this.$el
                 .attr( 'href', '/projects/' + this.model.get('url') )
-                .prepend(caption)
+                .append(caption)
             }
 
             return this.el

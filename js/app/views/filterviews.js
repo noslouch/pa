@@ -255,28 +255,31 @@ define([
 
         render : function() {
             this.$el.addClass('filter-bar')
-            this.collection = Projects
+            this.collection = this.options.collection || Projects
 
-            this.$('#brand .wrapper')
-                .append( new LogoBtns({
-                    model : this.model
-                }).render() )
-                .append( new LogoUl({
-                    model : this.model,
-                    collection : this.collection
-                }).render() )
-            this.$('#industry .wrapper')
-                .append( new ProjectUl({
-                    type : 'industry',
-                    model : this.model,
-                    collection : this.collection
-                }).render() )
-            this.$('#type .wrapper')
-                .append( new ProjectUl({
-                    type : 'type',
-                    model : this.model,
-                    collection : this.collection
-                }).render() )
+            if ( !this.options.profile ) {
+
+                this.$('#brand .wrapper')
+                    .append( new LogoBtns({
+                        model : this.model
+                    }).render() )
+                    .append( new LogoUl({
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+                this.$('#industry .wrapper')
+                    .append( new ProjectUl({
+                        type : 'industry',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+                this.$('#type .wrapper')
+                    .append( new ProjectUl({
+                        type : 'type',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+            }
 
             this.$el
                 .append( new JumpMenu({
