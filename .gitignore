@@ -9,3 +9,4 @@ php_files
 cgi-bin
 assets
 static
+core/expressionengine/config/config.php
