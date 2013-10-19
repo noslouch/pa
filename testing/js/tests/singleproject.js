@@ -21,6 +21,7 @@ define(
                 ok( projectView.collection.length, 'Showcases populated' )
                 ok( projectView.collection.first().get('title'), 'First Showcase item present' )
                 ok( projectView.collection.first().get('active'), 'First Showcase item activated' )
+                ok( $('#showcaseContainer').children().length, 'Rendered Showcase' )
                 start()
             }, 350 )
         })
