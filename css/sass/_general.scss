@@ -69,6 +69,8 @@ iframe {
     max-width: 1280px;
     margin: 0 auto;
     padding: emCalc(37);
+
+    &.profile { padding-bottom: 0; }
 }
 
 .site-header {
@@ -132,15 +134,21 @@ iframe {
     padding: 110px emCalc(37) emCalc(35);
     //height: 100%;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 
     &.home { 
         //z-index: 4;
-        height: 100%; }
+        padding-top: 70px;
+        padding-bottom: 55px;
+        height: 100%;
+        overflow: hidden;
+        @include transition(padding 150ms ease);
+    }
+
+    &.projects {
+        padding-top: 192px;
+    }
 }
-
-.page.projects { padding-top: 192px; }
-
 
 //
 // HOME
@@ -171,13 +179,13 @@ iframe {
     background: white;
 
     @include grid-row(collapse);
-    @include translate3d( 0, 77%, 0 );
+    @include translate3d( 0, 189px, 0 );
     @include transition(transform 150ms ease);
 
     margin: 0 auto;
 
     &.open { 
-        @include translate3d( 0, 0, 0 );
+        @include translate3d( 0, 0px, 0 );
         h2:before { content:"-"; }
 
         .row { opacity: 1; }
@@ -232,8 +240,7 @@ iframe {
             left: 0;
             right: 0;
             z-index: -1;
-            @include translate3d(0,0,0);
-            @include transition(transform 150ms ease);
+            @include translate3d(0,-100%,0);
             @include backface-visibility(hidden);
         }
 
@@ -250,9 +257,6 @@ iframe {
                 @include box-shadow(0 5px 30px 0px rgba(0,0,0,0.1));
             }
 
-            .img {
-                @include translate3d(0,-100%,0);
-            }
             img {
                 opacity: 1;
                 @include box-shadow(0 5px 30px 2px rgba(0,0,0,0.1));
@@ -317,8 +321,8 @@ iframe {
     }
 }
 
-.profile .filter-bar {
-    margin: 0;
+.profile.filter-bar {
+    padding: 0;
 }
 
 .filter {
@@ -692,6 +696,7 @@ iframe {
 
 .profile {
     .details {
+        -webkit-transform: translateZ(0); // fixes disappearing links after animation
         li { line-height: 1.3; }
     }
 }

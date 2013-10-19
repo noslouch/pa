@@ -1,6 +1,6 @@
 <?php header('Content-type: application/json'); ?>
-[
-{exp:channel:entries channel="projects" limit="1" backspace="6" status="open|private"}
+
+{exp:channel:entries channel="projects" limit="1" status="open|private"}
     {
         "id" : "{entry_id}",
         "title": "{title}",
@@ -87,10 +87,10 @@
         ],
         "info" : {exp:json_encode}{info_projects}{/exp:json_encode},
         "relatedLinks" : [
-            {related_links backspace="8"}
+            {related_links backspace="16"}
                 "{item}",
             {/related_links}
         ]
-    },
+    }
     {/exp:channel:entries}
-]
+

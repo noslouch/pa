@@ -60,8 +60,8 @@ define([
             this.model.set( 'keywords' , keywords )
             this.model.search()
                 .done(function(d){
-                    define(function(require){
-                        var JSON = require('json')
+                    //define(function(require){
+                        //var JSON = require('json')
                         self.page.set( {
                             page : new Results({
                                 collection : new Backbone.Collection(JSON.parse(d))
@@ -69,12 +69,12 @@ define([
                             className : 'search-page',
                             outlineTitle : 'Search Results'
                         })
-                    })
-                    define(function(require) {
+                    //})
+                    //define(function(require) {
                         var r = require('app/router')
                         r.router.navigate('/search/results')
                         spinner.detach()
-                    })
+                    //})
                 })
             this.close()
         },
@@ -97,6 +97,11 @@ define([
         },
 
         render : function() {
+            if ( this.groups['no results'] ) {
+                this.$el.append('<h2>No Results</h2>')
+                return this.el
+            }
+
             _.each( this.groups, function( modelsArray, type ) {
                 var sec = document.createElement('section')
 
@@ -174,6 +179,10 @@ define([
                             $(p2).append( model.get('summary') )
                             $(sec).append(p).append(p2)
                         } )
+                    break;
+
+                    default:
+                    break;
                 }
                 this.$el.append(sec)
             }, this)

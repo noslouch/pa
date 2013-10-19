@@ -8777,6 +8777,9 @@ class Super_search extends Module_builder_super_search
 	 
 	function save_search_form( $tagdata = '', $just_replace = '' )
 	{
+        // wtf who wants a save search form?
+        return $this->no_results( 'super_search' );
+
 		// -------------------------------------
 		//	Just return save search form?
 		// -------------------------------------

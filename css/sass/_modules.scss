@@ -27,7 +27,7 @@ button {
 }
 
 .quotes {
-    height: 88%;
+    height: 100%;
     @include transition(height 150ms ease);
 
     &.short { height: 66%; }

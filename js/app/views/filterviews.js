@@ -212,11 +212,8 @@ define([
     // instantiate with projects collection
     var Filter = Backbone.View.extend({
         template : TPL.projectFilter,
-
         initialize : function() {
             _.bindAll(this, 'filter', 'openMenu', 'render' )
-            this.$el.html( this.template() )
-            this.render()
         },
 
         events : {
@@ -254,29 +251,32 @@ define([
         },
 
         render : function() {
+            this.$el.html( this.template() )
             this.$el.addClass('filter-bar')
-            this.collection = Projects
 
-            this.$('#brand .wrapper')
-                .append( new LogoBtns({
-                    model : this.model
-                }).render() )
-                .append( new LogoUl({
-                    model : this.model,
-                    collection : this.collection
-                }).render() )
-            this.$('#industry .wrapper')
-                .append( new ProjectUl({
-                    type : 'industry',
-                    model : this.model,
-                    collection : this.collection
-                }).render() )
-            this.$('#type .wrapper')
-                .append( new ProjectUl({
-                    type : 'type',
-                    model : this.model,
-                    collection : this.collection
-                }).render() )
+            if ( !this.options.profile ) {
+
+                this.$('#brand .wrapper')
+                    .append( new LogoBtns({
+                        model : this.model
+                    }).render() )
+                    .append( new LogoUl({
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+                this.$('#industry .wrapper')
+                    .append( new ProjectUl({
+                        type : 'industry',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+                this.$('#type .wrapper')
+                    .append( new ProjectUl({
+                        type : 'type',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+            }
 
             this.$el
                 .append( new JumpMenu({
