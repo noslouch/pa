@@ -16,6 +16,20 @@ function( _ ){
         '</div>'
     ].join('\n')
 
+    JST.brick = [
+        '<article class="brick">',
+            '<div class="img">',
+                '<img src="<%= src %>">',
+            '</div>',
+            '<a href="<%= link %>"<%= external %>>',
+                '<div class="copy">',
+                    '<h3><%= title %></h3>',
+                    '<%= summary %>',
+                '</div>',
+            '</a>',
+        '</article>'
+    ].join('\n')
+
     JST.quotes = [
         '<div class="quotes" id="quotes">',
             '<div class="container" id="qContainer">',

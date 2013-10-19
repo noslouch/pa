@@ -8,9 +8,6 @@ define([
     'lib/requirejs/domReady!'
 ], function( $, _ ) {
 
-    var quotes = $('.quotes h3'),
-        container = document.getElementById('container')
-
     function Slide(h3, gallery){
         var self = this
         self.$el = $(h3).parent()
@@ -67,7 +64,8 @@ define([
     }
 
     function Gallery(c){
-        var self = this
+        var self = this,
+            quotes = $(c).find('h3')
 
         // Slides array for reference
         this.slides = []
@@ -164,7 +162,7 @@ define([
         return this.q
     }
 
-    Gallery.prototype.bulletBuilder = function(){
+    Gallery.prototype.init = function(){
         var $ul = $('<ul/>')
         var $wrap = $('<div />').addClass('wrapper')
         var $dot = $('<div/>').attr('id', 'dot').addClass('dot')
@@ -198,10 +196,9 @@ define([
 
         inspect()
     }
-    var g = new Gallery(container)
 
     return {
-        slideshow : g,
+        Quotes : Gallery,
         inspector : checkQuoteHeight
     }
 })
