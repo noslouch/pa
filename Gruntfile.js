@@ -59,7 +59,11 @@ module.exports = function(grunt) {
     },
 
     qunit: {
-      files: ['test/**/*.html']
+        all : {
+            options : {
+                urls : ['http://pa.local/testing/index.html']
+            }
+        }
     },
 
     jshint: {
@@ -102,8 +106,8 @@ module.exports = function(grunt) {
         tasks: ['jshint:src', 'qunit']
       },
       dev: {
-        files: ['js/**/*', 'css/sass/**/*', 'templates/**/*', 'assets/html/**/*'],
-        tasks : ['compass', 'jshint:src']
+        files: ['testing/js/tests/**/*','js/**/*', 'css/sass/**/*', 'templates/**/*', 'assets/html/**/*'],
+        tasks : ['jshint:src', 'qunit', 'compass']
       }
     },
 

@@ -5,7 +5,7 @@
 core/expressionengine/cache/*
 php_files
 #system/expressionengine/config/database.php
-#system/expressionengine/config/config.php
+system/expressionengine/config/config.php
 cgi-bin
 assets
 static

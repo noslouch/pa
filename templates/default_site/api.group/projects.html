@@ -1,6 +1,8 @@
 <?php header('Content-type: application/json'); ?>
 {exp:ce_cache:stat:ic seconds="86400"}
+{if segment_3 == ''}
 [
+{/if}
 {exp:channel:entries channel="projects" limit="100" backspace="6" orderby="title" sort="asc" status="open"}
     {
         "id" : "{entry_id}",
@@ -94,4 +96,6 @@
         ]
     },
     {/exp:channel:entries}
+{if segment_3 == ''}
 ]
+{/if}

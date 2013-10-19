@@ -20,6 +20,12 @@ define([
             _.bindAll( this, 'render', 'contentController' )
             this.listenTo( Backbone.dispatcher, 'profile:sectionActivate', this.render )
             this.listenTo( Backbone.dispatcher, 'profile:listItemActivate', this.contentController )
+            Backbone.dispatcher.on( 'filterCheck', function(router){
+                if ( router.previous.match('profile') ) {
+                    $('#filter-bar').empty()
+                }
+            })
+
         },
 
         render : function(model){
@@ -245,8 +251,7 @@ define([
             this.loadSeg = options.segment
             this.loadUrl = options.urlTitle
 
-            this.listenTo( Backbone.dispatcher, 'profile:swap', this.swap )
-
+            Backbone.dispatcher.on( 'profile:swap', this.swap )
             this.$el.append( TPL.profileLinks() ).append( new Content().el )
             _.each( this.collection, function(section, name, sections) {
                 new Link({

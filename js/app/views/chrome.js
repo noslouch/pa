@@ -10,8 +10,7 @@ define([
     'underscore',
     //'app/views/header',
     'app/views/page',
-    'app/views/search',
-    'bbq'
+    'app/views/search'
     //'app/router',
     //'app/collections/covergallery',
     //'app/views/projects',
@@ -57,7 +56,7 @@ define([
 
         navigate : function(e) {
             e.preventDefault()
-            Backbone.dispatcher.trigger('navigate', e)
+            Backbone.dispatcher.trigger('navigate:section', e)
             this.$('#nav a').removeClass( 'active' )
             $(e.target).addClass( 'active' )
         },
@@ -72,79 +71,57 @@ define([
             })
         },
 
-        projects : function(Projects) {
+        projects : function(spinner) {
             var self = this
-            //this.model.set({
-            //    outlineTitle : 'Projects',
-            //    projects : Projects
-            //})
 
-            require([
-                'app/views/showcaseviews',
-                'app/collections/covergallery',
-                'app/views/projects'],
-            function( S, CoverGallery, ProjectLanding ) {
+            require(['app/views/projects'], function( projects ) {
 
-                self.model.cover = new S.Image({
-                    cover : true,
-                    collection : new CoverGallery( Projects.pluck('coverImage') ),
-                    path : 'projects',
-                    model : self.model
-                })
-
-                self.model.list = new S.List({
-                    //collection : Projects,
-                    collection : new CoverGallery( Projects.pluck('coverImage') ),
-                    pageClass : 'projects',
-                    path : 'projects',
-                    section : 'Projects',
-                    model : self.model
-                })
-
-                self.model.random = new S.Starfield({
-                    collection : self.model.cover.collection
-                })
-
-                self.page.undelegateEvents()
-                self.page.stopListening()
-
-                //self.model.set( 'page', new ProjectLanding({ model : self.model }) )
-
-                self.$('.page').append( new ProjectLanding({
-                    model : self.model
-                })
-
-                if ( document.location.hash ) {
-                    $(window).trigger('hashchange')
-                } else {
-                    $.bbq.pushState({ view : 'random' })
+                projects.setElement('.page')
+                try {
+                    projects.init(spinner)
+                    projects.filter.$el.show()
+                } catch (e) {
+                    Backbone.dispatcher.on('projects:ready', function() {
+                        projects.init(spinner)
+                    })
                 }
             })
         },
 
-        singleProject : function(Projects, project, urlTitle) {
-            $('.page').removeClass('projects')
-            var model = Projects.findWhere({ 'url-title' : project })
+        singleProject : function( spinner, projectUrl, showcaseUrl ) {
+            require(
+                ['app/views/singleProject'],
+                function( projectView ) {
+                    projectView.on('rendered', function() {
+                        spinner.detach()
+                    })
 
-            if ( this.model.get('project') ) {
-                model.get('showcases')
-                    .findWhere({ url_title : urlTitle }).activate()
-            } else {
-                //var detailView = require('app/views/singleviews')
-                var self = this
-                require(['app/views/singleviews'],
-                function(detailView) {
-                    var view = new detailView.Project({ model : model })
-                    self.model.set('page', view)
+                    $('.page').html( projectView.render( projectUrl, showcaseUrl ) ).removeClass('projects')
+                }
+            )
+            //$('.page').removeClass('projects')
+            //var model = Projects.findWhere({ 'url-title' : project })
 
-                    if (urlTitle) {
-                        model.get('showcases')
-                            .findWhere({ url_title : urlTitle }).activate()
-                    } else {
-                        model.get('showcases').first().activate(true)
-                    }
-                })
-            }
+            //if ( this.model.get('project') ) {
+            //    model.get('showcases')
+            //        .findWhere({ url_title : urlTitle }).activate()
+            //} else {
+            //    //var detailView = require('app/views/singleviews')
+            //    var self = this
+            //    require(['app/views/singleviews'],
+            //    function(detailView) {
+            //        var view = new detailView.Project({ model : model })
+            //        view.setElement('.page')
+            //        self.model.set('page', view)
+
+            //        if (urlTitle) {
+            //            model.get('showcases')
+            //                .findWhere({ url_title : urlTitle }).activate()
+            //        } else {
+            //            model.get('showcases').first().activate(true)
+            //        }
+            //    })
+            //}
 
         },
 
