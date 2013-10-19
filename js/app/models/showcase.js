@@ -26,8 +26,9 @@ define([
 
         activate : function(first){
             this.set('active', true)
-            var r = require( 'app/router' )
-            r.router.navigate(this.url(),  {replace : first })
+            //var r = require( 'app/router' )
+            //r.router.navigate(this.url(),  {replace : first })
+            Backbone.dispatcher.trigger('navigate:showcase', { url : this.url(), replace : first })
         },
 
         deactivate : function(){

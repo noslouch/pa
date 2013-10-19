@@ -53,7 +53,7 @@ define([
         id : 'iso-grid',
 
         initialize : function() {
-            _.bindAll(this, 'render', 'filter')
+            _.bindAll(this, 'render', 'filter', 'isotope')
 
             this.collection.forEach(function(image) {
                 var thumb = new showcases.Thumb({
@@ -65,6 +65,7 @@ define([
                 this.$el.append( thumb.render() )
             }, this)
 
+            this.on('render', this.isotope)
         },
 
         className : function() {
@@ -79,6 +80,33 @@ define([
         },
 
         render : function(options){
+            this.trigger('render')
+            if ( this.model.hasChanged('view') ||
+                 this.model.get('type') === 'gallery' ) {
+                return this.el
+            }
+
+            //if ( this.options.path === 'photography' ||
+            //    this.model.get('type') === 'gallery' ||
+            //    this.model.hasChanged( 'view' ) ) {
+            //    fbLoader()
+            //    if ( this.options.path === 'photography' ) {
+            //        $('.page').html( this.el )
+            //    } else {
+            //        try {
+            //            this.model.get('page').$el.html( this.el )
+            //        } catch(e) {
+            //            options.container.html( this.el )
+            //        }
+            //    }
+
+            //} else {
+            //    this.filter( this.model.get('filter') )
+            //    this.sort( this.model.get('sort') )
+            //}
+        },
+
+        isotope : function() {
             var self = this,
                 $img = this.$('img'),
                 rtl = this.$el.hasClass('rtl'),
@@ -105,44 +133,26 @@ define([
                 }
             }
 
-            if (this.options.path === 'photography' ||
-                this.model.get('type') === 'gallery' ||
-                this.model.hasChanged( 'view' ) ) {
-                fbLoader()
-                if ( this.options.path === 'photography' ) {
-                    $('.page').html( this.el )
-                } else {
-                    try {
-                        this.model.get('page').$el.html( this.el )
-                    } catch(e) {
-                        options.container.html( this.el )
-                    }
-                }
-
-                if ( this.$el.hasClass('isotope') ) {
+            if ( this.$el.hasClass('isotope') ) {
                 this.$el.isotope(isoOps)
                 this.$el.isotope( 'updateSortData', $('.thumb') )
-                    this.filter( this.model.get('filter') )
-                    this.sort( this.model.get('sort') )
-                } else {
-                    var spinner = new Spinner()
-                    this.$el.imagesLoaded( function() {
-                        $el.isotope(isoOps)
-
-                        spinner.detach()
-                        $img.addClass('loaded')
-
-                        if ( self.model.has('filter') ) {
-                            $el.isotope( 'updateSortData', $('.thumb') )
-                            self.filter( self.model.get('filter') )
-                            self.sort( self.model.get('sort') )
-                            self.model.trigger('layout')
-                        }
-                    })
-                }
-            } else {
                 this.filter( this.model.get('filter') )
                 this.sort( this.model.get('sort') )
+            } else {
+                var spinner = new Spinner()
+                this.$el.imagesLoaded( function() {
+                    $el.isotope(isoOps)
+
+                    spinner.detach()
+                    $img.addClass('loaded')
+
+                    if ( self.model.has('filter') ) {
+                        $el.isotope( 'updateSortData', $('.thumb') )
+                        self.filter( self.model.get('filter') )
+                        self.sort( self.model.get('sort') )
+                        self.model.trigger('layout')
+                    }
+                })
             }
         },
 
@@ -176,7 +186,7 @@ define([
     // Loaded on /Films
     showcases.FilmGrid = Backbone.View.extend({
         tagName : 'div',
-        className: 'film-container',
+        className: 'film-container showcase',
         rowTmpl : TPL.filmRow,
         $row : undefined,
         render : function() {
@@ -385,6 +395,7 @@ define([
     // Stripped down variant of List
     showcases.SmallList = Backbone.View.extend({
         tagName : 'div',
+        id : 'showcase',
         className : 'showcase list',
         initialize : function() {},
         render : function() {
@@ -455,8 +466,8 @@ define([
     // Zoom effect used on Projects landing page
     showcases.Starfield = Backbone.View.extend({
         tagName : 'div',
-        className : 'starfield',
-        id : 'starfield',
+        className : 'starfield showcase',
+        id : 'showcase',
         initialize : function( collection, instagram ){
             var SCREEN_WIDTH = window.innerWidth,
                 SCREEN_HEIGHT = window.innerHeight,

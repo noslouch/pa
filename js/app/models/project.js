@@ -12,6 +12,7 @@ define([
         parse : function(response, options){
 
             response.htmlDate = this.makeHtmlDate( response.timestamp )
+            response.date = this.parseDate( response.timestamp )
 
             if ( response.relatedLinks[0] ) {
                 _.each( response.relatedLinks, function(item, index){
@@ -25,47 +26,39 @@ define([
                 response.relatedLinks = false
             }
 
-            return response
-        },
+            response.coverImage = new CoverImage( response.cover, {
+                tags : response['brand_tags']
+                        .concat( response['type_tags'] )
+                        .concat( response['industry_tags'] ),
+                year : response.date.year()
+            } )
 
-        initialize : function() {
-            this.set({
+            response.showcases = new Showcases( response.showcases, {
+                path : '/projects/' + response['url-title']
+            } )
 
-                date : this.parseDate( this.get('timestamp') ),
-
-                coverImage : new CoverImage( this.get('cover'), {
-                    tags : this.get('brand_tags')
-                            .concat( this.get('type_tags') )
-                            .concat( this.get('industry_tags') ),
-                    year : this.parseDate( this.get('timestamp') ).year(),
-                } ),
-
-                showcases : new Showcases( this.get('showcases'), {
-                    path : '/projects/' + this.get('url-title')
-                } )
-            })
-
-            if ( this.get('info') ) {
-                this.get('showcases').add({
+            if ( response.info ) {
+                response.showcases.add({
                     type : 'info',
                     title : 'Info',
                     url_title : 'info',
-                    content : this.get('info')
+                    content : response.info
                 }, {
-                    path : '/projects/' + this.get('url-title')
+                    path : '/projects/' + response['url-title']
                 })
             }
 
-            if ( this.get('relatedLinks') ) {
-                this.get('showcases').add({
+            if ( response.relatedLinks ) {
+                response.showcases.add({
                     type : 'related',
                     title : 'Related',
                     url_title : 'related',
-                    links : this.get('relatedLinks')
+                    links : response.relatedLinks
                 }, {
-                    path : '/projects/' + this.get('url-title')
+                    path : '/projects/' + response['url-title']
                 })
             }
+            return response
         },
 
         path : function() {

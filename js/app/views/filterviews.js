@@ -212,11 +212,8 @@ define([
     // instantiate with projects collection
     var Filter = Backbone.View.extend({
         template : TPL.projectFilter,
-
         initialize : function() {
             _.bindAll(this, 'filter', 'openMenu', 'render' )
-            this.$el.html( this.template() )
-            this.render()
         },
 
         events : {
@@ -254,8 +251,8 @@ define([
         },
 
         render : function() {
+            this.$el.html( this.template() )
             this.$el.addClass('filter-bar')
-            this.collection = this.options.collection || Projects
 
             if ( !this.options.profile ) {
 
