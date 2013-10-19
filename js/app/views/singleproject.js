@@ -39,7 +39,6 @@ define([
             _.bindAll( this, 'render' )
         },
         render : function(model, value, options) {
-            this.listenTo( this.collection, 'change:active', this.render )
             if (value) {
 
                 var showcase
@@ -190,7 +189,7 @@ define([
 
         renderOut : function( model, response, ops ) {
             this.collection = this.model.get('showcases')
-            this.viewer.collection = this.collection
+            this.viewer.listenTo( this.collection, 'change:active', this.viewer.render )
             this.listenTo( this.collection, 'swap', this.swap  )
 
             this.details.render({
@@ -213,6 +212,9 @@ define([
         },
 
         render : function(projectUrl, showcaseUrl) {
+            this.details.$el.empty()
+            this.viewer.$el.empty()
+
             this.model.fetch({
                 url : '/api/projects/' + projectUrl,
                 success : this.renderOut,

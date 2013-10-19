@@ -72,32 +72,6 @@ define([
         singleProject : function(projectUrl, showcaseUrl) {
             var spinner = new Spinner()
             Chrome.singleProject(spinner, projectUrl, showcaseUrl)
-            //require(['app/collections/projects'],
-            //function(Projects){
-            //    $.when( Projects.fetch({url : '/api/pro/' + project}) )
-            //    .done( function() {
-            //        Chrome.singleProject(Projects, project)
-            //        spinner.detach()
-            //    } )
-            //})
-        },
-
-        showcaseItem : function(project, urlTitle) {
-            require(['app/collections/projects'],
-            function(Projects){
-                try {
-                    var model = Projects.findWhere({ url : project })
-                    var showcase = model.get('showcases').findWhere({ url_title : urlTitle })
-                    showcase.trigger( 'swap', showcase )
-                } catch(e) {
-                    var spinner = new Spinner()
-                    $.when( Projects.fetch() )
-                    .done( function() {
-                        Chrome.singleProject(Projects, project, urlTitle)
-                        spinner.detach()
-                    } )
-                }
-            })
         },
 
         photography : function() {
