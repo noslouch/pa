@@ -76,7 +76,9 @@ define([
 
         photography : function() {
             var spinner = new Spinner()
+            Chrome.photography( spinner )
 
+            /*
             require(['app/collections/photography'],
             function(Albums) {
                 $.when( Albums.fetch() )
@@ -85,6 +87,7 @@ define([
                     spinner.detach()
                 } )
             })
+            */
         },
 
         singleAlbum : function(urlTitle) {
@@ -172,4 +175,5 @@ define([
 
     exports.router = router
 })
+
 

@@ -6,6 +6,7 @@ define([
     'backbone',
     'app/models/album'
 ], function( Backbone, PhotoAlbum ) {
+
     var PhotoAlbums = Backbone.Collection.extend({
         model : PhotoAlbum,
         url : '/api/photography',

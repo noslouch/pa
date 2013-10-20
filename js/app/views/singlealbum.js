@@ -1,5 +1,5 @@
 /* app/views/singleviews.js
- * detail view for projects, photo galleries, and films */
+ * detail view for photo galleries */
 'use strict';
 
 define([
@@ -7,8 +7,9 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/showcaseviews'
-], function( $, Backbone, _, TPL, S ) {
+    'app/views/showcaseviews',
+    'app/models/album'
+], function( $, Backbone, _, TPL, S, AlbumModel ) {
 
     var AlbumDetails = Backbone.View.extend({
         template : TPL.textTemplate, // type, content

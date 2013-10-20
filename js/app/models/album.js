@@ -8,15 +8,16 @@ define([
 ], function( Backbone, CoverImage, CoverGallery ) {
 
     var PhotoAlbum = Backbone.Model.extend({
-        initialize : function(album, options) {
-            this.set({
-                coverImage : new CoverImage( this.get('cover'), {} ),
-                photos : new CoverGallery(album.gallery),
-                htmlDate : this.makeHtmlDate( this.get('date') ),
-                date : this.parseDate( this.get('date' ) )
-            })
+        parse : function( response, options ) {
+            response.coverImage = new CoverImage( response.cover, {} )
+            response.photos = new CoverGallery( response.gallery )
+            response.htmlDate = this.makeHtmlDate( response.timestamp )
+            response.date = this.parseDate( response.timestamp )
+
+            return response
         },
-        url : function() {
+
+        path : function() {
             return '/photography/' + this.get('url')
         }
     })

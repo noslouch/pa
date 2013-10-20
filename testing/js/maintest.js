@@ -51,8 +51,12 @@ require.config({
     }
 })
 
-require(
-    ['/testing/js/tests/projectModel', '/testing/js/tests/singleproject'],
+require([
+    '/testing/js/tests/projectModel',
+    '/testing/js/tests/singleproject',
+    '/testing/js/tests/albumModel',
+    '/testing/js/tests/photoHome'
+    ],
     function() {
         QUnit.start()
     }
