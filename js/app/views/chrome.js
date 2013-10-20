@@ -24,16 +24,19 @@ define([
 
             this.model = new Backbone.Model()
 
+            /*
             this.page = new Page({
                 el : '.page',
                 parent : this,
                 model : this.model
             })
+            */
 
             this.search = new Search.Form({
                 el : '#searchForm',
                 page : this.model
             })
+
             this.listenTo( this.search, 'submit', function() {
                 this.page.$el.empty()
             } )
@@ -74,18 +77,21 @@ define([
         projects : function(spinner) {
             var self = this
 
-            require(['app/views/projects'], function( projects ) {
+            require(
+                ['app/views/projects'],
+                function( projects ) {
 
-                projects.setElement('.page')
-                try {
-                    projects.init(spinner)
-                    projects.filter.$el.show()
-                } catch (e) {
-                    Backbone.dispatcher.on('projects:ready', function() {
+                    projects.setElement('.page')
+                    try {
                         projects.init(spinner)
-                    })
+                        projects.filter.$el.show()
+                    } catch (e) {
+                        Backbone.dispatcher.on('projects:ready', function() {
+                            projects.init(spinner)
+                        })
+                    }
                 }
-            })
+            )
         },
 
         singleProject : function( spinner, projectUrl, showcaseUrl ) {
@@ -96,33 +102,30 @@ define([
                         spinner.detach()
                     })
 
-                    $('.page').html( projectView.render( projectUrl, showcaseUrl ) ).removeClass('projects')
+                    $('.page')
+                        .html( projectView.render( projectUrl, showcaseUrl ) )
+                        .removeClass('projects')
                 }
             )
-            //$('.page').removeClass('projects')
-            //var model = Projects.findWhere({ 'url-title' : project })
+        },
 
-            //if ( this.model.get('project') ) {
-            //    model.get('showcases')
-            //        .findWhere({ url_title : urlTitle }).activate()
-            //} else {
-            //    //var detailView = require('app/views/singleviews')
-            //    var self = this
-            //    require(['app/views/singleviews'],
-            //    function(detailView) {
-            //        var view = new detailView.Project({ model : model })
-            //        view.setElement('.page')
-            //        self.model.set('page', view)
+        photography : function( spinner ) {
+            var self = this
 
-            //        if (urlTitle) {
-            //            model.get('showcases')
-            //                .findWhere({ url_title : urlTitle }).activate()
-            //        } else {
-            //            model.get('showcases').first().activate(true)
-            //        }
-            //    })
-            //}
+            require(
+                ['app/views/photography'],
+                function( photography ) {
 
+                    photography.setElement( '.page' )
+                    try {
+                        photography.init(spinner)
+                    } catch(e) {
+                        Backbone.dispatcher.on('photography:ready', function() {
+                            photography.init(spinner)
+                        })
+                    }
+                }
+            )
         },
 
         photoHomeInit : function( Albums ) {
