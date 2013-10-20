@@ -81,7 +81,8 @@ define([
 
         render : function(options){
             this.trigger('render')
-            if ( this.model.hasChanged('view') ||
+            if ( this.options.path === 'photography' ||
+                 this.model.hasChanged('view') ||
                  this.model.get('type') === 'gallery' ) {
                 return this.el
             }
@@ -121,7 +122,9 @@ define([
                     columnWidth: rtl ? 164*1.5 : 164
                 },
                 onLayout : function() {
+                    console.log('onLayout')
                     $(this).css('overflow', 'visible')
+                    fbLoader()
                 },
                 getSortData : {
                     name : function($el) {
@@ -132,6 +135,7 @@ define([
                     }
                 }
             }
+
 
             if ( this.$el.hasClass('isotope') ) {
                 this.$el.isotope(isoOps)

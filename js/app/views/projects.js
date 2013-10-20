@@ -107,7 +107,7 @@ define([
         navigate : function(e) {
             e.preventDefault()
             this.model.unset('view').unset('filter').unset('view')
-            Backbone.dispatcher.trigger('navigate:detail', e)
+            Backbone.dispatcher.trigger('navigate:detail', e, this)
         },
 
         jumpSet : function() {
