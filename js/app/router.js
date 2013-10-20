@@ -162,9 +162,9 @@ define([
         router.navigate(e.target.pathname, { trigger: true })
     })
 
-    Backbone.dispatcher.on('navigate:detail', function(e) {
+    Backbone.dispatcher.on('navigate:detail', function(e, currentView) {
         Backbone.dispatcher.trigger('filterCheck', router)
-        $('.page').empty()
+        currentView.close()
         router.navigate(e.currentTarget.pathname, { trigger: true })
     })
 

@@ -10,7 +10,8 @@ define([
 
     Backbone.View.prototype.close = function() {
         this.$el.empty()
-        this.unbind()
+        this.stopListening()
+        this.undelegateEvents()
         if ( this.onClose ) {
             this.onClose()
         }
