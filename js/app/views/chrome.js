@@ -128,64 +128,65 @@ define([
             )
         },
 
-        photoHomeInit : function( Albums ) {
+        singleAlbum : function( spinner, albumUrl ) {
             var self = this
+            require(
+                ['app/views/singlealbum'],
+                function( albumView ) {
+                    albumView.on('rendered', function() {
+                        spinner.detach()
+                    })
 
-            require(['app/views/showcaseviews', 'app/collections/covergallery'],
-            function( S, CoverGallery ) {
-            //var CoverGallery = require('app/collections/covergallery'),
-            //    S = require('app/views/showcaseviews')
-
-                self.model.set( 'page', new S.Image({
-                    cover : true,
-                    collection : new CoverGallery( Albums.pluck('coverImage') ),
-                    path : 'photography',
-                    model : self.model
-                }) )
-            })
+                    $('.page').html( albumView.render( albumUrl ) )
+                }
+            )
         },
 
-        albumInit : function(Albums, urlTitle) {
-            //var views = require('app/views/singleviews')
+        film : function( spinner ) {
             var self = this
-            require(['app/views/singleviews'],
-            function( views ) {
-                self.model.set( 'page', new views.Album({
-                    model : Albums.findWhere({ url : urlTitle })
-                }) )
-            })
+
+            require(
+                ['app/views/film'],
+                function( film ){
+                    film.setElement('.page')
+                    try{
+                        film.init(spinner)
+                    } catch(e) {
+                        Backbone.dispatcher.on('film:ready', function(){
+                            film.init(spinner)
+                        })
+                    }
+                }
+            )
         },
 
-        filmHomeInit : function( Films ) {
-            //var S = require('app/views/showcaseviews')
+        singleFilm : function( spinner, filmUrl ) {
             var self = this
-            require(['app/views/showcaseviews'],
-            function( S ) {
-                self.model.set( 'page' , new S.FilmGrid({
-                    collection : Films
-                }) )
-            })
+            require(
+                ['app/views/singlefilm'],
+                function( filmView ) {
+                    filmView.on('rendered', function(){
+                        spinner.detach()
+                    })
+
+                    $('.page').html( filmView.render( filmUrl ) )
+                }
+            )
         },
 
-        singleFilmInit : function( Films, urlTitle ) {
-            //var views = require('app/views/singleviews')
-            var self = this
-            require(['app/views/singleviews'],
-            function( views ) {
-                self.model.set( 'page', new views.Film({
-                    model : Films.findWhere({ url : urlTitle })
-                }) )
-            })
-        },
-
-        profile : function( segment, urlTitle) {
-            var self = this
-            require(['app/views/profile'], function( Profile ) {
-                self.$('.page').append( new Profile({
-                    segment : segment,
-                    urlTitle : urlTitle
-                }).render() )
-            })
+        profile : function( spinner, segment, urlTitle) {
+            require(
+                ['app/views/profile'],
+                function( profileView ) {
+                    try {
+                        $('.page').html( profileView.render( spinner, segment, urlTitle ) )
+                    } catch(e) {
+                        profileView.model.on('change:loaded', function() {
+                            $('.page').html( profileView.render( spinner, segment, urlTitle ) )
+                        })
+                    }
+                }
+            )
         },
 
         streamInit : function( Instagrams ) {

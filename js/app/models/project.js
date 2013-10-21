@@ -61,6 +61,31 @@ define([
             return response
         },
 
+        initialize : function() {
+
+            //if ( this.get('info') ) {
+            //    this.get('showcases').add({
+            //        type : 'info',
+            //        title : 'Info',
+            //        url_title : 'info',
+            //        content : this.get('info')
+            //    }, {
+            //        path : '/projects/' + this.get('url-title')
+            //    })
+            //}
+
+            //if ( this.get('relatedLinks') ) {
+            //    this.get('showcases').add({
+            //        type : 'related',
+            //        title : 'Related',
+            //        url_title : 'related',
+            //        links : this.get('relatedLinks')
+            //    }, {
+            //        path : '/projects/' + this.get('url-title')
+            //    })
+            //}
+        },
+
         path : function() {
             return '/projects/' + this.get('url-title')
         }

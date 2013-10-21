@@ -34,7 +34,7 @@ define([
 
         render : function(){
             this.$el.html( this.template({
-                url : this.options.path ? this.options.path + '/' + this.model.get('url') : this.model.get('url'),
+                url : this.options.path ? this.options.path + '/' + this.model.get('url-title') : this.model.get('url-title'),
                 cover : this.options.cover,
                 caption : this.options.path === 'projects' ? this.model.get('title') : this.model.get('caption'),
                 year : this.options.path === 'projects' ? this.model.get('year') : '',
@@ -86,25 +86,6 @@ define([
                  this.model.get('type') === 'gallery' ) {
                 return this.el
             }
-
-            //if ( this.options.path === 'photography' ||
-            //    this.model.get('type') === 'gallery' ||
-            //    this.model.hasChanged( 'view' ) ) {
-            //    fbLoader()
-            //    if ( this.options.path === 'photography' ) {
-            //        $('.page').html( this.el )
-            //    } else {
-            //        try {
-            //            this.model.get('page').$el.html( this.el )
-            //        } catch(e) {
-            //            options.container.html( this.el )
-            //        }
-            //    }
-
-            //} else {
-            //    this.filter( this.model.get('filter') )
-            //    this.sort( this.model.get('sort') )
-            //}
         },
 
         isotope : function() {
@@ -122,7 +103,6 @@ define([
                     columnWidth: rtl ? 164*1.5 : 164
                 },
                 onLayout : function() {
-                    console.log('onLayout')
                     $(this).css('overflow', 'visible')
                     fbLoader()
                 },
@@ -135,7 +115,6 @@ define([
                     }
                 }
             }
-
 
             if ( this.$el.hasClass('isotope') ) {
                 this.$el.isotope(isoOps)
@@ -173,10 +152,11 @@ define([
     // Film grid thumbnail
     showcases.FilmThumb = Backbone.View.extend({
         tagName : 'div',
+        className : 'film-thumb',
         template : TPL.filmThumb,
         render : function() {
             var html = this.template({
-                url : this.model.url(),
+                url : this.model.get('path'),
                 thumb : this.model.get('thumb'),
                 title : this.model.get('title'),
                 summary : this.model.get('summary')
@@ -193,7 +173,8 @@ define([
         className: 'film-container showcase',
         rowTmpl : TPL.filmRow,
         $row : undefined,
-        render : function() {
+        initialize : function() {
+            if ( this.$el.children().length ) { return this.el }
 
             this.collection.forEach( function(model, index){
                 if (index % 4 === 0) {
@@ -205,10 +186,12 @@ define([
                 }).render() )
             }, this )
 
+        },
+
+        render : function() {
             this.$('.film-row').imagesLoaded( function() {
                 $(this).addClass('loaded')
             })
-
             return this.el
         }
     })
@@ -281,11 +264,12 @@ define([
         },
 
         render : function() {
-            this.$el.append( this.template({
+            this.$el.html( this.template({
                 id : this.model.id,
                 title : this.model.get('title'),
                 summary : this.model.get('showcases') ? '' : this.model.get('summary'),
-                url : this.options.url,
+                url : this.model.get('url-title'),
+                //url : this.options.url,
                 path : this.options.path
             }) )
             return this.el
@@ -315,7 +299,7 @@ define([
                     .append( new showcases.Li({
                         model : listItem,
                         path : path ? path : '',
-                        url : url ? listItem.get('url') : false
+                        url : url ? listItem.get('url-title') : false
                     }).render() )
             }, this )
 
@@ -454,7 +438,7 @@ define([
                 $(caption).addClass('caption').append(p).append(span)
 
                 this.$el
-                .attr( 'href', '/projects/' + this.model.get('url') )
+                .attr( 'href', '/projects/' + this.model.get('url-title') )
                 .append(caption)
             }
 

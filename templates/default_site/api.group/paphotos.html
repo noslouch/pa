@@ -1,21 +1,19 @@
 <?php header('Content-type: application/json'); ?>
 {exp:ce_cache:stat:ic seconds="86400"}
-[
-{exp:channel:entries channel="photos-of-pa" limit="100" backspace="2"}
-    {
-        "id" : "{entry_id}",
-        "type" : "photos-of-pa",
-        "url" : "photos-of-pa",
-        "gallery": [
-            {paPhotos_profile backspace="14"}
-            { 
-                "thumb" : "{image:url:thumb}",
-                "lg_thumb" : "{image:url:lg-thumb}",
-                "url" : "{image:url:full}",
-                "caption" : "{image:description}"
-            },
-            {/paPhotos_profile}
-        ]
-    },
+{exp:channel:entries channel="photos-of-pa" limit="1"}
+{
+    "id" : "{entry_id}",
+    "type" : "photos-of-pa",
+    "url-title" : "photos-of-pa",
+    "gallery": [
+        {paPhotos_profile backspace="10"}
+        { 
+            "thumb" : "{image:url:thumb}",
+            "lg_thumb" : "{image:url:lg-thumb}",
+            "url" : "{image:url:full}",
+            "caption" : "{image:description}"
+        },
+        {/paPhotos_profile}
+    ]
+}
 {/exp:channel:entries}
-]

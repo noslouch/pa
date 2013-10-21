@@ -1,12 +1,14 @@
 <?php header('Content-type: application/json'); ?>
 {exp:ce_cache:stat:ic seconds="86400"}
+{if segment_3 == ''}
 [
-{exp:channel:entries channel="film" limit="100" backspace="2" }
+{/if}
+{exp:channel:entries channel="film" limit="100" backspace="2"}
     {
         "id" : "{entry_id}",
         "title": "{title}",
-        "date" : "{year_film}000",
-        "url": "{url_title}",
+        "timestamp" : "{year_film}000",
+        "url-title": "{url_title}",
         "thumb" : "{cover_image_film}{image:url:thumb}{/cover_image_film}",
         "summary": {exp:json_encode}{summary_film}{/exp:json_encode},
         {if video_id_film}
@@ -19,4 +21,6 @@
         "caption" : {exp:json_encode}{caption_film}{/exp:json_encode}
     },
 {/exp:channel:entries}
+{if segment_3 == ''}
 ]
+{/if}

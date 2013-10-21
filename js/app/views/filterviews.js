@@ -224,32 +224,6 @@ define([
             'click h3' : 'openMenu'
         },
 
-        filter : function(e) {
-            var hash = e.currentTarget.dataset.hash,
-                option = $.deparam( hash, true )
-
-            e.preventDefault()
-            e.stopPropagation()
-            $.bbq.pushState( option, option.view === 'random' ? 2 : 0 )
-            this.$('.open').removeClass('open')
-        },
-
-        jump : function(e) {
-            e.preventDefault()
-            e.stopPropagation()
-            this.$('.open').removeClass('open')
-            $('html, body').animate({
-                scrollTop : $(e.currentTarget.hash).offset().top - (this.model.get('view') === 'list' ? 200 : 400)
-            })
-        },
-
-        openMenu : function(e) {
-            e.preventDefault()
-            e.stopPropagation()
-            this.$('.open').removeClass('open')
-            $(e.target.parentElement).addClass('open')
-        },
-
         render : function() {
             this.$el.html( this.template() )
             this.$el.addClass('filter-bar')
@@ -295,6 +269,36 @@ define([
                     type : 'view',
                     template : TPL.views
                 }).render() )
+        },
+
+        onClose : function() {
+            this.$el.removeClass('filter-bar')
+        },
+
+        filter : function(e) {
+            var hash = e.currentTarget.dataset.hash,
+                option = $.deparam( hash, true )
+
+            e.preventDefault()
+            e.stopPropagation()
+            $.bbq.pushState( option, option.view === 'random' ? 2 : 0 )
+            this.$('.open').removeClass('open')
+        },
+
+        jump : function(e) {
+            e.preventDefault()
+            e.stopPropagation()
+            this.$('.open').removeClass('open')
+            $('html, body').animate({
+                scrollTop : $(e.currentTarget.hash).offset().top - (this.model.get('view') === 'list' ? 200 : 400)
+            })
+        },
+
+        openMenu : function(e) {
+            e.preventDefault()
+            e.stopPropagation()
+            this.$('.open').removeClass('open')
+            $(e.target.parentElement).addClass('open')
         }
     })
 

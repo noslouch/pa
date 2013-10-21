@@ -3,8 +3,9 @@
 
 define([
     'backbone',
-    'underscore'
-], function( Backbone, _ ) {
+    'underscore',
+    'app/collections/covergallery'
+], function( Backbone, _, CoverGallery ) {
 
     var Model = Backbone.Model.extend({
         initialize : function() {
@@ -47,15 +48,15 @@ define([
         },
 
         activate : function(){
-            //this.active = true
+            this.active = true
             var r = require( 'app/router' )
-            r.router.navigate( '/profile/' + this.collection.section + '/' + this.url() )
+            r.router.navigate( '/profile/' + this.collection.section + '/' + this.get('url-title') )
             Backbone.dispatcher.trigger('profile:listItemActivate', this)
-        },
-
-        url : function() {
-            return this.get('url')
         }
+
+        //url : function() {
+        //    return this.get('url')
+        //}
     })
 
     Profile.Bio = Single.extend({
@@ -65,7 +66,11 @@ define([
 
     Profile.PhotosOf = Single.extend({
         url : '/api/paphotos',
-        section : 'photos-of-pa'
+        section : 'photos-of-pa',
+        parse : function( response, options ) {
+            response.photos = new CoverGallery( response.gallery )
+            return response
+        }
     })
 
     Profile.Acknowledgements = Single.extend({

@@ -6,16 +6,16 @@ define([
 ], function( Backbone ) {
 
     var Film = Backbone.Model.extend({
-        initialize : function() {
-            this.set({
-                htmlDate : this.makeHtmlDate( this.get('date') ),
-                date : this.parseDate( this.get('date') )
-            })
-        },
-
-        url : function() {
-            return '/film/' + this.get('url')
+        parse : function( response, options ) {
+            response.htmlDate = this.makeHtmlDate( response.timestamp )
+            response.date = this.parseDate( response.timestamp )
+            response.path = '/film/' + response['url-title']
+            return response
         }
+
+        //path : function() {
+        //    return '/film/' + this.get('url')
+        //}
     })
 
     return Film

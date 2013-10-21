@@ -8,7 +8,7 @@ define([
 ], function( Backbone, Film ) {
     var Films = Backbone.Collection.extend({
         model : Film,
-        url : '/api/films'
+        url : '/api/film'
     })
 
     return new Films()
