@@ -77,60 +77,26 @@ define([
         photography : function() {
             var spinner = new Spinner()
             Chrome.photography( spinner )
-
-            /*
-            require(['app/collections/photography'],
-            function(Albums) {
-                $.when( Albums.fetch() )
-                .done( function(){
-                    Chrome.photoHomeInit( Albums )
-                    spinner.detach()
-                } )
-            })
-            */
         },
 
-        singleAlbum : function(urlTitle) {
+        singleAlbum : function( albumUrl ) {
             var spinner = new Spinner()
-
-            require(['app/collections/photography'],
-            function(Albums){
-                $.when( Albums.fetch() )
-                .done( function() {
-                    Chrome.albumInit(Albums, urlTitle)
-                    spinner.detach()
-                } )
-            })
+            Chrome.singleAlbum( spinner, albumUrl )
         },
 
         film : function() {
             var spinner = new Spinner()
-
-            require(['app/collections/films'],
-            function(Films) {
-                $.when( Films.fetch() )
-                .done( function(){
-                    Chrome.filmHomeInit(Films)
-                    spinner.detach()
-                } )
-            })
+            Chrome.film( spinner )
         },
 
-        singleFilm : function( urlTitle ) {
+        singleFilm : function( filmUrl ) {
             var spinner = new Spinner()
-
-            require(['app/collections/films'],
-            function(Films){
-                $.when( Films.fetch() )
-                .done( function() {
-                    Chrome.singleFilmInit( Films, urlTitle )
-                    spinner.detach()
-                } )
-            })
+            Chrome.singleFilm( spinner, filmUrl )
         },
 
         profile : function( segment, urlTitle ) {
-            Chrome.profile( segment, urlTitle )
+            var spinner = new Spinner()
+            Chrome.profile( spinner, segment, urlTitle )
         },
 
         contact : function() {

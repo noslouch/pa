@@ -55,7 +55,11 @@ require([
     '/testing/js/tests/projectModel',
     '/testing/js/tests/singleproject',
     '/testing/js/tests/albumModel',
-    '/testing/js/tests/photoHome'
+    '/testing/js/tests/photoHome',
+    '/testing/js/tests/singlealbum',
+    '/testing/js/tests/filmHome',
+    '/testing/js/tests/singlefilm',
+    '/testing/js/tests/profile'
     ],
     function() {
         QUnit.start()

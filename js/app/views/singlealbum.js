@@ -1,4 +1,4 @@
-/* app/views/singleviews.js
+/* app/views/singlealbum.js
  * detail view for photo galleries */
 'use strict';
 
@@ -36,26 +36,45 @@ define([
         tagName : 'div',
         className : 'photo viewer',
         baseTmpl : TPL.viewer,
-
         initialize : function() {
+            _.bindAll( this, 'render', 'renderOut' )
+            this.model = new AlbumModel()
             this.$el.html( this.baseTmpl() )
             this.details = new AlbumDetails({
                 el : this.$('#details'),
                 model : this.model
             })
+            this.$viewer = this.$('#showcaseContainer')
         },
 
-        render : function(options) {
-            this.details.render()
-            this.model.set('type', 'gallery')
-            var gallery = new S.Image({
-                collection : this.model.get('photos'),
-                model : this.model
+        render : function( albumUrl ) {
+            this.details.$el.empty()
+            this.$viewer.empty()
+
+            this.model.fetch({
+                url : '/api/photography/' + albumUrl,
+                success : this.renderOut
             })
-            this.$('#showcaseContainer').html( gallery.render({ container : this.$('#showcaseContainer') }) )
-            //gallery.firstLoad()
 
             return this.el
+        },
+
+        renderOut : function( model, response, ops ) {
+            this.model.set('type', 'gallery')
+            this.collection = this.model.get('photos')
+
+            this.details.render({
+                collection : this.collection
+            })
+
+            var gallery = new S.Image({
+                model : this.model,
+                collection : this.collection
+            })
+
+            this.$viewer.html( gallery.render() )
+
+            this.trigger( 'rendered' )
         }
     })
 

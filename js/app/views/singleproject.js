@@ -132,7 +132,7 @@ define([
         events : {},
         template : TPL.projectDetails,
         render : function(options) {
-            this.model = options.model
+            //this.model = options.model
             this.collection = options.collection
 
             this.$el.html( this.template({
@@ -174,26 +174,39 @@ define([
         initialize : function() {
             _.bindAll(this, 'swap', 'render', 'renderOut' )
             this.model = new ProjectModel()
-
             this.$el.html( this.baseTmpl() )
 
             this.details = new Details({
-                el : this.$('#details')
+                el : this.$('#details'),
+                model : this.model
             })
 
             this.viewer = new Showcase({
                 el : this.$('#showcaseContainer')
             })
+        },
 
+        render : function(projectUrl, showcaseUrl) {
+            this.details.$el.empty()
+            this.viewer.$el.empty()
+
+            this.model.fetch({
+                url : '/api/projects/' + projectUrl,
+                success : this.renderOut,
+                showcaseUrl : showcaseUrl
+            })
+
+            return this.el
         },
 
         renderOut : function( model, response, ops ) {
             this.collection = this.model.get('showcases')
-            this.viewer.listenTo( this.collection, 'change:active', this.viewer.render )
-            this.listenTo( this.collection, 'swap', this.swap  )
+            this.collection.on( 'change:active', this.viewer.render )
+            this.collection.on( 'swap', this.swap )
+            //this.viewer.listenTo( this.collection, 'change:active', this.viewer.render )
+            //this.listenTo( this.collection, 'swap', this.swap  )
 
             this.details.render({
-                model : this.model,
                 collection : this.collection
             })
 
@@ -209,19 +222,6 @@ define([
             }
 
             this.trigger('rendered')
-        },
-
-        render : function(projectUrl, showcaseUrl) {
-            this.details.$el.empty()
-            this.viewer.$el.empty()
-
-            this.model.fetch({
-                url : '/api/projects/' + projectUrl,
-                success : this.renderOut,
-                showcaseUrl : showcaseUrl
-            })
-
-            return this.el
         },
 
         swap : function(showcase){

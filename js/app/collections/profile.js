@@ -1,4 +1,4 @@
-/* app/collections/profilesections.js - All Profile Section collections */
+/* app/collections/profile.js - All Profile Section collections */
 'use strict';
 
 define([

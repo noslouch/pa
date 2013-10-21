@@ -83,6 +83,7 @@ define([
             }
             this.model.set( hashObj )
             this.$el.html( this.model[hashObj.view].render() )
+            this.filter.delegateEvents()
         },
 
         init : function(spinner) {
