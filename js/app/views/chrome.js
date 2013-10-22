@@ -96,7 +96,7 @@ define([
 
         singleProject : function( spinner, projectUrl, showcaseUrl ) {
             require(
-                ['app/views/singleProject'],
+                ['app/views/singleproject'],
                 function( projectView ) {
                     projectView.on('rendered', function() {
                         spinner.detach()
