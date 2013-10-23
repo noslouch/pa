@@ -49,8 +49,9 @@ define([
         },
 
         render : function() {
+            this.delegateEvents()
             this.$('.film-row').imagesLoaded( function() {
-                $(this).addClass('loaded')
+                $('.film-row').addClass('loaded')
             })
             return this.el
         }

@@ -19,7 +19,7 @@ define([
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
-            _.bindAll( this, 'render', 'jumpSet', 'navigate' )
+            _.bindAll( this, 'render', 'jumpSet', 'navigate', 'init' )
             var self = this
 
             this.collection.fetch({
@@ -58,7 +58,7 @@ define([
             $(window).on('hashchange', this.render)
             Backbone.dispatcher.on('hashchange', this.render)
             Backbone.dispatcher.on('filterCheck', function(router){
-                if ( router.previous.match('projects') ) {
+                if ( router.previous.href.match('projects') ) {
                     self.filter.close()
                 }
             })
@@ -88,6 +88,7 @@ define([
 
         init : function(spinner) {
 
+            this.delegateEvents()
             this.filter.render()
 
             if ( !this.collection.length ) {
@@ -97,7 +98,7 @@ define([
                 }
             }
 
-            spinner.detach()
+            if (spinner) {spinner.detach()}
             if ( document.location.hash ) {
                 $(window).trigger('hashchange')
             } else {
@@ -109,6 +110,7 @@ define([
             e.preventDefault()
             this.model.unset('view').unset('filter').unset('view')
             Backbone.dispatcher.trigger('navigate:detail', e, this)
+            //this.collection.get( e.currentTarget.id ).activate()
         },
 
         jumpSet : function() {

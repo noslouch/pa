@@ -8,30 +8,21 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    //'app/views/header',
     'app/views/page',
-    'app/views/search'
+    'app/views/search',
+    'utils/spinner'
     //'app/router',
     //'app/collections/covergallery',
     //'app/views/projects',
     //'app/views/profileviews',
     //'app/views/singleviews'
-], function( require, exports, $, Backbone, _, Page, Search ) {
+], function( require, exports, $, Backbone, _, Page, Search, Spinner ) {
 
     var App = Backbone.View.extend({
         initialize : function() {
-            _.bindAll( this, 'render', 'routeHandler', 'projects', 'showSearch', 'singleProject' )
+            _.bindAll( this, 'render', 'detail', 'projects', 'showSearch', 'singleProject' )
 
             this.model = new Backbone.Model()
-
-            /*
-            this.page = new Page({
-                el : '.page',
-                parent : this,
-                model : this.model
-            })
-            */
-
             this.search = new Search.Form({
                 el : '#searchForm',
                 page : this.model
@@ -40,6 +31,7 @@ define([
             this.listenTo( this.search, 'submit', function() {
                 this.page.$el.empty()
             } )
+            Backbone.dispatcher.on('projects:goBack', this.projects)
         },
 
         events : {
@@ -59,22 +51,31 @@ define([
 
         navigate : function(e) {
             e.preventDefault()
-            Backbone.dispatcher.trigger('navigate:section', e)
+            var spinner = new Spinner()
+            this[e.target.id](spinner)
+
             this.$('#nav a').removeClass( 'active' )
             $(e.target).addClass( 'active' )
+            Backbone.dispatcher.trigger('navigate:section', e)
         },
 
-        home : function() {
+        detail : function(model) {
+            console.log(model)
+        },
+
+        home : function(spinner) {
             var self = this,
                 bootstrap = !!$('#n-container').length
 
             require(['app/views/home'], function( home ) {
                 home.setElement('.page')
                 home.render()
+                spinner.detach()
             })
         },
 
         projects : function(spinner) {
+            var self = this
             require(['app/views/projects'], function( projects ) {
                 projects.setElement('.page')
                 try {
@@ -85,6 +86,9 @@ define([
                         projects.init(spinner)
                     })
                 }
+
+                self.listenTo( projects.collection, 'change:active', self.detail )
+
             })
         },
 
@@ -178,17 +182,6 @@ define([
                 page : this.model
             })
             this.pageSearch.render()
-        },
-
-        routeHandler : function(methodName, urlParam) {
-            if (methodName !== 'projects'){
-                try {
-                    this.header.filterBar.remove()
-                } catch(e) {}
-            }
-            try {
-                this.page.$el.removeClass( this.last.pageClass )
-            } catch(e) {}
         }
     })
 

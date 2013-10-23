@@ -40,7 +40,8 @@ define([
                 year : this.options.path === 'projects' ? this.model.get('year') : '',
                 thumb : this.model.get('thumb'),
                 lg_thumb : this.model.get('lg_thumb'),
-                large : this.options.large
+                large : this.options.large,
+                id : this.model.id
             }) )
             return this.el
         }
@@ -363,8 +364,9 @@ define([
         initialize : function() {
             _.bindAll( this, 'render' )
 
-            $('<img>').appendTo( this.$el )
-                .attr( 'src', this.model.get('thumb') )
+            $('<img>')
+            .appendTo( this.$el )
+            .attr( 'src', this.model.get('thumb') )
 
             this.$el.css({
                 left : this.options.HALF_WIDTH + this.randomRange(-this.options.HALF_WIDTH, this.options.HALF_WIDTH),
@@ -390,7 +392,10 @@ define([
                 $(caption).addClass('caption').append(p).append(span)
 
                 this.$el
-                .attr( 'href', '/projects/' + this.model.get('url-title') )
+                .attr({
+                    href : '/projects/' + this.model.get('url-title'),
+                    id : this.model.id
+                })
                 .append(caption)
             }
 

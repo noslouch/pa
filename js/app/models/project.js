@@ -86,8 +86,20 @@ define([
             //}
         },
 
+        defaults : {
+            active : false
+        },
+
         path : function() {
             return '/projects/' + this.get('url-title')
+        },
+
+        activate : function(){
+            this.set('active', true)
+        },
+
+        deactivate : function(){
+            this.set('active', false)
         }
     })
 

@@ -269,10 +269,13 @@ define([
                     type : 'view',
                     template : TPL.views
                 }).render() )
+
+            this.delegateEvents()
         },
 
         onClose : function() {
             this.$el.removeClass('filter-bar')
+            $('.tooltip').remove()
         },
 
         filter : function(e) {

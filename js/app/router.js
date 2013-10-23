@@ -19,7 +19,7 @@ define([
             $(window).on('hashchange', this.saveHistory)
             //this.on('route', this.debug)
             //this.on('route', this.semantics)
-            this.history = [document.location.href]
+            this.history = [document.location]
         },
 
         routes : {
@@ -41,7 +41,7 @@ define([
         },
 
         saveHistory : function() {
-            this.history.push(Backbone.history.location.href)
+            this.history.push(_.clone(document.location))
             if ( this.history.length > 1 ) {
                 this.history.shift()
             }
@@ -61,7 +61,8 @@ define([
         },
 
         home : function() {
-            Chrome.home()
+            var spinner = new Spinner()
+            Chrome.home(spinner)
         },
 
         projects : function() {
@@ -125,7 +126,8 @@ define([
     Backbone.dispatcher.on('navigate:section', function(e) {
         Backbone.dispatcher.trigger('filterCheck', router)
         $('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
-        router.navigate(e.target.pathname, { trigger: true })
+        var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
+        router.navigate( l )
     })
 
     Backbone.dispatcher.on('navigate:detail', function(e, currentView) {

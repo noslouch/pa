@@ -162,7 +162,6 @@ define([
                     type : 'Project Type',
                     tags : this.model.get('type_tags')
                 }).render() )
-
         }
     })
 
@@ -186,7 +185,12 @@ define([
             })
         },
 
+        events : {
+            'click #back' : 'goBack'
+        },
+
         render : function( projectUrl, showcaseUrl, previous ) {
+            this.delegateEvents()
             this.details.$el.empty()
             this.viewer.$el.empty()
             this.previous = previous
@@ -213,7 +217,7 @@ define([
 
             this.$('#details').append( this.back({
                 buttonText : 'Back to Projects',
-                url : this.previous ? this.previous : '/projects'
+                url : this.previous ? '/projects' + this.previous.hash : '/projects'
             }) )
 
             if ( ops.showcaseUrl ) {
@@ -225,9 +229,15 @@ define([
             this.trigger('rendered')
         },
 
-        swap : function(showcase){
+        swap : function(showcase) {
             this.collection.findWhere({ active : true }).deactivate()
             showcase.activate()
+        },
+
+        goBack : function(e) {
+            e.preventDefault()
+            Backbone.dispatcher.trigger('navigate:section', e)
+            Backbone.dispatcher.trigger('projects:goBack')
         }
     })
 
