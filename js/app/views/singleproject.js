@@ -186,9 +186,10 @@ define([
             })
         },
 
-        render : function(projectUrl, showcaseUrl) {
+        render : function( projectUrl, showcaseUrl, previous ) {
             this.details.$el.empty()
             this.viewer.$el.empty()
+            this.previous = previous
 
             this.model.fetch({
                 url : '/api/projects/' + projectUrl,
@@ -212,7 +213,7 @@ define([
 
             this.$('#details').append( this.back({
                 buttonText : 'Back to Projects',
-                url : '/projects'
+                url : this.previous ? this.previous : '/projects'
             }) )
 
             if ( ops.showcaseUrl ) {

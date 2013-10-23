@@ -71,7 +71,7 @@ define([
 
         singleProject : function(projectUrl, showcaseUrl) {
             var spinner = new Spinner()
-            Chrome.singleProject(spinner, projectUrl, showcaseUrl)
+            Chrome.singleProject( spinner, projectUrl, showcaseUrl, this.previous )
         },
 
         photography : function() {
@@ -139,7 +139,9 @@ define([
         router.navigate( ops.url, { replace : ops.replace })
     })
 
+    Backbone.dispatcher.on('profile:navigate', function( path ){
+        router.navigate( path )
+    })
+
     exports.router = router
 })
-
-

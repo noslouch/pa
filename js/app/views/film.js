@@ -6,8 +6,55 @@ define([
     'backbone',
     'underscore',
     'app/collections/films',
-    'app/views/showcaseviews'
-], function( $, Backbone, _, filmCollection, S ) {
+    'tpl/jst'
+], function( $, Backbone, _, filmCollection, TPL ) {
+
+    // FilmThumb
+    // Film grid thumbnail
+    var FilmThumb = Backbone.View.extend({
+        tagName : 'div',
+        className : 'film-thumb',
+        template : TPL.filmThumb,
+        render : function() {
+            var html = this.template({
+                url : this.model.get('path'),
+                thumb : this.model.get('thumb'),
+                title : this.model.get('title'),
+                summary : this.model.get('summary')
+            })
+            this.$el.append( html )
+            return this.el
+        }
+    })
+
+    // FilmGrid
+    var FilmGrid = Backbone.View.extend({
+        tagName : 'div',
+        className: 'film-container showcase',
+        rowTmpl : TPL.filmRow,
+        $row : undefined,
+        initialize : function() {
+            if ( this.$el.children().length ) { return this.el }
+
+            this.collection.forEach( function(model, index){
+                if (index % 4 === 0) {
+                    this.$row = $( this.rowTmpl() )
+                    this.$el.append(this.$row)
+                }
+                this.$row.append( new FilmThumb({ 
+                    model : model
+                }).render() )
+            }, this )
+
+        },
+
+        render : function() {
+            this.$('.film-row').imagesLoaded( function() {
+                $(this).addClass('loaded')
+            })
+            return this.el
+        }
+    })
 
     var Film = Backbone.View.extend({
         initialize : function(){
@@ -16,7 +63,7 @@ define([
 
             this.collection.fetch({
                 success : function(collection) {
-                    self.filmThumbs = new S.FilmGrid({
+                    self.filmThumbs = new FilmGrid({
                         collection : collection
                     })
 

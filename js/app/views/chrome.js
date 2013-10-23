@@ -75,118 +75,90 @@ define([
         },
 
         projects : function(spinner) {
-            var self = this
-
-            require(
-                ['app/views/projects'],
-                function( projects ) {
-
-                    projects.setElement('.page')
-                    try {
+            require(['app/views/projects'], function( projects ) {
+                projects.setElement('.page')
+                try {
+                    projects.init(spinner)
+                    projects.filter.$el.show()
+                } catch (e) {
+                    Backbone.dispatcher.on('projects:ready', function() {
                         projects.init(spinner)
-                        projects.filter.$el.show()
-                    } catch (e) {
-                        Backbone.dispatcher.on('projects:ready', function() {
-                            projects.init(spinner)
-                        })
-                    }
+                    })
                 }
-            )
+            })
         },
 
-        singleProject : function( spinner, projectUrl, showcaseUrl ) {
-            require(
-                ['app/views/singleproject'],
-                function( projectView ) {
-                    projectView.on('rendered', function() {
-                        spinner.detach()
-                    })
+        singleProject : function( spinner, projectUrl, showcaseUrl, previous ) {
+            require(['app/views/singleproject'], function( projectView ) {
+                projectView.on('rendered', function() {
+                    spinner.detach()
+                })
 
-                    $('.page')
-                        .html( projectView.render( projectUrl, showcaseUrl ) )
-                        .removeClass('projects')
-                }
-            )
+                $('.page')
+                    .html( projectView.render( projectUrl, showcaseUrl, previous ) )
+                    .removeClass('projects')
+            })
         },
 
         photography : function( spinner ) {
-            var self = this
-
-            require(
-                ['app/views/photography'],
-                function( photography ) {
-
-                    photography.setElement( '.page' )
-                    try {
+            require(['app/views/photography'], function( photography ) {
+                photography.setElement( '.page' )
+                try {
+                    photography.init(spinner)
+                } catch(e) {
+                    Backbone.dispatcher.on('photography:ready', function() {
                         photography.init(spinner)
-                    } catch(e) {
-                        Backbone.dispatcher.on('photography:ready', function() {
-                            photography.init(spinner)
-                        })
-                    }
+                    })
                 }
-            )
+            })
         },
 
         singleAlbum : function( spinner, albumUrl ) {
-            var self = this
-            require(
-                ['app/views/singlealbum'],
-                function( albumView ) {
-                    albumView.on('rendered', function() {
-                        spinner.detach()
-                    })
+            require(['app/views/singlealbum'], function( albumView ) {
+                albumView.on('rendered', function() {
+                    spinner.detach()
+                })
 
-                    $('.page').html( albumView.render( albumUrl ) )
-                }
-            )
+                $('.page').html( albumView.render( albumUrl ) )
+            })
         },
 
         film : function( spinner ) {
-            var self = this
-
-            require(
-                ['app/views/film'],
-                function( film ){
-                    film.setElement('.page')
-                    try{
+            require(['app/views/film'], function( film ){
+                film.setElement('.page')
+                try{
+                    film.init(spinner)
+                } catch(e) {
+                    Backbone.dispatcher.on('film:ready', function(){
                         film.init(spinner)
-                    } catch(e) {
-                        Backbone.dispatcher.on('film:ready', function(){
-                            film.init(spinner)
-                        })
-                    }
+                    })
                 }
-            )
+            })
         },
 
         singleFilm : function( spinner, filmUrl ) {
-            var self = this
-            require(
-                ['app/views/singlefilm'],
-                function( filmView ) {
-                    filmView.on('rendered', function(){
-                        spinner.detach()
-                    })
+            require(['app/views/singlefilm'], function( filmView ) {
+                filmView.on('rendered', function(){
+                    spinner.detach()
+                })
 
-                    $('.page').html( filmView.render( filmUrl ) )
-                }
-            )
+                $('.page').html( filmView.render( filmUrl ) )
+            })
         },
 
         profile : function( spinner, segment, urlTitle) {
-            require(
-                ['app/views/profile'],
-                function( profileView ) {
-                    try {
-                        $('.page').html( profileView.render( spinner, segment, urlTitle ) )
-                    } catch(e) {
-                        profileView.model.on('change:loaded', function() {
-                            $('.page').html( profileView.render( spinner, segment, urlTitle ) )
-                        })
-                    }
+            require(['app/views/profile'], function( profileView ) {
+                profileView.on('rendered', function(){
+                    spinner.detach()
+                })
+                try {
+                    $('.page').html( profileView.render( segment, urlTitle ) )
+                } catch(e) {
+                    profileView.model.on('change:loaded', function() {
+                        $('.page').html( profileView.render( segment, urlTitle ) )
+                    })
                 }
-            )
+            })
         },
 
         streamInit : function( Instagrams ) {

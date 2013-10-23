@@ -11,31 +11,29 @@ define([
     'app/collections/profile',
     'app/views/jumplist',
     'utils/fbLoader'
-], function( require, $, Backbone, _, S, TPL, Sections, Jumps ) {
+], function( require, $, Backbone, _, S, TPL, sections, Jumps ) {
 
     var Content = Backbone.View.extend({
         id : 'showcaseContainer',
         className : 'container',
         initialize : function() {
             _.bindAll( this, 'render', 'contentController' )
-            this.listenTo( Backbone.dispatcher, 'profile:sectionActivate', this.render )
-            this.listenTo( Backbone.dispatcher, 'profile:listItemActivate', this.contentController )
             //Backbone.dispatcher.on( 'filterCheck', function(router){
             //    if ( router.previous.match('profile') ) {
             //        $('#filter-bar').empty()
             //    }
             //})
-
         },
 
-        render : function(model){
-            var showcase,
+        render : function( section ){
+            var model = section.get('content'),
+                showcase,
                 $layout,
                 $base,
                 album
 
             $('#filter-bar').empty()
-            switch(model.section) {
+            switch( section.id ) {
 
                 case 'bio':
                     showcase = new S.Text()
@@ -59,7 +57,7 @@ define([
                 case 'press':
                     showcase = new S.List({
                         collection : model,
-                        path : '/profile/press/'
+                        path : '/profile/press'
                     })
                     this.$el.html( showcase.render() )
 
@@ -70,7 +68,8 @@ define([
 
                 case 'awards':
                     showcase = new S.List({
-                        collection : model, path : false,
+                        collection : model,
+                        path : false,
                         url : false
                     })
                     this.$el.html( showcase.render('date') )
@@ -81,24 +80,20 @@ define([
                     break;
 
                 case 'photos-of-pa':
-                    var self = this
-                    //require(['app/models/album'], function(Album){
-                        //album = new Album( model.attributes )
-                        showcase = new S.Image({
-                            collection : model.get('photos'),
-                            model : model
-                        })
-                        model.set('type', 'gallery')
-                        self.$el.html( showcase.render({
-                            container : self.$el 
-                        }) )
-                    //})
+                    showcase = new S.Image({
+                        collection : model.get('photos'),
+                        model : model
+                    })
+                    model.set('type', 'gallery')
+                    this.$el.html( showcase.render({
+                        container : this.$el
+                    }) )
                     break;
 
                 case 'articles-by-pa':
                     showcase = new S.List({
                         collection : model,
-                        path : '/profile/articles-by-pa/'
+                        path : '/profile/articles-by-pa'
                     })
                     this.$el.html( showcase.render() )
 
@@ -110,7 +105,7 @@ define([
                 case 'articles-about-pa':
                     showcase = new S.List({
                         collection : model,
-                        path : '/profile/articles-by-pa/'
+                        path : '/profile/articles-by-pa'
                     })
                     this.$el.html( showcase.render() )
 
@@ -122,7 +117,7 @@ define([
                 case 'interviews':
                     showcase = new S.List({
                         collection : model,
-                        path : '/profile/interviews/'
+                        path : '/profile/interviews'
                     })
                     this.$el.html( showcase.render() )
 
@@ -134,7 +129,7 @@ define([
                 case 'transcripts':
                     showcase = new S.List({
                         collection : model,
-                        path : '/profile/transcripts/'
+                        path : '/profile/transcripts'
                     })
                     this.$el.html( showcase.render() )
 
@@ -158,6 +153,7 @@ define([
                     break;
             }
 
+            Backbone.dispatcher.trigger('profile:navigate', '/profile/' + section.id )
             $('html, body').animate({ scrollTop : 0 })
         },
 
@@ -204,7 +200,7 @@ define([
                 imageTemplate : TPL.textGalleryImage
             }) )
             .append( layout.back({
-                url : '/profile/' + model.collection.section,
+                url : '/profile/' + model.get('type'),
                 buttonText : 'Back to All ' + back
             }) ).appendTo( $layout )
 
@@ -217,25 +213,17 @@ define([
 
             $('html, body').animate({ scrollTop : 0 })
         }
+
     })
 
     var Link = Backbone.View.extend({
         initialize : function() {
-            _.bindAll( this, 'toggleSection', 'toggleView' )
-            this.listenTo( Backbone.dispatcher, 'profile:sectionActivate', this.toggleView )
-        },
-
-        events : {
-            'click' : 'toggleSection'
-        },
-
-        toggleSection : function(e) {
-            e.preventDefault()
-            Backbone.dispatcher.trigger( 'profile:swap', this.model || this.collection )
+            _.bindAll( this, 'toggleView' )
+            this.listenTo( this.model, 'change:active', this.toggleView )
         },
 
         toggleView : function() {
-            this.$el.toggleClass('active', this.model.active )
+            this.$el.toggleClass('active', this.model.get('active') )
         }
 
     })
@@ -244,31 +232,31 @@ define([
         className : 'profile viewer',
         id : 'profileViewer',
         initialize : function() {
-            _.bindAll( this, 'swap', 'back' )
+            _.bindAll( this, 'navigate', 'toggleSection', 'swap', 'back' )
             var promiseStack = [],
                 self = this
 
-            this.collection = Sections
+            this.collection = sections
             this.viewer = new Content()
+            this.$el.append( TPL.profileLinks() ).append( this.viewer.el )
 
-            _.each( this.collection, function( section ) {
-                promiseStack.push( section.fetch() )
+            this.collection.each(function( section ) {
+                promiseStack.push( section.get('content').fetch() )
             })
             $.when.apply( $, promiseStack ).done(function(){
-                self.$el.append( TPL.profileLinks() ).append( self.viewer.el )
-                _.each( self.collection, function(section, name, sections) {
+                self.collection.each( function( section ) {
                     new Link({
-                        el : this.$('#' + name)[0],
+                        el : this.$('#' + section.id)[0],
                         model : section
                     })
                 }, self )
                 self.model.set('loaded', true)
             })
 
-            Backbone.dispatcher.on( 'profile:swap', this.swap )
+            this.listenTo( this.collection, 'change:active', this.swap )
         },
 
-        render : function(spinner, segment, urlTitle ) {
+        render : function( segment, urlTitle ) {
             if ( !this.model.get('loaded') ){
                 throw {
                     message : 'Profile isn\'t loaded.',
@@ -276,34 +264,59 @@ define([
                 }
             }
 
-            //Backbone.dispatcher.trigger( 'profile:swap', this.collection[ segment ? segment : 'bio' ], segment ? false : true )
-            this.viewer.render( this.collection[ segment ? segment : 'bio' ], segment ? false : true )
+            var section = segment ? segment : 'bio'
+            this.collection.get(section).activate()
             if (urlTitle ) {
-                this.collection[segment].findWhere({ url : urlTitle }).activate()
+                var item = this.collection.section(segment).findWhere({ 'url-title' : urlTitle })
+                this.viewer.contentController( item )
             }
-            spinner.detach()
-            //this.trigger('rendered')
+            this.delegateEvents()
+            this.trigger('rendered')
             return this.el
         },
 
         events : {
-            'click #back' : 'back'
+            'click .list a' : 'navigate',
+            'click #back' : 'back',
+            'click #profileLinks' : 'toggleSection'
+        },
+
+        navigate : function(e){
+            e.preventDefault()
+            var id = e.currentTarget.id
+            var item = this.collection.active().get(id)
+            this.viewer.contentController( item )
+            Backbone.dispatcher.trigger('profile:navigate', e.currentTarget.pathname)
         },
 
         back : function(e) {
             e.preventDefault()
-            var sectionName = e.currentTarget.pathname
-            this.collection[sectionName.slice(9)].activate()
+            this.viewer.render( this.collection.findWhere({ active : true }) )
         },
 
-        swap : function(section, replace) {
+        toggleSection : function(e) {
+            e.preventDefault()
+            var section = e.target.id
+            this.collection.get(section).activate()
+        },
+
+        swap : function(section) {
             // there are some situations where there isn't a disabled section
-            try {
-                _.findWhere( this.collection, { active : true }).deactivate()
-            } catch(err) {}
-            section.activate(replace)
+            if ( section.get('active') ) {
+                try {
+                    var last = this.collection.chain()
+                        .filter(function(model) { return model.get('active') })
+                        .reject(function(model) { return model.id === section.id })
+                        .value()
+
+                    last[0].deactivate()
+                } catch(err) {}
+
+                this.viewer.render( section )
+            }
         }
     })
+
     return new Profile({
         model : new Backbone.Model()
     })
