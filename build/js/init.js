@@ -40,6 +40,7 @@ require.config({
         'app/views/page' : 'app/views/page.@@hash',
         'app/views/photography' : 'app/views/photography.@@hash',
         'app/views/profile' : 'app/views/profile.@@hash',
+        'app/views/film' : 'app/views/film.@@hash',
         'app/views/projects' : 'app/views/projects.@@hash',
         'app/views/search' : 'app/views/search.@@hash',
         'app/views/showcaseviews' : 'app/views/showcaseviews.@@hash',
@@ -48,6 +49,8 @@ require.config({
         'app/views/singleproject' : 'app/views/singleproject.@@hash',
         'app/views/singleviews' : 'app/views/singleviews.@@hash',
         'utils/spinner' : 'utils/spinner.@@hash',
+        'utils/quotes' : 'utils/quotes.@@hash',
+        'utils/fbLoader' : 'utils/fbLoader.@@hash',
         'tpl/jst' : 'tpl/jst.@@hash'
     },
     shim : {
