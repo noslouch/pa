@@ -7,28 +7,65 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    //'app/views/showcaseviews',
     'app/views/filterviews',
+    'app/views/showcaseviews',
+    'app/collections/covergallery',
+    'app/collections/projects',
     'foundation',
     'tooltips',
+    'bbq',
     'lib/requirejs/domReady!'
-], function( require, $, Backbone, _, FilterBar ) {
+], function( require, $, Backbone, _, FilterBar, S, CoverGallery, Projects ) {
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
-            _.bindAll( this, 'render', 'jumpSet' )
+            _.bindAll( this, 'render', 'jumpSet', 'navigate', 'init' )
+            var self = this
 
-            this.filter = new FilterBar({
-                el : '#filter-bar',
-                model : this.model
+            this.collection.fetch({
+                success : function(projects) {
+
+                    self.model.cover = new S.Image({
+                        cover : true,
+                        collection : new CoverGallery( projects.pluck('coverImage') ),
+                        path : 'projects',
+                        model : self.model
+                    })
+
+                    self.model.list = new S.List({
+                        collection : new CoverGallery( projects.pluck('coverImage') ),
+                        pageClass : 'projects',
+                        path : 'projects',
+                        section : 'Projects',
+                        model : self.model
+                    })
+
+                    self.model.random = new S.Starfield({
+                        collection : self.model.cover.collection
+                    })
+
+                    self.filter = new FilterBar({
+                        el : '#filter-bar',
+                        model : self.model,
+                        collection : projects
+                    })
+
+                    Backbone.dispatcher.trigger('projects:ready')
+                }
             })
 
-            this.setElement('.page')
-            this.outlineTitle = this.$('h2')
             this.model.on( 'layout', this.jumpSet )
-
             $(window).on('hashchange', this.render)
             Backbone.dispatcher.on('hashchange', this.render)
+            Backbone.dispatcher.on('filterCheck', function(router){
+                if ( router.previous.href.match('projects') ) {
+                    self.filter.close()
+                }
+            })
+        },
+
+        events : {
+            'click .showcase a' : 'navigate'
         },
 
         render : function() {
@@ -46,13 +83,37 @@ define([
             }
             this.model.set( hashObj )
             this.$el.html( this.model[hashObj.view].render() )
-            this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
+            this.filter.delegateEvents()
         },
 
-        semantics : function( className, outlineTitle ) {
-            this.$el.addClass( className || '' )
-            this.outlineTitle.html( outlineTitle || '' )
-            this.$el.prepend( this.outlineTitle )
+        init : function(spinner) {
+
+            this.delegateEvents()
+            this.filter.render()
+
+            if ( !this.collection.length ) {
+                throw {
+                    message : 'Projects aren\'t loaded.',
+                    type : 'EmptyCollection'
+                }
+            }
+
+            if (spinner) {spinner.detach()}
+            if ( document.location.hash ) {
+                $(window).trigger('hashchange')
+            } else {
+                $.bbq.pushState({ view : 'random' })
+            }
+        },
+
+        navigate : function(e) {
+            e.preventDefault()
+            Backbone.dispatcher.trigger('navigate:detail', e, this)
+            //this.collection.get( e.currentTarget.id ).activate()
+        },
+
+        onClose : function() {
+            this.model.unset('view').unset('filter').unset('view')
         },
 
         jumpSet : function() {
@@ -75,5 +136,9 @@ define([
     })
 
     $(document).foundation()
-    return ProjectLanding
+
+    return new ProjectLanding({
+        model : new Backbone.Model(),
+        collection : Projects
+    })
 })

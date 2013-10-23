@@ -14,15 +14,19 @@ define([
     var Router = Backbone.Router.extend({
 
         initialize : function() {
-            _.bindAll( this, 'debug', 'payload' )
+            _.bindAll( this, 'debug', 'payload', 'saveHistory' )
+            this.on('route', this.saveHistory)
+            $(window).on('hashchange', this.saveHistory)
             //this.on('route', this.debug)
+            //this.on('route', this.semantics)
+            this.history = [document.location]
         },
 
         routes : {
             "" : "home",
             "projects" : "projects",
             "projects/:project" : "singleProject",
-            "projects/:project/:showcase" : "showcaseItem",
+            "projects/:project/:showcase" : "singleProject",
             "photography" : "photography",
             "photography/:title" : "singleAlbum",
             "film" : "film",
@@ -36,8 +40,16 @@ define([
             "search/*any" : "search"
         },
 
+        saveHistory : function() {
+            this.history.push(_.clone(document.location))
+            if ( this.history.length > 1 ) {
+                this.history.shift()
+            }
+            this.previous = this.history[0]
+        },
+
         debug : function() {
-            console.log('updated again')
+            console.log('navigated to ', arguments[0])
         },
 
         payload : function(method) {
@@ -49,130 +61,43 @@ define([
         },
 
         home : function() {
-            Chrome.home()
+            var spinner = new Spinner()
+            Chrome.home(spinner)
         },
 
         projects : function() {
             var spinner = new Spinner()
-            require(['app/collections/projects'],
-            function(Projects){
-                $.when( Projects.fetch() )
-                .then( function() {
-                    Chrome.projects(Projects)
-                } ).done( function() {
-                    spinner.detach()
-                    Backbone.dispatcher.trigger('hashchange')
-                } )
-            })
+            Chrome.projects(spinner)
         },
 
-        singleProject : function(project) {
+        singleProject : function(projectUrl, showcaseUrl) {
             var spinner = new Spinner()
-            require(['app/collections/projects'],
-            function(Projects){
-                $.when( Projects.fetch({url : '/api/pro/' + project}) )
-                .done( function() {
-                    Chrome.singleProject(Projects, project)
-                    spinner.detach()
-                } )
-            })
-        },
-
-        showcaseItem : function(project, urlTitle) {
-            require(['app/collections/projects'],
-            function(Projects){
-                try {
-                    var model = Projects.findWhere({ url : project })
-                    var showcase = model.get('showcases').findWhere({ url_title : urlTitle })
-                    showcase.trigger( 'swap', showcase )
-                } catch(e) {
-                    var spinner = new Spinner()
-                    $.when( Projects.fetch() )
-                    .done( function() {
-                        Chrome.singleProject(Projects, project, urlTitle)
-                        spinner.detach()
-                    } )
-                }
-            })
+            Chrome.singleProject( spinner, projectUrl, showcaseUrl, this.previous )
         },
 
         photography : function() {
             var spinner = new Spinner()
-
-            require(['app/collections/photography'],
-            function(Albums) {
-                $.when( Albums.fetch() )
-                .done( function(){
-                    Chrome.photoHomeInit( Albums )
-                    spinner.detach()
-                } )
-            })
+            Chrome.photography( spinner )
         },
 
-        singleAlbum : function(urlTitle) {
+        singleAlbum : function( albumUrl ) {
             var spinner = new Spinner()
-
-            require(['app/collections/photography'],
-            function(Albums){
-                $.when( Albums.fetch() )
-                .done( function() {
-                    Chrome.albumInit(Albums, urlTitle)
-                    spinner.detach()
-                } )
-            })
+            Chrome.singleAlbum( spinner, albumUrl )
         },
 
         film : function() {
             var spinner = new Spinner()
-
-            require(['app/collections/films'],
-            function(Films) {
-                $.when( Films.fetch() )
-                .done( function(){
-                    Chrome.filmHomeInit(Films)
-                    spinner.detach()
-                } )
-            })
+            Chrome.film( spinner )
         },
 
-        singleFilm : function( urlTitle ) {
+        singleFilm : function( filmUrl ) {
             var spinner = new Spinner()
-
-            require(['app/collections/films'],
-            function(Films){
-                $.when( Films.fetch() )
-                .done( function() {
-                    Chrome.singleFilmInit( Films, urlTitle )
-                    spinner.detach()
-                } )
-            })
+            Chrome.singleFilm( spinner, filmUrl )
         },
 
         profile : function( segment, urlTitle ) {
-            require(['app/collections/profile', 'app/views/profileviews'],
-            function( Profile, Page ) {
-                try {
-                    Profile[segment].findWhere({ url : urlTitle }).activate()
-                    return
-                } catch(e) { console.log(e) }
-
-                var spinner = new Spinner()
-                var promiseStack = []
-                _.each( Profile, function( section ) {
-                    promiseStack.push( section.fetch() )
-                })
-
-                $.when.apply( $, promiseStack ).done(function(){
-                    Chrome.profileInit( Profile, Page )
-
-                    Backbone.dispatcher.trigger( 'profile:swap', Profile[ segment ? segment : 'bio' ], segment ? false : true )
-                    if ( urlTitle ) {
-                        Profile[segment].findWhere({ url : urlTitle }).activate()
-                    }
-
-                    spinner.detach()
-                })
-            })
+            var spinner = new Spinner()
+            Chrome.profile( spinner, segment, urlTitle )
         },
 
         contact : function() {
@@ -197,6 +122,28 @@ define([
     })
 
     var router = new Router()
+
+    Backbone.dispatcher.on('navigate:section', function(e) {
+        Backbone.dispatcher.trigger('filterCheck', router)
+        $('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
+        var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
+        router.navigate( l )
+    })
+
+    Backbone.dispatcher.on('navigate:detail', function(e, currentView) {
+        Backbone.dispatcher.trigger('filterCheck', router)
+        currentView.close()
+        router.navigate(e.currentTarget.pathname, { trigger: true })
+    })
+
+    Backbone.dispatcher.on('navigate:showcase', function(ops) {
+        Backbone.dispatcher.trigger('filterCheck', router)
+        router.navigate( ops.url, { replace : ops.replace })
+    })
+
+    Backbone.dispatcher.on('profile:navigate', function( path ){
+        router.navigate( path )
+    })
+
     exports.router = router
 })
-

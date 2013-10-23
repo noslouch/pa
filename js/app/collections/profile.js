@@ -1,86 +1,131 @@
-/* app/collections/profilesections.js - All Profile Section collections */
+/* app/collections/profile.js - All Profile Section collections */
 'use strict';
 
 define([
     'backbone',
     'underscore',
-    'app/router',
-    'app/models/profilesection'
-], function( Backbone, _, Router, Models ) {
+    'app/collections/covergallery',
+    //'app/router',
+    //'app/models/profile'
+], function( Backbone, _, CoverGallery ) {
+
+    /* DEPRECATED
+    var Model = Backbone.Model.extend({
+        initialize : function() {
+            _.bindAll( this, 'activate', 'deactivate')
+        },
+        defaults : {
+            active : false
+        },
+        activate : function(first){
+            this.set('active', true)
+            Backbone.dispatcher.trigger('profile:sectionActivate', this, first)
+        },
+
+        deactivate : function(){
+            this.set('active', false)
+        }
+    })
+
+    var ListItem = Model.extend({
+        activate : function(){
+            this.set('active', true)
+            Backbone.dispatcher.trigger('profile:listItemActivate', this)
+        }
+    })
+    */
+
+    var Section = Backbone.Model.extend({
+        initialize : function() {
+            _.bindAll( this, 'activate', 'deactivate')
+        },
+        gt : function(t) {
+            return this.get('content').get(t)
+        },
+        defaults : {
+            active : false
+        },
+        activate : function(){
+            this.set('active', true)
+        },
+        deactivate : function(silent){
+            this.set({'active' : false},{ silent : silent || false })
+        }
+    })
 
     var Collection = Backbone.Collection.extend({
         parse : function( response, options ) {
             _.each( response, function( model ) {
                 model.htmlDate = Backbone.Model.prototype.makeHtmlDate( model.timestamp )
                 model.date = Backbone.Model.prototype.parseDate( model.timestamp )
-                //model.segment = model.url
             } )
             return response
-        },
-        initialize : function(model, options) {
-            _.bindAll( this, 'activate', 'deactivate' )
-            this.section = options.section
-        },
-        active: false,
-        activate : function(href){
-            this.active = true
-            var r = require( 'app/router' )
-            r.router.navigate( '/profile/' + this.section )
-            Backbone.dispatcher.trigger('profile:sectionActivate', this)
-        },
-        deactivate : function() {
-            this.active = false
         }
     })
 
-    var Profile = {}
-    Profile.bio = new Models.Bio()
-    Profile['photos-of-pa'] = new Models.PhotosOf()
-    Profile.acknowledgements = new Models.Acknowledgements()
+    var bio = new Backbone.Model({}, {
+        url : '/api/bio'
+    })
 
-    Profile.press = new Collection({
-    }, {
-        model : Models.ListItem,
-        section : 'press',
+    var photosOf = new Backbone.Model({}, {
+        url : '/api/paphotos'
+    })
+    photosOf.parse = function( response, options ) {
+        response.photos = new CoverGallery( response.gallery )
+        return response
+    }
+
+    var ack = new Backbone.Model({}, {
+        url : '/api/acknowledgements'
+    })
+
+    var press = new Collection([], {
+        model : Backbone.Model,
         url : '/api/press'
     })
 
-    Profile.awards = new Collection({
-    }, {
-        model : Models.ListItem,
-        section : 'awards',
+    var awards = new Collection([], {
+        model : Backbone.Model,
         url : '/api/awards'
     })
 
-    Profile['articles-by-pa'] = new Collection({
-    }, {
-        model : Models.ListItem,
-        section : 'articles-by-pa',
+    var paAuthor = new Collection([], {
+        model : Backbone.Model,
         url : '/api/paauthor'
     })
 
-    Profile['articles-about-pa'] = new Collection({
-    }, {
-        model : Models.ListItem,
-        section : 'articles-about-pa',
+    var paSubject = new Collection([], {
+        model : Backbone.Model,
         url : '/api/pasubject'
     })
 
-    Profile.interviews = new Collection({
-    }, {
-        model : Models.ListItem,
-        section : 'interviews',
+    var interviews = new Collection([], {
+        model : Backbone.Model,
         url : '/api/interviews'
     })
 
-    Profile.transcripts = new Collection({
-    }, {
-        model : Models.ListItem,
-        section : 'transcripts',
+    var transcripts = new Collection([], {
+        model : Backbone.Model,
         url : '/api/transcripts'
     })
 
-    return Profile
+    var profileSections = new Backbone.Collection([
+        new Section({ id : 'bio', content : bio })
+        , new Section({ id : 'acknowledgements', content : ack })
+        , new Section({ id : 'press', content : press })
+        , new Section({ id : 'awards', content : awards })
+        , new Section({ id : 'photos-of-pa', content : photosOf })
+        , new Section({ id : 'articles-by-pa', content : paAuthor })
+        , new Section({ id : 'articles-about-pa', content : paSubject })
+        , new Section({ id : 'interviews', content : interviews })
+        , new Section({ id : 'transcripts', content : transcripts })
+    ])
+    profileSections.section = function(t) {
+        return this._byId[t].get('content')
+    }
+    profileSections.active = function() {
+        return this.findWhere({ active : true }).get('content')
+    }
+
+    return profileSections
 })
-
-

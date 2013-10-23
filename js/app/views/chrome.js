@@ -8,184 +8,183 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    //'app/views/header',
     'app/views/page',
     'app/views/search',
-    'bbq'
+    'utils/spinner'
     //'app/router',
     //'app/collections/covergallery',
     //'app/views/projects',
     //'app/views/profileviews',
     //'app/views/singleviews'
-], function( require, exports, $, Backbone, _, PageView, Search ) {
+], function( require, exports, $, Backbone, _, Page, Search, Spinner ) {
 
     var App = Backbone.View.extend({
         initialize : function() {
-
-            _.bindAll(this, 'render', 'routeHandler', 'projects', 'showSearch', 'singleProject' )
+            _.bindAll( this, 'showSearch', 'navigate', 'setView', 'detail', 'home', 'projects', 'singleProject', 'photography', 'singleAlbum', 'film', 'singleFilm', 'profile')
 
             this.model = new Backbone.Model()
-
-            this.pageView = new PageView({
-                el : '.page',
-                parent : this,
-                model : this.model
-            })
-
             this.search = new Search.Form({
                 el : '#searchForm',
                 page : this.model
             })
 
             this.listenTo( this.search, 'submit', function() {
-                this.pageView.$el.empty()
+                this.page.$el.empty()
             } )
+            Backbone.dispatcher.on('projects:goBack', this.projects)
+            Backbone.dispatcher.on('film:goBack', this.film)
+            Backbone.dispatcher.on('photography:goBack', this.photography)
         },
 
-        home : function() {
-            var self = this
+        events : {
+            'click' : 'closeMenu',
+            'click #searchIcon' : 'showSearch',
+            'click #nav a' : 'navigate'
+        },
 
-            this.model.set({
-                outlineTitle : 'Home'
-            })
+        showSearch : function(e){
+            e.preventDefault()
+            this.search.render()
+        },
 
-            require(['app/views/home'], function( Home ) {
-                self.model.set( 'page', new Home() )
+        closeMenu : function(e) {
+            $('#filter-bar .open').removeClass('open')
+        },
+
+        navigate : function(e) {
+            e.preventDefault()
+            this.currentView.close()
+
+            var spinner = new Spinner()
+            this[e.target.id](spinner)
+
+            this.$('#nav a').removeClass( 'active' )
+            $(e.target).addClass( 'active' )
+            Backbone.dispatcher.trigger('navigate:section', e)
+        },
+
+        setView : function( view ) {
+            this.currentView = view
+        },
+
+        detail : function(model) {
+            console.log(model)
+        },
+
+        home : function(spinner) {
+            var self = this,
+                bootstrap = !!$('#n-container').length
+
+            require(['app/views/home'], function( home ) {
+                self.setView( home )
+                home.setElement('.page')
+                home.render()
+                spinner.detach()
             })
         },
 
-        projects : function(Projects) {
+        projects : function(spinner) {
             var self = this
-            this.model.set({
-                outlineTitle : 'Projects',
-                projects : Projects
+            require(['app/views/projects'], function( projects ) {
+                self.setView( projects )
+                projects.setElement('.page')
+                try {
+                    projects.init(spinner)
+                    projects.filter.$el.show()
+                } catch (e) {
+                    Backbone.dispatcher.on('projects:ready', function() {
+                        projects.init(spinner)
+                    })
+                }
+
+                self.listenTo( projects.collection, 'change:active', self.detail )
+
             })
+        },
 
-            require([
-                'app/views/showcaseviews',
-                'app/collections/covergallery',
-                'app/views/projects'],
-            function( S, CoverGallery, ProjectLanding ) {
-
-                self.model.cover = new S.Image({
-                    cover : true,
-                    collection : new CoverGallery( Projects.pluck('coverImage') ),
-                    path : 'projects',
-                    model : self.model
+        singleProject : function( spinner, projectUrl, showcaseUrl, previous ) {
+            var self = this
+            require(['app/views/singleproject'], function( projectView ) {
+                self.setView( projectView )
+                projectView.on('rendered', function() {
+                    spinner.detach()
                 })
 
-                self.model.list = new S.List({
-                    //collection : Projects,
-                    collection : new CoverGallery( Projects.pluck('coverImage') ),
-                    pageClass : 'projects',
-                    path : 'projects',
-                    section : 'Projects',
-                    model : self.model
-                })
+                $('.page')
+                    .html( projectView.render( projectUrl, showcaseUrl, previous ) )
+                    .removeClass('projects')
+            })
+        },
 
-                self.model.random = new S.Starfield({
-                    collection : self.model.cover.collection
-                })
-
-                self.pageView.undelegateEvents()
-                self.pageView.stopListening()
-
-                self.model.set( 'page', new ProjectLanding({ model : self.model }) )
-
-                if ( document.location.hash ) {
-                    $(window).trigger('hashchange')
-                } else {
-                    $.bbq.pushState({ view : 'random' })
+        photography : function( spinner ) {
+            var self = this
+            require(['app/views/photography'], function( photography ) {
+                self.setView( photography )
+                photography.setElement( '.page' )
+                try {
+                    photography.init(spinner)
+                } catch(e) {
+                    Backbone.dispatcher.on('photography:ready', function() {
+                        photography.init(spinner)
+                    })
                 }
             })
         },
 
-        singleProject : function(Projects, project, urlTitle) {
-            $('.page').removeClass('projects')
-            var model = Projects.findWhere({ 'url-title' : project })
-
-            if ( this.model.get('project') ) {
-                model.get('showcases')
-                    .findWhere({ url_title : urlTitle }).activate()
-            } else {
-                //var detailView = require('app/views/singleviews')
-                var self = this
-                require(['app/views/singleviews'],
-                function(detailView) {
-                    var view = new detailView.Project({ model : model })
-                    self.model.set('page', view)
-
-                    if (urlTitle) {
-                        model.get('showcases')
-                            .findWhere({ url_title : urlTitle }).activate()
-                    } else {
-                        model.get('showcases').first().activate(true)
-                    }
+        singleAlbum : function( spinner, albumUrl ) {
+            var self = this
+            require(['app/views/singlealbum'], function( albumView ) {
+                self.setView( albumView )
+                albumView.on('rendered', function() {
+                    spinner.detach()
                 })
-            }
 
-        },
-
-        photoHomeInit : function( Albums ) {
-            var self = this
-
-            require(['app/views/showcaseviews', 'app/collections/covergallery'],
-            function( S, CoverGallery ) {
-            //var CoverGallery = require('app/collections/covergallery'),
-            //    S = require('app/views/showcaseviews')
-
-                self.model.set( 'page', new S.Image({
-                    cover : true,
-                    collection : new CoverGallery( Albums.pluck('coverImage') ),
-                    path : 'photography',
-                    model : self.model
-                }) )
+                $('.page').html( albumView.render( albumUrl ) )
             })
         },
 
-        albumInit : function(Albums, urlTitle) {
-            //var views = require('app/views/singleviews')
+        film : function( spinner ) {
             var self = this
-            require(['app/views/singleviews'],
-            function( views ) {
-                self.model.set( 'page', new views.Album({
-                    model : Albums.findWhere({ url : urlTitle })
-                }) )
+            require(['app/views/film'], function( film ){
+                self.setView( film )
+                film.setElement('.page')
+                try{
+                    film.init(spinner)
+                } catch(e) {
+                    Backbone.dispatcher.on('film:ready', function(){
+                        film.init(spinner)
+                    })
+                }
             })
         },
 
-        filmHomeInit : function( Films ) {
-            //var S = require('app/views/showcaseviews')
+        singleFilm : function( spinner, filmUrl ) {
             var self = this
-            require(['app/views/showcaseviews'],
-            function( S ) {
-                self.model.set( 'page' , new S.FilmGrid({
-                    collection : Films
-                }) )
+            require(['app/views/singlefilm'], function( filmView ) {
+                self.setView( filmView )
+                filmView.on('rendered', function(){
+                    spinner.detach()
+                })
+
+                $('.page').html( filmView.render( filmUrl ) )
             })
         },
 
-        singleFilmInit : function( Films, urlTitle ) {
-            //var views = require('app/views/singleviews')
+        profile : function( spinner, segment, urlTitle) {
             var self = this
-            require(['app/views/singleviews'],
-            function( views ) {
-                self.model.set( 'page', new views.Film({
-                    model : Films.findWhere({ url : urlTitle })
-                }) )
+            require(['app/views/profile'], function( profileView ) {
+                self.setView( profileView )
+                profileView.on('rendered', function(){
+                    spinner.detach()
+                })
+                try {
+                    $('.page').html( profileView.render( segment, urlTitle ) )
+                } catch(e) {
+                    profileView.model.on('change:loaded', function() {
+                        $('.page').html( profileView.render( segment, urlTitle ) )
+                    })
+                }
             })
-        },
-
-        profileInit : function( Profile, Page ) {
-            //var Page = require('app/views/profileviews')
-            //var self = this
-            //require(['app/views/profileviews'],
-            //function( Page ) {
-                this.model.set( 'page', new Page({
-                    el : '#profileViewer',
-                    sections : Profile
-                }) )
-            //})
         },
 
         streamInit : function( Instagrams ) {
@@ -205,31 +204,6 @@ define([
                 page : this.model
             })
             this.pageSearch.render()
-        },
-
-        events : {
-            'click' : 'closeMenu',
-            'click #searchIcon' : 'showSearch'
-        },
-
-        showSearch : function(e){
-            e.preventDefault()
-            this.search.render()
-        },
-
-        closeMenu : function(e) {
-            $('#filter-bar .open').removeClass('open')
-        },
-
-        routeHandler : function(methodName, urlParam) {
-            if (methodName !== 'projects'){
-                try {
-                    this.header.filterBar.remove()
-                } catch(e) {}
-            }
-            try {
-                this.page.$el.removeClass( this.last.pageClass )
-            } catch(e) {}
         }
     })
 

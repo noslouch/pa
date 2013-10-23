@@ -8,9 +8,13 @@ define([
     'underscore'
 ], function( Backbone, moment, _ ) {
 
-    Backbone.View.prototype.destroy = function() {
-        this.remove()
-        this.unbind()
+    Backbone.View.prototype.close = function() {
+        this.$el.empty()
+        this.stopListening()
+        this.undelegateEvents()
+        if ( this.onClose ) {
+            this.onClose()
+        }
     }
 
     Backbone.Model.prototype.makeHtmlDate = function(dateString, onlyYear) {

@@ -18,16 +18,16 @@
             <div class="inner-header {embed:nav}">
                 <header class="site-header{if segment_1==''} home{/if}">
                 <h1 class="logo"><a href="{site_url}">Peter Arnell</a></h1>
-                    <nav>
+                    <nav id="nav">
                         <h2 class="visuallyhidden">Main Navigation</h2>
                         <ul>
-                            <li><a href="{site_url}"{if embed:nav == 'home'} class="active"{/if}>Home</a></li>
-                            <li><a href="{path='projects'}"{if embed:nav=='projects'} class="active"{/if}>Projects</a></li>
-                            <li><a href="{path='photography'}"{if embed:nav=='photography'} class="active"{/if}>Photography</a></li>
-                            <li><a href="{path='film'}"{if embed:nav=='film'} class="active"{/if}>Film</a></li>
-                            <li><a href="{path='profile'}"{if embed:nav=='profile'} class="active"{/if}>Profile</a></li>
-                            <li><a href="{path='contact'}"{if embed:nav=='contact'} class="active"{/if}>Contact</a></li>
-                            <li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if}>Stream</a></li>
+                            <li><a href="{site_url}"{if embed:nav == 'home'} class="active"{/if} id="home">Home</a></li>
+                            <li><a href="{path='projects'}"{if embed:nav=='projects'} class="active"{/if} id="projects">Projects</a></li>
+                            <li><a href="{path='photography'}"{if embed:nav=='photography'} class="active"{/if} id="photography">Photography</a></li>
+                            <li><a href="{path='film'}"{if embed:nav=='film'} class="active"{/if} id="film">Film</a></li>
+                            <li><a href="{path='profile'}"{if embed:nav=='profile'} class="active"{/if} id="profile">Profile</a></li>
+                            <li><a href="{path='contact'}"{if embed:nav=='contact'} class="active"{/if} id="contact">Contact</a></li>
+                            <li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if} id="stream">Stream</a></li>
                             <li><a href="#" id="searchIcon" class="search-icon"></a></li>
                         </ul>
                         <form method="post" action="" class="search-form" id="searchForm">

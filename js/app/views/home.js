@@ -6,26 +6,101 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'utils/quotes'
-], function( $, Backbone, _, quotes ) {
+    'utils/quotes',
+    'tpl/jst'
+], function( $, Backbone, _, Q, TPL ) {
 
     var Home = Backbone.View.extend({
-        el : '.page',
         initialize : function() {
             _.bindAll( this, 'open' )
-            this.slideshow = quotes.slideshow.bulletBuilder
-            this.poll = quotes.inspector
 
-            this.slideshow = _.bind( this.slideshow, quotes.slideshow )
-
-            this.$noteworthy = $('#n-container')
-            this.$quotes = $('#quotes')
-            $('#n-container header').click(this.open)
-
+            //this.slideshow = quotes.slideshow.bulletBuilder
+            //this.slideshow = _.bind( this.slideshow, quotes.slideshow )
+            //this.slideshow = new Q.Quotes()
+            //this.poll = Q.inspector
         },
 
-        events : {
-            //'click #n-container header' : 'open'
+        render : function() {
+            this.$el.addClass( 'home' )
+
+            if ( !$('#n-container').length ) {
+                var q = new Backbone.Collection({}, { url : '/api/quotes' }),
+                    n = new Backbone.Collection({}, { url : '/api/noteworthy' }),
+                    promiseStack = [],
+                    self = this
+
+                promiseStack.push(q.fetch(), n.fetch())
+                $.when.apply( $, promiseStack ).done(function(quotesRes, bricksRes){
+                    self.quoteTemplate(quotesRes[0])
+                    self.noteworthyTemplate(bricksRes[0])
+                    self.init()
+                })
+
+                //this.noteworthyBuilder()
+                //this.init()
+            } else {
+                this.init()
+            }
+        },
+
+        quoteTemplate : function(quotes) {
+            var $quotes = $(TPL.quotes()),
+                container = $quotes.find('#qContainer'),
+                self = this
+
+            _.each( quotes, function(quote) {
+                var $slide = $(TPL.quoteSlide()),
+                    h3 = $slide.find('h3')
+
+                _.each( quote.lines, function(lineObj) {
+                    var blind = document.createElement('div')
+                    $(blind).addClass('blind closed')
+                    $(blind).html(lineObj.line)
+                    $(h3).append(blind)
+                } )
+                if ( quote.link ){
+                    var a = document.createElement('a')
+                    $(a).attr({
+                        href : quote.link,
+                        class : 'button closed',
+                        target : quote.external ? '_blank' : ''
+                    })
+                }
+                $(container).append($slide)
+            } )
+            this.$el.html($quotes)
+        },
+
+        noteworthyTemplate : function(bricks) {
+            var $noteworthy = $(TPL.noteworthy()),
+                row = $noteworthy.find('#brickRow'),
+                imgSize
+
+            switch(bricks.length) {
+                case '4':
+                    imgSize = 'one-quarter'
+                    break;
+                case '3':
+                    imgSize = 'one-third'
+                    break;
+                case '2':
+                case '1':
+                    imgSize = 'one-half'
+                    break;
+                default:
+                    break;
+            }
+
+            _.each( bricks, function(brick) {
+                $(row).append( TPL.brick({
+                    src : brick.imgSize,
+                    link : brick.link,
+                    external : brick.external ? ' target="_blank"' : '',
+                    title : brick.title,
+                    summary : brick.summary
+                }) )
+            } )
+            this.$el.append($noteworthy)
         },
 
         open : function(e) {
@@ -34,9 +109,18 @@ define([
             this.$noteworthy.toggleClass('open')
         },
 
-        render : function() {
+        init : function() {
+            this.$noteworthy = $('#n-container')
+            $('#n-container header').click(this.open)
+
+            this.slideshow = (function(){
+                var c = document.getElementById('qContainer')
+                var i = new Q.Quotes(c)
+                return _.bind( i.init, i )
+            }())
+
             this.slideshow()
-            this.poll()
+            Q.inspector()
 
             var brickClass
 
@@ -66,12 +150,5 @@ define([
             }, 2000 )
         }
     })
-
-    //var home = new Home()
-
-    var go = function(){
-        //home.render()
-    }
-
-    return Home
+    return new Home()
 })

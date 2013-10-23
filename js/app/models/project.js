@@ -12,6 +12,7 @@ define([
         parse : function(response, options){
 
             response.htmlDate = this.makeHtmlDate( response.timestamp )
+            response.date = this.parseDate( response.timestamp )
 
             if ( response.relatedLinks[0] ) {
                 _.each( response.relatedLinks, function(item, index){
@@ -25,51 +26,80 @@ define([
                 response.relatedLinks = false
             }
 
+            response.coverImage = new CoverImage( response.cover, {
+                tags : response['brand_tags']
+                        .concat( response['type_tags'] )
+                        .concat( response['industry_tags'] ),
+                year : response.date.year()
+            } )
+
+            response.showcases = new Showcases( response.showcases, {
+                path : '/projects/' + response['url-title']
+            } )
+
+            if ( response.info ) {
+                response.showcases.add({
+                    type : 'info',
+                    title : 'Info',
+                    url_title : 'info',
+                    content : response.info
+                }, {
+                    path : '/projects/' + response['url-title']
+                })
+            }
+
+            if ( response.relatedLinks ) {
+                response.showcases.add({
+                    type : 'related',
+                    title : 'Related',
+                    url_title : 'related',
+                    links : response.relatedLinks
+                }, {
+                    path : '/projects/' + response['url-title']
+                })
+            }
             return response
         },
 
         initialize : function() {
-            this.set({
 
-                date : this.parseDate( this.get('timestamp') ),
+            //if ( this.get('info') ) {
+            //    this.get('showcases').add({
+            //        type : 'info',
+            //        title : 'Info',
+            //        url_title : 'info',
+            //        content : this.get('info')
+            //    }, {
+            //        path : '/projects/' + this.get('url-title')
+            //    })
+            //}
 
-                coverImage : new CoverImage( this.get('cover'), {
-                    tags : this.get('brand_tags')
-                            .concat( this.get('type_tags') )
-                            .concat( this.get('industry_tags') ),
-                    year : this.parseDate( this.get('timestamp') ).year(),
-                } ),
+            //if ( this.get('relatedLinks') ) {
+            //    this.get('showcases').add({
+            //        type : 'related',
+            //        title : 'Related',
+            //        url_title : 'related',
+            //        links : this.get('relatedLinks')
+            //    }, {
+            //        path : '/projects/' + this.get('url-title')
+            //    })
+            //}
+        },
 
-                showcases : new Showcases( this.get('showcases'), {
-                    path : '/projects/' + this.get('url-title')
-                } )
-            })
-
-            if ( this.get('info') ) {
-                this.get('showcases').add({
-                    type : 'info',
-                    title : 'Info',
-                    url_title : 'info',
-                    content : this.get('info')
-                }, {
-                    path : '/projects/' + this.get('url-title')
-                })
-            }
-
-            if ( this.get('relatedLinks') ) {
-                this.get('showcases').add({
-                    type : 'related',
-                    title : 'Related',
-                    url_title : 'related',
-                    links : this.get('relatedLinks')
-                }, {
-                    path : '/projects/' + this.get('url-title')
-                })
-            }
+        defaults : {
+            active : false
         },
 
         path : function() {
             return '/projects/' + this.get('url-title')
+        },
+
+        activate : function(){
+            this.set('active', true)
+        },
+
+        deactivate : function(){
+            this.set('active', false)
         }
     })
 

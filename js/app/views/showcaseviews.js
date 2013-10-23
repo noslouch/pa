@@ -34,13 +34,14 @@ define([
 
         render : function(){
             this.$el.html( this.template({
-                url : this.options.path ? this.options.path + '/' + this.model.get('url') : this.model.get('url'),
+                url : this.options.path ? this.options.path + '/' + this.model.get('url-title') : this.model.get('url'),
                 cover : this.options.cover,
                 caption : this.options.path === 'projects' ? this.model.get('title') : this.model.get('caption'),
                 year : this.options.path === 'projects' ? this.model.get('year') : '',
                 thumb : this.model.get('thumb'),
                 lg_thumb : this.model.get('lg_thumb'),
-                large : this.options.large
+                large : this.options.large,
+                id : this.model.id
             }) )
             return this.el
         }
@@ -53,7 +54,7 @@ define([
         id : 'iso-grid',
 
         initialize : function() {
-            _.bindAll(this, 'render', 'filter')
+            _.bindAll(this, 'render', 'filter', 'isotope')
 
             this.collection.forEach(function(image) {
                 var thumb = new showcases.Thumb({
@@ -65,6 +66,7 @@ define([
                 this.$el.append( thumb.render() )
             }, this)
 
+            this.on('render', this.isotope)
         },
 
         className : function() {
@@ -79,6 +81,15 @@ define([
         },
 
         render : function(options){
+            this.trigger('render')
+            if ( this.options.path === 'photography' ||
+                 this.model.hasChanged('view') ||
+                 this.model.get('type') === 'gallery' ) {
+                return this.el
+            }
+        },
+
+        isotope : function() {
             var self = this,
                 $img = this.$('img'),
                 rtl = this.$el.hasClass('rtl'),
@@ -94,6 +105,7 @@ define([
                 },
                 onLayout : function() {
                     $(this).css('overflow', 'visible')
+                    fbLoader()
                 },
                 getSortData : {
                     name : function($el) {
@@ -105,44 +117,26 @@ define([
                 }
             }
 
-            if (this.options.path === 'photography' ||
-                this.model.get('type') === 'gallery' ||
-                this.model.hasChanged( 'view' ) ) {
-                fbLoader()
-                if ( this.options.path === 'photography' ) {
-                    $('.page').html( this.el )
-                } else {
-                    try {
-                        this.model.get('page').$el.html( this.el )
-                    } catch(e) {
-                        options.container.html( this.el )
-                    }
-                }
-
-                if ( this.$el.hasClass('isotope') ) {
+            if ( this.$el.hasClass('isotope') ) {
                 this.$el.isotope(isoOps)
                 this.$el.isotope( 'updateSortData', $('.thumb') )
-                    this.filter( this.model.get('filter') )
-                    this.sort( this.model.get('sort') )
-                } else {
-                    var spinner = new Spinner()
-                    this.$el.imagesLoaded( function() {
-                        $el.isotope(isoOps)
-
-                        spinner.detach()
-                        $img.addClass('loaded')
-
-                        if ( self.model.has('filter') ) {
-                            $el.isotope( 'updateSortData', $('.thumb') )
-                            self.filter( self.model.get('filter') )
-                            self.sort( self.model.get('sort') )
-                            self.model.trigger('layout')
-                        }
-                    })
-                }
-            } else {
                 this.filter( this.model.get('filter') )
                 this.sort( this.model.get('sort') )
+            } else {
+                var spinner = new Spinner()
+                this.$el.imagesLoaded( function() {
+                    $el.isotope(isoOps)
+
+                    spinner.detach()
+                    $img.addClass('loaded')
+
+                    if ( self.model.has('filter') ) {
+                        $el.isotope( 'updateSortData', $('.thumb') )
+                        self.filter( self.model.get('filter') )
+                        self.sort( self.model.get('sort') )
+                        self.model.trigger('layout')
+                    }
+                })
             }
         },
 
@@ -152,50 +146,6 @@ define([
 
         sort : function(sort) {
             this.$el.isotope({ sortBy : sort })
-        }
-    })
-
-    // FilmThumb
-    // Film grid thumbnail
-    showcases.FilmThumb = Backbone.View.extend({
-        tagName : 'div',
-        template : TPL.filmThumb,
-        render : function() {
-            var html = this.template({
-                url : this.model.url(),
-                thumb : this.model.get('thumb'),
-                title : this.model.get('title'),
-                summary : this.model.get('summary')
-            })
-            this.$el.append( html )
-            return this.el
-        }
-    })
-
-    // FilmGrid
-    // Loaded on /Films
-    showcases.FilmGrid = Backbone.View.extend({
-        tagName : 'div',
-        className: 'film-container',
-        rowTmpl : TPL.filmRow,
-        $row : undefined,
-        render : function() {
-
-            this.collection.forEach( function(model, index){
-                if (index % 4 === 0) {
-                    this.$row = $( this.rowTmpl() )
-                    this.$el.append(this.$row)
-                }
-                this.$row.append( new showcases.FilmThumb({ 
-                    model : model
-                }).render() )
-            }, this )
-
-            this.$('.film-row').imagesLoaded( function() {
-                $(this).addClass('loaded')
-            })
-
-            return this.el
         }
     })
 
@@ -256,7 +206,7 @@ define([
         },
 
         events : {
-            'click a' : 'toggle'
+            //'click a' : 'toggle'
         },
 
         toggle : function(e) {
@@ -267,11 +217,12 @@ define([
         },
 
         render : function() {
-            this.$el.append( this.template({
+            this.$el.html( this.template({
                 id : this.model.id,
                 title : this.model.get('title'),
                 summary : this.model.get('showcases') ? '' : this.model.get('summary'),
-                url : this.options.url,
+                url : this.model.get('url-title'),
+                //url : this.options.url,
                 path : this.options.path
             }) )
             return this.el
@@ -301,7 +252,7 @@ define([
                     .append( new showcases.Li({
                         model : listItem,
                         path : path ? path : '',
-                        url : url ? listItem.get('url') : false
+                        url : url ? listItem.get('url-title') : false
                     }).render() )
             }, this )
 
@@ -385,6 +336,7 @@ define([
     // Stripped down variant of List
     showcases.SmallList = Backbone.View.extend({
         tagName : 'div',
+        id : 'showcase',
         className : 'showcase list',
         initialize : function() {},
         render : function() {
@@ -412,8 +364,9 @@ define([
         initialize : function() {
             _.bindAll( this, 'render' )
 
-            $('<img>').appendTo( this.$el )
-                .attr( 'src', this.model.get('thumb') )
+            $('<img>')
+            .appendTo( this.$el )
+            .attr( 'src', this.model.get('thumb') )
 
             this.$el.css({
                 left : this.options.HALF_WIDTH + this.randomRange(-this.options.HALF_WIDTH, this.options.HALF_WIDTH),
@@ -439,7 +392,10 @@ define([
                 $(caption).addClass('caption').append(p).append(span)
 
                 this.$el
-                .attr( 'href', '/projects/' + this.model.get('url') )
+                .attr({
+                    href : '/projects/' + this.model.get('url-title'),
+                    id : this.model.id
+                })
                 .append(caption)
             }
 
@@ -455,8 +411,8 @@ define([
     // Zoom effect used on Projects landing page
     showcases.Starfield = Backbone.View.extend({
         tagName : 'div',
-        className : 'starfield',
-        id : 'starfield',
+        className : 'starfield showcase',
+        id : 'showcase',
         initialize : function( collection, instagram ){
             var SCREEN_WIDTH = window.innerWidth,
                 SCREEN_HEIGHT = window.innerHeight,

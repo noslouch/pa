@@ -10,13 +10,15 @@ define([
     'app/views/showcaseviews'
 ], function( exports, $, Backbone, _, S ) {
 
-    var PageView = Backbone.View.extend({
-        initialize: function() {
+    var Page = Backbone.View.extend({
+        initialize: function(options) {
+            // initialized as:
+            //  el : .page
+            //  model : app.model
+            //  options.parent : app
+            // shares model with app
             _.bindAll( this, 'render' )
-
             this.outlineTitle = $('<h2/>').addClass('visuallyhidden').attr( 'id', 'title' )
-            this.$el.prepend(this.outlineTitle)
-
             this.listenTo( this.model, 'change:page', this.render )
         },
 
@@ -26,34 +28,21 @@ define([
             this.$el.prepend( this.outlineTitle )
         },
 
-        pageRender : function( pageModel, newPageView ) {
-            this.$el.html( newPageView.render() )
-            this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
-        },
 
-        render : function(pageModel, pageView, filtering) {
+        render : function(appModel, page, filtering) {
+            // called in response to change:page event
+            // args:
+            //   app.model
+            //   current page, View instance
+            //   boolean - deprecated
 
+            // what is this used for ?
             this.model.set('view')
-            this.$el.html( pageView.render() )
+            //
+
+            this.$el.html( page.render() )
             this.semantics( this.model.get('className'), this.model.get('outlineTitle') )
-
-            /*
-            if ( pageModel.get('page') instanceof S.Image ) {
-                console.log('instanceof S.Image: loading isotope')
-
-                pageModel.get('page').firstLoad()
-                if ( !filtering ) {
-                    pageModel.set('filter', '*')
-                }
-            } else if ( pageModel.get('page') instanceof S.List ) {
-                console.log('instanceof S.List: sorting by name')
-
-                pageModel.set('sort','alpha')
-            }
-            */
         }
-
     })
-
-    return PageView
+    return Page
 })

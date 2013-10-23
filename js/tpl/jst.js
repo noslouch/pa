@@ -5,6 +5,45 @@ function( _ ){
 
     var JST = {}
 
+    JST.noteworthy = [
+        '<div class="n-wrapper home">',
+            '<section class="n-container" id="n-container">',
+                '<header>',
+                    '<h2><a href="#n-container">Noteworthy</a></h2>',
+                '</header>',
+                '<div class="row" id="brickRow"></div>',
+            '</section>',
+        '</div>'
+    ].join('\n')
+
+    JST.brick = [
+        '<article class="brick">',
+            '<div class="img">',
+                '<img src="<%= src %>">',
+            '</div>',
+            '<a href="<%= link %>"<%= external %>>',
+                '<div class="copy">',
+                    '<h3><%= title %></h3>',
+                    '<%= summary %>',
+                '</div>',
+            '</a>',
+        '</article>'
+    ].join('\n')
+
+    JST.quotes = [
+        '<div class="quotes" id="quotes">',
+            '<div class="container" id="qContainer">',
+                '<div class="indicators" id="bullets"></div>',
+            '</div>',
+        '</div>'
+    ].join('\n')
+
+    JST.quoteSlide = [
+        '<div class="slide closed">',
+            '<h3></h3>',
+        '</div>'
+    ].join('\n')
+
     JST.viewer = [
         '<div class="details" id="details"></div>',
         '<div class="container" id="showcaseContainer"></div>'
@@ -22,17 +61,19 @@ function( _ ){
     ].join('\n')
 
     JST.profileLinks = [
-        '<ul class="profile-links" id="profileViewer">',
-            '<li><a href="#" id="bio" class="active">Bio/CV</a></li>',
-            '<li><a href="#" id="press">Press</a></li>',
-            '<li><a href="#" id="awards">Selected Awards</a></li>',
-            '<li><a href="#" id="paPhotos">Photos of PA</a></li>',
-            '<li><a href="#" id="paAuthor">Articles by PA</a></li>',
-            '<li><a href="#" id="paSubject">Articles about PA</a></li>',
-            '<li><a href="#" id="interviews">Interviews</a></li>',
-            '<li><a href="#" id="transcripts">Transcripts</a></li>',
-            '<li><a href="#" id="acknowledgements">Acknowledgements</a></li>',
-        '</ul>'
+        '<div class="details">',
+            '<ul class="profile-links" id="profileLinks">',
+                '<li><a href="/profile/bio" id="bio">Bio/CV</a></li>',
+                '<li><a href="/profile/press" id="press">Press</a></li>',
+                '<li><a href="/profile/awards" id="awards">Selected Awards</a></li>',
+                '<li><a href="/profile/photos-of-pa" id="photos-of-pa">Photos of PA</a></li>',
+                '<li><a href="/profile/articles-by-pa" id="articles-by-pa">Articles by PA</a></li>',
+                '<li><a href="/profile/articles-about-pa" id="articles-about-pa">Articles About PA</a></li>',
+                '<li><a href="/profile/interviews" id="interviews">Interviews</a></li>',
+                '<li><a href="/profile/transcripts" id="transcripts">Transcripts</a></li>',
+                '<li><a href="/profile/acknowledgements" id="acknowledgements">Acknowledgements</a></li>',
+            '</ul>',
+        '</div>'
     ].join('\n')
 
     JST.showcaseLinks = [
@@ -108,7 +149,7 @@ function( _ ){
 
     JST.thumbTemplate = [
         '<div class="wrapper">',
-            '<a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %> title="<%= caption %>">',
+            '<a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %> title="<%= caption %>" id="<%= id %>">',
                 '<img src="<% large ? print(lg_thumb) : print(thumb) %>">',
                 '<% if (caption) { %>',
                     '<div class="caption">',
