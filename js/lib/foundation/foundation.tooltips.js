@@ -1,4 +1,5 @@
 /*jslint unparam: true, browser: true, indent: 2 */
+/* added mouseup and mousedown events to tooltip init method, line 56 */
 
 ;(function ($, window, document, undefined) {
   'use strict';
@@ -52,13 +53,13 @@
             });
         } else {
           $(this.scope)
-            .on('mouseenter.fndtn.tooltip mouseleave.fndtn.tooltip', 
+            .on('mouseenter.fndtn.tooltip mouseleave.fndtn.tooltip mousedown.fndtn.tooltip mouseup.fndtn.tooltip', 
               '[data-tooltip]', function (e) {
               var $this = $(this);
 
               if (/enter|over/i.test(e.type)) {
                 self.showOrCreateTip($this);
-              } else if (e.type === 'mouseout' || e.type === 'mouseleave') {
+              } else if (e.type === 'mouseout' || e.type === 'mouseleave' || e.type === 'mouseup') {
                 self.hide($this);
               }
             });
