@@ -270,6 +270,7 @@ define([
                 model.deactivate(true)
             })
             $('.inner-header').removeClass('profile')
+            $('.page').removeClass('profile')
         },
 
         navigate : function(e){

@@ -90,6 +90,7 @@ define([
 
             this.delegateEvents()
             this.filter.render()
+            this.$el.addClass('projects')
 
             if ( !this.collection.length ) {
                 throw {
@@ -114,6 +115,7 @@ define([
 
         onClose : function() {
             this.model.unset('view').unset('filter').unset('view')
+            this.$el.removeClass('projects')
         },
 
         jumpSet : function() {

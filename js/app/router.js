@@ -137,7 +137,7 @@ define([
 
     Backbone.dispatcher.on('navigate:section', function(e) {
         Backbone.dispatcher.trigger('filterCheck', router)
-        $('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
+        //$('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
         var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
         router.navigate( l )
         router._trackPageview()
