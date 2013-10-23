@@ -26,7 +26,12 @@ define([
         _trackPageview : function() {
             var url;
             url = Backbone.history.getFragment();
-            window.ga('send', 'pageview', { 'page' : '/' + url })
+            window.ga('send', 'pageview', {
+                'page' : '/' + url,
+                'hitCallback' : function() {
+                    console.log('Tracked: ', '/' + url)
+                }
+            })
         },
 
         routes : {
