@@ -84,7 +84,7 @@ define([
         back : function(e) {
             e.preventDefault()
             Backbone.dispatcher.trigger('navigate:section', e)
-            Backbone.dispatcher.trigger('projects:goBack')
+            Backbone.dispatcher.trigger('photography:goBack')
         }
 
     })
