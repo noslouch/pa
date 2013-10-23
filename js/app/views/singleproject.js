@@ -87,7 +87,6 @@ define([
         template : TPL.showcaseLinks,
         initialize: function() {
             _.bindAll( this, 'toggleView', 'toggleModel')
-
         },
 
         events : {
@@ -142,12 +141,14 @@ define([
                 summary : this.model.get('summary')
             }) )
 
-            this.collection.forEach( function(showcase) {
-                this.$('#showcaseLinks')
-                    .append( new Link({
-                        model : showcase
-                    }).render() )
-            }, this )
+            if ( this.collection.length > 1 ) {
+                this.collection.forEach( function(showcase) {
+                    this.$('#showcaseLinks')
+                        .append( new Link({
+                            model : showcase
+                        }).render() )
+                }, this )
+            }
 
             this.$('#tags')
                 .append( new TagRow({
