@@ -20,6 +20,13 @@ define([
             //this.on('route', this.debug)
             //this.on('route', this.semantics)
             this.history = [document.location]
+            this.bind('all', this._trackPageview)
+        },
+
+        _trackPageview : function() {
+            var url;
+            url = Backbone.history.getFragment();
+            window.ga('send', 'pageview', { 'page' : '/' + url })
         },
 
         routes : {
@@ -128,6 +135,7 @@ define([
         $('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
         var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
         router.navigate( l )
+        router._trackPageview()
     })
 
     Backbone.dispatcher.on('navigate:detail', function(e, currentView) {
@@ -139,10 +147,12 @@ define([
     Backbone.dispatcher.on('navigate:showcase', function(ops) {
         Backbone.dispatcher.trigger('filterCheck', router)
         router.navigate( ops.url, { replace : ops.replace })
+        router._trackPageview()
     })
 
     Backbone.dispatcher.on('profile:navigate', function( path ){
         router.navigate( path )
+        router._trackPageview()
     })
 
     exports.router = router
