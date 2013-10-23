@@ -48,7 +48,12 @@ define([
             this.$viewer = this.$('#showcaseContainer')
         },
 
+        events : {
+            'click #back' : 'back'
+        },
+
         render : function( filmUrl ) {
+            this.delegateEvents()
             this.details.$el.empty()
             this.$viewer.empty()
 
@@ -67,7 +72,14 @@ define([
             })
             this.$viewer.html( video.render() )
             this.trigger( 'rendered' )
+        },
+
+        back : function(e) {
+            e.preventDefault()
+            Backbone.dispatcher.trigger('navigate:section', e)
+            Backbone.dispatcher.trigger('film:goBack')
         }
+
     })
 
     return new Film()

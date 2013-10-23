@@ -89,7 +89,7 @@ define([
                 }
             }
 
-            spinner.detach()
+            if (spinner) {spinner.detach()}
             this.render()
         },
 

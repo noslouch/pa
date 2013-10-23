@@ -154,6 +154,7 @@ define([
             }
 
             Backbone.dispatcher.trigger('profile:navigate', '/profile/' + section.id )
+
             $('html, body').animate({ scrollTop : 0 })
         },
 
@@ -216,18 +217,6 @@ define([
 
     })
 
-    var Link = Backbone.View.extend({
-        initialize : function() {
-            _.bindAll( this, 'toggleView' )
-            this.listenTo( this.model, 'change:active', this.toggleView )
-        },
-
-        toggleView : function() {
-            this.$el.toggleClass('active', this.model.get('active') )
-        }
-
-    })
-
     var Profile = Backbone.View.extend({
         className : 'profile viewer',
         id : 'profileViewer',
@@ -238,25 +227,26 @@ define([
 
             this.collection = sections
             this.viewer = new Content()
-            this.$el.append( TPL.profileLinks() ).append( this.viewer.el )
+            this.links = new Backbone.Collection()
 
             this.collection.each(function( section ) {
                 promiseStack.push( section.get('content').fetch() )
             })
             $.when.apply( $, promiseStack ).done(function(){
-                self.collection.each( function( section ) {
-                    new Link({
-                        el : this.$('#' + section.id)[0],
-                        model : section
-                    })
-                }, self )
                 self.model.set('loaded', true)
             })
+        },
 
-            this.listenTo( this.collection, 'change:active', this.swap )
+        events : {
+            'click .list a' : 'navigate',
+            'click #back' : 'back',
+            'click #profileLinks a' : 'toggleSection'
         },
 
         render : function( segment, urlTitle ) {
+            this.$el.html( TPL.profileLinks() ).append( this.viewer.el )
+            $('.inner-header').addClass('profile')
+            this.delegateEvents()
             if ( !this.model.get('loaded') ){
                 throw {
                     message : 'Profile isn\'t loaded.',
@@ -264,21 +254,22 @@ define([
                 }
             }
 
+            this.listenTo( this.collection, 'change:active', this.swap )
             var section = segment ? segment : 'bio'
             this.collection.get(section).activate()
             if (urlTitle ) {
                 var item = this.collection.section(segment).findWhere({ 'url-title' : urlTitle })
                 this.viewer.contentController( item )
             }
-            this.delegateEvents()
             this.trigger('rendered')
             return this.el
         },
 
-        events : {
-            'click .list a' : 'navigate',
-            'click #back' : 'back',
-            'click #profileLinks' : 'toggleSection'
+        onClose : function() {
+            _.each( this.collection.where({ active : true }), function(model) {
+                model.deactivate(true)
+            })
+            $('.inner-header').removeClass('profile')
         },
 
         navigate : function(e){
@@ -313,6 +304,8 @@ define([
                 } catch(err) {}
 
                 this.viewer.render( section )
+                this.$('#profileLinks .active').removeClass('active')
+                this.$('#' + section.id).addClass('active')
             }
         }
     })

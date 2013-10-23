@@ -48,8 +48,8 @@ define([
         activate : function(){
             this.set('active', true)
         },
-        deactivate : function(){
-            this.set('active', false)
+        deactivate : function(silent){
+            this.set({'active' : false},{ silent : silent || false })
         }
     })
 

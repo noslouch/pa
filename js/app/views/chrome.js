@@ -20,7 +20,7 @@ define([
 
     var App = Backbone.View.extend({
         initialize : function() {
-            _.bindAll( this, 'render', 'detail', 'projects', 'showSearch', 'singleProject' )
+            _.bindAll( this, 'showSearch', 'navigate', 'setView', 'detail', 'home', 'projects', 'singleProject', 'photography', 'singleAlbum', 'film', 'singleFilm', 'profile')
 
             this.model = new Backbone.Model()
             this.search = new Search.Form({
@@ -32,6 +32,8 @@ define([
                 this.page.$el.empty()
             } )
             Backbone.dispatcher.on('projects:goBack', this.projects)
+            Backbone.dispatcher.on('film:goBack', this.film)
+            Backbone.dispatcher.on('photography:goBack', this.photography)
         },
 
         events : {
@@ -51,12 +53,18 @@ define([
 
         navigate : function(e) {
             e.preventDefault()
+            this.currentView.close()
+
             var spinner = new Spinner()
             this[e.target.id](spinner)
 
             this.$('#nav a').removeClass( 'active' )
             $(e.target).addClass( 'active' )
             Backbone.dispatcher.trigger('navigate:section', e)
+        },
+
+        setView : function( view ) {
+            this.currentView = view
         },
 
         detail : function(model) {
@@ -68,6 +76,7 @@ define([
                 bootstrap = !!$('#n-container').length
 
             require(['app/views/home'], function( home ) {
+                self.setView( home )
                 home.setElement('.page')
                 home.render()
                 spinner.detach()
@@ -77,6 +86,7 @@ define([
         projects : function(spinner) {
             var self = this
             require(['app/views/projects'], function( projects ) {
+                self.setView( projects )
                 projects.setElement('.page')
                 try {
                     projects.init(spinner)
@@ -93,7 +103,9 @@ define([
         },
 
         singleProject : function( spinner, projectUrl, showcaseUrl, previous ) {
+            var self = this
             require(['app/views/singleproject'], function( projectView ) {
+                self.setView( projectView )
                 projectView.on('rendered', function() {
                     spinner.detach()
                 })
@@ -105,7 +117,9 @@ define([
         },
 
         photography : function( spinner ) {
+            var self = this
             require(['app/views/photography'], function( photography ) {
+                self.setView( photography )
                 photography.setElement( '.page' )
                 try {
                     photography.init(spinner)
@@ -118,7 +132,9 @@ define([
         },
 
         singleAlbum : function( spinner, albumUrl ) {
+            var self = this
             require(['app/views/singlealbum'], function( albumView ) {
+                self.setView( albumView )
                 albumView.on('rendered', function() {
                     spinner.detach()
                 })
@@ -128,7 +144,9 @@ define([
         },
 
         film : function( spinner ) {
+            var self = this
             require(['app/views/film'], function( film ){
+                self.setView( film )
                 film.setElement('.page')
                 try{
                     film.init(spinner)
@@ -141,7 +159,9 @@ define([
         },
 
         singleFilm : function( spinner, filmUrl ) {
+            var self = this
             require(['app/views/singlefilm'], function( filmView ) {
+                self.setView( filmView )
                 filmView.on('rendered', function(){
                     spinner.detach()
                 })
@@ -151,7 +171,9 @@ define([
         },
 
         profile : function( spinner, segment, urlTitle) {
+            var self = this
             require(['app/views/profile'], function( profileView ) {
+                self.setView( profileView )
                 profileView.on('rendered', function(){
                     spinner.detach()
                 })

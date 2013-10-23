@@ -46,8 +46,12 @@ define([
             })
             this.$viewer = this.$('#showcaseContainer')
         },
+        events : {
+            'click #back' : 'back'
+        },
 
         render : function( albumUrl ) {
+            this.delegateEvents()
             this.details.$el.empty()
             this.$viewer.empty()
 
@@ -75,7 +79,14 @@ define([
             this.$viewer.html( gallery.render() )
 
             this.trigger( 'rendered' )
+        },
+
+        back : function(e) {
+            e.preventDefault()
+            Backbone.dispatcher.trigger('navigate:section', e)
+            Backbone.dispatcher.trigger('projects:goBack')
         }
+
     })
 
     return new Album()
