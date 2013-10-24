@@ -3130,7 +3130,7 @@ button {
 @-webkit-keyframes starfield {
   /* line 53, sass/_starfield.scss */
   from {
-    -webkit-transform: translate3d(0, 0, 365px);
+    -webkit-transform: translate3d(0, 0, 350px);
     opacity: 0;
     z-index: 100;
   }
@@ -3152,56 +3152,43 @@ button {
   }
 }
 
+/*
 @-moz-keyframes starfield {
-  /* line 70, sass/_starfield.scss */
-  from {
-    -moz-transform: translate3d(0, 0, 365px);
-    opacity: 0;
-    z-index: 100;
-  }
-
-  /* line 75, sass/_starfield.scss */
-  15% {
-    opacity: 1;
-  }
-
-  /* line 78, sass/_starfield.scss */
-  50% {
-    opacity: 1;
-  }
-
-  /* line 81, sass/_starfield.scss */
-  to {
-    -moz-transform: translate3d(0, 0, -25px);
-    z-index: 0;
-  }
+    from {
+        -moz-transform: translate3d(0,0,365px);
+        opacity: 0;
+        z-index: 100;
+    }
+    15% {
+        opacity : 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    to {
+        -moz-transform: translate3d(0,0,0px);
+        z-index: 0;
+    }
 }
 
 @keyframes starfield {
-  /* line 87, sass/_starfield.scss */
-  from {
-    transform: translate3d(0, 0, 365px);
-    opacity: 0;
-    z-index: 100;
-  }
-
-  /* line 92, sass/_starfield.scss */
-  15% {
-    opacity: 1;
-  }
-
-  /* line 95, sass/_starfield.scss */
-  50% {
-    opacity: 1;
-  }
-
-  /* line 98, sass/_starfield.scss */
-  to {
-    transform: translate3d(0, 0, -25px);
-    z-index: 0;
-  }
+    from {
+        transform: translate3d(0,0,365px);
+        opacity: 0;
+        z-index: 100;
+    }
+    15% {
+        opacity : 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    to {
+        transform: translate3d(0,0,-25px);
+        z-index: 0;
+    }
 }
-
+*/
 /* line 8, sass/_list-showcase.scss */
 .list section {
   overflow: auto;
