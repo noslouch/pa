@@ -6,11 +6,11 @@
 
         <link href="{site_url}/js/lib/fancybox/jquery.fancybox.css" rel="stylesheet" />
         <link href="{site_url}/js/lib/jscrollpane/jquery.jscrollpane.css" rel="stylesheet">
-        <link href="{site_url}/css/app.1382651595472504541.css" rel="stylesheet">
+        <link href="{site_url}/css/app.1382655604979221803.css" rel="stylesheet">
     
         <script src="{site_url}/js/lib/modernizr/custom.modernizr.js"></script>
         {if embed:secure != 'y'}
-        <script data-main="{site_url}/js/init.1382651595472504541.js" src="{site_url}/js/lib/requirejs/require.min.js"></script>
+        <script data-main="{site_url}/js/init.1382655604979221803.js" src="{site_url}/js/lib/requirejs/require.min.js"></script>
         {/if}
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -39,29 +39,29 @@
                             <li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if} id="stream">Stream</a></li>
                             <li><a href="#" id="search" class="search-icon"></a></li>
                         </ul>
-                        <form method="post" action="" class="search-form" id="searchForm">
-                            <div class="table-wrapper">
-                                <div class="cell-wrapper">
-                                    <input autofocus id="keywords" class="search" type="search" name="keywords" id="keywords" />
-                                    <button class="submit-search button" id="submitSearch" type="submit">Search</button>
-                                    <button class="cancel-search button" id="cancelSearch" type="button">Cancel</button>
-                                    <fieldset>
-                                        <legend>Advanced Search</legend>
-                                        <label><input type="checkbox" id="search:projects">Projects</label>
-                                        <label><input type="checkbox" id="search:photography">Photography</label>
-                                        <label><input type="checkbox" id="search:film">Film</label>
-                                        <label><input type="checkbox" id="search:press">Press</label>
-                                        <label><input type="checkbox" id="search:paAuthor">Articles by Peter</label>
-                                        <label><input type="checkbox" id="search:paSubject">Articles about Peter</label>
-                                        <label><input type="checkbox" id="search:allArticles">All Articles</label>
-                                        <label><input type="checkbox" id="search:interviews">Interviews</label>
-                                        <label><input type="checkbox" id="search:transcripts">Transcripts</label>
-                                    </fieldset>
-                                </div> <!-- .cell-wrapper -->
-                            </div> <!-- .table-wrapper -->
-                        </form> 
                     </nav>
                     <div id="filter-bar"></div>
+                    <form method="post" action="" class="search-form" id="searchForm">
+                        <div class="table-wrapper">
+                            <div class="cell-wrapper">
+                                <input autofocus id="keywords" class="search" type="search" name="keywords" id="keywords" />
+                                <button class="submit-search button" id="submitSearch" type="submit">Search</button>
+                                <button class="cancel-search button" id="cancelSearch" type="button">Cancel</button>
+                                <fieldset>
+                                    <legend>Advanced Search</legend>
+                                    <label><input type="checkbox" id="search:projects">Projects</label>
+                                    <label><input type="checkbox" id="search:photography">Photography</label>
+                                    <label><input type="checkbox" id="search:film">Film</label>
+                                    <label><input type="checkbox" id="search:press">Press</label>
+                                    <label><input type="checkbox" id="search:paAuthor">Articles by Peter</label>
+                                    <label><input type="checkbox" id="search:paSubject">Articles about Peter</label>
+                                    <label><input type="checkbox" id="search:allArticles">All Articles</label>
+                                    <label><input type="checkbox" id="search:interviews">Interviews</label>
+                                    <label><input type="checkbox" id="search:transcripts">Transcripts</label>
+                                </fieldset>
+                            </div> <!-- .cell-wrapper -->
+                        </div> <!-- .table-wrapper -->
+                    </form> 
                 </header> <!-- .site-header -->
             </div> <!-- .inner-header -->
         </div> <!-- .header-wrapper -->

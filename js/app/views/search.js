@@ -32,7 +32,7 @@ define([
         initialize : function(options) {
             this.model = new Q()
             //this.page = options.page
-            _.bindAll(this, 'submit', 'close')
+            _.bindAll(this, 'submit', 'onClose' )
         },
 
         render : function() {
@@ -43,7 +43,7 @@ define([
 
         events : {
             'submit' : 'submit',
-            'click #cancelSearch' : 'close'
+            'click #cancelSearch' : 'onClose'
         },
 
         submit : function(e) {
@@ -60,16 +60,17 @@ define([
 
             this.model.set( 'keywords' , keywords )
             this.model.search().done(function(d){
-                $('.page').html( new Results({
+                self.results = new Results({
                     collection : new Backbone.Collection(JSON.parse(d))
-                }).render() )
-                r.router.navigate('/search/results')
+                })
+                r.router.navigate('/search/results', {trigger: true})
+                $('.page').html( self.results.render() )
                 spinner.detach()
-                self.close()
+                self.onClose()
             })
         },
 
-        close : function(e) {
+        onClose : function(e) {
             if (e) { e.preventDefault() }
             this.keywords.val('')
             this.$el.removeClass('active')

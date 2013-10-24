@@ -20,12 +20,7 @@ define([
             this.model = new Backbone.Model()
             this.searchForm = new Search.Form({
                 el : '#searchForm'
-                //page : this.model
             })
-
-            this.listenTo( this.searchForm, 'submit', function() {
-                this.page.$el.empty()
-            } )
 
             Backbone.dispatcher.on('projects:goBack', this.projects)
             Backbone.dispatcher.on('film:goBack', this.film)
@@ -209,6 +204,7 @@ define([
             this.pageSearch = new Search.Form({
                 el : '#pageSearchForm'
             })
+            this.setView( this.pageSearch )
             this.pageSearch.render()
         }
     })

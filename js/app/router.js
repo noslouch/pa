@@ -49,6 +49,7 @@ define([
             "contact" : "contact",
             "stream" : "stream",
             "search" : "search",
+            "search/results" : "results",
             "search/*any" : "search"
         },
 
@@ -124,6 +125,16 @@ define([
 
         search : function() {
             Chrome.search()
+        },
+
+        results : function(){
+            try {
+                Chrome.currentView.close()
+                Chrome.setView( Chrome.searchForm.results )
+            } catch(e) {
+                Chrome.search()
+            }
+            $('nav .active').removeClass('active')
         }
     })
 

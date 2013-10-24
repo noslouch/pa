@@ -116,6 +116,7 @@ define([
         onClose : function() {
             this.model.unset('view').unset('filter').unset('view')
             this.$el.removeClass('projects')
+            this.filter.close()
         },
 
         jumpSet : function() {
