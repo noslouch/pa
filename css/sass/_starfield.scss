@@ -33,8 +33,6 @@
 
 } 
 
-//.loader { text-align: center; margin-top: 400px; }
-
 .star:hover {
     -webkit-animation-play-state:paused;
     -moz-animation-play-state:paused;
@@ -66,10 +64,10 @@
         z-index: 0;
     }
 }
-/*
+
 @-moz-keyframes starfield {
     from {
-        -moz-transform: translate3d(0,0,365px);
+        -moz-transform: translate3d(0,0,350px);
         opacity: 0;
         z-index: 100;
     }
@@ -80,14 +78,14 @@
         opacity: 1;
     }
     to {
-        -moz-transform: translate3d(0,0,0px);
+        -moz-transform: translate3d(0,0,-75px);
         z-index: 0;
     }
 }
 
 @keyframes starfield {
     from {
-        transform: translate3d(0,0,365px);
+        transform: translate3d(0,0,350px);
         opacity: 0;
         z-index: 100;
     }
@@ -98,8 +96,7 @@
         opacity: 1;
     }
     to {
-        transform: translate3d(0,0,-25px);
+        transform: translate3d(0,0,-75px);
         z-index: 0;
     }
 }
-*/
