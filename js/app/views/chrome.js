@@ -18,14 +18,15 @@ define([
             _.bindAll( this, 'showSearch', 'navigate', 'setView', 'detail', 'home', 'projects', 'singleProject', 'photography', 'singleAlbum', 'film', 'singleFilm', 'profile')
 
             this.model = new Backbone.Model()
-            this.search = new Search.Form({
-                el : '#searchForm',
-                page : this.model
+            this.searchForm = new Search.Form({
+                el : '#searchForm'
+                //page : this.model
             })
 
-            this.listenTo( this.search, 'submit', function() {
+            this.listenTo( this.searchForm, 'submit', function() {
                 this.page.$el.empty()
             } )
+
             Backbone.dispatcher.on('projects:goBack', this.projects)
             Backbone.dispatcher.on('film:goBack', this.film)
             Backbone.dispatcher.on('photography:goBack', this.photography)
@@ -33,13 +34,13 @@ define([
 
         events : {
             'click' : 'closeMenu',
-            'click #searchIcon' : 'showSearch',
+            'click #search' : 'showSearch',
             'click #nav a' : 'navigate'
         },
 
         showSearch : function(e){
             e.preventDefault()
-            this.search.render()
+            this.searchForm.render()
         },
 
         closeMenu : function(e) {
@@ -48,6 +49,7 @@ define([
 
         navigate : function(e) {
             e.preventDefault()
+            if ( e.target.id === 'search') { return }
             this.currentView.close()
 
             var spinner = new Spinner()
@@ -193,21 +195,19 @@ define([
         },
 
 
-        streamInit : function( Instagrams ) {
-            //var S = require('app/views/showcaseviews')
+        stream : function( spinner ) {
             var self = this
-            require(['app/views/showcaseviews'],
-            function( S ) {
-                self.model.set( 'page', new S.Starfield({
-                    collection : Instagrams
-                }, true ) )
+            require(['app/views/stream'],
+            function( stream ) {
+                self.setView( stream )
+                stream.setElement( '.page' )
+                stream.render(spinner)
             })
         },
 
-        searchInit : function() {
+        search : function() {
             this.pageSearch = new Search.Form({
-                el : '#pageSearchForm',
-                page : this.model
+                el : '#pageSearchForm'
             })
             this.pageSearch.render()
         }

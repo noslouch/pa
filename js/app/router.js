@@ -119,19 +119,11 @@ define([
 
         stream : function() {
             var spinner = new Spinner()
-
-            require(['app/collections/instagrams'], function(Instagrams){
-                $.when( Instagrams.fetch() )
-                .done( function() {
-                    //var c = require('app/views/chrome')
-                    Chrome.streamInit( Instagrams )
-                    spinner.detach()
-                } )
-            })
+            Chrome.stream( spinner )
         },
 
         search : function() {
-            Chrome.searchInit()
+            Chrome.search()
         }
     })
 

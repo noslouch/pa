@@ -31,7 +31,7 @@ define([
     var Form = Backbone.View.extend({
         initialize : function(options) {
             this.model = new Q()
-            this.page = options.page
+            //this.page = options.page
             _.bindAll(this, 'submit', 'close')
         },
 
@@ -48,6 +48,7 @@ define([
 
         submit : function(e) {
             e.preventDefault()
+            var r = require('app/router')
 
             // FIND A BETTER METHOD FOR THIS
             //PA.app.pageView.$el.empty()
@@ -58,25 +59,14 @@ define([
                 self = this
 
             this.model.set( 'keywords' , keywords )
-            this.model.search()
-                .done(function(d){
-                    //define(function(require){
-                        //var JSON = require('json')
-                        self.page.set( {
-                            page : new Results({
-                                collection : new Backbone.Collection(JSON.parse(d))
-                            }),
-                            className : 'search-page',
-                            outlineTitle : 'Search Results'
-                        })
-                    //})
-                    //define(function(require) {
-                        var r = require('app/router')
-                        r.router.navigate('/search/results')
-                        spinner.detach()
-                    //})
-                })
-            this.close()
+            this.model.search().done(function(d){
+                $('.page').html( new Results({
+                    collection : new Backbone.Collection(JSON.parse(d))
+                }).render() )
+                r.router.navigate('/search/results')
+                spinner.detach()
+                self.close()
+            })
         },
 
         close : function(e) {
@@ -160,11 +150,11 @@ define([
                                 a = document.createElement('a'),
                                 p = document.createElement('p'),
                                 p2 = document.createElement('p')
-                            $(img).attr('src', model.thumb)
-                            $(a).attr('href', model.get('url')).html(model.get('title'))
+                            $(img).attr('src', model.get('thumb'))
+                            $(a).attr('href', model.get('url')).html('<p>'+model.get('title')+'</p>').prepend(img)
                             $(p).append(a)
                             $(p2).append( model.get('summary') )
-                            $(sec).append(img).append(p).append(p2)
+                            $(sec).append(p).append(p2)
                         } )
                     break;
 
