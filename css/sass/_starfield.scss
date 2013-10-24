@@ -8,7 +8,7 @@
 }
 
 .starfield {
-    @include perspective(1350px);
+    @include perspective(350px);
     position: fixed;
     top: 0;
     left: 0;
@@ -26,6 +26,11 @@
         display: block;
     }
 
+    .caption {
+        @include translate3d(0,0,0);
+        @include transition(opacity 150ms ease, box-shadow 150ms ease);
+    }
+
 } 
 
 //.loader { text-align: center; margin-top: 400px; }
@@ -39,18 +44,14 @@
 
     .caption {
         opacity: 1;
-        @include translate3d(0,0,0);
         @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
-        @include transition(opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms);
-        p, .year {
-            font-size: emCalc(18); 
-        }
+        @include transition(opacity 150ms ease, box-shadow 150ms ease 150ms);
     }
 }
 
 @-webkit-keyframes starfield {
     from {
-        -webkit-transform: translate3d(0,0,150px);
+        -webkit-transform: translate3d(0,0,365px);
         opacity: 0;
         z-index: 100;
     }
@@ -61,13 +62,13 @@
         opacity: 1;
     }
     to {
-        -webkit-transform: translate3d(0,0,-1250px);
+        -webkit-transform: translate3d(0,0,-75px);
         z-index: 0;
     }
 }
 @-moz-keyframes starfield {
     from {
-        -moz-transform: translate3d(0,0,150px);
+        -moz-transform: translate3d(0,0,365px);
         opacity: 0;
         z-index: 100;
     }
@@ -78,13 +79,13 @@
         opacity: 1;
     }
     to {
-        -moz-transform: translate3d(0,0,-1250px);
+        -moz-transform: translate3d(0,0,-25px);
         z-index: 0;
     }
 }
 @keyframes starfield {
     from {
-        transform: translate3d(0,0,150px);
+        transform: translate3d(0,0,365px);
         opacity: 0;
         z-index: 100;
     }
@@ -95,7 +96,7 @@
         opacity: 1;
     }
     to {
-        transform: translate3d(0,0,-1250px);
+        transform: translate3d(0,0,-25px);
         z-index: 0;
     }
 }

@@ -3057,11 +3057,11 @@ button {
 
 /* line 10, sass/_starfield.scss */
 .starfield {
-  -webkit-perspective: 1350px;
-  -moz-perspective: 1350px;
-  -ms-perspective: 1350px;
-  -o-perspective: 1350px;
-  perspective: 1350px;
+  -webkit-perspective: 350px;
+  -moz-perspective: 350px;
+  -ms-perspective: 350px;
+  -o-perspective: 350px;
+  perspective: 350px;
   position: fixed;
   top: 0;
   left: 0;
@@ -3091,8 +3091,20 @@ button {
   transition: box-shadow 250ms ease-out;
   display: block;
 }
+/* line 29, sass/_starfield.scss */
+.starfield .caption {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: opacity 150ms ease, box-shadow 150ms ease;
+  -moz-transition: opacity 150ms ease, box-shadow 150ms ease;
+  -o-transition: opacity 150ms ease, box-shadow 150ms ease;
+  transition: opacity 150ms ease, box-shadow 150ms ease;
+}
 
-/* line 33, sass/_starfield.scss */
+/* line 38, sass/_starfield.scss */
 .star:hover {
   -webkit-animation-play-state: paused;
   -moz-animation-play-state: paused;
@@ -3102,99 +3114,90 @@ button {
   -moz-box-shadow: 5px 5px 40px 0px rgba(105, 105, 105, 0.3);
   box-shadow: 5px 5px 40px 0px rgba(105, 105, 105, 0.3);
 }
-/* line 40, sass/_starfield.scss */
+/* line 45, sass/_starfield.scss */
 .star:hover .caption {
   opacity: 1;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
   -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
-  -webkit-transition: opacity 150ms ease, -webkit-transform 150ms linear, box-shadow 150ms ease;
-  -webkit-transition-delay: 0s, 0s, 150ms;
-  -moz-transition: opacity 150ms ease, -moz-transform 150ms linear, box-shadow 150ms ease 150ms;
-  -o-transition: opacity 150ms ease, -o-transform 150ms linear, box-shadow 150ms ease 150ms;
-  transition: opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms;
-}
-/* line 45, sass/_starfield.scss */
-.star:hover .caption p, .star:hover .caption .year {
-  font-size: 1.125em;
+  -webkit-transition: opacity 150ms ease, box-shadow 150ms ease;
+  -webkit-transition-delay: 0s, 150ms;
+  -moz-transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
+  -o-transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
+  transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
 }
 
 @-webkit-keyframes starfield {
-  /* line 52, sass/_starfield.scss */
+  /* line 53, sass/_starfield.scss */
   from {
-    -webkit-transform: translate3d(0, 0, 150px);
+    -webkit-transform: translate3d(0, 0, 365px);
     opacity: 0;
     z-index: 100;
   }
 
-  /* line 57, sass/_starfield.scss */
+  /* line 58, sass/_starfield.scss */
   15% {
     opacity: 1;
   }
 
-  /* line 60, sass/_starfield.scss */
+  /* line 61, sass/_starfield.scss */
   50% {
     opacity: 1;
   }
 
-  /* line 63, sass/_starfield.scss */
+  /* line 64, sass/_starfield.scss */
   to {
-    -webkit-transform: translate3d(0, 0, -1250px);
+    -webkit-transform: translate3d(0, 0, -75px);
     z-index: 0;
   }
 }
 
 @-moz-keyframes starfield {
-  /* line 69, sass/_starfield.scss */
+  /* line 70, sass/_starfield.scss */
   from {
-    -moz-transform: translate3d(0, 0, 150px);
+    -moz-transform: translate3d(0, 0, 365px);
     opacity: 0;
     z-index: 100;
   }
 
-  /* line 74, sass/_starfield.scss */
+  /* line 75, sass/_starfield.scss */
   15% {
     opacity: 1;
   }
 
-  /* line 77, sass/_starfield.scss */
+  /* line 78, sass/_starfield.scss */
   50% {
     opacity: 1;
   }
 
-  /* line 80, sass/_starfield.scss */
+  /* line 81, sass/_starfield.scss */
   to {
-    -moz-transform: translate3d(0, 0, -1250px);
+    -moz-transform: translate3d(0, 0, -25px);
     z-index: 0;
   }
 }
 
 @keyframes starfield {
-  /* line 86, sass/_starfield.scss */
+  /* line 87, sass/_starfield.scss */
   from {
-    transform: translate3d(0, 0, 150px);
+    transform: translate3d(0, 0, 365px);
     opacity: 0;
     z-index: 100;
   }
 
-  /* line 91, sass/_starfield.scss */
+  /* line 92, sass/_starfield.scss */
   15% {
     opacity: 1;
   }
 
-  /* line 94, sass/_starfield.scss */
+  /* line 95, sass/_starfield.scss */
   50% {
     opacity: 1;
   }
 
-  /* line 97, sass/_starfield.scss */
+  /* line 98, sass/_starfield.scss */
   to {
-    transform: translate3d(0, 0, -1250px);
+    transform: translate3d(0, 0, -25px);
     z-index: 0;
   }
 }
@@ -3843,7 +3846,7 @@ html, body {
 }
 /* line 42, sass/_general.scss */
 .loader span {
-  background: url('img/loader.gif?1380128459') no-repeat;
+  background: url('img/loader.gif?1382393600') no-repeat;
   width: 32px;
   height: 32px;
   display: inline-block;
