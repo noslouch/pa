@@ -11,11 +11,6 @@ define([
     'app/views/page',
     'app/views/search',
     'utils/spinner'
-    //'app/router',
-    //'app/collections/covergallery',
-    //'app/views/projects',
-    //'app/views/profileviews',
-    //'app/views/singleviews'
 ], function( require, exports, $, Backbone, _, Page, Search, Spinner ) {
 
     var App = Backbone.View.extend({
@@ -186,6 +181,17 @@ define([
                 }
             })
         },
+
+        contact : function( spinner ) {
+            var self = this
+            require(['app/views/contact'],
+            function( c ) {
+                self.setView( c )
+                $('.page').html( c.render() )
+                spinner.detach()
+            })
+        },
+
 
         streamInit : function( Instagrams ) {
             //var S = require('app/views/showcaseviews')

@@ -113,6 +113,8 @@ define([
         },
 
         contact : function() {
+            var spinner = new Spinner()
+            Chrome.contact( spinner )
         },
 
         stream : function() {
