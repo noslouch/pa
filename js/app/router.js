@@ -29,7 +29,7 @@ define([
             window.ga('send', 'pageview', {
                 'page' : '/' + url,
                 'hitCallback' : function() {
-                    console.log('Tracked: ', '/' + url)
+                    //console.log('Tracked: ', '/' + url)
                 }
             })
         },
