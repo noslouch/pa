@@ -9,6 +9,8 @@
     ul { margin: 0; }
     li {
         border-bottom: 1px solid $light-gray;
+        opacity: 0;
+        @include transition( opacity 150ms ease );
         @include grid-column(12, $collapse:true);
     }
 

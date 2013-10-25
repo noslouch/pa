@@ -3213,13 +3213,18 @@ button {
 /* line 10, sass/_list-showcase.scss */
 .list li {
   border-bottom: 1px solid #e0e0e0;
+  opacity: 0;
+  -webkit-transition: opacity 150ms ease;
+  -moz-transition: opacity 150ms ease;
+  -o-transition: opacity 150ms ease;
+  transition: opacity 150ms ease;
   position: relative;
   padding-left: 0;
   padding-right: 0;
   width: 100%;
   float: left;
 }
-/* line 15, sass/_list-showcase.scss */
+/* line 17, sass/_list-showcase.scss */
 .projects .list li:nth-child(n+2) {
   position: relative;
   padding-left: 0;
@@ -3227,33 +3232,33 @@ button {
   width: 50%;
   float: left;
 }
-/* line 18, sass/_list-showcase.scss */
+/* line 20, sass/_list-showcase.scss */
 .projects .list li:nth-child(n+2) p {
   margin: 0;
 }
-/* line 21, sass/_list-showcase.scss */
+/* line 23, sass/_list-showcase.scss */
 .list h3 {
   margin-top: 1.25em;
   margin-bottom: 1.25em;
 }
-/* line 26, sass/_list-showcase.scss */
+/* line 28, sass/_list-showcase.scss */
 .list li:first-child h3 {
   margin-top: 1em;
 }
-/* line 27, sass/_list-showcase.scss */
+/* line 29, sass/_list-showcase.scss */
 .list li:first-child h4 {
   margin-top: 0;
 }
-/* line 30, sass/_list-showcase.scss */
+/* line 32, sass/_list-showcase.scss */
 .list li:first-child h4 a {
   margin-top: 0;
   padding-top: 0;
 }
-/* line 36, sass/_list-showcase.scss */
+/* line 38, sass/_list-showcase.scss */
 .list h4 {
   position: relative;
 }
-/* line 40, sass/_list-showcase.scss */
+/* line 42, sass/_list-showcase.scss */
 .list a {
   display: block;
   background: white;
@@ -3266,7 +3271,7 @@ button {
   -o-transition: box-shadow 150ms ease;
   transition: box-shadow 150ms ease;
 }
-/* line 49, sass/_list-showcase.scss */
+/* line 51, sass/_list-showcase.scss */
 .list .thumb {
   overflow: hidden;
   height: 0px;
@@ -3285,19 +3290,19 @@ button {
   -o-transform: rotate(0);
   transform: rotate(0);
 }
-/* line 60, sass/_list-showcase.scss */
+/* line 62, sass/_list-showcase.scss */
 .list .thumb img {
   position: absolute;
   bottom: 0;
   left: 50%;
   margin-left: -98.5px;
 }
-/* line 67, sass/_list-showcase.scss */
+/* line 69, sass/_list-showcase.scss */
 .list .wide.thumb img {
   margin-left: -200px;
 }
 
-/* line 71, sass/_list-showcase.scss */
+/* line 73, sass/_list-showcase.scss */
 .covers-container li:nth-child(n+2) {
   position: relative;
   padding-left: 0;
@@ -3305,7 +3310,7 @@ button {
   width: 50%;
   float: left;
 }
-/* line 73, sass/_list-showcase.scss */
+/* line 75, sass/_list-showcase.scss */
 .covers-container .list a {
   padding-left: 1em;
   margin-left: -1em;
@@ -3322,36 +3327,36 @@ button {
         */
 }
 
-/* line 91, sass/_list-showcase.scss */
+/* line 93, sass/_list-showcase.scss */
 .viewer .list {
   width: 589px;
   float: right;
 }
 
-/* line 98, sass/_list-showcase.scss */
+/* line 100, sass/_list-showcase.scss */
 .profile .list li:first-child h3 {
   margin-top: 0;
 }
-/* line 99, sass/_list-showcase.scss */
+/* line 101, sass/_list-showcase.scss */
 .profile .list li:nth-child(n+2) {
   padding: 1.5em 0;
 }
-/* line 100, sass/_list-showcase.scss */
+/* line 102, sass/_list-showcase.scss */
 .profile .list li:last-child {
   margin-bottom: 1.25em;
 }
-/* line 102, sass/_list-showcase.scss */
+/* line 104, sass/_list-showcase.scss */
 .profile .list h4 {
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
 }
-/* line 107, sass/_list-showcase.scss */
+/* line 109, sass/_list-showcase.scss */
 .profile .list a {
   padding: 0;
   margin: 0;
 }
-/* line 111, sass/_list-showcase.scss */
+/* line 113, sass/_list-showcase.scss */
 .profile .list p {
   font-size: 0.8125em;
   font-weight: 500;
@@ -3359,13 +3364,13 @@ button {
   margin-bottom: 0;
 }
 
-/* line 123, sass/_list-showcase.scss */
+/* line 125, sass/_list-showcase.scss */
 .list h3 {
   color: red;
   font-weight: 300;
   font-size: 1.1875em;
 }
-/* line 129, sass/_list-showcase.scss */
+/* line 131, sass/_list-showcase.scss */
 .list h4 {
   font-size: 1.1875em;
   font-weight: 500;
