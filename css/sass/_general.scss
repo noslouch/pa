@@ -8,7 +8,6 @@ a:hover, a:hover * { @include transition(color 150ms ease); }
 
 a:hover * {
     color: $secondary-color;
-    //@include transition(color 250ms ease-out); 
 }
 
 a:focus { color: auto; }
@@ -47,7 +46,7 @@ html, body {
     }
 }
 
-.loaded { opacity: 1; }
+.loaded { opacity: 1 !important; }
 
 iframe {
     width: 100%;

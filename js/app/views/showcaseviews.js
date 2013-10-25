@@ -267,7 +267,7 @@ define([
         tagName : 'div',
         className : 'showcase list',
         initialize : function() {
-            _.bindAll( this, 'filter', 'groupSort', 'render' )
+            _.bindAll( this, 'filter', 'groupSort', 'render', 'stagger' )
         },
 
         render : function(){
@@ -292,7 +292,19 @@ define([
                 this.$el.append( html.render() )
             }, this )
 
+            setTimeout( this.stagger, 50 )
             return this.el
+        },
+
+        stagger : function() {
+            var $li = this.$('li'),
+                delay = 25
+
+            $li.each(function(i,el){
+                setTimeout(function(){
+                    $(el).addClass('loaded')
+                }, i*delay )
+            })
         },
 
         filter : function( filter ) {
