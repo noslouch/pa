@@ -3057,11 +3057,11 @@ button {
 
 /* line 10, sass/_starfield.scss */
 .starfield {
-  -webkit-perspective: 350px;
-  -moz-perspective: 350px;
-  -ms-perspective: 350px;
-  -o-perspective: 350px;
-  perspective: 350px;
+  -webkit-perspective: 200px;
+  -moz-perspective: 200px;
+  -ms-perspective: 200px;
+  -o-perspective: 200px;
+  perspective: 200px;
   position: fixed;
   top: 0;
   left: 0;
@@ -3130,7 +3130,7 @@ button {
 @-webkit-keyframes starfield {
   /* line 51, sass/_starfield.scss */
   from {
-    -webkit-transform: translate3d(0, 0, 350px);
+    -webkit-transform: translate3d(0, 0, 250px);
     opacity: 0;
     z-index: 100;
   }
@@ -3147,7 +3147,7 @@ button {
 
   /* line 62, sass/_starfield.scss */
   to {
-    -webkit-transform: translate3d(0, 0, -75px);
+    -webkit-transform: translate3d(0, 0, -25px);
     z-index: 0;
   }
 }
@@ -3155,7 +3155,7 @@ button {
 @-moz-keyframes starfield {
   /* line 69, sass/_starfield.scss */
   from {
-    -moz-transform: translate3d(0, 0, 350px);
+    -moz-transform: translate3d(0, 0, 250px);
     opacity: 0;
     z-index: 100;
   }
@@ -3172,7 +3172,7 @@ button {
 
   /* line 80, sass/_starfield.scss */
   to {
-    -moz-transform: translate3d(0, 0, -75px);
+    -moz-transform: translate3d(0, 0, -25px);
     z-index: 0;
   }
 }
@@ -3180,7 +3180,7 @@ button {
 @keyframes starfield {
   /* line 87, sass/_starfield.scss */
   from {
-    transform: translate3d(0, 0, 350px);
+    transform: translate3d(0, 0, 250px);
     opacity: 0;
     z-index: 100;
   }
@@ -3197,7 +3197,7 @@ button {
 
   /* line 98, sass/_starfield.scss */
   to {
-    transform: translate3d(0, 0, -75px);
+    transform: translate3d(0, 0, -25px);
     z-index: 0;
   }
 }
