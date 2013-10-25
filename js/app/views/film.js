@@ -81,6 +81,10 @@ define([
             this.$el.html( this.filmThumbs.render() )
         },
 
+        onClass : function() {
+            $('.page').removeClass('film')
+        },
+
         init : function(spinner) {
             if ( !this.collection.length ) {
                 throw {

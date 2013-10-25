@@ -37,6 +37,10 @@ define([
             this.$el.html( this.covers.render() )
         },
 
+        onClose : function(){
+            $('.page').removeClass('photography')
+        },
+
         init : function(spinner) {
             if ( !this.collection.length ) {
                 throw {

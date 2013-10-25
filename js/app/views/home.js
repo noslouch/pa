@@ -13,11 +13,6 @@ define([
     var Home = Backbone.View.extend({
         initialize : function() {
             _.bindAll( this, 'open' )
-
-            //this.slideshow = quotes.slideshow.bulletBuilder
-            //this.slideshow = _.bind( this.slideshow, quotes.slideshow )
-            //this.slideshow = new Q.Quotes()
-            //this.poll = Q.inspector
         },
 
         render : function() {
@@ -107,6 +102,10 @@ define([
             e.preventDefault()
             this.$el.css({ 'padding-bottom' :  this.$noteworthy.hasClass('open') ? '' : 245 })
             this.$noteworthy.toggleClass('open')
+        },
+
+        onClose : function(){
+            $('.page').removeClass('home')
         },
 
         init : function() {
