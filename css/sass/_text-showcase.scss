@@ -40,8 +40,6 @@
     opacity: 0;
     @include transition( opacity 300ms ease-in );
 
-    &.loaded { opacity: 1; }
-
     .img {
         float: left;
         margin-right: 1em;

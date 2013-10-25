@@ -71,8 +71,6 @@ button {
     .indicators {
         opacity: 0;
         @include transition( opacity 300ms ease-in );
-
-        &.loaded { opacity: 1; }
     }
 
 }

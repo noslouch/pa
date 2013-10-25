@@ -13,8 +13,6 @@
     img {
         opacity: 0;
         @include transition(opacity 150ms ease, box-shadow 150ms ease 150ms);
-
-        &.loaded { opacity: 1; }
     }
 
     .wrapper { 
