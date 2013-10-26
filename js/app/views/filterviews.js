@@ -8,9 +8,11 @@ define([
     'bbq',
     'tpl/jst',
     'app/views/showcaseviews',
-    'app/collections/projects',
-    'utils/mobiledetect'
-], function( $, Backbone, _, bbq, TPL, S, Projects, mobile ) {
+    'app/collections/projects'
+    //'utils/mobiledetect'
+], function( $, Backbone, _, bbq, TPL, S, Projects ) {
+
+    var mobile = 'ontouchstart' in window
 
     var FilterMenu = Backbone.View.extend({
         reduce : function(filter) {
