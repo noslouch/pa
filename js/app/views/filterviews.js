@@ -11,6 +11,7 @@ define([
     'app/collections/projects',
     'utils/mobiledetect'
 ], function( $, Backbone, _, bbq, TPL, S, Projects, mobile ) {
+    mobile = true
 
     var FilterMenu = Backbone.View.extend({
         reduce : function(filter) {
@@ -104,20 +105,25 @@ define([
     })
 
     var ProjectLi = Backbone.View.extend({
-        tagName : 'li',
+        tagName : mobile ? 'option' : 'li',
         template : TPL.namePartial,
         render : function() {
-            this.$el
-                .html( this.template({
-                    tagFilter : this.options.tagObj.className,
-                    tag : this.options.tagObj.title
-                }) )
+            if (mobile) {
+                this.$el.attr('data-hash', 'filter=' + this.options.tagObj.className)
+                this.$el.html( this.options.tagObj.title )
+            } else {
+                this.$el
+                    .html( this.template({
+                        tagFilter : this.options.tagObj.className,
+                        tag : this.options.tagObj.title
+                    }) )
+            }
             return this.el
         }
     })
 
     var ProjectUl = FilterMenu.extend({
-        tagName : 'ul',
+        tagName : mobile ? 'select' : 'ul',
         className : 'names',
         render : function() {
             var filter
@@ -134,6 +140,7 @@ define([
 
             var tags = this.reduce(filter)
 
+            if (mobile) { $('#' + this.options.type).empty() }
             tags.forEach( function(tagObj) {
                 this.$el
                     .append( new ProjectLi({
@@ -169,9 +176,9 @@ define([
         className : 'jump-to name',
 
         initialize : function(options) {
-            var $name = $('<ul />').attr('class', 'names'),
-                $date = $('<ul />').attr('class', 'dates'),
-                byDate = this.collection.groupBy(function(model) {
+            this.$name = $( (mobile ? '<select/>' : '<ul/>') ).addClass('names')
+            this.$date = $( (mobile ? '<select/>' : '<ul/>') ).addClass('dates')
+            var byDate = this.collection.groupBy(function(model) {
                     return model.get('date').year()
                 }),
                 byFirst = this.collection.groupBy(function(model) {
@@ -179,23 +186,38 @@ define([
                 })
 
             _.each( byDate, function( model, date ) {
-                var li = document.createElement('li'),
-                    $tag = $('<a />')
-                $tag.attr('href', '#' + date).html(date)
-                $tag.appendTo(li)
-                $date.append(li)
-            } )
+                if ( mobile ) {
+                    var $op = $('<option/>').attr('value', date).html(date)
+                    this.$date.append($op)
+                } else {
+                    var li = document.createElement('li'),
+                        $tag = $('<a />').attr('href', '#' + date).html(date)
+                    $tag.appendTo(li)
+                    this.$date.append(li)
+                }
+            }, this )
             _.each( byFirst, function( model, first) {
-                var li = document.createElement('li'),
-                    $tag = $('<a />')
-                $tag.attr('href', '#' + first).html(first)
-                $tag.appendTo(li)
-                $name.append(li)
-            } )
+                if ( mobile ) {
+                    var $op = $('<option/>').attr('value', first).html(first)
+                    this.$name.append($op)
+                } else {
+                    var li = document.createElement('li'),
+                        $tag = $('<a />').attr('href', '#' + first).html(first)
+                    $tag.appendTo(li)
+                    this.$name.append(li)
+                }
+            }, this )
 
-            this.$el.append( options.template() )
-            this.$('.wrapper').append($name).append($date)
+            if (mobile){
+                this.$name.prepend('<option>Jump To</option>')
+                this.$date.prepend('<option>Jump To</option>')
+                this.$el.append(this.$name).append(this.$date)
+            } else {
+                this.$el.append( options.template() )
+                this.$('.wrapper').append(this.$name).append(this.$date)
+            }
 
+            this.listenTo( this.model, 'change:sort', this.toggleActive)
             this.listenTo( this.model, 'change:sort', this.toggleActive)
         },
 
@@ -221,7 +243,17 @@ define([
             'click .sorts button' : 'filter',
             'click .views button' : 'filter',
             'click .jump-to a' : 'jump',
-            'click h3' : 'openMenu'
+            'click h3' : 'openMenu',
+            'change .sorts select' : 'filter',
+            'change .views select' : 'filter',
+            'change .filter select' : 'filter',
+            'change .jump-to select' : 'jump'
+        },
+
+        debug : function() {
+            console.log('selected')
+            console.log(arguments)
+            console.log(this)
         },
 
         render : function() {
@@ -230,26 +262,49 @@ define([
 
             if ( !this.options.profile ) {
 
-                this.$('#brand .wrapper')
-                    .append( new LogoBtns({
-                        model : this.model
-                    }).render() )
-                    .append( new LogoUl({
-                        model : this.model,
-                        collection : this.collection
-                    }).render() )
-                this.$('#industry .wrapper')
-                    .append( new ProjectUl({
-                        type : 'industry',
-                        model : this.model,
-                        collection : this.collection
-                    }).render() )
-                this.$('#type .wrapper')
-                    .append( new ProjectUl({
-                        type : 'type',
-                        model : this.model,
-                        collection : this.collection
-                    }).render() )
+                if (mobile) {
+                    this.$('#brand')
+                        .html( new LogoBtns({
+                            model : this.model
+                        }).render() )
+                        .append( new LogoUl({
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                    this.$('#industry')
+                        .html( new ProjectUl({
+                            type : 'industry',
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                    this.$('#type')
+                        .html( new ProjectUl({
+                            type : 'type',
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                } else {
+                    this.$('#brand .wrapper')
+                        .append( new LogoBtns({
+                            model : this.model
+                        }).render() )
+                        .append( new LogoUl({
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                    this.$('#industry .wrapper')
+                        .append( new ProjectUl({
+                            type : 'industry',
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                    this.$('#type .wrapper')
+                        .append( new ProjectUl({
+                            type : 'type',
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                }
             }
 
             this.$el
@@ -271,6 +326,12 @@ define([
                     template : mobile ? TPL.mobileViews : TPL.views
                 }).render() )
 
+            var hash = $.bbq.getState()
+            for (var prop in hash) {
+                if (hash.hasOwnProperty(prop)) {
+                    $('#' + hash[prop]).prop('selected', true)
+                }
+            }
             this.delegateEvents()
         },
 
@@ -280,8 +341,10 @@ define([
         },
 
         filter : function(e) {
-            var hash = e.currentTarget.dataset.hash,
-                option = $.deparam( hash, true )
+            try {
+                var hash = e.type === 'change' ? e.currentTarget.selectedOptions[0].dataset.hash : e.currentTarget.dataset.hash,
+                    option = $.deparam( hash, true )
+            } catch(err) { return false }
 
             e.preventDefault()
             e.stopPropagation()
@@ -290,11 +353,15 @@ define([
         },
 
         jump : function(e) {
+            try {
+                var jump = e.type === 'change' ? '#' + e.currentTarget.selectedOptions[0].value : e.currentTarget.hash
+            } catch(err) { return false }
+
             e.preventDefault()
             e.stopPropagation()
             this.$('.open').removeClass('open')
             $('html, body').animate({
-                scrollTop : $(e.currentTarget.hash).offset().top - (this.model.get('view') === 'list' ? 200 : 400)
+                scrollTop : $(jump).offset().top - (this.model.get('view') === 'list' ? 200 : 400)
             })
         },
 
