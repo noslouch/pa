@@ -440,8 +440,7 @@ button {
 // FANCYBOX
 //
 
-.fancybox-wrap { 
-    
+#fancybox-lock {
     .logo {
         position: fixed;
         top: 39px;
@@ -457,7 +456,11 @@ button {
         a { color: $secondary-color; }
         a:hover { color: $gray; }
     }
+}
 
+.fancybox-skin { @include box-shadow(none); }
+
+.fancybox-wrap { 
     .close {
         position: fixed;
         top: 0;
@@ -465,7 +468,6 @@ button {
         z-index: 2;
         padding: 39px;
     }
-    .fancybox-skin { @include box-shadow(none); }
 }
 
 .fancybox-nav {
@@ -484,7 +486,7 @@ button {
 .fancybox-next { 
     span {
         @include icons-sprite(next);
-        right: 39px;
+        right: 109px;
     }
     &:hover span { @include icons-sprite(next-hover); }
 }
@@ -492,12 +494,12 @@ button {
 .fancybox-prev { 
     span {
         @include icons-sprite(prev);
-        left: 39px;
+        left: 109px;
     }
     &:hover span { @include icons-sprite(prev-hover); }
 }
 
-.fancybox-overlay .indicators {
+.fancybox-lock .indicators {
     position: fixed;
     bottom: 2.6em;
     left: 3em;

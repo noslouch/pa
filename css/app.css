@@ -2909,8 +2909,8 @@ button {
   transition-duration: 0s;
 }
 
-/* line 445, sass/_modules.scss */
-.fancybox-wrap .logo {
+/* line 444, sass/_modules.scss */
+#fancybox-lock .logo {
   position: fixed;
   top: 39px;
   left: 39px;
@@ -2922,15 +2922,23 @@ button {
   font-weight: 500;
   line-height: 1;
 }
-/* line 457, sass/_modules.scss */
-.fancybox-wrap .logo a {
+/* line 456, sass/_modules.scss */
+#fancybox-lock .logo a {
   color: red;
 }
-/* line 458, sass/_modules.scss */
-.fancybox-wrap .logo a:hover {
+/* line 457, sass/_modules.scss */
+#fancybox-lock .logo a:hover {
   color: #999999;
 }
+
 /* line 461, sass/_modules.scss */
+.fancybox-skin {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+/* line 464, sass/_modules.scss */
 .fancybox-wrap .close {
   position: fixed;
   top: 0;
@@ -2938,21 +2946,15 @@ button {
   z-index: 2;
   padding: 39px;
 }
-/* line 468, sass/_modules.scss */
-.fancybox-wrap .fancybox-skin {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
 
-/* line 471, sass/_modules.scss */
+/* line 473, sass/_modules.scss */
 .fancybox-nav {
   position: fixed;
   width: 20%;
   z-index: 0;
 }
 
-/* line 478, sass/_modules.scss */
+/* line 480, sass/_modules.scss */
 .fancybox-next span,
 .fancybox-prev span {
   width: 21px;
@@ -2960,28 +2962,28 @@ button {
   visibility: visible;
 }
 
-/* line 485, sass/_modules.scss */
+/* line 487, sass/_modules.scss */
 .fancybox-next span {
   background-position: 0 -159px;
-  right: 39px;
+  right: 109px;
 }
-/* line 489, sass/_modules.scss */
+/* line 491, sass/_modules.scss */
 .fancybox-next:hover span {
   background-position: 0 -131px;
 }
 
-/* line 493, sass/_modules.scss */
+/* line 495, sass/_modules.scss */
 .fancybox-prev span {
   background-position: 0 -187px;
-  left: 39px;
+  left: 109px;
 }
-/* line 497, sass/_modules.scss */
+/* line 499, sass/_modules.scss */
 .fancybox-prev:hover span {
   background-position: 0 -103px;
 }
 
-/* line 500, sass/_modules.scss */
-.fancybox-overlay .indicators {
+/* line 502, sass/_modules.scss */
+.fancybox-lock .indicators {
   position: fixed;
   bottom: 2.6em;
   left: 3em;
@@ -2989,24 +2991,24 @@ button {
   z-index: 8040;
   background: black;
 }
-/* line 508, sass/_modules.scss */
-.fancybox-overlay .indicators ul {
+/* line 510, sass/_modules.scss */
+.fancybox-lock .indicators ul {
   background: none;
   overflow: visible;
 }
-/* line 513, sass/_modules.scss */
-.fancybox-overlay .indicators li {
+/* line 515, sass/_modules.scss */
+.fancybox-lock .indicators li {
   background: url('img/small-mask.png?1379880013');
   float: left;
   width: 17px;
   height: 12px;
 }
-/* line 519, sass/_modules.scss */
-.fancybox-overlay .indicators li:hover {
+/* line 521, sass/_modules.scss */
+.fancybox-lock .indicators li:hover {
   background: white;
 }
-/* line 522, sass/_modules.scss */
-.fancybox-overlay .indicators li:hover a {
+/* line 524, sass/_modules.scss */
+.fancybox-lock .indicators li:hover a {
   opacity: 1;
   -webkit-transform: translate3d(0, -5px, 0);
   -moz-transform: translate3d(0, -5px, 0);
@@ -3014,12 +3016,12 @@ button {
   -o-transform: translate3d(0, -5px, 0);
   transform: translate3d(0, -5px, 0);
 }
-/* line 527, sass/_modules.scss */
-.fancybox-overlay .indicators li.active-slide:hover a {
+/* line 529, sass/_modules.scss */
+.fancybox-lock .indicators li.active-slide:hover a {
   background: red;
 }
-/* line 532, sass/_modules.scss */
-.fancybox-overlay .indicators a {
+/* line 534, sass/_modules.scss */
+.fancybox-lock .indicators a {
   background: black;
   width: 12px;
   height: 12px;
@@ -3035,13 +3037,13 @@ button {
   -o-transition: -o-transform 100ms ease;
   transition: transform 100ms ease;
 }
-/* line 542, sass/_modules.scss */
-.fancybox-overlay .indicators .dot {
+/* line 544, sass/_modules.scss */
+.fancybox-lock .indicators .dot {
   width: 12px;
   height: 12px;
 }
 
-/* line 548, sass/_modules.scss */
+/* line 550, sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;

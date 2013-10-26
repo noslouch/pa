@@ -13,7 +13,7 @@ require.config({
         bbq : 'lib/bbq/jquery.ba-bbq.no-legacy',
         foundation : 'lib/foundation/foundation',
         tooltips : 'lib/foundation/foundation.tooltips',
-        fancybox : 'lib/fancybox/jquery.fancybox.pack',
+        fancybox : 'lib/fancybox/jquery.fancybox',
         json : 'lib/json/json2',
         imagesLoaded : '../bower_components/imagesloaded/imagesloaded',
         'eventie': '../bower_components/eventie',

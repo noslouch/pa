@@ -14,27 +14,31 @@ define([
             scrolling: 'no',
             type : 'image',
             closeClick: true,
-            //nextEffect : 'fade',
-            //prevEffect : 'fade',
-            helpers : {
-                overlay : {
-                    css : {
-                        'background' : 'white'
-                    }
-                },
-                title : {
-                    type : "outside"
+            openEffect : 'fade',
+            closeEffect : 'fade',
+            nextEffect : 'fade',
+            prevEffect : 'fade',
+            overlay : {
+                css : {
+                    'background' : 'white',
+                    'opacity' : 1
                 }
             },
+            caption : {
+                type : "outside"
+            },
             tpl : {
-                wrap : '<div class="fancybox-wrap" tabIndex="-1"><h1 class="logo"><a href="/">Peter Arnell</a></h1><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div></div>',
-                closeBtn : '<a title="Close" class="close" href="javascript:;"><span></span></a>',
+                wrap : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-inner"></div></div>',
+                closeBtn : '<a title="Close" class="close" href="javascript:;" id="fb-close"><span></span></a>'
             },
             afterLoad : function() {
                 if (!window.loaded) {
-                    var $ul = $('<ul/>')
-                    var $bullet = $('<div/>').attr('id', 'bullet-wrap').addClass('indicators')
-                    var $dot = $('<div/>').attr('id','dot').addClass('dot')
+                    var $ul = $('<ul/>'),
+                        $bullet = $('<div/>').attr('id', 'bullet-wrap').addClass('indicators'),
+                        $dot = $('<div/>').attr('id','dot').addClass('dot'),
+                        $logo = $('<h1/>').addClass('logo')
+
+                    $logo.html( $('<a/>').attr('href', '/').text('Peter Arnell') )
 
                     $ul.appendTo($bullet)
                     $ul.append($dot)
@@ -48,7 +52,8 @@ define([
                         $li.append($a)
                         $ul.append($li)
                     }
-                    $('.fancybox-overlay').append($bullet)
+
+                    $('#fancybox-lock').append($logo).append($bullet)
 
                     $('#bullet-wrap li').click(function(){
                         $.fancybox.jumpto(this.id)
@@ -63,7 +68,11 @@ define([
                     left: p.left
                 })
             },
-            beforeClose : function(){ window.loaded = false }
+            beforeClose : function(){
+                window.loaded = false
+                $('#bullet-wrap').fadeOut(150)
+                $('#fancybox-lock .logo').fadeOut(150)
+            }
         })
     }
 
