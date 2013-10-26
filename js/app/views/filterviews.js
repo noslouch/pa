@@ -62,41 +62,53 @@ define([
     })
 
     var LogoLi = Backbone.View.extend({
-        tagName : 'li',
+        tagName : mobile ? 'option' : 'li',
         logoTemplate : TPL.logoPartial,
         nameTemplate : TPL.namePartial,
         render : function() {
-            this.$el.append( this.logoTemplate({
-                tagFilter : this.options.tagObj.className,
-                tag : this.options.tagObj.title,
-                logo: this.options.tagObj.logo
-            }) )
-            this.$el.append( this.nameTemplate({
-                tagFilter : this.options.tagObj.className,
-                tag : this.options.tagObj.title
-            }) )
+            if (mobile) {
+                this.$el.attr({
+                    'data-hash' : 'filter=.' + this.options.tagObj.className,
+                    'id' : this.options.tagObj.className
+                })
+                this.$el.html( this.options.tagObj.title)
+            } else {
+                this.$el.append( this.logoTemplate({
+                    tagFilter : this.options.tagObj.className,
+                    tag : this.options.tagObj.title,
+                    logo: this.options.tagObj.logo
+                }) )
+                this.$el.append( this.nameTemplate({
+                    tagFilter : this.options.tagObj.className,
+                    tag : this.options.tagObj.title
+                }) )
+            }
             return this.el
         }
     })
 
     var LogoUl = FilterMenu.extend({
-        tagName : 'ul',
+        tagName : mobile ? 'select' : 'ul',
         id : 'brandList',
-        className : 'icons',
+        className : mobile ? '' : 'icons',
         initialize : function() {
-            this.listenTo( Backbone.dispatcher, 'brandToggler', function(mdl, id) {
-                this.$el.toggleClass('icons')
-                this.$el.toggleClass('names')
-            })
+            if (!mobile) {
+                this.listenTo( Backbone.dispatcher, 'brandToggler', function(mdl, id) {
+                    this.$el.toggleClass('icons')
+                    this.$el.toggleClass('names')
+                })
+            } else {
+                this.$el.prepend('<option>Brands</option>')
+            }
         },
         render : function() {
-            //var logos = this.collection.pluck('logo')
             var tags = this.reduce('brand_tags')
+
+            if (mobile) { $('#brand').empty() }
             tags.forEach( function(tagObj, idx) {
                 this.$el
                     .append( new LogoLi({
                         tagObj : tagObj
-                        //logo : logos[idx]
                     })
                     .render() )
             }, this)
@@ -110,7 +122,10 @@ define([
         template : TPL.namePartial,
         render : function() {
             if (mobile) {
-                this.$el.attr('data-hash', 'filter=' + this.options.tagObj.className)
+                this.$el.attr({
+                    'data-hash' : 'filter=.' + this.options.tagObj.className,
+                    'id' : this.options.tagObj.className
+                })
                 this.$el.html( this.options.tagObj.title )
             } else {
                 this.$el
@@ -127,13 +142,16 @@ define([
         tagName : mobile ? 'select' : 'ul',
         className : 'names',
         render : function() {
-            var filter
+            var filter,
+                title
             switch (this.options.type) {
                 case 'industry':
                     filter = 'industry_tags'
+                    title = 'Industry'
                     break;
                 case 'type':
                     filter = 'type_tags'
+                    title = 'Project Type'
                     break;
                 default:
                     break;
@@ -141,7 +159,10 @@ define([
 
             var tags = this.reduce(filter)
 
-            if (mobile) { $('#' + this.options.type).empty() }
+            if (mobile) { 
+                $('#' + this.options.type).empty() 
+                this.$el.prepend('<option>' + title + '</option>')
+            }
             tags.forEach( function(tagObj) {
                 this.$el
                     .append( new ProjectLi({
@@ -265,9 +286,6 @@ define([
 
                 if (mobile) {
                     this.$('#brand')
-                        .html( new LogoBtns({
-                            model : this.model
-                        }).render() )
                         .append( new LogoUl({
                             model : this.model,
                             collection : this.collection
@@ -327,10 +345,14 @@ define([
                     template : mobile ? TPL.mobileViews : TPL.views
                 }).render() )
 
-            var hash = $.bbq.getState()
-            for (var prop in hash) {
-                if (hash.hasOwnProperty(prop)) {
-                    $('#' + hash[prop]).prop('selected', true)
+            if (mobile) {
+                var hash = $.bbq.getState()
+                for (var prop in hash) {
+                    if (hash.hasOwnProperty(prop)) {
+                        var id = hash[prop]
+                        if (prop === 'filter') { id = id.slice(1) }
+                        $('#' + id).prop('selected', true)
+                    }
                 }
             }
             this.delegateEvents()
