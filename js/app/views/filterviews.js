@@ -8,8 +8,9 @@ define([
     'bbq',
     'tpl/jst',
     'app/views/showcaseviews',
-    'app/collections/projects'
-], function( $, Backbone, _, bbq, TPL, S, Projects ) {
+    'app/collections/projects',
+    'utils/mobiledetect'
+], function( $, Backbone, _, bbq, TPL, S, Projects, mobile ) {
 
     var FilterMenu = Backbone.View.extend({
         reduce : function(filter) {
@@ -166,9 +167,8 @@ define([
         tagName : 'div',
         id : 'jump-to',
         className : 'jump-to name',
-        template: TPL.jumps,
 
-        initialize : function() {
+        initialize : function(options) {
             var $name = $('<ul />').attr('class', 'names'),
                 $date = $('<ul />').attr('class', 'dates'),
                 byDate = this.collection.groupBy(function(model) {
@@ -193,7 +193,7 @@ define([
                 $name.append(li)
             } )
 
-            this.$el.append( this.template() )
+            this.$el.append( options.template() )
             this.$('.wrapper').append($name).append($date)
 
             this.listenTo( this.model, 'change:sort', this.toggleActive)
@@ -255,19 +255,20 @@ define([
             this.$el
                 .append( new JumpMenu({
                     model : this.model,
-                    collection : this.collection
+                    collection : this.collection,
+                    template: mobile ? TPL.mobileJumps : TPL.jumps,
                 }).render() )
                 .append( new ViewSort({
                     model : this.model,
                     id : 'sorts',
                     type : 'sort',
-                    template : TPL.sorts
+                    template : mobile ? TPL.mobileSorts : TPL.sorts
                 }).render() )
                 .append( new ViewSort({
                     model : this.model,
                     id : 'views',
                     type : 'view',
-                    template : TPL.views
+                    template : mobile ? TPL.mobileViews : TPL.views
                 }).render() )
 
             this.delegateEvents()

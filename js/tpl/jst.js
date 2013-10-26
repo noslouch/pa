@@ -259,6 +259,12 @@ function( _ ){
         '<div class="wrapper"></div>'
     ].join('\n')
 
+    JST.mobileJumps = [
+        '<select>',
+            '<option>Jump To</option>',
+        '</select>'
+    ].join('\n')
+
     JST.sorts = [
         '<h3>Sort By</h3>',
         '<div class="wrapper">',
@@ -266,7 +272,14 @@ function( _ ){
                 '<li><button data-hash="sort=name" id="name" type="button">Name</button></li>',
                 '<li><button data-hash="sort=date" id="date" type="button">Date</button></li>',
             '</ul>',
-        '</div> <!-- .wrapper -->'
+        '</div>'
+    ].join('\n')
+
+    JST.mobileSorts = [
+        '<select>',
+            '<option data-hash="sort=name" id="name">Sort By</option>',
+            '<option data-hash="sort=date" id="date">Name</option>',
+        '</select>'
     ].join('\n')
 
     JST.views = [
@@ -277,7 +290,16 @@ function( _ ){
                 '<li><button class="title-view" data-hash="view=list" id="list" type="button">Project Title</button></li>',
                 '<li><button class="random-view" data-hash="view=random" id="random" type="button">Random</button></li>',
            '</ul>',
-        '</div> <!-- .wrapper -->'
+        '</div>'
+    ].join('\n')
+
+    JST.mobileViews = [
+        '<select>',
+            '<option>View By</option>',
+            '<option data-hash="view=cover" id="cover">Cover Image</option>',
+            '<option data-hash="view=list" id="list">Project Title</option>',
+            '<option data-hash="view=random" id="random">Random</option>',
+        '</select>'
     ].join('\n')
 
     for (var tmpl in JST) {
