@@ -1,4 +1,5 @@
 /* init.js */
+/*global document*/
 'use strict';
 
 require.config({
@@ -77,7 +78,8 @@ require.config({
     waitSeconds : 20
 })
 
-require( ['jquery', 'underscore', 'backbone', 'app/router', 'app/views/chrome'],
-function( $, _, Backbone, Router ){
+require( ['jquery', 'underscore', 'backbone', 'app/router', 'lib/fastclick/fastclick.min', 'app/views/chrome'],
+function( $, _, Backbone, Router, attachFastClick ){
     Backbone.history.start({ pushState : true, root : '/' })
+    attachFastClick(document.body)
 } )
