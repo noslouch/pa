@@ -254,6 +254,7 @@ function( _ ){
         '</h4>'
     ].join('\n')
 
+
     JST.jumps = [
         '<h3>Jump To</h3>',
         '<div class="wrapper"></div>'
@@ -277,8 +278,9 @@ function( _ ){
 
     JST.mobileSorts = [
         '<select>',
-            '<option data-hash="sort=name" id="name">Sort By</option>',
-            '<option data-hash="sort=date" id="date">Name</option>',
+            '<option>Sort By</option>',
+            '<option data-hash="sort=name" id="name">Name</option>',
+            '<option data-hash="sort=date" id="date">Date</option>',
         '</select>'
     ].join('\n')
 
