@@ -105,7 +105,9 @@ define([
                 },
                 onLayout : function() {
                     $(this).css('overflow', 'visible')
-                    g()
+                    if ( !('ontouchstart' in window) ) {
+                        g()
+                    }
                 },
                 getSortData : {
                     name : function($el) {
