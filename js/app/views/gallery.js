@@ -8,8 +8,8 @@ define([
     'underscore',
     'tpl/jst',
     'utils/spinner',
-    'isotope',
-    'is!mobile?lib/fresco/fresco:utils/fbLoader'
+    'is!mobile?lib/fresco/fresco:utils/fbLoader',
+    'isotope'
 ], function( $, Backbone, _, TPL, Spinner, g ) {
 
     var showcases = {}
