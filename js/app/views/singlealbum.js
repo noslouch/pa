@@ -7,7 +7,7 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/showcaseviews',
+    'app/views/gallery',
     'app/models/album'
 ], function( $, Backbone, _, TPL, S, AlbumModel ) {
 

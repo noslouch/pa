@@ -54,6 +54,16 @@ require.config({
         'utils/fbLoader' : 'utils/fbLoader.@@hash',
         'tpl/jst' : 'tpl/jst.@@hash'
     },
+    map : {
+        '*' : {
+            'is' : 'lib/require-is/is'
+        }
+    },
+    config : {
+        'lib/require-is/is' : {
+            mobile : 'ontouchstart' in window
+        }
+    },
     shim : {
         'jquery': {
             exports: '$'

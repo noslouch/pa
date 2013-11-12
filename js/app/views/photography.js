@@ -7,7 +7,7 @@ define([
     'underscore',
     'app/collections/covergallery',
     'app/collections/photography',
-    'app/views/showcaseviews'
+    'app/views/gallery'
 ], function( $, Backbone, _, CoverGallery, photoCollection, S ) {
 
     var Photography = Backbone.View.extend({
