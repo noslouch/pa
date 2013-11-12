@@ -556,3 +556,31 @@ button {
     font-weight: 500;
 }
 
+//
+// SWIPE
+//
+
+.swipe {
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+}
+.swipe-wrap {
+    overflow: hidden;
+    position: relative;
+}
+.swipe-wrap > div {
+    float:left;
+    width:100%;
+    position: relative;
+
+    .inner-wrap {
+        max-width: 80%;
+        margin: 50px auto 0;
+    }
+
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+}

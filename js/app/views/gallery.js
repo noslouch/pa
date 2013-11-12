@@ -8,7 +8,8 @@ define([
     'underscore',
     'tpl/jst',
     'utils/spinner',
-    'is!mobile?lib/fresco/fresco:utils/fbLoader',
+    //'is!mobile?utils/touchLoader:utils/fbLoader',
+    'utils/touchLoader',
     'isotope'
 ], function( $, Backbone, _, TPL, Spinner, g ) {
 
@@ -105,9 +106,7 @@ define([
                 },
                 onLayout : function() {
                     $(this).css('overflow', 'visible')
-                    if ( !('ontouchstart' in window) ) {
-                        g()
-                    }
+                    g()
                 },
                 getSortData : {
                     name : function($el) {

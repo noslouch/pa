@@ -3053,6 +3053,36 @@ button {
   font-weight: 500;
 }
 
+/* line 563, sass/_modules.scss */
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+
+/* line 568, sass/_modules.scss */
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+/* line 572, sass/_modules.scss */
+.swipe-wrap > div {
+  float: left;
+  width: 100%;
+  position: relative;
+}
+/* line 577, sass/_modules.scss */
+.swipe-wrap > div .inner-wrap {
+  max-width: 80%;
+  margin: 50px auto 0;
+}
+/* line 582, sass/_modules.scss */
+.swipe-wrap > div img {
+  display: block;
+  margin: 0 auto;
+}
+
 /* line 10, sass/_starfield.scss */
 .starfield {
   -webkit-perspective: 200px;
