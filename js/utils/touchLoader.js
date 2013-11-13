@@ -8,6 +8,9 @@ define([
     'swipe'
 ], function() {
 
+    var maxWidth = window.innerWidth - 100,
+        maxHeight = window.innerHeight - 100
+
     function gallery(selector, el){
 
         var $thumbs = $(selector),
@@ -34,6 +37,7 @@ define([
             var img = document.createElement('img'),
                 slide = document.createElement('div'),
                 innerWrap = document.createElement('div')
+
             img.src = el.href
             $(innerWrap).append(img).addClass('inner-wrap').appendTo(slide)
             $wrap.append(slide)
@@ -42,8 +46,18 @@ define([
         $('html').addClass('fancybox-margin fancybox-lock')
         $('body').append($lock).append($overlay)
         $wrap.find('img').imagesLoaded(function(){
+            var slides = $wrap.find('img'),
+                index = $('.fancybox').index(el)
+
+            if ( slides[index].height > maxHeight ) { $(slides[index]).height(maxHeight) }
+            else if ( slides[index].width > maxWidth ) { $(slides[index]).width(maxWidth) }
+
             window.s = new Swipe($slider[0], {
-                startSlide : $('.fancybox').index(el)
+                callback : function(i){
+                    if ( slides[i+1].height > maxHeight ) { $(slides[i+1]).height(maxHeight) }
+                    else if ( slides[i+1].width > maxWidth ) { $(slides[i+1]).width(maxWidth) }
+                },
+                startSlide : index
             })
 
             window.s.close = function(){
@@ -52,6 +66,11 @@ define([
                 $('.fancybox-overlay-fixed').remove()
             }
         })
+
+    }
+
+    function handleOrientation(){
+        $('body').css('background' , 'blue')
 
     }
 
@@ -65,6 +84,8 @@ define([
             window.s.close()
         })
     }
+
+    window.addEventListener('deviceorientation', handleOrientation, true)
 
     return init
 })
