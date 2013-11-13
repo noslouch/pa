@@ -41,15 +41,17 @@ define([
 
         $('html').addClass('fancybox-margin fancybox-lock')
         $('body').append($lock).append($overlay)
-        window.s = new Swipe($slider[0], {
-            startSlide : $('.fancybox').index(el)
-        })
+        $wrap.find('img').imagesLoaded(function(){
+            window.s = new Swipe($slider[0], {
+                startSlide : $('.fancybox').index(el)
+            })
 
-        window.s.close = function(){
-            $('#fancybox-lock').remove()
-            $('html').removeClass('fancybox-margin fancybox-lock')
-            $('.fancybox-overlay-fixed').remove()
-        }
+            window.s.close = function(){
+                $('#fancybox-lock').remove()
+                $('html').removeClass('fancybox-margin fancybox-lock')
+                $('.fancybox-overlay-fixed').remove()
+            }
+        })
 
     }
 
