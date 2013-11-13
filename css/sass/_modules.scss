@@ -573,10 +573,12 @@ button {
     float:left;
     width:100%;
     position: relative;
+    overflow: auto;
 
     .inner-wrap {
         max-width: 80%;
         margin: 50px auto 0;
+        overflow: auto;
     }
 
     img {

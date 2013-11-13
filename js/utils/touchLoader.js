@@ -21,7 +21,7 @@ define([
             $wrap = $('<div />').addClass('swipe-wrap'),
             $lock = $('<div />').attr({
                 id : 'fancybox-lock',
-                class : 'fancybox-wrap'
+                class : 'fancybox-wrap fancybox-default fancybox-type-image fancybox-open'
             }),
             $close = $('<a />').attr({
                 'title' : 'Close',
@@ -49,13 +49,18 @@ define([
             var slides = $wrap.find('img'),
                 index = $('.fancybox').index(el)
 
-            if ( slides[index].height > maxHeight ) { $(slides[index]).height(maxHeight) }
-            else if ( slides[index].width > maxWidth ) { $(slides[index]).width(maxWidth) }
+            $(slides).not($(slides)[index]).css('display', 'none')
+            $(slides).eq(index+1).css('display', 'block')
+
+            if ( slides[index].height > maxHeight ) { $(slides[index]).height(maxHeight).width('auto') }
+            else if ( slides[index].width > maxWidth ) { $(slides[index]).width(maxWidth).height('auto') }
 
             window.s = new Swipe($slider[0], {
                 callback : function(i){
-                    if ( slides[i+1].height > maxHeight ) { $(slides[i+1]).height(maxHeight) }
-                    else if ( slides[i+1].width > maxWidth ) { $(slides[i+1]).width(maxWidth) }
+                    if ( slides[i+1].height > maxHeight ) { $(slides[i+1]).height(maxHeight).width('auto') }
+                    else if ( slides[i+1].width > maxWidth ) { $(slides[i+1]).width(maxWidth).height('auto') }
+                    $(slides[i+1]).css('display','block')
+                    $(slides[i-1]).css('display','none')
                 },
                 startSlide : index
             })
@@ -69,9 +74,9 @@ define([
 
     }
 
-    function handleOrientation(){
-        $('body').css('background' , 'blue')
-
+    function handleOrientation(e){
+        maxWidth = window.innerWidth - 100
+        maxHeight = window.innerHeight - 100
     }
 
     function init() {
