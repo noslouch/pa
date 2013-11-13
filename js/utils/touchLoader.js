@@ -9,7 +9,7 @@ define([
 ], function() {
 
     var maxWidth = window.innerWidth - 100,
-        maxHeight = window.innerHeight - 100
+        maxHeight = window.innerHeight - 125
 
     function gallery(selector, el){
 
@@ -47,20 +47,28 @@ define([
         $('body').append($lock).append($overlay)
         $wrap.find('img').imagesLoaded(function(){
             var slides = $wrap.find('img'),
-                index = $('.fancybox').index(el)
+                index = $('.fancybox').index(el),
+                first = $(slides)[index]
 
-            $(slides).not($(slides)[index]).css('display', 'none')
-            $(slides).eq(index+1).css('display', 'block')
+            $(slides).not(first).css('display', 'none')
+            $(slides).eq(index === slides.length - 1 ? 0 : index+1).css('display', 'block')
+            $(slides).eq(index-1).css('display', 'block')
 
-            if ( slides[index].height > maxHeight ) { $(slides[index]).height(maxHeight).width('auto') }
-            else if ( slides[index].width > maxWidth ) { $(slides[index]).width(maxWidth).height('auto') }
+            if ( $(first).height() > maxHeight ) { $(first).parent().height(maxHeight).width('auto') }
+            else if ( $(first).width() > maxWidth ) { $(first).parent().width(maxWidth).height('auto') }
 
             window.s = new Swipe($slider[0], {
-                callback : function(i){
-                    if ( slides[i+1].height > maxHeight ) { $(slides[i+1]).height(maxHeight).width('auto') }
-                    else if ( slides[i+1].width > maxWidth ) { $(slides[i+1]).width(maxWidth).height('auto') }
-                    $(slides[i+1]).css('display','block')
-                    $(slides[i-1]).css('display','none')
+                callback : function(i, el){
+                    var ahead = i === slides.length - 1 ? slides[0] : slides[i+1],
+                        behind = slides[i-1]
+
+                    $(ahead).css('display','block')
+                    $(behind).css('display','block')
+                    $(slides[i-2]).css('display','none')
+                    $(slides[i+2]).css('display','none')
+
+                    if ( $(ahead).height() > maxHeight ) { $(ahead).parent().height(maxHeight).width('auto') }
+                    else if ( $(ahead).width() > maxWidth ) { $(ahead).parent().width(maxWidth).height('auto') }
                 },
                 startSlide : index
             })
@@ -76,7 +84,7 @@ define([
 
     function handleOrientation(e){
         maxWidth = window.innerWidth - 100
-        maxHeight = window.innerHeight - 100
+        maxHeight = window.innerHeight - 125
     }
 
     function init() {

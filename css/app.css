@@ -3072,17 +3072,25 @@ button {
   width: 100%;
   position: relative;
   overflow: auto;
+  padding: 50px;
 }
-/* line 578, sass/_modules.scss */
+/* line 579, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
   max-width: 80%;
-  margin: 50px auto 0;
+  margin: auto;
   overflow: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
-/* line 584, sass/_modules.scss */
+/* line 590, sass/_modules.scss */
 .swipe-wrap > div img {
   display: block;
   margin: 0 auto;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 /* line 10, sass/_starfield.scss */
