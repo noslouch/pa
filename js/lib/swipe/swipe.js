@@ -482,11 +482,11 @@ function Swipe(container, options) {
     }
 
     // set resize event on window
-    window.addEventListener('resize', events, false);
+    //window.addEventListener('resize', events, false);
 
   } else {
 
-    window.onresize = function () { setup() }; // to play nice with old IE
+    //window.onresize = function () { setup() }; // to play nice with old IE
 
   }
 
@@ -563,12 +563,12 @@ function Swipe(container, options) {
         element.removeEventListener('oTransitionEnd', events, false);
         element.removeEventListener('otransitionend', events, false);
         element.removeEventListener('transitionend', events, false);
-        window.removeEventListener('resize', events, false);
+        //window.removeEventListener('resize', events, false);
 
       }
       else {
 
-        window.onresize = null;
+        //window.onresize = null;
 
       }
 
