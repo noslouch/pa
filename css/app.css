@@ -3080,11 +3080,11 @@ button {
 .swipe-wrap > div.on img {
   opacity: 1;
   display: block;
-  -webkit-transition: opacity 150ms ease;
-  -webkit-transition-delay: 50ms;
-  -moz-transition: opacity 150ms ease 50ms;
-  -o-transition: opacity 150ms ease 50ms;
-  transition: opacity 150ms ease 50ms;
+  -webkit-transition: opacity 50ms ease, display 50ms ease;
+  -webkit-transition-delay: 0s, 100ms;
+  -moz-transition: opacity 50ms ease, display 50ms ease 100ms;
+  -o-transition: opacity 50ms ease, display 50ms ease 100ms;
+  transition: opacity 50ms ease, display 50ms ease 100ms;
 }
 /* line 587, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
@@ -3106,11 +3106,11 @@ button {
   max-height: 80%;
   display: none;
   opacity: 0;
-  -webkit-transition: opacity 150ms ease;
-  -webkit-transition-delay: 50ms;
-  -moz-transition: opacity 150ms ease 50ms;
-  -o-transition: opacity 150ms ease 50ms;
-  transition: opacity 150ms ease 50ms;
+  -webkit-transition: opacity 50ms ease, display 50ms ease;
+  -webkit-transition-delay: 0s, 100ms;
+  -moz-transition: opacity 50ms ease, display 50ms ease 100ms;
+  -o-transition: opacity 50ms ease, display 50ms ease 100ms;
+  transition: opacity 50ms ease, display 50ms ease 100ms;
 }
 
 /* line 10, sass/_starfield.scss */
