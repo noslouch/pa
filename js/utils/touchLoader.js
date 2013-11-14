@@ -106,6 +106,7 @@ define([
         })
         $('body').on('click', '.fancybox-wrap .close', function(e){
             e.preventDefault()
+            window.s.kill()
             window.s.close()
         })
     }
