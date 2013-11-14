@@ -53,6 +53,7 @@ define([
                 index = $('.fancybox').index(el),
                 first = $(slides)[index]
 
+            $(first).find('img').css('display', 'block')
             $(first).addClass('on')
             //$(slides).not(first).css('display', 'none')
             //$(slides).eq(index === slides.length - 1 ? 0 : index+1).css('display', 'block')
@@ -63,7 +64,8 @@ define([
 
             window.s = new Swipe($slider[0], {
                 beforeMove : function(nextIndex, nextEl){
-                    $(nextEl).css('display','block').addClass('on')
+                    $(nextEl).find('img').css('display','block')
+                    $(nextEl).addClass('on')
                 },
                 beforeLoad: function(){
                     //console.log('before Load')
@@ -121,6 +123,9 @@ define([
         console.log('transition end')
         console.log('property name: ', e.originalEvent.propertyName)
         console.log('target: ', e.target)
+        if (e.originalEvent.propertyName === 'opacity') {
+            $(e.target).css('display','none')
+        }
     }
 
     window.addEventListener('orientationchange', handleOrientation, true)
