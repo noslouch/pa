@@ -317,7 +317,7 @@ function Swipe(container, options) {
 
           var nextSlide = slides[nextIndex]
           var prevSlide = slides[prevIndex]
-          events.beforeMove(nextIndex, nextSlide)
+          events.beforeMove(nextIndex, nextSlide, prevSlide)
       }
       // determine if scrolling test has run - one time test
       if ( typeof isScrolling == 'undefined') {

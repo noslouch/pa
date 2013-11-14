@@ -31,10 +31,10 @@ define([
 
         $slider.append($wrap).appendTo($lock)
 
-        $slider.on('-webkit-transitionend', hide)
-        $slider.on('-moz-transitionend', hide)
-        $slider.on('-o-transitionend', hide)
-        $slider.on('transitionend', hide)
+        //$slider.on('-webkit-transitionend', hide)
+        //$slider.on('-moz-transitionend', hide)
+        //$slider.on('-o-transitionend', hide)
+        //$slider.on('transitionend', hide)
 
         $thumbs.each(function(idx, el){
             var img = document.createElement('img'),
@@ -75,13 +75,11 @@ define([
                     //console.log('before change, index: ', i)
                 },
                 transitionEnd: function(i, el){
-                    console.log(i)
                     // el is incoming slide
-                    $(el).find('img').css('display','none')
+                    $(slides).not(el).find('img').css('display','none')
                     //console.log('transition end')
                 },
                 callback : function(i, el){
-                    console.log(i)
                     //$(slides[i-1]).removeClass('on')
                     //$(slides[i-1]).find('img').css('display', 'block')
                     //console.log('callback, index: ', i)
