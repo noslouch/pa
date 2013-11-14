@@ -43,10 +43,11 @@ define([
         $('html').addClass('fancybox-margin fancybox-lock')
         $('body').append($lock).append($overlay)
         $wrap.find('img').imagesLoaded(function(){
-            var slides = $wrap.find('img'),
+            var slides = $('.swipe-wrap > div'),
                 index = $('.fancybox').index(el),
                 first = $(slides)[index]
 
+            $(first).addClass('on')
             //$(slides).not(first).css('display', 'none')
             //$(slides).eq(index === slides.length - 1 ? 0 : index+1).css('display', 'block')
             //$(slides).eq(index-1).css('display', 'block')
@@ -55,7 +56,21 @@ define([
             //else if ( $(first).width() > maxWidth ) { $(first).parent().width(maxWidth).height('auto') }
 
             window.s = new Swipe($slider[0], {
+                beforeMove : function(nextIndex, nextEl){
+                    $(nextEl).addClass('on')
+                },
+                beforeLoad: function(){
+                    //console.log('before Load')
+                },
+                beforeChange : function(i, el){
+                    //console.log('before change, index: ', i)
+                },
+                transitionEnd: function(i, el){
+                    //console.log('transition end')
+                },
                 callback : function(i, el){
+                    $(slides[i-1]).removeClass('on')
+                    //console.log('callback, index: ', i)
                     //var ahead = i === slides.length - 1 ? slides[0] : slides[i+1],
                     //    behind = slides[i-1]
 

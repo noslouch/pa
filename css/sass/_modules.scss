@@ -578,6 +578,12 @@ button {
     overflow: auto;
     height: 100%;
 
+    &.on img {
+        opacity: 1;
+        display: block;
+        @include transition( opacity 150ms ease 50ms );
+    }
+
     .inner-wrap {
         width: 100%;
         position: relative;
@@ -595,5 +601,8 @@ button {
         width: auto;
         max-width: 90%;
         max-height: 80%;
+        display: none;
+        opacity: 0;
+        @include transition( opacity 150ms ease 50ms );
     }
 }

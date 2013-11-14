@@ -13,7 +13,8 @@ function Swipe(container, options) {
   // utilities
   var noop = function() {}; // simple no operation function
   var offloadFn = function(fn) { setTimeout(fn || noop, 0) }; // offload a functions execution
-  
+  var that = this
+
   // check browser capabilities
   var browser = {
     addEventListener: !!window.addEventListener,
@@ -36,6 +37,7 @@ function Swipe(container, options) {
 
   function setup() {
 
+    events.beforeLoad()
     // cache slides
     slides = element.children;
     length = slides.length;
@@ -237,6 +239,9 @@ function Swipe(container, options) {
 
   // setup event capturing
   var events = {
+    beforeLoad : options.beforeLoad || noop,
+    beforeChange : options.beforeChange || noop,
+    beforeMove : options.beforeMove || noop,
 
     handleEvent: function(event) {
 
@@ -297,6 +302,20 @@ function Swipe(container, options) {
         y: touches.pageY - start.y
       }
 
+
+      if ( !that.eventId ) {
+          that.eventId = touches.identifier
+
+          if (delta.x < 0) {
+            var nextIndex = index === index.length ? 0 : index + 1
+          }
+          else if (delta.x > 0) {
+            var nextIndex = index === 0 ? slides.length -1 : index - 1
+          }
+
+          var nextSlide = slides[nextIndex]
+          events.beforeMove(nextIndex, nextSlide)
+      }
       // determine if scrolling test has run - one time test
       if ( typeof isScrolling == 'undefined') {
         isScrolling = !!( isScrolling || Math.abs(delta.x) < Math.abs(delta.y) );
@@ -314,6 +333,7 @@ function Swipe(container, options) {
         // increase resistance if first or last slide
         if (options.continuous) { // we don't add resistance at the end
 
+          //events.beforeChange( index, slides[index] )
           translate(circle(index-1), delta.x + slidePos[circle(index-1)], 0);
           translate(index, delta.x + slidePos[index], 0);
           translate(circle(index+1), delta.x + slidePos[circle(index+1)], 0);
@@ -329,6 +349,7 @@ function Swipe(container, options) {
               ( Math.abs(delta.x) / width + 1 )      // determine resistance level
               : 1 );                                 // no resistance if false
           
+          //events.beforeChange( index, slides[index] )
           // translate 1:1
           translate(index-1, delta.x + slidePos[index-1], 0);
           translate(index, delta.x + slidePos[index], 0);
@@ -427,6 +448,7 @@ function Swipe(container, options) {
         
         if (delay) begin();
 
+        that.eventId = null
         options.transitionEnd && options.transitionEnd.call(event, index, slides[index]);
 
       }

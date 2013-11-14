@@ -3077,12 +3077,22 @@ button {
   height: 100%;
 }
 /* line 581, sass/_modules.scss */
+.swipe-wrap > div.on img {
+  opacity: 1;
+  display: block;
+  -webkit-transition: opacity 150ms ease;
+  -webkit-transition-delay: 50ms;
+  -moz-transition: opacity 150ms ease 50ms;
+  -o-transition: opacity 150ms ease 50ms;
+  transition: opacity 150ms ease 50ms;
+}
+/* line 587, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
   width: 100%;
   position: relative;
   height: 100%;
 }
-/* line 587, sass/_modules.scss */
+/* line 593, sass/_modules.scss */
 .swipe-wrap > div img {
   overflow: auto;
   margin: auto;
@@ -3094,6 +3104,13 @@ button {
   width: auto;
   max-width: 90%;
   max-height: 80%;
+  display: none;
+  opacity: 0;
+  -webkit-transition: opacity 150ms ease;
+  -webkit-transition-delay: 50ms;
+  -moz-transition: opacity 150ms ease 50ms;
+  -o-transition: opacity 150ms ease 50ms;
+  transition: opacity 150ms ease 50ms;
 }
 
 /* line 10, sass/_starfield.scss */
