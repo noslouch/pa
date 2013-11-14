@@ -254,7 +254,7 @@ function Swipe(container, options) {
         case 'oTransitionEnd':
         case 'otransitionend':
         case 'transitionend': offloadFn(this.transitionEnd(event)); break;
-        case 'resize': offloadFn(setup.call()); break;
+        //case 'resize': offloadFn(setup.call()); break;
       }
 
       if (options.stopPropagation) event.stopPropagation();
