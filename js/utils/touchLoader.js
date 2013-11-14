@@ -80,7 +80,7 @@ define([
     }
 
     function handleOrientation(e){
-        window.s.setup()
+        //window.s.setup()
         console.log('orientation change')
     }
 
