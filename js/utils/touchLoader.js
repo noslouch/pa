@@ -4,9 +4,10 @@
 'use strict';
 
 define([
+    'utils/spinner',
     'jquery',
     'swipe'
-], function() {
+], function( Spinner ) {
 
     function gallery(selector, el){
 
@@ -31,11 +32,6 @@ define([
 
         $slider.append($wrap).appendTo($lock)
 
-        //$slider.on('-webkit-transitionend', hide)
-        //$slider.on('-moz-transitionend', hide)
-        //$slider.on('-o-transitionend', hide)
-        //$slider.on('transitionend', hide)
-
         $thumbs.each(function(idx, el){
             var img = document.createElement('img'),
                 slide = document.createElement('div'),
@@ -54,45 +50,22 @@ define([
                 first = $(slides)[index]
 
             $(first).find('img').css('display', 'block')
-            //$(first).addClass('on')
-            //$(slides).not(first).css('display', 'none')
-            //$(slides).eq(index === slides.length - 1 ? 0 : index+1).css('display', 'block')
-            //$(slides).eq(index-1).css('display', 'block')
-
-            //if ( $(first).height() > maxHeight ) { $(first).parent().height(maxHeight).width('auto') }
-            //else if ( $(first).width() > maxWidth ) { $(first).parent().width(maxWidth).height('auto') }
+            window.spinner.detach()
 
             window.s = new Swipe($slider[0], {
                 beforeMove : function(nextIndex, nextEl, prevEl){
                     $(nextEl).find('img').css('display','block')
                     $(prevEl).find('img').css('display','block')
-                    //$(nextEl).addClass('on')
                 },
                 beforeLoad: function(){
-                    //console.log('before Load')
                 },
                 beforeChange : function(i, el){
-                    //console.log('before change, index: ', i)
                 },
                 transitionEnd: function(i, el){
                     // el is incoming slide
                     $(slides).not(el).find('img').css('display','none')
-                    //console.log('transition end')
                 },
                 callback : function(i, el){
-                    //$(slides[i-1]).removeClass('on')
-                    //$(slides[i-1]).find('img').css('display', 'block')
-                    //console.log('callback, index: ', i)
-                    //var ahead = i === slides.length - 1 ? slides[0] : slides[i+1],
-                    //    behind = slides[i-1]
-
-                    //$(ahead).css('display','block')
-                    //$(behind).css('display','block')
-                    //$(slides[i-2]).css('display','none')
-                    //$(slides[i+2]).css('display','none')
-
-                    //if ( $(ahead).height() > maxHeight ) { $(ahead).parent().height(maxHeight).width('auto') }
-                    //else if ( $(ahead).width() > maxWidth ) { $(ahead).parent().width(maxWidth).height('auto') }
                 },
                 startSlide : index
             })
@@ -113,6 +86,7 @@ define([
 
     function init() {
         $('.fancybox').click(function(e){
+            window.spinner = new Spinner()
             e.preventDefault()
             gallery('.fancybox', e.currentTarget)
         })
@@ -121,15 +95,6 @@ define([
             window.s.kill()
             window.s.close()
         })
-    }
-
-    function hide(e) {
-        //console.log('transition end')
-        //console.log('property name: ', e.originalEvent.propertyName)
-        //console.log('target: ', e.target)
-        if (e.originalEvent.propertyName === 'opacity') {
-            //$(e.target).css('display','none')
-        }
     }
 
     window.addEventListener('orientationchange', handleOrientation, true)
