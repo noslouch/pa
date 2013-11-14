@@ -3861,11 +3861,11 @@ html, body {
 /* line 21, sass/_general.scss */
 .loader {
   position: absolute;
-  top: 0;
+  top: 150px;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 4;
+  z-index: 8030;
 }
 /* line 29, sass/_general.scss */
 .loader .table {
