@@ -564,33 +564,36 @@ button {
     overflow: hidden;
     visibility: hidden;
     position: relative;
+    height: 100%;
 }
 .swipe-wrap {
     overflow: hidden;
     position: relative;
+    height: 100%;
 }
 .swipe-wrap > div {
     float:left;
     width:100%;
     position: relative;
     overflow: auto;
-    padding: 50px;
+    height: 100%;
 
     .inner-wrap {
-        max-width: 80%;
-        margin: auto;
+        width: 100%;
+        position: relative;
+        height: 100%;
+    }
+
+    img {
         overflow: auto;
+        margin: auto;
         position: absolute;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
-    }
-
-    img {
-        display: block;
-        margin: 0 auto;
-        max-height: 100%;
-        max-width: 100%;
+        width: auto;
+        max-width: 90%;
+        max-height: 80%;
     }
 }

@@ -8,7 +8,8 @@ define([
     'underscore',
     'tpl/jst',
     'utils/spinner',
-    'is!mobile?utils/touchLoader:utils/fbLoader',
+    //'is!mobile?utils/touchLoader:utils/fbLoader',
+    'utils/touchLoader',
     'isotope'
 ], function( $, Backbone, _, TPL, Spinner, g ) {
 

@@ -3058,39 +3058,42 @@ button {
   overflow: hidden;
   visibility: hidden;
   position: relative;
+  height: 100%;
 }
 
-/* line 568, sass/_modules.scss */
+/* line 569, sass/_modules.scss */
 .swipe-wrap {
   overflow: hidden;
   position: relative;
+  height: 100%;
 }
 
-/* line 572, sass/_modules.scss */
+/* line 574, sass/_modules.scss */
 .swipe-wrap > div {
   float: left;
   width: 100%;
   position: relative;
   overflow: auto;
-  padding: 50px;
+  height: 100%;
 }
-/* line 579, sass/_modules.scss */
+/* line 581, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
-  max-width: 80%;
-  margin: auto;
+  width: 100%;
+  position: relative;
+  height: 100%;
+}
+/* line 587, sass/_modules.scss */
+.swipe-wrap > div img {
   overflow: auto;
+  margin: auto;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-}
-/* line 590, sass/_modules.scss */
-.swipe-wrap > div img {
-  display: block;
-  margin: 0 auto;
-  max-height: 100%;
-  max-width: 100%;
+  width: auto;
+  max-width: 90%;
+  max-height: 80%;
 }
 
 /* line 10, sass/_starfield.scss */

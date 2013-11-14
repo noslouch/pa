@@ -54,8 +54,8 @@ define([
             $(slides).eq(index === slides.length - 1 ? 0 : index+1).css('display', 'block')
             $(slides).eq(index-1).css('display', 'block')
 
-            if ( $(first).height() > maxHeight ) { $(first).parent().height(maxHeight).width('auto') }
-            else if ( $(first).width() > maxWidth ) { $(first).parent().width(maxWidth).height('auto') }
+            //if ( $(first).height() > maxHeight ) { $(first).parent().height(maxHeight).width('auto') }
+            //else if ( $(first).width() > maxWidth ) { $(first).parent().width(maxWidth).height('auto') }
 
             window.s = new Swipe($slider[0], {
                 callback : function(i, el){
@@ -67,8 +67,8 @@ define([
                     $(slides[i-2]).css('display','none')
                     $(slides[i+2]).css('display','none')
 
-                    if ( $(ahead).height() > maxHeight ) { $(ahead).parent().height(maxHeight).width('auto') }
-                    else if ( $(ahead).width() > maxWidth ) { $(ahead).parent().width(maxWidth).height('auto') }
+                    //if ( $(ahead).height() > maxHeight ) { $(ahead).parent().height(maxHeight).width('auto') }
+                    //else if ( $(ahead).width() > maxWidth ) { $(ahead).parent().width(maxWidth).height('auto') }
                 },
                 startSlide : index
             })
