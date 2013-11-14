@@ -110,7 +110,7 @@ define([
         })
     }
 
-    window.addEventListener('deviceorientation', handleOrientation, true)
+    window.addEventListener('orientationchange', handleOrientation, true)
 
     return init
 })
