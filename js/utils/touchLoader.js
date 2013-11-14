@@ -8,9 +8,6 @@ define([
     'swipe'
 ], function() {
 
-    var maxWidth = window.innerWidth - 100,
-        maxHeight = window.innerHeight - 125
-
     function gallery(selector, el){
 
         var $thumbs = $(selector),
@@ -83,8 +80,8 @@ define([
     }
 
     function handleOrientation(e){
-        maxWidth = window.innerWidth - 100
-        maxHeight = window.innerHeight - 125
+        window.s.setup()
+        console.log('orientation change')
     }
 
     function init() {
