@@ -3076,14 +3076,6 @@ button {
   overflow: auto;
   height: 100%;
 }
-/* line 581, sass/_modules.scss */
-.swipe-wrap > div.on img {
-  opacity: 1;
-  -webkit-transition: opacity 150ms ease;
-  -moz-transition: opacity 150ms ease;
-  -o-transition: opacity 150ms ease;
-  transition: opacity 150ms ease;
-}
 /* line 586, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
   width: 100%;
@@ -3103,11 +3095,6 @@ button {
   max-width: 90%;
   max-height: 80%;
   display: none;
-  opacity: 0;
-  -webkit-transition: opacity 50ms ease;
-  -moz-transition: opacity 50ms ease;
-  -o-transition: opacity 50ms ease;
-  transition: opacity 50ms ease;
 }
 
 /* line 10, sass/_starfield.scss */

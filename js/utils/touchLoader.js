@@ -54,7 +54,7 @@ define([
                 first = $(slides)[index]
 
             $(first).find('img').css('display', 'block')
-            $(first).addClass('on')
+            //$(first).addClass('on')
             //$(slides).not(first).css('display', 'none')
             //$(slides).eq(index === slides.length - 1 ? 0 : index+1).css('display', 'block')
             //$(slides).eq(index-1).css('display', 'block')
@@ -63,9 +63,10 @@ define([
             //else if ( $(first).width() > maxWidth ) { $(first).parent().width(maxWidth).height('auto') }
 
             window.s = new Swipe($slider[0], {
-                beforeMove : function(nextIndex, nextEl){
+                beforeMove : function(nextIndex, nextEl, prevEl){
                     $(nextEl).find('img').css('display','block')
-                    $(nextEl).addClass('on')
+                    $(prevEl).find('img').css('display','block')
+                    //$(nextEl).addClass('on')
                 },
                 beforeLoad: function(){
                     //console.log('before Load')
@@ -74,11 +75,12 @@ define([
                     //console.log('before change, index: ', i)
                 },
                 transitionEnd: function(i, el){
+                    $(el).find('img').css('display','none')
                     //console.log('transition end')
                 },
                 callback : function(i, el){
-                    $(slides[i-1]).removeClass('on')
-                    $(slides[i-1]).find('img').css('display', 'block')
+                    //$(slides[i-1]).removeClass('on')
+                    //$(slides[i-1]).find('img').css('display', 'block')
                     //console.log('callback, index: ', i)
                     //var ahead = i === slides.length - 1 ? slides[0] : slides[i+1],
                     //    behind = slides[i-1]
