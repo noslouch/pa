@@ -75,10 +75,13 @@ define([
                     //console.log('before change, index: ', i)
                 },
                 transitionEnd: function(i, el){
+                    console.log(i)
+                    // el is incoming slide
                     $(el).find('img').css('display','none')
                     //console.log('transition end')
                 },
                 callback : function(i, el){
+                    console.log(i)
                     //$(slides[i-1]).removeClass('on')
                     //$(slides[i-1]).find('img').css('display', 'block')
                     //console.log('callback, index: ', i)
