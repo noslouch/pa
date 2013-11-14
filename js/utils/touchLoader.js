@@ -47,22 +47,22 @@ define([
                 index = $('.fancybox').index(el),
                 first = $(slides)[index]
 
-            $(slides).not(first).css('display', 'none')
-            $(slides).eq(index === slides.length - 1 ? 0 : index+1).css('display', 'block')
-            $(slides).eq(index-1).css('display', 'block')
+            //$(slides).not(first).css('display', 'none')
+            //$(slides).eq(index === slides.length - 1 ? 0 : index+1).css('display', 'block')
+            //$(slides).eq(index-1).css('display', 'block')
 
             //if ( $(first).height() > maxHeight ) { $(first).parent().height(maxHeight).width('auto') }
             //else if ( $(first).width() > maxWidth ) { $(first).parent().width(maxWidth).height('auto') }
 
             window.s = new Swipe($slider[0], {
                 callback : function(i, el){
-                    var ahead = i === slides.length - 1 ? slides[0] : slides[i+1],
-                        behind = slides[i-1]
+                    //var ahead = i === slides.length - 1 ? slides[0] : slides[i+1],
+                    //    behind = slides[i-1]
 
-                    $(ahead).css('display','block')
-                    $(behind).css('display','block')
-                    $(slides[i-2]).css('display','none')
-                    $(slides[i+2]).css('display','none')
+                    //$(ahead).css('display','block')
+                    //$(behind).css('display','block')
+                    //$(slides[i-2]).css('display','none')
+                    //$(slides[i+2]).css('display','none')
 
                     //if ( $(ahead).height() > maxHeight ) { $(ahead).parent().height(maxHeight).width('auto') }
                     //else if ( $(ahead).width() > maxWidth ) { $(ahead).parent().width(maxWidth).height('auto') }
