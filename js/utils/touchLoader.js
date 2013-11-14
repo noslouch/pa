@@ -78,6 +78,7 @@ define([
                 },
                 callback : function(i, el){
                     $(slides[i-1]).removeClass('on')
+                    $(slides[i-1]).find('img').css('display', 'block')
                     //console.log('callback, index: ', i)
                     //var ahead = i === slides.length - 1 ? slides[0] : slides[i+1],
                     //    behind = slides[i-1]
@@ -120,11 +121,11 @@ define([
     }
 
     function hide(e) {
-        console.log('transition end')
-        console.log('property name: ', e.originalEvent.propertyName)
-        console.log('target: ', e.target)
+        //console.log('transition end')
+        //console.log('property name: ', e.originalEvent.propertyName)
+        //console.log('target: ', e.target)
         if (e.originalEvent.propertyName === 'opacity') {
-            $(e.target).css('display','none')
+            //$(e.target).css('display','none')
         }
     }
 
