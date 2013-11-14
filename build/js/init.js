@@ -14,6 +14,7 @@ require.config({
         foundation : 'lib/foundation/foundation',
         tooltips : 'lib/foundation/foundation.tooltips',
         fancybox : 'lib/fancybox/jquery.fancybox',
+        swipe : 'lib/swipe/swipe',
         json : 'lib/json/json2',
         imagesLoaded : '../bower_components/imagesloaded/imagesloaded',
         'eventie': '../bower_components/eventie',
