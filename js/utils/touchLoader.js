@@ -30,6 +30,12 @@ define([
             }).addClass('fancybox-overlay fancybox-overlay-fixed fancybox-default-overlay')
 
         $slider.append($wrap).appendTo($lock)
+
+        $slider.on('-webkit-transitionend', hide)
+        $slider.on('-moz-transitionend', hide)
+        $slider.on('-o-transitionend', hide)
+        $slider.on('transitionend', hide)
+
         $thumbs.each(function(idx, el){
             var img = document.createElement('img'),
                 slide = document.createElement('div'),
@@ -57,7 +63,7 @@ define([
 
             window.s = new Swipe($slider[0], {
                 beforeMove : function(nextIndex, nextEl){
-                    $(nextEl).addClass('on')
+                    $(nextEl).css('display','block').addClass('on')
                 },
                 beforeLoad: function(){
                     //console.log('before Load')
@@ -109,6 +115,12 @@ define([
             window.s.kill()
             window.s.close()
         })
+    }
+
+    function hide(e) {
+        console.log('transition end')
+        console.log('property name: ', e.originalEvent.propertyName)
+        console.log('target: ', e.target)
     }
 
     window.addEventListener('orientationchange', handleOrientation, true)

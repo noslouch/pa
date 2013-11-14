@@ -580,8 +580,7 @@ button {
 
     &.on img {
         opacity: 1;
-        display: block;
-        @include transition( opacity 50ms ease, display 50ms ease 100ms );
+        @include transition( opacity 150ms ease );
     }
 
     .inner-wrap {
@@ -603,6 +602,6 @@ button {
         max-height: 80%;
         display: none;
         opacity: 0;
-        @include transition( opacity 50ms ease, display 50ms ease 100ms );
+        @include transition( opacity 50ms ease );
     }
 }
