@@ -106,7 +106,6 @@ define([
                 },
                 onLayout : function() {
                     $(this).css('overflow', 'visible')
-                    g()
                 },
                 getSortData : {
                     name : function($el) {
@@ -126,6 +125,7 @@ define([
             } else {
                 var spinner = new Spinner()
                 this.$el.imagesLoaded( function() {
+                    g()
                     $el.isotope(isoOps)
 
                     spinner.detach()
