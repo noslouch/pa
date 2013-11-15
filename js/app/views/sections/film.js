@@ -6,7 +6,8 @@ define([
     'backbone',
     'underscore',
     'app/collections/films',
-    'tpl/jst'
+    'tpl/jst',
+    'imagesLoaded'
 ], function( $, Backbone, _, filmCollection, TPL ) {
 
     // FilmThumb

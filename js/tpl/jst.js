@@ -127,9 +127,7 @@ function( _ ){
     ].join('\n')
 
     JST.backButton = [
-        '<div class="wrapper">',
-            '<a href="<%= url %>" class="button" id="back"><%= buttonText %></a>',
-        '</div>'
+        '<a href="<%= url %>" class="back" id="back"><%= buttonText %></a>'
     ].join('\n')
 
     JST.videoID = [

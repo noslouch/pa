@@ -602,6 +602,7 @@ iframe {
     height: 100%;
     padding-left: 0;
     overflow-y: auto;
+    margin-bottom: 7em;
 
     header,
     .summary,
@@ -616,9 +617,6 @@ iframe {
         @include grid-column(7.5, $collapse: true);
     }
 
-    .wrapper {
-        margin-bottom: 7em;
-    }
 
 }
 
@@ -635,10 +633,12 @@ iframe {
 
 .viewer,
 .container {
-    .button {
-        background: $light-gray;
-        padding-bottom: 13px;
-        
+    .back {
+        display: block;
+        font-size: emCalc(19);
+        font-weight: 300;
+        margin-bottom: 1em;
+
         &:before {
             content: "<";
             color: red;
@@ -648,9 +648,7 @@ iframe {
         }
 
         &:hover {
-            background: $secondary-color;
-            color: white;
-            &:before { color: $primary-color; }
+            color: $secondary-color;
         }
     }
 }
