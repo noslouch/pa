@@ -58,6 +58,36 @@ define([
                     $(prevEl).find('img').css('display','block')
                 },
                 beforeLoad: function(){
+                    console.log('before load')
+                    if (!window.loaded) {
+                        var $ul = $('<ul/>'),
+                            $bullet = $('<div/>').attr('id', 'bullet-wrap').addClass('indicators'),
+                            $dot = $('<div/>').attr('id','dot').addClass('dot'),
+                            $logo = $('<h1/>').addClass('logo')
+
+                        $logo.html( $('<a/>').attr('href', '/').text('Peter Arnell') )
+
+                        $ul.appendTo($bullet)
+                        $ul.append($dot)
+
+                        for (var i = 0; i < slides.length; i++) {
+                            var $li = $('<li/>').attr('id', i)
+                            if (i === 0) {
+                                $li.addClass('active-slide')
+                            }
+                            var $a = $('<a/>')
+                            $li.append($a)
+                            $ul.append($li)
+                        }
+
+                        $('#fancybox-lock').append($logo).append($bullet)
+
+                        $('#bullet-wrap li').click(function(){
+                            $(slides[this.id]).find('img').css('display', 'block')
+                            window.s.slide( this.id, 150 )
+                        })
+                    }
+                    window.loaded = true
                 },
                 beforeChange : function(i, el){
                 },
@@ -66,11 +96,19 @@ define([
                     $(slides).not(el).find('img').css('display','none')
                 },
                 callback : function(i, el){
+                    $('#bullet-wrap li').removeClass('active-slide')
+                    var p = $('li#'+i).addClass('active-slide').position()
+                    $('#dot').animate({
+                        left: p.left
+                    })
                 },
                 startSlide : index
             })
 
             window.s.close = function(){
+                window.loaded = false
+                $('#bullet-wrap').fadeOut(150)
+                $('#fancybox-lock .logo').fadeOut(150)
                 $('#fancybox-lock').remove()
                 $('html').removeClass('fancybox-margin fancybox-lock')
                 $('.fancybox-overlay-fixed').remove()
