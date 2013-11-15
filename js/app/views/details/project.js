@@ -227,7 +227,11 @@ define([
             if ( ops.showcaseUrl ) {
                 this.collection.findWhere({ url_title : ops.showcaseUrl }).activate()
             } else {
-                this.collection.first().activate(true)
+                if ( this.collection.length ) {
+                    this.collection.first().activate(true)
+                } else {
+                    this.viewer.$el.html('<p>No media for this project</p>')
+                }
             }
 
             this.trigger('rendered')
