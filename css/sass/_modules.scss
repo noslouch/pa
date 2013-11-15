@@ -18,6 +18,12 @@ $light-gray: #E0E0E0;
     -moz-animation-iteration-count: $count;
 }
 
+@mixin thin-removal {
+// Fixes thin gray lines on mobile safari
+    margin: -1px;
+    padding: 1px;
+}
+
 //
 // BUTTONS N ANIMATION HELPERS
 //
@@ -117,9 +123,13 @@ button {
     right: 0;
     display: table;
     height: 100%;
+    // Fixes mobile safari 'div seam'
+    margin: -1px;
 
     ul {
-        margin: 0;
+        // Fixes mobile safari 'div seam'
+        margin: -1px;
+        margin-bottom: -6px;
         padding: 0;
         background: black;
         z-index: 0;
@@ -508,6 +518,7 @@ button {
     background: black;
 
     ul {
+        @include thin-removal;
         background: none;
         overflow: visible;
     }

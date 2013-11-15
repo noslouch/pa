@@ -308,12 +308,12 @@ function Swipe(container, options) {
           that.eventId = touches.identifier
 
           if (delta.x < 0) {
-            var nextIndex = index === index.length ? 0 : index + 1
+            var nextIndex = index === slides.length - 1 ? 0 : index + 1
             var prevIndex = index === 0 ? slides.length - 1 : index -1
           }
           else if (delta.x > 0) {
             var nextIndex = index === 0 ? slides.length -1 : index - 1
-            var prevIndex = index === index.length ? 0 : index + 1
+            var prevIndex = index === slides.length - 1 ? 0 : index + 1
           }
 
           var nextSlide = slides[nextIndex]

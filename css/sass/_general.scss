@@ -196,6 +196,8 @@ iframe {
         @include grid-row(collapse);
         padding-top: 1em;
         padding-bottom: 1em;
+        // Fixes Mobile Safari 'div seam' artifact
+        margin: -1px;
 
         &:hover { 
             a,
@@ -705,7 +707,15 @@ iframe {
 @media (max-width: 1024px) {
     .header-wrapper {
         position: relative;
+        // safari artifacts
+        padding-bottom: 2px;
     }
+
+    .inner-header {
+        // safari artifacts
+        margin-bottom: -3px;
+    }
+
     .page,
     .page.projects {
         //padding-top: 1em;

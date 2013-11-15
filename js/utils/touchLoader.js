@@ -115,6 +115,13 @@ define([
             }
         })
 
+        $('.fancybox-wrap .close').click(function(e){
+            e.preventDefault()
+            e.stopPropagation()
+            window.s.kill()
+            window.s.close()
+        })
+
     }
 
     function handleOrientation(e){
@@ -127,11 +134,6 @@ define([
             window.spinner = new Spinner()
             e.preventDefault()
             gallery('.fancybox', e.currentTarget)
-        })
-        $('body').on('click', '.fancybox-wrap .close', function(e){
-            e.preventDefault()
-            window.s.kill()
-            window.s.close()
         })
     }
 
