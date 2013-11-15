@@ -24,8 +24,8 @@ define([
                 title : this.model.get('title'),
                 htmlDate : this.model.get('htmlDate'),
                 date : this.model.get('date').year()
-            }) ).append( this.back({
-                buttonText : 'View All Film',
+            }) ).prepend( this.back({
+                buttonText : 'Back to All Film',
                 url : '/film'
             }) )
 
@@ -40,12 +40,6 @@ define([
         initialize : function() {
             _.bindAll( this, 'render', 'renderOut' )
             this.model = new FilmModel()
-            this.$el.html( this.baseTmpl() )
-            this.details = new FilmDetails({
-                el : this.$('#details'),
-                model : this.model
-            })
-            this.$viewer = this.$('#showcaseContainer')
         },
 
         events : {
@@ -53,9 +47,13 @@ define([
         },
 
         render : function( filmUrl ) {
+            this.$el.html( this.baseTmpl() )
+            this.details = new FilmDetails({
+                el : this.$('#details'),
+                model : this.model
+            })
+            this.$viewer = this.$('#showcaseContainer')
             this.delegateEvents()
-            this.details.$el.empty()
-            this.$viewer.empty()
 
             this.model.fetch({
                 url : '/api/film/' + filmUrl,

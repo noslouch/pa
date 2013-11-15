@@ -39,21 +39,19 @@ define([
         initialize : function() {
             _.bindAll( this, 'render', 'renderOut' )
             this.model = new AlbumModel()
-            this.$el.html( this.baseTmpl() )
-            this.details = new AlbumDetails({
-                el : this.$('#details'),
-                model : this.model
-            })
-            this.$viewer = this.$('#showcaseContainer')
         },
         events : {
             'click #back' : 'back'
         },
 
         render : function( albumUrl ) {
+            this.$el.html( this.baseTmpl() )
+            this.details = new AlbumDetails({
+                el : this.$('#details'),
+                model : this.model
+            })
+            this.$viewer = this.$('#showcaseContainer')
             this.delegateEvents()
-            this.details.$el.empty()
-            this.$viewer.empty()
 
             this.model.fetch({
                 url : '/api/photography/' + albumUrl,
