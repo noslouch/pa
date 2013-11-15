@@ -534,7 +534,6 @@ button {
         }
         &:hover a {
             opacity: 1;
-            @include translate3d(0, -5px, 0);
         }
 
         &.active-slide:hover a {
@@ -558,6 +557,16 @@ button {
     }
 }
 
+@media (min-width: 1024px) {
+    .fancybox-lock .indicators {
+        z-index: 8040;
+
+        li:hover a {
+            @include translate3d(0, -5px, 0);
+        }
+    }
+}
+
 .fancybox-title {
     color: $primary-color;
     position: fixed;
@@ -576,6 +585,7 @@ button {
     visibility: hidden;
     position: relative;
     height: 100%;
+    z-index: 8030;
 }
 .swipe-wrap {
     overflow: hidden;

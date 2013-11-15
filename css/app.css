@@ -3014,17 +3014,12 @@ button {
 /* line 535, sass/_modules.scss */
 .fancybox-lock .indicators li:hover a {
   opacity: 1;
-  -webkit-transform: translate3d(0, -5px, 0);
-  -moz-transform: translate3d(0, -5px, 0);
-  -ms-transform: translate3d(0, -5px, 0);
-  -o-transform: translate3d(0, -5px, 0);
-  transform: translate3d(0, -5px, 0);
 }
-/* line 540, sass/_modules.scss */
+/* line 539, sass/_modules.scss */
 .fancybox-lock .indicators li.active-slide:hover a {
   background: red;
 }
-/* line 545, sass/_modules.scss */
+/* line 544, sass/_modules.scss */
 .fancybox-lock .indicators a {
   background: black;
   width: 12px;
@@ -3041,13 +3036,27 @@ button {
   -o-transition: -o-transform 100ms ease;
   transition: transform 100ms ease;
 }
-/* line 555, sass/_modules.scss */
+/* line 554, sass/_modules.scss */
 .fancybox-lock .indicators .dot {
   width: 12px;
   height: 12px;
 }
 
-/* line 561, sass/_modules.scss */
+@media (min-width: 1024px) {
+  /* line 561, sass/_modules.scss */
+  .fancybox-lock .indicators {
+    z-index: 8040;
+  }
+  /* line 564, sass/_modules.scss */
+  .fancybox-lock .indicators li:hover a {
+    -webkit-transform: translate3d(0, -5px, 0);
+    -moz-transform: translate3d(0, -5px, 0);
+    -ms-transform: translate3d(0, -5px, 0);
+    -o-transform: translate3d(0, -5px, 0);
+    transform: translate3d(0, -5px, 0);
+  }
+}
+/* line 570, sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;
@@ -3057,22 +3066,23 @@ button {
   font-weight: 500;
 }
 
-/* line 574, sass/_modules.scss */
+/* line 583, sass/_modules.scss */
 .swipe {
   overflow: hidden;
   visibility: hidden;
   position: relative;
   height: 100%;
+  z-index: 8030;
 }
 
-/* line 580, sass/_modules.scss */
+/* line 590, sass/_modules.scss */
 .swipe-wrap {
   overflow: hidden;
   position: relative;
   height: 100%;
 }
 
-/* line 585, sass/_modules.scss */
+/* line 595, sass/_modules.scss */
 .swipe-wrap > div {
   float: left;
   width: 100%;
@@ -3080,13 +3090,13 @@ button {
   overflow: auto;
   height: 100%;
 }
-/* line 597, sass/_modules.scss */
+/* line 607, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
   width: 100%;
   position: relative;
   height: 100%;
 }
-/* line 603, sass/_modules.scss */
+/* line 613, sass/_modules.scss */
 .swipe-wrap > div img {
   overflow: auto;
   margin: auto;
