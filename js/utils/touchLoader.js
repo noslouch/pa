@@ -113,6 +113,7 @@ define([
                 $('#fancybox-lock').remove()
                 $('html').removeClass('fancybox-margin fancybox-lock')
                 $('.fancybox-overlay-fixed').remove()
+                window.s = null
             }
         })
 
