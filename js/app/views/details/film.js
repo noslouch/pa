@@ -1,5 +1,5 @@
-/* app/views/singleviews.js
- * detail view for projects, photo galleries, and films */
+/* app/views/film.js
+ * Single Film detail view */
 'use strict';
 
 define([
@@ -7,9 +7,9 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/showcaseviews',
+    'app/views/showcases/video',
     'app/models/film'
-], function( $, Backbone, _, TPL, S, FilmModel ) {
+], function( $, Backbone, _, TPL, V, FilmModel ) {
 
     var FilmDetails = Backbone.View.extend({
         template : TPL.textTemplate, // type, content
@@ -67,7 +67,7 @@ define([
 
         renderOut : function( model, response, ops ) {
             this.details.render()
-            var video = new S.Video({
+            var video = new V({
                 model : this.model
             })
             this.$viewer.html( video.render() )

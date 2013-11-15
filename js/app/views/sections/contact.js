@@ -1,4 +1,4 @@
-/* app/views/contact.js
+/* app/views/sections/contact.js
  * contact page */
 'use strict';
 

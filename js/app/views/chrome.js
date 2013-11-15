@@ -8,10 +8,9 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'app/views/page',
-    'app/views/search',
+    'app/views/sections/search',
     'utils/spinner'
-], function( require, exports, $, Backbone, _, Page, Search, Spinner ) {
+], function( require, exports, $, Backbone, _, Search, Spinner ) {
 
     var App = Backbone.View.extend({
         initialize : function() {
@@ -67,7 +66,7 @@ define([
             var self = this,
                 bootstrap = !!$('#n-container').length
 
-            require(['app/views/home'], function( home ) {
+            require(['app/views/sections/home'], function( home ) {
                 self.setView( home )
                 home.setElement('.page')
                 home.render()
@@ -77,7 +76,7 @@ define([
 
         projects : function(spinner) {
             var self = this
-            require(['app/views/projects'], function( projects ) {
+            require(['app/views/sections/projects'], function( projects ) {
                 self.setView( projects )
                 projects.setElement('.page')
                 try {
@@ -96,7 +95,7 @@ define([
 
         singleProject : function( spinner, projectUrl, showcaseUrl, previous ) {
             var self = this
-            require(['app/views/singleproject'], function( projectView ) {
+            require(['app/views/details/project'], function( projectView ) {
                 self.setView( projectView )
                 projectView.on('rendered', function() {
                     spinner.detach()
@@ -110,7 +109,7 @@ define([
 
         photography : function( spinner ) {
             var self = this
-            require(['app/views/photography'], function( photography ) {
+            require(['app/views/sections/photography'], function( photography ) {
                 self.setView( photography )
                 photography.setElement( '.page' )
                 try {
@@ -125,7 +124,7 @@ define([
 
         singleAlbum : function( spinner, albumUrl ) {
             var self = this
-            require(['app/views/singlealbum'], function( albumView ) {
+            require(['app/views/details/album'], function( albumView ) {
                 self.setView( albumView )
                 albumView.on('rendered', function() {
                     spinner.detach()
@@ -137,7 +136,7 @@ define([
 
         film : function( spinner ) {
             var self = this
-            require(['app/views/film'], function( film ){
+            require(['app/views/sections/film'], function( film ){
                 self.setView( film )
                 film.setElement('.page')
                 try{
@@ -152,7 +151,7 @@ define([
 
         singleFilm : function( spinner, filmUrl ) {
             var self = this
-            require(['app/views/singlefilm'], function( filmView ) {
+            require(['app/views/details/film'], function( filmView ) {
                 self.setView( filmView )
                 filmView.on('rendered', function(){
                     spinner.detach()
@@ -164,7 +163,7 @@ define([
 
         profile : function( spinner, segment, urlTitle) {
             var self = this
-            require(['app/views/profile'], function( profileView ) {
+            require(['app/views/sections/profile'], function( profileView ) {
                 self.setView( profileView )
                 profileView.on('rendered', function(){
                     spinner.detach()
@@ -181,7 +180,7 @@ define([
 
         contact : function( spinner ) {
             var self = this
-            require(['app/views/contact'],
+            require(['app/views/sections/contact'],
             function( c ) {
                 self.setView( c )
                 $('.page').html( c.render() )
@@ -192,7 +191,7 @@ define([
 
         stream : function( spinner ) {
             var self = this
-            require(['app/views/stream'],
+            require(['app/views/sections/stream'],
             function( stream ) {
                 self.setView( stream )
                 stream.setElement( '.page' )

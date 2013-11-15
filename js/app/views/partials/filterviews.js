@@ -1,4 +1,4 @@
-/* views/filterviews.js - Filter Bar View */
+/* app/views/partials/filterviews.js - Filter Bar View */
 'use strict';
 
 define([
@@ -7,9 +7,9 @@ define([
     'underscore',
     'bbq',
     'tpl/jst',
-    'app/views/showcaseviews',
+    //'app/views/gallery',
     'app/collections/projects'
-], function( $, Backbone, _, bbq, TPL, S, Projects ) {
+], function( $, Backbone, _, bbq, TPL, Projects ) {
 
     var mobile = 'ontouchstart' in window
 

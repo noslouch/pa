@@ -1,4 +1,4 @@
-/* app/views/search.js - Search view
+/* app/views/sections/search.js - Search view
  *
  * searchForm
  * **********

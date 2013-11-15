@@ -1,4 +1,4 @@
-/* app/views/singlealbum.js
+/* app/views/details/album.js
  * detail view for photo galleries */
 'use strict';
 
@@ -7,9 +7,9 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/gallery',
+    'app/views/showcases/gallery',
     'app/models/album'
-], function( $, Backbone, _, TPL, S, AlbumModel ) {
+], function( $, Backbone, _, TPL, G, AlbumModel ) {
 
     var AlbumDetails = Backbone.View.extend({
         template : TPL.textTemplate, // type, content
@@ -71,7 +71,7 @@ define([
                 collection : this.collection
             })
 
-            var gallery = new S.Image({
+            var gallery = new G({
                 model : this.model,
                 collection : this.collection
             })

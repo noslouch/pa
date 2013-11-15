@@ -1,4 +1,4 @@
-/* app/views/photography.js - Main Photography page */
+/* app/views/sections/photography.js - Main Photography page */
 'use strict';
 
 define([
@@ -7,8 +7,8 @@ define([
     'underscore',
     'app/collections/covergallery',
     'app/collections/photography',
-    'app/views/gallery'
-], function( $, Backbone, _, CoverGallery, photoCollection, S ) {
+    'app/views/showcases/gallery'
+], function( $, Backbone, _, CoverGallery, photoCollection, G ) {
 
     var Photography = Backbone.View.extend({
         initialize : function(){
@@ -17,7 +17,7 @@ define([
 
             this.collection.fetch({
                 success : function(collection) {
-                    self.covers = new S.Image({
+                    self.covers = new G({
                         cover : true,
                         collection : new CoverGallery( collection.pluck( 'coverImage' ) ),
                         path : 'photography',

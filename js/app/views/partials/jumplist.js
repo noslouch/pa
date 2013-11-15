@@ -1,4 +1,4 @@
-/* views/jumplist.js - Jump To List for use on Profile section */
+/* app/views/partials/jumplist.js - Jump To List for use on Profile section */
 'use strict';
 
 define([

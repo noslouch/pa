@@ -1,4 +1,4 @@
-/* app/views/home.js
+/* app/views/sections/home.js
  * home page */
 'use strict';
 

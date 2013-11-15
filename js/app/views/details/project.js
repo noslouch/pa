@@ -1,4 +1,4 @@
-/* app/views/singleproject.js
+/* app/views/details/project.js
  * detail view for projects */
 'use strict';
 
@@ -7,9 +7,12 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/showcaseviews',
+    'app/views/showcases/gallery',
+    'app/views/showcases/text',
+    'app/views/showcases/list',
+    'app/views/showcases/video',
     'app/models/project'
-], function( $, Backbone, _, TPL, S, ProjectModel ) {
+], function( $, Backbone, _, TPL, G, T, l, V, ProjectModel ) {
 
     var TagRow = Backbone.View.extend({
         tagName : 'li',
@@ -45,18 +48,18 @@ define([
                 switch( model.get('type') ) {
                     case 'gallery':
                         model.set('page', this)
-                        showcase = new S.Image({
+                        showcase = new G({
                             collection : model.get('gallery'),
                             model : model
                         })
                         break;
 
                     case 'video':
-                        showcase = new S.Video({ model : model })
+                        showcase = new V({ model : model })
                         break;
 
                     case 'info':
-                        showcase = new S.Text()
+                        showcase = new T()
                         showcase.$el.append( showcase.base({
                             type : '.project-info',
                             content : model.get('content')
@@ -64,7 +67,7 @@ define([
                         break;
 
                     case 'related':
-                        showcase = new S.SmallList({
+                        showcase = new l.SmList({
                             collection : model.get('links')
                         })
                         break;

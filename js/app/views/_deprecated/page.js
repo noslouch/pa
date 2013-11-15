@@ -1,5 +1,7 @@
 /* app/views/page.js - Generic Page View/Controller
  * outer most appviews */
+/* Deprecated
+ *********************************************************************************
 'use strict';
 
 define([
@@ -46,3 +48,4 @@ define([
     })
     return Page
 })
+*/

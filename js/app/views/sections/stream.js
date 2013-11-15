@@ -1,4 +1,4 @@
-/* app/views/stream.js
+/* app/views/sections/stream.js
  * Stream page */
 'use strict';
 
@@ -7,14 +7,14 @@ define([
     'underscore',
     'jquery',
     'app/collections/instagrams',
-    'app/views/showcaseviews'
-], function( Backbone, _, $, IG, S ) {
+    'app/views/showcases/starfield'
+], function( Backbone, _, $, IG, Starfield ) {
 
     var Stream = Backbone.View.extend({
         initialize : function() {
             _.bindAll( this, 'render', 'renderOut' )
             this.collection.fetch()
-            this.starfield = new S.Starfield({ collection : this.collection }, true)
+            this.starfield = new Starfield({ collection : this.collection }, true)
         },
         render : function(spinner){
             this.spinner = spinner

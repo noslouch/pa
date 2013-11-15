@@ -1,4 +1,4 @@
-/* app/views/profile.js - Profile Page Views and Section Views */
+/* app/views/sections/profile.js - Profile Page Views and Section Views */
 'use strict';
 
 define([
@@ -6,12 +6,14 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'app/views/showcaseviews',
+    'app/views/showcases/gallery',
+    'app/views/showcases/text',
+    'app/views/showcases/list',
     'tpl/jst',
     'app/collections/profile',
-    'app/views/jumplist',
+    'app/views/partials/jumplist',
     'utils/fbLoader'
-], function( require, $, Backbone, _, S, TPL, sections, Jumps ) {
+], function( require, $, Backbone, _, G, T, l, TPL, sections, Jumps ) {
 
     var Content = Backbone.View.extend({
         id : 'showcaseContainer',
@@ -36,7 +38,7 @@ define([
             switch( section.id ) {
 
                 case 'bio':
-                    showcase = new S.Text()
+                    showcase = new T()
                     $layout = showcase.render()
                     $base = $( showcase.base({
                         type : 'bio',
@@ -55,7 +57,7 @@ define([
                     break;
 
                 case 'press':
-                    showcase = new S.List({
+                    showcase = new l.List({
                         collection : model,
                         path : '/profile/press'
                     })
@@ -67,7 +69,7 @@ define([
                     break;
 
                 case 'awards':
-                    showcase = new S.List({
+                    showcase = new l.List({
                         collection : model,
                         path : false,
                         url : false
@@ -80,7 +82,7 @@ define([
                     break;
 
                 case 'photos-of-pa':
-                    showcase = new S.Image({
+                    showcase = new G({
                         collection : model.get('photos'),
                         model : model
                     })
@@ -91,7 +93,7 @@ define([
                     break;
 
                 case 'articles-by-pa':
-                    showcase = new S.List({
+                    showcase = new l.List({
                         collection : model,
                         path : '/profile/articles-by-pa'
                     })
@@ -103,7 +105,7 @@ define([
                     break;
 
                 case 'articles-about-pa':
-                    showcase = new S.List({
+                    showcase = new l.List({
                         collection : model,
                         path : '/profile/articles-by-pa'
                     })
@@ -115,7 +117,7 @@ define([
                     break;
 
                 case 'interviews':
-                    showcase = new S.List({
+                    showcase = new l.List({
                         collection : model,
                         path : '/profile/interviews'
                     })
@@ -127,7 +129,7 @@ define([
                     break;
 
                 case 'transcripts':
-                    showcase = new S.List({
+                    showcase = new l.List({
                         collection : model,
                         path : '/profile/transcripts'
                     })
@@ -139,7 +141,7 @@ define([
                     break;
 
                 case 'acknowledgements':
-                    showcase = new S.Text()
+                    showcase = new T()
                     $layout = showcase.render()
                     $base = $( showcase.base({
                         type : 'bio',
@@ -161,7 +163,7 @@ define([
         contentController : function(model){
             $('#filter-bar').empty()
 
-            var layout = new S.Text(),
+            var layout = new T(),
                 $layout = layout.render(),
                 type = model.get('type'),
                 back,

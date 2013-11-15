@@ -1,5 +1,7 @@
 /* app/views/singleviews.js
  * detail view for projects, photo galleries, and films */
+/* DEPRECATED
+ *********************************************************************************
 'use strict';
 
 define([
@@ -299,3 +301,4 @@ define([
 
     return viewers
 })
+*/

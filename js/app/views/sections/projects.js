@@ -1,4 +1,4 @@
-/* app/views/projects.js
+/* app/views/sections/projects.js
  * projects landing page - shit is complex! */
 'use strict';
 
@@ -7,15 +7,17 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'app/views/filterviews',
-    'app/views/showcaseviews',
+    'app/views/partials/filterviews',
+    'app/views/showcases/gallery',
+    'app/views/showcases/list',
+    'app/views/showcases/starfield',
     'app/collections/covergallery',
     'app/collections/projects',
     'foundation',
     'tooltips',
     'bbq',
     'lib/requirejs/domReady!'
-], function( require, $, Backbone, _, FilterBar, S, CoverGallery, Projects ) {
+], function( require, $, Backbone, _, FilterBar, G, l, Starfield, CoverGallery, Projects ) {
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
@@ -25,14 +27,14 @@ define([
             this.collection.fetch({
                 success : function(projects) {
 
-                    self.model.cover = new S.Image({
+                    self.model.cover = new G({
                         cover : true,
                         collection : new CoverGallery( projects.pluck('coverImage') ),
                         path : 'projects',
                         model : self.model
                     })
 
-                    self.model.list = new S.List({
+                    self.model.list = new l.List({
                         collection : new CoverGallery( projects.pluck('coverImage') ),
                         pageClass : 'projects',
                         path : 'projects',
@@ -40,7 +42,7 @@ define([
                         model : self.model
                     })
 
-                    self.model.random = new S.Starfield({
+                    self.model.random = new Starfield({
                         collection : self.model.cover.collection
                     })
 

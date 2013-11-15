@@ -1,67 +1,17 @@
-/* app/views/showcaseviews.js
- * the many showcases of Peter Arnell
- * image showcase has been separated out */
+/* app/views/showcases/lists.js
+ * Variations on a List view */
 'use strict';
 
 define([
     'jquery',
     'backbone',
     'underscore',
-    'tpl/jst',
-    'utils/spinner'
-], function( $, Backbone, _, TPL, fbLoader, Spinner ) {
-
-    var showcases = {}
-
-    // Video
-    // Video showcase used on Single projects
-    showcases.Video = Backbone.View.extend({
-        tagname : 'div',
-        className : 'showcase video',
-        videoCaption : TPL.videoCaption,
-
-        initialize : function() {
-            this.videoTmpl = this.model.get('video_id') ? TPL.videoID : TPL.iframeVideo
-            this.videoSrc = this.model.get('video_id') ? this.model.get('video_id') : this.model.get('video_src')
-        },
-
-        render : function() {
-            var film = this.videoTmpl({
-                videoSrc : this.videoSrc,
-                youtube : this.model.get('youtube')
-            })
-
-            var caption = this.videoCaption({
-                title : this.model.get('title'),
-                content : this.model.get('caption'),
-            })
-
-            this.$el
-                .append(film)
-                .append(caption)
-
-            return this.el
-        }
-    })
-
-    // Text
-    // Generic Text view with modular html components
-    showcases.Text = Backbone.View.extend({
-        tagName : 'div',
-        className : 'showcase text',
-        base : TPL.textTemplate,
-        header : TPL.textTemplateHeader,
-        bioImg : TPL.bioImage,
-        gallery : TPL.textGallery,
-        back : TPL.backButton,
-        render : function() {
-            return this.$el
-        }
-    })
+    'tpl/jst'
+], function( $, Backbone, _, TPL ) {
 
     // Li
     // List Showcase LI element
-    showcases.Li = Backbone.View.extend({
+    var Li = Backbone.View.extend({
         tagName : 'li',
         template : TPL.listItemPartial,
 
@@ -95,7 +45,7 @@ define([
 
     // ListSect
     // List Showcase Section element container
-    showcases.ListSect = Backbone.View.extend({
+    var ListSect = Backbone.View.extend({
         tagName : 'section',
         header : TPL.listHeaderPartial,
 
@@ -113,7 +63,7 @@ define([
 
             _.each( listItems, function(listItem) {
                 this.$('ul')
-                    .append( new showcases.Li({
+                    .append( new Li({
                         model : listItem,
                         path : path ? path : '',
                         url : url ? listItem.get('url-title') : false
@@ -127,7 +77,7 @@ define([
 
     // List
     // Outer List showcase made up of ListSects that contain Li views
-    showcases.List = Backbone.View.extend({
+    var List = Backbone.View.extend({
         tagName : 'div',
         className : 'showcase list',
         initialize : function() {
@@ -146,7 +96,7 @@ define([
 
             this.$el.empty()
             _.each( group, function(v,k){
-                var html = new showcases.ListSect({
+                var html = new ListSect({
                     id : v[0],
                     date : v[0],
                     listItems : v[1],
@@ -210,7 +160,7 @@ define([
 
     // SmallList
     // Stripped down variant of List
-    showcases.SmallList = Backbone.View.extend({
+    var SmallList = Backbone.View.extend({
         tagName : 'div',
         id : 'showcase',
         className : 'showcase list',
@@ -233,109 +183,9 @@ define([
 
     })
 
-    // Star
-    // Starfield item
-    showcases.Star = Backbone.View.extend({
-        tagName : "a",
-        initialize : function() {
-            _.bindAll( this, 'render' )
-
-            $('<img>')
-            .appendTo( this.$el )
-            .attr( 'src', this.model.get('thumb') )
-
-            this.$el.css({
-                left : this.options.HALF_WIDTH + this.randomRange(-this.options.HALF_WIDTH, this.options.HALF_WIDTH),
-                top : this.options.HALF_HEIGHT + this.randomRange(-this.options.HALF_HEIGHT, this.options.HALF_HEIGHT)
-            })
-        },
-
-        render : function(instagram) {
-            this.$el
-                .addClass( 'star' )
-
-            if ( !!instagram ) {
-                this.$el
-                .attr( 'target' , '_blank' )
-                .attr( 'href', this.model.get('url') )
-            } else {
-                var caption = document.createElement('div'),
-                    p = document.createElement('p'),
-                    span = document.createElement('span')
-
-                $(p).html( this.model.get('title') )
-                $(span).addClass('year').html( this.model.get('year') )
-                $(caption).addClass('caption').append(p).append(span)
-
-                this.$el
-                .attr({
-                    href : '/projects/' + this.model.get('url-title'),
-                    id : this.model.id
-                })
-                .append(caption)
-            }
-
-            return this.el
-        }
-    })
-
-    showcases.Star.prototype.randomRange = function (min, max) {
-        return ((Math.random()*(max-min)) + min)
+    return {
+        List : List,
+        SmList : SmallList
     }
 
-    // Starfield
-    // Zoom effect used on Projects landing page
-    showcases.Starfield = Backbone.View.extend({
-        tagName : 'div',
-        className : 'starfield showcase',
-        id : 'showcase',
-        initialize : function( collection, instagram ){
-            var SCREEN_WIDTH = window.innerWidth,
-                SCREEN_HEIGHT = window.innerHeight,
-                HALF_WIDTH = window.innerWidth / 2,
-                HALF_HEIGHT = window.innerHeight / 2
-                //imageLimit = SCREEN_WIDTH < 320 ? 12 : 48
-
-            this.stagger = function() {
-                var i = 0,
-                    self = this
-
-                function go(){
-                    self.$el.append(
-                        new showcases.Star({
-                            model : self.images.models[i],
-                            HALF_HEIGHT : HALF_HEIGHT,
-                            HALF_WIDTH : HALF_WIDTH
-                        }).render(instagram) )
-                    i++
-
-                    // CHANGE TO IMAGELIMIT WHEN PROJECTS INCREASE
-                    if ( i < self.images.length ) {
-                        setTimeout(go, 550)
-                    }
-                }
-
-                go()
-            }
-
-            this.starsRunning = false
-        },
-
-        destroy : function() {
-            this.starsRunning = false
-            this.$el.empty()
-            this.remove()
-            this.unbind()
-        },
-
-        render : function() {
-            this.starsRunning = true
-            this.$el.empty()
-            this.images = new Backbone.Collection( this.collection.shuffle() )
-            this.stagger()
-            return this.el
-        }
-    })
-
-    return showcases
 })

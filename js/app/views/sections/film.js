@@ -1,4 +1,4 @@
-/* app/views/film.js - Main Film page */
+/* app/views/sections/film.js - Main Film page */
 'use strict';
 
 define([

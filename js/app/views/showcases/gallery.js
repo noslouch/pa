@@ -1,4 +1,4 @@
-/* app/views/gallery.js
+/* app/views/showcases/gallery.js
  * PA galleries. tests for mobile and uses swipable gallery if so */
 'use strict';
 
@@ -12,11 +12,9 @@ define([
     'isotope'
 ], function( $, Backbone, _, TPL, Spinner, g ) {
 
-    var showcases = {}
-
     // Thumb
     // Image Showcase thumbnail used in Isotope
-    showcases.Thumb = Backbone.View.extend({
+    var Thumb = Backbone.View.extend({
         tagName : "div",
         template : TPL.thumbTemplate,
 
@@ -49,7 +47,7 @@ define([
 
     // Image
     // Image Showcase container. controls Isotope
-    showcases.Image = Backbone.View.extend({
+    var Image = Backbone.View.extend({
         tagName : 'div',
         id : 'iso-grid',
 
@@ -57,7 +55,7 @@ define([
             _.bindAll(this, 'render', 'filter', 'isotope')
 
             this.collection.forEach(function(image) {
-                var thumb = new showcases.Thumb({
+                var thumb = new Thumb({
                     model : image,
                     cover : this.options.cover ? true : false,
                     large : this.collection.length < 5 && !this.options.cover,
@@ -149,6 +147,6 @@ define([
         }
     })
 
-    return showcases
+    return Image
 })
 
