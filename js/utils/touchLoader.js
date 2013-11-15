@@ -58,7 +58,6 @@ define([
                     $(prevEl).find('img').css('display','block')
                 },
                 beforeLoad: function(){
-                    console.log('before load')
                     if (!window.loaded) {
                         var $ul = $('<ul/>'),
                             $bullet = $('<div/>').attr('id', 'bullet-wrap').addClass('indicators'),

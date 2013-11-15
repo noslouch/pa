@@ -86,6 +86,7 @@ function Swipe(container, options) {
 
     container.style.visibility = 'visible';
 
+    options.callback(index, slide)
   }
 
   function prev() {
