@@ -68,6 +68,13 @@ define([
                     left: p.left
                 })
             },
+            afterShow : function() {
+                if (!this.count) {
+                    // only run once
+                    $('#bullet-wrap').prepend($('.fancybox-nav'))
+                    this.count = 1
+                }
+            },
             beforeClose : function(){
                 window.loaded = false
                 $('#bullet-wrap').fadeOut(150)

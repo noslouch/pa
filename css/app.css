@@ -2576,7 +2576,7 @@ button {
 /* line 122, sass/_modules.scss */
 .indicators {
   position: absolute;
-  left: 1em;
+  left: 0.4em;
   bottom: 1em;
   margin: -1px;
 }
@@ -2687,7 +2687,7 @@ button {
 .sorts h3:after,
 .jump-to h3:after, .filter h3:hover:after,
 .filter.open h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, .close span, .close:hover span, .film-row .img:before, .film-row > div:hover .img:before, .fancybox-next span, .fancybox-next:hover span, .fancybox-prev span, .fancybox-prev:hover span {
-  background: url('img/icons-s46e8adcd5d.png') no-repeat;
+  background: url('img/icons-sf90dc8fc94.png') no-repeat;
 }
 
 /* line 232, sass/_modules.scss */
@@ -2701,7 +2701,7 @@ button {
 .filter h3:after, .view-all h3:after, .views h3:after,
 .sorts h3:after,
 .jump-to h3:after {
-  background-position: 0 -420px;
+  background-position: 0 -381px;
   width: 7px;
   height: 4px;
   content: '';
@@ -2719,7 +2719,7 @@ button {
 .open.views h3:after,
 .open.sorts h3:after,
 .open.jump-to h3:after {
-  background-position: 0 -416px;
+  background-position: 0 -377px;
 }
 
 /* line 253, sass/_modules.scss */
@@ -2729,7 +2729,7 @@ button {
 
 /* line 259, sass/_modules.scss */
 .icon-view:before {
-  background-position: 0 -263px;
+  background-position: 0 -385px;
   width: 16px;
   height: 15px;
   content: '';
@@ -2740,96 +2740,95 @@ button {
 }
 /* line 270, sass/_modules.scss */
 .icon-view:hover:before {
-  background-position: 0 -401px;
+  background-position: 0 -362px;
 }
 /* line 274, sass/_modules.scss */
 .icon-view.active:before {
-  background-position: 0 -386px;
+  background-position: 0 -347px;
 }
 
 /* line 281, sass/_modules.scss */
 .title-view:before {
-  background-position: 0 -315px;
+  background-position: 0 -313px;
   width: 25px;
-  height: 13px;
+  height: 17px;
   content: '';
   display: inline-block;
-  margin-top: 5px;
+  margin-top: 2px;
   position: absolute;
   left: -1px;
 }
 /* line 292, sass/_modules.scss */
 .title-view:hover:before {
-  background-position: 0 -278px;
+  background-position: 0 -261px;
 }
 /* line 296, sass/_modules.scss */
 .title-view.active:before {
-  background-position: 0 -328px;
+  background-position: 0 -330px;
 }
 
 /* line 303, sass/_modules.scss */
 .random-view:before {
-  background-position: 0 -341px;
-  width: 15px;
-  height: 15px;
+  background-position: 0 -294px;
+  width: 17px;
+  height: 20px;
   content: '';
   display: inline-block;
-  margin-top: 4px;
   position: absolute;
-  left: 0;
+  left: -1px;
 }
-/* line 314, sass/_modules.scss */
+/* line 313, sass/_modules.scss */
 .random-view:hover:before {
-  background-position: 0 -371px;
+  background-position: 0 -207px;
 }
-/* line 318, sass/_modules.scss */
+/* line 317, sass/_modules.scss */
 .random-view.active:before {
-  background-position: 0 -356px;
+  background-position: 0 -226px;
 }
 
-/* line 323, sass/_modules.scss */
+/* line 322, sass/_modules.scss */
 .alpha-sort {
-  background-position: 0 -215px;
+  background-position: 0 -103px;
   width: 26px;
   height: 8px;
 }
-/* line 328, sass/_modules.scss */
+/* line 327, sass/_modules.scss */
 .alpha-sort:hover {
-  background-position: 0 -231px;
+  background-position: 0 -119px;
 }
-/* line 332, sass/_modules.scss */
+/* line 331, sass/_modules.scss */
 .alpha-sort.active {
-  background-position: 0 -239px;
+  background-position: 0 -127px;
 }
 
-/* line 337, sass/_modules.scss */
+/* line 336, sass/_modules.scss */
 .date-sort {
-  background-position: 0 -223px;
+  background-position: 0 -111px;
   width: 21px;
   height: 8px;
 }
-/* line 342, sass/_modules.scss */
+/* line 341, sass/_modules.scss */
 .date-sort:hover {
-  background-position: 0 -247px;
+  background-position: 0 -135px;
 }
-/* line 346, sass/_modules.scss */
+/* line 345, sass/_modules.scss */
 .date-sort.active {
-  background-position: 0 -255px;
+  background-position: 0 -143px;
 }
 
-/* line 353, sass/_modules.scss */
+/* line 352, sass/_modules.scss */
 .close span {
-  background-position: 0 -303px;
+  background-position: 0 -195px;
   width: 11px;
   height: 12px;
   display: block;
 }
-/* line 361, sass/_modules.scss */
+/* line 360, sass/_modules.scss */
 .close:hover span {
-  background-position: 0 -291px;
+  background-position: 0 -183px;
 }
 
-/* line 367, sass/_modules.scss */
+/* line 366, sass/_modules.scss */
 .film-row .img:before {
   background-position: 0 -17px;
   content: '';
@@ -2842,23 +2841,23 @@ button {
   margin-top: -22px;
 }
 
-/* line 379, sass/_modules.scss */
+/* line 378, sass/_modules.scss */
 .film-row > div:hover .img:before {
   background-position: 0 -60px;
 }
 
-/* line 389, sass/_modules.scss */
+/* line 388, sass/_modules.scss */
 .isotope-item {
   z-index: 2;
 }
 
-/* line 393, sass/_modules.scss */
+/* line 392, sass/_modules.scss */
 .isotope-hidden.isotope-item {
   pointer-events: none;
   z-index: 1;
 }
 
-/* line 401, sass/_modules.scss */
+/* line 400, sass/_modules.scss */
 .isotope,
 .isotope .isotope-item {
   -webkit-transition-duration: 0.8s;
@@ -2868,7 +2867,7 @@ button {
   transition-duration: 0.8s;
 }
 
-/* line 409, sass/_modules.scss */
+/* line 408, sass/_modules.scss */
 .isotope {
   -webkit-transition-property: height, width;
   -moz-transition-property: height, width;
@@ -2877,7 +2876,7 @@ button {
   transition-property: height, width;
 }
 
-/* line 417, sass/_modules.scss */
+/* line 416, sass/_modules.scss */
 .isotope .isotope-item {
   -webkit-transition-property: -webkit-transform, opacity;
   -moz-transition-property: -moz-transform, opacity;
@@ -2886,7 +2885,7 @@ button {
   transition-property: transform, opacity;
 }
 
-/* line 425, sass/_modules.scss */
+/* line 424, sass/_modules.scss */
 .isotope.rtl .isotope-item {
   -webkit-transition-property: right, top, -webkit-transform, opacity;
   -moz-transition-property: right, top, -moz-transform, opacity;
@@ -2895,7 +2894,7 @@ button {
   transition-property: right, top, transform, opacity;
 }
 
-/* line 437, sass/_modules.scss */
+/* line 436, sass/_modules.scss */
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
@@ -2906,7 +2905,7 @@ button {
   transition-duration: 0s;
 }
 
-/* line 450, sass/_modules.scss */
+/* line 449, sass/_modules.scss */
 #fancybox-lock .logo {
   position: fixed;
   top: 39px;
@@ -2919,23 +2918,23 @@ button {
   font-weight: 500;
   line-height: 1;
 }
-/* line 462, sass/_modules.scss */
+/* line 461, sass/_modules.scss */
 #fancybox-lock .logo a {
   color: red;
 }
-/* line 463, sass/_modules.scss */
+/* line 462, sass/_modules.scss */
 #fancybox-lock .logo a:hover {
   color: #999999;
 }
 
-/* line 467, sass/_modules.scss */
+/* line 466, sass/_modules.scss */
 .fancybox-skin {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 470, sass/_modules.scss */
+/* line 469, sass/_modules.scss */
 .fancybox-wrap .close {
   position: fixed;
   top: 0;
@@ -2944,42 +2943,35 @@ button {
   padding: 39px;
 }
 
-/* line 479, sass/_modules.scss */
-.fancybox-nav {
-  position: fixed;
-  width: 20%;
-  z-index: 0;
-}
-
-/* line 486, sass/_modules.scss */
+/* line 485, sass/_modules.scss */
 .fancybox-next span,
 .fancybox-prev span {
-  width: 21px;
-  height: 28px;
+  width: 9px;
+  height: 16px;
   visibility: visible;
 }
 
-/* line 493, sass/_modules.scss */
+/* line 492, sass/_modules.scss */
 .fancybox-next span {
-  background-position: 0 -159px;
+  background-position: 0 -278px;
   right: 109px;
 }
-/* line 497, sass/_modules.scss */
+/* line 496, sass/_modules.scss */
 .fancybox-next:hover span {
-  background-position: 0 -131px;
+  background-position: 0 -167px;
 }
 
-/* line 501, sass/_modules.scss */
+/* line 500, sass/_modules.scss */
 .fancybox-prev span {
-  background-position: 0 -187px;
+  background-position: 0 -245px;
   left: 109px;
 }
-/* line 505, sass/_modules.scss */
+/* line 504, sass/_modules.scss */
 .fancybox-prev:hover span {
-  background-position: 0 -103px;
+  background-position: 0 -151px;
 }
 
-/* line 508, sass/_modules.scss */
+/* line 507, sass/_modules.scss */
 .fancybox-lock .indicators {
   position: fixed;
   left: 3em;
@@ -2988,12 +2980,9 @@ button {
   z-index: 8040;
   background: black;
 }
-/* line 516, sass/_modules.scss */
+/* line 515, sass/_modules.scss */
 .fancybox-lock .indicators ul {
   margin: -1px;
-  padding: 1px;
-  background: none;
-  overflow: visible;
 }
 /* line 524, sass/_modules.scss */
 .fancybox-lock .indicators li:hover {
@@ -3008,7 +2997,7 @@ button {
   background: red;
 }
 /* line 536, sass/_modules.scss */
-.fancybox-lock .indicators a {
+.fancybox-lock .indicators li a {
   background: black;
   width: 12px;
   height: 12px;

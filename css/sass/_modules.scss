@@ -121,7 +121,7 @@ button {
 
 .indicators {
     position: absolute;
-    left: 1em;
+    left: 0.4em;
     bottom: 1em;
     // Fixes mobile safari 'div seam'
     margin: -1px;
@@ -281,10 +281,10 @@ button {
     &:before {
         @include icons-sprite(title-view);
         width: 25px;
-        height: 13px;
+        height: 17px;
         content: '';
         display: inline-block;
-        margin-top: 5px;
+        margin-top: 2px;
         position: absolute;
         left: -1px;
     }
@@ -302,13 +302,12 @@ button {
     
     &:before {
         @include icons-sprite(random-view);
-        width: 15px;
-        height: 15px;
+        width: 17px;
+        height: 20px;
         content: '';
         display: inline-block;
-        margin-top: 4px;
         position: absolute;
-        left: 0;
+        left: -1px;
     }
 
     &:hover:before {
@@ -477,15 +476,15 @@ button {
 }
 
 .fancybox-nav {
-    position: fixed;
-    width: 20%;
-    z-index: 0;
+    //position: fixed;
+    //width: 20%;
+    //z-index: 0;
 }
 
 .fancybox-next span,
 .fancybox-prev span {
-    width: 21px;
-    height: 28px;
+    width: 9px;
+    height: 16px;
     visibility: visible;
 }
 
@@ -514,9 +513,10 @@ button {
     background: black;
 
     ul {
-        @include thin-removal;
-        background: none;
-        overflow: visible;
+        //@include thin-removal;
+        margin: -1px;
+        //background: none;
+        //overflow: visible;
     }
 
     li { 
@@ -533,7 +533,7 @@ button {
         }
     }
 
-    a {
+    li a {
         background: black;
         width: 12px;
         height: 12px;

@@ -286,9 +286,9 @@ function( _ ){
         '<h3>View By</h3>',
         '<div class="wrapper">',
             '<ul>',
-                '<li><button class="icon-view active" data-hash="view=cover" id="cover" type="button">Cover Image</button></li>',
-                '<li><button class="title-view" data-hash="view=list" id="list" type="button">Project Title</button></li>',
-                '<li><button class="random-view" data-hash="view=random" id="random" type="button">Random</button></li>',
+                '<li><button class="icon-view active" data-hash="view=cover" id="cover" type="button">Image</button></li>',
+                '<li><button class="title-view" data-hash="view=list" id="list" type="button">Title</button></li>',
+                '<li><button class="random-view" data-hash="view=random" id="random" type="button">Stream</button></li>',
            '</ul>',
         '</div>'
     ].join('\n')
@@ -296,9 +296,9 @@ function( _ ){
     JST.mobileViews = [
         '<select>',
             '<option>View By</option>',
-            '<option data-hash="view=cover" id="cover">Cover Image</option>',
-            '<option data-hash="view=list" id="list">Project Title</option>',
-            '<option data-hash="view=random" id="random">Random</option>',
+            '<option data-hash="view=cover" id="cover">Image</option>',
+            '<option data-hash="view=list" id="list">Title</option>',
+            '<option data-hash="view=random" id="random">Stream</option>',
         '</select>'
     ].join('\n')
 
