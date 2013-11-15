@@ -177,6 +177,13 @@ define([
         initialize : function() {
             _.bindAll(this, 'swap', 'render', 'renderOut' )
             this.model = new ProjectModel()
+        },
+
+        events : {
+            'click #back' : 'goBack'
+        },
+
+        render : function( projectUrl, showcaseUrl, previous ) {
             this.$el.html( this.baseTmpl() )
 
             this.details = new Details({
@@ -187,16 +194,8 @@ define([
             this.viewer = new Showcase({
                 el : this.$('#showcaseContainer')
             })
-        },
 
-        events : {
-            'click #back' : 'goBack'
-        },
-
-        render : function( projectUrl, showcaseUrl, previous ) {
             this.delegateEvents()
-            this.details.$el.empty()
-            this.viewer.$el.empty()
             this.previous = previous
 
             this.model.fetch({
@@ -219,8 +218,8 @@ define([
                 collection : this.collection
             })
 
-            this.$('#details').append( this.back({
-                buttonText : 'Back to Projects',
+            this.$('#details').prepend( this.back({
+                buttonText : 'Back to All Projects',
                 url : this.previous ? '/projects' + this.previous.hash : '/projects'
             }) )
 
