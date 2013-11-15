@@ -2523,6 +2523,7 @@ button {
 }
 /* line 77, sass/_modules.scss */
 .quotes .indicators {
+  z-index: 2;
   opacity: 0;
   -webkit-transition: opacity 300ms ease-in;
   -moz-transition: opacity 300ms ease-in;
@@ -2531,12 +2532,12 @@ button {
 }
 
 @media only screen and (min-width: 1080px) {
-  /* line 87, sass/_modules.scss */
+  /* line 88, sass/_modules.scss */
   .quotes h3 {
     font-size: 0.9375em;
   }
 }
-/* line 92, sass/_modules.scss */
+/* line 93, sass/_modules.scss */
 .blind {
   font-size: 3em;
   font-family: "Helvetica Neue", arial, sans-serif;
@@ -2550,34 +2551,33 @@ button {
   transition: opacity 2000ms ease-out;
 }
 
-/* line 103, sass/_modules.scss */
+/* line 104, sass/_modules.scss */
 .opened {
   opacity: 1;
   z-index: 1;
 }
 
-/* line 108, sass/_modules.scss */
+/* line 109, sass/_modules.scss */
 .closed {
   opacity: 0;
   z-index: 0;
 }
 
-/* line 113, sass/_modules.scss */
+/* line 114, sass/_modules.scss */
 .slide.closed {
   z-index: -1;
 }
 
-/* line 117, sass/_modules.scss */
+/* line 118, sass/_modules.scss */
 .button.opened {
   z-index: auto;
 }
 
-/* line 121, sass/_modules.scss */
+/* line 122, sass/_modules.scss */
 .indicators {
   position: absolute;
-  right: 0;
-  display: table;
-  height: 100%;
+  left: 1em;
+  bottom: 1em;
   margin: -1px;
 }
 /* line 129, sass/_modules.scss */
@@ -2592,43 +2592,38 @@ button {
 }
 /* line 139, sass/_modules.scss */
 .indicators li {
-  background: url('img/mask.png?1379880013');
-  width: 20px;
-  height: 25px;
+  background: url('img/small-mask.png?1379880013');
+  float: left;
+  width: 17px;
+  height: 12px;
 }
-/* line 144, sass/_modules.scss */
+/* line 145, sass/_modules.scss */
 .indicators a {
   width: 100%;
   height: 100%;
   display: block;
 }
-/* line 149, sass/_modules.scss */
-.indicators .wrapper {
-  display: table-cell;
-  vertical-align: middle;
-  height: 100%;
-}
 
-/* line 156, sass/_modules.scss */
+/* line 152, sass/_modules.scss */
 .dot {
   position: absolute;
   z-index: -1;
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
   background: red;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
 }
 
-/* line 165, sass/_modules.scss */
+/* line 161, sass/_modules.scss */
 .active-slide a {
   color: red;
 }
 
-/* line 173, sass/_modules.scss */
+/* line 169, sass/_modules.scss */
 .search-form {
   display: none;
   background: white;
@@ -2639,7 +2634,7 @@ button {
   transition: opacity 150ms ease;
 }
 
-/* line 180, sass/_modules.scss */
+/* line 176, sass/_modules.scss */
 .search-form.active {
   display: block;
   position: fixed;
@@ -2649,19 +2644,19 @@ button {
   right: 0;
   opacity: 0.95;
 }
-/* line 189, sass/_modules.scss */
+/* line 185, sass/_modules.scss */
 .search-form.active .table-wrapper {
   display: table;
   width: 100%;
   height: 100%;
 }
-/* line 194, sass/_modules.scss */
+/* line 190, sass/_modules.scss */
 .search-form.active .cell-wrapper {
   display: table-cell;
   vertical-align: middle;
   padding: 0 3em;
 }
-/* line 200, sass/_modules.scss */
+/* line 196, sass/_modules.scss */
 .search-form.active .search {
   width: 100%;
   padding: 0;
@@ -2674,13 +2669,13 @@ button {
   -moz-appearance: none;
   appearance: none;
 }
-/* line 212, sass/_modules.scss */
+/* line 208, sass/_modules.scss */
 .search-form.active .submit-search,
 .search-form.active .cancel-search {
   outline: none;
   background: #e0e0e0;
 }
-/* line 216, sass/_modules.scss */
+/* line 212, sass/_modules.scss */
 .search-form.active .submit-search:hover,
 .search-form.active .cancel-search:hover {
   background: red;
@@ -2695,14 +2690,14 @@ button {
   background: url('img/icons-s46e8adcd5d.png') no-repeat;
 }
 
-/* line 236, sass/_modules.scss */
+/* line 232, sass/_modules.scss */
 .search-icon {
   background-position: 0 0;
   width: 13px;
   height: 17px;
 }
 
-/* line 242, sass/_modules.scss */
+/* line 238, sass/_modules.scss */
 .filter h3:after, .view-all h3:after, .views h3:after,
 .sorts h3:after,
 .jump-to h3:after {
@@ -2715,7 +2710,7 @@ button {
   margin-bottom: 3px;
 }
 
-/* line 253, sass/_modules.scss */
+/* line 249, sass/_modules.scss */
 .filter h3:hover:after, .view-all h3:hover:after, .views h3:hover:after,
 .sorts h3:hover:after,
 .jump-to h3:hover:after,
@@ -2727,12 +2722,12 @@ button {
   background-position: 0 -416px;
 }
 
-/* line 257, sass/_modules.scss */
+/* line 253, sass/_modules.scss */
 .view-all h3:after {
   content: none;
 }
 
-/* line 263, sass/_modules.scss */
+/* line 259, sass/_modules.scss */
 .icon-view:before {
   background-position: 0 -263px;
   width: 16px;
@@ -2743,16 +2738,16 @@ button {
   position: absolute;
   left: 0;
 }
-/* line 274, sass/_modules.scss */
+/* line 270, sass/_modules.scss */
 .icon-view:hover:before {
   background-position: 0 -401px;
 }
-/* line 278, sass/_modules.scss */
+/* line 274, sass/_modules.scss */
 .icon-view.active:before {
   background-position: 0 -386px;
 }
 
-/* line 285, sass/_modules.scss */
+/* line 281, sass/_modules.scss */
 .title-view:before {
   background-position: 0 -315px;
   width: 25px;
@@ -2763,16 +2758,16 @@ button {
   position: absolute;
   left: -1px;
 }
-/* line 296, sass/_modules.scss */
+/* line 292, sass/_modules.scss */
 .title-view:hover:before {
   background-position: 0 -278px;
 }
-/* line 300, sass/_modules.scss */
+/* line 296, sass/_modules.scss */
 .title-view.active:before {
   background-position: 0 -328px;
 }
 
-/* line 307, sass/_modules.scss */
+/* line 303, sass/_modules.scss */
 .random-view:before {
   background-position: 0 -341px;
   width: 15px;
@@ -2783,58 +2778,58 @@ button {
   position: absolute;
   left: 0;
 }
-/* line 318, sass/_modules.scss */
+/* line 314, sass/_modules.scss */
 .random-view:hover:before {
   background-position: 0 -371px;
 }
-/* line 322, sass/_modules.scss */
+/* line 318, sass/_modules.scss */
 .random-view.active:before {
   background-position: 0 -356px;
 }
 
-/* line 327, sass/_modules.scss */
+/* line 323, sass/_modules.scss */
 .alpha-sort {
   background-position: 0 -215px;
   width: 26px;
   height: 8px;
 }
-/* line 332, sass/_modules.scss */
+/* line 328, sass/_modules.scss */
 .alpha-sort:hover {
   background-position: 0 -231px;
 }
-/* line 336, sass/_modules.scss */
+/* line 332, sass/_modules.scss */
 .alpha-sort.active {
   background-position: 0 -239px;
 }
 
-/* line 341, sass/_modules.scss */
+/* line 337, sass/_modules.scss */
 .date-sort {
   background-position: 0 -223px;
   width: 21px;
   height: 8px;
 }
-/* line 346, sass/_modules.scss */
+/* line 342, sass/_modules.scss */
 .date-sort:hover {
   background-position: 0 -247px;
 }
-/* line 350, sass/_modules.scss */
+/* line 346, sass/_modules.scss */
 .date-sort.active {
   background-position: 0 -255px;
 }
 
-/* line 357, sass/_modules.scss */
+/* line 353, sass/_modules.scss */
 .close span {
   background-position: 0 -303px;
   width: 11px;
   height: 12px;
   display: block;
 }
-/* line 365, sass/_modules.scss */
+/* line 361, sass/_modules.scss */
 .close:hover span {
   background-position: 0 -291px;
 }
 
-/* line 371, sass/_modules.scss */
+/* line 367, sass/_modules.scss */
 .film-row .img:before {
   background-position: 0 -17px;
   content: '';
@@ -2847,23 +2842,23 @@ button {
   margin-top: -22px;
 }
 
-/* line 383, sass/_modules.scss */
+/* line 379, sass/_modules.scss */
 .film-row > div:hover .img:before {
   background-position: 0 -60px;
 }
 
-/* line 393, sass/_modules.scss */
+/* line 389, sass/_modules.scss */
 .isotope-item {
   z-index: 2;
 }
 
-/* line 397, sass/_modules.scss */
+/* line 393, sass/_modules.scss */
 .isotope-hidden.isotope-item {
   pointer-events: none;
   z-index: 1;
 }
 
-/* line 405, sass/_modules.scss */
+/* line 401, sass/_modules.scss */
 .isotope,
 .isotope .isotope-item {
   -webkit-transition-duration: 0.8s;
@@ -2873,7 +2868,7 @@ button {
   transition-duration: 0.8s;
 }
 
-/* line 413, sass/_modules.scss */
+/* line 409, sass/_modules.scss */
 .isotope {
   -webkit-transition-property: height, width;
   -moz-transition-property: height, width;
@@ -2882,7 +2877,7 @@ button {
   transition-property: height, width;
 }
 
-/* line 421, sass/_modules.scss */
+/* line 417, sass/_modules.scss */
 .isotope .isotope-item {
   -webkit-transition-property: -webkit-transform, opacity;
   -moz-transition-property: -moz-transform, opacity;
@@ -2891,7 +2886,7 @@ button {
   transition-property: transform, opacity;
 }
 
-/* line 429, sass/_modules.scss */
+/* line 425, sass/_modules.scss */
 .isotope.rtl .isotope-item {
   -webkit-transition-property: right, top, -webkit-transform, opacity;
   -moz-transition-property: right, top, -moz-transform, opacity;
@@ -2900,7 +2895,7 @@ button {
   transition-property: right, top, transform, opacity;
 }
 
-/* line 441, sass/_modules.scss */
+/* line 437, sass/_modules.scss */
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
@@ -2911,7 +2906,7 @@ button {
   transition-duration: 0s;
 }
 
-/* line 454, sass/_modules.scss */
+/* line 450, sass/_modules.scss */
 #fancybox-lock .logo {
   position: fixed;
   top: 39px;
@@ -2924,23 +2919,23 @@ button {
   font-weight: 500;
   line-height: 1;
 }
-/* line 466, sass/_modules.scss */
+/* line 462, sass/_modules.scss */
 #fancybox-lock .logo a {
   color: red;
 }
-/* line 467, sass/_modules.scss */
+/* line 463, sass/_modules.scss */
 #fancybox-lock .logo a:hover {
   color: #999999;
 }
 
-/* line 471, sass/_modules.scss */
+/* line 467, sass/_modules.scss */
 .fancybox-skin {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 474, sass/_modules.scss */
+/* line 470, sass/_modules.scss */
 .fancybox-wrap .close {
   position: fixed;
   top: 0;
@@ -2949,14 +2944,14 @@ button {
   padding: 39px;
 }
 
-/* line 483, sass/_modules.scss */
+/* line 479, sass/_modules.scss */
 .fancybox-nav {
   position: fixed;
   width: 20%;
   z-index: 0;
 }
 
-/* line 490, sass/_modules.scss */
+/* line 486, sass/_modules.scss */
 .fancybox-next span,
 .fancybox-prev span {
   width: 21px;
@@ -2964,62 +2959,55 @@ button {
   visibility: visible;
 }
 
-/* line 497, sass/_modules.scss */
+/* line 493, sass/_modules.scss */
 .fancybox-next span {
   background-position: 0 -159px;
   right: 109px;
 }
-/* line 501, sass/_modules.scss */
+/* line 497, sass/_modules.scss */
 .fancybox-next:hover span {
   background-position: 0 -131px;
 }
 
-/* line 505, sass/_modules.scss */
+/* line 501, sass/_modules.scss */
 .fancybox-prev span {
   background-position: 0 -187px;
   left: 109px;
 }
-/* line 509, sass/_modules.scss */
+/* line 505, sass/_modules.scss */
 .fancybox-prev:hover span {
   background-position: 0 -103px;
 }
 
-/* line 512, sass/_modules.scss */
+/* line 508, sass/_modules.scss */
 .fancybox-lock .indicators {
   position: fixed;
-  bottom: 2.6em;
   left: 3em;
+  bottom: 2.6em;
   height: auto;
   z-index: 8040;
   background: black;
 }
-/* line 520, sass/_modules.scss */
+/* line 516, sass/_modules.scss */
 .fancybox-lock .indicators ul {
   margin: -1px;
   padding: 1px;
   background: none;
   overflow: visible;
 }
-/* line 526, sass/_modules.scss */
-.fancybox-lock .indicators li {
-  background: url('img/small-mask.png?1379880013');
-  float: left;
-  width: 17px;
-  height: 12px;
-}
-/* line 532, sass/_modules.scss */
+/* line 524, sass/_modules.scss */
 .fancybox-lock .indicators li:hover {
   background: white;
 }
-/* line 535, sass/_modules.scss */
+/* line 527, sass/_modules.scss */
 .fancybox-lock .indicators li:hover a {
   opacity: 1;
 }
-/* line 539, sass/_modules.scss */
+/* line 531, sass/_modules.scss */
 .fancybox-lock .indicators li.active-slide:hover a {
   background: red;
 }
-/* line 544, sass/_modules.scss */
+/* line 536, sass/_modules.scss */
 .fancybox-lock .indicators a {
   background: black;
   width: 12px;
@@ -3036,18 +3024,13 @@ button {
   -o-transition: -o-transform 100ms ease;
   transition: transform 100ms ease;
 }
-/* line 554, sass/_modules.scss */
-.fancybox-lock .indicators .dot {
-  width: 12px;
-  height: 12px;
-}
 
-@media (min-width: 1024px) {
-  /* line 561, sass/_modules.scss */
+@media only screen and (min-width: 1024px) {
+  /* line 548, sass/_modules.scss */
   .fancybox-lock .indicators {
     z-index: 8040;
   }
-  /* line 564, sass/_modules.scss */
+  /* line 551, sass/_modules.scss */
   .fancybox-lock .indicators li:hover a {
     -webkit-transform: translate3d(0, -5px, 0);
     -moz-transform: translate3d(0, -5px, 0);
@@ -3056,7 +3039,7 @@ button {
     transform: translate3d(0, -5px, 0);
   }
 }
-/* line 570, sass/_modules.scss */
+/* line 557, sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;
@@ -3066,7 +3049,7 @@ button {
   font-weight: 500;
 }
 
-/* line 583, sass/_modules.scss */
+/* line 570, sass/_modules.scss */
 .swipe {
   overflow: hidden;
   visibility: hidden;
@@ -3075,14 +3058,14 @@ button {
   z-index: 8030;
 }
 
-/* line 590, sass/_modules.scss */
+/* line 577, sass/_modules.scss */
 .swipe-wrap {
   overflow: hidden;
   position: relative;
   height: 100%;
 }
 
-/* line 595, sass/_modules.scss */
+/* line 582, sass/_modules.scss */
 .swipe-wrap > div {
   float: left;
   width: 100%;
@@ -3090,13 +3073,13 @@ button {
   overflow: auto;
   height: 100%;
 }
-/* line 607, sass/_modules.scss */
+/* line 594, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
   width: 100%;
   position: relative;
   height: 100%;
 }
-/* line 613, sass/_modules.scss */
+/* line 600, sass/_modules.scss */
 .swipe-wrap > div img {
   overflow: auto;
   margin: auto;
@@ -3111,6 +3094,25 @@ button {
   display: none;
 }
 
+@media only screen and (max-width: 1024px) {
+  /* line 619, sass/_modules.scss */
+  .indicators li {
+    background: url('img/mask.png?1379880013');
+    width: 20px;
+    height: 25px;
+  }
+
+  /* line 626, sass/_modules.scss */
+  .dot {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+  }
+}
 /* line 10, sass/_starfield.scss */
 .starfield {
   -webkit-perspective: 200px;

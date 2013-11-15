@@ -75,6 +75,7 @@ button {
     }
 
     .indicators {
+        z-index: 2; 
         opacity: 0;
         @include transition( opacity 300ms ease-in );
     }
@@ -120,9 +121,8 @@ button {
 
 .indicators {
     position: absolute;
-    right: 0;
-    display: table;
-    height: 100%;
+    left: 1em;
+    bottom: 1em;
     // Fixes mobile safari 'div seam'
     margin: -1px;
 
@@ -137,29 +137,25 @@ button {
         overflow: hidden;
     }
     li {
-        background: image-url('mask.png');
-        width: 20px;
-        height: 25px;
+        background: image-url('small-mask.png');
+        float: left; 
+        width: 17px;
+        height: 12px;
     }
     a {
         width: 100%;
         height: 100%;
         display: block;
     }
-    .wrapper {
-        display: table-cell;
-        vertical-align: middle;
-        height: 100%;
-    }
 }
 
 .dot {
     position: absolute;
     z-index: -1;
-    width: 20px;
-    height: 20px;
+    width: 12px;
+    height: 12px;
     background: red;
-    @include border-radius(10px);
+    @include border-radius(6px);
 }
 
 .active-slide a {
@@ -511,8 +507,8 @@ button {
 
 .fancybox-lock .indicators {
     position: fixed;
-    bottom: 2.6em;
     left: 3em;
+    bottom: 2.6em;
     height: auto;
     z-index: 8040;
     background: black;
@@ -524,10 +520,6 @@ button {
     }
 
     li { 
-        background: image-url('small-mask.png');
-        float: left; 
-        width: 17px;
-        height: 12px;
 
         &:hover {
             background: white;
@@ -550,14 +542,9 @@ button {
         @include translate3d(0,0,0);
         @include transition(transform 100ms ease);
     }
-
-    .dot {
-        width: 12px;
-        height: 12px;
-    }
 }
 
-@media (min-width: 1024px) {
+@media only screen and (min-width: 1024px) {
     .fancybox-lock .indicators {
         z-index: 8040;
 
@@ -625,4 +612,21 @@ button {
         //opacity: 0;
         //@include transition( opacity 50ms ease );
     }
+}
+
+@media only screen and (max-width: 1024px) {
+    .indicators {
+        li {
+            background: image-url('mask.png');
+            width: 20px;
+            height: 25px;
+        }
+    }
+
+    .dot {
+        @include border-radius(10px);
+        width: 20px;
+        height: 20px;
+    }
+
 }

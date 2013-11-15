@@ -86,7 +86,7 @@ define([
             $(self.els).removeClass('active-slide')
             var p = $(li).addClass('active-slide').position()
             $('#dot').animate({
-                top: p.top
+                left: p.left
             })
         }
 
@@ -163,11 +163,9 @@ define([
     }
 
     Gallery.prototype.init = function(){
-        var $ul = $('<ul/>')
-        var $wrap = $('<div />').addClass('wrapper')
-        var $dot = $('<div/>').attr('id', 'dot').addClass('dot')
+        var $ul = $('<ul/>'),
+            $dot = $('<div/>').attr('id', 'dot').addClass('dot')
 
-        $ul.appendTo($wrap)
         $ul.append($dot)
 
         for (var i = 0; i < this.slides.length; i++){
@@ -179,7 +177,7 @@ define([
             $li.append($a)
             $ul.append($li)
         }
-        $wrap.appendTo('#bullets')
+        $ul.appendTo('#bullets')
 
         // Slide bullets
         this.els = $('#bullets li')
