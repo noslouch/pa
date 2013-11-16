@@ -80,15 +80,11 @@ button {
         @include transition( opacity 300ms ease-in );
     }
 
+    .indicators ul { overflow: auto; }
+
 }
 
 
-
-@media only screen and (min-width: 1080px) {
-    .quotes h3 {
-        font-size: emCalc(15);
-    }
-}
 
 .blind { 
     font-size: 3em;
@@ -467,7 +463,7 @@ button {
         position: fixed;
         top: 0;
         right: 0;
-        z-index: 2;
+        z-index: 8040;
         padding: 39px;
     }
 }
@@ -546,16 +542,6 @@ a.fancybox-prev {
     }
 }
 
-@media only screen and (min-width: 1024px) {
-    .fancybox-lock .indicators {
-        z-index: 8040;
-
-        li:hover a {
-            @include translate3d(0, -5px, 0);
-        }
-    }
-}
-
 .fancybox-title {
     color: $primary-color;
     position: fixed;
@@ -618,19 +604,56 @@ a.fancybox-prev {
     }
 }
 
+@media only screen and (min-width: 1024px) {
+    .fancybox-lock .indicators {
+        z-index: 8040;
+
+        li:hover a {
+            @include translate3d(0, -5px, 0);
+        }
+    }
+}
+
 @media only screen and (max-width: 1024px) {
+    .fancybox-lock .outer-wrapper {
+        opacity: 0;
+    }
+    .fancybox-overlay {
+        opacity: 0;
+        @include transition(opacity 150ms ease);
+    }
     .indicators {
+        margin-bottom: 20px;
+
+        .fancybox-lock & {
+            right: 3em;
+        }
+
         li {
             background: image-url('mask.png');
-            width: 20px;
-            height: 25px;
+            width: 55px;
+            height: 44px;
+            //border-right: 10px solid white;
+            //padding-right: 12px;
+        }
+
+        a {
+            width: 44px;
+            height: 44px;
         }
     }
 
     .dot {
-        @include border-radius(10px);
-        width: 20px;
-        height: 20px;
+        @include border-radius(22px);
+        width: 44px;
+        height: 44px;
     }
 
 }
+
+@media only screen and (min-width: 1080px) {
+    .quotes h3 {
+        font-size: emCalc(15);
+    }
+}
+

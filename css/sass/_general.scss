@@ -129,6 +129,8 @@ iframe {
     bottom: 0;
     right: 0;
     left: 0;
+
+    @include transition(opacity 150ms ease);
 }
 
 .page {
