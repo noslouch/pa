@@ -4,6 +4,10 @@
 {exp:low_reorder:entries set="quote-slides" limit="10" backspace="2"}
     {
         "id" : "{entry_id}",
+        {image_quotes cover_only="yes"}
+        "image" : "{image:url:slide}",
+        "type" : "image",
+        {if image:no_images}
         "type" : "quote",
         "title" : "{title}",
         "lines" : [
@@ -13,6 +17,8 @@
             },
         {/lines}
         ],
+        {/if}
+        {/image_quotes}
         "link" : "{link-url_quotes}",
         "external" : "{external_quote}",
         "link-copy" : "{button_quotes}"
