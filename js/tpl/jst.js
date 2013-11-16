@@ -253,16 +253,16 @@ function( _ ){
     ].join('\n')
 
 
-    JST.jumps = [
-        '<h3>Jump To</h3>',
-        '<div class="wrapper"></div>'
-    ].join('\n')
+    //JST.jumps = [
+    //    '<h3>Jump To</h3>',
+    //    '<div class="wrapper"></div>'
+    //].join('\n')
 
-    JST.mobileJumps = [
-        '<select>',
-            '<option>Jump To</option>',
-        '</select>'
-    ].join('\n')
+    //JST.mobileJumps = [
+    //    '<div class="jumps">
+    //        '<option>Jump To</option>',
+    //    '</select>'
+    //].join('\n')
 
     JST.sorts = [
         '<h3>Sort By</h3>',

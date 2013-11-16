@@ -183,6 +183,19 @@ define([
             this.listenTo( this.model, 'change:' + options.type, this.toggleActive )
         },
         render : function() {
+            if (!mobile && this.id !== 'views') {
+                this.$('.wrapper')
+                    .append( new JumpMenu({
+                        model : this.model,
+                        collection : this.collection,
+                        className : 'date'
+                    }).render() )
+                    .append( new JumpMenu({
+                        model : this.model,
+                        collection : this.collection,
+                        className : 'name'
+                    }).render() )
+            }
             return this.el
         },
         toggleActive : function(model, set){
@@ -192,63 +205,57 @@ define([
     })
 
     var JumpMenu = Backbone.View.extend({
-        tagName : 'div',
-        id : 'jump-to',
-        className : 'jump-to name',
+        tagName : mobile ? 'select' : 'ul',
 
         initialize : function(options) {
-            this.$name = $( (mobile ? '<select/>' : '<ul/>') ).addClass('names')
-            this.$date = $( (mobile ? '<select/>' : '<ul/>') ).addClass('dates')
-            var byDate = this.collection.groupBy(function(model) {
-                    return model.get('date').year()
-                }),
-                byFirst = this.collection.groupBy(function(model) {
-                    return model.get('title')[0]
-                })
-
-            _.each( byDate, function( model, date ) {
-                if ( mobile ) {
-                    var $op = $('<option/>').attr('value', date).html(date)
-                    this.$date.append($op)
-                } else {
-                    var li = document.createElement('li'),
-                        $tag = $('<a />').attr('href', '#' + date).html(date)
-                    $tag.appendTo(li)
-                    this.$date.append(li)
-                }
-            }, this )
-            _.each( byFirst, function( model, first) {
-                if ( mobile ) {
-                    var $op = $('<option/>').attr('value', first).html(first)
-                    this.$name.append($op)
-                } else {
-                    var li = document.createElement('li'),
-                        $tag = $('<a />').attr('href', '#' + first).html(first)
-                    $tag.appendTo(li)
-                    this.$name.append(li)
-                }
-            }, this )
-
-            if (mobile){
-                this.$name.prepend('<option>Jump To</option>')
-                this.$date.prepend('<option>Jump To</option>')
-                this.$el.append(this.$name).append(this.$date)
-            } else {
-                this.$el.append( options.template() )
-                this.$('.wrapper').append(this.$name).append(this.$date)
-            }
-
-            this.listenTo( this.model, 'change:sort', this.toggleActive)
+            _.bindAll(this, 'toggleActive')
             this.listenTo( this.model, 'change:sort', this.toggleActive)
         },
 
         render : function() {
+            var sorted
+            switch( this.className ) {
+                case 'date':
+                    sorted = this.collection.groupBy(function(model) {
+                        return model.get('date').year()
+                    })
+
+                    _.each( sorted, function( model, date ) {
+                        if ( mobile ) {
+                            var $op = $('<option/>').attr('value', date).html(date)
+                            this.$el.append($op)
+                        } else {
+                            var li = document.createElement('li'),
+                                $tag = $('<a />').attr('href', '#' + date).html(date)
+                            $tag.appendTo(li)
+                            this.$el.append(li)
+                        }
+                    }, this )
+                    break;
+                case 'name':
+                    sorted = this.collection.groupBy(function(model) {
+                        return model.get('title')[0]
+                    })
+
+                    _.each( sorted, function( model, first) {
+                        if ( mobile ) {
+                            var $op = $('<option/>').attr('value', first).html(first)
+                            this.$el.append($op)
+                        } else {
+                            var li = document.createElement('li'),
+                                $tag = $('<a />').attr('href', '#' + first).html(first)
+                            $tag.appendTo(li)
+                            this.$el.append(li)
+                        }
+                    }, this )
+                    break;
+            }
+
             return this.el
         },
 
         toggleActive : function( pageModel, sort ) {
-            this.$el.toggleClass( 'name', sort === 'name' )
-            this.$el.toggleClass( 'date', sort === 'date' )
+            this.$el.toggleClass( 'show', sort === this.className )
         }
     })
 
@@ -263,12 +270,12 @@ define([
             'click .filter a' : 'filter',
             'click .sorts button' : 'filter',
             'click .views button' : 'filter',
-            'click .jump-to a' : 'jump',
+            'click .sorts a' : 'jump',
             'click h3' : 'openMenu',
             'change .sorts select' : 'filter',
             'change .views select' : 'filter',
             'change .filter select' : 'filter',
-            'change .jump-to select' : 'jump'
+            'change .jumps select' : 'jump'
         },
 
         debug : function() {
@@ -301,6 +308,33 @@ define([
                             model : this.model,
                             collection : this.collection
                         }).render() )
+
+                    this.$el
+                        .append('<div class="jumps"></div>')
+                        .append( new ViewSort({
+                            model : this.model,
+                            id : 'sorts',
+                            type : 'sort',
+                            template : mobile ? TPL.mobileSorts : TPL.sorts
+                        }).render() )
+                        .append( new ViewSort({
+                            model : this.model,
+                            id : 'views',
+                            type : 'view',
+                            template : mobile ? TPL.mobileViews : TPL.views
+                        }).render() )
+
+                    this.$('.jumps')
+                        .append( new JumpMenu({
+                            model : this.model,
+                            collection : this.collection,
+                            className : 'date'
+                        }).render() )
+                        .append( new JumpMenu({
+                            model : this.model,
+                            collection : this.collection,
+                            className : 'name'
+                        }).render() )
                 } else {
                     this.$('#brand .wrapper')
                         .append( new LogoBtns({
@@ -322,27 +356,24 @@ define([
                             model : this.model,
                             collection : this.collection
                         }).render() )
+
+                    this.$el
+                        .append( new ViewSort({
+                            model : this.model,
+                            collection : this.collection,
+                            id : 'sorts',
+                            type : 'sort',
+                            template : mobile ? TPL.mobileSorts : TPL.sorts
+                        }).render() )
+                        .append( new ViewSort({
+                            model : this.model,
+                            id : 'views',
+                            type : 'view',
+                            template : mobile ? TPL.mobileViews : TPL.views
+                        }).render() )
                 }
             }
 
-            this.$el
-                .append( new JumpMenu({
-                    model : this.model,
-                    collection : this.collection,
-                    template: mobile ? TPL.mobileJumps : TPL.jumps,
-                }).render() )
-                .append( new ViewSort({
-                    model : this.model,
-                    id : 'sorts',
-                    type : 'sort',
-                    template : mobile ? TPL.mobileSorts : TPL.sorts
-                }).render() )
-                .append( new ViewSort({
-                    model : this.model,
-                    id : 'views',
-                    type : 'view',
-                    template : mobile ? TPL.mobileViews : TPL.views
-                }).render() )
 
             if (mobile) {
                 var hash = $.bbq.getState()
