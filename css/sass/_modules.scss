@@ -134,7 +134,7 @@ button {
         background: black;
         z-index: 0;
         position: relative;
-        overflow: hidden;
+        //overflow: hidden;
     }
     li {
         background: image-url('small-mask.png');
@@ -142,7 +142,7 @@ button {
         width: 17px;
         height: 12px;
     }
-    a {
+    li a {
         width: 100%;
         height: 100%;
         display: block;
@@ -348,18 +348,15 @@ button {
 }
 
 .close { 
-    
+    font-size: emCalc(19);
+    font-weight: 100;
+
     span {
-        @include icons-sprite(close);
-        width: 11px;
-        height: 12px;
-        display: block;
+        color: $secondary-color;
     }
     
     &:hover {
-        span {
-            @include icons-sprite(close-hover);
-        }
+        color: $secondary-color;
     }
 }
 
@@ -475,31 +472,35 @@ button {
     }
 }
 
-.fancybox-nav {
+a.fancybox-nav {
+    display: block;
+    float: left;
+    margin-right: 10px;
     //position: fixed;
     //width: 20%;
     //z-index: 0;
 }
 
-.fancybox-next span,
-.fancybox-prev span {
+a.fancybox-next span,
+a.fancybox-prev span {
     width: 9px;
     height: 16px;
     visibility: visible;
+    display: block;
+    position: relative;
+    margin: 0;
 }
 
-.fancybox-next { 
+a.fancybox-next { 
     span {
         @include icons-sprite(next);
-        right: 109px;
     }
     &:hover span { @include icons-sprite(next-hover); }
 }
 
-.fancybox-prev { 
+a.fancybox-prev { 
     span {
         @include icons-sprite(prev);
-        left: 109px;
     }
     &:hover span { @include icons-sprite(prev-hover); }
 }
@@ -510,11 +511,12 @@ button {
     bottom: 2.6em;
     height: auto;
     z-index: 8040;
-    background: black;
 
     ul {
         //@include thin-removal;
         margin: -1px;
+        float: right;
+        border-top: 3px solid white;
         //background: none;
         //overflow: visible;
     }
@@ -561,6 +563,8 @@ button {
     right: 3em;
     font-size: emCalc(13);
     font-weight: 500;
+    text-align: right;
+    text-shadow: none;
 }
 
 //

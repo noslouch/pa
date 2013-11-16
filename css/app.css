@@ -2588,7 +2588,6 @@ button {
   background: black;
   z-index: 0;
   position: relative;
-  overflow: hidden;
 }
 /* line 139, sass/_modules.scss */
 .indicators li {
@@ -2598,7 +2597,7 @@ button {
   height: 12px;
 }
 /* line 145, sass/_modules.scss */
-.indicators a {
+.indicators li a {
   width: 100%;
   height: 100%;
   display: block;
@@ -2686,7 +2685,7 @@ button {
 .icons-sprite, .search-icon, .filter h3:after, .view-all h3:after, .views h3:after,
 .sorts h3:after,
 .jump-to h3:after, .filter h3:hover:after,
-.filter.open h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, .close span, .close:hover span, .film-row .img:before, .film-row > div:hover .img:before, .fancybox-next span, .fancybox-next:hover span, .fancybox-prev span, .fancybox-prev:hover span {
+.filter.open h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, .film-row .img:before, .film-row > div:hover .img:before, a.fancybox-next span, a.fancybox-next:hover span, a.fancybox-prev span, a.fancybox-prev:hover span {
   background: url('img/icons-sf90dc8fc94.png') no-repeat;
 }
 
@@ -2816,19 +2815,21 @@ button {
   background-position: 0 -143px;
 }
 
-/* line 352, sass/_modules.scss */
-.close span {
-  background-position: 0 -195px;
-  width: 11px;
-  height: 12px;
-  display: block;
+/* line 350, sass/_modules.scss */
+.close {
+  font-size: 1.1875em;
+  font-weight: 100;
 }
-/* line 360, sass/_modules.scss */
-.close:hover span {
-  background-position: 0 -183px;
+/* line 354, sass/_modules.scss */
+.close span {
+  color: red;
+}
+/* line 358, sass/_modules.scss */
+.close:hover {
+  color: red;
 }
 
-/* line 366, sass/_modules.scss */
+/* line 363, sass/_modules.scss */
 .film-row .img:before {
   background-position: 0 -17px;
   content: '';
@@ -2841,23 +2842,23 @@ button {
   margin-top: -22px;
 }
 
-/* line 378, sass/_modules.scss */
+/* line 375, sass/_modules.scss */
 .film-row > div:hover .img:before {
   background-position: 0 -60px;
 }
 
-/* line 388, sass/_modules.scss */
+/* line 385, sass/_modules.scss */
 .isotope-item {
   z-index: 2;
 }
 
-/* line 392, sass/_modules.scss */
+/* line 389, sass/_modules.scss */
 .isotope-hidden.isotope-item {
   pointer-events: none;
   z-index: 1;
 }
 
-/* line 400, sass/_modules.scss */
+/* line 397, sass/_modules.scss */
 .isotope,
 .isotope .isotope-item {
   -webkit-transition-duration: 0.8s;
@@ -2867,7 +2868,7 @@ button {
   transition-duration: 0.8s;
 }
 
-/* line 408, sass/_modules.scss */
+/* line 405, sass/_modules.scss */
 .isotope {
   -webkit-transition-property: height, width;
   -moz-transition-property: height, width;
@@ -2876,7 +2877,7 @@ button {
   transition-property: height, width;
 }
 
-/* line 416, sass/_modules.scss */
+/* line 413, sass/_modules.scss */
 .isotope .isotope-item {
   -webkit-transition-property: -webkit-transform, opacity;
   -moz-transition-property: -moz-transform, opacity;
@@ -2885,7 +2886,7 @@ button {
   transition-property: transform, opacity;
 }
 
-/* line 424, sass/_modules.scss */
+/* line 421, sass/_modules.scss */
 .isotope.rtl .isotope-item {
   -webkit-transition-property: right, top, -webkit-transform, opacity;
   -moz-transition-property: right, top, -moz-transform, opacity;
@@ -2894,7 +2895,7 @@ button {
   transition-property: right, top, transform, opacity;
 }
 
-/* line 436, sass/_modules.scss */
+/* line 433, sass/_modules.scss */
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
@@ -2905,7 +2906,7 @@ button {
   transition-duration: 0s;
 }
 
-/* line 449, sass/_modules.scss */
+/* line 446, sass/_modules.scss */
 #fancybox-lock .logo {
   position: fixed;
   top: 39px;
@@ -2918,23 +2919,23 @@ button {
   font-weight: 500;
   line-height: 1;
 }
-/* line 461, sass/_modules.scss */
+/* line 458, sass/_modules.scss */
 #fancybox-lock .logo a {
   color: red;
 }
-/* line 462, sass/_modules.scss */
+/* line 459, sass/_modules.scss */
 #fancybox-lock .logo a:hover {
   color: #999999;
 }
 
-/* line 466, sass/_modules.scss */
+/* line 463, sass/_modules.scss */
 .fancybox-skin {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 469, sass/_modules.scss */
+/* line 466, sass/_modules.scss */
 .fancybox-wrap .close {
   position: fixed;
   top: 0;
@@ -2943,60 +2944,69 @@ button {
   padding: 39px;
 }
 
+/* line 475, sass/_modules.scss */
+a.fancybox-nav {
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+
 /* line 485, sass/_modules.scss */
-.fancybox-next span,
-.fancybox-prev span {
+a.fancybox-next span,
+a.fancybox-prev span {
   width: 9px;
   height: 16px;
   visibility: visible;
+  display: block;
+  position: relative;
+  margin: 0;
 }
 
-/* line 492, sass/_modules.scss */
-.fancybox-next span {
+/* line 495, sass/_modules.scss */
+a.fancybox-next span {
   background-position: 0 -278px;
-  right: 109px;
 }
-/* line 496, sass/_modules.scss */
-.fancybox-next:hover span {
+/* line 498, sass/_modules.scss */
+a.fancybox-next:hover span {
   background-position: 0 -167px;
 }
 
-/* line 500, sass/_modules.scss */
-.fancybox-prev span {
+/* line 502, sass/_modules.scss */
+a.fancybox-prev span {
   background-position: 0 -245px;
-  left: 109px;
 }
-/* line 504, sass/_modules.scss */
-.fancybox-prev:hover span {
+/* line 505, sass/_modules.scss */
+a.fancybox-prev:hover span {
   background-position: 0 -151px;
 }
 
-/* line 507, sass/_modules.scss */
+/* line 508, sass/_modules.scss */
 .fancybox-lock .indicators {
   position: fixed;
   left: 3em;
   bottom: 2.6em;
   height: auto;
   z-index: 8040;
-  background: black;
 }
 /* line 515, sass/_modules.scss */
 .fancybox-lock .indicators ul {
   margin: -1px;
+  float: right;
+  border-top: 3px solid white;
 }
-/* line 524, sass/_modules.scss */
+/* line 526, sass/_modules.scss */
 .fancybox-lock .indicators li:hover {
   background: white;
 }
-/* line 527, sass/_modules.scss */
+/* line 529, sass/_modules.scss */
 .fancybox-lock .indicators li:hover a {
   opacity: 1;
 }
-/* line 531, sass/_modules.scss */
+/* line 533, sass/_modules.scss */
 .fancybox-lock .indicators li.active-slide:hover a {
   background: red;
 }
-/* line 536, sass/_modules.scss */
+/* line 538, sass/_modules.scss */
 .fancybox-lock .indicators li a {
   background: black;
   width: 12px;
@@ -3015,11 +3025,11 @@ button {
 }
 
 @media only screen and (min-width: 1024px) {
-  /* line 548, sass/_modules.scss */
+  /* line 550, sass/_modules.scss */
   .fancybox-lock .indicators {
     z-index: 8040;
   }
-  /* line 551, sass/_modules.scss */
+  /* line 553, sass/_modules.scss */
   .fancybox-lock .indicators li:hover a {
     -webkit-transform: translate3d(0, -5px, 0);
     -moz-transform: translate3d(0, -5px, 0);
@@ -3028,7 +3038,7 @@ button {
     transform: translate3d(0, -5px, 0);
   }
 }
-/* line 557, sass/_modules.scss */
+/* line 559, sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;
@@ -3036,9 +3046,11 @@ button {
   right: 3em;
   font-size: 0.8125em;
   font-weight: 500;
+  text-align: right;
+  text-shadow: none;
 }
 
-/* line 570, sass/_modules.scss */
+/* line 574, sass/_modules.scss */
 .swipe {
   overflow: hidden;
   visibility: hidden;
@@ -3047,14 +3059,14 @@ button {
   z-index: 8030;
 }
 
-/* line 577, sass/_modules.scss */
+/* line 581, sass/_modules.scss */
 .swipe-wrap {
   overflow: hidden;
   position: relative;
   height: 100%;
 }
 
-/* line 582, sass/_modules.scss */
+/* line 586, sass/_modules.scss */
 .swipe-wrap > div {
   float: left;
   width: 100%;
@@ -3062,13 +3074,13 @@ button {
   overflow: auto;
   height: 100%;
 }
-/* line 594, sass/_modules.scss */
+/* line 598, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
   width: 100%;
   position: relative;
   height: 100%;
 }
-/* line 600, sass/_modules.scss */
+/* line 604, sass/_modules.scss */
 .swipe-wrap > div img {
   overflow: auto;
   margin: auto;
@@ -3084,14 +3096,14 @@ button {
 }
 
 @media only screen and (max-width: 1024px) {
-  /* line 619, sass/_modules.scss */
+  /* line 623, sass/_modules.scss */
   .indicators li {
     background: url('img/mask.png?1379880013');
     width: 20px;
     height: 25px;
   }
 
-  /* line 626, sass/_modules.scss */
+  /* line 630, sass/_modules.scss */
   .dot {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;

@@ -14,6 +14,7 @@ define([
             scrolling: 'no',
             type : 'image',
             closeClick: true,
+            arrows : false,
             openEffect : 'fade',
             closeEffect : 'fade',
             nextEffect : 'fade',
@@ -29,18 +30,23 @@ define([
             },
             tpl : {
                 wrap : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-inner"></div></div>',
-                closeBtn : '<a title="Close" class="close" href="javascript:;" id="fb-close"><span></span></a>'
+                closeBtn : '<a title="Close" class="close" href="javascript:;" id="fb-close"><span>X</span> Close</a>'
             },
             afterLoad : function() {
-                if (!window.loaded) {
+                var $bullets = $('#bullet-wrap')
+
+                if (!$bullets.length) {
+                    $bullets = $('<div/>').attr('id', 'bullet-wrap').addClass('indicators')
+
                     var $ul = $('<ul/>'),
-                        $bullet = $('<div/>').attr('id', 'bullet-wrap').addClass('indicators'),
                         $dot = $('<div/>').attr('id','dot').addClass('dot'),
-                        $logo = $('<h1/>').addClass('logo')
+                        $logo = $('<h1/>').addClass('logo'),
+                        $next = $('<a/>').addClass('fancybox-nav fancybox-next').append('<span/>').attr('id', 'next'),
+                        $prev = $('<a/>').addClass('fancybox-nav fancybox-prev').append('<span/>').attr('id', 'prev')
 
                     $logo.html( $('<a/>').attr('href', '/').text('Peter Arnell') )
 
-                    $ul.appendTo($bullet)
+                    $bullets.append($prev).append($next).append($ul)
                     $ul.append($dot)
 
                     for (var i = 0; i < this.group.length; i++) {
@@ -53,13 +59,14 @@ define([
                         $ul.append($li)
                     }
 
-                    $('#fancybox-lock').append($logo).append($bullet)
+                    $('#fancybox-lock').append($logo).append($bullets)
 
                     $('#bullet-wrap li').click(function(){
                         $.fancybox.jumpto(this.id)
                     })
+                    $('#next').click(function(){ $.fancybox.next() })
+                    $('#prev').click(function(){ $.fancybox.prev() })
                 }
-                window.loaded = true
             },
             beforeShow : function() {
                 $('#bullet-wrap li').removeClass('active-slide')
