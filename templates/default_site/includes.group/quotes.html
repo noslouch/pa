@@ -1,19 +1,64 @@
 {exp:ce_cache:stat:ic seconds="86400"}
+
+{exp:stash:set_list
+    parse_depth="5"
+    name="slides"
+    parse_tags="yes"}
+
+    {exp:low_reorder:entries set="quote-slides" limit="10"}
+
+        {stash:image}
+            {image_quotes}<img class="blind closed" src="{image:url:slide}" title="{title}">{/image_quotes}
+        {/stash:image}
+        {stash:id}{entry_id}{/stash:id}
+
+        {exp:stash:set_list:nested 
+            context="{entry_id}"
+            parse_tags="yes"
+            name="quote"}
+
+            {lines}
+                {stash:item}<div class="blind closed">{item}</div>{/stash:item}
+            {/lines}
+
+        {/exp:stash:set_list:nested}
+
+        {stash:button}
+            {if button_quotes}
+                <a href="{link-url_quotes}" class="button closed"{if external_quote} target="_blank"{/if}>{button_quotes}</a>
+            {/if}
+        {/stash:button}
+
+    {/exp:low_reorder:entries}
+{/exp:stash:set_list}
+
+{exp:stash:parse
+    process="end"}
 <div class="quotes" id="quotes">
     <div class="container" id="qContainer">
-    {exp:low_reorder:entries set="quote-slides" limit="10"}
+        {exp:stash:get_list 
+            parse_tags="yes"
+            name="slides"}
         <div class="slide closed">
+                {exp:ifelse parse="inward"}
+                    {if '{image}'}
+            <h3 class="image">
+                        {image}
+                    {if:else}
             <h3>
-                {lines}
-                <div class="blind closed">{item}</div>
-                {/lines}
+                        {exp:stash:get_list:nested
+                            context="{id}"
+                            name="quote"}
+                            {item}
+                        {/exp:stash:get_list:nested}
+                    {/if}
+                {/exp:ifelse}
 
-                {if button_quotes}
-                <a href="{link-url_quotes}" class="button closed"{if external_quote} target="_blank"{/if}>{button_quotes}</a>
-                {/if}
+                {button}
             </h3>
         </div> <!--slide-->
-    {/exp:low_reorder:entries}
+        {/exp:stash:get_list}
     <div class="indicators" id="bullets"></div>
     </div> <!-- .container -->
 </div> <!-- quotes -->
+{/exp:stash:parse}

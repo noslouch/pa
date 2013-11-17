@@ -65,6 +65,15 @@ button {
         height: 100%;
         position: absolute;
         top: 0;
+
+        img { 
+            margin: auto 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            max-height: 100%;}
     }
 
     h3 {
@@ -72,6 +81,8 @@ button {
         vertical-align: middle;
         font-size: emCalc(10);
         @include transition(font-size 150ms ease);
+
+        &.image { display: block; }
     }
 
     .indicators {

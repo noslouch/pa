@@ -91,12 +91,14 @@ define([
         }
 
         var galleryHandler = function(e){
+            if (e.target.nodeName === 'A') { return }
             var openSlide = self.getCurrent(),
                 lastBlind = openSlide.lastBlind(),
                 thirdFromEnd = openSlide.getBlind(openSlide.blinds.length-1),
                 currentBlind = e.target
 
-            if (currentBlind === thirdFromEnd && $(thirdFromEnd).hasClass('closed')) {
+            if ( ( self.getCurrent().blinds.length === 1 && $(openSlide.blinds[0]).hasClass('closed') ) ||
+                 currentBlind === thirdFromEnd && $(thirdFromEnd).hasClass('closed') ) {
                 if (self.q.userChoice){
                     // userChoice flags when the user selects a specific slide
                     // the flag notifies us to override the typical update operation,

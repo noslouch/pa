@@ -44,22 +44,28 @@ define([
                 self = this
 
             _.each( quotes, function(quote) {
-                var $slide = $(TPL.quoteSlide()),
+                var $slide = $( TPL.quoteSlide() ),
                     h3 = $slide.find('h3')
 
-                _.each( quote.lines, function(lineObj) {
-                    var blind = document.createElement('div')
-                    $(blind).addClass('blind closed')
-                    $(blind).html(lineObj.line)
-                    $(h3).append(blind)
-                } )
-                if ( quote.link ){
-                    var a = document.createElement('a')
-                    $(a).attr({
-                        href : quote.link,
-                        class : 'button closed',
-                        target : quote.external ? '_blank' : ''
-                    })
+                if ( quote.type === 'image' ) {
+                    var img = document.createElement('img')
+                    img.src = quote.src
+                    $(h3).append(img)
+                } else {
+                    _.each( quote.lines, function(lineObj) {
+                        var blind = document.createElement('div')
+                        $(blind).addClass('blind closed')
+                        $(blind).html(lineObj.line)
+                        $(h3).append(blind)
+                    } )
+                    if ( quote.link ){
+                        var a = document.createElement('a')
+                        $(a).attr({
+                            href : quote.link,
+                            class : 'button closed',
+                            target : quote.external ? '_blank' : ''
+                        })
+                    }
                 }
                 $(container).append($slide)
             } )
