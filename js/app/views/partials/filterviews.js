@@ -394,9 +394,11 @@ define([
         },
 
         filter : function(e) {
+            var hash, option
+
             try {
-                var hash = e.type === 'change' ? e.currentTarget.selectedOptions[0].dataset.hash : e.currentTarget.dataset.hash,
-                    option = $.deparam( hash, true )
+                hash = e.type === 'change' ? e.currentTarget.selectedOptions[0].dataset.hash : e.currentTarget.dataset.hash
+                option = $.deparam( hash, true )
             } catch(err) { return false }
 
             e.preventDefault()
@@ -406,8 +408,10 @@ define([
         },
 
         jump : function(e) {
+            var jump
+
             try {
-                var jump = e.type === 'change' ? '#' + e.currentTarget.selectedOptions[0].value : e.currentTarget.hash
+                jump = e.type === 'change' ? '#' + e.currentTarget.selectedOptions[0].value : e.currentTarget.hash
             } catch(err) { return false }
 
             e.preventDefault()

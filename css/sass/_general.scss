@@ -486,6 +486,15 @@ iframe {
         display: none;
         &.show { display: block; } 
     }
+
+    .wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .touch .profile & {
+        padding: 0.75em;
+    }
 }
 
 
@@ -596,6 +605,7 @@ iframe {
     }
 }
 
+.jumps a,
 .sorts a {
     font-size: emCalc(19);
     font-weight: 500;

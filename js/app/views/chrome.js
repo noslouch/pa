@@ -169,10 +169,12 @@ define([
                     spinner.detach()
                 })
                 try {
-                    $('.page').html( profileView.render( segment, urlTitle ) )
+                    $('.page').html( profileView.el )
+                    profileView.render( segment, urlTitle )
                 } catch(e) {
                     profileView.model.on('change:loaded', function() {
-                        $('.page').html( profileView.render( segment, urlTitle ) )
+                        $('.page').html( profileView.el )
+                        profileView.render( segment, urlTitle )
                     })
                 }
             })
