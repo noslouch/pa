@@ -164,7 +164,9 @@ define([
         tagName : 'div',
         id : 'showcase',
         className : 'showcase list',
-        initialize : function() {},
+        initialize : function() {
+            _.bindAll( this, 'stagger' )
+        },
         render : function() {
             this.$el.append('<ul/>')
             _.each( this.collection, function(el, idx) {
@@ -172,15 +174,30 @@ define([
                     a = document.createElement('a'),
                     h4 = document.createElement('h4')
 
-                $(a).attr('href', el.url).text(el.title)
+                $(a).attr({
+                    'href' : el['url-title'],
+                    'target' : '_blank'
+                }).text(el.title)
                 $(a).appendTo(h4)
                 $(h4).appendTo(li)
                 this.$('ul').append(li)
             }, this )
 
-            return this.el
-        }
+            setTimeout( this.stagger, 50 )
 
+            return this.el
+        },
+
+        stagger : function() {
+            var $li = this.$('li'),
+                delay = 25
+
+            $li.each(function(i,el){
+                setTimeout(function(){
+                    $(el).addClass('loaded')
+                }, i*delay )
+            })
+        }
     })
 
     return {
