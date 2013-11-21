@@ -63,7 +63,7 @@ define([
 
             e.preventDefault()
             e.stopPropagation()
-            $('.open').removeClass('open')
+            //$('.open').removeClass('open')
             $('html, body').animate({
                 scrollTop : $(jump).offset().top - 115
             })

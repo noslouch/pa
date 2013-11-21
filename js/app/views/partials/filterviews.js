@@ -404,7 +404,9 @@ define([
             e.preventDefault()
             e.stopPropagation()
             $.bbq.pushState( option, option.view === 'random' ? 2 : 0 )
-            this.$('.open').removeClass('open')
+            if ( !$(e.target).parents('#sorts').length ) {
+                this.$('.open').removeClass('open')
+            }
         },
 
         jump : function(e) {
@@ -416,7 +418,7 @@ define([
 
             e.preventDefault()
             e.stopPropagation()
-            this.$('.open').removeClass('open')
+            //this.$('.open').removeClass('open')
             $('html, body').animate({
                 scrollTop : $(jump).offset().top - (this.model.get('view') === 'list' ? 200 : 400)
             })
