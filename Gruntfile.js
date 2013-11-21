@@ -95,7 +95,7 @@ module.exports = function(grunt) {
 
     watch: {
       options : {
-        livereload: true
+        //livereload: true
       },
       test : {
           files : ['testing/js/**/*'],
@@ -109,13 +109,17 @@ module.exports = function(grunt) {
         files: '<%= jshint.src.src %>',
         tasks: ['jshint:src', 'qunit']
       },
-      dev: {
-        files: ['testing/js/tests/**/*','js/**/*', 'css/sass/**/*', 'templates/**/*', 'assets/html/**/*'],
-        tasks : ['jshint:src', 'qunit', 'compass']
-      },
+      //dev: {
+        //files: ['testing/js/tests/**/*','js/**/*', 'css/sass/**/*', 'templates/**/*', 'assets/html/**/*'],
+       // tasks : ['jshint:src', 'qunit', 'compass']
+      //},
       sass : {
         files : ['css/sass/**/*'],
         tasks : ['compass']
+      },
+      css : {
+        files : ['css/master.css'],
+        options : { livereload : true }
       }
     },
 
