@@ -3188,11 +3188,11 @@ a.fancybox-prev:hover span {
   -moz-animation-duration: 15s;
   -moz-animation-name: starfield;
   -moz-animation-iteration-count: infinite;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 150px);
+  -moz-transform: translate3d(0, 0, 150px);
+  -ms-transform: translate3d(0, 0, 150px);
+  -o-transform: translate3d(0, 0, 150px);
+  transform: translate3d(0, 0, 150px);
   opacity: 0;
   -webkit-transition: box-shadow 250ms ease-out;
   -moz-transition: box-shadow 250ms ease-out;
@@ -3239,7 +3239,7 @@ a.fancybox-prev:hover span {
 @-webkit-keyframes starfield {
   /* line 51, sass/_starfield.scss */
   from {
-    -webkit-transform: translate3d(0, 0, 250px);
+    -webkit-transform: translate3d(0, 0, 150px);
     opacity: 0;
     z-index: 100;
   }
@@ -3264,7 +3264,7 @@ a.fancybox-prev:hover span {
 @-moz-keyframes starfield {
   /* line 69, sass/_starfield.scss */
   from {
-    -moz-transform: translate3d(0, 0, 250px);
+    -moz-transform: translate3d(0, 0, 150px);
     opacity: 0;
     z-index: 100;
   }
@@ -3289,7 +3289,7 @@ a.fancybox-prev:hover span {
 @keyframes starfield {
   /* line 87, sass/_starfield.scss */
   from {
-    transform: translate3d(0, 0, 250px);
+    transform: translate3d(0, 0, 150px);
     opacity: 0;
     z-index: 100;
   }

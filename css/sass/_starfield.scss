@@ -20,7 +20,7 @@
    .star {
         position: absolute;
         @include animation-props(15s, starfield, infinite);
-        @include translate3d(0,0,0);
+        @include translate3d(0,0,150px);
         opacity: 0;
         @include transition(box-shadow 250ms ease-out);
         display: block;
@@ -49,7 +49,7 @@
 
 @-webkit-keyframes starfield {
     from {
-        -webkit-transform: translate3d(0,0,250px);
+        -webkit-transform: translate3d(0,0,150px);
         opacity: 0;
         z-index: 100;
     }
@@ -67,7 +67,7 @@
 
 @-moz-keyframes starfield {
     from {
-        -moz-transform: translate3d(0,0,250px);
+        -moz-transform: translate3d(0,0,150px);
         opacity: 0;
         z-index: 100;
     }
@@ -85,7 +85,7 @@
 
 @keyframes starfield {
     from {
-        transform: translate3d(0,0,250px);
+        transform: translate3d(0,0,150px);
         opacity: 0;
         z-index: 100;
     }
