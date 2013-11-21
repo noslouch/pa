@@ -650,7 +650,7 @@ iframe {
     height: 100%;
     padding-left: 0;
     overflow-y: auto;
-    margin-bottom: 7em;
+    padding-bottom: 7em;
 
     header,
     .summary,
@@ -665,7 +665,9 @@ iframe {
         @include grid-column(7.5, $collapse: true);
     }
 
-
+    .touch & {
+        min-width: 0;
+    }
 }
 
 .container {

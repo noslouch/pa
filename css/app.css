@@ -4778,7 +4778,7 @@ iframe {
   height: 100%;
   padding-left: 0;
   overflow-y: auto;
-  margin-bottom: 7em;
+  padding-bottom: 7em;
 }
 /* line 657, sass/_general.scss */
 .details header,
@@ -4806,8 +4806,12 @@ iframe {
   width: 62.5%;
   float: left;
 }
+/* line 668, sass/_general.scss */
+.touch .details {
+  min-width: 0;
+}
 
-/* line 671, sass/_general.scss */
+/* line 673, sass/_general.scss */
 .container {
   position: relative;
   padding-left: 0;
@@ -4817,7 +4821,7 @@ iframe {
   max-width: 854px;
 }
 
-/* line 684, sass/_general.scss */
+/* line 686, sass/_general.scss */
 .viewer .back,
 .container .back {
   display: block;
@@ -4825,7 +4829,7 @@ iframe {
   font-weight: 300;
   margin-bottom: 1em;
 }
-/* line 690, sass/_general.scss */
+/* line 692, sass/_general.scss */
 .viewer .back:before,
 .container .back:before {
   content: "<";
@@ -4834,35 +4838,35 @@ iframe {
   vertical-align: text-top;
   margin-right: 0.5em;
 }
-/* line 698, sass/_general.scss */
+/* line 700, sass/_general.scss */
 .viewer .back:hover,
 .container .back:hover {
   color: red;
 }
 
-/* line 708, sass/_general.scss */
+/* line 710, sass/_general.scss */
 .details h3, .details time {
   font-size: 1.1875em;
 }
-/* line 709, sass/_general.scss */
+/* line 711, sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
 }
-/* line 715, sass/_general.scss */
+/* line 717, sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 720, sass/_general.scss */
+/* line 722, sass/_general.scss */
 .details p {
   font-size: 1.1875em;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 728, sass/_general.scss */
+/* line 730, sass/_general.scss */
 .showcase-links,
 .profile-links {
   font-size: 1.1875em;
@@ -4870,43 +4874,43 @@ iframe {
   line-height: 1.2;
 }
 
-/* line 734, sass/_general.scss */
+/* line 736, sass/_general.scss */
 .tags {
   font-size: 0.8125em;
 }
 
-/* line 738, sass/_general.scss */
+/* line 740, sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 742, sass/_general.scss */
+/* line 744, sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 747, sass/_general.scss */
+/* line 749, sass/_general.scss */
 .profile .details {
   -webkit-transform: translateZ(0);
 }
-/* line 749, sass/_general.scss */
+/* line 751, sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }
 
 @media (max-width: 1024px) {
-  /* line 754, sass/_general.scss */
+  /* line 756, sass/_general.scss */
   .header-wrapper {
     position: relative;
     padding-bottom: 2px;
   }
 
-  /* line 760, sass/_general.scss */
+  /* line 762, sass/_general.scss */
   .inner-header {
     margin-bottom: -3px;
   }
 
-  /* line 767, sass/_general.scss */
+  /* line 769, sass/_general.scss */
   .views,
   .jumps,
   .sorts {
@@ -4914,7 +4918,7 @@ iframe {
     margin-right: 0.5em;
   }
 
-  /* line 780, sass/_general.scss */
+  /* line 782, sass/_general.scss */
   .n-wrapper {
     position: absolute;
     bottom: 0;
@@ -4923,7 +4927,7 @@ iframe {
     margin: 0 auto;
   }
 
-  /* line 788, sass/_general.scss */
+  /* line 790, sass/_general.scss */
   .n-container {
     position: relative;
     -webkit-transform: translate3d(0, 77%, 0);
@@ -4932,7 +4936,7 @@ iframe {
     -o-transform: translate3d(0, 77%, 0);
     transform: translate3d(0, 77%, 0);
   }
-  /* line 792, sass/_general.scss */
+  /* line 794, sass/_general.scss */
   .n-container.open {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);

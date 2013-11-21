@@ -6,8 +6,7 @@
 define([
     'utils/spinner',
     'jquery',
-    'swipe',
-    'utils/orientation'
+    'swipe'
 ], function( Spinner ) {
 
     function gallery(selector, el){
