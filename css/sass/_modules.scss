@@ -158,6 +158,8 @@ button {
     }
 }
 
+.touch .indicators { display: none; }
+
 .dot {
     position: absolute;
     z-index: -1;
@@ -515,46 +517,46 @@ a.fancybox-prev {
     &:hover span { @include icons-sprite(prev-hover); }
 }
 
-.fancybox-lock .indicators {
-    position: fixed;
-    left: 3em;
-    bottom: 2.6em;
-    height: auto;
-    z-index: 8040;
-
-    ul {
-        //@include thin-removal;
-        margin: -1px;
-        float: right;
-        border-top: 3px solid white;
-        //background: none;
-        //overflow: visible;
-    }
-
-    li { 
-
-        &:hover {
-            background: white;
-        }
-        &:hover a {
-            opacity: 1;
-        }
-
-        &.active-slide:hover a {
-            background: red;
-        }
-    }
-
-    li a {
-        background: black;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        opacity: 0;
-        @include translate3d(0,0,0);
-        @include transition(transform 100ms ease);
-    }
-}
+//.fancybox-lock .indicators {
+//    position: fixed;
+//    left: 3em;
+//    bottom: 2.6em;
+//    height: auto;
+//    z-index: 8040;
+//
+//    ul {
+//        //@include thin-removal;
+//        margin: -1px;
+//        float: right;
+//        border-top: 3px solid white;
+//        //background: none;
+//        //overflow: visible;
+//    }
+//
+//    li { 
+//
+//        &:hover {
+//            background: white;
+//        }
+//        &:hover a {
+//            opacity: 1;
+//        }
+//
+//        &.active-slide:hover a {
+//            background: red;
+//        }
+//    }
+//
+//    li a {
+//        background: black;
+//        width: 12px;
+//        height: 12px;
+//        border-radius: 50%;
+//        opacity: 0;
+//        @include translate3d(0,0,0);
+//        @include transition(transform 100ms ease);
+//    }
+//}
 
 .fancybox-title {
     color: $primary-color;
@@ -636,32 +638,33 @@ a.fancybox-prev {
         opacity: 0;
         @include transition(opacity 150ms ease);
     }
-    .indicators {
-        margin-bottom: 20px;
 
-        .fancybox-lock & {
-            right: 3em;
-        }
+    //.indicators {
+    //    margin-bottom: 20px;
 
-        li {
-            background: image-url('mask.png');
-            width: 55px;
-            height: 44px;
-            //border-right: 10px solid white;
-            //padding-right: 12px;
-        }
+    //    .fancybox-lock & {
+    //        right: 3em;
+    //    }
 
-        a {
-            width: 44px;
-            height: 44px;
-        }
-    }
+    //    li {
+    //        //background: image-url('mask.png');
+    //        //width: 55px;
+    //        //height: 44px;
+    //        //border-right: 10px solid white;
+    //        //padding-right: 12px;
+    //    }
 
-    .dot {
-        @include border-radius(22px);
-        width: 44px;
-        height: 44px;
-    }
+    //    a {
+    //        width: 44px;
+    //        height: 44px;
+    //    }
+    //}
+
+    //.dot {
+    //    @include border-radius(22px);
+    //    width: 44px;
+    //    height: 44px;
+    //}
 
 }
 
