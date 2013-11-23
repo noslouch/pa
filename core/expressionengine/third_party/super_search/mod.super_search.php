@@ -7859,7 +7859,7 @@ class Super_search extends Module_builder_super_search
 					}
 					else
 					{
-						$temp[]	= $field." LIKE '%".ee()->super_search_lib->escape_str( $val )."%'";
+						@$temp[]	= $field." LIKE '%".ee()->super_search_lib->escape_str( $val )."%'";
 					}
 				}
 			}
