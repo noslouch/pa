@@ -517,46 +517,46 @@ a.fancybox-prev {
     &:hover span { @include icons-sprite(prev-hover); }
 }
 
-//.fancybox-lock .indicators {
-//    position: fixed;
-//    left: 3em;
-//    bottom: 2.6em;
-//    height: auto;
-//    z-index: 8040;
-//
-//    ul {
-//        //@include thin-removal;
-//        margin: -1px;
-//        float: right;
-//        border-top: 3px solid white;
-//        //background: none;
-//        //overflow: visible;
-//    }
-//
-//    li { 
-//
-//        &:hover {
-//            background: white;
-//        }
-//        &:hover a {
-//            opacity: 1;
-//        }
-//
-//        &.active-slide:hover a {
-//            background: red;
-//        }
-//    }
-//
-//    li a {
-//        background: black;
-//        width: 12px;
-//        height: 12px;
-//        border-radius: 50%;
-//        opacity: 0;
-//        @include translate3d(0,0,0);
-//        @include transition(transform 100ms ease);
-//    }
-//}
+.fancybox-lock .indicators {
+    position: fixed;
+    left: 3em;
+    bottom: 2.6em;
+    height: auto;
+    z-index: 8040;
+
+    ul {
+        //@include thin-removal;
+        margin: -1px;
+        float: right;
+        border-top: 3px solid white;
+        //background: none;
+        //overflow: visible;
+    }
+
+    li { 
+
+        &:hover {
+            background: white;
+        }
+        &:hover a {
+            opacity: 1;
+        }
+
+        &.active-slide:hover a {
+            background: red;
+        }
+    }
+
+    li a {
+        background: black;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        opacity: 0;
+        @include translate3d(0,0,0);
+        @include transition(transform 100ms ease);
+    }
+}
 
 .fancybox-title {
     color: $primary-color;
