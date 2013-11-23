@@ -4564,7 +4564,7 @@ iframe {
 .sorts h4 {
   color: gray;
   font-size: 0.8125em;
-  padding: 0.75em 1em;
+  padding: 0 1em;
 }
 /* line 512, sass/_general.scss */
 .sorts .wrapper {
@@ -4582,8 +4582,8 @@ iframe {
   display: none;
 }
 /* line 525, sass/_general.scss */
-.sorts .name.show,
-.sorts .date.show {
+.sorts .name.active,
+.sorts .date.active {
   display: block;
 }
 /* line 528, sass/_general.scss */
