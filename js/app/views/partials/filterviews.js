@@ -185,6 +185,7 @@ define([
         render : function() {
             if (!mobile && this.id !== 'views') {
                 this.$('.wrapper')
+                    .append('<h4>Jump To</h4>')
                     .append( new JumpMenu({
                         model : this.model,
                         collection : this.collection,
@@ -193,7 +194,7 @@ define([
                     .append( new JumpMenu({
                         model : this.model,
                         collection : this.collection,
-                        className : 'name'
+                        className : 'name show'
                     }).render() )
             }
             return this.el
@@ -315,13 +316,13 @@ define([
                             model : this.model,
                             id : 'sorts',
                             type : 'sort',
-                            template : mobile ? TPL.mobileSorts : TPL.sorts
+                            template : TPL.mobileSorts
                         }).render() )
                         .append( new ViewSort({
                             model : this.model,
                             id : 'views',
                             type : 'view',
-                            template : mobile ? TPL.mobileViews : TPL.views
+                            template : TPL.mobileViews
                         }).render() )
 
                     this.$('.jumps')
@@ -363,13 +364,13 @@ define([
                             collection : this.collection,
                             id : 'sorts',
                             type : 'sort',
-                            template : mobile ? TPL.mobileSorts : TPL.sorts
+                            template : TPL.sorts
                         }).render() )
                         .append( new ViewSort({
                             model : this.model,
                             id : 'views',
                             type : 'view',
-                            template : mobile ? TPL.mobileViews : TPL.views
+                            template : TPL.views
                         }).render() )
                 }
             }

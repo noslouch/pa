@@ -493,6 +493,8 @@ iframe {
     .touch .profile & {
         padding: 0.75em;
     }
+
+
 }
 
 
@@ -501,6 +503,11 @@ iframe {
     margin-left: 0.5em;
 
     h3 { padding: 0.75em 1em; }
+    h4 {
+        color: gray;
+        font-size: emCalc(13);
+        padding: 0.75em 1em;
+    }
 
     .wrapper {
         right: 0;

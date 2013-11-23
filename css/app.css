@@ -4511,83 +4511,89 @@ iframe {
   padding: 0.75em;
 }
 
-/* line 499, sass/_general.scss */
+/* line 501, sass/_general.scss */
 .sorts {
   margin-right: -0.8em;
   margin-left: 0.5em;
 }
-/* line 503, sass/_general.scss */
+/* line 505, sass/_general.scss */
 .sorts h3 {
   padding: 0.75em 1em;
 }
-/* line 505, sass/_general.scss */
+/* line 506, sass/_general.scss */
+.sorts h4 {
+  color: gray;
+  font-size: 0.8125em;
+  padding: 0.75em 1em;
+}
+/* line 512, sass/_general.scss */
 .sorts .wrapper {
   right: 0;
   min-width: 80px;
   width: 100%;
 }
-/* line 511, sass/_general.scss */
+/* line 518, sass/_general.scss */
 .sorts .wrapper ul:first-child {
   margin-bottom: 1em;
 }
-/* line 516, sass/_general.scss */
+/* line 523, sass/_general.scss */
 .sorts .name,
 .sorts .date {
   display: none;
 }
-/* line 518, sass/_general.scss */
+/* line 525, sass/_general.scss */
 .sorts .name.show,
 .sorts .date.show {
   display: block;
 }
-/* line 521, sass/_general.scss */
+/* line 528, sass/_general.scss */
 .sorts button {
   padding: 0;
 }
-/* line 522, sass/_general.scss */
+/* line 529, sass/_general.scss */
 .sorts li {
   line-height: 1.3;
 }
 
-/* line 525, sass/_general.scss */
+/* line 532, sass/_general.scss */
 .views {
   margin-right: 5px;
 }
-/* line 528, sass/_general.scss */
+/* line 535, sass/_general.scss */
 .views button {
   padding-left: 1.5em;
   line-height: 1.5;
 }
-/* line 533, sass/_general.scss */
+/* line 540, sass/_general.scss */
 .views .wrapper {
   left: 0;
   min-width: 150px;
 }
 
-/* line 541, sass/_general.scss */
+/* line 548, sass/_general.scss */
 .controls .views {
   float: left;
   margin: 0;
 }
-/* line 545, sass/_general.scss */
+/* line 552, sass/_general.scss */
 .controls .views button {
   display: inline-block;
   width: auto;
   padding-left: 0;
 }
-/* line 550, sass/_general.scss */
+/* line 557, sass/_general.scss */
 .controls .views button:focus, .controls .views button:active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
-/* line 557, sass/_general.scss */
+/* line 564, sass/_general.scss */
 .controls .views button.active:focus, .controls .views button.active:active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
-/* line 564, sass/_general.scss */
+/* line 571, sass/_general.scss */
 .controls .icon-view:before,
 .controls .title-view:before {
   margin-top: 0;
@@ -4595,7 +4601,7 @@ iframe {
   position: relative;
 }
 
-/* line 579, sass/_general.scss */
+/* line 586, sass/_general.scss */
 .filter h3, .view-all h3, .views h3,
 .jumps h3,
 .sorts h3 {
@@ -4607,19 +4613,19 @@ iframe {
   -o-transition: color 150ms ease;
   transition: color 150ms ease;
 }
-/* line 585, sass/_general.scss */
+/* line 592, sass/_general.scss */
 .filter h3:hover, .view-all h3:hover, .views h3:hover,
 .jumps h3:hover,
 .sorts h3:hover {
   color: red;
 }
-/* line 588, sass/_general.scss */
+/* line 595, sass/_general.scss */
 .filter.open h3, .open.view-all h3, .open.views h3,
 .open.jumps h3,
 .open.sorts h3 {
   color: red;
 }
-/* line 591, sass/_general.scss */
+/* line 598, sass/_general.scss */
 .filter ul .icon, .view-all ul .icon, .views ul .icon,
 .jumps ul .icon,
 .sorts ul .icon,
@@ -4632,13 +4638,13 @@ iframe {
   font-weight: 500;
   margin: 0;
 }
-/* line 597, sass/_general.scss */
+/* line 604, sass/_general.scss */
 .filter button:focus, .view-all button:focus, .views button:focus,
 .jumps button:focus,
 .sorts button:focus {
   outline: none;
 }
-/* line 600, sass/_general.scss */
+/* line 607, sass/_general.scss */
 .filter button.active:focus, .view-all button.active:focus, .views button.active:focus,
 .jumps button.active:focus,
 .sorts button.active:focus {
@@ -4648,7 +4654,7 @@ iframe {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2) inset;
 }
 
-/* line 607, sass/_general.scss */
+/* line 614, sass/_general.scss */
 .jumps a,
 .sorts a {
   font-size: 1.1875em;
@@ -4656,37 +4662,37 @@ iframe {
   margin: 0;
 }
 
-/* line 615, sass/_general.scss */
+/* line 622, sass/_general.scss */
 .views button,
 .sorts button {
   font-size: 1.1875em;
   background: none;
 }
-/* line 618, sass/_general.scss */
+/* line 625, sass/_general.scss */
 .views button:hover,
 .sorts button:hover {
   color: red;
 }
 
-/* line 626, sass/_general.scss */
+/* line 633, sass/_general.scss */
 .contact {
   display: table;
   height: 100%;
   width: 100%;
 }
-/* line 631, sass/_general.scss */
+/* line 638, sass/_general.scss */
 .contact .wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-/* line 636, sass/_general.scss */
+/* line 643, sass/_general.scss */
 .contact h3 {
   margin: 0px;
   line-height: 1;
   font-size: 3.125em;
 }
 
-/* line 647, sass/_general.scss */
+/* line 654, sass/_general.scss */
 .viewer {
   width: 100%;
   margin: 0;
@@ -4705,7 +4711,7 @@ iframe {
   clear: both;
 }
 
-/* line 653, sass/_general.scss */
+/* line 660, sass/_general.scss */
 .details {
   position: relative;
   padding-left: 0.53125em;
@@ -4720,17 +4726,17 @@ iframe {
   overflow-y: auto;
   padding-bottom: 7em;
 }
-/* line 665, sass/_general.scss */
+/* line 672, sass/_general.scss */
 .details header,
 .details .summary,
 .details ul {
   margin-bottom: 1.5rem;
 }
-/* line 668, sass/_general.scss */
+/* line 675, sass/_general.scss */
 .details .tags > li {
   line-height: 1.2;
 }
-/* line 669, sass/_general.scss */
+/* line 676, sass/_general.scss */
 .details .type {
   position: relative;
   padding-left: 0;
@@ -4738,7 +4744,7 @@ iframe {
   width: 37.5%;
   float: left;
 }
-/* line 672, sass/_general.scss */
+/* line 679, sass/_general.scss */
 .details .links {
   position: relative;
   padding-left: 0;
@@ -4746,12 +4752,12 @@ iframe {
   width: 62.5%;
   float: left;
 }
-/* line 676, sass/_general.scss */
+/* line 683, sass/_general.scss */
 .touch .details {
   min-width: 0;
 }
 
-/* line 681, sass/_general.scss */
+/* line 688, sass/_general.scss */
 .container {
   position: relative;
   padding-left: 0;
@@ -4761,7 +4767,7 @@ iframe {
   max-width: 854px;
 }
 
-/* line 694, sass/_general.scss */
+/* line 701, sass/_general.scss */
 .viewer .back,
 .container .back {
   display: block;
@@ -4769,7 +4775,7 @@ iframe {
   font-weight: 300;
   margin-bottom: 1em;
 }
-/* line 700, sass/_general.scss */
+/* line 707, sass/_general.scss */
 .viewer .back:before,
 .container .back:before {
   content: "<";
@@ -4778,35 +4784,35 @@ iframe {
   vertical-align: text-top;
   margin-right: 0.5em;
 }
-/* line 708, sass/_general.scss */
+/* line 715, sass/_general.scss */
 .viewer .back:hover,
 .container .back:hover {
   color: red;
 }
 
-/* line 718, sass/_general.scss */
+/* line 725, sass/_general.scss */
 .details h3, .details time {
   font-size: 1.1875em;
 }
-/* line 719, sass/_general.scss */
+/* line 726, sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
 }
-/* line 725, sass/_general.scss */
+/* line 732, sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 730, sass/_general.scss */
+/* line 737, sass/_general.scss */
 .details p {
   font-size: 1.1875em;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 738, sass/_general.scss */
+/* line 745, sass/_general.scss */
 .showcase-links,
 .profile-links {
   font-size: 1.1875em;
@@ -4814,43 +4820,43 @@ iframe {
   line-height: 1.2;
 }
 
-/* line 744, sass/_general.scss */
+/* line 751, sass/_general.scss */
 .tags {
   font-size: 0.8125em;
 }
 
-/* line 748, sass/_general.scss */
+/* line 755, sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 752, sass/_general.scss */
+/* line 759, sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 757, sass/_general.scss */
+/* line 764, sass/_general.scss */
 .profile .details {
   -webkit-transform: translateZ(0);
 }
-/* line 759, sass/_general.scss */
+/* line 766, sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }
 
 @media (max-width: 1024px) {
-  /* line 764, sass/_general.scss */
+  /* line 771, sass/_general.scss */
   .header-wrapper {
     position: relative;
     padding-bottom: 2px;
   }
 
-  /* line 770, sass/_general.scss */
+  /* line 777, sass/_general.scss */
   .inner-header {
     margin-bottom: -3px;
   }
 
-  /* line 777, sass/_general.scss */
+  /* line 784, sass/_general.scss */
   .views,
   .jumps,
   .sorts {
@@ -4858,7 +4864,7 @@ iframe {
     margin-right: 0.5em;
   }
 
-  /* line 790, sass/_general.scss */
+  /* line 797, sass/_general.scss */
   .n-wrapper {
     position: absolute;
     bottom: 0;
@@ -4867,7 +4873,7 @@ iframe {
     margin: 0 auto;
   }
 
-  /* line 798, sass/_general.scss */
+  /* line 805, sass/_general.scss */
   .n-container {
     position: relative;
     -webkit-transform: translate3d(0, 77%, 0);
@@ -4876,7 +4882,7 @@ iframe {
     -o-transform: translate3d(0, 77%, 0);
     transform: translate3d(0, 77%, 0);
   }
-  /* line 802, sass/_general.scss */
+  /* line 809, sass/_general.scss */
   .n-container.open {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
