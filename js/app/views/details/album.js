@@ -76,6 +76,10 @@ define([
 
             this.$viewer.html( gallery.render() )
 
+                var projectTitle = this.model.get('title')
+                $('#showcaseContainer a').each(function(idx, el) {
+                    $(el).attr('title', ( el.title ? projectTitle + ': ' + el.title : projectTitle ))
+                })
             this.trigger( 'rendered' )
         },
 
