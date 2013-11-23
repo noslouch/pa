@@ -23,7 +23,7 @@ define([
                 title : this.model.get('title'),
                 htmlDate : this.model.get('htmlDate'),
                 date : this.model.get('date').year()
-            }) ).append( this.back({
+            }) ).prepend( this.back({
                 buttonText : 'Back to All Photography',
                 url : '/photography'
             }) )
