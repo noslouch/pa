@@ -234,6 +234,12 @@ define([
             }
 
             this.trigger('rendered')
+            if ( this.collection.findWhere({ active : true }).get('type') === 'gallery') {
+                var projectTitle = this.model.get('title')
+                $('#showcaseContainer a').each(function(idx, el) {
+                    $(el).attr('title', ( el.title ? projectTitle + ': ' + el.title : projectTitle ))
+                })
+            }
         },
 
         swap : function(showcase) {

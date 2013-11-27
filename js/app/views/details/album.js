@@ -23,7 +23,7 @@ define([
                 title : this.model.get('title'),
                 htmlDate : this.model.get('htmlDate'),
                 date : this.model.get('date').year()
-            }) ).append( this.back({
+            }) ).prepend( this.back({
                 buttonText : 'Back to All Photography',
                 url : '/photography'
             }) )
@@ -76,6 +76,10 @@ define([
 
             this.$viewer.html( gallery.render() )
 
+                var projectTitle = this.model.get('title')
+                $('#showcaseContainer a').each(function(idx, el) {
+                    $(el).attr('title', ( el.title ? projectTitle + ': ' + el.title : projectTitle ))
+                })
             this.trigger( 'rendered' )
         },
 

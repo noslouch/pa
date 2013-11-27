@@ -189,12 +189,14 @@ define([
                     .append( new JumpMenu({
                         model : this.model,
                         collection : this.collection,
-                        className : 'date'
+                        className : 'date',
+                        id : 'date'
                     }).render() )
                     .append( new JumpMenu({
                         model : this.model,
                         collection : this.collection,
-                        className : 'name show'
+                        className : 'name',
+                        id : 'name'
                     }).render() )
             }
             return this.el
@@ -256,7 +258,7 @@ define([
         },
 
         toggleActive : function( pageModel, sort ) {
-            this.$el.toggleClass( 'show', sort === this.className )
+            this.$el.toggleClass( 'active', sort === this.className )
         }
     })
 

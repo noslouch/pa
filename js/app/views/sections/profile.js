@@ -273,6 +273,7 @@ define([
             })
             $('.inner-header').removeClass('profile')
             $('.page').removeClass('profile')
+            $('#filter-bar').empty()
         },
 
         navigate : function(e){
