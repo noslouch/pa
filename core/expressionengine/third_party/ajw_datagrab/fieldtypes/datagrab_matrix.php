@@ -18,7 +18,9 @@ class Datagrab_matrix extends Datagrab_fieldtype {
 	function register_setting( $field_name ) {
 		return array( 
 			$field_name . "_columns", 
-			$field_name . "_unique" 
+			$field_name . "_unique", 
+			$field_name . "_extra1", 
+			$field_name . "_extra2"
 		);
 	}
 
@@ -33,41 +35,77 @@ class Datagrab_matrix extends Datagrab_fieldtype {
 	 * @author Andrew Weaver
 	 */
 	function display_configuration( $field_name, $field_label, $field_type, $data ) {
-		$config = array();
-		$config["label"] = form_label($field_label)
-			. BR . anchor("http://brandnewbox.co.uk/support/details/datagrab_and_matrix_fields", "(&#946;eta notes)", 'class="help"');
 
-		$this->EE->db->select( "col_id, col_label" );
+		$config = array();
+
+		$config["label"] = form_label($field_label)
+			. BR . anchor("http://brandnewbox.co.uk/support/details/datagrab_and_matrix_fields", "Matrix notes", 'class="help"');
+
+		// Get list of matrix columns and map column id to label
+		$this->EE->db->select( "col_id, col_label,col_type" );
 		$query = $this->EE->db->get( "exp_matrix_cols" );
 		$matrix_columns = array();
+		$matrix_column_types = array();
 		foreach( $query->result_array() as $row ) {
 			$matrix_columns[ $row["col_id"] ] = $row["col_label"];
+			$matrix_column_types[ $row["col_id"] ] = $row["col_type"];
 		}
 
 		$cells = form_hidden( $field_name, "1" );
+		
+		// Loop over all columns
 		foreach( $data["field_settings"][ $field_name ][ "col_ids"] as $col_id ) {
+
+			// Get current settings if this is a saved import
 			if( isset($data["default_settings"]["cf"][ $field_name . "_columns" ]) ) {
 				$default_cells = $data["default_settings"]["cf"][ $field_name . "_columns" ];
 			} else {
 				$default_cells = array();
 			}
+
+			// Build configuration interface
 			$cells .= "<p>" . 
-				$matrix_columns[ $col_id ] . NBS . ":" . NBS . 
-				form_dropdown( 
-					$field_name . "_columns[" . $col_id . "]", 
-					$data["data_fields"],
-					isset($default_cells[$col_id]) ? $default_cells[$col_id] : ''
-				) . /* NBS .
-				form_radio( 
-					$field_name . "_unique", 
-					$col_id,
-					isset($data["default_settings"]["cf"][ $field_name . "_unique" ]) && 
-						$data["default_settings"]["cf"][ $field_name . "_unique" ] == $col_id ? 
-						$data["default_settings"]["cf"][ $field_name . "_unique" ] : ''
-				) . */
-				"</p>";
+				$matrix_columns[ $col_id ] . NBS . ":" . NBS; 
+
+			$cells .= form_dropdown( 
+				$field_name . "_columns[" . $col_id . "]", 
+				$data["data_fields"],
+				isset($default_cells[$col_id]) ? $default_cells[$col_id] : ''
+			);
+
+			if( $matrix_column_types[ $col_id ] == "file" ) {
+				$cells .= NBS . NBS . "Upload folder: " . NBS;
+				
+				// Get upload folders
+				if( !isset( $folders ) ) {
+					$this->EE->db->select( "id, name" );
+					$this->EE->db->from( "exp_upload_prefs" );
+					$this->EE->db->order_by( "id" );
+					$query = $this->EE->db->get();
+					$folders = array();
+					foreach( $query->result_array() as $row ) {
+						$folders[ $row["id"] ] = $row["name"];
+					}
+				}
+
+				$cells .= form_dropdown( 
+					$field_name . "_extra1[" . $col_id . "]", 
+					$folders,
+					isset($data["default_settings"]["cf"][ $field_name . "_extra1" ][$col_id]) ? $data["default_settings"]["cf"][ $field_name . "_extra1" ][$col_id] : ''
+				);
+				$cells .= NBS . NBS . "Fetch?: " . NBS;
+				$cells .= form_dropdown( 
+					$field_name . "_extra2[" . $col_id . "]", 
+					array("No", "Yes"),
+					isset($data["default_settings"]["cf"][ $field_name . "_extra2" ][$col_id]) ? $data["default_settings"]["cf"][ $field_name . "_extra2" ][$col_id] : ''
+				);
+			}
+
+			$cells .= "</p>";
+				
 		}
 
+		// Pulldown menu to determin what to do for updates
 		$column_options = array();
 		$column_options["-1"] = "Delete all existing rows";
 		$column_options["0"] = "Keep existing rows and append new";
@@ -87,6 +125,7 @@ class Datagrab_matrix extends Datagrab_fieldtype {
 			) .
 			"</p>";
 
+		// return config interface
 		$config["value"] = $cells;
 		return $config;
 	}
@@ -181,6 +220,11 @@ class Datagrab_matrix extends Datagrab_fieldtype {
 									$matrix[ $row_num ][ "col_id_".$col_id ] = array(
 										"filedir" => "",
 										"filename" => ""
+									);
+									$subitem = $DG->_get_file( 
+										$subitem, 
+										$DG->settings["cf"][ $field . "_extra1" ][ $col_id ],
+										$DG->settings["cf"][ $field . "_extra2" ][ $col_id ] == 1 ? TRUE : FALSE
 									);
 									if( preg_match('/{filedir_([0-9]+)}/', $subitem, $matches) ) {
 										$matrix[ $row_num ][ "col_id_".$col_id ] = array(

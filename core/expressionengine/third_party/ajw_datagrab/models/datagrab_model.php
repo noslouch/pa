@@ -18,6 +18,7 @@ class Datagrab_model extends CI_Model {
 	var $batch_limit_completed;
 	var $entries;
 	var $field_settings;
+	var $valid_statuses;
 	
 	var $check_memory = FALSE;
 	var $mem_usage = 0;
@@ -357,7 +358,7 @@ class Datagrab_model extends CI_Model {
 				$data["seo_lite__seo_lite_description"] = $datatype->get_item( $item, $this->settings["cf"]["ajw_seo_lite_description"] );
 				$data["cp_call"] = TRUE;
 			}
-
+    
 			// Check for duplicate entry
 			if( ! isset( $this->settings["config"][ "unique" ] ) ) {
 				$this->settings["config"]["unique"] = '';
@@ -673,7 +674,7 @@ class Datagrab_model extends CI_Model {
 	function _fetch_channel_defaults( $channel ) {
 
 		$this->db->select('channel_id, site_id, channel_title, channel_url, 
-			rss_url, ping_return_url, deft_comments, 
+			rss_url, deft_comments, 
 			deft_status, cat_group, field_group, url_title_prefix');
 		$this->db->from('exp_channels');
 		if( is_numeric($this->settings["import"]["channel"]) ) {
@@ -755,7 +756,6 @@ class Datagrab_model extends CI_Model {
 	 * @return string $status status to assign to entry
 	 */
 	function _fetch_status( $item ) {
-		// @todo: fetch valid settings from db (currently hard-coding open and closed)
 		$status = $this->channel_defaults["deft_status"];
 		if( isset( $this->settings["config"][ "status" ] ) ) {
 			switch( $this->settings["config"]["status"] ) {
@@ -769,6 +769,31 @@ class Datagrab_model extends CI_Model {
 				default:
 				$status = $this->datatype->get_item( $item, $this->settings["config"]["status"] );
 			}
+			
+			// fetch valid settings from db
+			if( !is_array( $this->valid_statuses ) ) {
+				$this->valid_statuses = array();
+				$this->db->select( "status" );
+				$this->db->from( "exp_statuses s" );
+				$this->db->join( "exp_channels c", "c.status_group = s.group_id" );
+				if( is_numeric($this->settings["import"]["channel"]) ) {
+					$this->db->where( 'c.channel_id', $this->settings["import"]["channel"] );
+				} else {
+					$this->db->where( 'c.channel_name', $this->settings["import"]["channel"] );
+					$this->db->where( 'c.site_id', $this->config->item('site_id') );
+				}
+				$this->db->order_by( "status_order ASC" );
+				$query = $this->db->get();
+				foreach( $query->result_array() as $row ) {
+					$this->valid_statuses[ $row["status"] ] = ucfirst($row["status"]);
+				}
+			}
+			
+			// check id setting is a valid custom status for this channel
+			if( in_array( $this->settings["config"]["status"], $this->valid_statuses ) ) {
+				$status = $this->settings["config"]["status"];
+			}
+			
 		}
 		return $status;
 	}
@@ -1368,6 +1393,78 @@ class Datagrab_model extends CI_Model {
 		// print_r( $data ); exit;
 		
 	}
+	
+	function _get_file( $filename, $filedir=1, $fetch_url=FALSE ) {
+	
+		// Is it in the correct format already?
+		if( preg_match('/{filedir_([0-9]+)}/', $filename, $matches) ) {
+			return $filename;
+		}	
+		
+		// Is it a filename?
+		if( ! preg_match('/http+/', $filename, $matches) ) {
+			return "{filedir_" . $filedir . "}" . $filename;
+		}	
+		
+		// Is it a url
+		$url = parse_url( $filename );
+		if( isset( $url["scheme"] ) ) {
+
+			$this->load->library('filemanager');
+			$this->filemanager->xss_clean_off();
+		
+			$basename = basename($filename);
+			$file_path = $this->filemanager->clean_filename(
+				$basename, 
+				$filedir,
+				array('ignore_dupes' => TRUE)
+			);
+			// If ignore_dupes = FALSE, basename may change
+			// $basename = basename($file_path);
+
+			// Does file laready exist?
+			if( file_exists( $file_path ) ) {
+				// File already exists
+				return '{filedir_' . $filedir . '}' . $basename;
+			}
+		
+			if( $fetch_url === TRUE ) {
+				// Fetch contents of url
+				$content = @file_get_contents( $filename );
+				if( $content === FALSE ) {
+					// cannot fetch file
+					return FALSE;
+				}
+			
+				if( file_put_contents($file_path, $content) === FALSE ) {
+					// error copying file to filedir
+					return FALSE;
+				}
+			
+				$result = $this->filemanager->save_file(
+					$file_path, 
+					$filedir, 
+					array(
+						'title'     => $basename,
+						'path'      => dirname($file_path),
+						'file_name' => $basename
+					)
+				);
+		
+				// Check to see the result
+				if ($result['status'] === FALSE) {
+					// file not saved
+					return FALSE;
+				}
+				
+				return '{filedir_' . $filedir . '}' . $basename;
+			}
+					
+		}	
+		
+		return FALSE;		
+	}
+	
 		
 	/*
 		HELPER FUNCTIONS

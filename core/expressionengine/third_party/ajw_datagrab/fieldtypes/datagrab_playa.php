@@ -15,8 +15,8 @@ class Datagrab_playa extends Datagrab_fieldtype {
 
 	function display_configuration( $field_name, $field_label, $field_type, $data ) {
 		$config = array();
-		$config["label"] = form_label($field_label)  . NBS .
-		anchor("http://brandnewbox.co.uk/support/details/importing_into_playa_fields_with_datagrab", "(?)", 'class="help"');
+		$config["label"] = form_label($field_label)  . BR .
+		anchor("http://brandnewbox.co.uk/support/details/importing_into_playa_fields_with_datagrab", "Playa notes", 'class="help"');
 		$config["value"] = "<p>" . form_dropdown( 
 			$field_name, $data["data_fields"], 
 			isset( $data["default_settings"]["cf"][$field_name] ) ? 
