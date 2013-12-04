@@ -1,0 +1,34 @@
+# Changelog
+
+## 1.1
+
+- **New**: Added progress display during file export in the CP.
+- **New**: Cancel button for cancelling an export in the CP.
+- **Improved**: Image tags are now preserved in the export.
+- **Fix**: Fixed an issue where odd rare characters were displayed in certain empty data cells in some applications. 
+- **Fix**: Fixed an issue in some installs with session errors displaying and affecting the cp_js_end hook.
+- **Fix**: Fixed issue where Hokoku scripts would not load when certain third-party add-ons where sharing the cp_js_end hook
+- **Fix**: Fixed issue where category data would occasionally not output in export file.
+- Compatible with EE 2.7. Make sure you're using Zenbu 1.8.5+
+
+## 1.0.1
+
+- **Fix**: Fixed an issue in EE 2.6 where errors where thrown in the background during export
+- **Fix**: Fixed an issue with EE 2.6 throwing an error in the Export Profile editor related to current time.
+
+## 1.0
+
+- **Improved**: Package file/folder structure now compatible with Updater add-on
+- **Improved**: Added help text for permissions.
+- **Fix**: Fixed issue where PHP errors related to stylesheet loading were thrown in some cases
+- **Fix**: Fixed issue where entities in data which are identical to the CSV enclosure would not be escaped.
+- **Fix**: Fixed issues when export was attempted despite having no data to export.
+- **Fix**: Added EE 2.6+ compatibility
+- **Fix**: Added message in template tag helper when there are no saved searches in Zenbu.
+- **Fix**: Fixed issue with empty profile tables displaying.
+- **Fix**: Fixed an issue where Permissions and other settings couldn't be set or accessed when a site was added by MSM after Hokoku was installed.
+
+## 0.9
+
+- Initial release
+

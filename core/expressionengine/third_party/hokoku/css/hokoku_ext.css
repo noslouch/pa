@@ -1,0 +1,50 @@
+button.export
+{
+	padding: 5px;
+	font-weight: bold;
+	width: 100%;
+}
+
+button.export::-moz-focus-inner
+{
+	padding: 5px;
+	font-weight: bold;
+	width: 100%;
+}
+
+div#exportoptions ul li.hokoku_controls
+{
+	margin: 5px 0 0 0;
+}
+
+div#exportoptions ul li.hokoku_controls button
+{
+	width: 50%;
+	padding: 3px;
+	margin: 0 auto;
+	display: block;
+}
+
+div.progressbar
+{
+	border: 2px solid #8ea1ad;
+	border-radius: 10px;
+	height: 5px;
+	margin-bottom: 5px;
+}
+
+div.progressbar div
+{
+	background: #8ea1ad;
+	height: 5px;
+}
+
+div#exportoptions ul li button
+{
+	margin: 5px 0 0 0;
+}
+
+div#exportoptions ul li.manage-profiles
+{
+	padding: 10px 0 0 0;
+}
