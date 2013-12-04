@@ -64,7 +64,7 @@ define([
                 this.$el.append( thumb.render() )
             }, this)
 
-            this.on('render', this.isotope)
+            //this.on('render', this.isotope)
         },
 
         className : function() {
@@ -79,7 +79,8 @@ define([
         },
 
         render : function(options){
-            this.trigger('render')
+            //this.trigger('render')
+            setTimeout(this.isotope, 0)
             if ( this.options.path === 'photography' ||
                  this.model.hasChanged('view') ||
                  this.model.get('type') === 'gallery' ) {
