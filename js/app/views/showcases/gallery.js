@@ -93,25 +93,25 @@ define([
                 fixed = this.$el.hasClass('fixed'),
                 $el = this.$el,
                 isoOps = {
-                transformsEnabled: !rtl,
-                itemSelector: '.thumb',
-                layoutMode : fixed ? 'masonry' : 'fitRows',
-                masonry : {
-                    gutterWidth: 7,
-                    columnWidth: rtl ? 164*1.5 : 164
-                },
-                onLayout : function() {
-                    $(this).css('overflow', 'visible')
-                },
-                getSortData : {
-                    name : function($el) {
-                        return $el.find('.caption p').text()
+                    transformsEnabled: !rtl,
+                    itemSelector: '.thumb',
+                    layoutMode : fixed ? 'masonry' : 'fitRows',
+                    masonry : {
+                        gutterWidth: 7,
+                        columnWidth: rtl ? 164*1.5 : 164
                     },
-                    date : function($el) {
-                        return parseInt( $el.find('.year').text(), 10 )
+                    onLayout : function() {
+                        $(this).css('overflow', 'visible')
+                    },
+                    getSortData : {
+                        name : function($el) {
+                            return $el.find('.caption p').text()
+                        },
+                        date : function($el) {
+                            return parseInt( $el.find('.year').text(), 10 )
+                        }
                     }
                 }
-            }
 
             if ( this.$el.hasClass('isotope') ) {
                 this.$el.isotope(isoOps)

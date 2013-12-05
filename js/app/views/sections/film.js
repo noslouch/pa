@@ -14,7 +14,7 @@ define([
     // Film grid thumbnail
     var FilmThumb = Backbone.View.extend({
         tagName : 'div',
-        className : 'film-thumb',
+        className : 'four-column-cell',
         template : TPL.filmThumb,
         render : function() {
             var html = this.template({
@@ -31,7 +31,7 @@ define([
     // FilmGrid
     var FilmGrid = Backbone.View.extend({
         tagName : 'div',
-        className: 'film-container showcase',
+        className: 'four-column showcase',
         rowTmpl : TPL.filmRow,
         $row : undefined,
         initialize : function() {
@@ -39,7 +39,7 @@ define([
 
             this.collection.forEach( function(model, index){
                 if (index % 4 === 0) {
-                    this.$row = $( this.rowTmpl() )
+                    this.$row = $( this.rowTmpl() ).addClass('film-row')
                     this.$el.append(this.$row)
                 }
                 this.$row.append( new FilmThumb({ 
@@ -51,8 +51,8 @@ define([
 
         render : function() {
             this.delegateEvents()
-            this.$('.film-row').imagesLoaded( function() {
-                $('.film-row').addClass('loaded')
+            this.$('.four-column-row').imagesLoaded( function() {
+                $('.four-column-row').addClass('loaded')
             })
             return this.el
         }
@@ -75,18 +75,20 @@ define([
         },
 
         events : {
-            'click .film-thumb a' : 'navigate'
+            'click .four-column-cell a' : 'navigate'
         },
 
         render : function() {
             this.$el.html( this.filmThumbs.render() )
         },
 
-        onClass : function() {
+        onClose : function() {
             $('.page').removeClass('film')
         },
 
         init : function(spinner) {
+
+            this.$el.addClass('film')
             if ( !this.collection.length ) {
                 throw {
                     message : 'Films aren\'t loaded',

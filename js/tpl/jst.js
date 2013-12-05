@@ -198,7 +198,7 @@ function( _ ){
         '</li>'
     ].join('\n')
 
-    JST.filmRow = '<div class="film-row"></div>'
+    JST.filmRow = '<div class="four-column-row"></div>'
 
     JST.filmThumb = [
         '<a href="<%= url %>">',
