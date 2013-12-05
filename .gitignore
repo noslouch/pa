@@ -11,3 +11,4 @@ assets
 static
 core/expressionengine/config/config.php
 cfg.php
+exports/
