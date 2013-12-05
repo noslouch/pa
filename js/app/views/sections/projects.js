@@ -28,9 +28,10 @@ define([
                 success : function(projects) {
 
                     self.model.cover = new G({
-                        cover : true,
+                        projects : true,
+                        //cover : true,
                         collection : new CoverGallery( projects.pluck('coverImage') ),
-                        path : 'projects',
+                        //path : 'projects',
                         model : self.model
                     })
 

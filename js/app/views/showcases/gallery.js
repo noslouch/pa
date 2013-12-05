@@ -16,30 +16,26 @@ define([
     // Image Showcase thumbnail used in Isotope
     var Thumb = Backbone.View.extend({
         tagName : "div",
-        template : TPL.thumbTemplate,
 
         className : function() {
-            if (this.options.cover) {
+            if (this.options.projects) {
                 var tags = []
                 _.each( this.model.get('tags'), function(obj) {
                     tags.push( obj.className )
                 }, this )
                 return "thumb " + tags.join(' ') + (this.model.get('wide') ? " wide" : "") + " " + this.model.get('year')
             } else {
-                return "thumb" + (this.model.get('wide') ? " wide" : "") + " " + this.model.get('year')
+                return "thumb" + (this.model.get('wide') ? " wide" : "")
             }
         },
 
         render : function(){
-            this.$el.html( this.template({
-                url : this.options.path ? this.options.path + '/' + this.model.get('url-title') : this.model.get('url'),
-                cover : this.options.cover,
-                caption : this.options.path === 'projects' ? this.model.get('title') : this.model.get('caption'),
-                year : this.options.path === 'projects' ? this.model.get('year') : '',
-                thumb : this.model.get('thumb'),
-                lg_thumb : this.model.get('lg_thumb'),
-                large : this.options.large,
-                id : this.model.id
+            this.$el.html( this.options.template({
+                url : this.options.url,
+                caption : this.options.caption,
+                year : this.options.year,
+                thumb : this.options.thumb,
+                id : this.id
             }) )
             return this.el
         }
@@ -56,10 +52,13 @@ define([
 
             this.collection.forEach(function(image) {
                 var thumb = new Thumb({
-                    model : image,
-                    cover : this.options.cover ? true : false,
-                    large : this.collection.length < 5 && !this.options.cover,
-                    path : this.options.path
+                    template : this.options.projects ? TPL.projectCover : TPL.thumbTemplate,
+                    url : this.options.projects ? '/projects/' + image.get('url-title') : image.get('url'),
+                    caption : this.options.projects ? image.get('title') : image.get('caption'),
+                    year : this.options.projects ? image.get('year') : '',
+                    thumb : this.collection.length < 5 && !this.options.projects ? image.get('lg_thumb') : image.get('thumb'),
+                    id : image.id,
+                    model : image
                 })
                 this.$el.append( thumb.render() )
             }, this)
@@ -68,7 +67,7 @@ define([
 
         className : function() {
             var classes = ['isotope-grid', 'showcase', 'image']
-            if (this.options.cover) {
+            if (this.options.projects) {
                 return classes.concat(['fixed']).join(' ')
             } else if (this.collection.length < 5) {
                 return classes.concat(['rtl']).join(' ')
@@ -79,7 +78,7 @@ define([
 
         render : function(options){
             setTimeout(this.isotope, 0) // triggers post-render callback
-            if ( this.options.path === 'photography' ||
+            if ( //this.options.path === 'photography' ||
                  this.model.hasChanged('view') ||
                  this.model.get('type') === 'gallery' ) {
                 return this.el
