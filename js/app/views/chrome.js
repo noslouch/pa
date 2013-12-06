@@ -124,7 +124,7 @@ define([
 
         singleAlbum : function( spinner, albumUrl ) {
             var self = this
-            require(['app/views/details/album'], function( albumView ) {
+            require(['app/views/details/photo'], function( albumView ) {
                 self.setView( albumView )
                 albumView.on('rendered', function() {
                     spinner.detach()
@@ -158,6 +158,21 @@ define([
                 })
 
                 $('.page').html( filmView.render( filmUrl ) )
+            })
+        },
+
+        books : function( spinner ) {
+            var self = this
+            require(['app/views/sections/books'], function( book ){
+                self.setView( book )
+                book.setElement('.page')
+                try{
+                    book.init(spinner)
+                } catch(e) {
+                    Backbone.dispatcher.on('books:ready', function(){
+                        book.init(spinner)
+                    })
+                }
             })
         },
 

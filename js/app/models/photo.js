@@ -2,15 +2,12 @@
 'use strict';
 
 define([
-    'backbone',
-    'app/models/cover',
-    'app/collections/covergallery'
-], function( Backbone, CoverImage, CoverGallery ) {
+    'backbone'
+], function( Backbone ) {
 
     var PhotoAlbum = Backbone.Model.extend({
         parse : function( response, options ) {
-            response.coverImage = new CoverImage( response.cover, {} )
-            response.photos = new CoverGallery( response.gallery )
+            response.photos = new Backbone.Collection( response.gallery )
             response.htmlDate = this.makeHtmlDate( response.timestamp )
             response.date = this.parseDate( response.timestamp )
 

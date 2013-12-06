@@ -6,7 +6,7 @@ define([
     'backbone',
     'underscore',
     'app/collections/films',
-    'app/views/partials/photogrid',
+    'app/views/partials/grid',
     'imagesLoaded'
 ], function( $, Backbone, _, filmCollection, G ) {
 
