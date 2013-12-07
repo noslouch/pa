@@ -20,11 +20,6 @@ define([
         className : 'container',
         initialize : function() {
             _.bindAll( this, 'render', 'contentController' )
-            //Backbone.dispatcher.on( 'filterCheck', function(router){
-            //    if ( router.previous.match('profile') ) {
-            //        $('#filter-bar').empty()
-            //    }
-            //})
         },
 
         render : function( section ){
@@ -233,7 +228,6 @@ define([
                 id : 'profileViewer'
             })
 
-            this.listenTo( this.collection, 'change:active', this.swap )
             this.collection.each(function( section ) {
                 promiseStack.push( section.get('content').fetch() )
             })
@@ -249,6 +243,7 @@ define([
         },
 
         render : function( segment, urlTitle, spinner ) {
+            this.listenTo( this.collection, 'change:active', this.swap )
             this.$container.html( TPL.profileLinks() ).append( this.viewer.el )
             $('.inner-header').addClass('profile')
             this.delegateEvents()
