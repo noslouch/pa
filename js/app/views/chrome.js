@@ -43,8 +43,12 @@ define([
         },
 
         navigate : function(e) {
+            if ( e.target.id === 'home' ) {
+                $('.site-header').addClass( 'home' )
+            } else if ( e.target.id === 'search') {
+                return
+            }
             e.preventDefault()
-            if ( e.target.id === 'search') { return }
             this.currentView.close()
 
             var spinner = new Spinner()
