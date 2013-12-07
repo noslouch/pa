@@ -35,22 +35,30 @@ define([
         },
 
         routes : {
-            "" : "home",
-            "projects" : "projects",
+            "" : "loadPage",
+            "projects" : "loadPage",
             "projects/:project" : "singleProject",
             "projects/:project/:showcase" : "singleProject",
-            "photography" : "photography",
+            "photography" : "loadPage",
             "photography/:title" : "singleAlbum",
-            "film" : "film",
+            "film" : "loadPage",
             "film/:title" : "singleFilm",
+            "books" : "loadPage",
+            "books/:title" : "singleBook",
             "profile" : "profile",
             "profile/:section" : "profile",
             "profile/:section/:urlTitle" : "profile",
-            "contact" : "contact",
-            "stream" : "stream",
+            "contact" : "loadPage",
+            "stream" : "loadPage",
             "search" : "search",
             "search/results" : "results",
             "search/*any" : "search"
+        },
+
+        loadPage : function() {
+            var spinner = new Spinner()
+            var route = Backbone.history.fragment === '' ? 'home' : Backbone.history.fragment
+            Chrome.section( spinner, route )
         },
 
         saveHistory : function() {
@@ -73,24 +81,9 @@ define([
             }
         },
 
-        home : function() {
-            var spinner = new Spinner()
-            Chrome.home(spinner)
-        },
-
-        projects : function() {
-            var spinner = new Spinner()
-            Chrome.projects(spinner)
-        },
-
         singleProject : function(projectUrl, showcaseUrl) {
             var spinner = new Spinner()
             Chrome.singleProject( spinner, projectUrl, showcaseUrl, this.previous )
-        },
-
-        photography : function() {
-            var spinner = new Spinner()
-            Chrome.photography( spinner )
         },
 
         singleAlbum : function( albumUrl ) {
@@ -98,12 +91,13 @@ define([
             Chrome.singleAlbum( spinner, albumUrl )
         },
 
-        film : function() {
-            var spinner = new Spinner()
-            Chrome.film( spinner )
-        },
 
         singleFilm : function( filmUrl ) {
+            var spinner = new Spinner()
+            Chrome.singleFilm( spinner, filmUrl )
+        },
+
+        singleBook : function( filmUrl ) {
             var spinner = new Spinner()
             Chrome.singleFilm( spinner, filmUrl )
         },
@@ -111,16 +105,6 @@ define([
         profile : function( segment, urlTitle ) {
             var spinner = new Spinner()
             Chrome.profile( spinner, segment, urlTitle )
-        },
-
-        contact : function() {
-            var spinner = new Spinner()
-            Chrome.contact( spinner )
-        },
-
-        stream : function() {
-            var spinner = new Spinner()
-            Chrome.stream( spinner )
         },
 
         search : function() {

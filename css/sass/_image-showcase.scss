@@ -9,6 +9,11 @@
     margin: 0 auto;
     height: 100%;
     max-width: 1190px;
+
+    .profile & {
+        width: 667px;
+        float: right;
+    }
     
     img {
         opacity: 0;

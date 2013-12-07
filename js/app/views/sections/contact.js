@@ -9,7 +9,6 @@ define([
 ], function( Backbone, _, $ ){
 
     var Contact = Backbone.View.extend({
-        className : 'contact',
         render : function(){
             var $wrapper = $('<div/>').addClass('wrapper'),
                 $phone = $('<h3/>').addClass('phone').text('(212) 260-3631'),
@@ -18,9 +17,8 @@ define([
 
             $email.append($link)
             $wrapper.append($phone).append($email)
-            this.$el.append($wrapper)
-            $('.page').addClass('contact')
-            return this.el
+            this.$el.append($wrapper).addClass('contact')
+            //$('.page').addClass('contact')
         },
 
         onClose : function() {

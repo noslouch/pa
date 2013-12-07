@@ -14,7 +14,7 @@ define([
 
     var App = Backbone.View.extend({
         initialize : function() {
-            _.bindAll( this, 'showSearch', 'navigate', 'setView', 'detail', 'home', 'projects', 'singleProject', 'photography', 'singleAlbum', 'film', 'singleFilm', 'profile')
+            _.bindAll( this, 'showSearch', 'navigate', 'setView', 'detail', 'section', 'singleProject', 'singleAlbum', 'singleFilm', 'profile')
 
             this.model = new Backbone.Model()
             this.searchForm = new Search.Form({
@@ -47,8 +47,11 @@ define([
             this.currentView.close()
 
             var spinner = new Spinner()
-            this[e.target.id](spinner)
-
+            if ( e.target.id === 'profile' ) {
+                this.profile(spinner)
+            } else {
+                this.section(spinner,e.target.id)
+            }
             this.$('#nav a').removeClass( 'active' )
             $(e.target).addClass( 'active' )
             Backbone.dispatcher.trigger('navigate:section', e)
@@ -62,6 +65,35 @@ define([
             console.log(model)
         },
 
+        section : function(spinner, section) {
+            var self = this
+
+            require(['app/views/sections/' + section], function( view ) {
+                self.setView(view)
+                view.setElement('.page')
+                if (section === 'home') {
+                    var bootstrap = !!$('#n-container').length
+                    view.render()
+                } else if (section === 'stream') {
+                    view.render(spinner)
+                } else {
+                    try {
+                        view.init(spinner)
+                        if (section === 'projets') { view.filter.$el.show() }
+                    } catch(e) {
+                        Backbone.dispatcher.on( section + ':ready', function() {
+                            view.init(spinner)
+                        })
+                    }
+                }
+                spinner.detach()
+                if (section === 'projects') {
+                    self.listenTo( view.collection, 'change:active', self.detail )
+                }
+            })
+        },
+
+/*
         home : function(spinner) {
             var self = this,
                 bootstrap = !!$('#n-container').length
@@ -73,7 +105,9 @@ define([
                 spinner.detach()
             })
         },
+*/
 
+/*
         projects : function(spinner) {
             var self = this
             require(['app/views/sections/projects'], function( projects ) {
@@ -92,6 +126,7 @@ define([
 
             })
         },
+*/
 
         singleProject : function( spinner, projectUrl, showcaseUrl, previous ) {
             var self = this
@@ -107,6 +142,8 @@ define([
             })
         },
 
+
+/*
         photography : function( spinner ) {
             var self = this
             require(['app/views/sections/photography'], function( photography ) {
@@ -121,6 +158,8 @@ define([
                 }
             })
         },
+*/
+
 
         singleAlbum : function( spinner, albumUrl ) {
             var self = this
@@ -134,6 +173,7 @@ define([
             })
         },
 
+/*
         film : function( spinner ) {
             var self = this
             require(['app/views/sections/film'], function( film ){
@@ -148,6 +188,7 @@ define([
                 }
             })
         },
+*/
 
         singleFilm : function( spinner, filmUrl ) {
             var self = this
@@ -161,6 +202,7 @@ define([
             })
         },
 
+/*
         books : function( spinner ) {
             var self = this
             require(['app/views/sections/books'], function( book ){
@@ -175,6 +217,7 @@ define([
                 }
             })
         },
+*/
 
         profile : function( spinner, segment, urlTitle) {
             var self = this
@@ -195,6 +238,7 @@ define([
             })
         },
 
+/*
         contact : function( spinner ) {
             var self = this
             require(['app/views/sections/contact'],
@@ -204,8 +248,9 @@ define([
                 spinner.detach()
             })
         },
+*/
 
-
+/*
         stream : function( spinner ) {
             var self = this
             require(['app/views/sections/stream'],
@@ -215,7 +260,7 @@ define([
                 stream.render(spinner)
             })
         },
-
+*/
         search : function() {
             this.pageSearch = new Search.Form({
                 el : '#pageSearchForm'
