@@ -35,30 +35,36 @@ define([
         },
 
         routes : {
-            "" : "loadPage",
-            "projects" : "loadPage",
-            "projects/:project" : "singleProject",
-            "projects/:project/:showcase" : "singleProject",
-            "photography" : "loadPage",
-            "photography/:title" : "singleAlbum",
-            "film" : "loadPage",
-            "film/:title" : "singleFilm",
-            "books" : "loadPage",
-            "books/:title" : "singleBook",
-            "profile" : "profile",
-            "profile/:section" : "profile",
-            "profile/:section/:urlTitle" : "profile",
-            "contact" : "loadPage",
-            "stream" : "loadPage",
+            "" : "section",
+            "projects" : "section",
+            "projects/:project" : "detail",
+            "projects/:project/:showcase" : "detail",
+            "photography" : "section",
+            "photography/:title" : "detail",
+            "film" : "section",
+            "film/:title" : "detail",
+            "books" : "section",
+            "books/:title" : "detail",
+            "profile" : "section",
+            "profile/:section" : "section",
+            "profile/:section/:urlTitle" : "section",
+            "contact" : "section",
+            "stream" : "section",
             "search" : "search",
             "search/results" : "results",
             "search/*any" : "search"
         },
 
-        loadPage : function() {
+        section : function( segment, urlTitle ) {
             var spinner = new Spinner()
-            var route = Backbone.history.fragment === '' ? 'home' : Backbone.history.fragment
-            Chrome.section( spinner, route )
+            var section = Backbone.history.fragment.match(/[^\/]*/).join('') === '' ? 'home' : Backbone.history.fragment.match(/[^\/]*/).join('')
+            Chrome.section( spinner, section, segment, urlTitle )
+        },
+
+        detail : function( urlTitle, showcaseUrl ) {
+            var section = Backbone.history.fragment.match(/[^\/]*/).join('')
+            var spinner = new Spinner()
+            Chrome.detail( spinner, section, urlTitle, showcaseUrl, this.previous )
         },
 
         saveHistory : function() {
@@ -70,7 +76,7 @@ define([
         },
 
         debug : function() {
-            console.log('navigated to ', arguments[0])
+            console.log(Backbone.history.fragment.match(/^.*\//).join('').slice(0,-1))
         },
 
         payload : function(method) {
@@ -79,27 +85,6 @@ define([
             } catch(e) {
                 console.log('error caught: ', e)
             }
-        },
-
-        singleProject : function(projectUrl, showcaseUrl) {
-            var spinner = new Spinner()
-            Chrome.singleProject( spinner, projectUrl, showcaseUrl, this.previous )
-        },
-
-        singleAlbum : function( albumUrl ) {
-            var spinner = new Spinner()
-            Chrome.singleAlbum( spinner, albumUrl )
-        },
-
-
-        singleFilm : function( filmUrl ) {
-            var spinner = new Spinner()
-            Chrome.singleFilm( spinner, filmUrl )
-        },
-
-        singleBook : function( filmUrl ) {
-            var spinner = new Spinner()
-            Chrome.singleFilm( spinner, filmUrl )
         },
 
         profile : function( segment, urlTitle ) {
@@ -120,6 +105,25 @@ define([
             }
             $('nav .active').removeClass('active')
         }
+
+/*
+        singleFilm : function( filmUrl ) {
+            console.log(Backbone.history.fragment.match(/^.*\//).join('').slice(0,-1))
+            var spinner = new Spinner()
+            Chrome.singleFilm( spinner, filmUrl )
+        },
+
+        singleBook : function( bookUrl ) {
+            var spinner = new Spinner()
+            Chrome.singleBook( spinner, bookUrl )
+        },
+
+        singleProject : function(projectUrl, showcaseUrl) {
+            console.log(Backbone.history.fragment.match(/^.*\//).join('').slice(0,-1))
+            var spinner = new Spinner()
+            Chrome.singleProject( spinner, projectUrl, showcaseUrl, this.previous )
+        },
+*/
     })
 
     var router = new Router()

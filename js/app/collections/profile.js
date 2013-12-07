@@ -5,35 +5,7 @@ define([
     'backbone',
     'underscore',
     'app/collections/covergallery',
-    //'app/router',
-    //'app/models/profile'
 ], function( Backbone, _, CoverGallery ) {
-
-    /* DEPRECATED
-    var Model = Backbone.Model.extend({
-        initialize : function() {
-            _.bindAll( this, 'activate', 'deactivate')
-        },
-        defaults : {
-            active : false
-        },
-        activate : function(first){
-            this.set('active', true)
-            Backbone.dispatcher.trigger('profile:sectionActivate', this, first)
-        },
-
-        deactivate : function(){
-            this.set('active', false)
-        }
-    })
-
-    var ListItem = Model.extend({
-        activate : function(){
-            this.set('active', true)
-            Backbone.dispatcher.trigger('profile:listItemActivate', this)
-        }
-    })
-    */
 
     var Section = Backbone.Model.extend({
         initialize : function() {
@@ -45,8 +17,8 @@ define([
         defaults : {
             active : false
         },
-        activate : function(){
-            this.set('active', true)
+        activate : function(urlTitle){
+            this.set('active', true, {urlTitle : urlTitle ? true : false})
         },
         deactivate : function(silent){
             this.set({'active' : false},{ silent : silent || false })

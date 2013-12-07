@@ -1,6 +1,6 @@
 /* DEPRECATED
  * *************************************************************
- * app/models/profilesection.js - All Profile Section models */
+ * app/models/profilesection.js - All Profile Section models
 'use strict';
 
 define([
@@ -69,4 +69,4 @@ define([
     return Profile
 })
 
-
+*/

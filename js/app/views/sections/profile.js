@@ -220,8 +220,6 @@ define([
     })
 
     var Profile = Backbone.View.extend({
-        className : 'profile viewer',
-        id : 'profileViewer',
         initialize : function() {
             _.bindAll( this, 'navigate', 'toggleSection', 'swap', 'back' )
             var promiseStack = [],
@@ -230,7 +228,12 @@ define([
             this.collection = sections
             this.viewer = new Content()
             this.links = new Backbone.Collection()
+            this.$container = $('<div/>').attr({
+                class : 'profile viewer',
+                id : 'profileViewer'
+            })
 
+            this.listenTo( this.collection, 'change:active', this.swap )
             this.collection.each(function( section ) {
                 promiseStack.push( section.get('content').fetch() )
             })
@@ -245,8 +248,8 @@ define([
             'click #profileLinks a' : 'toggleSection'
         },
 
-        render : function( segment, urlTitle ) {
-            this.$el.html( TPL.profileLinks() ).append( this.viewer.el )
+        render : function( segment, urlTitle, spinner ) {
+            this.$container.html( TPL.profileLinks() ).append( this.viewer.el )
             $('.inner-header').addClass('profile')
             this.delegateEvents()
             if ( !this.model.get('loaded') ){
@@ -256,15 +259,17 @@ define([
                 }
             }
 
-            this.listenTo( this.collection, 'change:active', this.swap )
+            this.$el.html( this.$container )
             var section = segment ? segment : 'bio'
-            this.collection.get(section).activate()
-            if (urlTitle ) {
+            this.collection.get(section).activate(urlTitle)
+
+            if ( urlTitle ) {
                 var item = this.collection.section(segment).findWhere({ 'url-title' : urlTitle })
                 this.viewer.contentController( item )
             }
+
             this.trigger('rendered')
-            return this.el
+            spinner.detach()
         },
 
         onClose : function() {
@@ -295,7 +300,7 @@ define([
             this.collection.get(section).activate()
         },
 
-        swap : function(section) {
+        swap : function(section, val, ops) {
             // there are some situations where there isn't a disabled section
             if ( section.get('active') ) {
                 try {
@@ -307,7 +312,9 @@ define([
                     last[0].deactivate()
                 } catch(err) {}
 
-                this.viewer.render( section )
+                if (!ops.urlTitle){
+                    this.viewer.render( section )
+                }
                 this.$('#profileLinks .active').removeClass('active')
                 this.$('#' + section.id).addClass('active')
             }

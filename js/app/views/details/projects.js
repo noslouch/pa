@@ -11,8 +11,9 @@ define([
     'app/views/showcases/text',
     'app/views/showcases/list',
     'app/views/showcases/video',
-    'app/models/project'
-], function( $, Backbone, _, TPL, G, T, l, V, ProjectModel ) {
+    'app/models/project',
+    'utils/spinner'
+], function( $, Backbone, _, TPL, G, T, l, V, ProjectModel, Spinner ) {
 
     var TagRow = Backbone.View.extend({
         tagName : 'li',
@@ -223,22 +224,23 @@ define([
                 url : this.previous ? '/projects' + this.previous.hash : '/projects'
             }) )
 
-            if ( ops.showcaseUrl ) {
-                this.collection.findWhere({ url_title : ops.showcaseUrl }).activate()
-            } else {
-                if ( this.collection.length ) {
-                    this.collection.first().activate(true)
+            try {
+                if ( ops.showcaseUrl ) {
+                    this.collection.findWhere({ url_title : ops.showcaseUrl }).activate()
                 } else {
-                    this.viewer.$el.html('<p>No media for this project</p>')
+                    this.collection.first().activate(true)
                 }
-            }
 
-            this.trigger('rendered')
-            if ( this.collection.findWhere({ active : true }).get('type') === 'gallery') {
-                var projectTitle = this.model.get('title')
-                $('#showcaseContainer a').each(function(idx, el) {
-                    $(el).attr('title', ( el.title ? projectTitle + ': ' + el.title : projectTitle ))
-                })
+                this.trigger('rendered')
+                if ( this.collection.findWhere({ active : true }).get('type') === 'gallery') {
+                    var projectTitle = this.model.get('title')
+                    $('#showcaseContainer a').each(function(idx, el) {
+                        $(el).attr('title', ( el.title ? projectTitle + ': ' + el.title : projectTitle ))
+                    })
+                }
+            } catch(e) {
+                this.viewer.$el.html('<p>No media for this project</p>')
+                this.trigger('rendered')
             }
         },
 
@@ -249,8 +251,8 @@ define([
 
         goBack : function(e) {
             e.preventDefault()
-            Backbone.dispatcher.trigger('navigate:section', e)
-            Backbone.dispatcher.trigger('projects:goBack')
+            Backbone.dispatcher.trigger( 'navigate:section', e )
+            Backbone.dispatcher.trigger( 'goBack', new Spinner(), 'projects' )
         }
     })
 

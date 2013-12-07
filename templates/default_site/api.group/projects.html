@@ -9,6 +9,7 @@
         "title": "{title}",
         "timestamp" : "{year_projects}000",
         "url-title": "{url_title}",
+        "summary": {exp:json_encode}{summary_projects}{/exp:json_encode},
         "cover" : {
             {cover_projects}
             {if image:category == 'landscape'}
@@ -28,7 +29,6 @@
             "title" : "{title}",
             "url-title" : "{url_title}"
         },
-        "summary": {exp:json_encode}{summary_projects}{/exp:json_encode},
         "brand_tags" : 
         [
             {categories show_group="21" backspace="14"}

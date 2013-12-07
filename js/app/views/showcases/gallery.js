@@ -18,7 +18,7 @@ define([
         tagName : "div",
 
         className : function() {
-            if (this.options.projects) {
+            if ( this.model.has('tags') ){
                 var tags = []
                 _.each( this.model.get('tags'), function(obj) {
                     tags.push( obj.className )

@@ -15,7 +15,7 @@ define([
             _.bindAll( this, 'open' )
         },
 
-        render : function() {
+        render : function(spinner) {
             this.$el.addClass( 'home' )
 
             if ( !$('#n-container').length ) {
@@ -28,14 +28,54 @@ define([
                 $.when.apply( $, promiseStack ).done(function(quotesRes, bricksRes){
                     self.quoteTemplate(quotesRes[0])
                     self.noteworthyTemplate(bricksRes[0])
-                    self.init()
+                    self.init(spinner)
                 })
-
-                //this.noteworthyBuilder()
-                //this.init()
             } else {
-                this.init()
+                this.init(spinner)
             }
+        },
+
+        init : function(spinner) {
+            this.$noteworthy = $('#n-container')
+            $('#n-container header').click(this.open)
+
+            this.slideshow = (function(){
+                var c = document.getElementById('qContainer')
+                var i = new Q.Quotes(c)
+                return _.bind( i.init, i )
+            }())
+
+            this.slideshow()
+            Q.inspector()
+
+            var brickClass
+
+            switch( $('.brick').length ) {
+                case 4:
+                    brickClass = 'four'
+                    break;
+                case 3:
+                    brickClass = 'three'
+                    break;
+                case 2:
+                    brickClass = 'two'
+                    break;
+                case 1:
+                    brickClass = 'one'
+                    break;
+                default:
+                    break;
+            }
+
+            $('#brickRow').addClass(brickClass)
+
+            setTimeout( function(){
+                $('.site-header').removeClass('home')
+                $('.n-wrapper').removeClass('home')
+                $('#bullets').addClass('loaded')
+            }, 2000 )
+
+            spinner.detach()
         },
 
         quoteTemplate : function(quotes) {
@@ -112,47 +152,6 @@ define([
 
         onClose : function(){
             $('.page').removeClass('home')
-        },
-
-        init : function() {
-            this.$noteworthy = $('#n-container')
-            $('#n-container header').click(this.open)
-
-            this.slideshow = (function(){
-                var c = document.getElementById('qContainer')
-                var i = new Q.Quotes(c)
-                return _.bind( i.init, i )
-            }())
-
-            this.slideshow()
-            Q.inspector()
-
-            var brickClass
-
-            switch( $('.brick').length ) {
-                case 4:
-                    brickClass = 'four'
-                    break;
-                case 3:
-                    brickClass = 'three'
-                    break;
-                case 2:
-                    brickClass = 'two'
-                    break;
-                case 1:
-                    brickClass = 'one'
-                    break;
-                default:
-                    break;
-            }
-
-            $('#brickRow').addClass(brickClass)
-
-            setTimeout( function(){
-                $('.site-header').removeClass('home')
-                $('.n-wrapper').removeClass('home')
-                $('#bullets').addClass('loaded')
-            }, 2000 )
         }
     })
     return new Home()

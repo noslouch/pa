@@ -7,8 +7,9 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/showcases/gallery'
-], function( $, Backbone, _, TPL, G ) {
+    'app/views/showcases/gallery',
+    'utils/spinner'
+], function( $, Backbone, _, TPL, G, Spinner ) {
 
     var AlbumDetails = Backbone.View.extend({
         template : TPL.textTemplate, // type, content
@@ -16,8 +17,8 @@ define([
         back : TPL.backButton, // buttonText, url
         render : function() {
             var $article = $( this.template({
-                type : 'photo',
-                content : this.model.get('summary')
+                type : null,
+                content : this.model.get('content')
             }) ).prepend( this.header({
                 title : this.model.get('title'),
                 htmlDate : this.model.get('htmlDate'),
@@ -84,7 +85,7 @@ define([
         back : function(e) {
             e.preventDefault()
             Backbone.dispatcher.trigger('navigate:section', e)
-            Backbone.dispatcher.trigger(this.namespace + ':goBack')
+            Backbone.dispatcher.trigger( 'goBack', new Spinner(), this.namespace )
         }
 
     })

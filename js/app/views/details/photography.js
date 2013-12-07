@@ -1,4 +1,4 @@
-/* app/views/details/photo.js
+/* app/views/details/photography.js
  * detail view for photo galleries */
 'use strict';
 
@@ -8,7 +8,7 @@ define([
     'underscore',
     'tpl/jst',
     'app/models/photo',
-    'app/views/partials/album'
+    'app/views/partials/album',
 ], function( $, Backbone, _, TPL, P, A ) {
 
     var PhotoDetails = A.Details.extend({
