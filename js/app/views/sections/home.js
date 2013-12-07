@@ -154,6 +154,7 @@ define([
 
         onClose : function(){
             $('.page').removeClass('home')
+            $('.page')[0].style.removeProperty('padding-bottom')
         }
     })
     return new Home()
