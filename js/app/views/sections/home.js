@@ -90,6 +90,8 @@ define([
                 if ( quote.type === 'image' ) {
                     var img = document.createElement('img')
                     img.src = quote.src
+                    img.classList.add('blind', 'closed')
+                    img.title = quote.title
                     $(h3).append(img)
                 } else {
                     _.each( quote.lines, function(lineObj) {
@@ -118,14 +120,14 @@ define([
                 imgSize
 
             switch(bricks.length) {
-                case '4':
+                case 4:
                     imgSize = 'one-quarter'
                     break;
-                case '3':
+                case 3:
                     imgSize = 'one-third'
                     break;
-                case '2':
-                case '1':
+                case 2:
+                case 1:
                     imgSize = 'one-half'
                     break;
                 default:
@@ -134,13 +136,13 @@ define([
 
             _.each( bricks, function(brick) {
                 $(row).append( TPL.brick({
-                    src : brick.imgSize,
+                    src : brick['image-sizes'] ? brick['image-sizes'][this] : '',
                     link : brick.link,
                     external : brick.external ? ' target="_blank"' : '',
                     title : brick.title,
                     summary : brick.summary
                 }) )
-            } )
+            }, imgSize )
             this.$el.append($noteworthy)
         },
 
