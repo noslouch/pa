@@ -1,4 +1,7 @@
-{exp:channel:entries channel="noteworthy" limit="4" disable="categories|member_data|pagination"}
+{exp:structure:entries
+    parent_id="586"
+    limit="4"
+    disable="categories|member_data|pagination"}
 
 {if count == '1'}
 <div class="n-wrapper home">
@@ -47,4 +50,4 @@
 </div> <!-- .n-wrapper -->
 {/if}
 
-{/exp:channel:entries}
+{/exp:structure:entries}

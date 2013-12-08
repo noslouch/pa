@@ -5,7 +5,10 @@
     name="slides"
     parse_tags="yes"}
 
-    {exp:low_reorder:entries set="quote-slides" limit="10"}
+    {exp:structure:entries
+        parent_id="585"
+        disable="categories|member_data|pagination"
+        limit="10"}
 
         {stash:image}
             {image_quotes}<img class="blind closed" src="{image:url:slide}" title="{title}">{/image_quotes}
@@ -29,7 +32,7 @@
             {/if}
         {/stash:button}
 
-    {/exp:low_reorder:entries}
+    {/exp:structure:entries}
 {/exp:stash:set_list}
 
 {exp:stash:parse
