@@ -1,0 +1,1 @@
+<p><?php echo lang('republic_structure_tweaks_not_installed');?></p>
