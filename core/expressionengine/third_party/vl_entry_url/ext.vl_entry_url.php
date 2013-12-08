@@ -31,7 +31,7 @@ class Vl_entry_url_ext {
 	public $docs_url		= '';
 	public $name			= 'VL Entry URL';
 	public $settings_exist	= 'y';
-	public $version			= '1.2';
+	public $version			= '1.3';
 
 	private $EE;
 

@@ -28,7 +28,7 @@ class Vl_entry_url_acc {
 
 	public $name			= 'VL Entry URL';
 	public $id				= 'vl_entry_url';
-	public $version			= '1.2';
+	public $version			= '1.3';
 	public $description		= 'Display the current entry url on the publish form.';
 	public $sections		= array();
 
@@ -75,6 +75,15 @@ class Vl_entry_url_acc {
 							$this->EE->cp->add_to_head($this->_js($channel_pattern, $site_url));
 							$this->EE->cp->add_to_head('<script src="'. $theme_folder_url . $this->id . '/scripts/' . $this->id .'.js"></script>');
 							$this->EE->cp->add_to_head($this->_css());
+
+							// Get the Structure tree
+							if (class_exists('Structure')) {
+								$sql = new Sql_structure();
+								$pages = $sql->get_site_pages();
+								$uris = json_encode($pages['uris']);
+
+								$this->EE->cp->add_to_head('<script>' . $this->id . '.structureTree = '. $uris . ';</script>');
+							}
 						}
 					}
 				}

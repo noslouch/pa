@@ -5,6 +5,7 @@ $lang = array();
 $lang['intro'] = '<p>Define the URL pattern for the channels that you want to enable. Special values:</p>
 				  <ul>
 				  	<li><strong>{page_url}</strong> &ndash; URL from Pages Module</li>
+				  	<li><strong>{structure_url}</strong> &ndash; URL from Structure Module</li>
 				  	<li><strong>{url_title}</strong> &ndash; URL Title for entry</li>
 				  	<li><strong>{year}</strong> &ndash; Year from entry date</li>
 				  	<li><strong>{month}</strong> &ndash; Month from entry date</li>
