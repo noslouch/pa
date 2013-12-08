@@ -830,6 +830,39 @@ class Structure_mcp
 	        $this->EE->view->cp_page_title = $this->EE->lang->line($title);
 	    }
 	}
+	
+	function hook_change_27()
+	{
+		$appver = str_replace('.','',APP_VER);
+		
+		
+		if ( substr($appver, 0, 2) != "27" )
+			{ 
+				// We're not actually running a version of 2.7, therefore we should just return an error and silently fail.
+				$this->EE->session->set_flashdata('message_failure',lang('not_ee27'));
+				
+				$this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=structure'.AMP.'method=module_settings');
+				
+			}
+			else
+			{
+				$fields = array(
+					'method'	=> 'channel_form_submit_entry_end',
+					'hook'		=> 'channel_form_submit_entry_end',
+				);
+				
+				$this->EE->db->where("class","Structure_ext")
+							->where("hook","safecracker_submit_entry_end")
+							->update("extensions",$fields);
+				
+				$this->EE->session->set_flashdata('message_success',lang('ee27_hook_complete'));
+				
+				$this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=structure'.AMP.'method=module_settings');
+				
+			}
+		
+		
+	}
 
 
 

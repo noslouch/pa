@@ -312,7 +312,7 @@ class Structure_ext {
 			unset($segment_array[$segment_count -1]);
 			$new_basepath = Structure_Helper::remove_double_slashes('/'.implode('/', $segment_array));
 
-			if (substr($last_segment,0,1) == 'P')
+			if (preg_match('/P\d+/', $last_segment))
 			{
 				$ee_obj->offset = substr($last_segment,1);
 				$ee_obj->basepath = $this->site_pages['url'].$new_basepath;
@@ -327,7 +327,7 @@ class Structure_ext {
 		$segment_count = count($segment_array);
 		$last_segment = $segment_array[$segment_count-1];
 
-		if (substr($last_segment,0,1) == 'P')
+		if (preg_match('/P\d+/', $last_segment))
 		{
 			$settings = $this->sql->get_settings();
 			unset($segment_array[$segment_count-1]);
@@ -463,6 +463,132 @@ class Structure_ext {
 		// 	}
 		// }
 	}
+	
+	// For 2.7 Compatibility
+	function channel_form_submit_entry_end($obj)
+	{
+		$this->EE->load->helper('url');
+
+		// The constants in this safecracker game.
+		$channel_id       = $obj->channel['channel_id'];
+		$channel_type     = $this->sql->get_channel_type($channel_id);
+
+		
+		if ($channel_type == NULL) return;
+		
+		// If we're not working with Structure data, let's kill this quickly.
+		if ( ! isset($obj->entry['entry_id']) && ($channel_type != 'page' || $channel_type != 'listing')) {
+			return;
+		}
+		
+		// These may not always be available so putting them *after* the conditional
+		$entry_id         = $obj->entry['entry_id'];
+		
+
+		// This defaults to false if not a listing entry
+		$listing_entry = $this->sql->get_listing_entry($entry_id);
+
+		/*
+		|-------------------------------------------------------------------------
+		| Template ID
+		|-------------------------------------------------------------------------
+		*/
+		$default_template = $listing_entry ? $listing_entry['template_id'] : $this->sql->get_default_template($channel_id);
+
+		$template_id = pick(
+			array_get($obj->entry, 'structure_template_id'),
+			array_get($this->site_pages['templates'], $entry_id)
+		);
+
+		if ( ! $this->sql->is_valid_template($template_id)) {
+			$template_id = $default_template;
+		}
+
+		/*
+		|-------------------------------------------------------------------------
+		| URI
+		|-------------------------------------------------------------------------
+		*/
+		$default_uri = $listing_entry ? array_get($listing_entry, 'uri') : array_get($this->site_pages['uris'], $entry_id);
+
+		$uri = Structure_Helper::tidy_url(
+			pick(
+				array_get($obj->entry, 'structure_uri'),
+				Structure_Helper::get_slug($default_uri),
+				$obj->entry['url_title']
+			)
+		);
+
+		/*
+		|-------------------------------------------------------------------------
+		| Parent ID
+		|-------------------------------------------------------------------------
+		*/
+		$default_parent_id = $channel_type == 'listing' ? $this->sql->get_listing_parent($channel_id) : 0;
+
+		$parent_id = pick(
+			array_get($obj->entry, 'structure_parent_id'),
+			$this->sql->get_parent_id($entry_id, null),
+			$default_parent_id
+		);
+
+		/*
+		|-------------------------------------------------------------------------
+		| Parent URI
+		|-------------------------------------------------------------------------
+		*/
+		$parent_uri  = array_get($this->site_pages['uris'], $parent_id, '/');
+
+		/*
+		|-------------------------------------------------------------------------
+		| URL
+		|-------------------------------------------------------------------------
+		*/
+		$url = $channel_type == 'listing' ? $uri : $this->sql->create_full_uri($parent_uri, $uri);
+
+		/*
+		|-------------------------------------------------------------------------
+		| Listing Channel ID
+		|-------------------------------------------------------------------------
+		*/
+		$listing_cid = $this->sql->get_listing_channel($parent_id);
+
+		/*
+		|-------------------------------------------------------------------------
+		| Hidden State
+		|-------------------------------------------------------------------------
+		*/
+		$hidden = pick(
+			array_get($obj->entry, 'structure_hidden'),
+			$this->sql->get_hidden_state($entry_id),
+			'n'
+		);
+
+		/*
+		|-------------------------------------------------------------------------
+		| Entry data to be processed and saved
+		|-------------------------------------------------------------------------
+		*/
+		$entry_data = array(
+			'channel_id'  => $channel_id,
+			'entry_id'    => $entry_id,
+			'uri'         => $url,
+			'parent_uri'  => $parent_uri,
+			'template_id' => $template_id,
+			'parent_id'   => $parent_id,
+			'listing_cid' => $listing_cid,
+			'hidden'      => $hidden
+		);
+
+		if ($channel_type == 'listing') {
+			$this->sql->set_listing_data($entry_data);
+		} else {
+			require_once PATH_THIRD.'structure/mod.structure.php';
+	        $this->structure = new Structure();
+			$this->structure->set_data($entry_data);
+		}
+		
+	}
 
 	function safecracker_submit_entry_end($obj)
 	{
@@ -471,12 +597,18 @@ class Structure_ext {
 		// The constants in this safecracker game.
 		$channel_id       = $obj->channel['channel_id'];
 		$channel_type     = $this->sql->get_channel_type($channel_id);
-		$entry_id         = $obj->entry['entry_id'];
 
+		
+		if ($channel_type == NULL) return;
+		
 		// If we're not working with Structure data, let's kill this quickly.
 		if ( ! isset($obj->entry['entry_id']) && ($channel_type != 'page' || $channel_type != 'listing')) {
 			return;
 		}
+		
+		// These may not always be available so putting them *after* the conditional
+		$entry_id         = $obj->entry['entry_id'];
+		
 
 		// This defaults to false if not a listing entry
 		$listing_entry = $this->sql->get_listing_entry($entry_id);
@@ -664,6 +796,16 @@ class Structure_ext {
 		foreach ($hooks as $hook => $method)
 		{
 			$priority = $hook == 'channel_module_create_pagination' ? 9 : 10;
+			
+			$app_ver = str_replace(".","",APP_VER);
+			
+			
+			// Check in place for 2.7 to install new hooks for safecracker
+			if(($hook=="safecracker_submit_entry_end") && (substr($app_ver, 0, 2)=="27"))
+			{
+				$hook = 'channel_form_submit_entry_end';
+				$method  = 'channel_form_submit_entry_end';
+			}
 
 			$data = array(
 				'class'		=> __CLASS__,

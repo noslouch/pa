@@ -54,8 +54,8 @@ $lang = array(
 	'delete_page'  		=> 'Delete Page',
 	'all_pages'  		=> 'All Pages',
 	'system_pref'  		=> 'System Preference',
-	'system_prefs'  		=> 'System Preferences',
-	'prefs'  		=> 'Preferences',
+	'system_prefs'  	=> 'System Preferences',
+	'prefs'  			=> 'Preferences',
 
 
 	'show_in_page_selector'		=> 'Show in page selector',
@@ -141,6 +141,12 @@ $lang = array(
 
 	'debug' => 'Debug',
 
+
+	'ee_27_hooks' => 'EE 2.7 Safecracker Hooks Update',
+	'ee_27_info' => 'If you have upgraded EE to 2.7 since installing this version of Structure, you will receive deprecation notices in the logs related to safecracker hooks. To stop these notices, ',
+	'ee_27_link' => 'convert to using the 2.7 hooks',
+	'not_ee27'	=> 'You are not currently running 2.7 - updating the hook calls on a pre 2.7 installation will render Structure inoperable. Please upgrade to ExpressionEngine 2.7 before running the conversion again',
+	'ee27_hook_complete' => 'ExpressionEngine Hooks updated to 2.7 compatible version',
 
 	//
 	'' => ''

@@ -33,6 +33,8 @@ class Structure extends Channel
 		$adapter = new Structure_Nestedset_Adapter_Ee('exp_structure', 'lft', 'rgt', 'entry_id');
 		$this->nset = new Structure_Nestedset($adapter);
 
+		$this->cat_trigger = $this->EE->config->item('reserved_category_word');
+
 		// -------------------------------------------
 		//  Prepare Cache
 		// -------------------------------------------
@@ -66,21 +68,23 @@ class Structure extends Channel
 	 **/
 	function nav()
 	{
-		$site_id         = $this->EE->config->item('site_id');
-		$uri             = $this->sql->get_uri();
-		$site_pages      = $this->sql->get_site_pages();
-		$current_id      = $this->EE->TMPL->fetch_param('entry_id', array_search($uri, $site_pages['uris']));
-		$start_from      = $this->EE->TMPL->fetch_param('start_from', '/');
-		$mode            = $this->EE->TMPL->fetch_param('mode', 'sub');
-		$show_depth      = $this->EE->TMPL->fetch_param('show_depth', 1); // depth past current to be shown by the tag
-		$max_depth       = $this->EE->TMPL->fetch_param('max_depth', -1); // max depth ever shown by the tag
-		$status          = $this->EE->TMPL->fetch_param('status', 'open');
-		$include         = $this->EE->TMPL->fetch_param('include', array());
-		$exclude         = $this->EE->TMPL->fetch_param('exclude', array());
-		$show_overview   = $this->EE->TMPL->fetch_param('show_overview', FALSE);
-		$rename_overview = $this->EE->TMPL->fetch_param('rename_overview', 'Overview');
-		$show_expired    = $this->EE->TMPL->fetch_param('show_expired', 'no');
-		$show_future     = $this->EE->TMPL->fetch_param('show_future_entries', 'no');
+		$site_id         		= 	$this->EE->config->item('site_id');
+		$uri             		= 	$this->sql->get_uri();
+		$site_pages      		= 	$this->sql->get_site_pages();
+		$current_id      		= 	$this->EE->TMPL->fetch_param('entry_id', array_search($uri, $site_pages['uris']));
+		$start_from      		= 	$this->EE->TMPL->fetch_param('start_from', '/');
+		$mode            		= 	$this->EE->TMPL->fetch_param('mode', 'sub');
+		$show_depth      		= 	$this->EE->TMPL->fetch_param('show_depth', 1); // depth past current to be shown by the tag
+		$max_depth       		= 	$this->EE->TMPL->fetch_param('max_depth', -1); // max depth ever shown by the tag
+		$status          		= 	$this->EE->TMPL->fetch_param('status', 'open');
+		$include         		= 	$this->EE->TMPL->fetch_param('include', array());
+		$exclude         		= 	$this->EE->TMPL->fetch_param('exclude', array());
+		$show_overview   		= 	$this->EE->TMPL->fetch_param('show_overview', FALSE);
+		$rename_overview 		= 	$this->EE->TMPL->fetch_param('rename_overview', 'Overview');
+		$show_expired    		= 	$this->EE->TMPL->fetch_param('show_expired', 'no');
+		$show_future     		= 	$this->EE->TMPL->fetch_param('show_future_entries', 'no');
+		$override_hidden_state	=	$this->EE->TMPL->fetch_param("override_hidden_state","no");
+		
 		$branch_entry_id = 0; // default to 'root'
 
 		if ($start_from != '/') {
@@ -94,27 +98,44 @@ class Structure extends Channel
 
 			// find 'start_from' in pages
 			$found_key = array_search($start_from, $site_pages['uris']);
+			
 			if ($found_key !== FALSE) {
 				$branch_entry_id = $found_key;
 			}
 		}
-
+		
 		$start_from = Structure_Helper::remove_double_slashes($start_from);
 
-		$selective_data = $this->sql->get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future);
-
-		$html = $this->sql->generate_nav($selective_data, $current_id, $branch_entry_id, $mode);
+		$selective_data = $this->sql->get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future,$override_hidden_state);
+		
+		
+		$html = $this->sql->generate_nav($selective_data, $current_id, $branch_entry_id, $mode, $show_overview,$rename_overview,$override_hidden_state);
 
 		return $html;
 	}
 
 	function entries() {
-
+	
 		$parent_id = $this->EE->TMPL->fetch_param('parent_id', false);
+		$include_hidden = $this->EE->TMPL->fetch_param('include_hidden','n');
+		
+		$cat="";
+		
+		$uricount = $this->EE->uri->total_segments();
+		
+		//Lets iterate through all the segment uris for the trigger word
+		for($x=1; $x<=$uricount; $x++)
+		{
+			if($this->EE->uri->segment($x)==$this->cat_trigger)
+			{
+				$cat = $this->EE->uri->segment($x+1);
+				break; 
+			}
+		}
+		
+		if (is_numeric($parent_id)) {
 
-		if ($parent_id) {
-
-			$child_ids = $this->sql->get_child_entries($parent_id);
+			$child_ids = $this->sql->get_child_entries($parent_id,$cat,$include_hidden);
 			$fixed_order = $child_ids !== FALSE && count($child_ids > 0) ? implode('|', $child_ids) : false;
 
 			if ($fixed_order) {
@@ -122,11 +143,21 @@ class Structure extends Channel
 			} else {
 				$this->EE->TMPL->tagparams['entry_id'] = '-1'; // No results
 			}
-
+			
 		}
 
 		return parent::entries();
 	}
+	
+	//function category()
+	//{
+	//	$cat = $this->EE->TMPL->fetch_param('start_from','');
+	//	$group_id = $this->EE->TMPL->fetch_param('group_id',0);
+	//	
+	//	$categories = $this->sql->get_categories($group_id);
+	//	
+	//	return $categories;
+	//}
 
 
 	/** -------------------------------------
@@ -1525,6 +1556,7 @@ class Structure extends Channel
 
 		if ( ! $site_pages)
 			return FALSE;
+		
 
 		// Get parameters
 		$separator = $this->EE->TMPL->fetch_param('separator', '&raquo;');
@@ -1609,7 +1641,7 @@ class Structure extends Channel
 				ORDER BY node.lft";
 
 		$result = $this->EE->db->query($sql);
-
+		
 		$home_entry = array_search('/', $site_pages['uris']) ? array_search('/', $site_pages['uris']) : 0; #default to zero
 
 		$site_index = trim($this->EE->functions->fetch_site_index(0, 0), '/');
@@ -2059,7 +2091,7 @@ class Structure extends Channel
 					WHERE parent.lft >1
 						AND node.site_id = {$this->EE->db->escape_str($site_id)}
 						AND node.parent_id = {$this->EE->db->escape_str($entry_id)}
-						AND exp_channel_titles.status = 'open'
+						AND exp_channel_titles.status != 'closed'
 					GROUP BY node.entry_id
 					ORDER BY node.lft
 					LIMIT 0,1";

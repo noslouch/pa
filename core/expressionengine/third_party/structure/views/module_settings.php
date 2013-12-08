@@ -84,6 +84,19 @@
 	</tbody>
 </table>
 
+<table class="structure-table" border="0" cellspacing="0" cellpadding="0">
+	<thead>
+		<tr class="even">
+			<th><?=lang('ee_27_hooks')?></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><?= lang('ee_27_info')?> <strong><a href="<?=BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=structure'.AMP.'method=hook_change_27';?>"><?= lang('ee_27_link') ?></a></strong></td>
+		</tr>
+	</tbody>
+</table>
+
 <div class="table-controls"><a href="#" class="submit">Save Module Settings</a></div>
 
 </form>
