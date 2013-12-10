@@ -1,0 +1,9 @@
+<tr>
+	<td>{{{group}}}</td>
+	<td>{{{field}}}</td>
+	<td>
+		{{#each sizes}}
+		<input type="checkbox" name="sizes[{{../field_id}}][]" value="{{this}}" checked> {{this}} &nbsp;&nbsp;&nbsp;
+		{{/each}}
+	</td>
+</tr>

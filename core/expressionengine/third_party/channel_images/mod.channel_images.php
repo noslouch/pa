@@ -212,9 +212,19 @@ class Channel_images
 				$image_url = str_replace('http://', 'https://', $image_url);
 			}
 
+			$arr = array();
+			$arr['{IMG_DESC}'] = $image->description;
+			$arr['{IMG_TITLE}'] = $image->title;
+			$arr['{IMG_CATEGORY}'] = $image->category;
+			$arr['{IMG_FIELD_1}'] = $image->cifield_1;
+			$arr['{IMG_FIELD_2}'] = $image->cifield_2;
+			$arr['{IMG_FIELD_3}'] = $image->cifield_3;
+			$arr['{IMG_FIELD_4}'] = $image->cifield_4;
+			$arr['{IMG_FIELD_5}'] = $image->cifield_5;
+
 			// Lets parse Description and Title once again in suffix/prefix
-			$imgprefix = str_replace(array('{IMG_DESC}', '{IMG_TITLE}', '{IMG_CATEGORY}'), array($image->description, $image->title, $image->category), $img_prefix);
-			$imgsuffix = str_replace(array('{IMG_DESC}', '{IMG_TITLE}', '{IMG_CATEGORY}'), array($image->description, $image->title, $image->category), $img_suffix);
+			$imgprefix = str_replace(array_keys($arr), array_values($arr), $img_prefix);
+			$imgsuffix = str_replace(array_keys($arr), array_values($arr), $img_suffix);
 
 			$this->EE->TMPL->tagdata = str_replace(
 						array(	LD.$this->prefix.$count.':id'.RD,

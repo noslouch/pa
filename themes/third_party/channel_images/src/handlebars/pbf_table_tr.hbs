@@ -1,0 +1,49 @@
+{{#if table_view}}
+<tr class="Image image-table {{#if is_cover}}PrimaryImage{{/if}}" data-filename="{{{filename}}}">
+	{{#if show_row_num}}<td class="num"></td>{{/if}}
+	{{#if show_id}}<td>{{{image_id}}}</td>{{/if}}
+	{{#if show_image}}<td>
+		<a href='{{{big_img_url}}}' class='ImgUrl' rel='ChannelImagesGal' title='{{{image_title}}}'>
+			<img src="{{{small_img_url}}}" width="50px" alt="{{{image_title}}}">
+		</a></td>
+	{{/if}}
+	{{#if show_filename}}<td>{{{filename}}}</td>{{/if}}
+	{{#if show_title}}<td data-field="title"><input type="text" value="{{image_title}}" class="image_title"></td>{{/if}}
+	{{#if show_url_title}}<td data-field="url_title"><textarea>{{{image_url_title}}}</textarea></td>{{/if}}
+	{{#if show_desc}}<td data-field="description"><textarea>{{{description}}}</textarea></td>{{/if}}
+	{{#if show_category}}<td data-field="category">{{{category}}}</td>{{/if}}
+	{{#if show_cifield_1}}<td data-field="cifield_1"><textarea>{{cifield_1}}</textarea></td>{{/if}}
+	{{#if show_cifield_2}}<td data-field="cifield_2"><textarea>{{cifield_2}}</textarea></td>{{/if}}
+	{{#if show_cifield_3}}<td data-field="cifield_3"><textarea>{{cifield_3}}</textarea></td>{{/if}}
+	{{#if show_cifield_4}}<td data-field="cifield_4"><textarea>{{cifield_4}}</textarea></td>{{/if}}
+	{{#if show_cifield_5}}<td data-field="cifield_5"><textarea>{{cifield_5}}</textarea></td>{{/if}}
+	<td>
+		{{#if show_image_action}}{{#unless is_linked}}<a href='#' class='gIcon ImageProcessAction'></a>{{/unless}}{{/if}}
+		<a href='javascript:void(0)' class='gIcon ImageMove'></a>
+		{{#if show_cover}}<a href='#' class='gIcon {{#if is_cover}}StarIcon ImageCover{{else}}ImageCover{{/if}}'></a>{{/if}}
+		{{#if show_image_edit}}<a href='#' class='gIcon ImageEdit'></a>{{/if}}
+		{{#if show_image_replace}}<a href='#' class='gIcon ImageReplace'></a>{{/if}}
+		<a href="#" {{#if is_linked}}class="gIcon ImageDel ImageLinked"{{else}}class="gIcon ImageDel"{{/if}}></a>
+		<textarea name="{{{field_name}}}[images][][data]" class="ImageData cihidden">{{{json_data}}}</textarea>
+	</td>
+</tr>
+{{/if}}
+
+{{#if tile_view}}
+<li class="Image image-tile {{#if is_cover}}PrimaryImage{{/if}}" data-filename="{{{filename}}}">
+	<a href='{{{big_img_url}}}' class='ImgUrl' rel='ChannelImagesGal' title='{{{image_title}}}'>
+		<img src="{{{small_img_url}}}" alt="{{{image_title}}}">
+	</a>
+	<div class="filename">
+		<div class="name" data-field="title"><input type="text" value="{{image_title}}" class="image_title"></div>
+	</div>
+	<div class="actions">
+		{{#if show_cover}}<span class="abtn btn-star {{#if is_cover}}StarIcon ImageCover{{else}}ImageCover{{/if}}"></span>{{/if}}
+		<span {{#if is_linked}}class="abtn ImageDel ImageLinked"{{/if}} {{#unless is_linked}}class="abtn btn-delete ImageDel"{{/unless}}></span>
+		{{#if show_image_edit}}<span class="abtn btn-edit ImageEdit"></span>{{/if}}
+		{{#if show_image_replace}}<span class="abtn btn-replace ImageReplace"></span>{{/if}}
+	</div>
+
+	<textarea name="{{{field_name}}}[images][][data]" class="ImageData cihidden">{{{json_data}}}</textarea>
+</li>
+{{/if}}

@@ -1,0 +1,30 @@
+<td class="action_row {{#if loading}}action_loading{{/if}}">Action</td>
+<td>
+{{#if action_done}}
+    <strong class="action_done">DONE</strong>
+{{else}}
+    ID: {{{id}}}&nbsp;&nbsp;
+
+    {{#if ajax_error}}
+    <strong style="color:red">(ERROR)</strong>&nbsp;&nbsp;
+    <span class="action_error">
+        <span class="channel"><strong>Channel:</strong> {{channel}}</span>&nbsp;&nbsp;
+        <span class="entry"><strong>Entry:</strong> {{entry}}</span>&nbsp;&nbsp;
+        <span class="field"><strong>Field:</strong> {{field}}</span>&nbsp;&nbsp;
+        <span class="field"><strong>Image:</strong> {{image.title}}</span>
+
+        <strong class="show_error">SHOW ERROR</strong>&nbsp;&nbsp;
+
+        {{#if retry}}
+        (<span class="retry">Retrying in 3 seconds..</span>)
+        {{/if}}
+
+        <script type="text/x-ci_debug">
+        {{{ajax_error}}}
+        </span>
+
+    </span>
+    {{/if}}
+
+{{/if}}
+</td>

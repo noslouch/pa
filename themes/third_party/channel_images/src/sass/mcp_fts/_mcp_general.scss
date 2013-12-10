@@ -1,0 +1,129 @@
+#mainContent .pageContents {
+    padding:0 0 10px !important;
+    border-top:0 !important;
+    overflow: visible !important;
+}
+
+// Top Menu
+#umenu {
+    background-color: #c8d2d7;
+    @include background-image(linear-gradient(top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%));
+    overflow:auto;
+    padding:3px 3px 6px 17px;
+    box-shadow:rgba(255, 255, 255, 0.5) 0 1px 0 0 inset;
+
+    li {
+        float:left;
+        margin:0;
+        padding:2px;
+        a {
+            background:#ABB7C3;
+            color:#fff;
+            font-size:11px;
+            font-weight:bold;
+            margin:3px 7px 0 0;
+            padding:5px 10px 5px 10px;
+            display:block;
+            text-decoration:none;
+            text-transform:uppercase;
+            border-radius:5px;
+        }
+    }
+
+    li.current a, li a:hover {
+        color:#fff;
+        font-weight:bold;
+        background:#27343C;
+        text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2);
+        box-shadow:rgba(0, 0, 0, 0.2) 0 1px 0 0 inset;
+    }
+}
+
+
+.ci-body {
+    padding:10px;
+}
+
+.page_title {
+    background:#fff;
+    border-bottom:1px solid rgba(0, 0, 0, 0.2);
+    color:#37444D;
+    margin:0;
+    padding:9px;
+
+    h2 {
+        font-size:16px;
+    }
+}
+
+.action-toggler {
+    padding: 0 0 0 10px;
+    font-size: 12px;
+    font-weight: normal;
+
+    input {
+        position: relative;
+        top: 2px;
+    }
+}
+
+.utable {
+    .action_row {
+        width: 100px;
+        padding: 0 0 0 25px;
+    }
+
+    .action_loading {
+        background: url(../img/spinner.gif) no-repeat 5px center;
+    }
+}
+
+
+.total-progress {
+    padding:0 !important;
+
+    .progress {
+        width: 0;
+        height: 32px;
+        overflow: display;
+        background-color: #a5df41;
+        background-size: 30px 30px;
+        position: relative;
+        @include background-image(linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+                            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+                            transparent 75%, transparent));
+        @include transition-property("width");
+        @include transition-duration("0.7s");
+        -webkit-animation: animate-stripes 3s linear infinite;
+        -moz-animation: animate-stripes 3s linear infinite;
+    }
+
+    .progress-text {
+        position: absolute;
+        width: 300px;
+        left: 10px;
+        top: 9px;
+        font-weight:bold;
+    }
+}
+
+.action_error {
+
+    .show_error {
+        color: red;
+        cursor: pointer;
+    }
+}
+
+.action_done {
+    color: darkgreen;
+}
+
+#ci_ajax_error {
+    display: none;
+
+    iframe {
+        width:100%;
+        height:400px;
+    }
+}
