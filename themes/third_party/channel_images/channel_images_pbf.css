@@ -57,6 +57,7 @@
 .CIField .SearchImages .entries {background:#fff; padding:5px; height:175px; overflow:scroll;}
 .CIField .SearchImages .entries a {text-decoration:none; display:block;}
 .CIField .SearchImages .entryimages {border:1px solid #B6C0C2; border-radius:3px 3px 3px 3px; width:50%; vertical-align:top; padding:0;}
+.CIField .SearchImages .entryimages h4 {margin:0 !important;}
 .CIField .SearchImages .images {padding:5px 0 5px 5px; height:175px; overflow:scroll;}
 .CIField .SearchImages .images .img {float:left; margin:0 5px 5px 0; position:relative;}
 .CIField .SearchImages .images .img span.add {height:16px; width:16px; display:block; background:url(img/add.png) no-repeat; outline:0; text-indent:-9999px; position:absolute; bottom:0; right:0}

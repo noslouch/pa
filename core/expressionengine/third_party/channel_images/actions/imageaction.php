@@ -179,7 +179,7 @@ class ImageAction
 		if ($resource == FALSE)
 		{
 			$resource =& $this->EE->channel_images->image;
-			$extension = $this->EE->channel_images->image_ext;
+			if (!$extension) $extension = $this->EE->channel_images->image_ext;
 		}
 
 		if ($this->image_jpeg_quality == FALSE)

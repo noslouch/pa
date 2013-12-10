@@ -11,6 +11,7 @@
  */
 class Channel_images_model
 {
+	public $LOCS = array();
 
 	private $flash_lookup = array(
 		'0x0' => 'No Flash',
@@ -357,8 +358,14 @@ class Channel_images_model
 			if (preg_match("#(^|/)CI(\d+)(/|$)#", $qstring, $match))
 			{
 				$current_page = $match['2'];
-				$uristr  = $this->EE->functions->remove_double_slashes(str_replace($match['0'], '/', $uristr));
-				$qstring = trim($this->EE->functions->remove_double_slashes(str_replace($match['0'], '/', $qstring)), '/');
+
+				if (function_exists('reduce_double_slashes')) {
+					$uristr  = reduce_double_slashes(str_replace($match['0'], '/', $uristr));
+					$qstring = trim(reduce_double_slashes(str_replace($match['0'], '/', $qstring)), '/');
+				} else {
+					$uristr  = $this->EE->functions->remove_double_slashes(str_replace($match['0'], '/', $uristr));
+					$qstring = trim($this->EE->functions->remove_double_slashes(str_replace($match['0'], '/', $qstring)), '/');
+				}
 			}
 
 			// Remove the {paginate}
@@ -400,7 +407,12 @@ class Channel_images_model
 					}
 				}
 
-				$basepath = $this->EE->functions->remove_double_slashes($this->EE->functions->create_url($uristr, FALSE).'/'.$deft_tmpl);
+				if (function_exists('reduce_double_slashes')) {
+					$basepath = reduce_double_slashes($this->EE->functions->create_url($uristr, FALSE).'/'.$deft_tmpl);
+				} else {
+					$basepath = $this->EE->functions->remove_double_slashes($this->EE->functions->create_url($uristr, FALSE).'/'.$deft_tmpl);
+				}
+
 
 				if (isset($params['paginate_base']) === TRUE)
 				{
@@ -413,7 +425,12 @@ class Channel_images_model
 
 					if ( ! strstr($basepath, $pbase))
 					{
-						$basepath = $this->EE->functions->remove_double_slashes($basepath.'/'.$pbase);
+						if (function_exists('reduce_double_slashes')) {
+							$basepath = reduce_double_slashes($basepath.'/'.$pbase);
+						} else {
+							$basepath = $this->EE->functions->remove_double_slashes($basepath.'/'.$pbase);
+						}
+
 					}
 				}
 
@@ -565,7 +582,7 @@ class Channel_images_model
 			$this->session->cache['channel_images']['locations'] = array();
 		}
 
-		$this->LOCS &= $this->session->cache['channel_images']['locations'];
+		$this->LOCS =& $this->session->cache['channel_images']['locations'];
 
 		// Another Check, just to be sure
 		if (is_array($this->LOCS) == FALSE) $this->LOCS = array();

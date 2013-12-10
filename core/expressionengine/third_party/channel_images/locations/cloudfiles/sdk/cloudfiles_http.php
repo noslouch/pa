@@ -1353,8 +1353,14 @@ class CF_Http
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, True);
             curl_setopt($ch, CURLOPT_CAINFO, $this->cabundle_path);
         }
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, True);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, True);
+
+        if (!ini_get('safe_mode') && !ini_get('open_basedir'))
+        {
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        }
+
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_MAXREDIRS, 4);
         curl_setopt($ch, CURLOPT_HEADER, 0);

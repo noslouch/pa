@@ -39,7 +39,12 @@
 							<td class="entryfilter">
 								<div class="filter">
 									<div class="left">
+										<!--[if IE]>
 										<input type="text" value="<?=lang('ci:filter_keywords')?>" maxlength="256" onblur="if (value == '') {value='<?=lang('ci:filter_keywords')?>'}" onfocus="if (value == '<?=lang('ci:filter_keywords')?>') {value =''}">
+										<![endif]-->
+										<!--[if !IE]> -->
+										<input type="text" value="" maxlength="256" placeholder="<?=lang('ci:filter_keywords')?>">
+										<![endif]-->
 									</div>
 									<div class="right">
 										<label><?=lang('ci:last')?></label>
@@ -74,7 +79,12 @@
 										<?php	if ($val == FALSE) continue;
 												if ($type == 'row_num' OR $type == 'id' OR $type == 'image') continue;
 										?>
+										<!--[if IE]>
 										<input rel="<?=$type?>" type="text" value="<?=$val?>" maxlength="256" onblur="if (value == '') {value='<?=$val?>'}" onfocus="if (value == '<?=$val?>') {value =''}">
+										<![endif]-->
+										<!--[if !IE]> -->
+										<input rel="<?=$type?>" type="text" value="" maxlength="256" placeholder="<?=$val?>">
+										<![endif]-->
 										<?php endforeach;?>
 									</div>
 									<div class="right">
@@ -142,4 +152,4 @@ ChannelImages.Fields = ChannelImages.Fields ? ChannelImages.Fields : new Object(
 ChannelImages.Fields.Field_<?=$field_id?> = "<?=$field_json?>";
 </script>
 
-<?php if ($js_templates === TRUE):?> <?=$this->load->view('pbf/js_templates');?> <?php endif;?>
+<?=$this->load->view('pbf/js_templates');?>

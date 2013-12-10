@@ -1,7 +1,7 @@
 // ********************************************************************************* //
 var ChannelImages = ChannelImages ? ChannelImages : {};
 ChannelImages.SWF = {}; ChannelImages.HTML5 = {}; ChannelImages.SWFUPLOAD = {};
-ChannelImages.CI_Images = {}; ChannelImages.Templates = {}; ChannelImages.Refreshing = false;
+ChannelImages.CI_Images = {}; ChannelImages.Refreshing = false;
 //********************************************************************************* //
 
 // Add :Contains (case-insensitive)
@@ -23,9 +23,6 @@ ChannelImages.Init = function(){
 		ChannelImages.initfields_done = 'yes';
 		ChannelImages.InitFields();
 	}
-
-	// Parse Hogan Templates
-	ChannelImages.Templates['TableTR'] = Hogan.compile($('#ChannelImagesSingleField').html());
 
 	// Loop over all fields and insert files (if any)
 	for (var Field in ChannelImages.Fields){
@@ -257,7 +254,7 @@ ChannelImages.AddNewFile = function(JSONOBJ, FIELD_ID, Sync){
 	JSONOBJ['table_view'] = (ChannelImages.Fields['Field_'+FIELD_ID].settings.view_mode == 'table') ? true : false;
 
 	// Render the new row
-	var HTML = ChannelImages.Templates['TableTR'].render(JSONOBJ);
+	var HTML = ChannelImages.Templates.pbf_table_tr(JSONOBJ);
 
 	// Add it
 	$('#ChannelImages_'+FIELD_ID).find('.AssignedImages').append(HTML);
@@ -333,19 +330,26 @@ ChannelImages.SyncOrderNumbers = function(FIELD_ID){
 
 	// Loop over all Files
 	$('#ChannelImages_'+FIELD_ID).find('.AssignedImages').find('.Image').each(function(Fileindex, Elem){
-		var FILETD = $(Elem);
+		var FILETR = $(Elem);
 
-		if (FILETD.hasClass('deleted') === false) {
+
+		if (FILETR.hasClass('deleted') === false) {
 			Count++;
-			ChannelImages.Fields['Field_'+FIELD_ID].wimages.push( JSON.parse(FILETD.find('textarea.ImageData').html()) );
+
+			// In some cases field_id is not available, lets make sure it's there
+			var obj = JSON.parse(FILETR.find('textarea.ImageData').html());
+			obj.field_id = FIELD_ID;
+
+			ChannelImages.Fields['Field_'+FIELD_ID].wimages.push( obj );
 		}
 
 		// Insert the row number (most of the time it's the first column)
-		FILETD.find('td.num').html(Count);
+		FILETR.find('td.num').html(Count);
 
 		// Find all form inputs
-		$(FILETD).find('input, textarea, select').each(function(findex,felem){
-			if (!felem.getAttribute('name')) return false;
+		$(FILETR).find('input, textarea, select').each(function(findex,felem){
+
+			if (!felem.getAttribute('name')) return true;
 
 			// Get it's attribute and change it
 			var attr = $(this).attr('name').replace(/\[images\]\[.*?\]/, '[images][' + (Fileindex+1) + ']');
@@ -882,7 +886,9 @@ ChannelImages.SWFUPLOAD.Init = function(FIELD_ID) {
 		post_params: {
 			ajax_method: 'upload_file',
 			field_id: FIELD_ID,
-			key: ChannelImages.Fields['Field_'+FIELD_ID].key
+			key: ChannelImages.Fields['Field_'+FIELD_ID].key,
+			XID: EE.XID,
+			flash_upload: 'yes'
 		},
 		file_post_name: 'channel_images_file',
 		prevent_swf_caching: true,

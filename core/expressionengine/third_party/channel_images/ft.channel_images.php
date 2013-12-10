@@ -97,16 +97,18 @@ class Channel_images_ft extends EE_Fieldtype
         $this->EE->image_helper->mcp_js_css('gjs');
         $this->EE->image_helper->mcp_js_css('css', 'channel_images_pbf.css?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'main');
         $this->EE->image_helper->mcp_js_css('css', 'jquery.colorbox.css', 'jquery', 'colorbox');
+        $this->EE->image_helper->mcp_js_css('js', 'js/handlebars.runtime-1.0.0.min.js', 'handlebars', 'runtime');
+        $this->EE->image_helper->mcp_js_css('js', 'js/hbs-templates.js?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'templates');
         $this->EE->image_helper->mcp_js_css('js', 'jquery.editable.js', 'jquery', 'editable');
         $this->EE->image_helper->mcp_js_css('js', 'jquery.base64.js', 'jquery', 'base64');
         $this->EE->image_helper->mcp_js_css('js', 'jquery.liveurltitle.js', 'jquery', 'liveurltitle');
         $this->EE->image_helper->mcp_js_css('js', 'jquery.colorbox.js', 'jquery', 'colorbox');
         $this->EE->image_helper->mcp_js_css('js', 'jquery.jcrop.min.js', 'jquery', 'jcrop');
-        $this->EE->image_helper->mcp_js_css('js', 'hogan.min.js', 'hogan', 'main');
         $this->EE->image_helper->mcp_js_css('js', 'json2.js', 'json2', 'main');
         $this->EE->image_helper->mcp_js_css('js', 'swfupload.js', 'swfupload', 'main');
         $this->EE->image_helper->mcp_js_css('js', 'swfupload.queue.js', 'swfupload', 'queue');
         $this->EE->image_helper->mcp_js_css('js', 'swfupload.speed.js', 'swfupload', 'speed');
+
         $this->EE->image_helper->mcp_js_css('js', 'channel_images_pbf.js?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'main');
 
         $this->EE->cp->add_js_script(array(
@@ -306,13 +308,13 @@ class Channel_images_ft extends EE_Fieldtype
                 // ReAssign Field ID (WE NEED THIS)
                 $image->field_id = $this->field_id;
 
-                $image->title = str_replace('&quot;', '"', $image->title);
-                $image->description = str_replace('&quot;', '"', $image->description);
-                $image->cifield_1 = str_replace('&quot;', '"', $image->cifield_1);
-                $image->cifield_2 = str_replace('&quot;', '"', $image->cifield_2);
-                $image->cifield_3 = str_replace('&quot;', '"', $image->cifield_3);
-                $image->cifield_4 = str_replace('&quot;', '"', $image->cifield_4);
-                $image->cifield_5 = str_replace('&quot;', '"', $image->cifield_5);
+                $image->title = html_entity_decode( str_replace('&quot;', '"', $image->title) );
+                $image->description = html_entity_decode( str_replace('&quot;', '"', $image->description) );
+                $image->cifield_1 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_1) );
+                $image->cifield_2 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_2) );
+                $image->cifield_3 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_3) );
+                $image->cifield_4 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_4) );
+                $image->cifield_5 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_5) );
 
                 $vData['assigned_images'][] = $image;
 
@@ -321,6 +323,8 @@ class Channel_images_ft extends EE_Fieldtype
 
             $vData['total_images'] = $query->num_rows();
         }
+
+        //var_dump($vData);
 
         //----------------------------------------
         // Form Submission Error?
@@ -1041,6 +1045,27 @@ class Channel_images_ft extends EE_Fieldtype
 
     private function _process_post_save($data, $draft_action=NULL)
     {
+        // -----------------------------------------
+        // Increase all types of limits!
+        // -----------------------------------------
+        @set_time_limit(0);
+
+        $conf = $this->EE->config->item('channel_images');
+        if (is_array($conf) === false) $conf = array();
+
+        if (isset($conf['infinite_memory']) === FALSE || $conf['infinite_memory'] == 'yes')
+        {
+            @ini_set('memory_limit', '64M');
+            @ini_set('memory_limit', '96M');
+            @ini_set('memory_limit', '128M');
+            @ini_set('memory_limit', '160M');
+            @ini_set('memory_limit', '192M');
+            @ini_set('memory_limit', '256M');
+            @ini_set('memory_limit', '320M');
+            @ini_set('memory_limit', '512M');
+            //@ini_set('memory_limit', -1);
+        }
+
         //print_r($data); exit();
         $entry_id = $this->settings['entry_id'];
         $this->EE->load->library('image_helper');
@@ -1085,11 +1110,10 @@ class Channel_images_ft extends EE_Fieldtype
         else
         {
             $is_draft = 0;
-            $data = (isset($this->EE->session->cache['ChannelImages'])) ? $this->EE->session->cache['ChannelImages']['FieldData'][$this->field_id] : false;
+            $data = (isset($this->EE->session->cache['ChannelImages']['FieldData'][$this->field_id])) ? $this->EE->session->cache['ChannelImages']['FieldData'][$this->field_id] : false;
             $channel_id = $this->EE->input->post('channel_id');
             $field_id = $this->field_id;
         }
-
 
         $settings = $this->EE->image_helper->grabFieldSettings($field_id, $this->settings);
 
@@ -1505,11 +1529,9 @@ class Channel_images_ft extends EE_Fieldtype
         $this->EE->db->select('field_id');
         $this->EE->db->from('exp_channel_fields');
         $this->EE->db->where('group_id', $field_group);
-        $this->EE->db->where('field_type', 'wygwam');
-        $this->EE->db->or_where('field_type', 'wyvern');
+        $this->EE->db->where('field_type', 'wyvern');
         $this->EE->db->or_where('field_type', 'textarea');
         $this->EE->db->or_where('field_type', 'rte');
-        $this->EE->db->or_where('field_type', 'editor');
         $query = $this->EE->db->get();
         if ($query->num_rows() == 0) return;
 
@@ -1582,7 +1604,7 @@ class Channel_images_ft extends EE_Fieldtype
     *   @param  $fieldtypes         array   Fieldtype of available fieldtypes: id, name, etc (optional)
     *   @return $output     The HTML used to display data
     */
-    public function zenbu_display($entry_id, $channel_id, $field_data, $ch_img_data = array(), $field_id, $settings, $rules = array(), $upload_prefs = array(), $installed_addons)
+    public function zenbu_display($entry_id, $channel_id, $field_data, $ch_img_data = array(), $field_id, $zenbuSettings, $rules = array(), $upload_prefs = array(), $installed_addons)
     {
         $output = '&nbsp;';
 
@@ -1595,7 +1617,7 @@ class Channel_images_ft extends EE_Fieldtype
         $big_preview = $settings['big_preview'];
 
         $max = 999;
-        $extra_options = $settings['setting'][$channel_id]['extra_options'];
+        $extra_options = $zenbuSettings['setting'][$channel_id]['extra_options'];
         if (isset($extra_options['field_'.$field_id]['ci_img_show_cover']) === true && $extra_options['field_'.$field_id]['ci_img_show_cover'] == 'yes')
         {
             $max = 1;
@@ -1605,7 +1627,7 @@ class Channel_images_ft extends EE_Fieldtype
         {
             if ($max == $count) break;
 
-            if ($image->link_image_id >= 1)
+            if ($image->link_entry_id > 0)
             {
                 $image->entry_id = $image->link_entry_id;
                 $image->field_id = $image->link_field_id;

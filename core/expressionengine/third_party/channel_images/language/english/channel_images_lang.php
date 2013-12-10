@@ -205,7 +205,7 @@ $lang = array(
 'ci:json:unlink_file'		=> 'Are you sure you want to unlink this file?',
 'ci:json:del_file_all'          => 'Are you sure you want to delete ALL files?',
 'ci:json:linked_force_del'	=> "This file is linked with other entries, are you sure you want to delete it? \n The other references will also be deleted!",
-'ci:json:submitwait'		=> 'You have uploaded file(s), those files are now being send to their final destination. This can take a while depending on the amount of files..',
+'ci:json:submitwait'		=> 'Your uploaded files are being stored. This may take a while, depending on the size of the files.',
 
 'ci:add_image'		=>	'Add Image',
 'ci:caption_text'	=>	'Image Caption:',

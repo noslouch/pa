@@ -518,6 +518,118 @@ class Channel_Images_API
 
 	// ********************************************************************************* //
 
+	public function convertUrlsToTags($data)
+	{
+		$url = $this->EE->image_helper->get_router_url('url', 'simple_image_url');
+		$urls = array();
+
+		preg_match_all("#<img.+?src=[\"'](.+?)[\"'].+?>#s", $data, $matches);
+
+		if (isset($matches[1]) === false || empty($matches[1]) === true) return $data;
+
+		foreach ($matches[1] as $url) {
+			$item = array();
+			$item['original'] = $url;
+
+			$query = parse_url($url, PHP_URL_QUERY);
+			$query = str_replace('&amp;', '&', $query);
+
+			parse_str($query, $output);
+			$item['parts'] = $output;
+
+			$urls[] = $item;
+		}
+
+		// General Vars
+		foreach ($urls as $item) {
+			$var = '{ci_image';
+
+			if (isset($item['parts']['d']) === false && isset($item['parts']['f']) === false) {
+				continue;
+			}
+
+			// Temp Dir ?
+			if (isset($item['parts']['temp_dir']) === true && $item['parts']['temp_dir'] == 'yes') {
+				$item['parts']['d'] = 0;
+			}
+
+			if (isset($item['parts']['fid']) === true) {
+				$var .= " field_id='{$item['parts']['fid']}'";
+			}
+
+			if (isset($item['parts']['d']) === true) {
+				$var .= " entry_id='{$item['parts']['d']}'";
+			}
+
+			if (isset($item['parts']['f']) === true) {
+				$var .= " filename='{$item['parts']['f']}'";
+			}
+
+			$var .= '}';
+
+			$data = str_replace($item['original'], $var, $data);
+		}
+
+		return $data;
+	}
+
+	// ********************************************************************************* //
+
+	public function generateUrlsFromTags($data, $entry_id=0)
+	{
+		$vars = array();
+		preg_match_all("/{ci_image (.*?)}/s", $data, $varMatches);
+
+		if (isset($varMatches[1]) === false || empty($varMatches[1]) === true) return $data;
+
+		foreach ($varMatches[0] as $key => $val) {
+			$matches = array();
+			$inner = $varMatches[1][$key];
+
+			$inner = str_replace('&#039;', '\'', $inner);
+			$inner = str_replace('&quot;', '"', $inner);
+
+			preg_match_all("/(\S+?)\s*=\s*(\042|\047)([^\\2]*?)\\2/is", $inner, $matches, PREG_SET_ORDER);
+
+			if (isset($matches[0][3]) === false) continue;
+
+			$item = array();
+			$item['original'] = $val;
+			$item['params'] = array();
+
+			foreach($matches as $match) {
+				$item['params'][$match[1]] = (trim($match[3]) == '') ? $match[3] : trim($match[3]);
+			}
+
+			$vars[] = $item;
+		}
+
+		$url = $this->EE->image_helper->get_router_url('url', 'simple_image_url');
+
+		foreach ($vars as $var) {
+			$imgurl = $url;
+
+			if (isset($var['params']['entry_id']) === true) {
+				if ($var['params']['entry_id'] == false) $var['params']['entry_id'] = $entry_id;
+				$imgurl .= '&amp;d=' . $var['params']['entry_id'];
+			}
+
+			if (isset($var['params']['field_id']) === true) {
+				$imgurl .= '&amp;fid=' . $var['params']['field_id'];
+			}
+
+			if (isset($var['params']['filename']) === true) {
+				$imgurl .= '&amp;f=' . $var['params']['filename'];
+			}
+
+			$data = str_replace($var['original'], $imgurl, $data);
+		}
+
+		return $data;
+	}
+
+	// ********************************************************************************* //
+
 } // END CLASS
 
 /* End of file api.channel_images.php  */

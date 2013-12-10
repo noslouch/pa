@@ -46,6 +46,15 @@ class Channel_Images_AJAX
 		$this->EE->load->helper('url');
 
 		// -----------------------------------------
+		// EE 2.7 requires XID, flash based stuff breaks..
+		// -----------------------------------------
+		if ($this->EE->input->post('flash_upload') == 'yes') {
+			if (version_compare(APP_VER, '2.7.0') >= 0) {
+				$this->EE->security->restore_xid($this->EE->input->post('XID'));
+			}
+		}
+
+		// -----------------------------------------
 		// Increase all types of limits!
 		// -----------------------------------------
 		@set_time_limit(0);
@@ -227,9 +236,18 @@ class Channel_Images_AJAX
 			}
 		}
 
+		// -----------------------------------------
+		// Move File
+		// -----------------------------------------
+		if (@move_uploaded_file($_FILES['channel_images_file']['tmp_name'], $temp_dir.$filename) === FALSE)
+    	{
+    		$o['body'] = $this->EE->lang->line('ci:file_move_error');
+	   		exit( $this->EE->image_helper->generate_json($o) );
+    	}
+
     	// Is it an image!?
     	try {
-    		$test = getimagesize($_FILES['channel_images_file']['tmp_name']);
+    		$test = getimagesize($temp_dir.$filename);
 
     		if ($test == FALSE)
     		{
@@ -239,15 +257,6 @@ class Channel_Images_AJAX
     	} catch (Exception $e) {
     		$o['body'] = 'Not an image';
 			exit( $this->EE->image_helper->generate_json($o) );
-    	}
-
-		// -----------------------------------------
-		// Move File
-		// -----------------------------------------
-		if (@move_uploaded_file($_FILES['channel_images_file']['tmp_name'], $temp_dir.$filename) === FALSE)
-    	{
-    		$o['body'] = $this->EE->lang->line('ci:file_move_error');
-	   		exit( $this->EE->image_helper->generate_json($o) );
     	}
 
     	// -----------------------------------------
@@ -2558,7 +2567,7 @@ class Channel_Images_AJAX
 	{
 		$out = array();
 
-		$this->EE->db->select('image_id');
+		$this->EE->db->select('image_id, field_id');
 		$this->EE->db->from('exp_channel_images');
 		$this->EE->db->where('link_image_id', 0);
 		$this->EE->db->where('site_id', $this->EE->input->post('site_id'));
@@ -2569,6 +2578,21 @@ class Channel_Images_AJAX
 
 		if (isset($_POST['fields']) === true) {
 			$this->EE->db->where_in('field_id', $_POST['fields']);
+		}
+
+		if (isset($_POST['entry_id']) === true) {
+			$temp = trim($_POST['entry_id']);
+			$temp = explode(',', $temp);
+
+			$ids = array();
+			foreach ($temp as $id) {
+				$id = trim($id);
+				if ($id != false) $ids[] = $id;
+			}
+
+			if (empty($ids) == false) {
+				$this->EE->db->where_in('entry_id', $ids);
+			}
 		}
 
 		if (isset($_POST['offset']) === true) {
@@ -2585,9 +2609,53 @@ class Channel_Images_AJAX
 		//$this->EE->firephp->log($this->EE->db->queries);
 
 		$out['ids'] = array();
+		$out['field_ids'] = array();
 
 		foreach ($query->result() as $row) {
 			$out['ids'][] = array('id' => $row->image_id);
+			$out['field_ids'][$row->field_id] = $row->field_id;
+		}
+
+		$out['field_ids'] = array_keys($out['field_ids']);
+
+		exit($this->EE->image_helper->generate_json($out));
+	}
+
+	// ********************************************************************************* //
+
+	public function get_image_sizes()
+	{
+		$out = array('fields' => array());
+
+		if ($this->EE->input->post('field_ids') == false) {
+			exit($this->EE->image_helper->generate_json($out));
+		}
+
+		$ids = explode(',', $this->EE->input->post('field_ids'));
+
+		foreach ($ids as $key => $id) {
+			if ($id == false) continue;
+			$sizes = array();
+
+			$this->EE->db->select('cf.field_id, cf.field_settings, cf.field_label, fg.group_name');
+			$this->EE->db->from('exp_channel_fields cf');
+			$this->EE->db->where('cf.field_id', $id);
+			$this->EE->db->join('exp_field_groups fg', 'fg.group_id = cf.group_id', 'left');
+			$query = $this->EE->db->get();
+
+			$settings = @unserialize(base64_decode($query->row('field_settings')));
+			if (isset($settings['channel_images']['action_groups']) == false) continue;
+
+			foreach ($settings['channel_images']['action_groups'] as $group) {
+				$sizes[] = $group['group_name'];
+			}
+
+			$out['fields'][] = array(
+				'group' => $query->row('group_name'),
+				'field' => $query->row('field_label'),
+				'field_id' => $query->row('field_id'),
+				'sizes' => $sizes,
+			);
 		}
 
 		exit($this->EE->image_helper->generate_json($out));
@@ -2703,6 +2771,11 @@ class Channel_Images_AJAX
 		// -----------------------------------------
 		$actions = &$this->EE->image_helper->get_actions();
 
+		$limit_sizes = array();
+		if (isset($_POST['sizes'][$field_id]) === true) {
+			$limit_sizes = $_POST['sizes'][$field_id];
+		}
+
 		// -----------------------------------------
 		// Loop over all action groups!
 		// -----------------------------------------
@@ -2712,29 +2785,33 @@ class Channel_Images_AJAX
 			$size_name = $group['group_name'];
 			$size_filename = str_replace($extension, "__{$size_name}{$extension}", $filename);
 
-			// Make a copy of the file
-			@copy($temp_dir.$filename, $temp_dir.$size_filename);
-			@chmod($temp_dir.$size_filename, 0777);
+			if (!in_array($size_name, $limit_sizes) && $limit_sizes != false) {
+				$LOC->download_file($entry_id, $size_filename, $temp_dir);
+			} else {
+				// Make a copy of the file
+				@copy($temp_dir.$filename, $temp_dir.$size_filename);
+				@chmod($temp_dir.$size_filename, 0777);
 
-			// -----------------------------------------
-			// Loop over all Actions and RUN! OMG!
-			// -----------------------------------------
-			foreach($group['actions'] as $action_name => $action_settings)
-			{
-				// RUN!
-				$actions[$action_name]->settings = $action_settings;
-				$actions[$action_name]->settings['field_settings'] = $settings;
-				$res = $actions[$action_name]->run($temp_dir.$size_filename, $temp_dir);
-
-				if ($res !== TRUE)
+				// -----------------------------------------
+				// Loop over all Actions and RUN! OMG!
+				// -----------------------------------------
+				foreach($group['actions'] as $action_name => $action_settings)
 				{
-					@unlink($temp_dir.$size_filename);
-					$o['body'] = 'ACTION ERROR: ' . $res;
-	   				exit( $this->EE->image_helper->generate_json($o) );
-				}
-			}
+					// RUN!
+					$actions[$action_name]->settings = $action_settings;
+					$actions[$action_name]->settings['field_settings'] = $settings;
+					$res = $actions[$action_name]->run($temp_dir.$size_filename, $temp_dir);
 
-			if (is_resource($this->EE->channel_images->image) == TRUE) imagedestroy($this->EE->channel_images->image);
+					if ($res !== TRUE)
+					{
+						@unlink($temp_dir.$size_filename);
+						$o['body'] = 'ACTION ERROR: ' . $res;
+		   				exit( $this->EE->image_helper->generate_json($o) );
+					}
+				}
+
+				if (is_resource($this->EE->channel_images->image) == TRUE) imagedestroy($this->EE->channel_images->image);
+			}
 
 			// Parse Image Size
 		    $imginfo = @getimagesize($temp_dir.$size_filename);

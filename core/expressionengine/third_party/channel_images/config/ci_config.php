@@ -74,6 +74,15 @@ $config['ci_s3_regions']['ap-southeast-2']  = 'REGION_APAC_SE2';
 $config['ci_s3_regions']['ap-northeast-1']  = 'REGION_APAC_NE1';
 $config['ci_s3_regions']['sa-east-1']  = 'REGION_SA_E1';
 
+$config['ci_s3_endpoints']['us-east-1'] = 's3-us-east-1.amazonaws.com';
+$config['ci_s3_endpoints']['us-west-1'] = 's3-us-west-2.amazonaws.com';
+$config['ci_s3_endpoints']['us-west-2'] = 's3-us-west-1.amazonaws.com';
+$config['ci_s3_endpoints']['eu'] = 's3-eu-west-1.amazonaws.com';
+$config['ci_s3_endpoints']['ap-southeast-1'] = 's3-ap-southeast-1.amazonaws.com';
+$config['ci_s3_endpoints']['ap-southeast-2'] = 's3-ap-southeast-2.amazonaws.com';
+$config['ci_s3_endpoints']['ap-northeast-1'] = 's3-ap-northeast-1.amazonaws.com';
+$config['ci_s3_endpoints']['sa-east-1'] = 's3-sa-east-1.amazonaws.com';
+
 $config['ci_s3_acl']['private']	= 'ACL_PRIVATE';
 $config['ci_s3_acl']['public-read']	= 'ACL_PUBLIC';
 $config['ci_s3_acl']['authenticated-read']	= 'ACL_AUTH_READ';

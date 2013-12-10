@@ -1149,10 +1149,10 @@ class Channel_images
 	public function channel_images_router()
 	{
 		@header('Access-Control-Allow-Origin: *');
-		@header('Access-Control-Allow-Credentials: true');
+		//@header('Access-Control-Allow-Credentials: true');
         @header('Access-Control-Max-Age: 86400');
         @header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-        @header('Access-Control-Allow-Headers: Keep-Alive, Content-Type, User-Agent, Cache-Control, Origin, X-Requested-With, X-File-Name, X-File-Size');
+        @header('Access-Control-Allow-Headers: Keep-Alive, Content-Type, User-Agent, Cache-Control, Origin, X-Requested-With, X-File-Name, X-File-Size, X-EEXID');
 
         if ($this->EE->input->server('REQUEST_METHOD') == 'OPTIONS') exit();
 

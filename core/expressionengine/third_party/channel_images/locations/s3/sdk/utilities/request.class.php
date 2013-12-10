@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -64,6 +64,11 @@ class CFRequest extends RequestCore
 		$this->set_useragent(CFRUNTIME_USERAGENT);
 		$this->credentials = $credentials;
 		$this->cacert_location = ($this->credentials['certificate_authority'] ? $this->credentials['certificate_authority'] : false);
+
+		if (strpos(parse_url($url, PHP_URL_HOST), 'dynamodb') === 0)
+			{
+				$this->use_gzip_enconding = false;
+			}
 
 		return $this;
 	}

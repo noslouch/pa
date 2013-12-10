@@ -50,11 +50,22 @@
 				var IMGSRC = Selected.attr('src');
 
 				var filename = Selected.data('filename');
+				var OLDFILENAME = Selected.data('filename');
+				var field_id = Selected.data('field_id');
+				var image_index = Selected.data('index');
+
 				var dot = filename.lastIndexOf('.');
 				var extension = filename.substr(dot,filename.length);
 
 				var Size = Wrapper.find('.sizeholder input[type=radio]:checked').val();
-				var OLDFILENAME = Selected.data('filename');
+
+				var output_type = 'image_url';
+				if (typeof(ChannelImages.Fields['Field_'+field_id]) != 'undefined') {
+					var settings = ChannelImages.Fields['Field_'+field_id].settings;
+					if (typeof(settings.wysiwyg_output) != 'undefined') {
+						output_type = settings.wysiwyg_output;
+					}
+				}
 
 				if (Size != 'original'){
 					var NewName = filename.replace(extension, '__'+Size+extension);
@@ -72,7 +83,18 @@
 				imageElement.setAttribute('alt', Selected.attr('alt'));
 				imageElement.setAttribute('class', 'ci-image ci-'+Size);
 
-				editor.insertElement( imageElement );
+				if (output_type == 'static_image') {
+					if (Size == 'original') {
+						img = '{image:'+image_index+'}';
+					} else {
+						img = '{image:'+image_index+':'+Size+'}';
+					}
+
+					editor.insertText(img);
+
+				} else {
+					editor.insertElement( imageElement );
+				}
 
 				Selected.parent().removeClass('Selected');
 			},
@@ -112,7 +134,7 @@
 						HTML.push('<div class="imageholder">');
 						for (var i = 0; i < ChannelImages.Fields[FIELD].wimages.length; i++) {
 							var IMG = ChannelImages.Fields[FIELD].wimages[i];
-							HTML.push('<div class="CImage"><img src="'+IMG.big_img_url+'" title="'+IMG.title+'" alt="'+IMG.description+'" data-filename="'+IMG.filename+'"></div>');
+							HTML.push('<div class="CImage"><img src="'+IMG.big_img_url+'" title="'+IMG.title+'" alt="'+IMG.description+'" data-filename="'+IMG.filename+'" data-field_id="'+IMG.field_id+'" data-index="'+(i+1)+'"></div>');
 						}
 
 						HTML.push('</div>');

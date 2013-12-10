@@ -108,7 +108,7 @@ class Image_helper
 
 	public function get_theme_url()
 	{
-		$theme_url = $this->EE->config->item('theme_folder_url').'third_party/' . $this->package . '/';
+		$theme_url = trim($this->EE->config->item('theme_folder_url').'third_party/' . $this->package . '/');
 
 		if (defined('URL_THIRD_THEMES') === TRUE)
 		{

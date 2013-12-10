@@ -12,10 +12,14 @@
         <td class="filter filter-fields" style="width:300px">
             <?=form_multiselect('fields[]', $fields, '', ' class="select2" placeholder="Limit By: Fields"  style="width:300px"')?>
         </td>
-        <td class="filter filter-fields" style="width:300px">
+
+        <td class="filter filter-fields" style="width:150px">
             <?=form_input('offset', '', ' placeholder="Override Start Position"')?>
         </td>
-        <td class="total-images">
+        <td class="filter filter-fields" style="width:230px">
+            <?=form_input('entry_id', '', ' placeholder="Limit By: Entry IDs (comma sep.)"')?>
+        </td>
+        <td class="total-images" colspan="50">
             <?=lang('ci:total_images')?>: <strong class="total_count"></strong>
         </td>
     </tr>
@@ -34,6 +38,16 @@
 </h2>
 
 <table class="actions action-regen">
+    <thead>
+        <tr>
+            <th>Group</th>
+            <th>Field</th>
+            <th>Sizes</th>
+        </tr>
+    </thead>
+    <tbody class="image_sizes">
+
+    </tbody>
 </table>
 
 <table class="actions action-transfer">

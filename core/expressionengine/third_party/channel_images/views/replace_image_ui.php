@@ -1,7 +1,15 @@
 <html>
 <body>
 <div>
-<?=form_open_multipart($ajax_url.AMP.'ajax_method=upload_file')?>
+<?php
+$hidden_fields = array();
+$hidden_fields['XID'] = $this->security->generate_xid();
+$formdata = array();
+$formdata['enctype'] = 'multi';
+$formdata['hidden_fields'] = $hidden_fields;
+$formdata['action'] = $ajax_url.AMP.'ajax_method=upload_file';
+echo $this->functions->form_declaration($formdata);
+?>
 
 <strong><?=lang('ci:new_image_file')?></strong><br>
 <input name="channel_images_file" type="file" accept="image/*">

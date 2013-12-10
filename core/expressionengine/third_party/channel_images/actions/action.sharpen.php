@@ -44,7 +44,7 @@ class ImageAction_sharpen extends ImageAction
 		$res = $this->open_image($file);
 		if ($res != TRUE) return FALSE;
 
-		@imagefilter($this->EE->channel_images->image, IMG_FILTER_BRIGHTNESS, $this->settings['brightness']);
+		//@imagefilter($this->EE->channel_images->image, IMG_FILTER_BRIGHTNESS, $this->settings['brightness']);
 		$this->UnsharpMask($this->EE->channel_images->image, $this->settings['amount'], $this->settings['radius'], $this->settings['threshold']);
 
 		$this->save_image($file);

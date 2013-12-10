@@ -130,11 +130,17 @@ class CI_Location_local extends Image_Location
 		$loc = $this->get_location_prefs($this->lsettings['location']);
 
 		// Does it starts with / ?
-		if (strpos($loc['url'], '/') === 0)
+		if (strpos($loc['url'], '/') === 0 && strpos($loc['url'], '//') !== 0)
 		{
 			// This may fail if using MSM
 			$loc['url'] = 'http://' .$_SERVER['HTTP_HOST'] . '/' . $loc['url'];
-			$loc['url'] = $this->EE->functions->remove_double_slashes($loc['url']); // Remove double slashes
+
+			if (function_exists('reduce_double_slashes')) {
+				$loc['url'] = reduce_double_slashes($loc['url']); // Remove double slashes
+			} else {
+				$loc['url'] = $this->EE->functions->remove_double_slashes($loc['url']); // Remove double slashes
+			}
+
 		}
 
 		// Is SSL?
