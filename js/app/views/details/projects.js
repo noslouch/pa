@@ -200,7 +200,7 @@ define([
             this.previous = previous
 
             this.model.fetch({
-                url : '/api/pro/' + projectUrl,
+                url : '/api/projects/' + projectUrl + (document.location.href.match(/private$/) ? '/private' : ''),
                 success : this.renderOut,
                 showcaseUrl : showcaseUrl
             })
