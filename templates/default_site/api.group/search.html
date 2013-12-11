@@ -183,7 +183,7 @@
         "url": "{path='projects'}/{url_title}",
         {!--"logo" : "{logo_projects}{image:url:logo-thumb}{/logo_projects}",--}
         "cover" : {
-        {cover_projects}
+        {gallery_projects}
         {if image:category == 'landscape'}
             "thumb" : "{image:url:landscape}",
             "wide" : "true",
@@ -192,7 +192,7 @@
             "wide" : "",
         {/if}
             "caption" : "{image:description}",
-        {/cover_projects}
+        {/gallery_projects}
             "url" : "{url_title}"
         },
         "summary": {exp:json_encode}{summary_projects}{/exp:json_encode},

@@ -200,7 +200,7 @@ define([
             this.previous = previous
 
             this.model.fetch({
-                url : '/api/projects/' + projectUrl,
+                url : '/api/pro/' + projectUrl,
                 success : this.renderOut,
                 showcaseUrl : showcaseUrl
             })

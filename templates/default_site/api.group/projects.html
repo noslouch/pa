@@ -3,7 +3,13 @@
 {if segment_3 == ''}
 [
 {/if}
-{exp:channel:entries channel="projects" limit="100" backspace="6" orderby="title" sort="asc" status="open"}
+{exp:channel:entries
+    channel="projects"
+    limit="100"
+    backspace="6"
+    orderby="title"
+    sort="asc"
+    status="open"}
     {
         "id" : "{entry_id}",
         "title": "{title}",
@@ -11,7 +17,7 @@
         "url-title": "{url_title}",
         "summary": {exp:json_encode}{summary_projects}{/exp:json_encode},
         "cover" : {
-            {cover_projects}
+            {gallery_projects}
             {if image:category == 'landscape'}
 
             "thumb" : "{image:url:landscape}",
@@ -23,7 +29,7 @@
             "wide" : "",
 
             {/if}
-            {/cover_projects}
+            {/gallery_projects}
 
             "id" : "{entry_id}",
             "title" : "{title}",

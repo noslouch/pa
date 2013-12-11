@@ -1,13 +1,17 @@
 <?php header('Content-type: application/json'); ?>
 
-{exp:channel:entries channel="projects" limit="1" status="open|private"}
+{exp:channel:entries
+    channel="projects"
+    limit="1"
+    status="open|private"}
     {
         "id" : "{entry_id}",
         "title": "{title}",
         "timestamp" : "{year_projects}000",
         "url-title": "{url_title}",
+        "summary": {exp:json_encode}{summary_projects}{/exp:json_encode},
         "cover" : {
-            {cover_projects}
+            {gallery_projects cover_only="yes"}
             {if image:category == 'landscape'}
 
             "thumb" : "{image:url:landscape}",
@@ -19,12 +23,11 @@
             "wide" : "",
 
             {/if}
-            {/cover_projects}
+            {/gallery_projects}
 
             "title" : "{title}",
             "url" : "{url_title}"
         },
-        "summary": {exp:json_encode}{summary_projects}{/exp:json_encode},
         "brand_tags" : 
         [
             {categories show_group="21" backspace="14"}
