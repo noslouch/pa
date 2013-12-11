@@ -65,35 +65,38 @@
         ],
         "showcases": 
         [ 
-            {exp:playa:children field="products_project" backspace="14"}
-            { 
-                "title" : "{title}",
-                "url_title": "{url_title}",
-                {if gallery_project}
+            {if gallery_projects}
+            {
+                "title" : "Gallery",
+                "url_title" : "gallery",
                 "type" : "gallery",
                 "images": [
-                    {gallery_project backspace="22"}
+                {gallery_projects backspace="18"}
                     { 
                         "lg_thumb" : "{image:url:lg-thumb}",
                         "thumb" : "{image:url:thumb}",
                         "url" : "{image:url}",
                         "caption": "{image:description}"
                     },
-                    {/gallery_project}
+                {/gallery_projects}
                 ]
-                {if:elseif video_id_project}
+            },
+            {/if}
+            { 
+            {if video_projects}
+                {if video_id_projects}
                 "type" : "video",
-                "video_id": "{video_id_project}",
-                "caption" : "{video_caption_project}",
+                "video_id": "{video_id_projects}",
+                "caption" : "{video_caption_projects}",
                 "youtube" : "{youtube}"
-                {if:elseif video_src_project}
+                {if:elseif video_src_projects}
                 "type" : "video",
-                "video_src": "{video_src_project}",
-                "caption" : "{video_caption_project}",
+                "video_src": "{video_src_projects}",
+                "caption" : "{video_caption_projects}",
                 "youtube" : "{youtube}"
                 {/if}
-            },
-            {/exp:playa:children}
+            {/if}
+            }
         ],
         "info" : {exp:json_encode}{info_projects}{/exp:json_encode},
         "relatedLinks" : [
