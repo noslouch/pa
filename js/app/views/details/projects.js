@@ -145,7 +145,7 @@ define([
                 summary : this.model.get('summary')
             }) )
 
-            if ( this.collection.length > 1 && this.collection.at(0).get('images').length > 1 ) {
+            if ( this.collection.length > 1 && this.collection.at(0).get('images').length ) {
                 this.collection.forEach( function(showcase) {
                     this.$('#showcaseLinks')
                         .append( new Link({
@@ -226,7 +226,7 @@ define([
 
             try {
                 if ( this.collection.at(0).get('images').length ) {
-                    this.collection.at(0).activate()
+                    this.collection.at(0).activate(true)
                 } else if ( this.collection.length > 1 ) {
                     this.collection.at(1).activate(true)
                 } else {
