@@ -5,7 +5,7 @@
         <?php if ( !$pw = ee()->input->post('pw', true) ) { ?>
             {embed="includes/header" nav="projects" secure="y"}
 
-            <form action="" method="post">
+            <form action="{structure:page:url}/private" method="post">
                 <input type="hidden" name="XID" value="{XID_HASH}" /> 
                 <label>Enter your password
                     <input autofocus type="password" name="pw" id="pw"></label>

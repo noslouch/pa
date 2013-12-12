@@ -1,0 +1,22 @@
+/**
+ * CSS Styles for extension settings and publish custom field
+ *
+ * @package			NsmLiveLook
+ * @version			1.2.4
+ * @author			Leevi Graham <http://leevigraham.com> - Technical Director, Newism
+ * @link			http://github.com/newism/nsm.live_look.ee-addon
+ * @copyright 		Copyright (c) 2007-2013 Newism <http://newism.com.au>
+ * @license 		Commercial - please see LICENSE file included with this distribution
+ */
+.cf.nsm_live_look .tg{position:relative;}
+.cf.nsm_live_look .menu{margin-top:9px; margin-bottom:9px;}
+.cf.nsm_live_look .info a.settings{position:absolute; right:58px; text-align:right;}
+.cf.nsm_live_look .info a.icon{position:absolute; top:7px; right:10px;}
+.cf.nsm_live_look .info a.icon.add{right:32px;}
+.cf.nsm_live_look .btn{margin-right:0; margin-left:5px;}
+.cf.nsm_live_look .iframe-wrap iframe{
+	background:#fff;
+	border:none;
+	margin-bottom:-3px;
+	width:100%;
+}

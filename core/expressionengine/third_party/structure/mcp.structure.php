@@ -38,7 +38,7 @@ class Structure_mcp
 	);
 	// Enable additional reordering options on a per-level basis
 	// Used only in conjunction with per-member group reorder settings
-	var $extra_reorder_options = FALSE; // Default: FALSE
+	var $extra_reorder_options = TRUE; // Default: FALSE
 
 
 	/**

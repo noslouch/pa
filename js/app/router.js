@@ -64,6 +64,7 @@ define([
         detail : function( urlTitle, showcaseUrl ) {
             var section = Backbone.history.fragment.match(/[^\/]*/).join('')
             var spinner = new Spinner()
+            showcaseUrl = showcaseUrl === 'private' ? '' : showcaseUrl
             Chrome.detail( spinner, section, urlTitle, showcaseUrl, this.previous )
         },
 
