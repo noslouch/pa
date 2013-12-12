@@ -225,7 +225,7 @@ define([
             }) )
 
             try {
-                if ( this.collection.at(0).get('images').length > 1 ) {
+                if ( this.collection.at(0).get('images').length ) {
                     this.collection.at(0).activate()
                 } else if ( this.collection.length > 1 ) {
                     this.collection.at(1).activate(true)
