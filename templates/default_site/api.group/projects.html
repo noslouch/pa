@@ -71,7 +71,7 @@
                 "url_title" : "gallery",
                 "type" : "gallery",
                 "images": [
-                {gallery_projects backspace="18"}
+                {gallery_projects backspace="18" skip_cover="yes"}
                     { 
                         "lg_thumb" : "{image:url:lg-thumb}",
                         "thumb" : "{image:url:thumb}",
@@ -80,23 +80,22 @@
                     },
                 {/gallery_projects}
                 ]
-            },
-            {/if}
-            { 
-            {if video_projects}
-                {if video_id_projects}
-                "type" : "video",
-                "video_id": "{video_id_projects}",
-                "caption" : "{video_caption_projects}",
-                "youtube" : "{youtube}"
-                {if:elseif video_src_projects}
-                "type" : "video",
-                "video_src": "{video_src_projects}",
-                "caption" : "{video_caption_projects}",
-                "youtube" : "{youtube}"
-                {/if}
-            {/if}
             }
+            {/if}
+            {if video_id_projects OR video_src_projects}
+            ,{ 
+                "title" : "Video",
+                "url_title" : "video",
+                "type" : "video",
+                {if video_id_projects}
+                "video_id": "{video_id_projects}",
+                "youtube" : "{youtube}",
+                {if:elseif video_src_projects}
+                "video_src": "{video_src_projects}",
+                {/if}
+                "caption" : "{video_caption_projects}"
+            }
+            {/if}
         ],
         "info" : {exp:json_encode}{info_projects}{/exp:json_encode},
         "relatedLinks" : [
