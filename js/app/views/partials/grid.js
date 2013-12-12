@@ -5,7 +5,8 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'tpl/jst'
+    'tpl/jst',
+    'imagesLoaded'
 ], function( $, Backbone, _, TPL ) {
 
     var GridThumb = Backbone.View.extend({

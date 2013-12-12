@@ -7,7 +7,6 @@ define([
     'underscore',
     'app/collections/photography',
     'app/views/partials/grid',
-    'imagesLoaded'
 ], function( $, Backbone, _, photoCollection, G ) {
 
     // Photo landing thumbnail

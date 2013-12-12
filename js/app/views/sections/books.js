@@ -6,8 +6,7 @@ define([
     'backbone',
     'underscore',
     'app/collections/books',
-    'app/views/partials/grid',
-    'imagesLoaded'
+    'app/views/partials/grid'
 ], function( $, Backbone, _, bookCollection, G ) {
 
     // Book landing thumbnail

@@ -6,8 +6,7 @@ define([
     'backbone',
     'underscore',
     'app/collections/films',
-    'app/views/partials/grid',
-    'imagesLoaded'
+    'app/views/partials/grid'
 ], function( $, Backbone, _, filmCollection, G ) {
 
     // Film landing thumbnail
