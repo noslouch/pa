@@ -17,6 +17,7 @@ require.config({
         swipe : 'lib/swipe/swipe',
         json : 'lib/json/json2',
         imagesLoaded : '../bower_components/imagesloaded/imagesloaded',
+        mixitup : '../bower_components/mixitup/jquery.mixitup.min',
         'eventie': '../bower_components/eventie',
         'eventEmitter': '../bower_components/eventEmitter',
         'app/router' : 'app/router.@@hash',
