@@ -66,33 +66,36 @@ define([
         className : 'starfield showcase',
         id : 'showcase',
         initialize : function( collection, instagram ){
+            _.bindAll( this, 'stagger' )
+            this.instagram = instagram
+        },
+
+        stagger : function() {
             var SCREEN_WIDTH = window.innerWidth,
                 SCREEN_HEIGHT = window.innerHeight,
                 HALF_WIDTH = window.innerWidth / 2,
                 HALF_HEIGHT = window.innerHeight / 2
                 //imageLimit = SCREEN_WIDTH < 320 ? 12 : 48
 
-            this.stagger = function() {
-                var i = 0,
-                    self = this
+            var i = 0,
+                self = this
 
-                function go(){
-                    self.$el.append(
-                        new Star({
-                            model : self.images.models[i],
-                            HALF_HEIGHT : HALF_HEIGHT,
-                            HALF_WIDTH : HALF_WIDTH
-                        }).render(instagram) )
-                    i++
+            function go(){
+                self.$el.append(
+                    new Star({
+                        model : self.images.models[i],
+                        HALF_HEIGHT : HALF_HEIGHT,
+                        HALF_WIDTH : HALF_WIDTH
+                    }).render(self.instagram) )
+                i++
 
-                    // CHANGE TO IMAGELIMIT WHEN PROJECTS INCREASE
-                    if ( i < self.images.length ) {
-                        setTimeout(go, 550)
-                    }
+                // CHANGE TO IMAGELIMIT WHEN PROJECTS INCREASE
+                if ( i < self.images.length ) {
+                    setTimeout(go, 550)
                 }
-
-                go()
             }
+
+            go()
 
             this.starsRunning = false
         },
@@ -108,7 +111,7 @@ define([
             this.starsRunning = true
             this.$el.empty()
             this.images = new Backbone.Collection( this.collection.shuffle() )
-            this.stagger()
+            setTimeout(this.stagger, 0)
             return this.el
         }
     })
