@@ -219,7 +219,7 @@ function( _ ){
                 '<img src="<%= thumb %>">',
             '</div>',
             '<h3><%= title %></h3>',
-            '<p><%= summary %></p>',
+            '<%= summary %>',
         '</a>'
     ].join('\n')
 
