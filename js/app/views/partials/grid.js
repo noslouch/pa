@@ -6,16 +6,17 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    //'imagesLoaded',
-    'mixitup'
-], function( $, Backbone, _, TPL ) {
+    'app/views/partials/mixfilter',
+    'mixitup',
+    'imagesLoaded'
+], function( $, Backbone, _, TPL, Filter ) {
 
     var GridThumb = Backbone.View.extend({
         tagName : 'div',
         className : function() {
-            if ( this.model.has('tags') ) {
+            if ( this.model.has('type_tags') ) {
                 var tags = []
-                _.each( this.model.get('tags'), function(obj) {
+                _.each( this.model.get('type_tags'), function(obj) {
                     tags.push( obj.className )
                 }, this )
                 return 'photo-cell ' + tags.join(' ')
@@ -33,7 +34,7 @@ define([
             })
             this.$el.append( html )
             this.el.dataset.name = this.model.get('title')
-            this.el.dataset.year = this.model.get('date').year()
+            this.el.dataset.date = this.model.get('date').unix()
             return this.el
         }
     })
@@ -63,19 +64,26 @@ define([
         },
 
         render : function() {
-            this.delegateEvents()
+            //this.delegateEvents()
             return this.el
         }
     })
 
     var GridPage = Backbone.View.extend({
         initialize : function(){
-            _.bindAll( this, 'render', 'navigate' )
+            _.bindAll( this, 'render', 'navigate', 'filter', 'init' )
             var self = this
 
             this.collection.fetch({
                 success : function(collection) {
                     self.grid = new self.Grid({
+                        collection : collection,
+                        id : self.class + '-grid'
+                    })
+
+                    self.filterbar = new Filter({
+                        el : '#filter-bar',
+                        model : self.model,
                         collection : collection
                     })
 
@@ -83,7 +91,6 @@ define([
                 }
             })
 
-            $(window).on('hashchange', this.filter)
         },
 
         events : {
@@ -91,18 +98,29 @@ define([
         },
 
         render : function() {
+            var self = this
+            $(window).on('hashchange', this.filter)
             this.$el.html( this.grid.render() )
-            this.$('.showcase').mixitup({
-                targetSelector : '.photo-cell',
-                filterSelector : ''
+
+            this.$('.page').imagesLoaded(function(){
+                $( '#' + self.class + '-grid' ).mixitup({
+                    targetSelector : '.photo-cell',
+                    filterSelector : '',
+                    minHeight : '100%',
+                    onMixLoad : function() {
+                        if ( document.location.hash ) {
+                            $(window).trigger('hashchange')
+                        }
+                    }
+                })
+
             })
         },
 
-        onClose : function() {
-            $('.page').removeClass(this.class)
-        },
-
         init : function(spinner) {
+
+            this.delegateEvents()
+            this.filterbar.render( this.collection.some(function(m){ return m.has('type_tags') }) )
             this.$el.addClass(this.class)
 
             if ( !this.collection.length ) {
@@ -116,13 +134,32 @@ define([
             this.render()
         },
 
+        filter : function(e) {
+            if (!e.fragment) { return }
+            var hash = $.bbq.getState()
+            this.model.set(hash)
+            if (this.model.hasChanged('filter')) {
+                this.grid.$el.mixitup('filter', hash.filter === '*' ? 'all' : hash.filter.slice(1) )
+            }
+            if (this.model.hasChanged('sort')) {
+                this.grid.$el.mixitup('sort', 'data-' + hash.sort)
+            }
+            this.filterbar.delegateEvents()
+        },
+
+        onClose : function() {
+            this.model.unset('sort').unset('filter')
+            $('.page').removeClass(this.class)
+            this.filterbar.close()
+            $(window).off('hashchange')
+        },
+
+
         navigate : function(e) {
             e.preventDefault()
             Backbone.dispatcher.trigger('navigate:detail', e, this)
-        },
-
-        filter : function(e) {
         }
+
     })
 
     return {

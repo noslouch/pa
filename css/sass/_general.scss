@@ -167,10 +167,16 @@ iframe {
         @include transition(padding 150ms ease);
     }
 
+    &.photography,
+    &.books,
+    &.film,
     &.projects {
         padding-top: 192px;
     }
 
+    &.photography,
+    &.books,
+    &.film,
     &.photography {
         height: 100%;
     }

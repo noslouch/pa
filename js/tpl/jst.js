@@ -236,7 +236,7 @@ function( _ ){
             '<h3>Project Type</h3>',
             '<div class="wrapper"></div>',
         '</div>',
-        '<div class="filter view-all">',
+        '<div class="filter view-all" id="all">',
             '<h3><a href="#" data-hash="filter=*">View All</a></h3>',
         '</div>'
     ].join('\n')

@@ -7,8 +7,7 @@ define([
     'underscore',
     'app/collections/films',
     'app/views/partials/grid',
-    'app/views/partials/mixfilter'
-], function( $, Backbone, _, filmCollection, G, Filter ) {
+], function( $, Backbone, _, filmCollection, G ) {
 
     // Film landing thumbnail
     var FilmThumb = G.Thumb.extend({
@@ -26,15 +25,6 @@ define([
     var Film = G.Page.extend({
         class : 'film',
         Grid : FilmGrid
-    })
-
-    Backbone.dispatcher.on('film:ready', function(film){
-        film.filter = new Filter({
-            el : '#filter-bar',
-            model : film.model,
-            collection : film.collection
-        })
-        film.filter.render()
     })
 
     return new Film({

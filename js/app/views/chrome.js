@@ -85,7 +85,7 @@ define([
                 } else {
                     try {
                         view.init(spinner)
-                        if (section === 'projets') { view.filter.$el.show() }
+                        if (section === 'projects') { view.filter.$el.show() }
                     } catch(e) {
                         Backbone.dispatcher.on( section + ':ready', function() {
                             view.init(spinner)

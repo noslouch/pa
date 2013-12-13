@@ -120,16 +120,21 @@ define([
             'change .sorts select' : 'filter'
         },
 
-        render : function(){
+        render : function(hasTags){
             this.$el.html( this.template() )
             this.$el.addClass( 'filter-bar' )
 
-            this.$('#type .wrapper')
-                .append( new ProjectUl({
-                    type : 'type',
-                    model : this.model,
-                    collection : this.collection
-                }).render() )
+            if (hasTags) {
+                this.$('#type .wrapper')
+                    .append( new ProjectUl({
+                        type : 'type',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+            } else {
+                this.$('#type').remove()
+                this.$('#all').remove()
+            }
 
             this.$el
                 .append( new ViewSort({
@@ -140,6 +145,9 @@ define([
                     template : TPL.sorts
                 }).render() )
             this.delegateEvents()
+
+            this.$('#brand').remove()
+            this.$('#industry').remove()
         },
 
         onClose : function() {

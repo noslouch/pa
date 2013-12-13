@@ -47,7 +47,7 @@ define([
                         collection : self.model.cover.collection
                     })
 
-                    self.filter = new FilterBar({
+                    self.filterbar = new FilterBar({
                         el : '#filter-bar',
                         model : self.model,
                         collection : projects
@@ -58,11 +58,10 @@ define([
             })
 
             this.model.on( 'layout', this.jumpSet )
-            $(window).on('hashchange', this.render)
             Backbone.dispatcher.on('hashchange', this.render)
             Backbone.dispatcher.on('filterCheck', function(router){
                 if ( router.previous.href.match('projects') ) {
-                    self.filter.close()
+                    self.filterbar.close()
                 }
             })
         },
@@ -86,13 +85,13 @@ define([
             }
             this.model.set( hashObj )
             this.$el.html( this.model[hashObj.view].render() )
-            this.filter.delegateEvents()
+            this.filterbar.delegateEvents()
         },
 
         init : function(spinner) {
-
+            $(window).on('hashchange', this.render)
             this.delegateEvents()
-            this.filter.render()
+            this.filterbar.render()
             this.$el.addClass('projects')
 
             if ( !this.collection.length ) {
@@ -117,9 +116,10 @@ define([
         },
 
         onClose : function() {
-            this.model.unset('view').unset('filter').unset('view')
+            this.model.unset('sort').unset('filter').unset('view')
             this.$el.removeClass('projects')
-            this.filter.close()
+            this.filterbar.close()
+            $(window).off('hashchange')
         },
 
         jumpSet : function() {
