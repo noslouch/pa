@@ -7,7 +7,6 @@ define([
     'underscore',
     'bbq',
     'tpl/jst',
-    //'app/views/gallery',
     'app/collections/projects'
 ], function( $, Backbone, _, bbq, TPL, Projects ) {
 
