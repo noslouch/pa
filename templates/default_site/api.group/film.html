@@ -18,7 +18,16 @@
         "video_src" : "{video_src_film}",
         {/if}
         "youtube" : "{youtube_film}",
-        "caption" : {exp:json_encode}{caption_film}{/exp:json_encode}
+        "caption" : {exp:json_encode}{caption_film}{/exp:json_encode},
+        "type_tags" :
+        [
+            {categories backspace="14"}
+            {
+                "title" : "{category_name}",
+                "className" : "{category_url_title}"
+            },
+            {/categories}
+        ]
     },
 {/exp:channel:entries}
 {if segment_3 == ''}
