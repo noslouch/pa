@@ -18,6 +18,7 @@ define([
 
         this.detach = function() {
             $loader.detach()
+            console.log('detached at', Date.now())
         }
 
         this.append = function() {

@@ -86,6 +86,7 @@ define([
             }
             this.model.set( hashObj )
             if (hashObj.view === 'random') {
+                console.log('setting timeout at', Date.now() )
                 setTimeout( this.spinner.detach, 750 )
             } else {
                 this.spinner.detach()
