@@ -58,6 +58,7 @@ define([
             })
 
             this.model.on( 'layout', this.jumpSet )
+            $(window).on('hashchange', this.render)
             Backbone.dispatcher.on('hashchange', this.render)
             Backbone.dispatcher.on('filterCheck', function(router){
                 if ( router.previous.href.match('projects') ) {
@@ -84,12 +85,17 @@ define([
                 hashObj.sort = hashObj.sort || 'name'
             }
             this.model.set( hashObj )
+            if (hashObj.view === 'random') {
+                setTimeout( this.spinner.detach, 500 )
+            } else {
+                this.spinner.detach()
+            }
             this.$el.html( this.model[hashObj.view].render() )
             this.filterbar.delegateEvents()
         },
 
         init : function(spinner) {
-            $(window).on('hashchange', this.render)
+            this.spinner = spinner
             this.delegateEvents()
             this.filterbar.render()
             this.$el.addClass('projects')
@@ -101,7 +107,6 @@ define([
                 }
             }
 
-            if (spinner) {spinner.detach()}
             if ( document.location.hash ) {
                 $(window).trigger('hashchange')
             } else {
