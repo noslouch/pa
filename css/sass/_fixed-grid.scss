@@ -1,0 +1,57 @@
+//
+// Fixed Photo Grid
+//
+
+$column-gutter: emCalc(7);
+
+.photo-grid {
+    width: 100%;
+    max-width: 1190px;
+    margin: 0 auto;
+    font-size: 0.1px;
+}
+
+.photo-cell {
+    @include grid-column(3, $float: none);
+    font-size: 16px;
+    vertical-align: top;
+    opacity: 0;
+    display: none;
+
+    .img { position: relative; }
+    a { display: block; }
+
+    .film & .img:before {
+        @include icons-sprite(play);
+        content: '';
+        position: absolute;
+        width: 76px;
+        height: 43px;
+        left: 50%;
+        margin-left: -38px;
+        top: 50%;
+        margin-top: -22px;
+    }
+
+    .film &:hover .img:before {
+        @include icons-sprite(play-hover);
+    }
+}
+
+$column-gutter: emCalc(17);
+
+.photo-cell {
+
+    h3 {
+        font-size: emCalc(19);
+        font-weight: 500;
+        margin-bottom: 0;
+        margin-top: 0.75em;
+    }
+    a p { 
+        font-size: emCalc(13);
+        font-weight: 300;
+        line-height: 1.2;
+        color: $primary-color;
+    }
+}

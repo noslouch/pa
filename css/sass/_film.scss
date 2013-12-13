@@ -2,92 +2,10 @@
 // FILM
 //
 
-// LAYOUT
-
-$column-gutter: emCalc(7);
-
-.four-column {
-    width: 100%;
-    max-width: 1190px;
-    margin: 0 auto;
-}
-
-.four-column-row {
-    @include grid-row(nest);
-    width: 100%;
-    float: left !important;
-    margin-bottom: 3em;
-
-    .img { position: relative; }
-    a { display: block; }
-}
-
-.four-column-cell {
-    @include grid-column(3);
-
-    .film & .img:before {
-        @include icons-sprite(play);
-        content: '';
-        position: absolute;
-        width: 76px;
-        height: 43px;
-        left: 50%;
-        margin-left: -38px;
-        top: 50%;
-        margin-top: -22px;
-    }
-
-    .film &:hover .img:before {
-        @include icons-sprite(play-hover);
-    }
-}
-
-$column-gutter: emCalc(17);
-
-
-// TYPE
-
-.four-column-row {
-    opacity: 0; @include transition(opacity 150ms ease);
-
-    h3 {
-        font-size: emCalc(19);
-        font-weight: 500;
-        margin-bottom: 0;
-        margin-top: 0.75em;
-    }
-    a p { 
-        font-size: emCalc(13);
-        font-weight: 300;
-        line-height: 1.2;
-        color: $primary-color;
-    }
-}
-
-.film .details { // this actuall calls a text-showcase
+.film .details { 
     p {
         font-size: emCalc(13);
         font-weight: 500;
         line-height: 1.2;
     }
-
-    /*
-    .button {
-        background: $light-gray;
-
-        &:before {
-            content: "<";
-            color: red;
-            display: inline;
-            vertical-align: text-top;
-            margin-right: 0.5em;
-        }
-        
-        &:hover {
-            background: $secondary-color;
-            color: white;
-            &:before { color: $primary-color; }
-        }
-    }
-    */
 } 

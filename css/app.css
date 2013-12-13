@@ -2709,7 +2709,7 @@ button {
 .icons-sprite, .search-icon, .filter h3:after, .view-all h3:after, .views h3:after,
 .jumps h3:after,
 .sorts h3:after, .filter h3:hover:after,
-.filter.open h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, a.fancybox-next span, a.fancybox-next:hover span, a.fancybox-prev span, a.fancybox-prev:hover span, .film .four-column-cell .img:before, .film .four-column-cell:hover .img:before {
+.filter.open h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, a.fancybox-next span, a.fancybox-next:hover span, a.fancybox-prev span, a.fancybox-prev:hover span, .film .photo-cell .img:before, .film .photo-cell:hover .img:before {
   background: url('img/icons-sf90dc8fc94.png') no-repeat;
 }
 
@@ -3444,180 +3444,6 @@ a.fancybox-prev:hover span {
   font-weight: 500;
 }
 
-/* line 7, sass/_image-showcase.scss */
-.isotope-grid {
-  width: 100%;
-  margin: 0;
-  max-width: 80em;
-  *zoom: 1;
-  margin: 0 auto;
-  height: 100%;
-  max-width: 1190px;
-}
-/* line 121, ../../../../../Users/noslouch/.rvm/gems/ruby-1.9.2-p320/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
-.isotope-grid:before, .isotope-grid:after {
-  content: " ";
-  display: table;
-}
-/* line 122, ../../../../../Users/noslouch/.rvm/gems/ruby-1.9.2-p320/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
-.isotope-grid:after {
-  clear: both;
-}
-/* line 13, sass/_image-showcase.scss */
-.profile .isotope-grid {
-  width: 667px;
-  float: right;
-}
-/* line 18, sass/_image-showcase.scss */
-.isotope-grid img {
-  opacity: 0;
-  position: relative;
-  z-index: 1;
-  -webkit-transition: opacity 150ms ease, box-shadow 150ms ease;
-  -webkit-transition-delay: 0s, 150ms;
-  -moz-transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
-  -o-transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
-  transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
-}
-/* line 25, sass/_image-showcase.scss */
-.isotope-grid .wrapper {
-  -webkit-transform: scale(1, 1);
-  -moz-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  -o-transform: scale(1, 1);
-  transform: scale(1, 1);
-  -webkit-transition: -webkit-transform 150ms linear;
-  -moz-transition: -moz-transform 150ms linear;
-  -o-transition: -o-transform 150ms linear;
-  transition: transform 150ms linear;
-}
-/* line 31, sass/_image-showcase.scss */
-.isotope-grid .thumb {
-  margin-bottom: 7px;
-  margin-left: 7px;
-}
-/* line 37, sass/_image-showcase.scss */
-.isotope-grid .thumb a {
-  display: block;
-  width: auto;
-  height: 216px;
-}
-/* line 43, sass/_image-showcase.scss */
-.photography .isotope-grid .thumb a {
-  width: auto !important;
-}
-/* line 52, sass/_image-showcase.scss */
-.isotope-grid.rtl .thumb a {
-  height: auto;
-}
-/* line 54, sass/_image-showcase.scss */
-.isotope-grid.fixed .thumb {
-  margin-left: 0;
-}
-/* line 57, sass/_image-showcase.scss */
-.isotope-grid.fixed .thumb a {
-  width: 164px;
-}
-/* line 61, sass/_image-showcase.scss */
-.isotope-grid.fixed.rtl .thumb a {
-  width: 246px;
-}
-/* line 63, sass/_image-showcase.scss */
-.isotope-grid.fixed .wide.thumb {
-  margin-left: 0;
-}
-/* line 64, sass/_image-showcase.scss */
-.isotope-grid.fixed .wide.thumb a {
-  width: 334px;
-}
-/* line 70, sass/_image-showcase.scss */
-.isotope-grid.fixed.rtl .wide.thumb a {
-  width: 501px;
-}
-/* line 72, sass/_image-showcase.scss */
-.isotope-grid .thumb:hover {
-  z-index: 4;
-}
-/* line 75, sass/_image-showcase.scss */
-.isotope-grid .thumb:hover .wrapper {
-  -webkit-transform: scale(1.2, 1.2);
-  -moz-transform: scale(1.2, 1.2);
-  -ms-transform: scale(1.2, 1.2);
-  -o-transform: scale(1.2, 1.2);
-  transform: scale(1.2, 1.2);
-}
-/* line 80, sass/_image-showcase.scss */
-.isotope-grid .thumb:hover img.loaded {
-  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
-}
-/* line 83, sass/_image-showcase.scss */
-.isotope-grid .thumb:hover img.loaded + .caption {
-  opacity: 1;
-  -webkit-transform: translate3d(0, 100%, 0);
-  -moz-transform: translate3d(0, 100%, 0);
-  -ms-transform: translate3d(0, 100%, 0);
-  -o-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0);
-  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
-  -webkit-transition: opacity 150ms ease, -webkit-transform 150ms linear, box-shadow 150ms ease;
-  -webkit-transition-delay: 0s, 0s, 150ms;
-  -moz-transition: opacity 150ms ease, -moz-transform 150ms linear, box-shadow 150ms ease 150ms;
-  -o-transition: opacity 150ms ease, -o-transform 150ms linear, box-shadow 150ms ease 150ms;
-  transition: opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms;
-}
-
-/* line 94, sass/_image-showcase.scss */
-.caption {
-  color: red;
-  background: white;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 12px 10px;
-  opacity: 0;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transition: opacity 150ms ease, -webkit-transform 150ms linear, box-shadow 150ms ease;
-  -webkit-transition-delay: 0s, 0s, 150ms;
-  -moz-transition: opacity 150ms ease, -moz-transform 150ms linear, box-shadow 150ms ease 150ms;
-  -o-transition: opacity 150ms ease, -o-transform 150ms linear, box-shadow 150ms ease 150ms;
-  transition: opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms;
-}
-/* line 108, sass/_image-showcase.scss */
-.caption p {
-  margin: 0;
-  font-size: 0.6875em;
-  font-weight: 500;
-  line-height: 1;
-}
-/* line 115, sass/_image-showcase.scss */
-.caption .year {
-  font-weight: 300;
-  font-size: 0.6875em;
-}
-
-/* line 122, sass/_image-showcase.scss */
-.thumb img {
-  max-height: 100%;
-  max-width: 100%;
-}
-
 /* line 7, sass/_text-showcase.scss */
 .text {
   max-width: 660px;
@@ -3762,54 +3588,36 @@ a.fancybox-prev:hover span {
   line-height: 1.2;
 }
 
-/* line 9, sass/_film.scss */
-.four-column {
+/* line 7, sass/_fixed-grid.scss */
+.photo-grid {
   width: 100%;
   max-width: 1190px;
   margin: 0 auto;
+  font-size: 0.1px;
 }
 
-/* line 15, sass/_film.scss */
-.four-column-row {
-  width: auto;
-  margin-left: -0.21875em;
-  margin-right: -0.21875em;
-  margin-top: 0;
-  margin-bottom: 0;
-  max-width: none;
-  *zoom: 1;
-  width: 100%;
-  float: left !important;
-  margin-bottom: 3em;
-}
-/* line 121, ../../../../../Users/noslouch/.rvm/gems/ruby-1.9.2-p320/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
-.four-column-row:before, .four-column-row:after {
-  content: " ";
-  display: table;
-}
-/* line 122, ../../../../../Users/noslouch/.rvm/gems/ruby-1.9.2-p320/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
-.four-column-row:after {
-  clear: both;
-}
-/* line 21, sass/_film.scss */
-.four-column-row .img {
-  position: relative;
-}
-/* line 22, sass/_film.scss */
-.four-column-row a {
-  display: block;
-}
-
-/* line 25, sass/_film.scss */
-.four-column-cell {
+/* line 14, sass/_fixed-grid.scss */
+.photo-cell {
   position: relative;
   padding-left: 0.21875em;
   padding-right: 0.21875em;
   width: 25%;
-  float: left;
+  float: none;
+  font-size: 16px;
+  vertical-align: top;
+  opacity: 0;
+  display: none;
 }
-/* line 28, sass/_film.scss */
-.film .four-column-cell .img:before {
+/* line 21, sass/_fixed-grid.scss */
+.photo-cell .img {
+  position: relative;
+}
+/* line 22, sass/_fixed-grid.scss */
+.photo-cell a {
+  display: block;
+}
+/* line 24, sass/_fixed-grid.scss */
+.film .photo-cell .img:before {
   background-position: 0 -17px;
   content: '';
   position: absolute;
@@ -3820,57 +3628,201 @@ a.fancybox-prev:hover span {
   top: 50%;
   margin-top: -22px;
 }
-/* line 40, sass/_film.scss */
-.film .four-column-cell:hover .img:before {
+/* line 36, sass/_fixed-grid.scss */
+.film .photo-cell:hover .img:before {
   background-position: 0 -60px;
 }
 
-/* line 50, sass/_film.scss */
-.four-column-row {
-  opacity: 0;
-  -webkit-transition: opacity 150ms ease;
-  -moz-transition: opacity 150ms ease;
-  -o-transition: opacity 150ms ease;
-  transition: opacity 150ms ease;
-}
-/* line 53, sass/_film.scss */
-.four-column-row h3 {
+/* line 45, sass/_fixed-grid.scss */
+.photo-cell h3 {
   font-size: 1.1875em;
   font-weight: 500;
   margin-bottom: 0;
   margin-top: 0.75em;
 }
-/* line 59, sass/_film.scss */
-.four-column-row a p {
+/* line 51, sass/_fixed-grid.scss */
+.photo-cell a p {
   font-size: 0.8125em;
   font-weight: 300;
   line-height: 1.2;
   color: black;
 }
 
-/* line 67, sass/_film.scss */
-.film .details {
-    /*
-    .button {
-        background: $light-gray;
-
-        &:before {
-            content: "<";
-            color: red;
-            display: inline;
-            vertical-align: text-top;
-            margin-right: 0.5em;
-        }
-        
-        &:hover {
-            background: $secondary-color;
-            color: white;
-            &:before { color: $primary-color; }
-        }
-    }
-    */
+/* line 7, sass/_isotope-grid.scss */
+.isotope-grid {
+  width: 100%;
+  margin: 0;
+  max-width: 80em;
+  *zoom: 1;
+  margin: 0 auto;
+  height: 100%;
+  max-width: 1190px;
 }
-/* line 68, sass/_film.scss */
+/* line 121, ../../../../../Users/noslouch/.rvm/gems/ruby-1.9.2-p320/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+.isotope-grid:before, .isotope-grid:after {
+  content: " ";
+  display: table;
+}
+/* line 122, ../../../../../Users/noslouch/.rvm/gems/ruby-1.9.2-p320/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+.isotope-grid:after {
+  clear: both;
+}
+/* line 13, sass/_isotope-grid.scss */
+.profile .isotope-grid {
+  width: 667px;
+  float: right;
+}
+/* line 18, sass/_isotope-grid.scss */
+.isotope-grid img {
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+  -webkit-transition: opacity 150ms ease, box-shadow 150ms ease;
+  -webkit-transition-delay: 0s, 150ms;
+  -moz-transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
+  -o-transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
+  transition: opacity 150ms ease, box-shadow 150ms ease 150ms;
+}
+/* line 25, sass/_isotope-grid.scss */
+.isotope-grid .wrapper {
+  -webkit-transform: scale(1, 1);
+  -moz-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  -o-transform: scale(1, 1);
+  transform: scale(1, 1);
+  -webkit-transition: -webkit-transform 150ms linear;
+  -moz-transition: -moz-transform 150ms linear;
+  -o-transition: -o-transform 150ms linear;
+  transition: transform 150ms linear;
+}
+/* line 31, sass/_isotope-grid.scss */
+.isotope-grid .thumb {
+  margin-bottom: 7px;
+  margin-left: 7px;
+}
+/* line 37, sass/_isotope-grid.scss */
+.isotope-grid .thumb a {
+  display: block;
+  width: auto;
+  height: 216px;
+}
+/* line 43, sass/_isotope-grid.scss */
+.photography .isotope-grid .thumb a {
+  width: auto !important;
+}
+/* line 52, sass/_isotope-grid.scss */
+.isotope-grid.rtl .thumb a {
+  height: auto;
+}
+/* line 54, sass/_isotope-grid.scss */
+.isotope-grid.fixed .thumb {
+  margin-left: 0;
+}
+/* line 57, sass/_isotope-grid.scss */
+.isotope-grid.fixed .thumb a {
+  width: 164px;
+}
+/* line 61, sass/_isotope-grid.scss */
+.isotope-grid.fixed.rtl .thumb a {
+  width: 246px;
+}
+/* line 63, sass/_isotope-grid.scss */
+.isotope-grid.fixed .wide.thumb {
+  margin-left: 0;
+}
+/* line 64, sass/_isotope-grid.scss */
+.isotope-grid.fixed .wide.thumb a {
+  width: 334px;
+}
+/* line 70, sass/_isotope-grid.scss */
+.isotope-grid.fixed.rtl .wide.thumb a {
+  width: 501px;
+}
+/* line 72, sass/_isotope-grid.scss */
+.isotope-grid .thumb:hover {
+  z-index: 4;
+}
+/* line 75, sass/_isotope-grid.scss */
+.isotope-grid .thumb:hover .wrapper {
+  -webkit-transform: scale(1.2, 1.2);
+  -moz-transform: scale(1.2, 1.2);
+  -ms-transform: scale(1.2, 1.2);
+  -o-transform: scale(1.2, 1.2);
+  transform: scale(1.2, 1.2);
+}
+/* line 80, sass/_isotope-grid.scss */
+.isotope-grid .thumb:hover img.loaded {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+}
+/* line 83, sass/_isotope-grid.scss */
+.isotope-grid .thumb:hover img.loaded + .caption {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 100%, 0);
+  -moz-transform: translate3d(0, 100%, 0);
+  -ms-transform: translate3d(0, 100%, 0);
+  -o-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+  -webkit-transition: opacity 150ms ease, -webkit-transform 150ms linear, box-shadow 150ms ease;
+  -webkit-transition-delay: 0s, 0s, 150ms;
+  -moz-transition: opacity 150ms ease, -moz-transform 150ms linear, box-shadow 150ms ease 150ms;
+  -o-transition: opacity 150ms ease, -o-transform 150ms linear, box-shadow 150ms ease 150ms;
+  transition: opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms;
+}
+
+/* line 94, sass/_isotope-grid.scss */
+.caption {
+  color: red;
+  background: white;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 10px;
+  opacity: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: opacity 150ms ease, -webkit-transform 150ms linear, box-shadow 150ms ease;
+  -webkit-transition-delay: 0s, 0s, 150ms;
+  -moz-transition: opacity 150ms ease, -moz-transform 150ms linear, box-shadow 150ms ease 150ms;
+  -o-transition: opacity 150ms ease, -o-transform 150ms linear, box-shadow 150ms ease 150ms;
+  transition: opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms;
+}
+/* line 108, sass/_isotope-grid.scss */
+.caption p {
+  margin: 0;
+  font-size: 0.6875em;
+  font-weight: 500;
+  line-height: 1;
+}
+/* line 115, sass/_isotope-grid.scss */
+.caption .year {
+  font-weight: 300;
+  font-size: 0.6875em;
+}
+
+/* line 122, sass/_isotope-grid.scss */
+.thumb img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+/* line 6, sass/_film.scss */
 .film .details p {
   font-size: 0.8125em;
   font-weight: 500;
