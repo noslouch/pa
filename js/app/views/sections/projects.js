@@ -58,7 +58,6 @@ define([
             })
 
             this.model.on( 'layout', this.jumpSet )
-            $(window).on('hashchange', this.render)
             Backbone.dispatcher.on('hashchange', this.render)
             Backbone.dispatcher.on('filterCheck', function(router){
                 if ( router.previous.href.match('projects') ) {
@@ -109,6 +108,7 @@ define([
                 }
             }
 
+            $(window).on('hashchange', this.render)
             if ( document.location.hash ) {
                 $(window).trigger('hashchange')
             } else {

@@ -117,53 +117,6 @@ define([
             this.pageSearch.render()
         }
 
-/*
-        singleProject : function( spinner, projectUrl, showcaseUrl, previous ) {
-            var self = this
-            require(['app/views/details/project'], function( projectView ) {
-                self.setView( projectView )
-                projectView.on('rendered', function() {
-                    spinner.detach()
-                })
-
-                $('.page')
-                    .html( projectView.render( projectUrl, showcaseUrl, previous ) )
-                    .removeClass('projects')
-            })
-        },
-
-        singleFilm : function( spinner, filmUrl ) {
-            var self = this
-            require(['app/views/details/film'], function( filmView ) {
-                self.setView( filmView )
-                filmView.on('rendered', function(){
-                    spinner.detach()
-                })
-
-                $('.page').html( filmView.render( filmUrl ) )
-            })
-        },
-
-        contact : function( spinner ) {
-            var self = this
-            require(['app/views/sections/contact'],
-            function( c ) {
-                self.setView( c )
-                $('.page').html( c.render() )
-                spinner.detach()
-            })
-        },
-
-        stream : function( spinner ) {
-            var self = this
-            require(['app/views/sections/stream'],
-            function( stream ) {
-                self.setView( stream )
-                stream.setElement( '.page' )
-                stream.render(spinner)
-            })
-        },
-*/
     })
 
     return new App({ el : document })
