@@ -72,6 +72,7 @@ define([
         },
 
         render : function() {
+            if (!this.spinner.running) { this.spinner.append() }
             var hashObj = $.deparam.fragment()
             if ( this.model.get('view') === 'random' && hashObj.view === 'random' ) {
                 // random view is currently running

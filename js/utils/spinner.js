@@ -18,11 +18,12 @@ define([
 
         this.detach = function() {
             $loader.detach()
-            console.log('detached at', Date.now())
+            this.running = false
         }
 
         this.append = function() {
             $('body').append($loader)
+            this.running = true
         }
 
         this.append()
