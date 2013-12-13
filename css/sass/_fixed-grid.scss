@@ -20,7 +20,14 @@ $column-gutter: emCalc(7);
     opacity: 0;
     display: none;
 
-    .img { position: relative; }
+    .img {
+        position: relative;
+
+        .photography &,
+        .books & { 
+            height: 216px;
+        }
+    }
     a { display: block; }
 
     .film & .img:before {
