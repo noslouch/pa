@@ -147,8 +147,21 @@ function( _ ){
 
     JST.thumbTemplate = [
         '<div class="wrapper">',
-            '<a href="<%= url %>"<% if (!cover) { %> class="fancybox" rel="gallery"<% } %> title="<%= caption %>" id="<%= id %>">',
-                '<img src="<% large ? print(lg_thumb) : print(thumb) %>">',
+            '<a href="<%= url %>" class="fancybox" id="<%= id %>" rel="gallery" title="<%= caption %>">',
+                '<img src="<%= thumb %>">',
+                '<% if (caption) { %>',
+                    '<div class="caption">',
+                        '<p class="title"><%= caption %></p>',
+                    '</div>',
+                '<% } %>',
+            '</a>',
+        '</div>'
+    ].join('\n')
+
+    JST.projectCover = [
+        '<div class="wrapper">',
+            '<a href="<%= url %>" id="<%= id %>" title="<%= caption %>">',
+                '<img src="<%= thumb %>" >',
                 '<% if (caption) { %>',
                     '<div class="caption">',
                         '<p class="title"><%= caption %></p>',
@@ -198,9 +211,9 @@ function( _ ){
         '</li>'
     ].join('\n')
 
-    JST.filmRow = '<div class="film-row"></div>'
+    JST.gridRow = '<div class="four-column-row"></div>'
 
-    JST.filmThumb = [
+    JST.gridThumb = [
         '<a href="<%= url %>">',
             '<div class="img">',
                 '<img src="<%= thumb %>">',

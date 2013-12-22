@@ -1,0 +1,212 @@
+#resultArea-inner
+{
+	overflow: auto;
+	margin: 0 0 10px 0;
+}
+
+.right
+{
+	float: right;
+}
+
+.left
+{
+	float: left;
+}
+
+.invisible
+{
+	display: none;
+}
+
+.nowrap
+{
+	white-space: nowrap;
+}
+
+span.highlight
+{
+	background: yellow;
+}
+
+#mainContent table.mainTable
+{
+	margin-top: 5px;
+	margin-bottom: 0;
+}
+
+table.mainTable tr.selected td
+{
+	background: #ecffc4;
+}
+
+table.mainTable tr.odd.hover td, tr.hover td, table.mainTable tr.even.hover td
+{
+	background-color: #FFF;
+}
+
+
+table.matrixTable th
+{
+	opacity: 0.7;
+}
+
+table.mainTable tr td.label, table.mainTable tr td.cursor
+{
+	cursor: move;
+}
+
+table.mainTable tr td.center
+{
+	text-align: center;	
+}
+
+table.mainTable tr td a.more-categories
+{
+	cursor: pointer;
+	padding: 0px 2px;
+	background: #f2f2f2;
+	border: 1px solid #999;
+	border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+table.mainTable tr td a:hover.more-categories
+{
+	text-decoration: none;
+	background: #e9e9e9;
+}
+
+.loader
+{
+	margin: 5px 0 0 5px;
+}
+
+#mainContent #filterMenu .group
+{
+	margin-bottom: 0px;
+	padding-top: 0;
+}
+
+#mainContent #filterMenu .group2
+{
+	margin-top: 2px;
+}
+
+#mainContent #filterMenu .group select, select.bottom-margin, input.bottom-margin
+{
+	margin: 0 0 7px 0;
+}
+
+/**
+ *	Rules filter styles
+ */
+ 
+#mainContent .pageContents fieldset
+{
+	margin: 0 1px 1px 0;
+}
+
+
+#mainContent .pageContents div#savedsearches fieldset
+{
+	height: 100%;
+	padding-top: 0;
+	padding-bottom: 0;
+	float: left;
+	display: inline;
+}
+
+#mainContent .pageContents div#savedsearches fieldset div
+{
+	overflow: auto;
+	height: 100%;
+}
+
+#mainContent .pageContents div#savedsearches fieldset div ul li a
+{
+	display: block;
+	padding: 0.2em 0;
+}
+
+#mainContent .pageContents table.rule
+{
+	margin: 0;
+}
+
+.rule, .rule input, .rule select
+{
+	margin: 0 0 0 0;
+}
+
+.rule select
+{
+	margin-top: 0px;
+}
+
+.rule input, #mainContent .field
+{
+	width: 150px;
+}
+
+button.addrule, button.removerule
+{
+	padding: 0 5px 0 0;
+	margin: 0;
+	color: #8195a0;
+	text-shadow: 0 1px 0 #FFF;
+}
+
+button.addrule, button.removerule, a.delete, a.copy
+{
+	
+	border: none;
+	cursor: pointer;
+}
+
+a.delete i, a.copy i
+{
+	text-decoration: none;
+}
+
+/**
+ * Visual tweaks to jQuery UI widgets
+ */
+div.ui-datepicker
+{
+	box-shadow: 0 1px 8px rgba(0,0,0, 0.5);
+}
+
+/** 
+ * I'm not a fan of !important, but this avoids themes such as
+ * Sassy_CP from overriding the +/- buttons, etc
+ */
+button.addrule
+{
+	background: transparent !important;
+	box-shadow: none !important;
+	border: none !important;
+}
+
+button.removerule, a.delete
+{
+	background: transparent !important;
+	box-shadow: none !important;
+	border: none !important;
+}
+
+
+/*
+ * Styles for settings section
+ */
+
+a.nav_ch
+{
+	cursor: pointer;
+}
+
+textarea, input[type="text"]
+{
+	width: auto;
+}

@@ -372,21 +372,6 @@ button {
     }
 }
 
-.film-row .img:before {
-    @include icons-sprite(play);
-    content: '';
-    position: absolute;
-    width: 76px;
-    height: 43px;
-    left: 50%;
-    margin-left: -38px;
-    top: 50%;
-    margin-top: -22px;
-}
-
-.film-row > div:hover .img:before {
-    @include icons-sprite(play-hover);
-}
 
 //
 // ISOTOPE

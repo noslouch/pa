@@ -14,7 +14,7 @@ define('DATAGRAB_PATH', 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=aj
  */
 class Ajw_datagrab_mcp {
 	
-	var $version = '1.7.7';
+	var $version = '1.8.0';
 	var $module_name = "AJW_Datagrab";
 	
 	var $settings;
@@ -161,6 +161,9 @@ class Ajw_datagrab_mcp {
 		$ret = $this->EE->datagrab->datatypes[ $this->settings["import"]["type"] ]->fetch();
 		if( $ret != -1 ) {
 			$titles = $this->EE->datagrab->datatypes[ $this->settings["import"]["type"] ]->fetch_columns();
+			if( $titles === FALSE ) {
+				$data["errors"] = $this->EE->datagrab->datatypes[ $this->settings["import"]["type"] ]->errors;			
+			}
 			if( $titles != "" ) {
 				foreach( $titles as $key => $value ) {
 					$data["rows"][] = array( $value );
@@ -308,10 +311,23 @@ class Ajw_datagrab_mcp {
 		// Get statuses
 		
 		$data["status_fields"] = array(
-			"default" => "Channel default",
-			"open" => "Open",
-			"closed" => "Closed"
+			"default" => "Channel default"
 		);
+		
+		$this->EE->db->select( "status" );
+		$this->EE->db->from( "exp_statuses s" );
+		$this->EE->db->join( "exp_channels c", "c.status_group = s.group_id" );
+		if( is_numeric($this->settings["import"]["channel"]) ) {
+			$this->EE->db->where( 'c.channel_id', $this->settings["import"]["channel"] );
+		} else {
+			$this->EE->db->where( 'c.channel_name', $this->settings["import"]["channel"] );
+			$this->EE->db->where( 'c.site_id', $this->EE->config->item('site_id') );
+		}
+		$this->EE->db->order_by( "status_order ASC" );
+		$query = $this->EE->db->get();
+		foreach( $query->result_array() as $row ) {
+			$data["status_fields"][ $row["status"] ] = ucfirst($row["status"]);
+		}
 		
 		$data["status_fields"] = array_merge( $data["status_fields"], $data["data_fields"] );
 		

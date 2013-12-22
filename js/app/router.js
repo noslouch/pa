@@ -35,22 +35,36 @@ define([
         },
 
         routes : {
-            "" : "home",
-            "projects" : "projects",
-            "projects/:project" : "singleProject",
-            "projects/:project/:showcase" : "singleProject",
-            "photography" : "photography",
-            "photography/:title" : "singleAlbum",
-            "film" : "film",
-            "film/:title" : "singleFilm",
-            "profile" : "profile",
-            "profile/:section" : "profile",
-            "profile/:section/:urlTitle" : "profile",
-            "contact" : "contact",
-            "stream" : "stream",
+            "" : "section",
+            "projects" : "section",
+            "projects/:project" : "detail",
+            "projects/:project/:showcase" : "detail",
+            "photography" : "section",
+            "photography/:title" : "detail",
+            "film" : "section",
+            "film/:title" : "detail",
+            "books" : "section",
+            "books/:title" : "detail",
+            "profile" : "section",
+            "profile/:section" : "section",
+            "profile/:section/:urlTitle" : "section",
+            "contact" : "section",
+            "stream" : "section",
             "search" : "search",
             "search/results" : "results",
             "search/*any" : "search"
+        },
+
+        section : function( segment, urlTitle ) {
+            var spinner = new Spinner()
+            var section = Backbone.history.fragment.match(/[^\/]*/).join('') === '' ? 'home' : Backbone.history.fragment.match(/[^\/]*/).join('')
+            Chrome.section( spinner, section, segment, urlTitle )
+        },
+
+        detail : function( urlTitle, showcaseUrl ) {
+            var section = Backbone.history.fragment.match(/[^\/]*/).join('')
+            var spinner = new Spinner()
+            Chrome.detail( spinner, section, urlTitle, showcaseUrl, this.previous )
         },
 
         saveHistory : function() {
@@ -62,7 +76,7 @@ define([
         },
 
         debug : function() {
-            console.log('navigated to ', arguments[0])
+            console.log(Backbone.history.fragment.match(/^.*\//).join('').slice(0,-1))
         },
 
         payload : function(method) {
@@ -73,54 +87,9 @@ define([
             }
         },
 
-        home : function() {
-            var spinner = new Spinner()
-            Chrome.home(spinner)
-        },
-
-        projects : function() {
-            var spinner = new Spinner()
-            Chrome.projects(spinner)
-        },
-
-        singleProject : function(projectUrl, showcaseUrl) {
-            var spinner = new Spinner()
-            Chrome.singleProject( spinner, projectUrl, showcaseUrl, this.previous )
-        },
-
-        photography : function() {
-            var spinner = new Spinner()
-            Chrome.photography( spinner )
-        },
-
-        singleAlbum : function( albumUrl ) {
-            var spinner = new Spinner()
-            Chrome.singleAlbum( spinner, albumUrl )
-        },
-
-        film : function() {
-            var spinner = new Spinner()
-            Chrome.film( spinner )
-        },
-
-        singleFilm : function( filmUrl ) {
-            var spinner = new Spinner()
-            Chrome.singleFilm( spinner, filmUrl )
-        },
-
         profile : function( segment, urlTitle ) {
             var spinner = new Spinner()
             Chrome.profile( spinner, segment, urlTitle )
-        },
-
-        contact : function() {
-            var spinner = new Spinner()
-            Chrome.contact( spinner )
-        },
-
-        stream : function() {
-            var spinner = new Spinner()
-            Chrome.stream( spinner )
         },
 
         search : function() {
@@ -136,6 +105,25 @@ define([
             }
             $('nav .active').removeClass('active')
         }
+
+/*
+        singleFilm : function( filmUrl ) {
+            console.log(Backbone.history.fragment.match(/^.*\//).join('').slice(0,-1))
+            var spinner = new Spinner()
+            Chrome.singleFilm( spinner, filmUrl )
+        },
+
+        singleBook : function( bookUrl ) {
+            var spinner = new Spinner()
+            Chrome.singleBook( spinner, bookUrl )
+        },
+
+        singleProject : function(projectUrl, showcaseUrl) {
+            console.log(Backbone.history.fragment.match(/^.*\//).join('').slice(0,-1))
+            var spinner = new Spinner()
+            Chrome.singleProject( spinner, projectUrl, showcaseUrl, this.previous )
+        },
+*/
     })
 
     var router = new Router()

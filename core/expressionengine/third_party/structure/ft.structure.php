@@ -45,7 +45,7 @@ class Structure_ft extends EE_Fieldtype {
 			'structure_list_type' => 'pages'
 		);
 	}
-
+	
 	// --------------------------------------------------------------------
 
 
@@ -58,7 +58,7 @@ class Structure_ft extends EE_Fieldtype {
 		return $this->build_dropdown($data, $this->field_name, $this->field_id, $channel_id);
 	}
 
-
+	
 	/**
      * Matrix Cell Display
      */
@@ -66,8 +66,22 @@ class Structure_ft extends EE_Fieldtype {
 	{
 		return $this->build_dropdown($data, $this->cell_name, $this->field_id);
 	}
+	
+	function grid_display_cell($data)
+	{
+		return $this->display_cell($data);
+	}
 
 
+	function grid_display_settings($data)
+	{
+		return array(
+			$this->grid_settings_row( "Populate with...", $this->_get_dropdown($data) )
+		);
+	    
+	}
+
+	    
 	/**
      * Low Variables Fieldtype Display
 	 *
@@ -92,6 +106,11 @@ class Structure_ft extends EE_Fieldtype {
 
 	function display_settings($data)
 	{
+	    $this->EE->table->add_row('Populate selection with...', $this->_get_dropdown($data));
+	}
+	
+	function _get_dropdown($data)
+	{
 	    $selected = array_get($data, 'structure_list_type', null);
 
 	    $rows = array();
@@ -104,9 +123,10 @@ class Structure_ft extends EE_Fieldtype {
 			}
 		}
 
-	    $this->EE->table->add_row('Populate selection with...', form_dropdown('structure_list_type', $dropdown_options, $selected));
+	   return form_dropdown('structure_list_type', $dropdown_options, $selected);
 	}
-
+	
+	
 	public function save_settings($data)
 	{
 		return array(

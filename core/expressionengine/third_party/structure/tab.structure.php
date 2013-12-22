@@ -255,7 +255,29 @@ class Structure_tab
 
 	function validate_publish($params)
 	{
-		return FALSE;
+	  
+	  $structure_channels = $this->structure->get_structure_channels();
+	  $channel_type = $structure_channels[$params[0]['channel_id']]['type'];
+	  
+	  if ($channel_type == 'page')
+		{  
+		  $adapter = new Structure_Nestedset_Adapter_Ee('exp_structure', 'lft', 'rgt', 'entry_id');
+		  $this->nset = new Structure_Nestedset($adapter);
+		
+		  $entry_id = $params[0]['entry_id'];
+		  $node = $this->nset->getNode($entry_id);
+		  
+		  $parent_id = $params[0]['parent_id'];
+		  $parentNode = $this->nset->getNode($parent_id);
+		  
+		  if ($parentNode && $parentNode['left'] > $node['left'] && $parentNode['right'] < $node['right'] && $entry_id!=0) {
+		    return array('You can not nest a page below itself.' => 'parent_id');
+		  }
+		}
+		else
+		{
+			return;
+		}
 	}
 
 	function publish_data_db($params)
@@ -389,7 +411,7 @@ class Structure_tab
 		$parent_ids = array();
 		$parent_ids[0] = "NONE";
 
-		$data = $this->sql->get_data();
+		$data = $this->sql->get_data($this->EE->input->get('entry_id'));
 
 		foreach ($data as $eid => $entry)
 		{

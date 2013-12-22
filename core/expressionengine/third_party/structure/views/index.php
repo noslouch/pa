@@ -14,10 +14,10 @@ $level_lock_delete = is_numeric(substr($permissions['delete'], -1)) ? (int)subst
 
 			<ul id="tree-switcher">
 				<?php foreach($tabs as $id => $name) : ?>
-					<li<?php if(array_search($id, array_keys($tabs)) == 0) : ?> class="here"<?php endif; ?>><a href="#<?php echo $id; ?>"><?php echo $name; ?></a></li>
+					<li<?php if(array_search($id, array_keys($tabs)) == 0) : ?> class="here"<?php endif; ?>><a href="#" rel="<?php echo $id; ?>"><?php echo $name; ?></a></li>
 				<?php endforeach; ?>
 				<?php if ($cp_asset_data): ?>
-					<li><a href="#assets"><?=lang('assets')?></a></li>
+					<li><a href="#" rel="assets"><?=lang('assets')?></a></li>
 				<?php endif; ?>
 			</ul>
 

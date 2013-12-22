@@ -1,0 +1,357 @@
+# Changelog
+
+## 1.8.5.2
+
+- **Fix**: Fixed an issue where the date range dates would not calculate until the end of the end range day
+- **Fix**: Fixed an issue where extension javascript would be outputted twice.
+- **Changed**: Removed Zenbu's internal Channel Images file so that the native Channel Images fieldtype data display and settings kick in.
+
+## 1.8.5.1
+
+- **New**: Added Zenbu's WYSIWYG/text field settings for Editor field.
+- **Fix**: Fixed issue where Zenbu scripts would not load when certain third-party add-ons where sharing the cp_js_end hook.
+
+## 1.8.5
+
+- **New**: Grid fieldtype support (EE 2.7+).
+- **Fix**: Fixed an issue where a PHP "Array to string conversion" error was thrown in PHP 5.4+ in some cases.
+- **Fix**: Fixed an issue in some installs with session errors displaying and affecting the cp_js_end hook
+- **Fix**: Fixed issues related to date/time display in Solspace Calendar event fields.
+- **Fix**: Fixed a language string.
+- **Fix**: Fixed a rare but potential js/css asset loading conflict with third-party add-ons. 
+- **Improved**: Fancybox is now included in Zenbu. Please update your themes folder.
+- **Improved**: The "Display Settings" top link now points to the display settings of the currently selected channel. The "Entries" top link in Display Settings now returns to the currently viewed channel.
+
+## 1.8.4
+
+- **Fix**: Fixed an issue with protocol relative URLs not creating file hyperlink/image URLs correctly.
+- **Fix**: Fixed an issue where non-image files in Assets-field-within-Matrix would trigger the modal window. 
+- **Fix**: Fixed an issue where not all files in Assets-field-within-Matrix would display in Zenbu.
+- **Fix**: Removed unparsed HTML in Zenbu's top right navigation buttons.
+- **Fix**: Fixed a PHP error occurring on occasion when a new channel is created.
+- **Improved**: Added a space between files in Assets-field-within-Matrix.
+- **Improved/Dev**: Added a display settings argument (array) in the zenbu_result_query() method.
+
+
+## 1.8.3
+
+- **Fix**: Fixed a visual glitch where clicking the "Save this Search" button would stack on top of other buttons (eg. for exporting data through Hokoku) after cancelling/saving a search.
+- **Improved**: Clicking the Search button does not reload the Zenbu page anymore. The request now goes through ajax.
+- **Improved**: Added some human language display for the CartThrob Discount field.
+- **Fix**: Fixed an issue where extension scripts would not load in EE 2.6 in some situations.
+
+## 1.8.2
+
+- **New**: Added support for the EE Relationship field (EE 2.6+ only).
+- **New**: Added support for Pixel & Tonic's Field Pack fields.
+- **New**: Category display option: Limit display to X categories.
+- **Improved**: The column used for ordering is now highlighted by default when first loading the Zenbu section.
+- **Improved**: Code cleanup and minor optimization.
+
+## 1.8.1
+
+- **New**: Added zenbu_modify_standard_cell_data hook
+- **New**: Order by category. Default order can now also be set to category in General Settings
+- **Improved**: Tweaked the Manage Saved Search dialog
+- **Improved**: Code cleanup and various small tweaks
+- **Fix**: Fixed issue where ajax pagination would not move to the next page after visiting an entry form for some users
+- **Fix**: Fixed issue with icons not showing in IE8
+- **Fix**: Added EE 2.6+ compatibility
+
+## 1.8.0
+
+- **New**: Saved Search Manager: Enables the changing of search labels and order. 
+- **New**: Saved Search Manager: Global saved searches for member groups. Individual saved searches can be copied to other member groups with the appropriate permissions.
+- **New**: Member Access Settings is now known as *Permissions*. Added permissions for managing/viewing member group searches. 
+- **New**: Added url_title searching.
+- **New**: Added "Any Title or Basic Custom Field" as a default rule filter option in Display Settings.
+- **New**: Added grouped checkbox checking in "All Channels" section of *Display Settings*.
+- **New**: Filtering on a custom date field now has the same filtering options as entry_date, expiration_date and edit_date.
+- **New**: General Settings - *Default limit*. Now the default limit when visiting Zenbu can be something else than the default 25.
+- **New**: Added Assets 2 support.
+- **New**: Added zenbu_modify_channel_data hook.
+- **Improved**: Now using Font Awesome in the Zenbu interface.
+- **Improved**: Handling of row sorting in Display Settings
+- **Improved**: Added all categories to category dropdown when no channel ("All Channels") is selected.
+- **Improved**: Reduced AJAX calls used to render filtering rules. Improved related code.
+- **Improved**: Saved search list in main Zenbu page now follow the height of the top search interface.
+- **Improved**: More filter options (starts with, ends with, etc) for entry titles and url_titles
+- **Fix**: Fixed an issue in Assets 1.x where a query containing two asset_id columns seems to ignore the second instance of the asset_id column in some cases and shifts right-hand results to the left.
+- **Fix**: Fixed an issue in the Channel Images fieldtype where index.php was explicitly used in CI links, creating issues when index.php is renamed in some EE installs.
+- **Fix**: Fixed an issue in the Channel Images fieldtype where PHP errors occur when no upload directories are set in EE while using CI.
+- **Fix**: Fixed an issue in the Matrix fieldtype where the same Playa results were displayed across Matrix rows.
+- **Fix**: Fixed an issue for users using a custom third party themes folder.
+- **Fix**: Fixed an issue where returning to the Zenbu listing with a memorized custom (i.e. user-created) limit would ignore this setting and display the default first 25 results.
+- **Fix**: Fixed an issue in certain setups where Zenbu-specific fieldtype classes would not load
+
+## 1.7.1
+
+- **Fixed**: Fixed an issue where the EE login screen was presented in some cases after clicking the entry title
+- **Fixed**: Fixed an issue where Display Settings for channels added after Zenbu is installed would not saved
+- **Improved**: Channels are now listed alphabetically
+
+## 1.7.0
+
+- **New**: Expiration and edit date filtering
+- **Improved**: Package file/folder structure now compatible with Updater add-on
+- **Improved**: Display Settings now have individual pages/forms for each channel. Fixes data saving and display issues for users with large numbers of channels and/or with a limit on the amount of data that can be sent through a form (suhosin) 
+- **Improved**: Assets are not displayed in a table when only files (and no metadata) are set to be displayed
+- **Improved**: View Count column only displays the count value (no table) if only one count view is set to be displayed.
+- **Improved**: Added $category_list to parameters for zenbu_modify_category_display hook.
+- **Improved**: Reduced query calls for better performance
+- **Improved**: Updated German language file (again,  *Danke schön* [Werner Gusset](http://www.octave2media.ch/)!)
+- **Fix**: A few PHP errors for users of PHP 5.4+
+- **Fix**: Fixed an issue where fields containing a literal "0" would not display any data in the Zenbu column.
+- **Fix**: Fixed an issue for users upgrading from before Zenbu 1.5.5 where saved searches appeared to not be saved due to a missing value in the table's site_id column
+- **Fix**: Fixed a minor issue where the second filter rule dropdown would not have any value selected.
+- **Fix**: Fixed an issue where channels without a set custom field group would return an undefined index PHP error.
+- **Fix**: Fixed an issue where errors would display if not even one custom field was present in the EE installation
+
+## 1.6.1
+
+- **Fix**: Fixed javascript "apply" error for users of recent versions of Google Chrome.
+- **Improved**: Reduced the number of times searching is fired when searching.
+- **Improved**: Javascript file tweaks.
+
+## 1.6.0
+
+- **New**: Date ranges for entry_date
+- **New**: Ability to enable all custom fields in filter dropdowns. Even if fields are not set to show in Zenbu, they can still be searched upon.
+- **New**: Added custom zenbu_results_refresh custom event in js script.
+- **New**: Ability for Super Admins to turn on ADD-ONS and ADD-ONS => Modules when enabling Zenbu access to member groups. See note in Member Access Settings
+- **New**: Added settings for text custom fields set as numeric to allow exponential or regular number display, with control on decimals
+- **Improved**: Capitalization for a number of fields
+- **Improved**: Search button appears after page is loaded to avoid rapid search button clicking error
+- **Improved**: Better defense against garbled text for non-English text/symbols.
+- **Improved**: Channel selection in Display Settings switches from tabs to a dropdown when there are more than 10 channels.
+- **Fix**: Added a partial fix to the "apply" error in Chrome.
+- **Fix**: Fixed a monior issue with Zenbu field validation in Display Settings
+- **Fix**: Resolved an issue with how Playa class is loaded when used within a Matrix field
+
+## 1.5.5
+
+- **New** Autosave column. Users can add an autosave column which points to the autosaved entry.
+- **New**: Added hook "zenbu_modify_category_display"
+- **Improvement**: Modified how Zenbu functions are loaded for third-party fieldtypes. Zenbu now looks in native fieldtypes first, then Zenbu fieldtype files, then defaults to contents of exp_channel_data.
+- **Improved**: Saved searches are now per site/MSM-compatible
+- **Changed**: Removed MX Cloner support from Zenbu. This functionality is now moved to a separate add-on, giving it more flexibility and cleaning up Zenbu code.
+- **Fix** Fixed an issue with users with short_open_tag turned off in PHP getting a fatal PHP error
+- **Fix**: Fixed an issue with P&T Dropdown and Multiselect fields showing no data when optgroups are present.
+- **Improved**:  Changed the name of hook "zenbu_add_setting_row" to the more general "zenbu_add_column"
+
+## 1.5.4
+
+- **New**: Added alert popup to confirm or cancel the deletion of saved searches
+- **New**: Added zenbu_modify_field_cell_data hook
+- **New**: Super Admins can now enable the Zenbu module for other member groups from the Member Access Settings section. No need to visit each member group preferences individually to enable the module anymore!
+- **Improved**: Slightly more verbal AJAX-based errors
+- **Improved**: Author name filter dropdown is now alphabetical by screen name
+- **Improved**: Visually improved the display settings sorter
+- **Improved**: Added default display of entry ID and title for new channels freshly created but without any settings yet
+- **Fix**: Added fixes for MSM installs when retrieving and saving individual member settings
+- **Fix**: Resolved an issue where searching for "Any title or basic custom field" would trigger the Zenbu-specific Playa table query method for all custom fields instead of a single field and would break on opening bracket characters in field data.
+- **Fix**: Resolved issue with multi-entry delete or edit hooks conflicting with front-end add-ons using the same hook.
+- **Fix**: Resolved an issue where "in the last X days" and "within the next X days" always defaulted to "within the next X days" after submitting the form
+- **Fix**: Minor checkbox toggle bug in Member Access Settings
+
+## 1.5.3
+
+- **Fix**: Fixed CONCAT error in Zenbu's CartThrob fieldtype
+- **Fix**: Potential PHP error in Zenbu's CartThrob simple fieldtype
+- **Fix**: Fixed a bug where users only able to edit/delete their own entries were able to edit/delete entries from other authors
+- **Fix**: Fixed issues with LiveLook link
+- **Improved**: Added input field focus on Zenbu page load
+- **Improved**: Improved submit-type button animation and effect
+- **Improved**: Tweaked some theme CSS rules to avoid some CP themes from overriding +/- button styles
+- **Improved**: Saving search filters doesn't occur when there is no label
+- **Improved**: Saving search filters can be done by pressing the Enter key (i.e. no need to click the "Save" button)
+- **Improved**: Added "show calendar only" option for Solspace Calendar field
+- **Improved**: Searching by associated calendar name in Solspace's Calendar "Dates & Options" field
+- **Improved**: Added is empty/is not empty, and other filtering options for Playa fields.
+- **Improved**: More robust searching in Playa fields
+- **Improved**: Reduced the number of possible errors displayed when many searches were done in a very short time (eg. frequent clicking of the Search button)
+- **Improved**: Initial installation does not set custom fields to be shown by default
+- **Improved**: Added *zenbu_add_setting_row* hook. This is used in a few places to establish third-party columns/data
+- **Improved**: Added *zenbu_entry_cell_data* hook
+- **Improved**: Added *zenbu_custom_order_sort* hook
+
+## 1.5.2
+
+- **Fix**: Error when ZENBU_VER is already defined
+- **Fix**: Issue with fieldtypes that should have contains/does not contain options showed all options (thread 4142)
+- **Fix**: Potential PHP error in Display Settings when a channel isn't associated with a field group
+- **Fix**: PHP errors in Display Settings, such as show_expiration_date error.
+- **Fix**: Non-existent language key in date format
+- **Improved**: Better version comparison functions
+- **Improved**: Added index.html files to block access if Zenbu folder is directly accessed from browser
+- **Improved**: Added Asset support within Matrix display
+- **Improved**: Dropped adding of channel dropdown to Content => Edit and changed Access Settings wording for edit replace option if EE version >= 2.4.
+- **Improved**: Fetching of upload preferences
+- **Improved**: Added URL_THEMES_THIRD constant support when it becomes active in future EE versions
+
+## 1.5.1
+
+- **New**: Display settings are now saved per member. Administrators can copy profiles to member groups, and remove previous customized profiles in these groups while copying
+- **New**: Optional date display for entry_date and expiration_date when date is after current date
+- **New**: "Any title and basic custom field" filtering is possible now when searching in "All channels"
+- **New**: New hook: zenbu_modify_data_array
+- **Fix**: Issue with Playa filtering ending prematurely when more than one Playa filter was used in some cases
+- **Fix**: Fixed PHP error on installation when some channels have no associated fields/field groups (thread 3765)
+- **Fix**: Issue when "Any title or basic custom field" search term contained double and single quotes
+- **Fix**: Fixed MySQL error occurring when cat_group_ids have multiple pipe characters in exp_channels (thread 3904)
+- **Fix**: Issue where date format options were not displayed in Display Settings (thread 3471)
+- **Fix**: Issue for users using Command/Ctrl + click to open entry links in a new tab.
+- **Improved**: Reliability when returning to Zenbu's filtered results after saving an entry
+- **Improved**: Changed a few hyperlinks to buttons, as that's more what they are.
+
+## 1.5.0
+
+- **New**: Solspace Calendar support - shows event start/end dates (first rule only), whether it recurs, all-day, end of recurrence and calendar name
+- **New**: Better Workflow compatibility
+- **New**: Search all entry basic field data and titles
+- **New**: Ability to select a native EE thumbnail size in file fieldtype
+- **New**: Zenbu fieldtype support framework now extended to allow functions to be added in original fieldtype instead of zenbu/fieldtypes folder 
+- **New**: CartThrob fieldtype searching
+- **New**: Zenbu hooks: zenbu_filter_by_status, zenbu_modify_title_display, zenbu_entry_query_end and zenbu_after_save_search
+- **New**: German language pack (*Danke schön* [Werner Gusset](http://www.octave2media.ch/)!)
+- **New**: Italian language pack (*Grazie* [Riccardo Melzi](http://www.vivadesign.it/)!)
+- **Fix**: Fixed an issue with Assets when more than one Assets custom field is present
+- **Fix**: Fixed an issue with Assets when subfolders were not displayed correctly
+- **Fix**: Fixed an issue with MSM installations where retrieving site_system_preferences used up too much memory
+- **Fix**: Edge case fix for when Zenbu is installed before channels are created, as well as other edge case fixes
+- **Fix**: Fixed an issue with the interpretation of the format of category groups data associated with a channel
+- **Fix**: Odd display with CartThrob fieldtype when more than one extra column
+- **Fix**: Freshly installed Zenbu, without visiting the Display Section yet, will display the right custom fields for each channel
+- **Fix**: A number of bug fixes for Zoo Visitor compatibility
+- **Improved**: Less ajax request/search firing, which starts after user stopped typing after a short delay.
+- **Improved**: Removed the wording "Assets" in Zenbu when displaying Assets data
+- **Improved**: Made "Save this search" a button instead of a link
+- **Improved**: A number of smaller bug fixes and query performance tweaks
+
+## 1.4.0
+
+- **New**: Zenbu third-party fieldtype API: functions moved to a single place per fieldtype for easier Zenbu field compatibility development
+- **New**: Assets field support (with options)
+- **New**: CartThrob field support
+- **New**: Pages support: enable Pages URI override in LiveLook if an entry has URI set up with Pages module.
+- **New**: Relationship and Playa fields have the option to display entry ID or not
+- **New**: "True ordering" of entry listing data by clicking result table header (not through javascript anymore)
+- **New**: General settings: users can set Default initial filter rule (used to be fixed to "Category")
+- **New**: General settings: users can set Default order (used to be fixed to "Entry date")
+- **New**: General settings: users can set Default sort (used to be fixed to "descending order")
+- **New**: General settings: users can set Additional "Show X results". Note: high numbers (eg. "Show 9999 results" per page) can yield to long query times or system hanging.
+- **Improved**: Display settings sorting interface: sorting animation, clearer tabs for each channel, easier clicking of checkboxes, etc
+- **Fix**: Fix errors when search keywords contained single/double quotes
+- **Fix**: A number of small bugs, some related to the move to the Zenbu API
+- **Fix**: Minor filtering rule rendering
+
+## 1.3.1
+
+- Maintenance release
+- Fixed issue with Zenbu extension where entry links to multi-entry editing buttons would not work or throw js error
+- Partly removed selective script output based on url since determining url from cp_js_end hook proves unreliable in a few cases
+- Replaced a few HTML element classes for more targeted listening by extension script
+- Fixed an issue when on the Member Access settings page
+
+## 1.3.0
+
+- Major rewrite of the Zenbu code to accomodate the new features below
+- **New**: "Rules-based filtering" - Add as many filtering rules as you want to filter entry results. Similar to email filtering rules.
+- **New**: Filtering rules can be saved for later use, as well as can be labeled
+- **New**: More search accuracy options for certain fields - contains/does not contain/starts with/does not start with/ends with/does not end with/contains exactly
+- **New**: Future entries - display entries with entry date in the next X days
+- **New**: Option to have Live Look use channel settings or custom settings. Last segment can be set to entry ID or URL title
+- **New**: Option to display text custom fields as plain text or with HTML markup
+- **New**: Column display and order settings for no channel/multi-channel entry listings (such as initial screen)
+- **New**: LiveLook settings - have url_title as last segment instead of entry_id.
+- **New**: LiveLook settings - use custom segments instead of channel LiveLook settings
+- **New**: MX Cloner support - must have MX Cloner installed for this to work
+- **New**: Channel Images 5 support
+- **New**: [Solspace Tag](http://www.solspace.com/software/detail/tag/) support
+- **Improved**: Linebreaks in textareas, input fields, etc are respected in display column
+- **Improved**: Better error messages when AJAX loading of results fails
+- **Fix**: Tagger 3 support
+- **Fix**: If no channels exist in your installation, Zenbu displays an error page instead of scary PHP errors
+- **Fix**: Deprecated comment links now compatible with EE 2.2.1
+- **Fix**: Thumbnail image display in EE 2.2.1 (changed from EE 2.1.5)
+- **Fix**: Fixed issue when using style="" in custom date decorations
+- **Fix**: Date fields display within Matrix fields
+- **Fix**: A number of small bug fixes
+
+## 1.2.3
+
+- **New**: Improved return to Zenbu after multi-editing entries (includes when adding/removing categories). No more transition through standard EE entry listings!
+- **New**: Custom date formatting for date fields (includes dropdate fields)
+- **New**: Dropdate field support
+- **Fix**: Links to comments are not transformed to Zenbu links anymore
+- **Fix**: Solved an issue with Live Look columns not displaying
+- **Fix**: Solved an issue with display of last authors
+- **Fix**: Solved an issue with date display and localization
+- **Fix**: cat_array PHP error for channels without category groups
+- **Fix**: Solved an issue with categories with the same name not displaying results correctly
+- **Fix**: Fixed fatal PHP/Query error when "None" is selected for category groups in channel preferences
+- **Fix**: Default sorting of entries is now descending based on entry date, in accordance with EE's standard entry listing
+- **Fix**: EE 2.1.5 compatibility - Fixed fatal PHP/Query error
+- **Fix**: EE 2.1.5 compatibility - Added support for new EE naming of thumbnails.
+- **Fix**: EE 2.1.5 compatibility - Content => Edit dropdown fix
+- **Fix**: Small javascript issue with NDG Flexible Admin when hiding Home button
+- **Fix**: Added margins and constrained width (700px) on tables displayed in fancybox to avoid hidden or inaccessible images in small tables
+
+## 1.2.2
+
+- **New**: Ability to enable/disable display and set column order for entry ID in entry listing
+- **New**: "Last edited by" - display last author having worked on an entry.
+- **New**: [Deviant](http://devot-ee.com/add-ons/deviant) compatibility
+- **New**: In Display settings, alert before saving settings about channels with *all* columns set as hidden.
+- **New**: In Display settings, shadowing when sorting column order. Please update /themes/third_party/zenbu folder
+- **Fix**: keywords are now encoded before being sent for querying
+- **Fix**: Changed "keyword" parameter to "keywords" for consistency with standard EE listing and simplification of Deviant compatibility code
+- **Fix**: PHP show_comments error for users without Comment module installed
+
+## 1.2.1
+
+- **New**: Order entries by entry ID, title, date, edit date, and expiration date, in descending or ascending order, based on total results
+- **New**: Ordering and display/hiding of entry title column
+- **New**: Search by Entry ID and URL title
+- **Fix**: Better and more accurate display of sub categories in category filter dropdown
+- **Fix**: Fixed an issue where entries from channels which have access denied for certain member groups would be listed in Zenbu and throw PHP errors
+- **Fix**: Bug where dropdowns would not refresh and errors appear for < IE7 users
+
+## 1.2
+
+- **New**: Compatible with [NDG Flexible Admin](http://devot-ee.com/add-ons/ndg-flexible-admin/): Enable Zenbu links in Zenbu's "Member access settings" section.
+- **New**: Display of Entry expiration date (after channel sorting)
+- **New**: Display of Entry edit date (after channel sorting)
+- **New**: Display of [Entry view counts](http://expressionengine.com/legacy_docs/modules/weblog/entry_tracking.html)  (after channel sorting), includes options to enable/diable display of all view counters (1 to 4).
+- **Fix**: Entry title sorting by clicking the result table header now orders correctly
+- **Fix**: Improved handling of foreign character display when "show X characters" option is set (using multibyte functions in PHP)
+- **Fix**: Sorting of categories in category dropdown (works with related fix in EE 2.1.4+)
+- Some minor code cleanup
+
+## 1.1
+
+- **New** Multiple-site manager (MSM) compatible
+- **New** [NSM Addon Updater](http://ee-garage.com/nsm-addon-updater) support
+- **New** Support for [Playa](http://pixelandtonic.com/divebar) 3/4
+- **New** Support for display and search using [Pixel & Tonic's](http://pixelandtonic.com/) field type *labels*, including [Dive Bar](http://pixelandtonic.com/divebar) field types
+- **New** Support for [Safecracker](http://expressionengine.com/downloads/details/safecracker/) file fieldtype
+- **New** Multi-edit: Better multi-entry editor for editing/deleting entries
+- **New** Support for [DevDemon's Channel Images](http://www.devdemon.com/channel_images/) addon. Includes options.
+- **New** Support for [DevDemon's Tagger](http://www.devdemon.com/tagger/) addon
+- **New** Support for [VZ Url](http://devot-ee.com/add-ons/vz-url-extension/) fieldtype
+- **New** Focused custom field search: you can now search for the presence or absence of keywords in Matrix, Playa, Channel Images, etc fields
+- **Improved** Multi-edit: Adding/Removing categories from entries returns you to Zenbu after transiting through standard EE entry listing.
+- **Improved** Performance improvements
+- **Improved** Removed some redundant function calls
+- **Improved** Minor improvements to UI: table row stripes, entry rows can be selected from anywhere in the row, etc
+- **Fix** Dates respect user's timezone/daylight savings settings
+- **Fix** Fixes to minor search behavior quirks
+- **Fix** Fixed an issue with fancybox images not respecting fancybox rules when moving to next/previous image
+- **Fix** Fixed some issues with links when the Structure module is installed
+- **Fix** Javascript bug fix for installations without the latest jQuery plugin loaded or jQuery version that cannot support the delegate() function
+- **Fix** Using the livequery plugin to cover for the lack of delegate() support
+
+## 1.0
+
+- First release
+- Multi-adding/removing categories still returns you to the EE&#39;s standard *Edit Channel Entries* page. I hope to modify this soon.

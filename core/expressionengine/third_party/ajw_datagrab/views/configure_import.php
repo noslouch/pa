@@ -433,8 +433,9 @@ $this->table->add_row(
 );
 $this->table->add_row(
 	form_label("Author") .
-	NBS . anchor("http://brandnewbox.co.uk/support/details/assigning_authors_to_entries_with_datagrab", "(?)", 'class="help" title="Help"') .
-	'<div class="subtext">Assign the entry to the member in this field.<br/>Note: members will not be created. If the member does not exist the default author will be used.</div>', 
+	NBS . anchor("http://brandnewbox.co.uk/support/details/assigning_authors_to_entries_with_datagrab", "More details", 'class="help" title="Help"') .
+	'<div class="subtext">Assign the entry to the member in this field.<br/>Note: members will not be created. If the member does not exist the default author will be used.</div>'
+	, 
 	form_dropdown("author_field", $data_fields, 
 	 	isset($default_settings["config"]["author_field"]) ? $default_settings["config"]["author_field"] : '' )
 );

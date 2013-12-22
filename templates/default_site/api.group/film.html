@@ -9,15 +9,15 @@
         "title": "{title}",
         "timestamp" : "{year_film}000",
         "url-title": "{url_title}",
-        "thumb" : "{cover_image_film}{image:url:thumb}{/cover_image_film}",
         "summary": {exp:json_encode}{summary_film}{/exp:json_encode},
+        "content": {exp:json_encode}{content_film}{/exp:json_encode},
+        "thumb" : "{cover_image_film}{image:url:thumb}{/cover_image_film}",
         {if video_id_film}
         "video_id": "{video_id_film}",
         {if:else}
         "video_src" : "{video_src_film}",
         {/if}
         "youtube" : "{youtube_film}",
-        "content": {exp:json_encode}{content_film}{/exp:json_encode},
         "caption" : {exp:json_encode}{caption_film}{/exp:json_encode}
     },
 {/exp:channel:entries}

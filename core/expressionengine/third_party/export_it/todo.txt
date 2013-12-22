@@ -1,0 +1,9 @@
+Add Zoo Visitor & User Support
+Categories
+Freeform
+Brilliant Retail
+Expresso Store
+
+Write usage scenarios
+Add template methods
+Member Authentication and permission integration

@@ -15,7 +15,7 @@ define([
             _.bindAll( this, 'open' )
         },
 
-        render : function() {
+        render : function(spinner) {
             this.$el.addClass( 'home' )
 
             if ( !$('#n-container').length ) {
@@ -28,93 +28,14 @@ define([
                 $.when.apply( $, promiseStack ).done(function(quotesRes, bricksRes){
                     self.quoteTemplate(quotesRes[0])
                     self.noteworthyTemplate(bricksRes[0])
-                    self.init()
+                    self.init(spinner)
                 })
-
-                //this.noteworthyBuilder()
-                //this.init()
             } else {
-                this.init()
+                this.init(spinner)
             }
         },
 
-        quoteTemplate : function(quotes) {
-            var $quotes = $(TPL.quotes()),
-                container = $quotes.find('#qContainer'),
-                self = this
-
-            _.each( quotes, function(quote) {
-                var $slide = $( TPL.quoteSlide() ),
-                    h3 = $slide.find('h3')
-
-                if ( quote.type === 'image' ) {
-                    var img = document.createElement('img')
-                    img.src = quote.src
-                    $(h3).append(img)
-                } else {
-                    _.each( quote.lines, function(lineObj) {
-                        var blind = document.createElement('div')
-                        $(blind).addClass('blind closed')
-                        $(blind).html(lineObj.line)
-                        $(h3).append(blind)
-                    } )
-                    if ( quote.link ){
-                        var a = document.createElement('a')
-                        $(a).attr({
-                            href : quote.link,
-                            class : 'button closed',
-                            target : quote.external ? '_blank' : ''
-                        })
-                    }
-                }
-                $(container).append($slide)
-            } )
-            this.$el.html($quotes)
-        },
-
-        noteworthyTemplate : function(bricks) {
-            var $noteworthy = $(TPL.noteworthy()),
-                row = $noteworthy.find('#brickRow'),
-                imgSize
-
-            switch(bricks.length) {
-                case '4':
-                    imgSize = 'one-quarter'
-                    break;
-                case '3':
-                    imgSize = 'one-third'
-                    break;
-                case '2':
-                case '1':
-                    imgSize = 'one-half'
-                    break;
-                default:
-                    break;
-            }
-
-            _.each( bricks, function(brick) {
-                $(row).append( TPL.brick({
-                    src : brick.imgSize,
-                    link : brick.link,
-                    external : brick.external ? ' target="_blank"' : '',
-                    title : brick.title,
-                    summary : brick.summary
-                }) )
-            } )
-            this.$el.append($noteworthy)
-        },
-
-        open : function(e) {
-            e.preventDefault()
-            this.$el.css({ 'padding-bottom' :  this.$noteworthy.hasClass('open') ? '' : 245 })
-            this.$noteworthy.toggleClass('open')
-        },
-
-        onClose : function(){
-            $('.page').removeClass('home')
-        },
-
-        init : function() {
+        init : function(spinner) {
             this.$noteworthy = $('#n-container')
             $('#n-container header').click(this.open)
 
@@ -153,6 +74,87 @@ define([
                 $('.n-wrapper').removeClass('home')
                 $('#bullets').addClass('loaded')
             }, 2000 )
+
+            spinner.detach()
+        },
+
+        quoteTemplate : function(quotes) {
+            var $quotes = $(TPL.quotes()),
+                container = $quotes.find('#qContainer'),
+                self = this
+
+            _.each( quotes, function(quote) {
+                var $slide = $( TPL.quoteSlide() ),
+                    h3 = $slide.find('h3')
+
+                if ( quote.type === 'image' ) {
+                    var img = document.createElement('img')
+                    img.src = quote.src
+                    img.classList.add('blind', 'closed')
+                    img.title = quote.title
+                    $(h3).append(img)
+                } else {
+                    _.each( quote.lines, function(lineObj) {
+                        var blind = document.createElement('div')
+                        $(blind).addClass('blind closed')
+                        $(blind).html(lineObj.line)
+                        $(h3).append(blind)
+                    } )
+                    if ( quote.link ){
+                        var a = document.createElement('a')
+                        $(a).attr({
+                            href : quote.link,
+                            class : 'button closed',
+                            target : quote.external ? '_blank' : ''
+                        })
+                    }
+                }
+                $(container).append($slide)
+            } )
+            this.$el.html($quotes)
+        },
+
+        noteworthyTemplate : function(bricks) {
+            var $noteworthy = $(TPL.noteworthy()),
+                row = $noteworthy.find('#brickRow'),
+                imgSize
+
+            switch(bricks.length) {
+                case 4:
+                    imgSize = 'one-quarter'
+                    break;
+                case 3:
+                    imgSize = 'one-third'
+                    break;
+                case 2:
+                case 1:
+                    imgSize = 'one-half'
+                    break;
+                default:
+                    break;
+            }
+
+            _.each( bricks, function(brick) {
+                $(row).append( TPL.brick({
+                    src : brick['image-sizes'] ? brick['image-sizes'][this] : '',
+                    link : brick.link,
+                    external : brick.external ? ' target="_blank"' : '',
+                    title : brick.title,
+                    summary : brick.summary
+                }) )
+            }, imgSize )
+            this.$el.append($noteworthy)
+        },
+
+        open : function(e) {
+            e.preventDefault()
+            this.$el.css({ 'padding-bottom' :  this.$noteworthy.hasClass('open') ? '' : 245 })
+            this.$noteworthy.toggleClass('open')
+        },
+
+        onClose : function(){
+            $('.page').removeClass('home')
+            $('.page')[0].style.removeProperty('padding-bottom')
         }
     })
     return new Home()

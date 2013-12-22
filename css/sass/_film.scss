@@ -6,26 +6,48 @@
 
 $column-gutter: emCalc(7);
 
-.film-container {
+.four-column {
     width: 100%;
     max-width: 1190px;
     margin: 0 auto;
 }
 
-.film-row {
+.four-column-row {
     @include grid-row(nest);
+    width: 100%;
+    float: left !important;
     margin-bottom: 3em;
 
-    > div { @include grid-column(3); }
     .img { position: relative; }
     a { display: block; }
 }
 
+.four-column-cell {
+    @include grid-column(3);
+
+    .film & .img:before {
+        @include icons-sprite(play);
+        content: '';
+        position: absolute;
+        width: 76px;
+        height: 43px;
+        left: 50%;
+        margin-left: -38px;
+        top: 50%;
+        margin-top: -22px;
+    }
+
+    .film &:hover .img:before {
+        @include icons-sprite(play-hover);
+    }
+}
+
 $column-gutter: emCalc(17);
+
 
 // TYPE
 
-.film-row {
+.four-column-row {
     opacity: 0; @include transition(opacity 150ms ease);
 
     h3 {

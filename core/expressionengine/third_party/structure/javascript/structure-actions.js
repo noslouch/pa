@@ -9,20 +9,28 @@ $(document).ready(function() {
   // TREE SWITCHER
   $treeSwitcher.find('a')
   .each(function() {
-    if ( !$(this.hash).length ) {
+    var $rel = $(this).attr('rel');
+    
+    if ( !$("#"+$rel).length ) {
       $(this).hide();
     }
   })
   .bind('click', function(event) {
     event.preventDefault();
+    
+    var $rel = $(this).attr('rel');
+    
     var $a = $(this),
         $li = $a.parent();
+    
     if ( !$li.hasClass('here') ) {
-      $(this.hash).removeClass('hide-alt');
+      $("#"+$rel).removeClass('hide-alt');
       $li.addClass('here');
       $li.siblings().removeClass('here')
         .find('a').each(function() {
-          $(this.hash).addClass('hide-alt');
+          var $rel2 = $(this).attr('rel');
+          
+          $("#"+$rel2).addClass('hide-alt');
         });
     }
   });

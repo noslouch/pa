@@ -172,6 +172,20 @@ define([
                         } )
                     break;
 
+                    case 'book':
+                        $(sec).append('<h2>Project Books</h2>')
+                        $(sec).append('<p>Implement Book Resuts</p>')
+                        //_.each( modelsArray, function( model, idx) {
+                        //    var a = document.createElement('a'),
+                        //        p = document.createElement('p'),
+                        //        p2 = document.createElement('p')
+                        //    $(a).attr('href', model.get('url')).html(model.get('title'))
+                        //    $(p).append(a)
+                        //    $(p2).append( model.get('summary') )
+                        //    $(sec).append(p).append(p2)
+                        //} )
+                    break;
+
                     default:
                     break;
                 }

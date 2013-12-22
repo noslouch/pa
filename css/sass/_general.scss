@@ -119,7 +119,7 @@ iframe {
         float: right;
         font-weight: 500;
         font-size: emCalc(19);
-        width: 589px;
+        width: 660px;
         a:hover { color: $secondary-color; }
 
         ul { 
@@ -169,6 +169,10 @@ iframe {
 
     &.projects {
         padding-top: 192px;
+    }
+
+    &.photography {
+        height: 100%;
     }
 }
 

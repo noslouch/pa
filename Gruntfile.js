@@ -75,7 +75,8 @@ module.exports = function(grunt) {
       },
       src: {
         options: {
-          jshintrc: 'js/.jshintrc'
+          jshintrc: 'js/.jshintrc',
+            ignores : ['js/utils/orientation.js']
         },
         src: ['js/app/**/*.js', 'js/app.js', 'js/utils/**/*.js']
       }
@@ -107,7 +108,8 @@ module.exports = function(grunt) {
       },
       src: {
         files: '<%= jshint.src.src %>',
-        tasks: ['jshint:src', 'qunit']
+        tasks: ['jshint:src'],
+        options : { livereload: true }
       },
       //dev: {
         //files: ['testing/js/tests/**/*','js/**/*', 'css/sass/**/*', 'templates/**/*', 'assets/html/**/*'],
@@ -118,7 +120,7 @@ module.exports = function(grunt) {
         tasks : ['compass']
       },
       css : {
-        files : ['css/master.css'],
+        files : ['css/app.css'],
         options : { livereload : true }
       }
     },

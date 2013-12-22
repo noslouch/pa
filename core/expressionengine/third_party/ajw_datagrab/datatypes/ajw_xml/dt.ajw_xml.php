@@ -110,6 +110,11 @@ class Ajw_xml extends Datagrab_type {
 			$columns = array_merge( $columns, $item );
 		}
 
+		if ( !is_array($columns) ) {
+			$this->errors[] = "Cannot find any data. Is the XML path correct?";
+			return FALSE;
+		}
+
 		$titles = array();
 		$count = 0;
 		foreach( $columns as $idx => $title ) {

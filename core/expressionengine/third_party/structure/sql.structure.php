@@ -86,13 +86,29 @@ class Sql_structure
 		return $settings;
 	}
 
+	function get_categories($group_id)
+	{
+		$sql = "SELECT * from exp_categories where group_id={$group_id}";
+		
+		$result = $this->EE->db->query($sql);		
+		
+		$data = $result->result_array();
+		
+		
+		// =debug
+		header('Content-Type: text/plain; charset=iso-8859-1');
+		print_r($cats);
+		exit;
+		
+		return $data;
+	}
 
 	/**
 	 * Get all data for all Structure Channels
 	 *
 	 * @return array
 	 */
-	function get_data()
+	function get_data($entryid=0)
 	{
 		$data = array();
 
@@ -102,8 +118,15 @@ class Sql_structure
 					ON node.lft BETWEEN parent.lft AND parent.rgt
 				INNER JOIN exp_channel_titles AS expt
 					ON node.entry_id = expt.entry_id
-				WHERE parent.lft > 1
-				AND node.site_id = {$this->site_id}
+				WHERE parent.lft > 1";
+				
+		if($entryid!=0)
+		{
+			$sql .= " AND expt.entry_id !=".$entryid;
+			$sql .= " AND node.parent_id !=".$entryid;
+		}
+				
+		$sql .=	" AND node.site_id = {$this->site_id}
 				AND parent.site_id = {$this->site_id}
 				GROUP BY node.entry_id
 				ORDER BY node.lft";
@@ -153,8 +176,9 @@ class Sql_structure
 	 *
 	 * @return array
 	 */
-	function get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future)
+	function get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future, $override_hidden_state="no")
 	{
+		
 		$parent_id = $this->get_parent_id($current_id);
 
 		$settings = $this->get_settings();
@@ -300,7 +324,7 @@ class Sql_structure
 			$query = $this->EE->db->query($sql);
 			$results = $query->result_array();
 			$query->free_result();
-
+			
 			// -------------------------------------------
 			// 'structure_get_selective_data_results' hook.
 			//
@@ -313,7 +337,7 @@ class Sql_structure
 
 			$this->EE->session->cache['structure'][$cache_name] = $results;
 		}
-
+		
 		// ---
 		// Return empty array with no nav
 		// ---
@@ -410,9 +434,11 @@ class Sql_structure
 			$tree->selective_prune('status', $statuses, $status_exclude);
 		}
 
-		if ($this->EE->TMPL->fetch_param('override_hidden_state', FALSE) != 'yes')
-			$tree->selective_prune('hidden', array('y'), TRUE);
-
+		if($override_hidden_state)
+		{
+		if ($override_hidden_state != 'yes')
+		  $tree->selective_prune('hidden', array('y'), TRUE);
+		}
 
 		// limit to 'include' ids
 		if (count($include))
@@ -430,8 +456,8 @@ class Sql_structure
 
 		// rebuild results from what is left in the tree
 		$results = $tree->get_results();
-
-		if ($show_overview == 'yes')
+		
+		if ($show_overview)
 		{
 			// add sql to get this entry
 			$overview = $this->get_overview($branch_entry_id);
@@ -458,7 +484,7 @@ class Sql_structure
 				// echo $data[$row['entry_id']]['uri'].' ';
 			}
 		}
-
+		
 		return $data;
 	}
 
@@ -529,8 +555,9 @@ class Sql_structure
 		return $array;
 	}
 
-	function add_attributes($pages, $entry_id, $mode)
+	function add_attributes($pages, $entry_id, $mode,$override_hidden_state="no")
 	{
+		
 		$top_array = array();
 		$separator = $this->EE->config->item('word_separator') != "dash" ? '_' : '-';
 		$root_id = $this->EE->TMPL->fetch_param('css_id', 'nav' . $separator . $mode);
@@ -541,7 +568,7 @@ class Sql_structure
 		$listing_ids = $this->get_listing_entry_ids();
 
 		$zero_index_pages = array_values($pages);
-
+		
 		$i = 1;
 		foreach ($zero_index_pages as $index => $page)
 		{
@@ -602,7 +629,16 @@ class Sql_structure
 			// unique ids
 			if ($this->EE->TMPL->fetch_param('add_unique_ids', FALSE) == "yes" || $this->EE->TMPL->fetch_param('add_unique_ids', FALSE) == "on")
 			{
-				$pages[$key]['ids'][] = $page['slug'] == '/' ? $root_id . $separator . 'home' : $root_id . $separator . $this->get_slug($page['slug']);
+				$slugs = $this->get_slug($page['slug'],true);
+				
+				$pageslug='';
+				
+				foreach($slugs as $s)
+				{
+					$pageslug .= $separator . $s;
+				}
+				
+				$pages[$key]['ids'][] = $page['slug'] == '/' ? $root_id . $separator . 'home' : $root_id . $pageslug;
 			}
 			elseif ($this->EE->TMPL->fetch_param('add_unique_ids', FALSE) == "entry_ids" || $this->EE->TMPL->fetch_param('add_unique_ids', FALSE) == "entry_id")
 			{
@@ -628,10 +664,23 @@ class Sql_structure
 				$pages[$key]['classes'][] = 'first';
 			}
 
+			
 			// last class
 			if ($page['parent_id'] != 0 && array_key_exists($page['parent_id'], $pages) && ($page['rgt']+1) == $pages[$page['parent_id']]['rgt'])
 			{
-				$pages[$key]['classes'][] = 'last';
+					
+					// If this is the last but it's set to hidden, we want to go back and set the 
+					// previous entry and then remove it from the nav.
+					if($pages[$key]['hidden']=="y" && $override_hidden_state!="yes")
+					{
+						$pages[$key-1]['classes'][] = 'last';
+						unset($pages[$key]);
+					}
+					else
+					{
+						$pages[$key]['classes'][] = 'last';	
+					}
+					
 			}
 
 			// Build array of top level items
@@ -659,12 +708,19 @@ class Sql_structure
 		return $pages;
 	}
 
-	function get_slug($uri = FALSE)
+	function get_slug($uri = FALSE,$all=false)
 	{
 		if ($uri !== FALSE)
 		{
 			$segments = explode('/', trim($uri, '/'));
-			return end($segments);
+			if ($all)
+			{
+				return $segments;	
+			}
+			else
+			{
+				return end($segments);
+			}
 		}
 		return FALSE;
 	}
@@ -673,8 +729,9 @@ class Sql_structure
 	 * Get the HTML code for an unordered list of the tree
 	 * @return string HTML code for an unordered list of the whole tree
 	 */
-	function generate_nav($selective_data, $current_id, $entry_id, $mode)
+	function generate_nav($selective_data, $current_id, $entry_id, $mode, $show_overview, $rename_overview,$override_hidden_state="no")
 	{
+		
 		$html = '';
 		$separator = $this->EE->config->item('word_separator') != "dash" ? '_' : '-';
 
@@ -682,10 +739,31 @@ class Sql_structure
 		if ($current_id === FALSE)
 			$current_id = $entry_id;
 
-		$pages = $this->add_attributes($selective_data, $current_id, $mode);
+		$pages = $this->add_attributes($selective_data, $current_id, $mode,$override_hidden_state);
+		
+
+		// Now we've got the data, we need to do a cleanup to remove any child entries which don't have the parents
+			//$lp=0;
+			//
+			//foreach($pages as $row)
+			//{
+			//	//Ignore the Root Node
+			//	if (isset($row['parent_id']))
+			//	{
+			//		if($row['parent_id']!="0")
+			//		{
+			//			if (!isset($pages[$row['parent_id']]))
+			//			{
+			//				unset($pages[$lp]);	
+			//			}
+			//		}
+			//		$lp++;
+			//	}	
+			//}		
 
 		$tree = array_values($pages);
 		$tree_count = count($tree);
+		
 		if ($tree_count < 1)
 			return NULL;
 
@@ -699,7 +777,7 @@ class Sql_structure
 
 			// Build class string if any exist
 			$classes = count($tree[$i]['classes']) > 0 ? ' class="'. implode(' ',$tree[$i]['classes']) .'"' : NULL;
-
+			
 			// Build id string if any exist
 			$ids = count($tree[$i]['ids']) > 0 ? ' id="'. implode(' ',$tree[$i]['ids']) .'"' : NULL;
 
@@ -709,10 +787,6 @@ class Sql_structure
 			if ($this->EE->TMPL->fetch_param('encode_titles', 'yes') === "yes") {
 				$title = htmlspecialchars($title);
 			}
-
-			// Show Overview ovverride
-			if (array_key_exists('overview', $tree[$i]))
-				$title = $tree[$i]['overview'];
 
 			// Add span hook if desired
 			$title_output = $this->EE->TMPL->fetch_param('add_span', FALSE) == "yes" ? "<span>" . $title . "</span>" : $title;
@@ -727,6 +801,26 @@ class Sql_structure
 			if ($tree[$i]['depth'] < @$tree[$i+1]['depth'])
 			{
 				$html .= "\n<ul>\n";
+				
+				if ($show_overview)
+				{
+					if ($tree[$i]['depth']=="1")
+					{
+					
+					if($rename_overview=="title")
+					{
+						$title = $tree[$i]['title'];
+					}
+					else
+					{
+						$title = $rename_overview;
+					}
+					
+					$html .= '<li'. $classes . $ids . '><a href="' . $tree[$i]['uri'] . '">'.$title.'</a>';	
+					}
+				}
+				
+				
 			}
 			// Closing up a list item
 			elseif (@$tree[$i]['depth'] == @$tree[$i+1]['depth'])
@@ -1107,19 +1201,55 @@ class Sql_structure
 	}
 
 
-	function get_child_entries($parent_id)
+	function get_child_entries($parent_id,$cat='',$include_hidden='n')
 	{
 		$entries = array();
+		$catarray = array();
+		
+		if($cat!='')
+		{
+			$cat_entries = $this->get_entries_by_category($cat);
+			
+			foreach($cat_entries as $entry)
+			{
+				$catarray[] = $entry['entry_id'];
+			}
+			
+			$catarray = implode(",",$catarray);
+			
+		}
+		
 		if ($parent_id !== FALSE && is_numeric($parent_id))
 		{
-			$this->EE->db->select('entry_id')->from('structure')->where(array(
-				'parent_id' => $parent_id,
-				'entry_id !=' => 0,
-				'hidden !=' => 'y',
-				'site_id' => $this->site_id
-			))->order_by('lft', 'asc');
-
-			$results = $this->EE->db->get();
+			
+			$sql = "select entry_id from exp_structure where
+						parent_id = ".$parent_id." AND
+						entry_id!=0 AND
+						site_id = ".$this->site_id;
+			
+			if($include_hidden=='n')
+			{
+				$sql .= " AND hidden != 'y' ";
+			}
+						
+			// I've had to remove this from Active Record because CI adds backticks on a 
+			// where_in clause which is a bit crap when you want to do an inclusive array of entry_id's!
+			
+			//$this->EE->db->select('entry_id')->from('structure')->where(array(
+			//	'parent_id' => $parent_id,
+			//	'entry_id !=' => 0,
+			//	'hidsden !=' => 'y',
+			//	'site_id' => $this->site_id
+			//));
+			
+			if ($catarray)
+			{
+				$sql .= "	AND entry_id IN(".$catarray.")";
+			}
+			
+			$sql .= "	order by lft asc";
+			
+			$results = $this->EE->db->query($sql);
 
 			if ($results->num_rows() > 0)
 			{
@@ -1129,7 +1259,32 @@ class Sql_structure
 				}
 			}
 		}
+		
 		return $entries;
+	}
+	
+	function get_entries_by_category($cat)
+	{
+		//firstly, lets see whether we have a category id or a word
+		if (is_numeric($cat))
+		{
+			//it's a number, so we'll assume a cat_id and not bother with the lookup.
+			//I'm going to leave this if conditional in here though as I might want to use it at some point.
+		}
+		else
+		{
+			//it's not a number so we need to get a cat id;
+			$result = $this->EE->db->select("cat_id")->from("categories")->where("cat_url_title",$cat)->get();
+			
+			if ($result->num_rows() > 0)
+			{
+				$cat = $result->row()->cat_id;
+			}
+		}
+		
+		// Now, lets get an array of all entries which are in this category_id
+		return $this->EE->db->select("entry_id")->from("category_posts")->where("cat_id",$cat)->get()->result_array();
+		
 	}
 
 	function get_channel_by_entry_id($entry_id)
