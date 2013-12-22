@@ -114,7 +114,16 @@ class Ce_cache_redis extends Ce_cache_driver
 			return false;
 		}
 
-		return ( $this->redis->del( $id ) === 1 );
+		if ( method_exists( $this->redis, 'del' ) )
+		{
+			return ( $this->redis->del( $id ) === 1 );
+		}
+		else if ( method_exists( $this->redis, 'delete' ) )
+		{
+			return ( $this->redis->delete( $id ) === 1 );
+		}
+		
+		return false;
 	}
 
 	/**
@@ -181,8 +190,8 @@ class Ce_cache_redis extends Ce_cache_driver
 			return false;
 		}
 
-		//clear the 'user' cache
-		return $this->redis->flushAll();
+		//clear the Redis database cache
+		return $this->redis->flushDB();
 	}
 
 	/**
@@ -203,7 +212,18 @@ class Ce_cache_redis extends Ce_cache_driver
 		$relative_path = rtrim( $relative_path, '/' ) . '/';
 
 		//get all keys that start with the path
-		$keys = $this->redis->keys( $relative_path . '*' );
+		if ( method_exists( $this->redis, 'keys' ) )
+		{
+			$keys = $this->redis->keys( $relative_path . '*' );
+		}
+		else if ( method_exists( $this->redis, 'getKeys' ) ) //support for much older versions of phpredis
+		{
+			$keys = $this->redis->getKeys( $relative_path . '*' );
+		}
+		else
+		{
+			return false;
+		}
 
 		$items = array();
 
@@ -295,6 +315,19 @@ class Ce_cache_redis extends Ce_cache_driver
 				try
 				{
 					$success = call_user_func_array( array( $redis, 'connect' ), $server );
+
+					//authentication contribution from Juking the Stats: http://devot-ee.com/add-ons/support/ce-cache/viewthread/9084
+					if ( $this->EE->config->item('ce_cache_redis_auth') != false )
+					{
+						$redis->auth( $this->EE->config->item( 'ce_cache_redis_auth' ) );
+					}
+
+					//select a particular db if it's specified
+					if ( false !== $db_index = $this->EE->config->item('ce_cache_redis_db_index') )
+					{
+						$redis->select( intval( $db_index ) );
+					}
+
 				}
 				catch ( RedisException $e )
 				{

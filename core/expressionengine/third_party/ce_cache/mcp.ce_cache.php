@@ -1532,6 +1532,27 @@ class Ce_cache_mcp {
 			}
 		}
 
+		$javascript = '<script type="text/javascript">
+$(document).ready( function() {
+
+	var tagMaster = $("#ce_cache_tag_master");
+	if ( tagMaster.size() > 0 )
+	{
+		tagMaster.change(function() {
+		    $(".ce_cache_tag_item").attr("checked", this.checked);
+		});
+
+		$(".ce_cache_tag_item").change(function() {
+		    tagMaster.attr("checked", $(".ce_cache_tag_item:checked").length == $(".ce_cache_tag_item").length);
+		});
+	}
+});
+</script>';
+
+
+		//add the js
+		$this->EE->cp->add_to_foot( $javascript );
+
 		//view data
 		$data = array(
 			'action_url' => 'C=addons_modules' . AMP . 'M=show_module_cp' . AMP . "module=ce_cache" . AMP . 'method=clear_tags',

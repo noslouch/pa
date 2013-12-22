@@ -162,7 +162,7 @@ $lang = array(
 	RewriteCond %{REQUEST_URI} !^/system [NC]
 	RewriteCond %{QUERY_STRING} !ACT|URL [NC]
 	RewriteCond %{REQUEST_METHOD} !=POST [NC]
-	RewriteCond %{DOCUMENT_ROOT}/static/{site}/static%{REQUEST_URI}/index\\\.html -f [NC]
+	RewriteCond %{DOCUMENT_ROOT}/static/{site}/static%{REQUEST_URI}/index\\\.html -f
 	RewriteRule (.*) /_static_cache_handler.php%{REQUEST_URI}/index\\\.html [L,QSA]
 
 	#------------------- EE -------------------

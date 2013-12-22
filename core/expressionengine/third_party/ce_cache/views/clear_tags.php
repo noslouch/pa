@@ -11,9 +11,7 @@ if ( $show_form ) //show the form
 
 		//create the table
 		$this->table->set_template( $cp_table_template );
-		$this->table->set_heading(
-			lang( 'ce_cache_tag' )
-		);
+		$this->table->set_heading( '<input type="checkbox" id="ce_cache_tag_master" name="ce_cache_tag_master" /> ' . lang( 'ce_cache_tag' ) );
 
 		//loop through the tags
 		foreach( $tags as $index => $tag )
@@ -23,6 +21,7 @@ if ( $show_form ) //show the form
 					array(
 						'name' => 'ce_cache_tags[]',
 						'id' => 'ce_cache_tag_' . $index,
+						'class' => 'ce_cache_tag_item',
 						'value' => $tag,
 						'checked' =>  in_array( $tag, $selected ),
 					 )

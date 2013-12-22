@@ -40,6 +40,22 @@ class Ce_cache_static extends Ce_cache_driver
 		}
 
 		$this->cache_base = rtrim( str_replace( '\\', '/', $this->cache_base ), '/' ) . '/';
+
+		//file permissions
+		$this->file_permissions = 0644;
+		$file_perms_override = $this->EE->config->item('ce_cache_file_permissions');
+		if ( $file_perms_override != FALSE && is_numeric( $file_perms_override ) )
+		{
+			$this->file_permissions = $file_perms_override;
+		}
+
+		//directory permissions
+		$this->dir_permissions = 0775;
+		$dir_perms_override = $this->EE->config->item('ce_cache_dir_permissions');
+		if ( $dir_perms_override != FALSE && is_numeric( $dir_perms_override ) )
+		{
+			$this->dir_permissions = $dir_perms_override;
+		}
 	}
 
 	/**
@@ -168,8 +184,8 @@ class Ce_cache_static extends Ce_cache_driver
 				//check if the directory exists
 				if ( ! @is_dir( $current ) )
 				{
-					//try to make the directory with full permissions
-					if ( ! @mkdir( $current . '/', 0777, true ) )
+					//try to make the directory with the specified permissions
+					if ( ! @mkdir( $current . '/', $this->dir_permissions, true ) )
 					{
 						$this->log_debug_message( __METHOD__, "Could not create the cache directory '$current/'." );
 						break;
@@ -191,8 +207,8 @@ class Ce_cache_static extends Ce_cache_driver
 		//write the file
 		if ( write_file( $file, $this->is_flat ? $data : @serialize( $data ) ) )
 		{
-			//set the file to full permissions
-			@chmod( $file, 0777 );
+			//try to set the file permissions
+			@chmod( $file, $this->file_permissions );
 			unset( $file, $data );
 			return true;
 		}
