@@ -214,7 +214,7 @@ class Ce_cache_break
 		unset( $deletes );
 
 		//create the URL
-		$url = $this->EE->functions->fetch_site_index( 0, 0 );
+		$url = $this->EE->config->slash_item('site_url');
 
 		//see if this install has the ability to recreate the cache
 		$can_recreate = ( function_exists( 'curl_init' ) || function_exists( 'fsockopen' ) );
@@ -587,7 +587,7 @@ class Ce_cache_break
 		unset( $deletes );
 
 		//create the URL
-		$url = $this->EE->functions->fetch_site_index( 0, 0 );
+		$url = $this->EE->config->slash_item('site_url');
 
 		//see if this install has the ability to recreate the cache
 		$can_recreate = ( function_exists( 'curl_init' ) || function_exists( 'fsockopen' ) );
@@ -770,6 +770,8 @@ class Ce_cache_break
 			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true ); //no output
 			curl_setopt( $curl, CURLOPT_CONNECTTIMEOUT, false ) ; //no timeout
 			curl_setopt( $curl, CURLOPT_NOSIGNAL, true );
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //no ssl verification
+			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Cache-Control: no-cache'));
 
 			//follow location only works if there are no open_basedir or safe_mode restrictions
 			if ( ! ini_get('open_basedir') && ! ini_get('safe_mode') )

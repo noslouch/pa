@@ -18,7 +18,11 @@ class Ce_cache_file extends Ce_cache_driver
 		$this->EE->load->helper( 'file' );
 
 		//set the base cache path
-		$this->cache_base = str_replace( '\\', '/', APPPATH ) . 'cache/';
+		$this->cache_base = $this->EE->config->item( 'cache_path' );
+		if ( empty( $this->cache_base ) )
+		{
+			$this->cache_base = str_replace( '\\', '/', APPPATH ) . 'cache/';
+		}
 
 		//override this setting if set in the config or global vars array
 		if ( isset( $this->EE->config->_global_vars[ 'ce_cache_file_path' ] ) && $this->EE->config->_global_vars[ 'ce_cache_file_path' ] !== false ) //first check global array
@@ -28,6 +32,22 @@ class Ce_cache_file extends Ce_cache_driver
 		else if ( $this->EE->config->item( 'ce_cache_file_path' ) !== false ) //then check config
 		{
 			$this->cache_base = $this->EE->config->item( 'ce_cache_file_path' );
+		}
+
+		//file permissions
+		$this->file_permissions = 0644;
+		$file_perms_override = $this->EE->config->item('ce_cache_file_permissions');
+		if ( $file_perms_override != FALSE && is_numeric( $file_perms_override ) )
+		{
+			$this->file_permissions = $file_perms_override;
+		}
+
+		//directory permissions
+		$this->dir_permissions = 0775;
+		$dir_perms_override = $this->EE->config->item('ce_cache_dir_permissions');
+		if ( $dir_perms_override != FALSE && is_numeric( $dir_perms_override ) )
+		{
+			$this->dir_permissions = $dir_perms_override;
 		}
 	}
 
@@ -109,8 +129,8 @@ class Ce_cache_file extends Ce_cache_driver
 				//check if the directory exists
 				if ( ! @is_dir( $current ) )
 				{
-					//try to make the directory with full permissions
-					if ( ! @mkdir( $current . '/', 0777, true ) )
+					//try to make the directory with the specified permissions
+					if ( ! @mkdir( $current . '/', $this->dir_permissions, true ) )
 					{
 						$this->log_debug_message( __METHOD__, "Could not create the cache directory '$current/'." );
 						break;
@@ -132,8 +152,8 @@ class Ce_cache_file extends Ce_cache_driver
 		//write the file
 		if ( write_file( $file, @serialize( $data ) ) )
 		{
-			//set the file to full permissions
-			@chmod( $file, 0777 );
+			//try to set the file permissions
+			@chmod( $file, $this->file_permissions );
 			unset( $file, $data );
 			return true;
 		}

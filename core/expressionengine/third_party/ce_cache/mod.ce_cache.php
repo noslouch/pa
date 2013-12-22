@@ -141,8 +141,20 @@ class Ce_cache
 			//we're going to escape the logged_in and logged_out conditionals, since the Channel Entries loop adds them as variables.
 			$tagdata = str_replace( array( 'logged_in', 'logged_out' ), array( 'ce_cache-in_logged', 'ce_cache-out_logged' ), $tagdata );
 
+			//pre parse hook
+			if ($this->EE->extensions->active_hook('ce_cache_pre_parse'))
+			{
+				$tagdata = $this->EE->extensions->call('ce_cache_pre_parse', $tagdata);
+			}
+
 			//parse the data
 			$tagdata = $this->parse_as_template( $tagdata );
+
+			//post parse hook
+			if ($this->EE->extensions->active_hook('ce_cache_post_parse'))
+			{
+				$tagdata = $this->EE->extensions->call('ce_cache_post_parse', $tagdata);
+			}
 		}
 
 		$tagdata = $this->unescape_tagdata( $tagdata );
@@ -224,11 +236,12 @@ class Ce_cache
 		if (
 			( isset( $this->EE->session->cache['ep_better_workflow']['is_preview'] ) && $this->EE->session->cache['ep_better_workflow']['is_preview'] === true ) //better workflow draft
 			|| ( isset( $_GET['bwf_dp'] ) && $_GET['bwf_dp'] == 't' ) //another bwf check (from Matt Green)
+			|| ( isset( $_GET['publisher_status'] ) && $_GET['publisher_status'] == 'draft' ) // publisher check (from Fusionary)
 			|| $this->ee_string_to_bool( $this->determine_setting( 'off', 'no' ) ) //ce cache is off
 			|| ( $this->EE->config->item( 'ce_cache_block_bots' ) != 'no' && $this->is_bot() ) //bot page
 			|| ($this->ee_string_to_bool( $this->determine_setting( 'logged_in_only', 'no', 'static' ) ) && ! $logged_in ) //logged in only, but not logged in
 			|| ($this->ee_string_to_bool( $this->determine_setting( 'logged_out_only', 'no', 'static' ) ) && $logged_in ) //logged out only, but is logged in
-			|| ( ! empty( $_POST ) && $this->ee_string_to_bool( $this->determine_setting( 'ignore_post_requests', 'yes' ) ) ) //a POST page and ignore_post_requests is set to "yes"
+			|| ( ! empty( $_POST ) && $this->ee_string_to_bool( $this->determine_setting( 'ignore_post_requests', 'yes' ) ) && $_POST != array( 'entry_id' => '' ) ) //a POST page and ignore_post_requests is set to "yes"
 		) //no caching
 		{
 			return;
@@ -436,6 +449,50 @@ class Ce_cache
 
 		//delete all of the current tags for this item
 		$this->EE->db->query( 'DELETE FROM exp_ce_cache_tagged_items WHERE item_id = ?', array( $id ) );
+	}
+
+	/**
+	 * Manually clears items and/or tags, and optionally refreshes the cleared items.
+	 * @return void
+	 */
+	public function clear()
+	{
+		//get the items
+		$items = $this->EE->TMPL->fetch_param( 'items' );
+		$items = empty( $items ) ? array() : explode( '|', $this->reduce_pipes( $items, false ) );
+
+		//get the tags
+		$tags = $this->EE->TMPL->fetch_param( 'tags' );
+		$tags = empty( $tags ) ? array() : explode( '|', $this->reduce_pipes( $tags ) );
+
+		//do we need to continue?
+		if ( empty( $items ) && empty( $tags ) ) //we don't have any items or tags
+		{
+			return;
+		}
+
+		//refresh?
+		$refresh = $this->EE->TMPL->fetch_param( 'refresh' );
+		$refresh_time = 1;
+		if ( is_numeric( $refresh ) )
+		{
+			$refresh_time = round( $refresh );
+			$refresh = true;
+		}
+		else
+		{
+			$refresh = false;
+		}
+
+		//load the cache break class, if needed
+		if ( ! class_exists( 'Ce_cache_break' ) )
+		{
+			include PATH_THIRD . 'ce_cache/libraries/Ce_cache_break.php';
+		}
+
+		//instantiate the class break and call the break cache method
+		$cache_break = new Ce_cache_break();
+		$cache_break->break_cache( $items, $tags, $refresh, $refresh_time );
 	}
 
 	/**
@@ -659,10 +716,11 @@ class Ce_cache
 			&& (
 				( isset( $this->EE->session->cache['ep_better_workflow']['is_preview'] ) && $this->EE->session->cache['ep_better_workflow']['is_preview'] === true ) //better workflow draft
 				|| ( isset( $_GET['bwf_dp'] ) && $_GET['bwf_dp'] == 't' ) //another bwf check (from Matt Green)
+				|| ( isset( $_GET['publisher_status'] ) && $_GET['publisher_status'] == 'draft' ) // publisher check (from Fusionary)
 				|| $this->ee_string_to_bool( $this->determine_setting( 'off', 'no' ) )  //cache is off
 				|| ($this->ee_string_to_bool( $this->determine_setting( 'logged_in_only', 'no', 'fragment' ) ) && ! $logged_in ) //logged in only, but not logged in
 				|| ($this->ee_string_to_bool( $this->determine_setting( 'logged_out_only', 'no', 'fragment' ) ) && $logged_in ) //logged out only, but is logged in
-				|| ( ! empty( $_POST ) && $this->ee_string_to_bool( $this->determine_setting( 'ignore_post_requests', 'yes' ) ) ) //a POST page and ignore_post_requests is set to "yes"
+				|| ( ! empty( $_POST ) && $this->ee_string_to_bool( $this->determine_setting( 'ignore_post_requests', 'yes' ) ) && $_POST != array( 'entry_id' => '' ) ) //a POST page and ignore_post_requests is set to "yes"
 			)
 		)
 		{
@@ -913,6 +971,9 @@ class Ce_cache
 	 */
 	public function process_return_data( $str )
 	{
+		//parse globals and segment variables in case there were escaped during parsing
+		$str = $this->parse_vars( $str );
+
 		//parse current_time
 		$str = $this->current_time( $str );
 
@@ -1197,8 +1258,19 @@ class Ce_cache
 	}
 
 
-	public function unescape_tagdata( $tagdata )
+	/**
+	 * Swaps out placeholders with their escaped values.
+	 *
+	 * @param null $tagdata
+	 * @return mixed|null
+	 */
+	public function unescape_tagdata( $tagdata = null )
 	{
+		if ( ! isset( $tagdata ) )
+		{
+			$tagdata = $this->no_results_tagdata();
+		}
+
 		//unescape any content escaped by the escape() method
 		if ( isset( $this->EE->session->cache[ 'Ce_cache' ]['placeholder-keys'] ) )
 		{
@@ -1229,9 +1301,7 @@ class Ce_cache
 		if ( $tag_string !== false )
 		{
 			//cleanup the tag string
-			$tag_string = trim( $tag_string, '|' ); //trim pipes
-			$tag_string = str_replace( '||', '', $tag_string ); //remove double pipes (empty tags)
-			$tag_string = strtolower( $tag_string ); //convert to lowercase
+			$tag_string = $this->reduce_pipes( $tag_string );
 
 			//explode into tags
 			$temps = explode( '|', $tag_string );
@@ -1273,6 +1343,18 @@ class Ce_cache
 
 			unset( $data );
 		}
+	}
+
+	private function reduce_pipes( $string, $make_lowercase = true )
+	{
+		$string = trim( $string, '|' ); //trim pipes
+		$string = str_replace( '||', '', $string ); //remove double pipes (empty tags)
+		if ( $make_lowercase )
+		{
+			$string = strtolower( $string ); //convert to lowercase
+		}
+
+		return $string;
 	}
 }
 /* End of file mod.ce_cache.php */

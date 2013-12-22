@@ -2,8 +2,7 @@
 
 if ( ! defined('CE_CACHE_VERSION') )
 {
-	//Last Update: 8 May 2013
-	define('CE_CACHE_VERSION', '1.9.5');
+	define('CE_CACHE_VERSION', '1.10.1');
 }
 
 $config['name'] = 'CE Cache';

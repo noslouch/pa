@@ -36,7 +36,7 @@ class Ce_cache_static_handler
 		$here = str_replace(pathinfo(__FILE__, PATHINFO_BASENAME), '', __FILE__);
 		$here = str_replace( '\\', '/', $here );
 
-		if ( isset( $_GET['bwf_dp'] ) && $_GET['bwf_dp'] == 't' ) //better workflow preview
+		if ( ( isset( $_GET['bwf_dp'] ) && $_GET['bwf_dp'] == 't' ) || ( isset($_GET['publisher_status']) && $_GET['publisher_status'] == 'draft' ) ) //better workflow preview or publisher draft
 		{
 			$this->disabled = true;
 		}
@@ -96,6 +96,7 @@ class Ce_cache_static_handler
 
 		//create the absolute file path
 		$cache_folder = rtrim( $here, '/' ) . '/' . trim( $this->cache_folder, '/' );
+		$cache_folder = rtrim( str_replace( '\\', '/', realpath( $cache_folder ) ), '/');
 		$file = $cache_folder . '/static'. $item;
 
 		//decode special characters to find the actual file
