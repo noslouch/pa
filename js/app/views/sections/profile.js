@@ -144,6 +144,9 @@ define([
                     }) )
                     $layout.append($base)
                     this.$el.html($layout)
+                    setTimeout( function() {
+                        $('.bio').addClass('loaded')
+                    }, 5 )
                     break;
 
                 default:
