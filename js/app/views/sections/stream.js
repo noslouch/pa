@@ -18,9 +18,9 @@ define([
         },
         render : function(spinner){
             this.spinner = spinner
-            try {
+            if (this.collection.length) {
                 this.renderOut()
-            } catch(e) {
+            } else {
                 this.collection.on('sync', this.renderOut)
             }
         },
