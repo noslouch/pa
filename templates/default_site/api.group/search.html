@@ -42,7 +42,7 @@
                             'id' => '{image:id}',
                             'lg_thumb' => '{image:url:lg-thumb}',
                             'thumb' => '{image:url:thumb}',
-                            'url' => '{image:url:full-size}',
+                            'url' => '{image:url-size}',
                             'caption' => '{image:description}',
                             'keywords' => '{image:field:1}'
                         );
@@ -113,7 +113,7 @@
             {gallery_article backspace="14"}
             {
                 "thumb" : "{image:url:thumb}",
-                "url" : "{image:url:full}",
+                "url" : "{image:url}",
                 "caption" : {exp:json_encode}{image:description}{/exp:json_encode},
                 "keywords" : "{image:field:1}"
             },
@@ -131,7 +131,7 @@
             { 
                 "thumb" : "{image:url:thumb}",
                 "lg_thumb" : "{image:url:lg-thumb}",
-                "url" : "{image:url:full}",
+                "url" : "{image:url}",
                 "caption" : "{image:description}",
                 "keywords" : "{image:field:1}"
             },
@@ -233,7 +233,7 @@
                     { 
                         "lg_thumb" : "{image:url:lg-thumb}",
                         "thumb" : "{image:url:thumb}",
-                        "url" : "{image:url:full-size}",
+                        "url" : "{image:url-size}",
                         "caption": "{image:description}",
                         "keywords" : "{image:field:1}"
                     },
@@ -270,7 +270,7 @@
                 { 
                     "lg_thumb" : "{image:url:lg-thumb}",
                     "thumb" : "{image:url:thumb}",
-                    "url" : "{image:url:full-size}",
+                    "url" : "{image:url-size}",
                     "caption": "{image:description}",
                     "keywords" : "{image:field:1}"
                 },
