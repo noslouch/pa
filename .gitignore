@@ -13,3 +13,4 @@ core/expressionengine/config/config.php
 cfg.php
 exports/
 utils/
+logs/
