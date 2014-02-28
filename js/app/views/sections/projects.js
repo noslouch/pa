@@ -58,12 +58,12 @@ define([
             })
 
             this.model.on( 'layout', this.jumpSet )
-            Backbone.dispatcher.on('hashchange', this.render)
             Backbone.dispatcher.on('filterCheck', function(router){
                 if ( router.previous.href.match('projects') ) {
                     self.filterbar.close()
                 }
             })
+
         },
 
         events : {
@@ -114,6 +114,13 @@ define([
             } else {
                 $.bbq.pushState({ view : 'random' })
             }
+
+            $(document).foundation({
+                tooltip : {
+                    hover_delay: 50,
+                    disable_for_touch: true
+                }
+            })
         },
 
         navigate : function(e) {
@@ -147,8 +154,6 @@ define([
             window.chrome = this.model
         },
     })
-
-    $(document).foundation()
 
     return new ProjectLanding({
         model : new Backbone.Model(),

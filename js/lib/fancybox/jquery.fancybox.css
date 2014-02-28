@@ -34,9 +34,10 @@ a.fancybox-expand,
     overflow-y: scroll;
     overflow-y: auto;
     overflow-x: auto;
-
+/*
     -webkit-transition : -webkit-transform 0.5s;
     -webkit-transform  : translateX(0px);
+*/
 }
 
 .fancybox-lock-test {

@@ -190,7 +190,7 @@ iframe {
 .n-wrapper {
     width: 100%;
     max-width: 1280px;
-    z-index: 1;
+    //z-index: 1;
     position: relative;
     //bottom: 0;
     //left: 0;
@@ -257,6 +257,7 @@ iframe {
     // bricks are in an html defined row
     .brick {
         height: 150px;
+        position: relative;
 
         .copy {
             padding: 1em;
@@ -271,7 +272,8 @@ iframe {
             text-align: center;
             left: 0;
             right: 0;
-            z-index: -1;
+            // z-index: -1;
+            pointer-events: none;
             @include translate3d(0,-100%,0);
             @include backface-visibility(hidden);
         }
@@ -362,6 +364,7 @@ iframe {
     width: auto;
     margin-left: -10px;
     margin-right: 20px;
+    position: relative;
 
     h3 {
         display: inline-block;
@@ -394,7 +397,7 @@ iframe {
         overflow-x: hidden;
         max-height: 390px;
         margin: 0;
-        padding: 0 1em 0 0.75em;
+        padding: 0 16px 0 12px;
     }
 
     &.open {
@@ -804,21 +807,21 @@ iframe {
         //padding-top: 60px;
     }
 
-    .n-wrapper {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-    }
-    
-    .n-container {
-        position: relative;
-        @include translate3d( 0, 77%, 0 );
+    // .n-wrapper {
+    //     position: absolute;
+    //     bottom: 0;
+    //     left: 0;
+    //     right: 0;
+    //     margin: 0 auto;
+    // }
+    // 
+    // .n-container {
+    //     position: relative;
+    //     @include translate3d( 0, 77%, 0 );
 
-        &.open {
-            @include translate3d( 0, 0, 0 );
-        }
-    }
+    //     &.open {
+    //         @include translate3d( 0, 0, 0 );
+    //     }
+    // }
 
 }

@@ -30,10 +30,11 @@ define([
             },
             tpl : {
                 wrap : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-inner"></div></div>',
-                closeBtn : '<a title="Close" class="close" href="javascript:;" id="fb-close"><span>X</span> Close</a>'
+                closeBtn : ''
             },
             afterLoad : function() {
-                var $bullets = $('#bullet-wrap')
+                var $bullets = $('#bullet-wrap'),
+                    $close = $('<a title="Close" class="close" href="javascript:;" id="fb-close"><span>X</span> Close</a>')
 
                 if (!$bullets.length) {
                     $bullets = $('<div/>').attr('id', 'bullet-wrap').addClass('indicators')
@@ -59,13 +60,14 @@ define([
                         $ul.append($li)
                     }
 
-                    $('#fancybox-lock').append($logo).append($bullets)
+                    $('#fancybox-lock').append($logo).append($bullets).append($close)
 
                     $('#bullet-wrap li').click(function(){
                         $.fancybox.jumpto(this.id)
                     })
                     $('#next').click(function(){ $.fancybox.next() })
                     $('#prev').click(function(){ $.fancybox.prev() })
+                    $('#fb-close').click($.fancybox.close)
                 }
             },
             beforeShow : function() {
@@ -84,8 +86,7 @@ define([
             },
             beforeClose : function(){
                 window.loaded = false
-                $('#bullet-wrap').fadeOut(150)
-                $('#fancybox-lock .logo').fadeOut(150)
+                $('#fancybox-lock .logo, #fb-close, #bullet-wrap').fadeOut(150)
             }
         })
     }

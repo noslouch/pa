@@ -34,6 +34,8 @@ button {
 
 .quotes {
     height: 100%;
+    position: relative;
+    z-index: 0;
     @include transition(height 150ms ease);
 
     &.short { height: 66%; }
@@ -84,16 +86,34 @@ button {
         font-size: emCalc(10);
         @include transition(font-size 150ms ease);
 
-        &.image { display: block; }
+        &.image {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding-bottom: 15px;
+            z-index: 0;
+        }
     }
 
     .indicators {
-        z-index: 2; 
+        z-index: 1; 
         opacity: 0;
         @include transition( opacity 300ms ease-in );
     }
 
     .indicators ul { overflow: auto; }
+
+    .image .back {
+        position: absolute;
+        bottom: 0;
+        left: 100px;
+        right: 100px;
+        text-align: center;
+        margin: 0;
+        z-index: 1;
+    }
 
 }
 
@@ -455,11 +475,7 @@ button {
         a { color: $secondary-color; }
         a:hover { color: $gray; }
     }
-}
 
-.fancybox-skin { @include box-shadow(none); }
-
-.fancybox-wrap { 
     .close {
         position: fixed;
         top: 0;
@@ -468,6 +484,8 @@ button {
         padding: 39px;
     }
 }
+
+.fancybox-skin { @include box-shadow(none); }
 
 a.fancybox-nav {
     display: block;

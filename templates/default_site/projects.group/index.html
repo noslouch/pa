@@ -2,7 +2,7 @@
 {if segment_2 != ''}
     {exp:channel:entries url_title="{segment_2}" channel="projects" status="open|private"}
         {if status == 'Private'}
-        <?php if ( !$pw = ee()->input->post('pw', true) ) { ?>
+        <?php if ( ! $pw = ee()->input->post('pw', true) ) { ?>
             {embed="includes/header" nav="projects" secure="y"}
 
             <form action="{structure:page:url}/private" method="post">
