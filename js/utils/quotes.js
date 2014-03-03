@@ -65,7 +65,8 @@ define([
 
     function Gallery(c){
         var self = this,
-            quotes = $(c).find('h3')
+            quotes = $(c).find('h3'),
+            i
 
         // Slides array for reference
         this.slides = []
@@ -74,7 +75,7 @@ define([
         this.q = []
 
 
-        for (var i = 0; i < quotes.length; i++){
+        for ( i = 0; i < quotes.length; i++ ){
             this.slides.push( new Slide(quotes[i], self) )
             this.q.push(i)
         }
@@ -119,9 +120,9 @@ define([
             }
         }
 
+        $(c).on('transitionend', galleryHandler)
         $(c).on('webkitTransitionEnd', galleryHandler)
         $(c).on('transitionEnd', galleryHandler)
-        $(c).on('transitionend', galleryHandler)
 
         $(c).on('click', '.indicators a', function(e){
             e.preventDefault()
