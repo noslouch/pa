@@ -234,6 +234,7 @@ button {
         border-bottom: 1px solid #eaeaea;
         margin-bottom: 1rem;
         font-size: 5rem;
+        height: 5rem;
         @include appearance(none);
     }
 
@@ -246,6 +247,20 @@ button {
             background: red;
             color: white;
         }
+    }
+}
+
+.page.search {
+    .search-form {
+        position: relative;
+        
+        .cell-wrapper {
+            padding: 0;
+        }
+    }
+
+    .cancel-search {
+        display: none;
     }
 }
 
