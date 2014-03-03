@@ -88,6 +88,7 @@
 .CIField .Image .ImageLinked {background: url(img/break_link.png) no-repeat !important;}
 .CIField .Image .ImageReplace {background: url(img/refresh.png) no-repeat;}
 
+.CIField .TileBased .AssignedImages {list-style:none; margin:0; padding:0;}
 .CIField .TileBased .Image {z-index:50; width:100px; padding:2px 2px 0; height:119px;margin:0 5px 5px 0;position:relative; float:left; border:2px solid transparent}
 .CIField .TileBased .Image a {width:100px;height:100px;display:block;}
 .CIField .TileBased .Image a img {width:100px;height:100px;border-radius:5px 5px 0 0;}
@@ -104,7 +105,7 @@
 .CIField .TileBased .Image:hover .actions {display:block;}
 .CIField .TileBased .PrimaryImage {border:2px solid orange; padding:0;border-radius:7px 7px 7px 7px;}
 .CIField .TileBased .PrimaryImage .filename {}
-.CIField .TileBased .image_title {background:none;}
+.CIField .TileBased .image_title {background:none; }
 
 .ChannelImagesSubmitWait {padding:0 0 0 20px; background:url(img/spinner.gif) no-repeat; text-align: left; font-weight:bold; color:green;}
 

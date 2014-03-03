@@ -15,7 +15,7 @@
 
 /* TABS: Normal Style */
 .ChannelImagesField .ChannelImagesTabs {border-bottom:1px solid #B8B8B8;}
-.ChannelImagesField .ChannelImagesTabs li {margin-left:5px; margin-bottom: -1px; height:22px; background:url(img/tab_inactive_bg.gif) repeat-x; border:1px solid #B8B8B8; border-top-left-radius:2px; border-top-right-radius:2px; line-height:22px;}
+.ChannelImagesField .ChannelImagesTabs li {margin-right:5px; margin-bottom: -1px; height:22px; background:url(img/tab_inactive_bg.gif) repeat-x; border:1px solid #B8B8B8; border-top-left-radius:2px; border-top-right-radius:2px; line-height:22px;}
 .ChannelImagesField .ChannelImagesTabs li a {color:#646464; padding:0 5px; font-size:11px; font-weight:bold; float:left; text-decoration:none; outline:none;}
 .ChannelImagesField .ChannelImagesTabs li.ui-tabs-selected {border-bottom:none;}
 .ChannelImagesField .ChannelImagesTabs li.ui-tabs-selected a {color:#B22447;}
@@ -66,5 +66,5 @@
 
 .ChannelImagesField .TestLocation {padding:0 0 0 20px; height:16px; display:block; background:url(img/test.png) no-repeat; line-height:16px; font-size:13px; font-weight:bold;}
 
-.ChannelImagesField .view_toggle {position:absolute; font-weight:bold; padding:0 10px; font-size:12px; left:450px; top:0; margin-left:5px; margin-bottom: -1px; height:22px; background:url(img/tab_inactive_bg.gif) repeat-x; border:1px solid #B8B8B8; border-top-left-radius:2px; border-top-right-radius:2px; line-height:22px;}
+.ChannelImagesField .view_toggle {font-weight:bold; padding:0 10px; font-size:12px; margin:0 0 10px; height:22px; background:url(img/tab_inactive_bg.gif) repeat-x; border:1px solid #B8B8B8; border-top-left-radius:2px; border-top-right-radius:2px; line-height:22px;}
 .ChannelImagesField .view_toggle input {position:relative; top:2px;}

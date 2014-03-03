@@ -1,30 +1,32 @@
 <?php echo $this->view('mcp/_menu'); ?>
 <div class="ci-body">
 
-<?php foreach($matrix as $matrix_field):?>
+<?php foreach($fields as $field):?>
 
 <?=form_open($base_url_short.AMP.'method=import_images')?>
 
-<?=form_hidden('matrix[field_id]', $matrix_field['field_id']);?>
-<?=form_hidden('matrix[channel_id]', $matrix_field['channel_id']);?>
+<?=form_hidden('field[type]', $field['type']);?>
+<?=form_hidden('field[field_id]', $field['field_id']);?>
+<?=form_hidden('field[channel_id]', $field['channel_id']);?>
 
 <table class="mainTable ImportMatrixImages">
 	<thead>
 		<tr>
-			<th colspan="3"><?=$matrix_field['field_label']?></th>
+			<th colspan="3"><?=$field['field_label']?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<td><strong><?=lang('ci:transfer_field')?></strong></td>
 			<td>
-				<select name="matrix[ci_field]">
-				<?php foreach($matrix_field['ci_fields'] as $ci):?>
+				<select name="field[ci_field]">
+				<?php foreach($field['ci_fields'] as $ci):?>
 					<option value="<?=$ci->field_id?>"><?=$ci->field_label?></option>
 				<?php endforeach;?>
 				</select>
 			</td>
 		</tr>
+<?php if ($field['type'] == 'matrix'):?>
 		<tr>
 			<td><strong><?=lang('ci:column_mapping')?></strong></td>
 			<td>
@@ -35,11 +37,11 @@
 					</tr>
 				</thead>
 				<tbody>
-				<?php foreach($matrix_field['cols'] as $col):?>
+				<?php foreach($field['cols'] as $col):?>
 					<tr>
 						<td><?=$col->col_label?></td>
 						<td>
-							<select name="matrix[fieldmap][<?=$col->col_id?>]">
+							<select name="field[fieldmap][<?=$col->col_id?>]">
 								<option value=""><?=lang('ci:dont_transfer')?></option>
 								<option value="image"><?=lang('ci:image')?></option>
 								<option value="title"><?=lang('ci:title')?></option>
@@ -58,10 +60,11 @@
 				</table>
 			</td>
 		</tr>
+<?php endif;?>
 		<tr>
 			<td style="width:300px"><?=lang('ci:import_entries')?></td>
 			<td class="CI_IMAGES">
-				<?php foreach($matrix_field['entries'] as $row):?>
+				<?php foreach($field['entries'] as $row):?>
 					<div class="Image Queued label" rel="<?=$row->entry_id?>" style="float:left;margin:0 5px 5px 0;"><?=$row->entry_id?></div>
 				<?php endforeach;?>
 				<br clear="all">

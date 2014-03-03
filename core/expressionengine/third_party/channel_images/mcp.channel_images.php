@@ -160,10 +160,10 @@ class Channel_images_mcp
 		// -----------------------------------------
 		// Grab all matrix fields
 		// -----------------------------------------
-		$this->EE->db->select('cf.field_label, cf.field_id, cf.group_id, fg.group_name');
+		$this->EE->db->select('cf.field_label, cf.field_type, cf.field_id, cf.group_id, fg.group_name');
 		$this->EE->db->from('exp_channel_fields cf');
 		$this->EE->db->join('exp_field_groups fg', 'cf.group_id = fg.group_id', 'left');
-		$this->EE->db->where('cf.field_type', 'matrix');
+		$this->EE->db->where_in('cf.field_type', array('matrix', 'file'));
 		$this->EE->db->order_by('cf.field_label', 'ASC');
 		$query = $this->EE->db->get();
 
@@ -172,26 +172,38 @@ class Channel_images_mcp
 			// Grab all channel image fields whithin that field group
 			$q2 = $this->EE->db->select('field_id, field_label')->from('exp_channel_fields')->where('group_id', $row->group_id)->where('field_type', 'channel_images')->get();
 
-			// Grab ll matrix columns
-			$q3 = $this->EE->db->select('col_id, col_label')->from('exp_matrix_cols')->where('field_id', $row->field_id)->order_by('col_order', 'ASC')->get();
+			if ($row->field_type == 'matrix') {
+				// Grab ll matrix columns
+				$q3 = $this->EE->db->select('col_id, col_label')->from('exp_matrix_cols')->where('field_id', $row->field_id)->order_by('col_order', 'ASC')->get();
+
+				// Grab all entry ids
+				$q5 = $this->EE->db->select('entry_id')->from('exp_matrix_data')->where('field_id', $row->field_id)->group_by('entry_id')->get();
+			}
+
+			if ($row->field_type == 'file') {
+				// Grab all entry ids
+				$q5 = $this->EE->db->select('entry_id')->from('exp_channel_data')->where('field_id_'.$row->field_id. ' !=', '')->get();
+			}
 
 			// Grab channel id's
 			$q4 = $this->EE->db->select('channel_id')->from('exp_channels')->where('field_group', $row->group_id)->get();
 
-			// Grab all entry ids
-			$q5 = $this->EE->db->select('entry_id')->from('exp_matrix_data')->where('field_id', $row->field_id)->group_by('entry_id')->get();
 
-			$matrix = array();
-			$matrix['field_label'] = $row->field_label;
-			$matrix['field_id'] = $row->field_id;
-			$matrix['group_label'] = $row->group_name;
-			$matrix['channel_id'] = $q4->row('channel_id');
-			$matrix['cols'] = $q3->result();
-			$matrix['ci_fields'] = $q2->result();
-			$matrix['entries'] = $q5->result();
+			$field = array();
+			$field['type'] = $row->field_type;
+			$field['field_label'] = $row->field_label;
+			$field['field_id'] = $row->field_id;
+			$field['group_label'] = $row->group_name;
+			$field['channel_id'] = $q4->row('channel_id');
+			$field['ci_fields'] = $q2->result();
+			$field['entries'] = $q5->result();
+
+			if ($row->field_type == 'matrix') {
+				$field['cols'] = $q3->result();
+			}
 
 
-			$this->vData['matrix'][] = $matrix;
+			$this->vData['fields'][] = $field;
 		}
 
 
@@ -205,6 +217,22 @@ class Channel_images_mcp
 
 	// ********************************************************************************* //
 
+	public function ajaxRouter()
+    {
+    	// -----------------------------------------
+        // EE 2.7 requires XID, restore the XID
+        // -----------------------------------------
+        if (version_compare(APP_VER, '2.7.0') >= 0) {
+            //$this->EE->security->restore_xid($this->EE->input->post('XID'));
+        }
+
+        include PATH_THIRD . 'channel_images/mod.channel_images.php';
+        $MOD = new Channel_images();
+        $MOD->channel_images_router($this->EE->input->get_post('ajax_method'));
+    }
+
+    // ********************************************************************************* //
+
 	public function mcp_globals()
 	{
 		$this->EE->cp->set_breadcrumb($this->base, $this->EE->lang->line('channel_images'));
@@ -214,7 +242,7 @@ class Channel_images_mcp
 		$this->EE->image_helper->mcp_js_css('css', 'css/select2.css', 'select2', 'main');
 		$this->EE->image_helper->mcp_js_css('css', 'css/mcp_fts.css?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'main');
 		$this->EE->image_helper->mcp_js_css('js', 'js/select2.min.js', 'select2', 'main');
-		$this->EE->image_helper->mcp_js_css('js', 'js/handlebars.runtime-1.0.0.min.js', 'handlebars', 'runtime');
+		$this->EE->image_helper->mcp_js_css('js', 'js/handlebars.runtime-v1.3.0.js', 'handlebars', 'runtime');
 		$this->EE->image_helper->mcp_js_css('js', 'js/hbs-templates.js?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'templates');
 		$this->EE->image_helper->mcp_js_css('js', 'js/mcp.min.js?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'main');
 	}

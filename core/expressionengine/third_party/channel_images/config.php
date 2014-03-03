@@ -15,12 +15,25 @@ if ( ! defined('CHANNEL_IMAGES_NAME'))
 {
 	define('CHANNEL_IMAGES_NAME',         'Channel Images');
 	define('CHANNEL_IMAGES_CLASS_NAME',   'channel_images');
-	define('CHANNEL_IMAGES_VERSION',      '5.4.10');
+	define('CHANNEL_IMAGES_VERSION',      '5.4.14');
 }
 
 $config['name'] 	= CHANNEL_IMAGES_NAME;
 $config["version"] 	= CHANNEL_IMAGES_VERSION;
 $config['nsm_addon_updater']['versions_xml'] = 'http://www.devdemon.com/'.CHANNEL_IMAGES_CLASS_NAME.'/versions_feed/';
+
+/**
+ * < EE 2.6.0 backward compat
+ */
+if (!function_exists('ee'))
+{
+    function ee()
+    {
+        static $EE;
+        if ( ! $EE) $EE = get_instance();
+        return $EE;
+    }
+}
 
 /* End of file config.php */
 /* Location: ./system/expressionengine/third_party/channel_images/config.php */

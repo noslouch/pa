@@ -54,6 +54,8 @@ class Channel_images_model
 		8 => 'Rotate 270 CW',
 	);
 
+	public $prefix = '';
+
 	/**
 	 * Constructor
 	 *
@@ -85,6 +87,7 @@ class Channel_images_model
 			if (isset($params['orderby']) === FALSE) $params['orderby'] = 'image_order';
 
 			if ($params['orderby'] == 'title') $this->EE->db->order_by('title', $sort);
+			if ($params['orderby'] == 'date') $this->EE->db->order_by('upload_date', $sort);
 			elseif ($params['orderby'] == 'random') $this->EE->db->order_by('RAND()', FALSE);
 			else $this->EE->db->order_by('image_order', $sort);
 		}
@@ -767,6 +770,7 @@ class Channel_images_model
 		$vars[$this->prefix.'category'] = $image->category;
 		$vars[$this->prefix.'filename'] = $image->filename;
 		$vars[$this->prefix.'id'] = $image->image_id;
+		$vars[$this->prefix.'member_id'] = $image->member_id;
 		$vars[$this->prefix.'cover'] = $image->cover;
 		$vars[$this->prefix.'upload_date'] = $image->upload_date;
 		$vars[$this->prefix.'url'] = $image_url;
@@ -843,62 +847,7 @@ class Channel_images_model
 			// http://phpgraphy.sourceforge.net/manual/latest/apas04.html
 			$iptc = @unserialize(base64_decode($image->iptc));
 
-			$vars[$this->prefix.'iptc:object_name'] = (isset($iptc['2#005'][0])) ? $iptc['2#005'][0] : '';
-			$vars[$this->prefix.'iptc:keywords'] = (isset($iptc['2#025'][0])) ? implode(', ', $iptc['2#025']) : '';
-			$vars[$this->prefix.'iptc:special_instructions'] = (isset($iptc['2#040'][0])) ? $iptc['2#040'][0] : '';
-			$vars[$this->prefix.'iptc:date_created'] = (isset($iptc['2#055'][0])) ? $iptc['2#055'][0] : '';
-			$vars[$this->prefix.'iptc:time_created'] = (isset($iptc['2#060'][0])) ? $iptc['2#060'][0] : '';
-
-			$vars[$this->prefix.'iptc:byline'] = (isset($iptc['2#080'][0])) ? $iptc['2#080'][0] : '';
-			$vars[$this->prefix.'iptc:byline_title'] = (isset($iptc['2#085'][0])) ? $iptc['2#085'][0] : '';
-			$vars[$this->prefix.'iptc:city'] = (isset($iptc['2#090'][0])) ? $iptc['2#090'][0] : '';
-			$vars[$this->prefix.'iptc:sub_location'] = (isset($iptc['2#092'][0])) ? $iptc['2#092'][0] : '';
-			$vars[$this->prefix.'iptc:province_state'] = (isset($iptc['2#095'][0])) ? $iptc['2#095'][0] : '';
-			$vars[$this->prefix.'iptc:country_name'] = (isset($iptc['2#101'][0])) ? $iptc['2#101'][0] : '';
-			$vars[$this->prefix.'iptc:original_transmission_reference'] = (isset($iptc['2#103'][0])) ? $iptc['2#103'][0] : '';
-			$vars[$this->prefix.'iptc:headline'] = (isset($iptc['2#105'][0])) ? $iptc['2#105'][0] : '';
-			$vars[$this->prefix.'iptc:credit'] = (isset($iptc['2#110'][0])) ? utf8_encode($iptc['2#110'][0]) : '';
-			$vars[$this->prefix.'iptc:source'] = (isset($iptc['2#115'][0])) ? utf8_encode($iptc['2#115'][0]) : '';
-			$vars[$this->prefix.'iptc:copyright_notice'] = (isset($iptc['2#116'][0])) ? utf8_encode($iptc['2#116'][0]) : '';
-			$vars[$this->prefix.'iptc:caption_abstract'] = (isset($iptc['2#120'][0])) ? $iptc['2#120'][0] : '';
-			$vars[$this->prefix.'iptc:writer_editor'] = (isset($iptc['2#122'][0])) ? $iptc['2#122'][0] : '';
-
-			$vars[$this->prefix.'iptc:title'] = $vars[$this->prefix.'iptc:object_name'];
-			$vars[$this->prefix.'iptc:author'] = $vars[$this->prefix.'iptc:byline'];
-			$vars[$this->prefix.'iptc:author_title'] = $vars[$this->prefix.'iptc:byline_title'];
-			$vars[$this->prefix.'iptc:state'] = $vars[$this->prefix.'iptc:province_state'];
-			$vars[$this->prefix.'iptc:location'] = $vars[$this->prefix.'iptc:sub_location'];
-			$vars[$this->prefix.'iptc:country'] = $vars[$this->prefix.'iptc:country_name'];
-			$vars[$this->prefix.'iptc:otr'] = $vars[$this->prefix.'iptc:original_transmission_reference'];
-			$vars[$this->prefix.'iptc:copyright'] = $vars[$this->prefix.'iptc:copyright_notice'];
-			$vars[$this->prefix.'iptc:caption'] = $vars[$this->prefix.'iptc:caption_abstract'];
-			$vars[$this->prefix.'iptc:caption_author'] = $vars[$this->prefix.'iptc:writer_editor'];
-
-			// Parse Date!
-			$vars[$this->prefix.'iptc:date'] = '';
-			if ($vars[$this->prefix.'iptc:date_created'] != FALSE && $vars[$this->prefix.'iptc:time_created'] != FALSE)
-			{
-				$vars[$this->prefix.'iptc:date'] = mktime(
-		            substr( $vars[$this->prefix.'iptc:time_created'], 0, 2 ),
-		            substr( $vars[$this->prefix.'iptc:time_created'], 2, 2 ),
-		            substr( $vars[$this->prefix.'iptc:time_created'], 4, 2 ),
-		            substr( $vars[$this->prefix.'iptc:date_created'], 4, 2 ),
-		            substr( $vars[$this->prefix.'iptc:date_created'], 6, 2 ),
-		            substr( $vars[$this->prefix.'iptc:date_created'], 0, 4 )
-	            );
-			}
-
-			if ($vars[$this->prefix.'iptc:date_created'] != FALSE && $vars[$this->prefix.'iptc:time_created'] == FALSE)
-			{
-				$vars[$this->prefix.'iptc:date'] = mktime(
-		            12,
-		            12,
-		            12,
-		            substr( $vars[$this->prefix.'iptc:date_created'], 4, 2 ),
-		            substr( $vars[$this->prefix.'iptc:date_created'], 6, 2 ),
-		            substr( $vars[$this->prefix.'iptc:date_created'], 0, 4 )
-	            );
-			}
+			$vars = $this->parseIptc($vars, $iptc);
 		}
 
 		// -----------------------------------------
@@ -912,89 +861,7 @@ class Channel_images_model
 			$exif = @unserialize(base64_decode($image->exif));
 			//var_dump($exif);
 
-			$vars[$this->prefix.'exif:make'] = (isset($exif['Make'])) ? $exif['Make'] : '';
-			$vars[$this->prefix.'exif:model'] = (isset($exif['Model'])) ? $exif['Model'] : '';
-			$vars[$this->prefix.'exif:software'] = (isset($exif['Software'])) ? $exif['Software'] : '';
-			$vars[$this->prefix.'exif:image_description'] = (isset($exif['ImageDescription'])) ? $exif['ImageDescription'] : '';
-
-			$vars[$this->prefix.'exif:datetime_original'] = (isset($exif['DateTimeOriginal'])) ? $exif['DateTimeOriginal'] : '';
-			$vars[$this->prefix.'exif:flash'] = (isset($exif['Flash'])) ? @$this->flash_lookup['0x'.dechex((int)$exif['Flash'])] : '';
-			$vars[$this->prefix.'exif:orientation'] = (isset($exif['Orientation'])) ? @$this->orientation_lookup[$exif['Orientation']] : '';
-			$vars[$this->prefix.'exif:artist'] = (isset($exif['Artist'])) ? $exif['Artist'] : '';
-			$vars[$this->prefix.'exif:copyright'] = (isset($exif['Copyright'])) ? $exif['Copyright'] : '';
-			$vars[$this->prefix.'exif:exposure_time'] = (isset($exif['ExposureTime'])) ? $exif['ExposureTime'].' sec' : '';
-
-			// Date
-			$vars[$this->prefix.'exif:date'] = '';
-			if ($vars[$this->prefix.'exif:datetime_original'] != FALSE)
-			{
-				$pieces = explode(':', $vars[$this->prefix.'exif:datetime_original']);
-				$pieces = $pieces[0] . '-' . $pieces[1] . '-' . $pieces[2] . ':' . $pieces[3] . ':' . $pieces[4];
-				$vars[$this->prefix.'exif:date'] = strtotime($pieces);
-			}
-
-			// Focal Length
-			$vars[$this->prefix.'exif:focal_length'] = (isset($exif['FocalLength'])) ? $exif['FocalLength'] : '';
-			if ($vars[$this->prefix.'exif:focal_length'] != FALSE)
-			{
-				$fraction = trim((string)($vars[$this->prefix.'exif:focal_length']));
-				// This method is slightly faster than using a preg function
-				$slash_pos = strpos($fraction, '/');
-				if ($slash_pos !== FALSE) {
-					$dividend = substr($fraction, 0, ($slash_pos));
-					$divisor = substr($fraction, ($slash_pos + 1) );
-					$vars[$this->prefix.'exif:focal_length'] = floor($dividend / $divisor).' mm';
-				}
-				else {
-					// No slash means it's .. too hard to work out.
-					$vars[$this->prefix.'exif:focal_length'] = $fraction.' mm';
-				}
-			}
-
-			// FNumber
-			$vars[$this->prefix.'exif:fnumber'] = (isset($exif['FNumber'])) ? $exif['FNumber'] : '';
-			if ($vars[$this->prefix.'exif:fnumber'] != FALSE)
-			{
-				$fraction = trim((string)($vars[$this->prefix.'exif:fnumber']));
-				// This method is slightly faster than using a preg function
-				$slash_pos = strpos($fraction, '/');
-				if ($slash_pos !== FALSE) {
-					$dividend = substr($fraction, 0, ($slash_pos));
-					$divisor = substr($fraction, ($slash_pos + 1) );
-					$vars[$this->prefix.'exif:fnumber'] = '&fnof;/'.floor($dividend / $divisor);
-				}
-				else {
-					// No slash means it's .. too hard to work out.
-					$vars[$this->prefix.'exif:fnumber'] = '&fnof;/'.$fraction;
-				}
-			}
-
-			// ISO
-			$vars[$this->prefix.'exif:iso'] = '';
-			if (isset($exif['ISO'])) $vars[$this->prefix.'exif:iso'] = $exif['ISO'];
-			if (isset($exif['ISOSpeedRatings'])) $vars[$this->prefix.'exif:iso'] = $exif['ISOSpeedRatings'];
-			if (isset($exif['PhotographicSensitivity'])) $vars[$this->prefix.'exif:iso'] = $exif['PhotographicSensitivity'];
-
-
-			// GPS
-			$vars[$this->prefix.'exif:gps_lat'] = (isset($exif['GPSLatitude']) === TRUE && empty($exif['GPSLatitude']) === FALSE) ? $this->getGps($exif["GPSLatitude"], $exif['GPSLatitudeRef']) : '';
-			$vars[$this->prefix.'exif:gps_lon'] = (isset($exif['GPSLongitude']) === TRUE && empty($exif['GPSLongitude']) === FALSE) ? $this->getGps($exif["GPSLongitude"], $exif['GPSLongitudeRef']) : '';
-
-			// GPS Altitude
-			$vars[$this->prefix.'exif:gps_alt'] = '';
-			if (isset($exif['GPSAltitude']) === TRUE)
-			{
-				list( $num, $denom ) = explode( '/', $exif['GPSAltitude']);
-				$exif['GPSAltitude'] = $num / $denom;
-
-				if ($exif['GPSAltitudeRef'] === "\1" ) {
-					$exif['GPSAltitude'] *= - 1;
-				}
-
-				$vars[$this->prefix.'exif:gps_alt'] = number_format($exif['GPSAltitude'], 2) . 'm';
-			}
-
-
+			$vars = $this->parseExif($vars, $exif);
 		}
 
 
@@ -1007,47 +874,7 @@ class Channel_images_model
 			$xmp = @base64_decode($image->xmp);
 			$xmp = $this->XMP2array($xmp);
 
-			$vars[$this->prefix.'xmp:creator_email'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiEmailWork'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiEmailWork'] : '';
-			$vars[$this->prefix.'xmp:creator_tel'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiTelWork'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiTelWork'] : '';
-			$vars[$this->prefix.'xmp:creator_url'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiUrlWork'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiUrlWork'] : '';
-
-			$vars[$this->prefix.'xmp:creator_address'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrExtadr'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrExtadr'] : '';
-			$vars[$this->prefix.'xmp:creator_city'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrCity'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrCity'] : '';
-			$vars[$this->prefix.'xmp:creator_zip'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrPcode'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrPcode'] : '';
-			$vars[$this->prefix.'xmp:creator_region'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrRegion'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrRegion'] : '';
-			$vars[$this->prefix.'xmp:creator_country'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrCtry'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrCtry'] : '';
-
-			$vars[$this->prefix.'xmp:usage_terms'] = (isset($xmp['xapRights:UsageTerms'])) ? reset($xmp['xapRights:UsageTerms']) : '';
-
-			$vars[$this->prefix.'xmp:author'] = (isset($xmp['dc:creator'])) ? reset($xmp['dc:creator']) : '';
-			$vars[$this->prefix.'xmp:description'] = (isset($xmp['dc:description'])) ? reset($xmp['dc:description']) : '';
-			$vars[$this->prefix.'xmp:rights'] = (isset($xmp['dc:rights'])) ? reset($xmp['dc:rights']) : '';
-			$vars[$this->prefix.'xmp:title'] = (isset($xmp['dc:title'])) ? reset($xmp['dc:title']) : '';
-
-			$vars[$this->prefix.'xmp:source'] = (isset($xmp['rdf:Description']['Iptc4xmpExt:AOSource'])) ? $xmp['rdf:Description']['Iptc4xmpExt:AOSource'] : '';
-			$vars[$this->prefix.'xmp:copyright_notice'] = (isset($xmp['rdf:Description']['Iptc4xmpExt:AOCopyrightNotice'])) ? $xmp['rdf:Description']['Iptc4xmpExt:AOCopyrightNotice'] : '';
-
-
-			/*
-			$xmp = "<?xml version='1.0'?>\n" . $xmp;
-			//echo $xmp;
-			$xmp = @simplexml_load_string($xmp);
-
-
-			if ($xmp !== FALSE)
-			{
-				$namespaces = $xmp->getNamespaces(true);
-				foreach ($namespaces as $key => $val) {
-					//var_dump($key.' '.$val);
-					$xmp->registerXPathNamespace($key, $val);
-				}
-
-				print_r($xmp->xpath('//rdf/Iptc4xmpCore'));
-			}*/
-
-
-			//;
-			//$vars[$this->prefix.'exif:model'] = (isset($exif['Model'])) ? $exif['Model'] : '';
+			$vars = $this->parseXmp($vars, $xmp);
 		}
 
 
@@ -1076,6 +903,210 @@ class Channel_images_model
 		}
 
 		return $temp;
+	}
+
+	// ********************************************************************************* //
+
+	public function parseExif($vars, $exif)
+	{
+		$vars[$this->prefix.'exif:make'] = (isset($exif['Make'])) ? $exif['Make'] : '';
+		$vars[$this->prefix.'exif:model'] = (isset($exif['Model'])) ? $exif['Model'] : '';
+		$vars[$this->prefix.'exif:software'] = (isset($exif['Software'])) ? $exif['Software'] : '';
+		$vars[$this->prefix.'exif:image_description'] = (isset($exif['ImageDescription'])) ? $exif['ImageDescription'] : '';
+
+		$vars[$this->prefix.'exif:datetime_original'] = (isset($exif['DateTimeOriginal'])) ? $exif['DateTimeOriginal'] : '';
+		$vars[$this->prefix.'exif:flash'] = (isset($exif['Flash'])) ? @$this->flash_lookup['0x'.dechex((int)$exif['Flash'])] : '';
+		$vars[$this->prefix.'exif:orientation'] = (isset($exif['Orientation'])) ? @$this->orientation_lookup[$exif['Orientation']] : '';
+		$vars[$this->prefix.'exif:artist'] = (isset($exif['Artist'])) ? $exif['Artist'] : '';
+		$vars[$this->prefix.'exif:copyright'] = (isset($exif['Copyright'])) ? $exif['Copyright'] : '';
+		$vars[$this->prefix.'exif:exposure_time'] = (isset($exif['ExposureTime'])) ? $exif['ExposureTime'].' sec' : '';
+
+		// Date
+		$vars[$this->prefix.'exif:date'] = '';
+		if ($vars[$this->prefix.'exif:datetime_original'] != FALSE)
+		{
+			$pieces = explode(':', $vars[$this->prefix.'exif:datetime_original']);
+			$pieces = $pieces[0] . '-' . $pieces[1] . '-' . $pieces[2] . ':' . $pieces[3] . ':' . $pieces[4];
+			$vars[$this->prefix.'exif:date'] = strtotime($pieces);
+		}
+
+		// Focal Length
+		$vars[$this->prefix.'exif:focal_length'] = (isset($exif['FocalLength'])) ? $exif['FocalLength'] : '';
+		if ($vars[$this->prefix.'exif:focal_length'] != FALSE)
+		{
+			$fraction = trim((string)($vars[$this->prefix.'exif:focal_length']));
+			// This method is slightly faster than using a preg function
+			$slash_pos = strpos($fraction, '/');
+			if ($slash_pos !== FALSE) {
+				$dividend = substr($fraction, 0, ($slash_pos));
+				$divisor = substr($fraction, ($slash_pos + 1) );
+				$vars[$this->prefix.'exif:focal_length'] = floor($dividend / $divisor).' mm';
+			}
+			else {
+				// No slash means it's .. too hard to work out.
+				$vars[$this->prefix.'exif:focal_length'] = $fraction.' mm';
+			}
+		}
+
+		// FNumber
+		$vars[$this->prefix.'exif:fnumber'] = (isset($exif['FNumber'])) ? $exif['FNumber'] : '';
+		if ($vars[$this->prefix.'exif:fnumber'] != FALSE)
+		{
+			$fraction = trim((string)($vars[$this->prefix.'exif:fnumber']));
+			// This method is slightly faster than using a preg function
+			$slash_pos = strpos($fraction, '/');
+			if ($slash_pos !== FALSE) {
+				$dividend = substr($fraction, 0, ($slash_pos));
+				$divisor = substr($fraction, ($slash_pos + 1) );
+				$vars[$this->prefix.'exif:fnumber'] = '&fnof;/'.floor($dividend / $divisor);
+			}
+			else {
+				// No slash means it's .. too hard to work out.
+				$vars[$this->prefix.'exif:fnumber'] = '&fnof;/'.$fraction;
+			}
+		}
+
+		// ISO
+		$vars[$this->prefix.'exif:iso'] = '';
+		if (isset($exif['ISO'])) $vars[$this->prefix.'exif:iso'] = $exif['ISO'];
+		if (isset($exif['ISOSpeedRatings'])) $vars[$this->prefix.'exif:iso'] = $exif['ISOSpeedRatings'];
+		if (isset($exif['PhotographicSensitivity'])) $vars[$this->prefix.'exif:iso'] = $exif['PhotographicSensitivity'];
+
+
+		// GPS
+		$vars[$this->prefix.'exif:gps_lat'] = (isset($exif['GPSLatitude']) === TRUE && empty($exif['GPSLatitude']) === FALSE) ? $this->getGps($exif["GPSLatitude"], $exif['GPSLatitudeRef']) : '';
+		$vars[$this->prefix.'exif:gps_lon'] = (isset($exif['GPSLongitude']) === TRUE && empty($exif['GPSLongitude']) === FALSE) ? $this->getGps($exif["GPSLongitude"], $exif['GPSLongitudeRef']) : '';
+
+		// GPS Altitude
+		$vars[$this->prefix.'exif:gps_alt'] = '';
+		if (isset($exif['GPSAltitude']) === TRUE)
+		{
+			list( $num, $denom ) = explode( '/', $exif['GPSAltitude']);
+			$exif['GPSAltitude'] = $num / $denom;
+
+			if ($exif['GPSAltitudeRef'] === "\1" ) {
+				$exif['GPSAltitude'] *= - 1;
+			}
+
+			$vars[$this->prefix.'exif:gps_alt'] = number_format($exif['GPSAltitude'], 2) . 'm';
+		}
+
+		return $vars;
+	}
+
+	// ********************************************************************************* //
+
+	public function parseXmp($vars, $xmp)
+	{
+		if ($xmp == false) return $vars;
+
+		$vars[$this->prefix.'xmp:creator_email'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiEmailWork'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiEmailWork'] : '';
+		$vars[$this->prefix.'xmp:creator_tel'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiTelWork'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiTelWork'] : '';
+		$vars[$this->prefix.'xmp:creator_url'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiUrlWork'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiUrlWork'] : '';
+
+		$vars[$this->prefix.'xmp:creator_address'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrExtadr'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrExtadr'] : '';
+		$vars[$this->prefix.'xmp:creator_city'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrCity'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrCity'] : '';
+		$vars[$this->prefix.'xmp:creator_zip'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrPcode'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrPcode'] : '';
+		$vars[$this->prefix.'xmp:creator_region'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrRegion'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrRegion'] : '';
+		$vars[$this->prefix.'xmp:creator_country'] = (isset($xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrCtry'])) ? $xmp['Iptc4xmpCore:CreatorContactInfo']['Iptc4xmpCore:CiAdrCtry'] : '';
+
+		$vars[$this->prefix.'xmp:usage_terms'] = (isset($xmp['xapRights:UsageTerms'])) ? reset($xmp['xapRights:UsageTerms']) : '';
+
+		$vars[$this->prefix.'xmp:author'] = (isset($xmp['dc:creator'])) ? reset($xmp['dc:creator']) : '';
+		$vars[$this->prefix.'xmp:description'] = (isset($xmp['dc:description'])) ? reset($xmp['dc:description']) : '';
+		$vars[$this->prefix.'xmp:rights'] = (isset($xmp['dc:rights'])) ? reset($xmp['dc:rights']) : '';
+		$vars[$this->prefix.'xmp:title'] = (isset($xmp['dc:title'])) ? reset($xmp['dc:title']) : '';
+
+		$vars[$this->prefix.'xmp:source'] = (isset($xmp['rdf:Description']['Iptc4xmpExt:AOSource'])) ? $xmp['rdf:Description']['Iptc4xmpExt:AOSource'] : '';
+		$vars[$this->prefix.'xmp:copyright_notice'] = (isset($xmp['rdf:Description']['Iptc4xmpExt:AOCopyrightNotice'])) ? $xmp['rdf:Description']['Iptc4xmpExt:AOCopyrightNotice'] : '';
+
+		/*
+		$xmp = "<?xml version='1.0'?>\n" . $xmp;
+		//echo $xmp;
+		$xmp = @simplexml_load_string($xmp);
+
+
+		if ($xmp !== FALSE)
+		{
+			$namespaces = $xmp->getNamespaces(true);
+			foreach ($namespaces as $key => $val) {
+				//var_dump($key.' '.$val);
+				$xmp->registerXPathNamespace($key, $val);
+			}
+
+			print_r($xmp->xpath('//rdf/Iptc4xmpCore'));
+		}*/
+
+
+		//;
+		//$vars[$this->prefix.'exif:model'] = (isset($exif['Model'])) ? $exif['Model'] : '';
+
+		return $vars;
+	}
+
+	// ********************************************************************************* //
+
+	public function parseIptc($vars, $iptc)
+	{
+		$vars[$this->prefix.'iptc:object_name'] = (isset($iptc['2#005'][0])) ? $iptc['2#005'][0] : '';
+		$vars[$this->prefix.'iptc:keywords'] = (isset($iptc['2#025'][0])) ? implode(', ', $iptc['2#025']) : '';
+		$vars[$this->prefix.'iptc:special_instructions'] = (isset($iptc['2#040'][0])) ? $iptc['2#040'][0] : '';
+		$vars[$this->prefix.'iptc:date_created'] = (isset($iptc['2#055'][0])) ? $iptc['2#055'][0] : '';
+		$vars[$this->prefix.'iptc:time_created'] = (isset($iptc['2#060'][0])) ? $iptc['2#060'][0] : '';
+
+		$vars[$this->prefix.'iptc:byline'] = (isset($iptc['2#080'][0])) ? $iptc['2#080'][0] : '';
+		$vars[$this->prefix.'iptc:byline_title'] = (isset($iptc['2#085'][0])) ? $iptc['2#085'][0] : '';
+		$vars[$this->prefix.'iptc:city'] = (isset($iptc['2#090'][0])) ? $iptc['2#090'][0] : '';
+		$vars[$this->prefix.'iptc:sub_location'] = (isset($iptc['2#092'][0])) ? $iptc['2#092'][0] : '';
+		$vars[$this->prefix.'iptc:province_state'] = (isset($iptc['2#095'][0])) ? $iptc['2#095'][0] : '';
+		$vars[$this->prefix.'iptc:country_name'] = (isset($iptc['2#101'][0])) ? $iptc['2#101'][0] : '';
+		$vars[$this->prefix.'iptc:original_transmission_reference'] = (isset($iptc['2#103'][0])) ? $iptc['2#103'][0] : '';
+		$vars[$this->prefix.'iptc:headline'] = (isset($iptc['2#105'][0])) ? $iptc['2#105'][0] : '';
+		$vars[$this->prefix.'iptc:credit'] = (isset($iptc['2#110'][0])) ? utf8_encode($iptc['2#110'][0]) : '';
+		$vars[$this->prefix.'iptc:source'] = (isset($iptc['2#115'][0])) ? utf8_encode($iptc['2#115'][0]) : '';
+		$vars[$this->prefix.'iptc:copyright_notice'] = (isset($iptc['2#116'][0])) ? utf8_encode($iptc['2#116'][0]) : '';
+		$vars[$this->prefix.'iptc:caption_abstract'] = (isset($iptc['2#120'][0])) ? $iptc['2#120'][0] : '';
+		$vars[$this->prefix.'iptc:writer_editor'] = (isset($iptc['2#122'][0])) ? $iptc['2#122'][0] : '';
+
+		$vars[$this->prefix.'iptc:title'] = $vars[$this->prefix.'iptc:object_name'];
+		$vars[$this->prefix.'iptc:author'] = $vars[$this->prefix.'iptc:byline'];
+		$vars[$this->prefix.'iptc:author_title'] = $vars[$this->prefix.'iptc:byline_title'];
+		$vars[$this->prefix.'iptc:state'] = $vars[$this->prefix.'iptc:province_state'];
+		$vars[$this->prefix.'iptc:location'] = $vars[$this->prefix.'iptc:sub_location'];
+		$vars[$this->prefix.'iptc:country'] = $vars[$this->prefix.'iptc:country_name'];
+		$vars[$this->prefix.'iptc:otr'] = $vars[$this->prefix.'iptc:original_transmission_reference'];
+		$vars[$this->prefix.'iptc:copyright'] = $vars[$this->prefix.'iptc:copyright_notice'];
+		$vars[$this->prefix.'iptc:description'] = $vars[$this->prefix.'iptc:caption_abstract'];
+		$vars[$this->prefix.'iptc:caption'] = $vars[$this->prefix.'iptc:caption_abstract'];
+		$vars[$this->prefix.'iptc:caption_author'] = $vars[$this->prefix.'iptc:writer_editor'];
+
+		// Parse Date!
+		$vars[$this->prefix.'iptc:date'] = '';
+		if ($vars[$this->prefix.'iptc:date_created'] != FALSE && $vars[$this->prefix.'iptc:time_created'] != FALSE)
+		{
+			$vars[$this->prefix.'iptc:date'] = mktime(
+	            substr( $vars[$this->prefix.'iptc:time_created'], 0, 2 ),
+	            substr( $vars[$this->prefix.'iptc:time_created'], 2, 2 ),
+	            substr( $vars[$this->prefix.'iptc:time_created'], 4, 2 ),
+	            substr( $vars[$this->prefix.'iptc:date_created'], 4, 2 ),
+	            substr( $vars[$this->prefix.'iptc:date_created'], 6, 2 ),
+	            substr( $vars[$this->prefix.'iptc:date_created'], 0, 4 )
+            );
+		}
+
+		if ($vars[$this->prefix.'iptc:date_created'] != FALSE && $vars[$this->prefix.'iptc:time_created'] == FALSE)
+		{
+			$vars[$this->prefix.'iptc:date'] = mktime(
+	            12,
+	            12,
+	            12,
+	            substr( $vars[$this->prefix.'iptc:date_created'], 4, 2 ),
+	            substr( $vars[$this->prefix.'iptc:date_created'], 6, 2 ),
+	            substr( $vars[$this->prefix.'iptc:date_created'], 0, 4 )
+            );
+		}
+
+		return $vars;
 	}
 
 	// ********************************************************************************* //

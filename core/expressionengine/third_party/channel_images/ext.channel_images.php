@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) die('No direct script access allowed');
 
 // include config file
-include PATH_THIRD.'channel_images/config'.EXT;
+include_once dirname(__FILE__).'/config.php';
 
 /**
  * Channel Images Module Extension File
@@ -57,9 +57,9 @@ class Channel_images_ext
 		}
 
 		// Check just to be sure!
-		if (isset($config['extraPlugins']) != FALSE && strpos($config['extraPlugins'],'channelimages') !== FALSE )
+		if (isset($config['extraPlugins']) != FALSE)
 		{
-			//$config['extraPlugins'] .= ',channelimages';
+			$config['extraPlugins'] .= ',channelimages';
 			$config['toolbar'][] = array('ChannelImages');
 		}
 
@@ -95,7 +95,7 @@ class Channel_images_ext
 		$API = new Channel_Images_API();
 
 		$entry_id = $this->EE->input->get_post('entry_id');
-		$data = $API->generateUrlsFromTags($data);
+		$data = $API->generateUrlsFromTags($data, $entry_id);
 
 		return $data;
 	}
@@ -117,7 +117,7 @@ class Channel_images_ext
 			$entry_id = $obj->row['entry_id'];
 		}
 
-		$data = $API->generateUrlsFromTags($data, $entry_id);
+		$data = $API->generateUrlsFromTags($data, $entry_id, true);
 
 		return $data;
 	}
@@ -173,7 +173,7 @@ class Channel_images_ext
 			$entry_id = $obj->row['entry_id'];
 		}
 
-		$data = $API->generateUrlsFromTags($data, $entry_id);
+		$data = $API->generateUrlsFromTags($data, $entry_id, true);
 
 		return $data;
 	}

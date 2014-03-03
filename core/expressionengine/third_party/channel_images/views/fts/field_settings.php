@@ -111,15 +111,6 @@
 				<small><?=lang('ci:save_data_in_field_exp')?></small>
 			</td>
 		</tr>
-		<!--
-		<tr>
-			<td><?=lang('ci:locked_url_fieldtype')?></td>
-			<td>
-				<?=form_dropdown('channel_images[locked_url_fieldtype]', array('no' => lang('ci:no'), 'yes' => lang('ci:yes')), $locked_url_fieldtype)?>
-				<small><?=lang('ci:locked_url_fieldtype_exp')?></small>
-			</td>
-		</tr>
-		-->
 		<tr>
 			<td><?=lang('ci:disable_cover')?></td>
 			<td>
@@ -146,6 +137,13 @@
 			<td>
 				<input name="channel_images[wysiwyg_output]" <?php if (isset($override['wysiwyg_output'])):?>disabled="disabled"<?php endif;?> type="radio" value="image_url" <?php if ($wysiwyg_output == 'image_url') echo 'checked'?>> <?=lang('ci:image_url')?>&nbsp;&nbsp;
 				<input name="channel_images[wysiwyg_output]" <?php if (isset($override['wysiwyg_output'])):?>disabled="disabled"<?php endif;?> type="radio" value="static_image" <?php if ($wysiwyg_output == 'static_image') echo 'checked'?>> <?=lang('ci:static_image:var')?>
+			</td>
+		</tr>
+		<tr>
+			<td>File Size Limit (in KB)</td>
+			<td>
+				<input type="text" name="channel_images[max_filesize]" <?php if (isset($override['max_filesize']) === true):?>disabled<?php endif;?> value="<?=$max_filesize?>" style="border:1px solid #ccc; width:80px;">
+				<small>Leave empty to ignore/disable filesize. (1024 = 1 MB)</small>
 			</td>
 		</tr>
 		<tr>
@@ -179,25 +177,4 @@
 	</tbody>
 </table>
 
-<table cellspacing="0" cellpadding="0" border="0" class="ChannelImagesTable" style="width:80%">
-	<thead>
-		<tr>
-			<th colspan="2">
-				<h4>
-					<?=lang('ci:field_columns')?>
-					<small><?=lang('ci:field_columns_exp')?></small>
-				</h4>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-	<?php foreach($columns as $name => $val):?>
-		<tr>
-			<td><?=lang('ci:'.$name)?></td>
-			<td>
-				<input type="text" name="channel_images[columns][<?=$name?>]'" <?php if (isset($override['columns'][$name]) === true):?>disabled value="<?=$override['columns'][$name]?>" <?php else:?> value="<?=$val?>"  <?php endif;?> style="border:1px solid #ccc; width:150px;">
-			</td>
-		</tr>
-	<?php endforeach;?>
-	</tbody>
-</table>
+

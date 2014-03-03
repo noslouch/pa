@@ -1048,11 +1048,21 @@ class Image_helper
 		{
 			if ( isset($this->EE->session->cache['inline_js'][$this->package]) == FALSE )
 			{
-				$AJAX_url = $this->get_router_url();
+				$theme_url = $this->get_theme_url();
+				$ACT_url = $this->get_router_url();
+
+				//$MCP_AJAX_url = BASE.'&C=addons_modules&M=show_module_cp&module='.$this->package.'&method=ajaxRouter';
+				$MCP_AJAX_url = '';
+
+				// Remove those AMP!!!
+                $ACT_url = str_replace('&amp;', '&', $ACT_url);
+                $MCP_AJAX_url = str_replace('&amp;', '&', $MCP_AJAX_url);
+                $theme_url = str_replace('&amp;', '&', $theme_url);
 
 				$js = "	var ChannelImages = ChannelImages ? ChannelImages : {};
-						ChannelImages.AJAX_URL = '{$AJAX_url}';
-						ChannelImages.ThemeURL = '" . $this->get_theme_url() . "';
+						ChannelImages.AJAX_URL = '{$ACT_url}';
+						ChannelImages.MCP_AJAX_URL = '{$MCP_AJAX_url}';
+						ChannelImages.ThemeURL = '{$theme_url}';
 						ChannelImages.site_id = '" . $this->site_id . "';
 					";
 

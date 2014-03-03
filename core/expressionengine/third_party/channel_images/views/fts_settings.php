@@ -10,12 +10,14 @@
 	<li><a href="#CIActions"><?=lang('ci:upload_actions')?></a></li>
 	<li><a href="#CILocSettings"><?=lang('ci:loc_settings')?></a></li>
 	<li><a href="#CIFieldUI"><?=lang('ci:fieldtype_settings')?></a></li>
+    <li><a href="#CIColumns"><?=lang('ci:field_columns')?></a></li>
 </ul>
 
 <div class="ChannelImagesTabsHolder">
 	<div class="CIActions cfix" id="CIActions"><?=$this->load->view('fts/actions', array(), TRUE);?></div>
 	<div class="CILocSettings" id="CILocSettings"><?=$this->load->view('fts/locations', array(), TRUE);?></div>
 	<div class="CIFieldUI" id="CIFieldUI"><?=$this->load->view('fts/field_settings', array(), TRUE);?></div>
+    <div class="CIColumns" id="CIColumns"><?=$this->load->view('fts/field_columns', array(), TRUE);?></div>
 
     <small class="imagick">
         Imagick

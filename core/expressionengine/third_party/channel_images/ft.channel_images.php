@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) die('No direct script access allowed');
 
 // include config file
-include PATH_THIRD.'channel_images/config'.EXT;
+include_once dirname(__FILE__).'/config.php';
 
 /**
  * Channel Images Module FieldType
@@ -79,6 +79,8 @@ class Channel_images_ft extends EE_Fieldtype
      */
     function display_field($data)
     {
+        $conf = $this->EE->config->item('channel_images');
+
         //----------------------------------------
         // Global Vars
         //----------------------------------------
@@ -97,7 +99,7 @@ class Channel_images_ft extends EE_Fieldtype
         $this->EE->image_helper->mcp_js_css('gjs');
         $this->EE->image_helper->mcp_js_css('css', 'channel_images_pbf.css?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'main');
         $this->EE->image_helper->mcp_js_css('css', 'jquery.colorbox.css', 'jquery', 'colorbox');
-        $this->EE->image_helper->mcp_js_css('js', 'js/handlebars.runtime-1.0.0.min.js', 'handlebars', 'runtime');
+        $this->EE->image_helper->mcp_js_css('js', 'js/handlebars.runtime-v1.3.0.js', 'handlebars', 'runtime');
         $this->EE->image_helper->mcp_js_css('js', 'js/hbs-templates.js?v='.CHANNEL_IMAGES_VERSION, 'channel_images', 'templates');
         $this->EE->image_helper->mcp_js_css('js', 'jquery.editable.js', 'jquery', 'editable');
         $this->EE->image_helper->mcp_js_css('js', 'jquery.base64.js', 'jquery', 'base64');
@@ -316,6 +318,30 @@ class Channel_images_ft extends EE_Fieldtype
                 $image->cifield_4 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_4) );
                 $image->cifield_5 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_5) );
 
+                // On some systems characters are not passed on as UTF-8, json_encode only works with UTF-8 chars.
+                // This "hack" forces utf-8 encoding, good for swedisch chars etc
+                if (isset($conf['utf8_encode_fields_for_json']) === true && $conf['utf8_encode_fields_for_json'] == 'yes') {
+                    $image->title = utf8_encode($image->title);
+                    $image->description = utf8_encode($image->description);
+                    $image->cifield_1 = utf8_encode($image->cifield_1);
+                    $image->cifield_2 = utf8_encode($image->cifield_2);
+                    $image->cifield_3 = utf8_encode($image->cifield_3);
+                    $image->cifield_4 = utf8_encode($image->cifield_4);
+                    $image->cifield_5 = utf8_encode($image->cifield_5);
+                }
+
+
+                // Fix utf chars once and for all
+                // $image->title = base64_encode($image->title);
+                // $image->description = base64_encode($image->description);
+                // $image->cifield_1 = base64_encode($image->cifield_1);
+                // $image->cifield_2 = base64_encode($image->cifield_2);
+                // $image->cifield_3 = base64_encode($image->cifield_3);
+                // $image->cifield_4 = base64_encode($image->cifield_4);
+                // $image->cifield_5 = base64_encode($image->cifield_5);
+
+
+
                 $vData['assigned_images'][] = $image;
 
                 unset($image);
@@ -395,6 +421,15 @@ class Channel_images_ft extends EE_Fieldtype
 
                     // ReAssign Field ID (WE NEED THIS)
                     $image->field_id = $this->field_id;
+
+                    // Fix utf chars once and for all
+                    // $image->title = base64_encode($image->title);
+                    // $image->description = base64_encode($image->description);
+                    // $image->cifield_1 = base64_encode($image->cifield_1);
+                    // $image->cifield_2 = base64_encode($image->cifield_2);
+                    // $image->cifield_3 = base64_encode($image->cifield_3);
+                    // $image->cifield_4 = base64_encode($image->cifield_4);
+                    // $image->cifield_5 = base64_encode($image->cifield_5);
 
                     $vData['assigned_images'][] = $image;
 
@@ -674,6 +709,9 @@ class Channel_images_ft extends EE_Fieldtype
 
             foreach($actions AS $action_name => &$settings)
             {
+                // Sometimes people don't have Imagick anymore!
+                if (isset($vData['actions'][$action_name]) == false) continue;
+
                 $new = array();
                 $new['action'] = $action_name;
                 $new['action_name'] = $vData['actions'][$action_name]->info['title'];
@@ -1122,7 +1160,13 @@ class Channel_images_ft extends EE_Fieldtype
             $channel_id = $this->EE->input->get_post('new_channel');
         }
 
-        //$this->EE->firephp->log($data);
+        // Double check to see if we have a channel id
+        if ($channel_id == false) {
+            $query = $this->EE->db->select('channel_id')->from('exp_channel_titles')->where('entry_id', $entry_id)->get();
+            $channel_id = $query->row('channel_id');
+        }
+
+         //$this->EE->firephp->log($data);
 
         // Do we need to skip?
         if (isset($data['images']) == false) return;
@@ -1176,6 +1220,18 @@ class Channel_images_ft extends EE_Fieldtype
         foreach ($data['images'] as $order => $file)
         {
             $file = $this->EE->image_helper->decode_json($file['data']);
+
+            $file->title = base64_decode($file->title);
+            $file->description = base64_decode($file->description);
+            $file->category = base64_decode($file->category);
+            $file->cifield_1 = base64_decode($file->cifield_1);
+            $file->cifield_2 = base64_decode($file->cifield_2);
+            $file->cifield_3 = base64_decode($file->cifield_3);
+            $file->cifield_4 = base64_decode($file->cifield_4);
+            $file->cifield_5 = base64_decode($file->cifield_5);
+
+            $file->cover = base64_decode($file->cover);
+
             $data['images'][$order] = $file;
             if (isset($file->delete) === true)
             {

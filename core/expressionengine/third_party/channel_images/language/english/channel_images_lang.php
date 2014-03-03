@@ -160,7 +160,7 @@ $lang = array(
 
 // Field Columns
 'ci:field_columns'		=>	'Field Columns',
-'ci:field_columns_exp'	=>	'Specify a label for each column, leave the field blank to disable the column.',
+'ci:field_columns_exp'	=>	'Specify a label for each column, leave the "Field Label" blank to disable the column.',
 'ci:row_num'		=>	'#',
 'ci:id'				=>	'ID',
 'ci:image'			=>	'Image',

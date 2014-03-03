@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) die('No direct script access allowed');
 
 // include config file
-include PATH_THIRD.'channel_images/config'.EXT;
+include_once dirname(__FILE__).'/config.php';
 
 /**
  * Channel Images Module RTE

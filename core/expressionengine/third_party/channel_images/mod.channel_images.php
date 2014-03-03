@@ -1156,7 +1156,7 @@ class Channel_images
 
 	// ********************************************************************************* //
 
-	public function channel_images_router()
+	public function channel_images_router($mcp_task=false)
 	{
 		@header('Access-Control-Allow-Origin: *');
 		//@header('Access-Control-Allow-Credentials: true');
@@ -1166,30 +1166,31 @@ class Channel_images
 
         if ($this->EE->input->server('REQUEST_METHOD') == 'OPTIONS') exit();
 
-		// -----------------------------------------
-		// Ajax Request?
-		// -----------------------------------------
-		if ( $this->EE->input->get_post('ajax_method') != FALSE OR (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') )
-		{
-			// Load Library
-			if (class_exists('Channel_Images_AJAX') != TRUE) include 'ajax.channel_images.php';
+        // Task
+        $task = $this->EE->input->get_post('ajax_method');
 
-			$AJAX = new Channel_Images_AJAX();
+        if ($mcp_task !== false) {
+            $task = $mcp_task;
+        }
 
-			// Shoot the requested method
-			$method = $this->EE->input->get_post('ajax_method');
-			echo $AJAX->$method();
-			exit();
-		}
+        if (!$task) {
+        	// If nothing of the above is true...
+			exit('This is the ACT URL for Channel Images');
+        }
 
+		// Load Library
+		if (class_exists('Channel_Images_AJAX') != TRUE) include 'ajax.channel_images.php';
+		$AJAX = new Channel_Images_AJAX();
 
-		// If nothing of the above is true...
-		exit('This is the ACT URL for Channel Images');
+		// Shoot the requested method
+		echo $AJAX->$task();
+		exit();
+
 	}
 
 	// ********************************************************************************* //
 
-	public function locked_image_url()
+    public function locked_image_url()
 	{
 		// -----------------------------------------
 		// We need our Key

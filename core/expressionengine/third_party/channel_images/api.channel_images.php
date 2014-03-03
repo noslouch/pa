@@ -12,6 +12,7 @@
 class Channel_Images_API
 {
 	private $valid_mime = array('jpg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif');
+	private $LOCS = array();
 
 	public $last_error = array();
 
@@ -117,8 +118,11 @@ class Channel_Images_API
 
 	public function process_field_string($string)
 	{
+		//$this->EE->firephp->log('BEFORE: '.$string);
 		$string = $this->EE->security->xss_clean($string);
+		//$this->EE->firephp->log('AFTER XSS: '.$string);
 		$string = htmlentities($string, ENT_QUOTES, "UTF-8");
+		//$this->EE->firephp->log('AFTER HTML ENTITIES: '.$string);
 
 		return $string;
 	}
@@ -575,7 +579,7 @@ class Channel_Images_API
 
 	// ********************************************************************************* //
 
-	public function generateUrlsFromTags($data, $entry_id=0)
+	public function generateUrlsFromTags($data, $entry_id=0, $template=false)
 	{
 		$vars = array();
 		preg_match_all("/{ci_image (.*?)}/s", $data, $varMatches);
@@ -620,6 +624,39 @@ class Channel_Images_API
 
 			if (isset($var['params']['filename']) === true) {
 				$imgurl .= '&amp;f=' . $var['params']['filename'];
+			}
+
+			if ($template) {
+
+				$field_id = $var['params']['field_id'];
+
+				// Get the field settings
+				$settings = $this->EE->image_helper->grabFieldSettings($field_id);
+
+				//----------------------------------------
+				// Load Location
+				//----------------------------------------
+				if (isset($this->LOCS[$field_id]) === FALSE)
+				{
+					$location_type = $settings['upload_location'];
+					$location_class = 'CI_Location_'.$location_type;
+					$location_settings = $settings['locations'][$location_type];
+
+					// Load Main Class
+					if (class_exists('Image_Location') == FALSE) require PATH_THIRD.'channel_images/locations/image_location.php';
+
+					// Try to load Location Class
+					if (class_exists($location_class) == FALSE)
+					{
+						$location_file = PATH_THIRD.'channel_images/locations/'.$location_type.'/'.$location_type.'.php';
+						require $location_file;
+					}
+
+					// Init!
+					$this->LOCS[$field_id] = new $location_class($location_settings);
+				}
+
+				$imgurl = $this->LOCS[$field_id]->parse_image_url($var['params']['entry_id'], $var['params']['filename']);
 			}
 
 			$data = str_replace($var['original'], $imgurl, $data);

@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 // include config file
-include PATH_THIRD.'channel_images/config'.EXT;
+include_once dirname(__FILE__).'/config.php';
 
 /**
  * Install / Uninstall and updates the modules
@@ -56,10 +56,8 @@ class Channel_images_upd
 	 */
 	public function __construct()
 	{
-		$this->EE =& get_instance();
-
-		$this->EE->load->add_package_path(PATH_THIRD . 'channel_images/');
-		$this->EE->config->load('ci_config');
+		ee()->load->add_package_path(PATH_THIRD . 'channel_images/');
+		ee()->config->load('ci_config');
 	}
 
 	// ********************************************************************************* //
@@ -78,17 +76,44 @@ class Channel_images_upd
 	public function install()
 	{
 		// Load dbforge
-		$this->EE->load->dbforge();
+		ee()->load->dbforge();
 
-		//----------------------------------------
-		// EXP_MODULES
-		//----------------------------------------
-		$module = array(	'module_name' => ucfirst($this->module_name),
-							'module_version' => $this->version,
-							'has_cp_backend' => 'y',
-							'has_publish_fields' => 'n' );
+        //----------------------------------------
+        // EXP_MODULES
+        //----------------------------------------
+        ee()->db->set('module_name', ucfirst($this->module_name));
+        ee()->db->set('module_version', $this->version);
+        ee()->db->set('has_cp_backend', $this->has_cp_backend);
+        ee()->db->set('has_publish_fields', $this->has_publish_fields);
+        ee()->db->insert('modules');
 
-		$this->EE->db->insert('modules', $module);
+        //----------------------------------------
+        // Actions
+        //----------------------------------------
+        $fields = ee()->db->list_fields('exp_actions');
+        $csrfColumnExists = in_array('csrf_exempt', $fields);
+
+        ee()->db->set('class', ucfirst($this->module_name));
+        if ($csrfColumnExists) ee()->db->set('csrf_exempt', 1);
+        ee()->db->set('method', $this->module_name . '_router');
+        ee()->db->insert('actions');
+
+        ee()->db->set('class', ucfirst($this->module_name));
+        ee()->db->set('method', 'locked_image_url');
+        ee()->db->insert('actions');
+
+        ee()->db->set('class', ucfirst($this->module_name));
+        ee()->db->set('method', 'simple_image_url');
+        ee()->db->insert('actions');
+
+        //----------------------------------------
+        // EXP_MODULES
+        // The settings column, Ellislab should have put this one in long ago.
+        // No need for a seperate preferences table for each module.
+        //----------------------------------------
+        if (ee()->db->field_exists('settings', 'modules') == false) {
+            ee()->dbforge->add_column('modules', array('settings' => array('type' => 'TEXT') ) );
+        }
 
 		//----------------------------------------
 		// EXP_CHANNEL_IMAGES
@@ -129,32 +154,11 @@ class Channel_images_upd
 			'xmp'			=> array('type' => 'TEXT'),
 		);
 
-		$this->EE->dbforge->add_field($ci);
-		$this->EE->dbforge->add_key('image_id', TRUE);
-		$this->EE->dbforge->add_key('entry_id');
-		$this->EE->dbforge->create_table('channel_images', TRUE);
+		ee()->dbforge->add_field($ci);
+		ee()->dbforge->add_key('image_id', TRUE);
+		ee()->dbforge->add_key('entry_id');
+		ee()->dbforge->create_table('channel_images', TRUE);
 
-		//----------------------------------------
-		// EXP_ACTIONS
-		//----------------------------------------
-		$module = array('class' => ucfirst($this->module_name), 'method' => $this->module_name . '_router' );
-		$this->EE->db->insert('actions', $module);
-
-		$module = array('class' => ucfirst($this->module_name), 'method' => 'locked_image_url');
-		$this->EE->db->insert('actions', $module);
-
-		$module = array('class' => ucfirst($this->module_name), 'method' => 'simple_image_url');
-		$this->EE->db->insert('actions', $module);
-
-		//----------------------------------------
-		// EXP_MODULES
-		// The settings column, Ellislab should have put this one in long ago.
-		// No need for a seperate preferences table for each module.
-		//----------------------------------------
-		if ($this->EE->db->field_exists('settings', 'modules') == FALSE)
-		{
-			$this->EE->dbforge->add_column('modules', array('settings' => array('type' => 'TEXT') ) );
-		}
 
 		// Do we need to enable the extension
         //if ($this->uses_extension === TRUE) $this->extension_handler('enable');
@@ -173,16 +177,16 @@ class Channel_images_upd
 	public function uninstall()
 	{
 		// Load dbforge
-		$this->EE->load->dbforge();
+		ee()->load->dbforge();
 
 		// Remove
-		$this->EE->dbforge->drop_table('channel_images');
-		$this->EE->db->where('module_name', ucfirst($this->module_name));
-		$this->EE->db->delete('modules');
-		$this->EE->db->where('class', ucfirst($this->module_name));
-		$this->EE->db->delete('actions');
+		ee()->dbforge->drop_table('channel_images');
+		ee()->db->where('module_name', ucfirst($this->module_name));
+		ee()->db->delete('modules');
+		ee()->db->where('class', ucfirst($this->module_name));
+		ee()->db->delete('actions');
 
-		// $this->EE->cp->delete_layout_tabs($this->tabs(), 'tagger');
+		// ee()->cp->delete_layout_tabs($this->tabs(), 'tagger');
 
 		return TRUE;
 	}
@@ -203,9 +207,14 @@ class Channel_images_upd
 	 **/
 	public function update($current = '')
 	{
+		if (ee()->db->field_exists('csrf_exempt', 'exp_actions') === true) {
+			ee()->db->set('csrf_exempt', 1);
+			ee()->db->where('class', ucfirst($this->module_name));
+			ee()->db->update('exp_actions');
+		}
+
 		// Are they the same?
-		if ($current >= $this->version)
-		{
+		if (version_compare($current, $this->version) >= 0) {
 			return FALSE;
 		}
 
@@ -243,9 +252,9 @@ class Channel_images_upd
 		}
 
 		// Upgrade The Module
-		$this->EE->db->set('module_version', $this->version);
-		$this->EE->db->where('module_name', ucfirst($this->module_name));
-		$this->EE->db->update('exp_modules');
+		ee()->db->set('module_version', $this->version);
+		ee()->db->where('module_name', ucfirst($this->module_name));
+		ee()->db->update('exp_modules');
 
 		return TRUE;
 	}

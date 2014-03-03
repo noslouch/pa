@@ -121,8 +121,7 @@ class CI_Location_s3 extends Image_Location
             return $e->getMessage();
         }
 
-
-        return false;
+        return true;
     }
 
     // ********************************************************************************* //

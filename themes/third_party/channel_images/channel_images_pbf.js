@@ -187,8 +187,17 @@ ChannelImages.AddNewFile = function(JSONOBJ, FIELD_ID, Sync){
 	if (!JSONOBJ.cover) JSONOBJ.cover = '0';
 	if (!JSONOBJ.link_image_id) JSONOBJ.link_image_id = '0';
 
+	var jsonData = $.extend(true,{},JSONOBJ);
+	jsonData.title = $.base64Encode(jsonData.title);
+	jsonData.description = $.base64Encode(jsonData.description);
+	jsonData.cifield_1 = $.base64Encode(jsonData.cifield_1);
+	jsonData.cifield_2 = $.base64Encode(jsonData.cifield_2);
+	jsonData.cifield_3 = $.base64Encode(jsonData.cifield_3);
+	jsonData.cifield_4 = $.base64Encode(jsonData.cifield_4);
+	jsonData.cifield_5 = $.base64Encode(jsonData.cifield_5);
+
 	// Lets store it for POST
-	JSONOBJ.json_data = JSON.stringify(JSONOBJ);
+	JSONOBJ.json_data = JSON.stringify(jsonData);
 
 	// Add field_name
 	JSONOBJ.field_name = ChannelImages.Fields['Field_'+FIELD_ID].field_name;
@@ -295,7 +304,7 @@ ChannelImages.ChangeFile = function(attr, value, file){
 	jsondata = JSON.parse(jsondata);
 
 	// Set the attribute
-	jsondata[attr] = value;
+	jsondata[attr] = $.base64Encode(value);
 
 	// Put it back!
 	file.find('textarea.ImageData').html(JSON.stringify(jsondata));
@@ -678,6 +687,7 @@ ChannelImages.HTML5.UploadStart = function(FIELD_ID) {
 	xhr.setRequestHeader('X-File-Name', File.name);
 	xhr.setRequestHeader('X-File-Size', File.fileSize);
 
+
 	//xhr.setRequestHeader("Content-Type", "multipart/form-data");
 	//xhr.send(File);
 
@@ -686,10 +696,15 @@ ChannelImages.HTML5.UploadStart = function(FIELD_ID) {
 		var f = new FormData();
 		f.append('channel_images_file', File);
 
+		var filenames = [];
+
 		// Get all files
 		ChannelImages.CFields.find('.Image').each(function(index, imgelem){
-			f.append('filenames[]', imgelem.getAttribute('data-filename'));
+			filenames.push(imgelem.getAttribute('data-filename'));
 		});
+
+		f.append('filenames', filenames.join('||'));
+		f.append('XID', EE.XID);
 
 		xhr.send(f);
 	}
@@ -988,6 +1003,8 @@ ChannelImages.SWFUPLOAD.DialogCompleteHandler = function(FilesSelected, ImagesQu
 //********************************************************************************* //
 
 ChannelImages.SWFUPLOAD.StartHandler = function(File) {
+
+	this.addPostParam('XID', EE.XID);
 
 	// Was there an error? Stop! And cancel all
 	if (ChannelImages.UploadError == true) {

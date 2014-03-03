@@ -48,6 +48,7 @@ $config['ci_defaults']['parse_xmp'] = 'no';
 $config['ci_defaults']['parse_iptc'] = 'no';
 $config['ci_defaults']['cover_first'] = 'yes';
 $config['ci_defaults']['wysiwyg_output'] = 'image_url';
+$config['ci_defaults']['max_filesize'] = '';
 $config['ci_defaults']['locations']['local']['location'] = 0;
 $config['ci_defaults']['locations']['s3']['key'] = '';
 $config['ci_defaults']['locations']['s3']['secret_key'] = '';
@@ -63,6 +64,11 @@ $config['ci_defaults']['locations']['cloudfiles']['container'] = '';
 $config['ci_defaults']['locations']['cloudfiles']['region'] = 'us';
 $config['ci_defaults']['locations']['cloudfiles']['cdn_uri'] = '';
 $config['ci_defaults']['columns'] = $config['ci_columns'];
+$config['ci_defaults']['columns_default'] = array();
+
+foreach ($config['ci_columns'] as $col => $val) {
+    $config['ci_defaults']['columns_default'][$col] = '';
+}
 
 // S3
 $config['ci_s3_regions']['us-east-1']   = 'REGION_US_E1';
@@ -96,6 +102,9 @@ $config['ci_s3_storage']['reduced']	= 'STORAGE_REDUCED';
 // Special Config
 //$config['channel_images']['infinite_memory'] = 'yes';
 //$config['channel_images']['ascii_filename'] = 'yes';
+//$config['channel_images']['utf8_encode_fields_for_json'] = 'yes';
+//$config['channel_images_act_url']['channel_images_router'] = '';
+
 
 // Cloudfiles
 $config['ci_cloudfiles_regions']['us']	= 'US_AUTHURL';
