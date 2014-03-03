@@ -23,8 +23,13 @@ define([
 
         function open(blindIndex){
             if ( blindIndex === self.blinds.length ) {
+                // console.log('returning')
+                if ( $(self.blinds).hasClass('closed') ) {
+                    // console.log('if everything isn\t open, needs a restart')
+                }
                 return
             }
+            // console.log('opening blind:', self.blinds[blindIndex].innerHTML)
             $(self.blinds[blindIndex]).addClass('opened ')
             $(self.blinds[blindIndex]).removeClass('closed')
             setTimeout(open.bind(self,blindIndex+1), 110)
@@ -32,18 +37,25 @@ define([
 
         function close(blindIndex){
             if ( blindIndex === self.blinds.length ) {
+                // console.log('returning')
+                if ( $(self.blinds).hasClass('opened') ) {
+                    // console.log('if everything isn\'t closed, needs a restart')
+                }
                 return
             }
+            // console.log('closing blind:', self.blinds[blindIndex].innerHTML)
             $(self.blinds[blindIndex]).removeClass('opened')
             $(self.blinds[blindIndex]).addClass('closed')
             setTimeout(close.bind(self,blindIndex+1), 110)
         }
 
         self.staggerOpen = function(){
+            // console.log('opening slide:', self)
             open(0)
         }
 
         self.staggerClose = function(){
+            // console.log('closing slide:', self)
             close(0)
         }
 
@@ -58,6 +70,7 @@ define([
     }
 
     Slide.prototype.animate = function(){
+        // console.log('calling animate on:', this)
         this.g.openSlide = this
         setTimeout(this.staggerClose, 4500)
         this.staggerOpen()
@@ -97,7 +110,14 @@ define([
         }
 
         galleryHandler = function(e){
-            if (e.target.nodeName === 'A') { return }
+            // console.log('tranitionend handler')
+            if ( e.target.nodeName.toLowerCase() === 'a' &&
+                    !e.target.classList.contains('back') ||
+                    e.target.id === 'bullets' ) {
+                // console.log('do nothing')
+                return 
+            }
+            // console.log('check slides')
             var openSlide = self.getCurrent(),
                 lastBlind = openSlide.lastBlind(),
                 thirdFromEnd = openSlide.getBlind(openSlide.blinds.length-1),
@@ -118,6 +138,7 @@ define([
                     //
                     // there's probably a way to refactor this so we can respect
                     // user choices without needing to force an override.
+                    // console.log('need to grab next slide in queue and start animation')
                     self.update().animate()
                     openSlide.$el.addClass('closed')
                 }
@@ -158,6 +179,7 @@ define([
 
     Gallery.prototype.update = function(){
         if (arguments.length < 1) {
+            // console.log('calling update')
             // move closed slide to end of queue
             // next slide to open moves to first position
             var justClosed = this.q.shift()
