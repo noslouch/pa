@@ -309,6 +309,14 @@
         ]
     },
     {/if}
+    {if gallery_books}
+    {
+        "type" : "book",
+        "title" : "{title}",
+        "url" : "{path='books'}/{url_title}",
+        "summary" : "{summary_books}"
+    },
+    {/if}
     {/exp:super_search:results}
     {
         "type" : "keywords",

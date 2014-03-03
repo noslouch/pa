@@ -3,9 +3,6 @@
  * searchForm
  * **********
  * uses html in header include
- * creates a new search query on show
- * sets keywords on submit and calls model's search method
- * advanced search dimensions are set/unset with checkboxes
  * creates searchresults collection on success event
  *
  * searchResults
@@ -20,23 +17,20 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'app/models/searchQuery',
+    //'app/models/searchQuery',
     'utils/spinner',
     'json'
     //'app/router'
-], function( $, Backbone, _, Q, Spinner ) {
+], function( $, Backbone, _, Spinner ) {
 
     var search = {}
 
     var Form = Backbone.View.extend({
         initialize : function(options) {
-            this.model = new Q()
-            //this.page = options.page
             _.bindAll(this, 'submit', 'onClose' )
         },
 
         render : function() {
-            this.keywords = this.$('#keywords')
             this.$el.addClass('active')
             this.$('#searchInput').focus()
         },
@@ -48,18 +42,23 @@ define([
 
         submit : function(e) {
             e.preventDefault()
-            var r = require('app/router')
+            var r = require('app/router'),
+                advanced = this.$el.serializeArray().slice(1),
+                q = this.$el.serializeArray().slice(0,1),
+                spinner = new Spinner(),
+                self = this,
+                o
 
-            // FIND A BETTER METHOD FOR THIS
-            //PA.app.pageView.$el.empty()
-            // app is listening to submit event
-
-            var spinner = new Spinner()
-            var keywords = this.keywords.val().trim(),
-                self = this
-
-            this.model.set( 'keywords' , keywords )
-            this.model.search().done(function(d){
+            if ( advanced.length ) {
+                o = { name : 'channel' }
+                o.value = ''
+                _.each(advanced, function(el, i, adv) {
+                    o.value += el['value'] + (i + 1 === adv.length ? '' : ' ')
+                })
+                q[1] = o
+            }
+            $.get( '/api/search/search', $.param(q)
+            ).done( function(d) {
                 self.results = new Results({
                     collection : new Backbone.Collection(JSON.parse(d))
                 })
@@ -72,7 +71,7 @@ define([
 
         onClose : function(e) {
             if (e) { e.preventDefault() }
-            this.keywords.val('')
+            this.el.reset()
             this.$el.removeClass('active')
         }
     })
@@ -173,17 +172,16 @@ define([
                     break;
 
                     case 'book':
-                        $(sec).append('<h2>Project Books</h2>')
-                        $(sec).append('<p>Implement Book Resuts</p>')
-                        //_.each( modelsArray, function( model, idx) {
-                        //    var a = document.createElement('a'),
-                        //        p = document.createElement('p'),
-                        //        p2 = document.createElement('p')
-                        //    $(a).attr('href', model.get('url')).html(model.get('title'))
-                        //    $(p).append(a)
-                        //    $(p2).append( model.get('summary') )
-                        //    $(sec).append(p).append(p2)
-                        //} )
+                        $(sec).append('<h2>Books</h2>')
+                        _.each( modelsArray, function( model, idx) {
+                            var a = document.createElement('a'),
+                                p = document.createElement('p'),
+                                p2 = document.createElement('p')
+                            $(a).attr('href', model.get('url')).html(model.get('title'))
+                            $(p).append(a)
+                            $(p2).append( model.get('summary') )
+                            $(sec).append(p).append(p2)
+                        } )
                     break;
 
                     default:
