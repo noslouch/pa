@@ -1,3 +1,4 @@
+/*global Modernizr*/
 /* utils/quotes.js
  * Homepage quotes */
 'use strict';
@@ -66,7 +67,11 @@ define([
     function Gallery(c){
         var self = this,
             quotes = $(c).find('h3'),
-            i
+            i,
+            dotHandler,
+            galleryHandler,
+            transEndEventName,
+            transEndEventNames
 
         // Slides array for reference
         this.slides = []
@@ -80,7 +85,7 @@ define([
             this.q.push(i)
         }
 
-        var dotHandler = function(dot){
+        dotHandler = function(dot){
             // get current li based on front of queue
             var li = self.els[self.q[0]]
 
@@ -91,7 +96,7 @@ define([
             })
         }
 
-        var galleryHandler = function(e){
+        galleryHandler = function(e){
             if (e.target.nodeName === 'A') { return }
             var openSlide = self.getCurrent(),
                 lastBlind = openSlide.lastBlind(),
@@ -120,9 +125,17 @@ define([
             }
         }
 
-        $(c).on('transitionend', galleryHandler)
-        $(c).on('webkitTransitionEnd', galleryHandler)
-        $(c).on('transitionEnd', galleryHandler)
+        transEndEventNames = {
+            'WebkitTransition' : 'webkitTransitionEnd',// Saf 6, Android Browser
+            'MozTransition'    : 'transitionend',      // only for FF < 15
+            'transition'       : 'transitionend'       // IE10, Opera, Chrome, FF 15+, Saf 7+
+        }
+        transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ];
+
+        $(c).on(transEndEventName, galleryHandler)
+        // $(c).on('transitionend', galleryHandler)
+        // $(c).on('webkitTransitionEnd', galleryHandler)
+        // $(c).on('transitionEnd', galleryHandler)
 
         $(c).on('click', '.indicators a', function(e){
             e.preventDefault()
