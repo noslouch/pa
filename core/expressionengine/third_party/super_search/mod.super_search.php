@@ -1158,7 +1158,8 @@ class Super_search extends Module_builder_super_search
         //  Pagination Tags Parsed Out
         // -------------------------------------
         
-		$channel->pagination->get_template();
+		//$channel->pagination->get_template();
+        
 
 		// -------------------------------------
 		//	Prep pagination
