@@ -95,7 +95,7 @@ define([
             })
         },
 
-        detail : function( spinner, section, urlTitle, showcaseUrl, previous ) {
+        detail : function( spinner, section, urlTitle, hidden, previous ) {
             var self = this
             require(['app/views/details/' + section], function( view ) {
                 self.setView( view )
@@ -104,7 +104,7 @@ define([
                 })
 
                 $('.page')
-                    .html( view.render( urlTitle, showcaseUrl, previous ) )
+                    .html( view.render( urlTitle, hidden, previous ) )
                     .removeClass('projects')
             })
         },

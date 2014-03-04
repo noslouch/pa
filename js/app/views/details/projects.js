@@ -184,7 +184,7 @@ define([
             'click #back' : 'goBack'
         },
 
-        render : function( projectUrl, showcaseUrl, previous ) {
+        render : function( projectUrl, hidden, previous ) {
             this.$el.html( this.baseTmpl() )
 
             this.details = new Details({
@@ -200,9 +200,9 @@ define([
             this.previous = previous
 
             this.model.fetch({
-                url : '/api/projects/' + projectUrl + (document.location.href.match(/private$/) ? '/private' : ''),
-                success : this.renderOut,
-                showcaseUrl : showcaseUrl
+                url : '/api/projects/' + projectUrl + ( hidden ? '/private' : '' ),
+                success : this.renderOut
+                // showcaseUrl : showcaseUrl
             })
 
             return this.el

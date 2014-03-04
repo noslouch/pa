@@ -37,8 +37,7 @@ define([
         routes : {
             "" : "section",
             "projects" : "section",
-            "projects/:project" : "detail",
-            "projects/:project/:showcase" : "detail",
+            "projects/:project(/:hidden)" : "detail",
             "photography" : "section",
             "photography/:title" : "detail",
             "film" : "section",
@@ -61,11 +60,11 @@ define([
             Chrome.section( spinner, section, segment, urlTitle )
         },
 
-        detail : function( urlTitle, showcaseUrl ) {
+        detail : function( urlTitle, hidden ) {
             var section = Backbone.history.fragment.match(/[^\/]*/).join('')
             var spinner = new Spinner()
-            showcaseUrl = showcaseUrl === 'private' ? '' : showcaseUrl
-            Chrome.detail( spinner, section, urlTitle, showcaseUrl, this.previous )
+
+            Chrome.detail( spinner, section, urlTitle, hidden, this.previous )
         },
 
         saveHistory : function() {
