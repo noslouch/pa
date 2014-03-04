@@ -1,0 +1,44 @@
+<?php header('Content-type: application/json'); ?>
+{exp:ce_cache:stat:ic seconds="86400"}
+{if segment_3 == ''}
+[
+{/if}
+{exp:channel:entries channel="photography" limit="100" backspace="2"}
+    {
+        "id" : "{entry_id}",
+        "title": "{title}",
+        "timestamp" : "{year_photography}000",
+        "url-title": "{url_title}",
+        "summary": {exp:json_encode}{summary_photography}{/exp:json_encode},
+        "content": {exp:json_encode}{content_photography}{/exp:json_encode},
+        "thumb" : "{gallery_photography cover_only="yes"}{image:url:thumb}{/gallery_photography}",
+        "gallery": [
+            {gallery_photography backspace="14"}
+            {
+                "thumb" : "{image:url:thumb}",
+                "lg_thumb" : "{image:url:lg-thumb}",
+                "caption" : {exp:json_encode}{image:description}{/exp:json_encode},
+                "url" : "{image:url}"
+        	},
+            {/gallery_photography}
+        ],	
+        "cover" : {
+        {gallery_photography cover_only="yes"}
+            {if image:category == 'landscape'}
+            "thumb" : "{image:url:landscape}",
+            "wide" : "true",
+            "caption" : "{if image:description}{image:description}{/if}",
+            {if:else}
+            "thumb" : "{image:url:portrait}",
+            "wide" : "",
+            "caption" : "{if image:description}{image:description}{/if}",
+            {/if}
+            "caption" : "{title}",
+            "url-title" : "{url_title}"
+        {/gallery_photography}
+        }  
+    },
+{/exp:channel:entries}
+{if segment_3 == ''}
+]
+{/if}

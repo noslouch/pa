@@ -1,0 +1,11 @@
+<?php header('Content-type: application/json'); ?>
+{exp:ce_cache:stat:ic seconds="86400"}
+{exp:channel:entries channel="profile_acknowledgements" limit="1"}
+{
+    "id" : "{entry_id}",
+    "type" : "acknowledgements",
+    "title": "{title}",
+    "url-title" : "acknowledgements",
+    "content": {exp:json_encode}{content_profile}{/exp:json_encode}
+}
+{/exp:channel:entries}

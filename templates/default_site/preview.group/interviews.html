@@ -1,0 +1,24 @@
+<?php header('Content-type: application/json'); ?>
+{exp:ce_cache:stat:ic seconds="86400"}
+[
+{exp:channel:entries channel="interviews" limit="100" backspace="2"}
+    {
+        "id" : "{entry_id}",
+        "type" : "interviews",
+        "title" : "{title}",
+        "timestamp" : "{date_article}000",
+        "url-title" : "{url_title}",
+        "summary": {exp:json_encode}{summary_article}{/exp:json_encode},
+        "content": {exp:json_encode}{content_article}{/exp:json_encode},
+        "gallery": [
+        {gallery_article backspace="10"}
+            {
+                "thumb" : "{image:url:thumb}",
+                "url" : "{image:url}",
+                "caption" : {exp:json_encode}{image:description}{/exp:json_encode}
+            },
+        {/gallery_article}
+        ]
+    },
+{/exp:channel:entries}
+]

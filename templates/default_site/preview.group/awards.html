@@ -1,0 +1,13 @@
+<?php header('Content-type: application/json'); ?>
+{exp:ce_cache:stat:ic seconds="86400"}
+[
+{exp:channel:entries channel="profile_awards" limit="100" backspace="2"}
+    {
+        "id" : "{entry_id}",
+        "type" : "awards",
+        "title" : "{title}",
+        "timestamp" : "{date_awards}000",
+        "summary" : "{summary_awards}"
+    },
+{/exp:channel:entries}
+]
