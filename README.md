@@ -27,4 +27,4 @@ See [here for more](http://www.devdemon.com/forums/viewthread/985/#5741).
 
 ### Structure
 
-I enable additional reorder options by setting the boolean switch to true on line 40 of mcp.structure.php
+I enabled additional reorder options by setting the boolean switch to true on line 40 of mcp.structure.php

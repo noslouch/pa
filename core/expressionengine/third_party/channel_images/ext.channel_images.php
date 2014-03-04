@@ -57,9 +57,10 @@ class Channel_images_ext
 		}
 
 		// Check just to be sure!
-		if (isset($config['extraPlugins']) != FALSE)
+		// if (isset($config['extraPlugins']) != FALSE)
+        if (isset($config['extraPlugins']) != FALSE && strpos($config['extraPlugins'],'channelimages') !== FALSE )
 		{
-			$config['extraPlugins'] .= ',channelimages';
+			// $config['extraPlugins'] .= ',channelimages';
 			$config['toolbar'][] = array('ChannelImages');
 		}
 
