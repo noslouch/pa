@@ -51,7 +51,8 @@ class Nsm_live_look_ft extends EE_Fieldtype
 	public function __construct()
 	{
 		$this->addon_id = $this->field_type = strtolower(substr(__CLASS__, 0, -3));
-		parent::EE_Fieldtype();
+		//parent::EE_Fieldtype();
+        EE_Fieldtype::__construct();
 	}	
 
 

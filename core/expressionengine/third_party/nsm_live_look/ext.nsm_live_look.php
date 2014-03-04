@@ -238,7 +238,8 @@ class Nsm_live_look_ext
 			)
 		), TRUE);
 
-		$template = $EE->javascript->generate_json($template);
+		// $template = $EE->javascript->generate_json($template);
+		$template = json_encode($template);
 
 		// Javascript away
 		$js = 'NSM_Live_Look = {
@@ -518,7 +519,7 @@ class Nsm_live_look_ext
 	{
 		$EE =& get_instance();
 		$data = array(
-			'settings'	=> $EE->javascript->generate_json($settings, TRUE),
+			'settings'	=> json_encode($settings, TRUE),
 			'addon_id'	=> $this->addon_id,
 			'site_id'	=> SITE_ID
 		);
