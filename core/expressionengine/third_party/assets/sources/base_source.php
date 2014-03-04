@@ -54,6 +54,11 @@ abstract class Assets_base_source
 
 		$this->EE = get_instance();
 
+		if ( ! in_array(PATH_THIRD.'assets/', $this->EE->load->get_package_paths()))
+		{
+			$this->EE->load->add_package_path(PATH_THIRD.'assets/');
+		}
+		
 		$this->EE->load->library('assets_lib');
 
 		if (! isset($this->EE->session->cache['assets']))
@@ -90,6 +95,14 @@ abstract class Assets_base_source
 	 * @return bool|mixed
 	 */
 	abstract protected function _rename_source_folder($old_path, $new_path);
+
+	/**
+	 * Check if a source file exists
+	 * @abstract
+	 * @param $server_path
+	 * @return bool|mixed
+	 */
+	abstract protected function _source_file_exists($server_path);
 
 	/**
 	 * Delete a folder
@@ -179,7 +192,7 @@ abstract class Assets_base_source
 	 * @param $file_name
 	 * @return mixed
 	 */
-	abstract protected function _get_name_replacement($folder_row, $file_name);
+	abstract public function get_name_replacement($folder_row, $file_name);
 
 	/**
 	 * Get a files server path
@@ -262,6 +275,11 @@ abstract class Assets_base_source
 		// swap whitespace with underscores
 		$folder_name = preg_replace('/\s+/', '_', $folder_name);
 
+		if (!Assets_helper::is_allowed_folder_name($folder_name))
+		{
+			throw new Exception(lang('invalid_folder_name'));
+		}
+
 		$parent_path = Assets_helper::normalize_path($row->full_path);
 		$new_path = $parent_path . $folder_name;
 
@@ -320,7 +338,7 @@ abstract class Assets_base_source
 	 */
 	public function rename_folder($folder_id, $new_title)
 	{
-		if (substr_count($new_title, '/') > 0)
+		if (substr_count($new_title, '/') > 0 OR !Assets_helper::is_allowed_folder_name($new_title))
 		{
 			throw new Exception(lang('invalid_folder_path'));
 		}
@@ -595,6 +613,11 @@ abstract class Assets_base_source
 			return array('error' => lang('empty_file'));
 		}
 
+		if (!Assets_helper::is_allowed_file_name($uploader->file->getName()))
+		{
+			throw new Exception(lang('invalid_file_name'));
+		}
+
 		$file_path = Assets_helper::get_temp_file(pathinfo($uploader->file->getName(), PATHINFO_EXTENSION));
 		$uploader->file->save($file_path);
 
@@ -608,7 +631,7 @@ abstract class Assets_base_source
 		// naming conflict. create the new filename and ask user what to do
 		if (isset($result['prompt']))
 		{
-			$new_file_name = $this->_get_name_replacement($folder_row, $uploader->file->getName());
+			$new_file_name = $this->get_name_replacement($folder_row, $uploader->file->getName());
 			$return_prompt = $result;
 			$result = $this->_do_upload_in_folder($folder_row, $file_path, $new_file_name);
 		}
@@ -735,15 +758,16 @@ abstract class Assets_base_source
 	 * Get a file by asset id
 	 * @param int $file_id
 	 * @param bool $return_missing if true return object even if file is missing
+	 * @param array $file_row with prefetched data
 	 * @return Assets_base_file
 	 */
-	public function get_file($file_id, $return_missing = FALSE)
+	public function get_file($file_id, $return_missing = FALSE, $file_row = null)
 	{
 		if (! isset($this->files[$file_id]))
 		{
 			$class_name = 'Assets_' . $this->get_source_type()  .'_file';
 
-			$file = new $class_name($file_id, $this);
+			$file = new $class_name($file_id, $this, $file_row);
 			$this->files[$file_id] = $file;
 		}
 
@@ -803,7 +827,7 @@ abstract class Assets_base_source
 
 					break;
 				case Assets_helper::ACTIONS_KEEP_BOTH:
-					$file_name = $this->_get_name_replacement($folder_row, $file_name);
+					$file_name = $this->get_name_replacement($folder_row, $file_name);
 					break;
 			}
 		}
@@ -909,7 +933,7 @@ abstract class Assets_base_source
 
 				case Assets_helper::ACTIONS_KEEP_BOTH:
 				{
-					$file_name = $this->_get_name_replacement($folder_row, $file_name);
+					$file_name = $this->get_name_replacement($folder_row, $file_name);
 					break;
 				}
 			}
@@ -1038,8 +1062,8 @@ abstract class Assets_base_source
 		}
 
 		$data = array(
-			'width' => $replace_with->width(),
-			'height' => $replace_with->height(),
+			'width' => (int) $replace_with->width(),
+			'height' => (int) $replace_with->height(),
 			'size' => $replace_with->size(),
 			'date_modified' => $replace_with->date_modified()
 		);
@@ -1065,9 +1089,14 @@ abstract class Assets_base_source
 	protected function _get_sources($parameters)
 	{
 		$result = $this->EE->db->get_where('assets_sources', $parameters)->result();
+
+		foreach ($result as &$row)
+		{
+			$row->settings = json_encode(Assets_helper::apply_source_overrides($row->source_id, json_decode($row->settings)));
+		}
+
 		return $result;
 	}
-
 
 	/**
 	 * Store folder data
@@ -1229,9 +1258,10 @@ abstract class Assets_base_source
 	/**
 	 * Return a prefix for sources that have subfolder set
 	 *
+	 * @param $source_data
 	 * @return string
 	 */
-	protected function _get_path_prefix($source_data = array())
+	protected function _get_path_prefix($source_data = '')
 	{
 		$settings = empty($source_data) ? $this->settings() : $source_data;
 
@@ -1251,5 +1281,61 @@ abstract class Assets_base_source
 	protected function _purge_cached_source_file($server_path)
 	{
 		return;
+	}
+
+	/**
+	 * Check if a file exists on the server.
+	 *
+	 * @param $folder
+	 * @param $file_name
+	 * @return bool|mixed
+	 */
+	public function source_file_exists($folder, $file_name)
+	{
+		return $this->_source_file_exists($this->_get_file_server_path($folder, $file_name));
+	}
+
+	/**
+	 * Return true if a folder path is allowed according to settings.
+	 *
+	 * @param $path
+	 * @return bool
+	 */
+	protected function _is_allowed_folder_path($path)
+	{
+		$parts = explode('/', rtrim($path, '/'));
+
+		// The folder or one of it's parent folders is no good. Throw it out.
+		foreach ($parts as $path_part)
+		{
+			if (!Assets_helper::is_allowed_folder_name($path_part))
+			{
+				// Continue the outer loop
+				return FALSE;
+			}
+		}
+
+		return TRUE;
+	}
+
+	/**
+	 * Return true if a file path is allowed according to settings.
+	 *
+	 * @param $path
+	 * @return bool
+	 */
+	protected function _is_allowed_file_path($path)
+	{
+
+		$filename = pathinfo($path, PATHINFO_BASENAME);
+		$path_to = pathinfo($path, PATHINFO_DIRNAME);
+
+		// Check if folder is allowed
+		if (!empty($path_to) && $path_to != '.' && !$this->_is_allowed_folder_path($path_to))
+		{
+			return FALSE;
+		}
+
+		return Assets_helper::is_allowed_file_name($filename);
 	}
 }

@@ -6,7 +6,7 @@
 * @package        low_reorder
 * @author         Lodewijk Schutte <hi@gotolow.com>
 * @link           http://gotolow.com/addons/low-reorder
-* @copyright      Copyright (c) 2009-2012, Low
+* @copyright      Copyright (c) 2009-2013, Low
 */
 
 $lang = array(
@@ -16,6 +16,9 @@ $lang = array(
 
 "low_reorder_module_description" =>
 "Create sets of entries and order them any way you want",
+
+"can_create_sets" =>
+"Select member groups that can create Sets",
 
 // --------------------------------------------------------------------
 //	Channel/field Listing
@@ -132,6 +135,9 @@ $lang = array(
 "show_future_entries" =>
 "Show future entries?",
 
+"sticky_only" =>
+"Show sticky entries only?",
+
 "search_fields" =>
 "Search fields",
 
@@ -208,6 +214,9 @@ $lang = array(
 
 "set_name_not_unique" =>
 "Set name is not unique",
+
+"cannot_create_sets" =>
+"Sorry, you are not allowed to create sets.",
 
 // --------------------------------------------------------------------
 

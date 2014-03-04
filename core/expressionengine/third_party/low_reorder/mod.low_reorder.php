@@ -12,7 +12,7 @@ if ( ! class_exists('Low_reorder_base'))
  * @package        low_reorder
  * @author         Lodewijk Schutte <hi@gotolow.com>
  * @link           http://gotolow.com/addons/low-reorder
- * @copyright      Copyright (c) 2009-2012, Low
+ * @copyright      Copyright (c) 2009-2013, Low
  */
 class Low_reorder extends Low_reorder_base {
 
@@ -21,45 +21,45 @@ class Low_reorder extends Low_reorder_base {
 	// --------------------------------------------------------------------
 
 	/**
-	* Return data
-	*
-	* @access      public
-	* @var         string
-	*/
+	 * Return data
+	 *
+	 * @access      public
+	 * @var         string
+	 */
 	public $return_data = '';
 
 	// --------------------------------------------------------------------
 
 	/**
-	* Set ID
-	*
-	* @access      public
-	* @var         int
-	*/
+	 * Set ID
+	 *
+	 * @access      public
+	 * @var         int
+	 */
 	private $set_id;
 
 	/**
-	* Category ID
-	*
-	* @access      public
-	* @var         int
-	*/
+	 * Category ID
+	 *
+	 * @access      public
+	 * @var         int
+	 */
 	private $cat_id;
 
 	/**
-	* Set instance
-	*
-	* @access      public
-	* @var         array
-	*/
+	 * Set instance
+	 *
+	 * @access      public
+	 * @var         array
+	 */
 	private $set;
 
 	/**
-	* Entry ids for set/cat combo
-	*
-	* @access      public
-	* @var         array
-	*/
+	 * Entry ids for set/cat combo
+	 *
+	 * @access      public
+	 * @var         array
+	 */
 	private $entry_ids = array();
 
 	// --------------------------------------------------------------------
@@ -67,15 +67,15 @@ class Low_reorder extends Low_reorder_base {
 	// --------------------------------------------------------------------
 
 	/**
-	* Display entries in order
-	*
-	* @access      public
-	* @return      string
-	*/
+	 * Display entries in order
+	 *
+	 * @access      public
+	 * @return      string
+	 */
 	public function entries()
 	{
 		// Set low_reorder param so extension kicks in
-		$this->EE->TMPL->tagparams['low_reorder'] = 'yes';
+		ee()->TMPL->tagparams['low_reorder'] = 'yes';
 
 		// --------------------------------------
 		// Initiate set to get set_id, cat_id and entry_ids
@@ -83,6 +83,7 @@ class Low_reorder extends Low_reorder_base {
 
 		$this->_init_set();
 		$this->_prep_no_results();
+		$this->_remove_var_prefix();
 
 		// --------------------------------------
 		// Cache the set_id and cat_it
@@ -95,7 +96,7 @@ class Low_reorder extends Low_reorder_base {
 		// Check fallback parameter
 		// --------------------------------------
 
-		$fallback = ($this->EE->TMPL->fetch_param('fallback') == 'yes')
+		$fallback = (ee()->TMPL->fetch_param('fallback') == 'yes')
 		          ? '_channel_entries'
 		          : '_empty_set';
 
@@ -112,12 +113,12 @@ class Low_reorder extends Low_reorder_base {
 		// Check existing entry_id parameter
 		// --------------------------------------
 
-		if (isset($this->EE->TMPL->tagparams['entry_id']) && strlen($this->EE->TMPL->tagparams['entry_id']))
+		if ($entry_ids = ee()->TMPL->fetch_param('entry_id'))
 		{
 			$this->_log('entry_id parameter found, filtering ordered entries accordingly');
 
 			// Get the parameter value
-			list($ids, $in) = low_explode_param($this->EE->TMPL->tagparams['entry_id']);
+			list($ids, $in) = low_explode_param($entry_ids);
 
 			// Either remove $ids from $entry_ids OR limit $entry_ids to $ids
 			$method = $in ? 'array_intersect' : 'array_diff';
@@ -143,7 +144,7 @@ class Low_reorder extends Low_reorder_base {
 		// --------------------------------------
 
 		// Check whether to force template params or not
-		$force = ($this->EE->TMPL->fetch_param('force_set_params', 'no') == 'yes');
+		$force = (ee()->TMPL->fetch_param('force_set_params', 'no') == 'yes');
 
 		// Set the params
 		$this->_set_template_parameters($force);
@@ -156,11 +157,11 @@ class Low_reorder extends Low_reorder_base {
 	}
 
 	/**
-	* Return pipe-delimited list of ordered entry_ids
-	*
-	* @access      public
-	* @return      string
-	*/
+	 * Return pipe-delimited list of ordered entry_ids
+	 *
+	 * @access      public
+	 * @return      string
+	 */
 	public function entry_ids()
 	{
 		// --------------------------------------
@@ -174,9 +175,9 @@ class Low_reorder extends Low_reorder_base {
 		// Get some parameters and check pair tag
 		// --------------------------------------
 
-		$pair       = ($tagdata = $this->EE->TMPL->tagdata) ? TRUE : FALSE;
-		$no_results = $this->EE->TMPL->fetch_param('no_results');
-		$separator  = $this->EE->TMPL->fetch_param('separator', '|');
+		$pair       = ($tagdata = ee()->TMPL->tagdata) ? TRUE : FALSE;
+		$no_results = ee()->TMPL->fetch_param('no_results');
+		$separator  = ee()->TMPL->fetch_param('separator', '|');
 
 		// --------------------------------------
 		// Create single string from entry ids
@@ -190,7 +191,7 @@ class Low_reorder extends Low_reorder_base {
 
 		if ($pair)
 		{
-			return $this->EE->TMPL->parse_variables_row($tagdata, array(
+			return ee()->TMPL->parse_variables_row($tagdata, array(
 				'low_reorder:entry_ids' => $entry_ids
 			));
 		}
@@ -203,18 +204,18 @@ class Low_reorder extends Low_reorder_base {
 	// --------------------------------------------------------------------
 
 	/**
-	* Add leading 0's to count
-	*
-	* @access      public
-	* @return      string
-	*/
+	 * Add leading 0's to count
+	 *
+	 * @access      public
+	 * @return      string
+	 */
 	public function pad()
 	{
 		// Get parameters
-		$input  = (string) $this->EE->TMPL->fetch_param('input', '');
-		$length = (int) $this->EE->TMPL->fetch_param('length', 1);
-		$string = (string) $this->EE->TMPL->fetch_param('string', '0');
-		$type   = ($this->EE->TMPL->fetch_param('type', 'left') != 'right') ?  STR_PAD_LEFT : STR_PAD_RIGHT;
+		$input  = (string) ee()->TMPL->fetch_param('input', '');
+		$length = (int) ee()->TMPL->fetch_param('length', 1);
+		$string = (string) ee()->TMPL->fetch_param('string', '0');
+		$type   = (ee()->TMPL->fetch_param('type', 'left') != 'right') ?  STR_PAD_LEFT : STR_PAD_RIGHT;
 
 		// Add padding if necessary
 		if (strlen($input) < $length)
@@ -229,34 +230,34 @@ class Low_reorder extends Low_reorder_base {
 	// --------------------------------------------------------------------
 
 	/**
-	* Get next entry in custom order
-	*
-	* @access      public
-	* @return      string
-	*/
+	 * Get next entry in custom order
+	 *
+	 * @access      public
+	 * @return      string
+	 */
 	public function next_entry()
 	{
 		return $this->_prev_next('next');
 	}
 
 	/**
-	* Get previous entry in custom order
-	*
-	* @access      public
-	* @return      string
-	*/
+	 * Get previous entry in custom order
+	 *
+	 * @access      public
+	 * @return      string
+	 */
 	public function prev_entry()
 	{
 		return $this->_prev_next('prev');
 	}
 
 	/**
-	* Get next or previous entry in custom order
-	*
-	* @access      private
-	* @param       string
-	* @return      string
-	*/
+	 * Get next or previous entry in custom order
+	 *
+	 * @access      private
+	 * @param       string
+	 * @return      string
+	 */
 	private function _prev_next($which)
 	{
 		// --------------------------------------
@@ -265,6 +266,7 @@ class Low_reorder extends Low_reorder_base {
 
 		$this->_init_set();
 		$this->_prep_no_results();
+		// $this->_remove_var_prefix();
 
 		// --------------------------------------
 		// Get other parameters
@@ -274,7 +276,7 @@ class Low_reorder extends Low_reorder_base {
 
 		foreach ($params AS $param)
 		{
-			$$param = $this->EE->TMPL->fetch_param($param);
+			$$param = ee()->TMPL->fetch_param($param);
 		}
 
 		// --------------------------------------
@@ -342,47 +344,13 @@ class Low_reorder extends Low_reorder_base {
 				// Log the entries for debugging purposes
 				$this->_log("Getting {$which} entry from stack ".implode('|', $entries));
 
-				/*
-					// Using the Channel:entries tag for displaying
-					// Strip optional prefix from template data
-					$this->_strip_prefix($prefix);
-
-					// Parameters to set
-					$tagparams = array(
-						'fixed_order' => implode('|', $entries),
-						'limit'       => '1',
-						'sort'        => 'asc',
-						'dynamic'     => 'no'
-					);
-
-					// Check if the disable param is set
-					if ( ! $this->EE->TMPL->fetch_param('disable'))
-					{
-						$tagparams['disable'] = 'categories|member_data|pagination|channel_fields';
-					}
-
-					// Add the params to the set
-					$this->set['parameters'] = array_merge($this->set['parameters'], $tagparams);
-
-					// Force params
-					$this->_set_template_parameters(TRUE);
-
-					// Unset before calling channel entries
-					foreach ($params AS $param)
-					{
-						unset($this->EE->TMPL->tagparams[$param]);
-					}
-
-					$this->return_data = $this->_channel_entries();
-				*/
-
-				$params = $this->EE->low_reorder_set_model->get_params($this->set['parameters']);
+				$params = ee()->low_reorder_set_model->get_params($this->set['parameters']);
 				$params['category']   = $this->cat_id;
 				$params['channel_id'] = implode('|', $this->set['channels']);
 				$params['entry_id']   = implode('|', $entries);
 
 				// Get site pages
-				if ($pages = $this->EE->config->item('site_pages'))
+				if ($pages = ee()->config->item('site_pages'))
 				{
 					$pages = $pages[$this->site_id];
 				}
@@ -396,7 +364,7 @@ class Low_reorder extends Low_reorder_base {
 					                   : '';
 
 					$entry['page_url'] = (isset($pages['url']) && strlen($entry['page_uri']))
-					                   ? $this->EE->functions->create_page_url($pages['url'], $entry['page_uri'])
+					                   ? ee()->functions->create_page_url($pages['url'], $entry['page_uri'])
 					                   : '';
 
 					foreach ($entry AS $key => $val)
@@ -406,7 +374,7 @@ class Low_reorder extends Low_reorder_base {
 				}
 
 				// Parse the single row
-				$this->return_data = $this->EE->TMPL->parse_variables_row($this->EE->TMPL->tagdata, $row);
+				$this->return_data = ee()->TMPL->parse_variables_row(ee()->TMPL->tagdata, $row);
 			}
 		}
 
@@ -416,7 +384,7 @@ class Low_reorder extends Low_reorder_base {
 
 		if (empty($row))
 		{
-			$this->return_data = ($no_results === FALSE) ? $this->EE->TMPL->no_results() :  $no_results;
+			$this->return_data = ($no_results === FALSE) ? ee()->TMPL->no_results() :  $no_results;
 		}
 
 		return $this->return_data;
@@ -439,7 +407,7 @@ class Low_reorder extends Low_reorder_base {
 		$it = 0;
 
 		// Check if entry_id is given
-		if (($entry_id = $this->EE->TMPL->fetch_param('entry_id')) &&
+		if (($entry_id = ee()->TMPL->fetch_param('entry_id')) &&
 			($i = array_search($entry_id, $this->entry_ids)) !== FALSE)
 		{
 			$it = $i + 1;
@@ -479,9 +447,9 @@ class Low_reorder extends Low_reorder_base {
 		// Get set_id and set details
 		// --------------------------------------
 
-		$set = $this->EE->TMPL->fetch_param('set');
-		$set = $this->EE->TMPL->fetch_param('set_name', $set);
-		$set = $this->EE->TMPL->fetch_param('set_id', $set);
+		$set = ee()->TMPL->fetch_param('set');
+		$set = ee()->TMPL->fetch_param('set_name', $set);
+		$set = ee()->TMPL->fetch_param('set_id', $set);
 
 		if ($set)
 		{
@@ -561,12 +529,12 @@ class Low_reorder extends Low_reorder_base {
 			$this->_log('Retrieving set from database');
 
 			// Get set and its orders for each category
-			$query = $this->EE->db->select(array('s.set_id', 's.set_name', 's.channels',
+			$query = ee()->db->select(array('s.set_id', 's.set_name', 's.channels',
 				     's.cat_option', 's.cat_groups', 's.parameters', 'o.cat_id', 'o.sort_order'))
-			       ->from($this->EE->low_reorder_set_model->table() . ' s')
-			       ->join($this->EE->low_reorder_order_model->table() . ' o', 's.set_id = o.set_id')
+			       ->from(ee()->low_reorder_set_model->table() . ' s')
+			       ->join(ee()->low_reorder_order_model->table() . ' o', 's.set_id = o.set_id')
 			       ->where('s.'.$attr, $set_id)
-			       ->where_in('s.site_id', $this->EE->TMPL->site_ids)
+			       ->where_in('s.site_id', ee()->TMPL->site_ids)
 			       ->get();
 
 			// Get the first row to initiate the set
@@ -575,7 +543,7 @@ class Low_reorder extends Low_reorder_base {
 				// Decode some attributes
 				$set['channels']   = low_delinearize($set['channels']);
 				$set['cat_groups'] = low_delinearize($set['cat_groups']);
-				$set['parameters'] = $this->EE->low_reorder_set_model->get_params($set['parameters']);
+				$set['parameters'] = ee()->low_reorder_set_model->get_params($set['parameters']);
 
 				// Clean up what we don't need now
 				unset($set['cat_id'], $set['sort_order']);
@@ -632,7 +600,7 @@ class Low_reorder extends Low_reorder_base {
 			$filtered = low_flatten_results($this->get_entries($params, FALSE), 'entry_id');
 
 			// Intersect to preserve the order
-			$filtered = array_intersect($this->entry_ids, $filtered);
+			$filtered = array_filter(array_intersect($this->entry_ids, $filtered));
 
 			// Add to cache
 			$entries[$key] = $filtered;
@@ -670,7 +638,7 @@ class Low_reorder extends Low_reorder_base {
 			$this->_log("Retrieving entry_id from database");
 
 			// Get get the entry id
-			$query = $this->EE->db->select('entry_id')
+			$query = ee()->db->select('entry_id')
 			       ->from('channel_titles')
 			       ->where('url_title', $url_title)
 			       ->where_in('entry_id', $entry_ids)
@@ -709,7 +677,7 @@ class Low_reorder extends Low_reorder_base {
 		// Check category parameter first
 		// --------------------------------------
 
-		if ($cat_id = $this->EE->TMPL->fetch_param('category'))
+		if ($cat_id = ee()->TMPL->fetch_param('category'))
 		{
 			$this->_log("Retrieving cat_id from parameter");
 			return $cat_id;
@@ -719,7 +687,7 @@ class Low_reorder extends Low_reorder_base {
 		// Check URI for C123
 		// --------------------------------------
 
-		if (preg_match('#/?C(\d+)(/|$)#', $this->EE->uri->uri_string(), $match))
+		if (preg_match('#/?C(\d+)(/|$)#', ee()->uri->uri_string(), $match))
 		{
 			$this->_log("Retrieving cat_id from URI");
 			return $match[1];
@@ -731,12 +699,12 @@ class Low_reorder extends Low_reorder_base {
 
 		// Check if cat group is not empty and reserved category word is valid
 		if ($cat_groups &&
-			($this->EE->config->item('use_category_name') == 'y') &&
-			($cat_word = $this->EE->config->item('reserved_category_word')) != '')
+			(ee()->config->item('use_category_name') == 'y') &&
+			($cat_word = ee()->config->item('reserved_category_word')) != '')
 		{
 			// Check if reserved cat word is in URI and if there's a segment behind it
-			if (($key = array_search($cat_word, $this->EE->uri->segment_array())) &&
-				($cat_url_title = $this->EE->uri->segment($key + 1)))
+			if (($key = array_search($cat_word, ee()->uri->segment_array())) &&
+				($cat_url_title = ee()->uri->segment($key + 1)))
 			{
 				// Get category cache
 				$categories = (array) low_get_cache(LOW_REORDER_PACKAGE, 'categories');
@@ -746,7 +714,7 @@ class Low_reorder extends Low_reorder_base {
 				{
 					$this->_log("Retrieving cat_id from database");
 
-					$query = $this->EE->db->select('cat_id, cat_url_title')
+					$query = ee()->db->select('cat_id, cat_url_title')
 					       ->from('categories')
 					       ->where('cat_url_title', $cat_url_title)
 					       ->where_in('group_id', $cat_groups)
@@ -780,10 +748,39 @@ class Low_reorder extends Low_reorder_base {
 	private function _empty_set($no_results = NULL)
 	{
 		$this->_log("Empty set for set_id {$this->set_id} / cat_id {$this->cat_id}");
-		return is_string($no_results) ? $no_results : $this->EE->TMPL->no_results();
+		return is_string($no_results) ? $no_results : ee()->TMPL->no_results();
 	}
 
 	// --------------------------------------------------------------------
+
+	/**
+	 * Look if there's a prefix parameter and strip it from the tagdata
+	 *
+	 * @access     private
+	 * @return     void
+	 */
+	private function _remove_var_prefix()
+	{
+		// Only continue if there is a var_prefix
+		if ( ! ($var_prefix = ee()->TMPL->fetch_param('prefix'))) return;
+
+		// Make sure : is appended
+		// $var_prefix = rtrim($var_prefix, ':') . ':';
+		$prefix_length = strlen($var_prefix);
+
+		// Clean up tagdata
+		ee()->TMPL->tagdata = preg_replace(
+			'#('.LD.')(/|if\s)?'.preg_quote($var_prefix, '#').'#',
+			'$1$2',
+			ee()->TMPL->tagdata
+		);
+
+		// Re-assign variables
+		$vars = ee()->functions->assign_variables(ee()->TMPL->tagdata);
+
+		ee()->TMPL->var_single = $vars['var_single'];
+		ee()->TMPL->var_pair   = $vars['var_pair'];
+	}
 
 	/**
 	 * Set template parameters based on given params
@@ -808,58 +805,22 @@ class Low_reorder extends Low_reorder_base {
 				// Strip off the 'search:' prefix
 				$key = substr($key, 7);
 
-				if ($force || ! isset($this->EE->TMPL->search_fields[$key]))
+				if ($force || ! isset(ee()->TMPL->search_fields[$key]))
 				{
-					$this->EE->TMPL->search_fields[$key] = $val;
+					ee()->TMPL->search_fields[$key] = $val;
 				}
 			}
 			else
 			{
-				if ($force || ! isset($this->EE->TMPL->tagparams[$key]))
+				if ($force || ! isset(ee()->TMPL->tagparams[$key]))
 				{
-					$this->EE->TMPL->tagparams[$key] = $val;
+					ee()->TMPL->tagparams[$key] = $val;
 				}
 			}
 		}
 
 		// Log this
 		$this->_log('Setting parameters '.implode(' ', $params));
-	}
-
-	/**
-	 * Reset current template vars
-	 *
-	 * @access      private
-	 * @return      void
-	 */
-	private function _strip_prefix($prefix)
-	{
-		// Do nothing if no prefix is given
-		if ( ! $prefix) return;
-
-		// Shortcut to tagdata
-		$td =& $this->EE->TMPL->tagdata;
-
-		// Simple replace for prefixed vars
-		$td = str_replace(LD.$prefix, LD, $td);
-
-		// Check if there are conditionals
-		if ($conds = $this->EE->functions->assign_conditional_variables($td))
-		{
-			foreach ($conds AS $cond)
-			{
-				$td = str_replace(
-					$cond[0],
-					preg_replace('#(\s)'.preg_quote($prefix).'([\w_])#', '$1$2', $cond[0]),
-					$td
-				);
-			}
-		}
-
-		// Reset template vars
-		$vars = $this->EE->functions->assign_variables($td);
-		$this->EE->TMPL->var_single = $vars['var_single'];
-		$this->EE->TMPL->var_pair   = $vars['var_pair'];
 	}
 
 	/**
@@ -876,23 +837,26 @@ class Low_reorder extends Low_reorder_base {
 		// Set dynamic="no" as default
 		// --------------------------------------
 
-		if ($this->EE->TMPL->fetch_param('dynamic') != 'yes')
+		if (ee()->TMPL->fetch_param('dynamic') != 'yes')
 		{
-			$this->EE->TMPL->tagparams['dynamic'] = 'no';
+			ee()->TMPL->tagparams['dynamic'] = 'no';
 		}
 
 		// --------------------------------------
 		// Take care of related entries
 		// --------------------------------------
 
-		// We must do this, 'cause the template engine only does it for
-		// channel:entries or search:search_results. The bastard.
-		$this->EE->TMPL->tagdata = $this->EE->TMPL->assign_relationship_data($this->EE->TMPL->tagdata);
-
-		// Add related markers to single vars to trigger replacement
-		foreach ($this->EE->TMPL->related_markers AS $var)
+		if (version_compare(APP_VER, '2.6.0', '<'))
 		{
-			$this->EE->TMPL->var_single[$var] = $var;
+			// We must do this, 'cause the template engine only does it for
+			// channel:entries or search:search_results. The bastard.
+			ee()->TMPL->tagdata = ee()->TMPL->assign_relationship_data(ee()->TMPL->tagdata);
+
+			// Add related markers to single vars to trigger replacement
+			foreach (ee()->TMPL->related_markers AS $var)
+			{
+				ee()->TMPL->var_single[$var] = $var;
+			}
 		}
 
 		// --------------------------------------
@@ -928,7 +892,7 @@ class Low_reorder extends Low_reorder_base {
 	private function _prep_no_results()
 	{
 		// Shortcut to tagdata
-		$td =& $this->EE->TMPL->tagdata;
+		$td =& ee()->TMPL->tagdata;
 		$open = 'if '.LOW_REORDER_PACKAGE.'_no_results';
 		$close = '/if';
 
@@ -940,11 +904,11 @@ class Low_reorder extends Low_reorder_base {
 			// Check if there are conditionals inside of that
 			if (stristr($match[1], LD.'if'))
 			{
-				$match[0] = $this->EE->functions->full_tag($match[0], $td, LD.'if', LD.'\/if'.RD);
+				$match[0] = ee()->functions->full_tag($match[0], $td, LD.'if', LD.'\/if'.RD);
 			}
 
 			// Set template's no_results data to found chunk
-			$this->EE->TMPL->no_results = substr($match[0], strlen(LD.$open.RD), -strlen(LD.$close.RD));
+			ee()->TMPL->no_results = substr($match[0], strlen(LD.$open.RD), -strlen(LD.$close.RD));
 
 			// Remove no_results conditional from tagdata
 			$td = str_replace($match[0], '', $td);
@@ -962,7 +926,7 @@ class Low_reorder extends Low_reorder_base {
 	 */
 	private function _log($msg)
 	{
-		$this->EE->TMPL->log_item(LOW_REORDER_NAME.': '.$msg);
+		ee()->TMPL->log_item(LOW_REORDER_NAME.': '.$msg);
 	}
 
 	// --------------------------------------------------------------------

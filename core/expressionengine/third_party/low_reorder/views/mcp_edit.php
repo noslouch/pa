@@ -80,6 +80,11 @@
 				<td><?=$yesno_future?></td>
 			</tr>
 
+			<tr class="<?=low_zebra()?>">
+				<td><span class="label"><?=lang('sticky_only')?></span></td>
+				<td><?=$yesno_sticky?></td>
+			</tr>
+
 			<!-- List of channels -->
 			<tr class="<?=low_zebra()?>">
 				<td class="multi"><span class="label"><em>*</em> <?=lang('channels')?></span></td>

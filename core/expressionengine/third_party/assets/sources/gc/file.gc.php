@@ -29,10 +29,11 @@ class Assets_gc_file extends Assets_base_file
 	 * Construct the asset file from asset id and source
 	 * @param $file_id
 	 * @param Assets_gc_source $source
+	 * @param $prefetched_row if passed, will be used instead of loading DB data
 	 */
-	public function __construct($file_id, Assets_gc_source $source)
+	public function __construct($file_id, Assets_gc_source $source, $prefetched_row = null)
 	{
-		parent::__construct($file_id, $source);
+		parent::__construct($file_id, $source, $prefetched_row);
 
 		$bucket_id = $this->folder_row->source_id;
 
@@ -77,7 +78,7 @@ class Assets_gc_file extends Assets_base_file
 			return NULL;
 		}
 
-		$prefix = isset($this->_source_settings->subfolder) ? rtrim($this->_source_settings->subfolder, '/').'/' : '';
+		$prefix = !empty($this->_source_settings->subfolder) ? rtrim($this->_source_settings->subfolder, '/').'/' : '';
 
 		return $this->_source_settings->url_prefix . $prefix . $this->subpath;
 	}
@@ -92,7 +93,7 @@ class Assets_gc_file extends Assets_base_file
 	{
 		$location = Assets_helper::get_temp_file();
 
-		$prefix = isset($this->_source_settings->subfolder) ? $this->_source_settings->subfolder : '';
+		$prefix = !empty($this->_source_settings->subfolder) ? rtrim($this->_source_settings->subfolder, '/').'/' : '';
 
 		@$this->source->GC->getObject($this->_source_settings->bucket, $prefix.$this->subpath, $location);
 
@@ -189,7 +190,7 @@ class Assets_gc_file extends Assets_base_file
 	{
 		if (empty($this->_file_info))
 		{
-			$prefix = isset($this->_source_settings->subfolder) ? $this->_source_settings->subfolder : '';
+			$prefix = !empty($this->_source_settings->subfolder) ? rtrim($this->_source_settings->subfolder, '/').'/' : '';
 			$this->_file_info = (object) $this->source->GC->getObjectInfo($this->_source_settings->bucket, $prefix.$this->subpath);
 		}
 		return $this->_file_info;

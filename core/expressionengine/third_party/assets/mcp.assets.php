@@ -119,7 +119,7 @@ class Assets_mcp
 					'confirm_delete_folder', 'confirm_delete_file', 'confirm_delete_files',
 					'how_to_proceed', 'apply_to_remaining_conflicts', 'perform_selected', 'couldnt_upload')."\n"
 		    . 'Assets.siteUrl = "'.Assets_helper::get_site_url()."\";\n"
-		    . 'new Assets.FileManager(jQuery(".assets-fm"), {namespace: "' . $this->EE->config->item('site_id') . '_panel"});';
+		    . 'new Assets.FileManager(jQuery(".assets-fm"), {namespace: "' . $this->EE->config->item('site_id') . '_panel", context: "filemanager"});';
 
 		Assets_helper::insert_js($js);
 
@@ -296,6 +296,8 @@ class Assets_mcp
 		$sort = $this->EE->input->post('sort');
 		$offset = $this->EE->input->post('offset', 0);
 
+		$special = $this->EE->input->post('special');
+
 		$files = array();
 		$total = 0;
 		$template_variables = array();
@@ -314,7 +316,14 @@ class Assets_mcp
 
 			try
 			{
-				$files = $this->EE->assets_lib->get_files($parameters);
+				if (!empty($special) && $special == 'recent')
+				{
+					$files = $this->EE->assets_lib->get_recent_files($parameters);
+				}
+				else
+				{
+					$files = $this->EE->assets_lib->get_files($parameters);
+				}
 				$total = count($files);
 			}
 			catch (Exception $exception)
@@ -541,7 +550,7 @@ class Assets_mcp
 		{
 			$vars['file'] = $file;
 			$vars['timestamp'] = version_compare(APP_VER, '2.6', '<') ? $this->EE->localize->set_localized_time($file->row_field('date') * 1000) : $this->EE->localize->format_date("%U", $file->row_field('date') * 1000);
-			$vars['human_readable_time'] = version_compare(APP_VER, '2.6', '<') ? $this->EE->localize->set_human_time($file->row_field('date')) : $this->EE->localize->format_date("%Y-%m-%d %H:%i %A", $file->row_field('date'));
+			$vars['human_readable_time'] = version_compare(APP_VER, '2.6', '<') ? $this->EE->localize->set_human_time($file->row_field('date')) : $this->EE->localize->format_date("%Y-%m-%d %h:%i %A", $file->row_field('date'));
 
 			switch ($file->kind())
 			{
@@ -575,7 +584,7 @@ class Assets_mcp
 		{
 			if (strpos($key, 'date') !== FALSE && $val)
 			{
-				$data[$key] = $this->EE->localize->convert_human_date_to_gmt($val);
+				$data[$key] = $this->EE->localize->string_to_timestamp($val);
 			}
 		}
 

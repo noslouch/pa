@@ -75,6 +75,8 @@
 		// in future releases, I will probably switch to all these methods returning
 		// JSON and have the HTML creation does in whereever the data ends up.
 		// You learn by doing, right?
+		
+		// "media" is used to look up a single image for the image preview
 		case 'media':
 		$media_id = $_GET["media_id"];
 		$theURL = "https://api.instagram.com/v1/media/$media_id?";
@@ -82,7 +84,7 @@
 
 		// the @ symbol will make this fail silently, so we'll need to check that $json actually is parsable and show alternate images instead
 
-			// $json = @file_get_contents($jsonurl,0,null,null);
+			$json = @file_get_contents($jsonurl,0,null,null);
 
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $jsonurl);
@@ -94,10 +96,13 @@
 				curl_close($ch);
 
 				$json_output = json_decode($json);
+				
 				// Need to debug? Uncomment out the following.
 				// echo "<pre>";
 				// print_r($json);
 				// echo "</pre>";
+
+				// preview JSON doesn't return the raw Instagram data but instead if reformatted here
 
 				if ($json_output->meta->code === 200 ) {
 					header('Content-Type: application/json');
@@ -134,6 +139,7 @@
 
 		break;
 
+		// "tagsearch" is PP's keyword for TAG/media/recent in Instagram's API
 		case 'tagsearch':
 			$next_max_tag_id = isset($_GET["next_max_tag_id"]) ? $_GET["next_max_tag_id"] : null;
 			$searchTerm = $_GET['tag'];
@@ -149,80 +155,14 @@
 			$json = curl_exec($ch);
 			curl_close($ch);
 
-			$json_output = json_decode($json);
-
-			// Need to debug? Uncomment out the following.
-			// echo "<pre>";
-			// print_r($json_output);
-			// echo "</pre>";
-
-			if ($json_output->meta->code === 200 ) {
-				header('Content-Type: application/json');
-				echo $json;
-			} else {
-				header('Content-Type: application/json');
-				$success = '0';
-				$error_message =  $json_output->meta->error_message;
-				$imageURL = '';
-				echo json_encode( array(
-					'success' => $success,
-					'code' => $json_output->meta->code,
-					'error_type' => $json_output->meta->error_type,
-					'error_message' => $error_message
-				) );
-			}
-
-				// does the $json_output->data array actually exist? ie, Was there an error getting the data from Instagram?
-				// if (is_array($json_output->data)) {
-				// 	$theCount = 0;
-				// 	$new_next_max_id = isset($json_output->pagination->next_max_tag_id) ? $json_output->pagination->next_max_tag_id : null;
-				// 	$fullCount = count($json_output->data);
-				// 	if($fullCount >0) {
-				// 	foreach ( $json_output->data as $images )
-				// 	{
-				// 		$theCount ++;
-				// 		$theImage = $images->images->thumbnail->url;
-				// 		$theId = $images->id;
-				// 		$theLink = $images->link;
-				// 		$theUsername = $images->user->username;
-				// 		$theCaption = isset($images->caption) ? $images->caption->text : '<em>untitled</em>';
-				// 		echo "<div class='thumbnail' >
-				// 				<img src='$theImage' alt='Instagram image id: $theId' width='100' height='100' border=0 data-link='$theLink'>
-				// 				<div class='headline' >$theCaption <em>by $theUsername</em></div>
-				// 				<a href='#' class='selectbtn' data-id='$theId'>Select this image</a>
-				// 			</div>";
-				// 		if ($theCount == $fullCount && isset($new_next_max_id) ) {
-
-				// 			$nextURL = $third_party_theme_dir."pp_engine.php?"."access_token=".$oauthkey."&method=tagsearch&tag=".$searchTerm."&count=".$count."&next_max_tag_id=".$new_next_max_id;
-				// 			echo "<div class='thumbnail getmore'>
-				// 				<div class='headline'>Need more to choose from?</div>
-				// 				<a href='$nextURL' class='pp_morebt'>Load more images</a></div>";
-
-				// 			break;
-				// 		}
-				// 	}
-				// } else {
-				// 	echo "<div class='thumbnail'>
-				// 				<div class='headline'>No results for <em>$searchTerm</em>.</div>
-				// 				</div>";
-
-				// 			break;
-				// }
-
-
-				// } else {
-				// 	echo "<div class='thumbnail'>
-				// 				<div class='headline'>No results for <em>$searchTerm</em>.</div>
-				// 				</div>";
-
-				// 			break;
-				// 	//echo "Error: Unable to communicate with Instagram to retreive images.";
-				// }
-
-
+			// return the JSON data
+			header('Content-Type: application/json');
+			echo $json;
 
 			break;
-
+		
+		// the default method (in the future to be rename "recent") is PP's keyword for self/media/recent in Instagram's API
+		case 'recent':
 		default:
 			$theURL = 'https://api.instagram.com/v1/users/self/media/recent/?';
 			$next_max_id = isset($_GET["max_id"]) ? $_GET["max_id"] : null;
@@ -246,49 +186,9 @@
 			// print_r($json);
 			// echo "</pre>";
 
-
-			$json_output = json_decode($json);
-
-			if ($json_output->meta->code === 200 ) {
-				header('Content-Type: application/json');
-				echo $json;
-			} else {
-				echo "Error: Unable to communicate with Instagram to retreive images.";
-			}
-
-			// does the $json_output->data array actually exist? ie, Was there an error getting the data from Instagram?
-			// if (is_array($json_output->data)) {
-			// 	$theCount = 0;
-			// 	$new_next_max_id = isset($json_output->pagination->next_max_id) ? $json_output->pagination->next_max_id : null;
-			// 	$fullCount = count($json_output->data);
-			// 	foreach ( $json_output->data as $images )
-			// 	{
-			// 		$theCount ++;
-			// 		$theImage = $images->images->thumbnail->url;
-			// 		$theId = $images->id;
-			// 		$theLink = $images->link;
-			// 		$theUsername = $images->user->username;
-			// 		$theCaption = isset($images->caption) ? $images->caption->text : '<em>untitled</em>';
-			// 		echo "<div class='thumbnail' >
-			// 				<img src='$theImage' alt='Instagram image id: $theId' width='100' height='100' border=0 >
-			// 				<div class='headline' >$theCaption</div>
-			// 				<a href='#' class='selectbtn' data-id='$theId'>Select this image</a>
-			// 			</div>";
-			// 		if ($theCount == $fullCount && isset($new_next_max_id) ) {
-
-			// 			$nextURL = $third_party_theme_dir."pp_engine.php?"."access_token=".$oauthkey."&count=".$count."&max_id=".$new_next_max_id;
-			// 			echo "<div class='thumbnail getmore'>
-			// 				<div class='headline'>Need more to choose from?</div>
-			// 				<a href='$nextURL' class='pp_morebt'>Load more images</a></div>";
-
-			// 			break;
-			// 		}
-			// 	}
-
-			// } else {
-			// 	echo "Error: Unable to communicate with Instagram to retreive images.";
-			// }
-
+			// return the JSON data
+			header('Content-Type: application/json');
+			echo $json;
 
 			break;
 	}

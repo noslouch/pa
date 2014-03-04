@@ -25,6 +25,7 @@ $lang = array(
 	'display_instructions_option_text' => 'Display default Pic Puller field instructions?',
 	'display_personal_stream_option_text' => 'Display the Instagram Personal Photo Stream browser?',
 	'display_search_option_text' => 'Display the Instagram Tag Search browser?',
+	'display_ft_input_field_text' => 'Display the Media ID field?',
 
 	'default_instructions' => '<strong>Instructions:</strong> Browse for an image on Instagram or enter its media_id manually.',
 

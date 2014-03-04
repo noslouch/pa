@@ -3,6 +3,24 @@
 // include config file
 include (PATH_THIRD.'ig_picpuller/config.php');
 
+require_once(PATH_THIRD.'ig_picpuller/lib/FirePHPCore/fb.php');
+//FB:: *
+ 
+/*
+
+Digging around? Enable FirePHP debugging: FB::setEnabled(true);
+You'll need to use FirePHP for Firefox or FirePHP4Chrome and look at your console in your web browser
+
+*/
+
+FB::setEnabled(false);
+
+// Examples:
+// FB::log('Log message', 'Label');
+// FB::info('Info message', 'Label');
+// FB::warn('Warn message', 'Label');
+// FB::error('Error message', 'Label');
+
 /**
  * ExpressionEngine - by EllisLab
  *
@@ -51,6 +69,8 @@ class Ig_picpuller {
 		$this->_appID = $this->getAppID();
 		$this->_memberID = $this->get_logged_in_user_id();
 		$this->_ig_picpuller_prefix = $this->get_ig_picpuller_prefix();
+
+
 	}
 
 	// ----------------------------------------------------------------
@@ -60,7 +80,7 @@ class Ig_picpuller {
 	 *
 	 * Testing function only, to see that module is working.
 	 *
-	 * @access	private
+	 * @access	public
 	 * @param	none
 	 * @return	string - beeps
 	 */
@@ -80,103 +100,44 @@ class Ig_picpuller {
 		};
 
 		$this->EE->TMPL->log_item('Pic Puller for Instagram: is installed an returning data. Beep.');
+
+		if (version_compare(APP_VER, '2.8.0') >= 0) {
+			FB::info("The cache property does exist on the EE object.");
+		} else {
+			FB::warn('No cache property so we need to use the old caching.');
+		}
+
 		return "Beep. Beep beep beep beep. Beep beep.";
 	 }
 
 	/**
-	 * Create a new channel for Pic Puller
+	 * userauthorized
 	 *
-	 * This function should be called by the advanced menu instead of this current method which
-	 * requires adding tags to a template to execute them. IT IS CURRENTLY NOT IN USE.
+	 * Is this user authorized?
 	 *
-	 * @access	private
+	 * @access	public
 	 * @param	none
-	 * @return	string - beeps
+	 * @return	string - 1 or 0
 	 */
-	/*
-	public function create_pp_channel_field_group()
-	{
-		$this->EE->load->library('api');
-		$this->EE->api->instantiate('channel_structure');
-		$this->EE->api->instantiate('channel_fields');
-		$this->EE->api_channel_fields->fetch_custom_channel_fields();
 
-		$prefix = $this->EE->db->dbprefix;
-		$pp_field_group_name = 'Pic Puller Group-Do Not Update Manually';
-		$pp_channel_name = 'Pic Puller-Do Not Update Manually';
+	 public function userauthorized()
+	 {
 
-		$query = $this->EE->db->query("SELECT group_name FROM ". $prefix. "field_groups WHERE group_name = 'Pic Puller Group-Do Not Update Manually' AND site_id = '".  $this->_currentSite . "'" ) ;
+		if (!$this->applicationExists() ) {
+			$this->EE->TMPL->log_item( 'ERROR: There is no Instagram application in the system to authorize.');
+			return false;
+		};
 
-		echo ("Does field group exist? ");
-		echo ($query->num_rows ? 'yes' : 'no' );
-		echo "<br >";
-		// If the field group doesn't exist yet for this site, create it.
-		if(!$query->num_rows){
-			$query = $this->EE->db->query("SELECT group_id FROM ". $prefix. "field_groups ORDER BY group_id DESC LIMIT 1")->result();
-			$highest_existing_group_id = $query[0]->group_id;
-			$next_group_id = $highest_existing_group_id + 1;
-
-			// echo "<pre>Highest Number of field_group that exists: ";
-			// echo( $query[0]->group_id . ", next: " . $next_group_id);
-			// echo "</pre>";
-
-			// Create the new field group
-
-			$sql = "INSERT INTO ". $prefix. "field_groups (group_id, site_id, group_name)
-			VALUES (".$next_group_id.", ".$this->_currentSite.", 'Pic Puller Group-Do Not Update Manually')";
-			// Commented out only for dev reasons... need to check to see it this field group exists before creating a new one
-
-			$this->EE->db->query($sql);
-			echo ('Success field group creation? '. $this->EE->db->affected_rows());
-			$this->EE->TMPL->log_item('Pic Puller: create_pp_channel_field_group');
-			// Now create the Pic Puller channel
-			//
-			$query = $this->EE->api_channel_structure->get_channels($this->_currentSite);
-
-			//$query = $this->EE->api_channel_structure->get_channel_info(2); //->result_object;
-			//$data =$this->_currentSite;
-			//$query = $this->EE->api_channel_structure->get_channel_info($channel_id); ;
-
-
-			// foreach ($query->result() as $row)
-			// {
-			// 	//$site_label = $row->site_label;
-			// 	echo "<pre>Existing Channels: ";
-			// 	echo($row->channel_title . " (" . $row->channel_id . ")");
-			// 	echo "</pre>";
-			// }
-
-
-			//echo "<pre>";
-			//print_r($query->result());
-			//echo "</pre>";
-
-
-			$data = array(
-				'channel_title'     => $pp_channel_name,
-				'channel_name'      => 'ig_pp_autochannel',
-				'field_group'       => $next_group_id,
-				'channel_url'       => 'http://yoursite.com/index.php/you/can/update/this',
-				'status_group'      => 1
-			);
-
-			$query = $this->EE->db->query("SELECT channel_name FROM ". $prefix. "channels WHERE channel_name = 'ig_pp_autochannel' AND site_id = '".  $this->_currentSite . "'" ) ;
-
-			echo ("Does channel exist? ");
-			echo $query->num_rows ? 'yes' : 'no';
-
-			if(!$query->num_rows){
-				if ($this->EE->api_channel_structure->create_channel($data) === FALSE)
-				{
-						show_error('An Error Occurred Creating the Channel');
-				}
-			}
+		if (! $this->EE->session->userdata('member_id')){
+			$this->EE->TMPL->log_item( 'ERROR: Only logged in users can authorize this application.' );
+			return false;
 		}
 
-		return "Beep.";
+		$loggedInUser = $this->getInstagramId ($this->get_logged_in_user_id());
+		return $this->getInstagramId ($this->get_logged_in_user_id()) ? true : false;
 
-	}
-	*/
+	 }
+
 	 public function authorization_link()
 	 {
 		if (!$this->applicationExists() ) {
@@ -304,6 +265,8 @@ class Ig_picpuller {
 
 		$data = $this->_fetch_data($query_string);
 
+		FB::info($data, "popular func");
+
 		if ($data['status'] === FALSE ) { // && $this->use_stale != 'yes') {
 			$variables[] = array(
 				$this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
@@ -324,7 +287,7 @@ class Ig_picpuller {
 				$this->_ig_picpuller_prefix.'video_standard_resolution' => isset($node['videos']['standard_resolution']['url']) ? $node['videos']['standard_resolution']['url'] : "No video URL available.",
 				$this->_ig_picpuller_prefix.'username' => $node['user']['username'],
 				$this->_ig_picpuller_prefix.'full_name' => $node['user']['full_name'],
-				$this->_ig_picpuller_prefix.'profile_picture' => $node['user']['profile_picture']['url'],
+				$this->_ig_picpuller_prefix.'profile_picture' => isset($node['user']['profile_picture']['url']) ? $node['user']['profile_picture']['url'] : '',
 				$this->_ig_picpuller_prefix.'created_time' => $node['created_time'],
 				$this->_ig_picpuller_prefix.'link' => $node['link'],
 				$this->_ig_picpuller_prefix.'caption' => $node['caption']['text'],
@@ -404,6 +367,8 @@ class Ig_picpuller {
 		$query_string = "https://api.instagram.com/v1/users/self?access_token={$oauth}";
 
 		$data = $this->_fetch_data($query_string);
+
+		FB::info($data, "user func");
 
 		if ($data['status'] === FALSE ) { // && $this->use_stale != 'yes') {
 			$variables[] = array(
@@ -495,11 +460,7 @@ class Ig_picpuller {
 
 		$data = $this->_fetch_data($query_string);
 
-		// echo '404 :
-		// <pre>';
-		// var_dump($data);
-		// echo '</pre>';
-
+		FB::info($data, "media func");
 
 		if ($data['status'] === FALSE) {
 			$variables[] = array(
@@ -623,6 +584,8 @@ class Ig_picpuller {
 		$query_string = "https://api.instagram.com/v1/users/{$ig_user_id}/media/recent/?access_token={$oauth}". $limit.$max_id.$min_id;
 
 		$data = $this->_fetch_data($query_string);
+
+		FB::info($data, "media_recent func");
 
 		if ($data['status'] === FALSE ) { // && $this->use_stale != 'yes') {
 			$variables[] = array(
@@ -752,6 +715,8 @@ class Ig_picpuller {
 
 		$data = $this->_fetch_data($query_string);
 
+		FB::info($data, "user_feed func");
+
 		if ($data['status'] === FALSE ) { // && $this->use_stale != 'yes') {
 			$variables[] = array(
 				$this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
@@ -763,7 +728,6 @@ class Ig_picpuller {
 		}
 
 		$node = $data['data'];
-		//$next_url = isset($data['pagination']['next_url']) ? $data['pagination']['next_url'] : 'no';
 
 		$next_max_id = '';
 		if (isset($data['pagination']['next_max_id'])){
@@ -873,6 +837,8 @@ class Ig_picpuller {
 		$query_string = "https://api.instagram.com/v1/users/self/media/liked?access_token={$oauth}". $limit.$max_id.$min_id;
 
 		$data = $this->_fetch_data($query_string);
+
+		FB::info($data, "user_liked func");
 
 		if ($data['status'] === FALSE ) { // && $this->use_stale != 'yes') {
 			$variables[] = array(
@@ -999,6 +965,8 @@ class Ig_picpuller {
 
 		$data = $this->_fetch_data($query_string);
 
+		FB::info($data, "tagged_media func");
+
 		if ($data['status'] === FALSE ) { // && $this->use_stale != 'yes') {
 			$variables[] = array(
 				$this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
@@ -1020,6 +988,8 @@ class Ig_picpuller {
 		var_dump($data['pagination']);
 		echo '</pre>';
 		*/
+	
+
 		$cacheddata = (isset($data['cacheddata'])) ? 'yes' : 'no';
 		foreach($data['data'] as $node)
 		{
@@ -1062,10 +1032,6 @@ class Ig_picpuller {
 		}
 
 		if (isset($user_data->{'access_token'})){
-
-			//echo "<pre>";
-			//var_dump($this->_memberID);
-			//echo "</pre>";
 
 			$this->remove_auth_logged_in_user();
 			$this->EE->db->set('oauth', $user_data->{'access_token'});
@@ -1155,12 +1121,6 @@ class Ig_picpuller {
 
 		$returndata = curl_exec($ch);
 
-		// echo "<pre>";
-		// print_r(json_decode($returndata));
-		// echo "</pre>";
-
-		//die();
-
 		if ($returndata === FALSE) {
 
 			//echo "cURL Error: " . curl_error($ch);
@@ -1174,12 +1134,7 @@ class Ig_picpuller {
 
 		$json = json_decode($returndata);
 
-
-		// echo "<pre>";
-		// print_r($json);
-		// echo "</pre>";
-
-		// die();
+		FB::info($json, "getOAuthFromCode func");
 
 		return $json;
 	}
@@ -1365,7 +1320,6 @@ class Ig_picpuller {
 	{
 		$this->EE->load->library('session');
 		return $this->EE->session->userdata['member_id'];
-		//return $this->EE->session;
 	}
 
 	/**
@@ -1443,16 +1397,9 @@ class Ig_picpuller {
 
 		$data = json_decode(curl_exec($ch), true);
 		curl_close($ch);
-
-		/*
-
-		Digging around? Uncomment this out to see all the goodies returned by Instagram.
-
-		echo '<pre>';
-		var_dump($data);
-		echo '</pre>';
-		*/
-
+	
+		FB::info($data, 'IG Data:');
+	
 		$valid_data = $this->_validate_data($data, $url);
 
 		return $valid_data;
@@ -1472,8 +1419,9 @@ class Ig_picpuller {
 
 	private function _validate_data($data, $url){
 
-		// to FAKE a non-responsive error from Instagram, change the initial conditional meta code statement below
+		// to FAKE a non-responsive error from Instagram, change the initial conditional meta code statement below to return FALSE
 
+		//if (FALSE)
 		if ($data != '' && isset($data['meta']))
 		{
 			$error_array;
@@ -1520,15 +1468,20 @@ class Ig_picpuller {
 					}
 					else
 					{
-
+						// no stale data to return
 						$error_array = array(
 							'status' => FALSE,
 							'error_message' => (isset($meta['error_message']) ? $meta['error_message'] : 'No error message provided by Instagram. No cached data available.' ),
 							'error_type' =>  (isset($meta['error_type']) ? $meta['error_type'] : 'NoCodeReturned')
-						);
-
-						return $error_array;
+						);						
 					}
+				} else {
+					// didn't WANT stale data, so cache was not checked, so just return the IG error
+					$error_array = array(
+							'status' => FALSE,
+							'error_message' => (isset($meta['error_message']) ? $meta['error_message'] : 'No error message provided by Instagram. Cached data not checked.' ),
+							'error_type' =>  (isset($meta['error_type']) ? $meta['error_type'] : 'NoCodeReturned')
+						);
 				}
 			}
 
@@ -1538,18 +1491,31 @@ class Ig_picpuller {
 
 			if ($this->use_stale == 'yes')
 			{
+				FB::info('Yes, use stale data.');
 				$data = $this->_check_cache($url, $this->use_stale);
+				FB::info($data, 'What data did we get?');
 			}
 			if ($data) {
+				FB::info('Yes, in data loop.');
 				$data['cacheddata'] = TRUE;
 				$error_array = array(
 					'status' => TRUE,
 					'error_message' => (isset($meta['error_message']) ? $meta['error_message'] : 'No data returned from Instagram API. Check http://api-status.com/6404/174981/Instagram-API. Using cached data.' ), //. ' Using stale data as back up if available.',
 					'error_type' =>  (isset($meta['error_type']) ? $meta['error_type'] : 'NoCodeReturned')
 				);
+			} else {
+				$data['cacheddata'] = FALSE;
+				$error_array = array(
+					'status' => FALSE,
+					'error_message' => (isset($meta['error_message']) ? $meta['error_message'] : 'No data returned from Instagram API. Check http://api-status.com/6404/174981/Instagram-API. No cached data available.' ), //. ' Using stale data as back up if available.',
+					'error_type' =>  (isset($meta['error_type']) ? $meta['error_type'] : 'NoCodeReturned')
+				);
 			}
 
 		}
+
+		FB::warn(array_merge($data, $error_array), 'validate');
+
 		return array_merge($data, $error_array);
 		// merge the original data or cached data (if stale allowed) with the error array
 	}
@@ -1646,52 +1612,76 @@ class Ig_picpuller {
 	 */
 	private function _check_cache($url, $use_stale = FALSE)
 	{
+		
+		//FB::info($data, "user_liked func");
+
 		// Check for cache directory
 		$this->EE->TMPL->log_item("Checking Cache");
-		$dir = APPPATH.'cache/'.$this->cache_name.'/';
 
-		$this->EE->TMPL->log_item('CHECK CASHE: dir, '. $dir);
 
-		if ( ! @is_dir($dir))
-		{
-			$this->EE->TMPL->log_item('CHECK CASHE: directory wasn\'t there');
-			return FALSE;
+		//if (property_exists(ee(), 'cache')) {
+		if (version_compare(APP_VER, '2.8.0') >= 0) {
+			FB::info("The cache property does exist on the EE object.");
+			$dir = md5($url);
+			$cache = ee()->cache->get('/ig_picpuller_eedev/'.$dir);
+			FB::info($cache);
+
+			if($cache) {
+				$cache = json_decode($cache, true);
+				return $cache;
+			} else {
+				return false;				
+			}
+
+		} else {
+			FB::info('No cache property so we need to use the old caching.');
+		
+			$dir = APPPATH.'cache/'.$this->cache_name.'/';
+
+			$this->EE->TMPL->log_item('CHECK CASHE: dir, '. $dir);
+
+			if ( ! @is_dir($dir))
+			{
+				$this->EE->TMPL->log_item('CHECK CASHE: directory wasn\'t there');
+				return FALSE;
+			}
+
+			// Check for cache file
+
+			$file = $dir.md5($url);
+
+			if ( ! file_exists($file) OR ! ($fp = @fopen($file, 'rb')))
+			{
+				return FALSE;
+			}
+
+			flock($fp, LOCK_SH);
+
+			$cache = @fread($fp, filesize($file));
+
+			flock($fp, LOCK_UN);
+
+			fclose($fp);
+
+			// Grab the timestamp from the first line
+
+			$eol = strpos($cache, "\n");
+
+			$timestamp = substr($cache, 0, $eol);
+			$cache = trim((substr($cache, $eol)));
+
+			if ($use_stale == FALSE && time() > ($timestamp + ($this->refresh * 60)))
+			{
+				return FALSE;
+			}
+
+			$this->EE->TMPL->log_item("Instagram data retrieved from cache");
+
+			$cache = json_decode($cache, true);
+
+			return $cache;
+
 		}
-
-		// Check for cache file
-
-		$file = $dir.md5($url);
-
-		if ( ! file_exists($file) OR ! ($fp = @fopen($file, 'rb')))
-		{
-			return FALSE;
-		}
-
-		flock($fp, LOCK_SH);
-
-		$cache = @fread($fp, filesize($file));
-
-		flock($fp, LOCK_UN);
-
-		fclose($fp);
-
-		// Grab the timestamp from the first line
-
-		$eol = strpos($cache, "\n");
-
-		$timestamp = substr($cache, 0, $eol);
-		$cache = trim((substr($cache, $eol)));
-
-		if ($use_stale == FALSE && time() > ($timestamp + ($this->refresh * 60)))
-		{
-			return FALSE;
-		}
-
-		$this->EE->TMPL->log_item("Instagram data retrieved from cache");
-
-		$cache = json_decode($cache, true);
-
-		return $cache;
 	}
 
 	// --------------------------------------------------------------------
@@ -1707,46 +1697,61 @@ class Ig_picpuller {
 	 */
 	private function _write_cache($data, $url)
 	{
+		
+		//if (property_exists(ee(), 'cache')) {
+		if (version_compare(APP_VER, '2.8.0') >= 0) {
+			FB::info("Will use NEW cache system.");
+			//$data = json_encode($data);
+			$dir = md5($url);
+			ee()->cache->save('/ig_picpuller_eedev/'.$dir, json_encode($data), 1000);
 
-		// Check for cache directory
 
-		$this->EE->TMPL->log_item('Pic Puller: _write_cache $data '. gettype($data));
+		
+		} else {
+			FB::info('Must use OLD cache system.');
 
-		$data = json_encode($data);
+			
 
-		$dir = APPPATH.'cache/'.$this->cache_name.'/';
+			// Check for cache directory
 
-		if ( ! @is_dir($dir))
-		{
-			if ( ! @mkdir($dir, 0777))
+			$this->EE->TMPL->log_item('Pic Puller: _write_cache $data '. gettype($data));
+
+			$data = json_encode($data);
+
+			$dir = APPPATH.'cache/'.$this->cache_name.'/';
+
+			if ( ! @is_dir($dir))
+			{
+				if ( ! @mkdir($dir, 0777))
+				{
+					return FALSE;
+				}
+
+				@chmod($dir, 0777);
+			}
+
+			// add a timestamp to the top of the file
+			$data = time()."\n".$data;
+
+			// Write the cached data
+
+			$file = $dir.md5($url);
+
+			if ( ! $fp = @fopen($file, 'wb'))
 			{
 				return FALSE;
 			}
 
-			@chmod($dir, 0777);
+			flock($fp, LOCK_EX);
+			fwrite($fp, $data);
+			flock($fp, LOCK_UN);
+			fclose($fp);
+
+			@chmod($file, 0777);
+
+			// now clean up the cache
+			$this->_clear_cache();
 		}
-
-		// add a timestamp to the top of the file
-		$data = time()."\n".$data;
-
-		// Write the cached data
-
-		$file = $dir.md5($url);
-
-		if ( ! $fp = @fopen($file, 'wb'))
-		{
-			return FALSE;
-		}
-
-		flock($fp, LOCK_EX);
-		fwrite($fp, $data);
-		flock($fp, LOCK_UN);
-		fclose($fp);
-
-		@chmod($file, 0777);
-
-		// now clean up the cache
-		$this->_clear_cache();
 	}
 
 	private function _clear_cache()

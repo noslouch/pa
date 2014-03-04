@@ -31,7 +31,7 @@ class Structure_Helper
     }
 }
 
-function array_get($array, $key, $default = NULL)
+function structure_array_get($array, $key, $default = NULL)
 {
     if (is_null($key)) return $array;
 
@@ -71,7 +71,7 @@ function pick()
  * @param  mixed  $value
  * @return void
  */
-function dd($value)
+function structure_dd($value)
 {
     echo "<pre>";
     var_dump($value);

@@ -12,7 +12,7 @@ if ( ! class_exists('Low_reorder_base'))
  * @package        low_reorder
  * @author         Lodewijk Schutte <hi@gotolow.com>
  * @link           http://gotolow.com/addons/low-reorder
- * @copyright      Copyright (c) 2009-2012, Low
+ * @copyright      Copyright (c) 2009-2013, Low
  */
 class Low_reorder_mcp extends Low_reorder_base {
 
@@ -21,23 +21,11 @@ class Low_reorder_mcp extends Low_reorder_base {
 	// --------------------------------------------------------------------
 
 	/**
-	* Legacy Constructor
-	*
-	* @see         __construct()
-	*/
-	public function Low_reorder_mcp()
-	{
-		$this->__construct();
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	* Constructor
-	*
-	* @access      public
-	* @return      void
-	*/
+	 * Constructor
+	 *
+	 * @access      public
+	 * @return      void
+	 */
 	public function __construct()
 	{
 		// -------------------------------------
@@ -56,44 +44,48 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Add themes url for images
 		// --------------------------------------
 
-		$this->data['themes_url'] = $this->EE->config->slash_item('theme_folder_url');
+		$this->data['themes_url'] = ee()->config->slash_item('theme_folder_url');
 
 		// --------------------------------------
 		// Load JS lib
 		// --------------------------------------
 
-		$this->EE->load->library('javascript');
+		ee()->load->library('javascript');
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	* Home screen for module
-	*
-	* @access      public
-	* @return      string
-	*/
+	 * Home screen for module
+	 *
+	 * @access      public
+	 * @return      string
+	 */
 	public function index()
 	{
 		// --------------------------------------
 		// Get all collections
 		// --------------------------------------
 
-		$this->EE->db->where('site_id', $this->site_id);
-		$this->EE->db->order_by('set_label', 'asc');
-		$this->data['sets'] = $this->EE->low_reorder_set_model->get_all();
+		ee()->db->where('site_id', $this->site_id);
+		$sets = ee()->low_reorder_set_model->get_all();
 
-		foreach ($this->data['sets'] AS &$set)
+		// Order naturally by set label
+		usort($sets, array($this, '_natsort'));
+
+		foreach ($sets AS &$set)
 		{
-			$permissions = $this->EE->low_reorder_set_model->get_permissions(json_decode($set['permissions'], TRUE));
+			$permissions = ee()->low_reorder_set_model->get_permissions(json_decode($set['permissions'], TRUE));
 			$set = array_merge($set, $permissions);
 		}
+
+		$this->data['sets'] = $sets;
 
 		// --------------------------------------
 		// Set page title and breadcrumb
 		// --------------------------------------
 
-		$this->EE->cp->set_variable('cp_page_title', lang('low_reorder_module_name'));
+		$this->_set_cp_var('cp_page_title', lang('low_reorder_module_name'));
 
 		// --------------------------------------
 		// Load view and return it
@@ -105,32 +97,42 @@ class Low_reorder_mcp extends Low_reorder_base {
 	// --------------------------------------------------------------------
 
 	/**
-	* Edit reorder set
-	*
-	* @access      public
-	* @return      string
-	*/
+	 * Edit reorder set
+	 *
+	 * @access      public
+	 * @return      string
+	 */
 	public function edit()
 	{
-		$this->EE->load->helper('form');
+		ee()->load->helper('form');
 
 		// --------------------------------------
 		// Get set by id or empty row
 		// --------------------------------------
 
-		$set_id = $this->EE->input->get('set_id');
-		$set    = ($set_id === FALSE)
-		        ? $this->EE->low_reorder_set_model->empty_row()
-		        : $this->EE->low_reorder_set_model->get_one($set_id);
+		$set_id = ee()->input->get('set_id');
+
+		// --------------------------------------
+		// Check creation permissions
+		// --------------------------------------
+
+		if ($set_id === FALSE && $this->member_group != 1 && ! in_array($this->member_group, $this->get_settings('can_create_sets')))
+		{
+			show_error(lang('cannot_create_sets'));
+		}
+
+		$set = ($set_id === FALSE)
+		     ? ee()->low_reorder_set_model->empty_row()
+		     : ee()->low_reorder_set_model->get_one($set_id);
 
 		// --------------------------------------
 		// Get settings & permissions
 		// --------------------------------------
 
-		$set['parameters']  = $this->EE->low_reorder_set_model->get_params($set['parameters']);
+		$set['parameters']  = ee()->low_reorder_set_model->get_params($set['parameters']);
 		$set['permissions'] = json_decode($set['permissions'], TRUE);
 
-		$perm = $this->EE->low_reorder_set_model->get_permissions($set['permissions']);
+		$perm = ee()->low_reorder_set_model->get_permissions($set['permissions']);
 
 		if (( ! $set_id && $this->member_group != 1) || ($set_id && ! $perm['can_edit']))
 		{
@@ -144,12 +146,13 @@ class Low_reorder_mcp extends Low_reorder_base {
 		$this->data['yesno_cache']   = $this->_yesno('clear_cache', (@$set['clear_cache'] == 'y' ? 'yes' : 'no'));
 		$this->data['yesno_expired'] = $this->_yesno('parameters[show_expired]', @$set['parameters']['show_expired']);
 		$this->data['yesno_future']  = $this->_yesno('parameters[show_future_entries]', @$set['parameters']['show_future_entries']);
+		$this->data['yesno_sticky']  = $this->_yesno('parameters[sticky]', @$set['parameters']['sticky']);
 
 		// --------------------------------------
 		// Get all channels
 		// --------------------------------------
 
-		$query = $this->EE->db->select('channel_id, channel_name, channel_title, field_group, cat_group, status_group')
+		$query = ee()->db->select('channel_id, channel_name, channel_title, field_group, cat_group, status_group')
 		       ->from('channels')
 		       ->where('site_id', $this->site_id)
 		       ->order_by('channel_title', 'asc')
@@ -168,7 +171,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Statuses
 		// --------------------------------------
 
-		$query = $this->EE->db->select('status, group_name')
+		$query = ee()->db->select('status, group_name')
 		       ->from('statuses')
 		       ->join('status_groups', 'statuses.group_id = status_groups.group_id')
 		       ->where('statuses.site_id', $this->site_id)
@@ -201,11 +204,11 @@ class Low_reorder_mcp extends Low_reorder_base {
 		$cat_groups = array();
 
 		// We need the category api for that
-		$this->EE->load->library('api');
-		$this->EE->api->instantiate('channel_categories');
+		ee()->load->library('api');
+		ee()->api->instantiate('channel_categories');
 
 		// get group details from DB
-		$query = $this->EE->db->select('group_id, group_name, sort_order')
+		$query = ee()->db->select('group_id, group_name, sort_order')
 		       ->from('category_groups')
 		       ->where('site_id', $this->site_id)
 		       ->order_by('group_name', 'asc')
@@ -217,10 +220,10 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Loop through groups and get the category group from API
 		foreach ($cat_groups AS &$cat_group)
 		{
-			$this->EE->api_channel_categories->categories = array();
-			$this->EE->api_channel_categories->category_tree($cat_group['group_id'], '', $cat_group['sort_order']);
+			ee()->api_channel_categories->categories = array();
+			ee()->api_channel_categories->category_tree($cat_group['group_id'], '', $cat_group['sort_order']);
 
-			$cat_group['categories'] = $this->EE->api_channel_categories->categories;
+			$cat_group['categories'] = ee()->api_channel_categories->categories;
 			$cat_count += count($cat_group['categories']);
 		}
 
@@ -239,7 +242,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Get channel fields for search: params
 		// --------------------------------------
 
-		$query = $this->EE->db->select('cf.field_id, cf.field_name, cf.field_label, fg.group_name')
+		$query = ee()->db->select('cf.field_id, cf.field_name, cf.field_label, fg.group_name')
 		       ->from('channel_fields cf')
 		       ->join('field_groups fg', 'cf.group_id = fg.group_id')
 		       ->where('cf.site_id', $this->site_id)
@@ -269,15 +272,15 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Get existing search filters
 		// --------------------------------------
 
-		$search = $this->EE->low_reorder_set_model->get_search_params($set['parameters']);
+		$search = ee()->low_reorder_set_model->get_search_params($set['parameters']);
 
-		$this->data['json_fields'] = $this->EE->javascript->generate_json($search);
+		$this->data['json_fields'] = json_encode($search);
 
 		// --------------------------------------
 		// Member groups
 		// --------------------------------------
 
-		$query = $this->EE->db->select('group_id, group_title')
+		$query = ee()->db->select('group_id, group_title')
 		       ->from('member_groups')
 		       ->where_not_in('group_id', array('1','2','3','4'))
 		       ->where('can_access_cp', 'y')
@@ -318,8 +321,8 @@ class Low_reorder_mcp extends Low_reorder_base {
 		       ? lang('create_new_set')
 		       : lang('edit_set').' #'.$set_id;
 
-		$this->EE->cp->set_variable('cp_page_title', $title);
-		$this->EE->cp->set_breadcrumb($this->base_url, lang('low_reorder_module_name'));
+		$this->_set_cp_var('cp_page_title', $title);
+		ee()->cp->set_breadcrumb($this->base_url, lang('low_reorder_module_name'));
 
 		// Return settings form
 		return $this->view('mcp_edit');
@@ -337,7 +340,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Get Set id
 		// --------------------------------------
 
-		if ( ! ($set_id = $this->EE->input->post('set_id')))
+		if ( ! ($set_id = ee()->input->post('set_id')))
 		{
 			return $this->_show_error('invalid_request');
 		}
@@ -352,9 +355,9 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Regular fields
 		// --------------------------------------
 
-		foreach ($this->EE->low_reorder_set_model->attributes() AS $attr)
+		foreach (ee()->low_reorder_set_model->attributes() AS $attr)
 		{
-			$data[$attr] = $this->EE->input->post($attr);
+			$data[$attr] = ee()->input->post($attr);
 		}
 
 		// Clean up params
@@ -377,7 +380,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		}
 
 		// Check if set name is unique for this site
-		if ( ! $this->EE->low_reorder_set_model->name_is_unique($set_id, $data['set_name'], $this->site_id))
+		if ( ! ee()->low_reorder_set_model->name_is_unique($set_id, $data['set_name'], $this->site_id))
 		{
 			show_error(lang('set_name_not_unique'));
 		}
@@ -429,7 +432,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Store channel_short_names in parameters
 		if ( ! empty($data['channels']))
 		{
-			$query = $this->EE->db->select('channel_name')
+			$query = ee()->db->select('channel_name')
 			       ->from('channels')
 			       ->where_in('channel_id', $data['channels'])
 			       ->get();
@@ -441,7 +444,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Add search filters to parameters
 		// --------------------------------------
 
-		if ($search = $this->EE->input->post('search'))
+		if ($search = ee()->input->post('search'))
 		{
 			foreach ($search['fields'] AS $i => $key)
 			{
@@ -458,8 +461,8 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Get parameters and permissions
 		// --------------------------------------
 
-		$data['parameters']  = $this->EE->low_reorder_set_model->get_params($data['parameters']);
-		$data['permissions'] = (array) $this->EE->input->post('permissions');
+		$data['parameters']  = ee()->low_reorder_set_model->get_params($data['parameters']);
+		$data['permissions'] = (array) ee()->input->post('permissions');
 
 		// Copy data to $sql_data
 		$sql_data = $data;
@@ -468,8 +471,8 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Convert sql_data to strings
 		// --------------------------------------
 
-		$sql_data['parameters']  = $this->EE->javascript->generate_json($sql_data['parameters']);
-		$sql_data['permissions'] = $this->EE->javascript->generate_json($sql_data['permissions']);
+		$sql_data['parameters']  = json_encode($sql_data['parameters']);
+		$sql_data['permissions'] = json_encode($sql_data['permissions']);
 
 		foreach ($sql_data AS &$val)
 		{
@@ -485,11 +488,11 @@ class Low_reorder_mcp extends Low_reorder_base {
 
 		if ($set_id == 'new')
 		{
-			$set_id = $this->EE->low_reorder_set_model->insert($sql_data);
+			$set_id = ee()->low_reorder_set_model->insert($sql_data);
 		}
 		else
 		{
-			$this->EE->low_reorder_set_model->update($set_id, $sql_data);
+			ee()->low_reorder_set_model->update($set_id, $sql_data);
 		}
 
 		// --------------------------------------
@@ -504,7 +507,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Initiate orders for all categories
 		if ($data['cat_option'] == 'one')
 		{
-			$query = $this->EE->db->select("c.cat_id, GROUP_CONCAT(t.entry_id ORDER BY t.entry_date DESC SEPARATOR '|') AS entry_ids", FALSE)
+			$query = ee()->db->select("c.cat_id, GROUP_CONCAT(t.entry_id ORDER BY t.entry_date DESC SEPARATOR '|') AS entry_ids", FALSE)
 			       ->from('channel_titles t')
 			       ->join('category_posts cp', 't.entry_id = cp.entry_id')
 			       ->join('categories c', 'c.cat_id = cp.cat_id')
@@ -516,7 +519,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 
 			foreach ($query->result() AS $row)
 			{
-				$this->EE->low_reorder_order_model->insert_ignore(array(
+				ee()->low_reorder_order_model->insert_ignore(array(
 					'set_id'     => $set_id,
 					'cat_id'     => $row->cat_id,
 					'sort_order' => ($row->entry_ids ? "|{$row->entry_ids}|" : '')
@@ -528,7 +531,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		{
 			$entries = low_flatten_results($this->get_entries($params), 'entry_id');
 
-			$this->EE->low_reorder_order_model->insert_ignore(array(
+			ee()->low_reorder_order_model->insert_ignore(array(
 				'set_id'     => $set_id,
 				'cat_id'     => 0,
 				'sort_order' => low_linearize($entries)
@@ -540,25 +543,25 @@ class Low_reorder_mcp extends Low_reorder_base {
 		//  - Do something after the (new) set has been saved
 		// -------------------------------------
 
-		if ($this->EE->extensions->active_hook('low_reorder_post_save_set') === TRUE)
+		if (ee()->extensions->active_hook('low_reorder_post_save_set') === TRUE)
 		{
 			// Use raw, non-encoded data to pass through
-			$this->EE->extensions->call('low_reorder_post_save_set', $set_id, $data);
+			ee()->extensions->call('low_reorder_post_save_set', $set_id, $data);
 		}
 
 		// --------------------------------------
 		// Set feedback message
 		// --------------------------------------
 
-		$this->EE->session->set_flashdata('msg', lang('settings_saved'));
+		ee()->session->set_flashdata('msg', lang('settings_saved'));
 
 		// --------------------------------------
 		// Go back to set or reoder page
 		// --------------------------------------
 
-		$method = $this->EE->input->post('reorder') ? 'reorder' : 'edit';
+		$method = ee()->input->post('reorder') ? 'reorder' : 'edit';
 
-		$this->EE->functions->redirect($this->base_url.AMP.'method='.$method.AMP.'set_id='.$set_id);
+		ee()->functions->redirect($this->base_url.AMP.'method='.$method.AMP.'set_id='.$set_id);
 	}
 
 	// --------------------------------------------------------------------
@@ -575,12 +578,12 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Get Set id
 		// --------------------------------------
 
-		if ( ! ($set_id = $this->EE->input->get('set_id')))
+		if ( ! ($set_id = ee()->input->get('set_id')))
 		{
 			return $this->_show_error('invalid_request');
 		}
 
-		if ( ! ($set = $this->EE->low_reorder_set_model->get_one($set_id)))
+		if ( ! ($set = ee()->low_reorder_set_model->get_one($set_id)))
 		{
 			show_error('Reorder set not found');
 		}
@@ -589,8 +592,8 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Get settings
 		// --------------------------------------
 
-		$params = $this->EE->low_reorder_set_model->get_params($set['parameters']);
-		$perm   = $this->EE->low_reorder_set_model->get_permissions($set['permissions']);
+		$params = ee()->low_reorder_set_model->get_params($set['parameters']);
+		$perm   = ee()->low_reorder_set_model->get_permissions($set['permissions']);
 
 		// --------------------------------------
 		// Change channels to array
@@ -610,7 +613,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Get selected category, if there is one
 		// --------------------------------------
 
-		if (($set['cat_id'] = $this->EE->input->get('category')) === FALSE)
+		if (($set['cat_id'] = ee()->input->get('category')) === FALSE)
 		{
 			$set['cat_id'] = 0;
 		}
@@ -632,11 +635,11 @@ class Low_reorder_mcp extends Low_reorder_base {
 			$params['category'] = $set['cat_id'];
 
 			// Load categories API
-			$this->EE->load->library('api');
-			$this->EE->api->instantiate('channel_categories');
+			ee()->load->library('api');
+			ee()->api->instantiate('channel_categories');
 
 			// get group details from DB
-			$query = $this->EE->db->select('group_id, group_name, sort_order')
+			$query = ee()->db->select('group_id, group_name, sort_order')
 			       ->from('category_groups')
 			       ->where_in('group_id', $set['cat_groups'])
 			       ->order_by('group_name', 'asc')
@@ -648,9 +651,9 @@ class Low_reorder_mcp extends Low_reorder_base {
 			// Loop through groups and get the category group from API
 			foreach ($this->data['category_groups'] AS &$row)
 			{
-				$this->EE->api_channel_categories->categories = array();
-				$this->EE->api_channel_categories->category_tree($row['group_id'], '', $row['sort_order']);
-				$row['categories'] = $this->EE->api_channel_categories->categories;
+				ee()->api_channel_categories->categories = array();
+				ee()->api_channel_categories->category_tree($row['group_id'], '', $row['sort_order']);
+				$row['categories'] = ee()->api_channel_categories->categories;
 			}
 
 			$this->data['url'] = $this->base_url.AMP.'method=reorder'.AMP.'set_id='.$set_id.AMP.'category=';
@@ -663,8 +666,8 @@ class Low_reorder_mcp extends Low_reorder_base {
 		if ($this->data['show_entries'])
 		{
 			// Get the current order from the DB
-			$this->EE->db->where('cat_id', $set['cat_id']);
-			$order = $this->EE->low_reorder_order_model->get_one($set_id, 'set_id');
+			ee()->db->where('cat_id', $set['cat_id']);
+			$order = ee()->low_reorder_order_model->get_one($set_id, 'set_id');
 			$set_order = empty($order) ? array() : low_delinearize($order['sort_order']);
 
 			// Add channel_id as parameter
@@ -695,9 +698,9 @@ class Low_reorder_mcp extends Low_reorder_base {
 			//  - Change the output of entries displayed in the CP reorder list
 			// -------------------------------------
 
-			if ($this->EE->extensions->active_hook('low_reorder_show_entries') === TRUE)
+			if (ee()->extensions->active_hook('low_reorder_show_entries') === TRUE)
 			{
-				$entries = $this->EE->extensions->call('low_reorder_show_entries', $entries, $set);
+				$entries = ee()->extensions->call('low_reorder_show_entries', $entries, $set);
 			}
 
 			$this->data['entries'] = $entries;
@@ -720,26 +723,26 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Set title and breadcrumb
 		// --------------------------------------
 
-		$this->EE->cp->set_variable('cp_page_title', $set['set_label']);
-		$this->EE->cp->set_breadcrumb($this->base_url, lang('low_reorder_module_name'));
+		$this->_set_cp_var('cp_page_title', $set['set_label']);
+		ee()->cp->set_breadcrumb($this->base_url, lang('low_reorder_module_name'));
 
 		// Return settings form
 		return $this->view('mcp_reorder');
 	}
 
 	/**
-	* Save the New Order (dundundun)
-	*
-	* @access      public
-	* @return      void
-	*/
+	 * Save the New Order (dundundun)
+	 *
+	 * @access      public
+	 *  @return      void
+	 */
 	public function save_order()
 	{
 		// --------------------------------------
 		// Get Set id
 		// --------------------------------------
 
-		if ( ! ($set_id = $this->EE->input->post('set_id')))
+		if ( ! ($set_id = ee()->input->post('set_id')))
 		{
 			return $this->_show_error('invalid_request');
 		}
@@ -748,19 +751,19 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Get Cat id
 		// --------------------------------------
 
-		$cat_id = $this->EE->input->post('cat_id');
+		$cat_id = ee()->input->post('cat_id');
 
 		// --------------------------------------
 		// Get entries
 		// --------------------------------------
 
-		$entries = (array) $this->EE->input->post('entries');
+		$entries = (array) ee()->input->post('entries');
 
 		// --------------------------------------
 		// Reverse entries if sort = desc
 		// --------------------------------------
 
-		if ($this->EE->input->post('sort') == 'desc')
+		if (ee()->input->post('sort') == 'desc')
 		{
 			$entries = array_reverse($entries);
 		}
@@ -769,7 +772,7 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// REPLACE INTO table statement
 		// --------------------------------------
 
-		$this->EE->low_reorder_order_model->replace(array(
+		ee()->low_reorder_order_model->replace(array(
 			'set_id' => $set_id,
 			'cat_id' => $cat_id,
 			'sort_order' => low_linearize($entries)
@@ -780,11 +783,11 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Now, do we need to clear the cache?
 		// --------------------------------------
 
-		$clear_cache = ($this->EE->input->post('clear_caching') == 'y');
+		$clear_cache = (ee()->input->post('clear_caching') == 'y');
 
 		if ($clear_cache)
 		{
-			$this->EE->functions->clear_caching('all', '', TRUE);
+			ee()->functions->clear_caching('all', '', TRUE);
 		}
 
 		// -------------------------------------
@@ -792,9 +795,9 @@ class Low_reorder_mcp extends Low_reorder_base {
 		//  - Do something after new order is saved
 		// -------------------------------------
 
-		if ($this->EE->extensions->active_hook('low_reorder_post_sort') === TRUE)
+		if (ee()->extensions->active_hook('low_reorder_post_sort') === TRUE)
 		{
-			$this->EE->extensions->call('low_reorder_post_sort', $entries, $clear_cache);
+			ee()->extensions->call('low_reorder_post_sort', $entries, $clear_cache);
 		}
 
 		// --------------------------------------
@@ -813,10 +816,10 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Set flashdata for feedback
 		// --------------------------------------
 
-		$this->EE->session->set_flashdata('msg', lang('new_order_saved'));
+		ee()->session->set_flashdata('msg', lang('new_order_saved'));
 
 		// And go back
-		$this->EE->functions->redirect($url);
+		ee()->functions->redirect($url);
 		exit;
 	}
 
@@ -834,18 +837,18 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Redirect back to module home if no set is given
 		// --------------------------------------
 
-		if ( ! ($set_id = $this->EE->input->get('set_id')))
+		if ( ! ($set_id = ee()->input->get('set_id')))
 		{
-			$this->EE->functions->redirect($this->base_url);
+			ee()->functions->redirect($this->base_url);
 		}
 
 		// --------------------------------------
 		// Get collection from DB
 		// --------------------------------------
 
-		if ( ! ($set = $this->EE->low_reorder_set_model->get_one($set_id)))
+		if ( ! ($set = ee()->low_reorder_set_model->get_one($set_id)))
 		{
-			$this->EE->functions->redirect($this->base_url);
+			ee()->functions->redirect($this->base_url);
 		}
 
 		// --------------------------------------
@@ -858,8 +861,8 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Title and Crumbs
 		// --------------------------------------
 
-		$this->EE->cp->set_variable('cp_page_title', lang('delete_set_confirm'));
-		$this->EE->cp->set_breadcrumb($this->base_url, lang('low_reorder_module_name'));
+		$this->_set_cp_var('cp_page_title', lang('delete_set_confirm'));
+		ee()->cp->set_breadcrumb($this->base_url, lang('low_reorder_module_name'));
 
 		// --------------------------------------
 		// Load up view
@@ -880,27 +883,27 @@ class Low_reorder_mcp extends Low_reorder_base {
 		// Check set id
 		// --------------------------------------
 
-		if ($set_id = $this->EE->input->post('set_id'))
+		if ($set_id = ee()->input->post('set_id'))
 		{
 			// --------------------------------------
 			// Delete in 2 tables
 			// --------------------------------------
 
-			$this->EE->low_reorder_set_model->delete($set_id);
-			$this->EE->low_reorder_order_model->delete($set_id, 'set_id');
+			ee()->low_reorder_set_model->delete($set_id);
+			ee()->low_reorder_order_model->delete($set_id, 'set_id');
 
 			// --------------------------------------
 			// Set feedback message
 			// --------------------------------------
 
-			$this->EE->session->set_flashdata('msg', 'set_deleted');
+			ee()->session->set_flashdata('msg', 'set_deleted');
 		}
 
 		// --------------------------------------
 		// Go home
 		// --------------------------------------
 
-		$this->EE->functions->redirect($this->base_url);
+		ee()->functions->redirect($this->base_url);
 	}
 
 	// --------------------------------------------------------------------
@@ -908,19 +911,19 @@ class Low_reorder_mcp extends Low_reorder_base {
 	// --------------------------------------------------------------------
 
 	/**
-	* Show error message in module
-	*
-	* @access      private
-	* @param       string
-	* @return      string
-	*/
+	 * Show error message in module
+	 *
+	 * @access      private
+	 * @param       string
+	 * @return      string
+	 */
 	private function _show_error($msg)
 	{
 		// Set page title
-		$this->EE->cp->set_variable('cp_page_title', lang('error'));
+		$this->_set_cp_var('cp_page_title', lang('error'));
 
 		// Set breadcrumb
-		$this->EE->cp->set_breadcrumb(BASE.AMP.$this->base_url, lang('low_reorder_module_name'));
+		ee()->cp->set_breadcrumb(BASE.AMP.$this->base_url, lang('low_reorder_module_name'));
 
 		$this->data['error_msg'] = $msg;
 
@@ -942,6 +945,38 @@ class Low_reorder_mcp extends Low_reorder_base {
 		return '<label>'.form_radio($name, 'yes', ($value == 'yes')).NBS.lang('yes').'</label>'
 		     . str_repeat(NBS,5)
 		     . '<label>'.form_radio($name, '',    ($value != 'yes')).NBS.lang('no').'</label>';
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Naturally sorts a list of set labels
+	 */
+	private function _natsort($a, $b)
+	{
+		return strnatcasecmp($a['set_label'], $b['set_label']);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Set cp var
+	 *
+	 * @access     private
+	 * @param      string
+	 * @param      string
+	 * @return     void
+	 */
+	private function _set_cp_var($key, $val)
+	{
+		if (version_compare(APP_VER, '2.6.0', '<'))
+		{
+			ee()->cp->set_variable($key, $val);
+		}
+		else
+		{
+			ee()->view->$key = $val;
+		}
 	}
 }
 // End mcp.low_reorder.php

@@ -440,6 +440,11 @@ class Wygwam_ft extends EE_Fieldtype {
 		// convert site page tags to URLs
 		Wygwam_helper::replace_page_tags($data);
 
+		if ($this->EE->extensions->active_hook('wygwam_before_display'))
+		{
+			$data = $this->EE->extensions->call('wygwam_before_display', $this, $data);
+		}
+
 		return '<div class="wygwam"><textarea id="'.$id.'" name="'.$this->field_name.'" rows="10" data-config="'.$this->settings['config'].'" data-defer="'.($this->settings['defer'] == 'y' ? 'y' : 'n').'">'.$data.'</textarea></div>'.$this->_generate_asset_inputs_string($asset_info);
 	}
 
@@ -481,6 +486,11 @@ class Wygwam_ft extends EE_Fieldtype {
 
 		// convert site page tags to URLs
 		Wygwam_helper::replace_page_tags($data);
+
+		if ($this->EE->extensions->active_hook('wygwam_before_display'))
+		{
+			$data = $this->EE->extensions->call('wygwam_before_display', $this, $data);
+		}
 
 		return '<textarea name="'.$this->cell_name.'" rows="10">'.$data.'</textarea>'.$this->_generate_asset_inputs_string($asset_info);;
 	}
@@ -591,6 +601,12 @@ class Wygwam_ft extends EE_Fieldtype {
 		//  - For whatever reason, SafeCracker is converting HTML comment brackets into entities
 		$data = str_replace('&lt;!--read_more--&gt;', '<!--read_more-->', $data);
 
+		if ($this->EE->extensions->active_hook('wygwam_before_save'))
+		{
+			$data = $this->EE->extensions->call('wygwam_before_save', $this, $data);
+		}
+
+
 		return $data;
 	}
 
@@ -618,7 +634,7 @@ class Wygwam_ft extends EE_Fieldtype {
 	 */
 	function save_element($data)
 	{
-		return $this->_convert_urls_to_tags($data);
+		return $this->save($data);
 	}
 
 	// --------------------------------------------------------------------
@@ -690,6 +706,11 @@ class Wygwam_ft extends EE_Fieldtype {
 
 			// strip out the {read_more} tag
 			$data = str_replace('<!--read_more-->', '', $data);
+		}
+
+		if ($this->EE->extensions->active_hook('wygwam_before_replace'))
+		{
+			$data = $this->EE->extensions->call('wygwam_before_replace', $this, $data);
 		}
 
 		return $data;

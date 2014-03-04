@@ -236,60 +236,69 @@ if(!isset($access_token)){
 				url: urlToCall,
 				dataType: 'json',
 				success: function(data) {
-					//console.log('SEARCH Data received from Instagram.');
-					var theImages = data.data;
-					var next_max_tag_id = data.pagination.next_max_tag_id;
-					//console.log(theImages.length);
-					$('.getmore').remove();
-					var prevTotal = $('.scroll-content .thumbnail').length;
+					console.log('SEARCH Data received from Instagram.');
+					console.dir(data);
+					if (data.meta.code === 200 ) {
+						var theImages = data.data;
+						var next_max_tag_id = data.pagination.next_max_tag_id;
+						//console.log(theImages.length);
+						$('.getmore').remove();
+						var prevTotal = $('.scroll-content .thumbnail').length;
 
-					for (var i = 0; i < theImages.length; i++) {
-						console.log('adding a thumbnail ' + i);
-						//console.log(theImages[i]);
-						//console.log(theImages[i].filter);
-						// $imageURL = $json_output->data->images->low_resolution->url;
-						// $imageTitle =  $json_output->data->caption->text;
-						var caption = '<em>untitled</em>';
-						if (!!theImages[i].caption){
-							caption = theImages[i].caption.text;
-						}
-						// var newThumbnail = $('<div class="thumbnail" data-id="'+ theImages[i].id +'" data-username="'+ theImages[i].user.username +'" data-profile_picture="'+ theImages[i].user.profile_picture +'" data-fullurl="'+ theImages[i].link +'"><img src="' + theImages[i].images.low_resolution.url + '" alt="Instagram image id: '+ theImages[i].id +'" width="100" height="100" border="0"><div class="headline">'+ caption +' by<em>'+theImages[i].user.username+'</em></div><a href="#" class="selectbtn" data-id="'+ theImages[i].id +'">Select this image</a></div>');
-						var newThumbnail = $('<div class="thumbnail" data-id="'+ theImages[i].id +'" data-username="'+ theImages[i].user.username +'" data-profile_picture="'+ theImages[i].user.profile_picture +'" data-fullurl="'+ theImages[i].link +'"><img src="' + theImages[i].images.low_resolution.url + '" alt="Instagram image id: '+ theImages[i].id +'" width="100" height="100" border="0"><a href="'+ theImages[i].link +'" target="_blank" title="Preview this '+ theImages[i].type +' in a new window" class="mediatype '+ theImages[i].type +'">'+ theImages[i].type +'</a><div class="headline">'+ caption +'</div><a href="#" class="selectbtn" data-id="'+ theImages[i].id +'">Select this image</a></div>');
-						$('.scroll-content').append(newThumbnail);
-
-						PicPullerIG.callback('afterThumbnailGeneration', newThumbnail);
-						if( i === (theImages.length-1) ){
-							//console.log('last one');
-							//console.log(next_max_tag_id);
-							if(next_max_tag_id != '' ){
-								var nextURL = "<?php echo $third_party_theme_dir;?>pp_engine.php?access_token=<?php echo $access_token;?>&method=tagsearch&tag="+ PPsearchterm +"&count=29&next_max_tag_id="+next_max_tag_id;
-								$('.scroll-content').append("<div class='thumbnail getmore'><div class='headline'>Need more to choose from?</div><a href='" + nextURL + "' class='pp_morebt'>Load more images</a></div>");
+						for (var i = 0; i < theImages.length; i++) {
+							console.log('adding a thumbnail ' + i);
+							//console.log(theImages[i]);
+							//console.log(theImages[i].filter);
+							// $imageURL = $json_output->data->images->low_resolution->url;
+							// $imageTitle =  $json_output->data->caption->text;
+							var caption = '<em>untitled</em>';
+							if (!!theImages[i].caption){
+								caption = theImages[i].caption.text;
 							}
-							// Need to reset the position of the scrollbar slider to accommodate the updated image set
-							var newTotal = $('.scroll-content .thumbnail').length;
-							var sliderValue = Math.floor(Math.abs((prevTotal/newTotal * 100) -100 ) );
+							// var newThumbnail = $('<div class="thumbnail" data-id="'+ theImages[i].id +'" data-username="'+ theImages[i].user.username +'" data-profile_picture="'+ theImages[i].user.profile_picture +'" data-fullurl="'+ theImages[i].link +'"><img src="' + theImages[i].images.low_resolution.url + '" alt="Instagram image id: '+ theImages[i].id +'" width="100" height="100" border="0"><div class="headline">'+ caption +' by<em>'+theImages[i].user.username+'</em></div><a href="#" class="selectbtn" data-id="'+ theImages[i].id +'">Select this image</a></div>');
+							var newThumbnail = $('<div class="thumbnail" data-id="'+ theImages[i].id +'" data-username="'+ theImages[i].user.username +'" data-profile_picture="'+ theImages[i].user.profile_picture +'" data-fullurl="'+ theImages[i].link +'"><img src="' + theImages[i].images.low_resolution.url + '" alt="Instagram image id: '+ theImages[i].id +'" width="100" height="100" border="0"><a href="'+ theImages[i].link +'" target="_blank" title="Preview this '+ theImages[i].type +' in a new window" class="mediatype '+ theImages[i].type +'">'+ theImages[i].type +'</a><div class="headline">'+ caption +'</div><a href="#" class="selectbtn" data-id="'+ theImages[i].id +'">Select this image</a></div>');
+							$('.scroll-content').append(newThumbnail);
 
-							// reset slider value
-							$( ".scroll-bar" ).slider({ value: sliderValue });
+							PicPullerIG.callback('afterThumbnailGeneration', newThumbnail);
+							if( i === (theImages.length-1) ){
+								//console.log('last one');
+								//console.log(next_max_tag_id);
+								if(next_max_tag_id != '' ){
+									var nextURL = "<?php echo $third_party_theme_dir;?>pp_engine.php?access_token=<?php echo $access_token;?>&method=tagsearch&tag="+ PPsearchterm +"&count=29&next_max_tag_id="+next_max_tag_id;
+									$('.scroll-content').append("<div class='thumbnail getmore'><div class='headline'>Need more to choose from?</div><a href='" + nextURL + "' class='pp_morebt'>Load more images</a></div>");
+								}
+								// Need to reset the position of the scrollbar slider to accommodate the updated image set
+								var newTotal = $('.scroll-content .thumbnail').length;
+								var sliderValue = Math.floor(Math.abs((prevTotal/newTotal * 100) -100 ) );
 
-							var maxDepth = $('.scroll-content').height() - $('.scroll-area').height() + 10 ;
-							var newTop = -((.01 * Math.abs(sliderValue-100)) * maxDepth);
-							newTop +=10;
-							$('.scroll-content').css('top', newTop+'px');
+								// reset slider value
+								$( ".scroll-bar" ).slider({ value: sliderValue });
+
+								var maxDepth = $('.scroll-content').height() - $('.scroll-area').height() + 10 ;
+								var newTop = -((.01 * Math.abs(sliderValue-100)) * maxDepth);
+								newTop +=10;
+								$('.scroll-content').css('top', newTop+'px');
+							}
+						};
+
+						// Turn the Search button back on.
+						//
+						// May need to clear the search field of text b/c UX is wonky
+						// if you hit search again.. you get the first page of results.
+
+						$("#ig_search_field").val('');
+
+						if ($("#ig_search_field").val() != ''){
+							$("#ig_search_button").attr("disabled", false);
+						} else {
+							$("#ig_search_button").attr("disabled", true);
 						}
-					};
-
-					// Turn the Search button back on.
-					//
-					// May need to clear the search field of text b/c UX is wonky
-					// if you hit search again.. you get the first page of results.
-
-					$("#ig_search_field").val('');
-
-					if ($("#ig_search_field").val() != ''){
-						$("#ig_search_button").attr("disabled", false);
 					} else {
-						$("#ig_search_button").attr("disabled", true);
+						// the code wasn't 200, so something else was returned by Instagram
+						$('.scroll-content').append("Error message returned from Instagram:<br><br><strong>"+data.meta.error_type + "</strong>: " + data.meta.error_message);
+						if (data.meta.error_type === "OAuthAccessTokenException") {
+							$('.scroll-content').append("<br><br><p><em>This error usually indicates that the Pic Puller application has been deauthorized from the user's Instagram account but the authorization has not been removed from ExpressionEngine.</em></p>");
+						}
 					}
 				},
 				statusCode: {

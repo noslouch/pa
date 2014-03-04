@@ -126,7 +126,9 @@ $lang = array(
 'invalid_source_path' => 'Invalid Assets source path',
 'invalid_filedir_path' => 'Invalid EE Upload Directory path',
 'invalid_folder_path' => 'That wasn’t a valid folder path',
+'invalid_folder_name' => 'That wasn’t a valid folder name',
 'invalid_file_path' => 'That wasn’t a valid file path',
+'invalid_file_name' => 'That wasn’t a valid file name',
 'file_already_exists' => 'A folder or file with that name already exists',
 
 'filedir_not_writable' => 'Your upload directory isn’t writable',
@@ -156,6 +158,8 @@ $lang = array(
 'unexpected_response' => 'Remote server returned an unexpected response.',
 'connection_information_missing' => 'Connection information not found!',
 'unrecognized_operation_type' => 'Unrecognized operation type!',
+
+'recent_uploads' => 'Recent uploads',
 
 
 // -------------------------------------------

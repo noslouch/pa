@@ -828,7 +828,7 @@ class Channel_images_ft extends EE_Fieldtype
 
                 foreach($group['actions'] as $action => &$action_settings)
                 {
-                    $this->EE->cache['channel_images']['group_final_size'] = false;
+                    $this->EE->session->cache['channel_images']['group_final_size'] = false;
 
                     if (isset($actions[$action]) == false)
                     {
@@ -838,9 +838,9 @@ class Channel_images_ft extends EE_Fieldtype
 
                     $action_settings = $actions[$action]->save_settings($action_settings);
 
-                    if ($this->EE->cache['channel_images']['group_final_size'] != false)
+                    if ($this->EE->session->cache['channel_images']['group_final_size'] != false)
                     {
-                        $group['final_size'] = $this->EE->cache['channel_images']['group_final_size'];
+                        $group['final_size'] = $this->EE->session->cache['channel_images']['group_final_size'];
                     }
                 }
             }

@@ -6,7 +6,7 @@
  * @package        low_reorder
  * @author         Lodewijk Schutte <hi@gotolow.com>
  * @link           http://gotolow.com/addons/low-reorder
- * @copyright      Copyright (c) 2009-2012, Low
+ * @copyright      Copyright (c) 2009-2013, Low
  */
 class Low_reorder_order_model extends Low_reorder_model {
 
@@ -51,8 +51,8 @@ class Low_reorder_order_model extends Low_reorder_model {
 			$cat_ids = array($cat_ids);
 		}
 
-		$this->EE->db->where('set_id', $set_id);
-		$this->EE->db->where_in('cat_id', $cat_ids);
+		ee()->db->where('set_id', $set_id);
+		ee()->db->where_in('cat_id', $cat_ids);
 		return $this->get_all();
 	}
 
@@ -66,12 +66,12 @@ class Low_reorder_order_model extends Low_reorder_model {
 	 */
 	public function replace($data = array())
 	{
-		$sql = $this->EE->db->insert_string(
+		$sql = ee()->db->insert_string(
 			$this->table(),
 			$data
 		);
 
-		$this->EE->db->query(str_replace('INSERT', 'REPLACE', $sql));
+		ee()->db->query(str_replace('INSERT', 'REPLACE', $sql));
 	}
 
 	/**
@@ -83,12 +83,12 @@ class Low_reorder_order_model extends Low_reorder_model {
 	 */
 	public function insert_ignore($data = array())
 	{
-		$sql = $this->EE->db->insert_string(
+		$sql = ee()->db->insert_string(
 			$this->table(),
 			$data
 		);
 
-		$this->EE->db->query(str_replace('INSERT', 'INSERT IGNORE', $sql));
+		ee()->db->query(str_replace('INSERT', 'INSERT IGNORE', $sql));
 	}
 
 	// --------------------------------------------------------------------
@@ -112,7 +112,7 @@ class Low_reorder_order_model extends Low_reorder_model {
 				WHERE set_id = {$set_id}
 				AND cat_id NOT IN ({$sql_cat_ids})";
 
-		$this->EE->db->query($sql);
+		ee()->db->query($sql);
 	}
 
 
@@ -125,8 +125,8 @@ class Low_reorder_order_model extends Low_reorder_model {
 	public function remove_rogues()
 	{
 		// Delete rogue records
-		$this->EE->db->where('sort_order', '|');
-		$this->EE->db->delete($this->table());
+		ee()->db->where('sort_order', '|');
+		ee()->db->delete($this->table());
 	}
 
 	// --------------------------------------------------------------------

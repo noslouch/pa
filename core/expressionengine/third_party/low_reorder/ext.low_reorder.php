@@ -12,7 +12,7 @@ if ( ! class_exists('Low_reorder_base'))
  * @package        low_reorder
  * @author         Lodewijk Schutte <hi@gotolow.com>
  * @link           http://gotolow.com/addons/low-reorder
- * @copyright      Copyright (c) 2009-2012, Low
+ * @copyright      Copyright (c) 2009-2013, Low
  */
 class Low_reorder_ext extends Low_reorder_base
 {
@@ -26,7 +26,7 @@ class Low_reorder_ext extends Low_reorder_base
 	 * @var        string	y|n
 	 * @access     public
 	 */
-	public $settings_exist = 'n';
+	public $settings_exist = 'y';
 
 	/**
 	 * Required?
@@ -41,6 +41,63 @@ class Low_reorder_ext extends Low_reorder_base
 	// --------------------------------------------------------------------
 
 	/**
+	 * Constructor
+	 *
+	 * @access     public
+	 * @param      mixed     Array with settings or FALSE
+	 * @return     null
+	 */
+	public function __construct($settings = array())
+	{
+		// Get global instance
+		parent::__construct();
+
+		// Force settings array
+		if ( ! is_array($settings))
+		{
+			$settings = array();
+		}
+
+		// Set settings
+		$this->settings = array_merge($this->default_settings, $settings);
+	}
+
+	/**
+	 * Settings
+	 *
+	 * @access     public
+	 * @param      array
+	 * @return     array
+	 */
+	public function settings()
+	{
+		// -------------------------------------------
+		// Get member groups with access to CP
+		// -------------------------------------------
+
+		$query = ee()->db->select('group_id, group_title')
+		       ->from('member_groups')
+		       ->where('can_access_cp', 'y')
+		       ->order_by('group_title')
+		       ->get();
+
+		$groups = low_flatten_results($query->result_array(), 'group_title', 'group_id');
+
+		// -------------------------------------------
+		// Return list of groups
+		// -------------------------------------------
+
+		return array(
+			'can_create_sets' => array('ms',
+				$groups,
+				$this->default_settings['can_create_sets']
+			)
+		);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
 	 * Add/modify entry in sort orders
 	 *
 	 * @access      public
@@ -51,101 +108,188 @@ class Low_reorder_ext extends Low_reorder_base
 	 */
 	public function entry_submission_end($entry_id, $meta, $data)
 	{
-		// Not sure if $data is actually stored in last_call...?
+		// -------------------------------------------
+		// Not changing anything; get return value from last_call
+		// -------------------------------------------
 
-		// if ($this->EE->extensions->last_call !== FALSE)
-		// {
-		// 	$data = $this->EE->extensions->last_call;
-		// }
+		$return = ee()->extensions->last_call;
+
+		// -------------------------------------------
+		// Get sets for this channel
+		// -------------------------------------------
+
+		$sets = ee()->low_reorder_set_model->get_by_channel($meta['channel_id']);
+		$sets = low_associate_results($sets, 'set_id');
+
+		// If no sets are found, just bail out early
+		if (empty($sets)) return $return;
+
+		// -------------------------------------------
+		// Define array for new orders, set needle
+		// -------------------------------------------
+
+		$new_orders = $old_orders = array();
+
+		// This entry's pipe-separated id
+		$needle = "|{$entry_id}|";
+
+		// -------------------------------------------
+		// Get all old orders for the sets found
+		// -------------------------------------------
+
+		ee()->db->where_in('set_id', array_keys($sets));
+		$old = ee()->low_reorder_order_model->get_all();
+
+		foreach ($old AS $row)
+		{
+			$key = $row['set_id'].'-'.$row['cat_id'];
+			$old_orders[$key] = $row['sort_order'];
+		}
+
+		unset($old);
 
 		// -------------------------------------------
 		// Make sure we get all posted categories,
 		// including parents if necessary
 		// -------------------------------------------
 
-		// Load channel categories API
-		$this->EE->load->library('api');
-		$this->EE->api->instantiate('channel_categories');
-
 		// Get categories either from data or POST
 		$categories = (isset($data['revision_post']['category']))
 			? $data['revision_post']['category']
-			: $this->EE->input->post('category');
+			: ee()->input->post('category');
 
-		// Make sure we get the auto-assigned parents, too
-		if ($this->EE->config->item('auto_assign_cat_parents') == 'y' &&
-			! empty($this->EE->api_channel_categories->cat_parents))
+		if ( ! is_array($categories))
 		{
-			$categories = array_unique(array_merge(
-				$categories, $this->EE->api_channel_categories->cat_parents
-			));
+			$categories = array(0);
 		}
 
-		// -------------------------------------------
-		// Define array for new orders
-		// -------------------------------------------
+		// Make sure we get the auto-assigned parents, too
+		if (ee()->config->item('auto_assign_cat_parents') == 'y')
+		{
+			// Load channel categories API
+			ee()->load->library('api');
+			ee()->api->instantiate('channel_categories');
 
-		$new_orders = array();
+			if ( ! empty(ee()->api_channel_categories->cat_parents))
+			{
+				$categories = array_unique(array_merge(
+					$categories, ee()->api_channel_categories->cat_parents
+				));
+			}
+		}
+
+		// Is this entry sticky?
+		$sticky = (@$meta['sticky'] == 'y');
 
 		// -------------------------------------------
-		// Get sets for this channel
+		// Loop through applicable sets, populate new_orders
 		// -------------------------------------------
-
-		$sets = $this->EE->low_reorder_set_model->get_by_channel($meta['channel_id']);
 
 		foreach ($sets AS $set)
 		{
+			// Get the set's parameters
+			$params = ee()->low_reorder_set_model->get_params($set['parameters']);
+
+			// Skip non-sticky if sticky only
+			if (isset($params['sticky']) && $params['sticky'] == 'yes' && ! $sticky) continue;
+
 			// Use posted category IDs for Sort By Single Category
 			$cat_ids = ($set['cat_option'] == 'one') ? $categories : array(0);
-
-			// Remove references to this entry id from other categories
-			$this->EE->low_reorder_order_model->purge_others($set['set_id'], $cat_ids, $entry_id);
 
 			// Create array of all the Orders that must be present
 			foreach ($cat_ids AS $cat_id)
 			{
-				$new_orders[$set['set_id'].'-'.$cat_id] = array($entry_id);
-			}
+				// Set the key
+				$key = $set['set_id'].'-'.$cat_id;
+				$val = FALSE;
 
-			// Loop through existing orders and update the order in $new_orders
-			foreach ($this->EE->low_reorder_order_model->get_orders($set['set_id'], $cat_ids) AS $old)
-			{
-				$entry_ids = low_delinearize($old['sort_order']);
-
-				// Append/Prepend if it's not there yet
-				if ( ! in_array($entry_id, $entry_ids))
+				// Check old orders
+				if (isset($old_orders[$key]))
 				{
-					if ($set['new_entries'] == 'prepend')
+					$old_val = $old_orders[$key];
+
+					// If entry id is not present in old order
+					if (strpos($old_val, $needle) === FALSE)
 					{
-						$entry_ids = array_merge(array($entry_id), $entry_ids);
+						$val = ($set['new_entries'] == 'prepend')
+						     ? $needle.ltrim($old_val, '|')
+						     : rtrim($old_val, '|').$needle;
 					}
-					else
-					{
-						$entry_ids[] = $entry_id;
-					}
+
+					// remove reference from $old_orders
+					unset($old_orders[$key]);
+				}
+				else
+				{
+					$val = $needle;
 				}
 
-				$new_orders[$old['set_id'].'-'.$old['cat_id']] = $entry_ids;
+				// Only add new order if we have a valid value
+				if ($val !== FALSE)
+				{
+					$new_orders[$key] = $val;
+				}
 			}
+		}
+
+		// -------------------------------------------
+		// Loop through remaining old orders and remove references
+		// -------------------------------------------
+
+		foreach ($old_orders AS $key => $val)
+		{
+			// Get set and cat IDs
+			list($set_id, $cat_id) = explode('-', $key);
+
+			// Remove lint
+			if (($sets[$set_id]['cat_option'] == 'one' && $cat_id == 0) ||
+				($sets[$set_id]['cat_option'] != 'one' && $cat_id > 0))
+			{
+				ee()->db->where('cat_id', $cat_id);
+				ee()->low_reorder_order_model->delete($set_id, 'set_id');
+				continue;
+			}
+
+			// See if entry id is present in old order,
+			// if so, remove it and add new order to array
+			if (strpos($val, $needle) !== FALSE)
+			{
+				$new_orders[$key] = str_replace($needle, '|', $val);
+			}
+		}
+
+		// -------------------------------------------
+		// Update the new orders
+		// -------------------------------------------
+
+		if ($new_orders)
+		{
+			$values = array();
 
 			// Loop through new orders and REPLACE INTO orders table
 			foreach ($new_orders AS $key => $val)
 			{
 				list($set_id, $cat_id) = explode('-', $key);
 
-				$this->EE->low_reorder_order_model->replace(array(
-					'set_id' => $set_id,
-					'cat_id' => $cat_id,
-					'sort_order' => low_linearize($val)
-				));
+				$values[] = sprintf("('%s', '%s', '%s')",
+					$set_id,
+					$cat_id,
+					$val
+				);
 			}
+
+			ee()->db->query(sprintf(
+				'REPLACE INTO `%s` (`set_id`, `cat_id`, `sort_order`) VALUES %s',
+				ee()->low_reorder_order_model->table(),
+				implode(",\n", $values)
+			));
+
+			// Cleans up the order table
+			ee()->low_reorder_order_model->remove_rogues();
 		}
 
-		// Cleans up the order table
-		$this->EE->low_reorder_order_model->remove_rogues();
-
 		// Play nice
-		return $this->EE->extensions->last_call;
+		return $return;
 	}
 
 	// --------------------------------------------------------------------
@@ -164,23 +308,23 @@ class Low_reorder_ext extends Low_reorder_base
 		// Get the latest version of $query
 		// -------------------------------------------
 
-		if ($this->EE->extensions->last_call !== FALSE)
+		if (ee()->extensions->last_call !== FALSE)
 		{
-			$query = $this->EE->extensions->last_call;
+			$query = ee()->extensions->last_call;
 		}
 
 		// -------------------------------------------
 		// Fire for low_reorder only
 		// -------------------------------------------
 
-		if ($this->EE->TMPL->fetch_param('low_reorder') == 'yes')
+		if (ee()->TMPL->fetch_param('low_reorder') == 'yes')
 		{
 			// Get the set id
 			$set_id = (int) low_get_cache($this->package, 'set_id');
 			$cat_id = (int) low_get_cache($this->package, 'cat_id');
 
 			$total_results = count($query);
-			$reverse_count = $this->EE->TMPL->fetch_param('reverse_count', 'reverse_count');
+			$reverse_count = ee()->TMPL->fetch_param('reverse_count', 'reverse_count');
 
 			foreach ($query AS &$row)
 			{
@@ -201,6 +345,143 @@ class Low_reorder_ext extends Low_reorder_base
 		// -------------------------------------------
 
 		return $query;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Order Low Search results by Low Reorder Set
+	 *
+	 * @access      public
+	 * @param       array
+	 * @return      array
+	 */
+	public function low_search_post_search($params)
+	{
+		// -------------------------------------------
+		// Get the latest version of $params
+		// -------------------------------------------
+
+		if (ee()->extensions->last_call !== FALSE)
+		{
+			$params = ee()->extensions->last_call;
+		}
+
+		// -------------------------------------------
+		// Get the ordered entry IDs
+		// -------------------------------------------
+
+		return $this->_get_ordered_ids($params);
+	}
+
+	/**
+	 * Order Playa entries by Low Reorder Set
+	 *
+	 * @access      public
+	 * @return      void
+	 */
+	public function playa_parse_relationships()
+	{
+		ee()->TMPL->tagparams = $this->_get_ordered_ids(ee()->TMPL->tagparams);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Set fixed_order param based on orderby param
+	 *
+	 * @access     private
+	 * @param      array
+	 * @return     array
+	 */
+	private function _get_ordered_ids($params)
+	{
+		// -------------------------------------------
+		// Do we have to?
+		// -------------------------------------------
+
+		if ( ! (isset($params['orderby']) && substr($params['orderby'], 0, 12) == 'low_reorder:'))
+		{
+			return $params;
+		}
+
+		ee()->TMPL->log_item('Low Reorder: Found orderby Low Reorder set parameter');
+
+		// -------------------------------------------
+		// Get reorder parameters
+		// -------------------------------------------
+
+		$reorder_params = array(
+			'set'      => substr($params['orderby'], 12),
+			'category' => isset($params['category']) ? $params['category'] : ''
+		);
+
+		// -------------------------------------------
+		// Trick the template parser
+		// -------------------------------------------
+
+		$old_tagdata = ee()->TMPL->tagdata;
+		$old_tagparams = ee()->TMPL->tagparams;
+
+		ee()->TMPL->tagdata = '';
+		ee()->TMPL->tagparams = $reorder_params;
+
+		// Include the Low Reorder Mod file
+		if ( ! class_exists('Low_reorder'))
+		{
+			ee()->TMPL->log_item('Low Reorder: Including Low Reorder module file');
+
+			include(PATH_THIRD.'low_reorder/mod.low_reorder.php');
+		}
+
+		// Instatiate object
+		$Low_reorder = new Low_reorder;
+
+		ee()->TMPL->log_item('Low Reorder: Calling Low_reorder::entry_ids()');
+
+		// Get the entry_ids
+		$entry_ids = $Low_reorder->entry_ids();
+
+		// And restore
+		ee()->TMPL->tagdata = $old_tagdata;
+		ee()->TMPL->tagparams = $old_tagparams;
+
+		// -------------------------------------------
+		// Filter the entry ids
+		// -------------------------------------------
+
+		if ( ! empty($params['entry_id']) && ! empty($entry_ids))
+		{
+			ee()->TMPL->log_item('Low Reorder: Limiting Low Reorder set ids to entry_id param');
+
+			$entry_ids = implode('|', array_intersect(
+				explode('|', $entry_ids),
+				explode('|', $params['entry_id'])
+			));
+		}
+
+		// -------------------------------------------
+		// Set params accordingly
+		// -------------------------------------------
+
+		// Force no_results by setting entry_id to -1
+		if (empty($entry_ids))
+		{
+			ee()->TMPL->log_item('Low Reorder: No entry ids found');
+			$params['entry_id'] = '-1';
+		}
+		else
+		{
+			ee()->TMPL->log_item('Low Reorder: Setting fixed_order param to found ids');
+			unset($params['entry_id']);
+			$params['fixed_order'] = $entry_ids;
+		}
+
+		// remove orderby
+		unset($params['orderby']);
+
+		// And return the parameters again
+		return $params;
 	}
 
 } // End Class low_reorder_ext

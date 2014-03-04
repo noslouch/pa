@@ -39,9 +39,15 @@ abstract class Assets_base_file
 	 * @abstract
 	 * @param $file_id
 	 * @param Assets_base_source $source
+	 * @param $prefetched_row if passed, will be used instead of loading DB data
 	 */
-	public function __construct($file_id, Assets_base_source $source)
+	public function __construct($file_id, Assets_base_source $source, $prefetched_row = null)
 	{
+		if (!empty($prefetched_row))
+		{
+			$this->row = $prefetched_row;
+		}
+
 		$this->source = $source;
 
 		$this->EE = get_instance();
@@ -108,28 +114,6 @@ abstract class Assets_base_file
 	abstract public function subfolder($manipulation_name = '');
 
 	/**
-	 * Return the file height
-	 *
-	 * @param string $manipulation_name
-	 * @return mixed
-	 */
-	public function height($manipulation_name = '')
-	{
-		return $this->row_field('height');
-	}
-
-	/**
-	 * Return the file width
-	 *
-	 * @param string $manipulation_name
-	 * @return mixed
-	 */
-	public function width($manipulation_name = '')
-	{
-		return $this->row_field('width');
-	}
-
-	/**
 	 * Return file size
 	 *
 	 * @abstract
@@ -169,6 +153,28 @@ abstract class Assets_base_file
 	function __call($name, $arguments)
 	{
 		return $this->row_field($name);
+	}
+
+	/**
+	 * Return the file height
+	 *
+	 * @param string $manipulation_name
+	 * @return mixed
+	 */
+	public function height($manipulation_name = '')
+	{
+		return $this->row_field('height');
+	}
+
+	/**
+	 * Return the file width
+	 *
+	 * @param string $manipulation_name
+	 * @return mixed
+	 */
+	public function width($manipulation_name = '')
+	{
+		return $this->row_field('width');
 	}
 
 	/**
@@ -357,5 +363,26 @@ abstract class Assets_base_file
 		$path = Assets_helper::ensure_cache_path('assets/thumbs/'.$this->file_id);
 
 		return $path.$this->file_id.'_'.$size.'.'.$this->extension();
+	}
+
+	/**
+	 * Return a file's source.
+	 *
+	 * @return Assets_base_source|Assets_ee_source
+	 */
+	public function source()
+	{
+		return $this->source;
+	}
+
+	/**
+	 * Return a file source's subfolder setting
+	 *
+	 * @return string
+	 */
+	public function source_subfolder()
+	{
+		$settings = $this->source()->settings();
+		return !empty($settings->subfolder) ? rtrim($settings->subfolder, '/').'/' : '';
 	}
 }

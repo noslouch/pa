@@ -22,6 +22,9 @@ class Assets_ft extends EE_Fieldtype
 	var $row_id; // Set by Matrix
 	var $var_id; // Set by Low Variables
 	var $is_draft = 0; // Set by Better Workflow
+	var $element_id; // Set by Content Elements
+	var $element_name; // Set by Content Elements
+
 
 	/**
 	 * @var EE
@@ -37,6 +40,7 @@ class Assets_ft extends EE_Fieldtype
 
 		// Add Package Path
 		$this->EE->load->add_package_path(PATH_THIRD.'assets/');
+
 
 		// -------------------------------------------
 		//  Prepare Cache
@@ -113,9 +117,9 @@ class Assets_ft extends EE_Fieldtype
 
 		// get all the file upload directories
 		$filedirs = $this->EE->db->select('id, name')->from('upload_prefs')
-		                         ->where('site_id', $this->EE->config->item('site_id'))
-		                         ->order_by('name')
-		                         ->get()->result();
+			->where('site_id', $this->EE->config->item('site_id'))
+			->order_by('name')
+			->get()->result();
 
 		$filedir_array = array();
 		foreach ($filedirs as $filedir)
@@ -185,6 +189,37 @@ class Assets_ft extends EE_Fieldtype
 			}
 		}
 	}
+
+	/**
+	 * Display Element Settings
+	 */
+	function display_element_settings($data)
+	{
+		// Add Package Path, because sometimes EE forgets it.
+		$this->EE->load->add_package_path(PATH_THIRD.'assets/');
+
+		return $this->_field_settings($data);
+	}
+
+	/**
+	 * Display Grid Settings
+	 */
+	function grid_display_settings($data)
+	{
+		// Add Package Path, because sometimes EE forgets it.
+		$this->EE->load->add_package_path(PATH_THIRD.'assets/');
+
+		$rows = $this->_field_settings($data);
+
+		// Just throw the HTML together.
+		foreach ($rows as &$row)
+		{
+			$row = EE_Fieldtype::grid_settings_row($row[0], $row[1]);
+		}
+		return $rows;
+
+	}
+
 
 	/**
 	 * Display Cell Settings
@@ -261,12 +296,29 @@ class Assets_ft extends EE_Fieldtype
 	 */
 	function save_settings($data)
 	{
-		$settings = $this->EE->input->post('assets');
+		if (empty($data['assets']))
+		{
+			$settings = $this->EE->input->post('assets');
+		}
+		else
+		{
+			$settings = $data['assets'];
+		}
 
 		// cross the T's
 		$settings['field_fmt'] = 'none';
 		$settings['field_show_fmt'] = 'n';
 		$settings['field_type'] = 'assets';
+
+		return $settings;
+	}
+
+	/**
+	 * Save Field Settings
+	 */
+	function save_element_settings($settings)
+	{
+		$settings = $settings['assets'];
 
 		return $settings;
 	}
@@ -412,9 +464,9 @@ class Assets_ft extends EE_Fieldtype
 			if ($this->EE->db->field_exists($field_name, 'channel_data'))
 			{
 				$entries = $this->EE->db->select("entry_id, {$field_name}")
-				                        ->where("{$field_name} LIKE '{filedir_%'")
-				                        ->where("{$field_name} != ", '')
-				                        ->get('channel_data');
+					->where("{$field_name} LIKE '{filedir_%'")
+					->where("{$field_name} != ", '')
+					->get('channel_data');
 
 				foreach ($entries->result() as $entry)
 				{
@@ -429,7 +481,7 @@ class Assets_ft extends EE_Fieldtype
 		{
 			// delete any asset associations created by this field
 			$this->EE->db->where('field_id', $data['field_id'])
-			             ->delete('assets_selections');
+				->delete('assets_selections');
 		}
 
 		// just return the default column settings
@@ -452,9 +504,9 @@ class Assets_ft extends EE_Fieldtype
 			if ($field_id && $this->EE->db->field_exists($col_name, 'matrix_data'))
 			{
 				$rows = $this->EE->db->select("entry_id, row_id, {$col_name}")
-				                     ->where("{$col_name} LIKE '{filedir_%'")
-				                     ->where("{$col_name} != ", '')
-				                     ->get('matrix_data');
+					->where("{$col_name} LIKE '{filedir_%'")
+					->where("{$col_name} != ", '')
+					->get('matrix_data');
 
 				foreach ($rows->result() as $row)
 				{
@@ -471,7 +523,7 @@ class Assets_ft extends EE_Fieldtype
 		{
 			// delete any asset associations created by this column
 			$this->EE->db->where('col_id', $data['col_id'])
-			             ->delete('assets_selections');
+				->delete('assets_selections');
 		}
 	}
 
@@ -500,6 +552,16 @@ class Assets_ft extends EE_Fieldtype
 		{
 			$vars['field_name'] = $this->field_name;
 			$vars['field_id'] = str_replace(array('[',']'), array('_',''), $this->field_name);
+		}
+		else if ($this->element_id)
+		{
+			$vars['field_name'] = $this->field_name;
+			$vars['field_id'] = $this->_extract_element_id($this->field_name);
+		}
+		else if ($context == 'grid')
+		{
+			$cell_name = 'col_id_'.$this->settings['col_id'];
+			$vars['field_id']  = $vars['field_name'] = $cell_name;
 		}
 		else
 		{
@@ -533,13 +595,27 @@ class Assets_ft extends EE_Fieldtype
 
 		// should there be existing data?
 		else if (
-				($context == 'channel' && $this->EE->input->get('entry_id'))
+			($context == 'channel' && $this->EE->input->get('entry_id'))
 			||
-				($context == 'matrix' && isset($this->row_id))
+			($context == 'matrix' && isset($this->row_id))
 			||
-				($context == 'low')
-			)
+			($context == 'grid' && isset($this->settings['grid_row_id']) && isset($this->settings['col_id']))
+			||
+			($context == 'low')
+			||
+			($context == 'content_elements')
+		)
 		{
+			if ($context == 'grid')
+			{
+				// Set up these properties so we can select data the same way we do for Matrix
+				$this->row_id = $this->settings['grid_row_id'];
+				$this->col_id = $this->settings['col_id'];
+
+				// Also stop lying about our field id.
+				$this->field_id = $this->settings['grid_field_id'];
+			}
+
 			$sql = "SELECT DISTINCT a.source_type, a.folder_id, a.file_name, a.file_id, af.source_id, af.filedir_id
 			        FROM exp_assets_files AS a
 			        INNER JOIN exp_assets_selections AS ae ON ae.file_id = a.file_id
@@ -552,16 +628,36 @@ class Assets_ft extends EE_Fieldtype
 					$sql .= " ae.var_id = {$this->var_id}";
 					break;
 
+				case 'content_elements':
+					$element_id = $this->_extract_element_id($this->field_name);
+					$sql .= ' ae.element_id = "'.$element_id.'"';
+
+					$is_draft = isset($this->EE->session->cache['ep_better_workflow']['is_draft']) && $this->EE->session->cache['ep_better_workflow']['is_draft'];
+					$sql .= ' AND is_draft = ' . ($is_draft ? '1' : '0') . ' ';
+
+					break;
+
 				case 'matrix':
+				case 'grid':
 					$sql .= " ae.col_id = '{$this->col_id}'
 					          AND ae.row_id = '{$this->row_id}'
 					          AND";
+					$entry_id = $this->EE->security->xss_clean($this->EE->input->get('entry_id'));
+					if (!$entry_id)
+					{
+						$entry_id = $this->settings['entry_id'];
+					}
 
+					$sql .= " ae.entry_id ". ($entry_id ? "= '{$entry_id}'" : 'IS NULL')
+						. " AND ae.field_id ". ($this->field_id ? "= '{$this->field_id}'" : 'IS NULL');
+
+					break;
 				case 'channel':
 					$entry_id = $this->EE->security->xss_clean($this->EE->input->get('entry_id'));
 
 					$sql .= " ae.entry_id ". ($entry_id ? "= '{$entry_id}'" : 'IS NULL')
 						. " AND ae.field_id ". ($this->field_id ? "= '{$this->field_id}'" : 'IS NULL');
+
 			}
 
 			$sql .= ' ORDER BY ae.sort_order';
@@ -572,9 +668,9 @@ class Assets_ft extends EE_Fieldtype
 			}
 
 			// -------------------------------------------
- 			//  'assets_field_selections_query' hook
- 			//   - Modify the row data before it gets saved to exp_assets_selections
- 			//
+			//  'assets_field_selections_query' hook
+			//   - Modify the row data before it gets saved to exp_assets_selections
+			//
 			if ($this->EE->extensions->active_hook('assets_field_selections_query'))
 			{
 				$query = $this->EE->extensions->call('assets_field_selections_query', $this, $sql);
@@ -583,8 +679,8 @@ class Assets_ft extends EE_Fieldtype
 			{
 				$query = $this->EE->db->query($sql);
 			}
- 			//
- 			// -------------------------------------------
+			//
+			// -------------------------------------------
 
 
 			foreach ($query->result() as $row)
@@ -623,6 +719,15 @@ class Assets_ft extends EE_Fieldtype
 			$vars['cols']   = $this->settings['show_cols'];
 		}
 
+		if ($context == 'content_elements')
+		{
+			$vars['ce_options'] = Assets_helper::get_json($this->settings);
+		}
+		else
+		{
+			$vars['ce_options'] = NULL;
+		}
+
 		$r = $this->EE->load->view('field/field', $vars, TRUE);
 
 		// Add a hidden input in case no files are selected
@@ -641,12 +746,16 @@ class Assets_ft extends EE_Fieldtype
 			{
 				$namespace = 'col_id_'.$this->col_id;
 			}
+			else if ($context == 'content_elements')
+			{
+				$namespace = 'element_id_'.$this->element_id;
+			}
 			else
 			{
 				$namespace = 'field_id_'.$this->field_id;
 			}
 
-			$settings_json = json_encode(array(
+			$settings_json = Assets_helper::get_json(array(
 				'filedirs'       => $this->settings['filedirs'],
 				'multi'          => $vars['multi'],
 				'view'           => $this->settings['view'],
@@ -660,6 +769,18 @@ class Assets_ft extends EE_Fieldtype
 			{
 				Assets_helper::insert_js('Assets.Field.matrixConfs.col_id_'.$this->col_id.' = '.$settings_json.';');
 				$this->cache['initialized_col_settings'][$this->col_id] = TRUE;
+			}
+			if (!empty($this->element_id))
+			{
+				if ($this->field_name != '__element_name__[__index__][data]')
+				{
+					$field_id = $this->_extract_element_id($this->field_name);
+					Assets_helper::insert_js("new Assets.Field('{$field_id}', '{$this->field_name}', {$settings_json});");
+				}
+			}
+			else if ($context == 'grid')
+			{
+				Assets_helper::insert_js('Assets.Field.gridConfs.col_id_'.$this->settings['col_id'].' = '.$settings_json.';');
 			}
 			else
 			{
@@ -701,6 +822,24 @@ class Assets_ft extends EE_Fieldtype
 	}
 
 	/**
+	 * Display Grid Cell
+	 */
+	function grid_display_field($data)
+	{
+		// include the resources
+		Assets_helper::include_sheet_resources();
+
+		if (! isset($this->cache['included_grid_resources']))
+		{
+			Assets_helper::include_js('grid.js');
+
+			$this->cache['included_grid_resources'] = TRUE;
+		}
+
+		return $this->_build_field($data, 'grid');
+	}
+
+	/**
 	 * Display Variable Field
 	 */
 	function display_var_field($data)
@@ -710,6 +849,27 @@ class Assets_ft extends EE_Fieldtype
 		return $this->_build_field($data, 'low');
 	}
 
+	/**
+	 * Display Content Elements Field
+	 *
+	 * @param string $data
+	 * @return string
+	 */
+	function display_element($data)
+	{
+		// have we included the CE script?
+		if (! isset($this->cache['included_content_resources']))
+		{
+			Assets_helper::include_js('content_elements.js');
+			$this->cache['included_content_resources'] = TRUE;
+		}
+
+		// Load this each time, because EE might have discarded it.
+		$this->EE->load->add_package_path(PATH_THIRD.'assets');
+
+		return $this->_build_field($data, 'content_elements');
+	}
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -717,10 +877,60 @@ class Assets_ft extends EE_Fieldtype
 	 */
 	function validate($data)
 	{
+		$require_upload = FALSE;
+
 		// is this a required field?
 		if ($this->settings['field_required'] == 'y' && ! (is_array($data) && array_filter($data)))
 		{
-			return lang('required');
+			if (empty($_FILES))
+			{
+				return lang('required');
+			}
+			else
+			{
+				$require_upload = TRUE;
+			}
+		}
+
+		if (!empty($_FILES))
+		{
+			$field_name = $this->EE->db->get_where('channel_fields', array('field_id' => $this->field_id))->row()->field_name;
+			$filedir_id = $this->EE->input->post($field_name .'_filedir');
+
+			if (!empty($_FILES[$field_name]['name']) && !empty($filedir_id))
+			{
+				$source = $this->EE->assets_lib->instantiate_source_type((object) array('source_type' => 'ee', 'filedir_id' => $filedir_id));
+				$filedir = $source->settings();
+
+				if ($filedir->max_size)
+				{
+					if (!is_array($_FILES[$field_name]['tmp_name']))
+					{
+						$sizes = array($_FILES[$field_name]['size']);
+					}
+					else
+					{
+						$sizes = $_FILES[$field_name]['size'];
+					}
+
+					foreach ($sizes as $size)
+					{
+						if ($size > $filedir->max_size)
+						{
+							$this->EE->lang->loadfile('assets');
+
+							return $this->EE->functions->var_swap(lang('file_too_large'), array(
+								'max_size' => Assets_helper::format_filesize($filedir->max_size)
+							));
+
+						}
+					}
+				}
+			}
+			elseif ($require_upload)
+			{
+				return lang('required');
+			}
 		}
 
 		return TRUE;
@@ -750,8 +960,8 @@ class Assets_ft extends EE_Fieldtype
 		if ($file_ids)
 		{
 			$query = $this->EE->db->select('file_name')
-			                      ->where_in('file_id', $file_ids)
-			                      ->get('assets_files');
+				->where_in('file_id', $file_ids)
+				->get('assets_files');
 
 			foreach ($query->result() as $asset)
 			{
@@ -777,6 +987,19 @@ class Assets_ft extends EE_Fieldtype
 	}
 
 	/**
+	 * Save a BWF draft for Content Elements element.
+	 *
+	 * @param $data
+	 * @return mixed
+	 */
+	public function save_element_draft($data)
+	{
+		$this->is_draft = 1;
+		$this->post_save_element($data);
+		return $data;
+	}
+
+	/**
 	 * Discard a BWF draft.
 	 */
 	public function draft_discard()
@@ -784,6 +1007,20 @@ class Assets_ft extends EE_Fieldtype
 		$where = array(
 			'entry_id' => $this->settings['entry_id'],
 			'field_id' => $this->settings['field_id'],
+			'is_draft' => 1
+		);
+
+		$this->EE->db->where($where)->delete('assets_selections');
+	}
+
+	/**
+	 * Discard a BWF draft for a content element.
+	 */
+	public function discard_element_draft($data)
+	{
+
+		$where = array(
+			'element_id' => $this->element_id,
 			'is_draft' => 1
 		);
 
@@ -810,6 +1047,26 @@ class Assets_ft extends EE_Fieldtype
 	}
 
 	/**
+	 * Publish a BWF draft for a content element.
+	 */
+	public function publish_element_draft($data)
+	{
+
+		$where = array(
+			'element_id' => $this->element_id,
+			'is_draft' => 0
+		);
+		$this->EE->db->where($where)->delete('assets_selections');
+
+		$where['is_draft'] = 1;
+		$update = array('is_draft' => 0);
+		$this->EE->db->where($where)->update('assets_selections', $update);
+
+		return;
+	}
+
+
+	/**
 	 * Save
 	 */
 	function save($file_ids)
@@ -828,50 +1085,31 @@ class Assets_ft extends EE_Fieldtype
 
 			if (!empty($_FILES[$field_name]['name']) && !empty($filedir_id))
 			{
-				$filename = $_FILES[$field_name]['name'];
-				try
+				$file_data = array();
+
+				// If multiple files are submitted we can always rely on PHP to mess up the _FILES array.
+				if (is_array($_FILES[$field_name]['name']))
 				{
-					$source = $this->EE->assets_lib->instantiate_source_type((object) array('source_type' => 'ee', 'filedir_id' => $filedir_id));
-
-					$filedir = $source->settings();
-					$filename = preg_replace('/[^a-z0-9_\-\.]/i', '_', $filename);
-
-					$file_parts = explode('.', $filename);
-					$ext = array_pop($file_parts);
-					$file_base = join(".", $file_parts);
-					$filename = $file_base . '.' . $ext;
-					$target = $filedir->server_path . $filename;
-
-					$i = 0;
-					while (file_exists($target))
+					foreach ($_FILES[$field_name]['name'] as $index => $name)
 					{
-						if (is_numeric($i) && $i < 50)
-						{
-							$i++;
-						}
-						else{
-							$i = uniqid('', TRUE);
-						}
-
-						$filename = $file_base . '_' . $i . '.' . $ext;
-						$target = $filedir->server_path . $filename;
-					}
-
-
-					move_uploaded_file($_FILES[$field_name]['tmp_name'], $target);
-					$file_id = $this->EE->assets_lib->register_ee_file($filedir->id, $filename);
-					if ($file_id)
-					{
-						Assets_helper::create_ee_thumbnails($target, $filedir->id);
-
-						$this->cache['uploaded_assets'][$this->field_id] = array('file_id' => $file_id);
-						$file_ids = array($file_id);
+						$file_data[] = array('name' => $name, 'tmp_name' => $_FILES[$field_name]['tmp_name'][$index]);
 					}
 				}
-				catch (Exception $exception)
+				else
 				{
-					// Skip this.
+					$file_data[] = array('name' => $_FILES[$field_name]['name'], 'tmp_name' => $_FILES[$field_name]['tmp_name']);
 				}
+
+				$file_ids = array();
+				foreach ($file_data as $data)
+				{
+					$file_ids[] = $this->_simple_html_upload($data, $filedir_id);
+				}
+
+			}
+			else
+			{
+				return;
 			}
 		}
 
@@ -883,12 +1121,74 @@ class Assets_ft extends EE_Fieldtype
 	}
 
 	/**
+	 * Save Element
+	 */
+	function save_element($data)
+	{
+
+		if (!$this->element_id)
+		{
+			return '';
+		}
+
+		// ignore if it doesn't look like Assets data
+		if (! is_array($data)) return '';
+
+		$file_ids = array_filter($data);
+
+		$this->cache['content_elements'][$this->element_id] = $file_ids;
+
+		// return the filenames
+		return $this->_get_filenames($file_ids);
+	}
+
+	/**
+	 * Save Grid
+	 */
+	function grid_save($data)
+	{
+
+		// ignore if it doesn't look like Assets data
+		if (! is_array($data) OR empty($this->settings['col_id']) OR empty($this->settings['grid_row_name'])) {
+			return '';
+		}
+
+		$file_ids = array_filter($data);
+
+		$this->cache['field_data']['grid'][$this->settings['grid_row_name']][$this->settings['col_id']] = $file_ids;
+
+		// return the filenames
+		return $this->_get_filenames($file_ids);
+	}
+
+	/**
 	 * Save Cell
 	 */
 	function save_cell($file_ids)
 	{
-		// ignore if it doesn't look like Assets data
-		if (! is_array($file_ids)) return;
+
+		// ignore if it doesn't look like submitted Assets data
+		if (! is_array($file_ids))
+		{
+			$field_name = $this->EE->db->get_where('channel_fields', array('field_id' => $this->field_id))->row()->field_name;
+			$row_name = $this->settings['row_name'];
+			$col_name = $this->settings['col_name'];
+			$filedir_id = isset($_POST[$field_name][$row_name][$col_name.'_filedir']) ? $_POST[$field_name][$row_name][$col_name.'_filedir'] : '';
+
+
+			if (!empty($_FILES[$field_name]['name'][$row_name][$col_name]) && !empty($filedir_id))
+			{
+				$file_array = array(
+					'name' => $_FILES[$field_name]['name'][$row_name][$col_name],
+					'tmp_name' => $_FILES[$field_name]['tmp_name'][$row_name][$col_name]);
+
+				$file_ids = array($this->_simple_html_upload($file_array, $filedir_id));
+			}
+			else
+			{
+				return;
+			}
+		}
 
 		// save the post data for later
 		$id = ($this->var_id ? $this->var_id : $this->field_id);
@@ -944,10 +1244,64 @@ class Assets_ft extends EE_Fieldtype
 			'is_draft' => $this->is_draft
 		);
 
-		if (!empty($this->cache['uploaded_assets'][$this->field_id]))
+		// save the changes
+		$this->_save_field($file_ids, $where);
+	}
+
+	/**
+	 * Post Save
+	 */
+
+	function post_save_element ($data)
+	{
+
+		if (!$this->element_id)
 		{
-			$file_ids[] = $this->cache['uploaded_assets'][$this->field_id]['file_id'];
+			return;
 		}
+
+		if (empty($this->cache['content_elements'][$this->element_id]))
+		{
+			return;
+		}
+
+		$file_ids = $this->cache['content_elements'][$this->element_id];
+
+		$where = array(
+			'element_id' => $this->element_id
+		);
+
+		if ($this->is_draft OR isset($this->EE->session->cache['ep_better_workflow']['is_draft']) && $this->EE->session->cache['ep_better_workflow']['is_draft'])
+		{
+			$where['is_draft'] = 1;
+		}
+
+		// save the changes
+		$this->_save_field($file_ids, $where);
+	}
+
+
+	/**
+	 * Post-save Grid data.
+	 *
+	 * @param $data
+	 */
+	function grid_post_save($data)
+	{
+		if (empty($this->cache['field_data']['grid'][$this->settings['grid_row_name']][$this->settings['col_id']]))
+		{
+			return;
+		}
+
+		$file_ids = $this->cache['field_data']['grid'][$this->settings['grid_row_name']][$this->settings['col_id']];
+
+		$where = array(
+			'col_id'       => $this->settings['col_id'],
+			'row_id'       => $this->settings['grid_row_id'],
+			'field_id'     => $this->settings['grid_field_id'],
+			'entry_id'     => $this->settings['entry_id'],
+			'content_type' => 'grid'
+		);
 
 		// save the changes
 		$this->_save_field($file_ids, $where);
@@ -967,8 +1321,9 @@ class Assets_ft extends EE_Fieldtype
 		$file_ids = $this->cache['field_data'][$id][$this->settings['col_id']][$this->settings['row_name']];
 
 		$where = array(
-			'col_id'   => $this->settings['col_id'],
-			'row_id'   => $this->settings['row_id']
+			'col_id'       => $this->settings['col_id'],
+			'row_id'       => $this->settings['row_id'],
+			'content_type' => 'matrix'
 		);
 
 		if ($this->var_id)
@@ -1003,12 +1358,12 @@ class Assets_ft extends EE_Fieldtype
 		{
 			$where = $this->EE->extensions->call('assets_save_row', $this, $where);
 		}
- 		//
- 		// -------------------------------------------
+		//
+		// -------------------------------------------
 
 		// delete previous selections
 		$this->EE->db->where($where)
-		             ->delete('assets_selections');
+			->delete('assets_selections');
 
 		if ($file_ids)
 		{
@@ -1035,7 +1390,20 @@ class Assets_ft extends EE_Fieldtype
 	function delete($entry_ids)
 	{
 		$this->EE->db->where_in('entry_id', $entry_ids)
-		             ->delete('assets_selections');
+			->delete('assets_selections');
+	}
+
+	/**
+	 * Delete Grid Rows.
+	 *
+	 * @param $row_ids
+	 */
+	function grid_delete($row_ids)
+	{
+		$this->EE->db->where_in('row_id', $row_ids)
+			->where('field_id', $this->settings['grid_field_id'])
+			->where('content_type', 'grid')
+			->delete('assets_selections');
 	}
 
 	/**
@@ -1044,7 +1412,8 @@ class Assets_ft extends EE_Fieldtype
 	function delete_rows($row_ids)
 	{
 		$this->EE->db->where_in('row_id', $row_ids)
-		             ->delete('assets_selections');
+			->where('content_type', 'matrix')
+			->delete('assets_selections');
 	}
 
 	/**
@@ -1053,7 +1422,7 @@ class Assets_ft extends EE_Fieldtype
 	function delete_var($var_id)
 	{
 		$this->EE->db->where('var_id', $var_id)
-		             ->delete('assets_selections');
+			->delete('assets_selections');
 	}
 
 	// --------------------------------------------------------------------
@@ -1063,9 +1432,18 @@ class Assets_ft extends EE_Fieldtype
 	 */
 	function pre_process($data)
 	{
+
 		// -------------------------------------------
 		//  Get the exp_assets_selections rows
 		// -------------------------------------------
+
+		// Grid specific
+		if (isset($this->content_type) && $this->content_type == 'grid')
+		{
+			$this->field_id = $this->settings['grid_field_id'];
+			$this->col_id = $this->settings['col_id'];
+			$this->row_id = $this->settings['grid_row_id'];
+		}
 
 		// did the extension get called and do we have the requested entries?
 		if(isset($this->cache['assets_selections_rows']) && ! $this->row_id && ! $this->var_id
@@ -1117,6 +1495,14 @@ class Assets_ft extends EE_Fieldtype
 			$rows = $query->result_array();
 		}
 
+		// Since EE doesn't bother creating a new Fieldtype object for different context,
+		// we have to reset this, otherwise parsing non-Matrix Assets fields in the same entry
+		// are not possible once an Assets field is parsed within a Grid field.
+		if (isset($this->content_type) && $this->content_type == 'grid')
+		{
+			$this->row_id = NULL;
+		}
+
 		// -------------------------------------------
 		//  Get the files
 		// -------------------------------------------
@@ -1129,7 +1515,7 @@ class Assets_ft extends EE_Fieldtype
 			{
 				$source = $this->EE->assets_lib->instantiate_source_type((object) $row);
 				{
-					if ($file = $source->get_file($row['file_id']))
+					if ($file = $source->get_file($row['file_id'], FALSE, $row))
 					{
 						$files[] = $file;
 					}
@@ -1152,7 +1538,7 @@ class Assets_ft extends EE_Fieldtype
 	private function _apply_params(&$data, $params)
 	{
 		// ignore if there are no selected files
-		if (! $data) return;
+		if (! $data || !is_array($data)) return;
 
 		// -------------------------------------------
 		//  Orderby and Sort
@@ -1358,6 +1744,49 @@ class Assets_ft extends EE_Fieldtype
 	}
 
 	/**
+	 * Render the element.
+	 *
+	 * @param $data
+	 * @param array $params
+	 * @param $tagdata
+	 * @return bool
+	 */
+	function replace_element_tag($data, $params = array(), $tagdata = FALSE)
+	{
+
+		if ($data && $this->element_id)
+		{
+			$is_draft = isset($this->EE->session->cache['ep_better_workflow']['is_draft']) && $this->EE->session->cache['ep_better_workflow']['is_draft'];
+
+			// array_values is applied here to re-index the array, as we need the keys to be in a numerical order.
+			$data = array_values($this->EE->assets_lib->get_file_by_id($this->EE->assets_lib->get_file_ids_by_element_id($this->element_id, $is_draft)));
+			$tagdata = $this->EE->functions->var_swap($tagdata, array('element_name' => $this->element_name));
+			if (preg_match_all('/(\{files(\s.*?)?\}(.*?)\{\/files\})/s', $tagdata, $matches))
+			{
+				foreach ($matches[1] as $index => $matched_markup)
+				{
+					$params = array();
+					if (!empty($matches[2][$index]))
+					{
+						$parameters = array_filter(preg_split("/\s/", $matches[2][$index]));
+						foreach ($parameters as $parameter)
+						{
+							if (strpos($parameter, '='))
+							{
+								list ($key, $value) = explode("=", $parameter);
+								$params[$key] = trim($value, "'" . '"');
+							}
+						}
+					}
+					$replace = $this->replace_tag($data, $params, $matches[3][$index]);
+					$tagdata = str_replace($matches[1][$index], $replace, $tagdata);
+				}
+			}
+			return $tagdata;
+		}
+	}
+
+	/**
 	 * Catches {assets_field:manipulation} and {assets_field:tag_func:manipulation} tags
 	 *
 	 * @param Assets_base_file $file_info
@@ -1459,7 +1888,7 @@ class Assets_ft extends EE_Fieldtype
 		$this->_apply_params($data, $params);
 		if (! $data) return;
 
-		return $data[0]->filename();
+		return $data[0]->filename_sans_extension();
 	}
 
 	/**
@@ -1651,5 +2080,91 @@ class Assets_ft extends EE_Fieldtype
 		if (! $data) return;
 
 		return $data[0]->row_field('location');
+	}
+
+	/**
+	 * Extract a CE element id from field name
+	 *
+	 * @param $field_name
+	 * @return string
+	 */
+	private function _extract_element_id($field_name)
+	{
+		if (!preg_match('/\[([a-z0-9]+)\]\[data\]/i', $this->field_name, $matches))
+		{
+			return '';
+		}
+
+		return $matches[1];
+	}
+
+	/**
+	 * Make Assets Grid compatible.
+	 *
+	 * @param $name
+	 * @return bool
+	 */
+	public function accepts_content_type($name)
+	{
+		return ($name == 'channel' || $name == 'grid');
+	}
+
+	/**
+	 * Perform the simple HTML upload for frontend forms.
+	 *
+	 * @param $file_info
+	 * @param $filedir_id
+	 * @return mixed
+	 */
+	private function _simple_html_upload($file_info, $filedir_id)
+	{
+		$filename = $file_info['name'];
+
+		try
+		{
+			$source = $this->EE->assets_lib->instantiate_source_type((object) array('source_type' => 'ee', 'filedir_id' => $filedir_id));
+			$filedir = $source->settings();
+
+			if($filedir->max_size && filesize($file_info['tmp_name']) > $filedir->max_size)
+			{
+				return FALSE;
+			}
+
+			$filename = preg_replace('/[^a-z0-9_\-\.]/i', '_', $filename);
+
+			$file_parts = explode('.', $filename);
+			$ext = array_pop($file_parts);
+			$file_base = join(".", $file_parts);
+			$filename = $file_base . '.' . $ext;
+			$target = $filedir->server_path . $filename;
+
+			$i = 0;
+			while (file_exists($target))
+			{
+				if (is_numeric($i) && $i < 50)
+				{
+					$i++;
+				}
+				else{
+					$i = uniqid('', TRUE);
+				}
+
+				$filename = $file_base . '_' . $i . '.' . $ext;
+				$target = $filedir->server_path . $filename;
+			}
+
+
+			move_uploaded_file($file_info['tmp_name'], $target);
+			$file_id = $this->EE->assets_lib->register_ee_file($filedir->id, $filename);
+			if ($file_id)
+			{
+				Assets_helper::create_ee_thumbnails($target, $filedir->id);
+				return $file_id;
+			}
+		}
+		catch (Exception $exception)
+		{
+			// Skip this.
+		}
 	}
 }

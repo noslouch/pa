@@ -9,7 +9,7 @@ include(PATH_THIRD.'low_reorder/config.php');
  * @package        low_reorder
  * @author         Lodewijk Schutte <hi@gotolow.com>
  * @link           http://gotolow.com/addons/low-reorder
- * @copyright      Copyright (c) 2009-2012, Low
+ * @copyright      Copyright (c) 2009-2013, Low
  */
 class Low_reorder_base {
 
@@ -52,20 +52,20 @@ class Low_reorder_base {
 	// --------------------------------------------------------------------
 
 	/**
-	 * EE object
-	 *
-	 * @var        object
-	 * @access     protected
-	 */
-	protected $EE;
-
-	/**
 	 * Package name
 	 *
 	 * @var        string
 	 * @access     protected
 	 */
 	protected $package = LOW_REORDER_PACKAGE;
+
+	/**
+	 * Main class name
+	 *
+	 * @var        string
+	 * @access     protected
+	 */
+	protected $class_name;
 
 	/**
 	 * Site id shortcut
@@ -113,7 +113,9 @@ class Low_reorder_base {
 	 * @var        array
 	 * @access     protected
 	 */
-	protected $default_settings = array();
+	protected $default_settings = array(
+		'can_create_sets' => array(1)
+	);
 
 	/**
 	 * Extra nav in CP
@@ -146,28 +148,22 @@ class Low_reorder_base {
 	public function __construct()
 	{
 		// -------------------------------------
-		//  Get global object
-		// -------------------------------------
-
-		$this->EE =& get_instance();
-
-		// -------------------------------------
 		//  Define the package path
 		// -------------------------------------
 
-		$this->EE->load->add_package_path(PATH_THIRD.$this->package);
+		ee()->load->add_package_path(PATH_THIRD.$this->package);
 
 		// -------------------------------------
 		//  Load helper
 		// -------------------------------------
 
-		$this->EE->load->helper($this->package);
+		ee()->load->helper($this->package);
 
 		// -------------------------------------
 		//  Libraries
 		// -------------------------------------
 
-		$this->EE->load->library('Low_reorder_model');
+		ee()->load->library('Low_reorder_model');
 
 		// -------------------------------------
 		//  Load the models
@@ -176,16 +172,22 @@ class Low_reorder_base {
 		Low_reorder_model::load_models();
 
 		// -------------------------------------
+		//  Set main class name
+		// -------------------------------------
+
+		$this->class_name = ucfirst($this->package);
+
+		// -------------------------------------
 		//  Get site shortcut
 		// -------------------------------------
 
-		$this->site_id = (int) $this->EE->config->item('site_id');
+		$this->site_id = (int) ee()->config->item('site_id');
 
 		// -------------------------------------
 		//  Get member group shortcut
 		// -------------------------------------
 
-		$this->member_group = (int) @$this->EE->session->userdata['group_id'];
+		$this->member_group = (int) @ee()->session->userdata['group_id'];
 	}
 
 	// --------------------------------------------------------------------
@@ -194,38 +196,41 @@ class Low_reorder_base {
 	 * Get settings
 	 *
 	 * @access     protected
-	 * @param      array
-	 * @return     array
+	 * @param      string
+	 * @return     mixed
 	 */
-	protected function get_settings($settings = array())
+	protected function get_settings($which = FALSE)
 	{
-		if ( ! $settings)
+		if (empty($this->settings))
 		{
 			// Check cache
-			if (($this->settings = low_get_cache(LOW_REORDER_PACKAGE, 'settings')) === FALSE)
+			if (($this->settings = low_get_cache($this->package, 'settings')) === FALSE)
 			{
 				// Not in cache? Get from DB and add to cache
-				$query = $this->EE->db->select('settings')
+				$query = ee()->db->select('settings')
 				       ->from('extensions')
-				       ->where('class', 'Low_reorder_ext')
+				       ->where('class', $this->class_name.'_ext')
 				       ->limit(1)
 				       ->get();
 
 				$this->settings = (array) @unserialize($query->row('settings'));
 
 				// Add to cache
-				low_set_cache(LOW_REORDER_PACKAGE, 'settings', $this->settings);
+				low_set_cache($this->package, 'settings', $this->settings);
 			}
-		}
-		else
-		{
-			$this->settings = $settings;
 		}
 
 		// Always fallback to default settings
 		$this->settings = array_merge($this->default_settings, $this->settings);
 
-		return $this->settings;
+		if ($which !== FALSE)
+		{
+			return isset($this->settings[$which]) ? $this->settings[$which] : FALSE;
+		}
+		else
+		{
+			return $this->settings;
+		}
 	}
 
 	// --------------------------------------------------------------------
@@ -257,16 +262,16 @@ class Low_reorder_base {
 
 		$version = '&amp;v=' . (LOW_REORDER_DEBUG ? time() : LOW_REORDER_VERSION);
 
-		$this->EE->cp->load_package_css($this->package.$version);
-		$this->EE->cp->load_package_js($this->package.$version);
+		ee()->cp->load_package_css($this->package.$version);
+		ee()->cp->load_package_js($this->package.$version);
 
 		// -------------------------------------
 		//  Add feedback msg to output
 		// -------------------------------------
 
-		if ($this->data['message'] = $this->EE->session->flashdata('msg'))
+		if ($this->data['message'] = ee()->session->flashdata('msg'))
 		{
-			$this->EE->javascript->output(array(
+			ee()->javascript->output(array(
 				'$.ee_notice("'.lang($this->data['message']).'",{type:"success",open:true});',
 				'window.setTimeout(function(){$.ee_notice.destroy()}, 2000);'
 			));
@@ -279,16 +284,16 @@ class Low_reorder_base {
 		$nav = array();
 		$nav['low_reorder_module_name'] = $this->base_url;
 
-		if ($this->member_group == 1)
+		if ($this->member_group == 1 || in_array($this->member_group, $this->get_settings('can_create_sets')))
 		{
 			$nav['create_new_set'] = $this->base_url.AMP.'method=edit';
 		}
 
 		$nav += $this->extra_nav;
 
-		$this->EE->cp->set_right_nav($nav);
+		ee()->cp->set_right_nav($nav);
 
-		return $this->EE->load->view($file, $this->data, TRUE);
+		return ee()->load->view($file, $this->data, TRUE);
 	}
 
 	// --------------------------------------------------------------------
@@ -308,9 +313,9 @@ class Low_reorder_base {
 		// Check search params
 		// --------------------------------------
 
-		if ($search = $this->EE->low_reorder_set_model->get_search_params($params))
+		if ($search = ee()->low_reorder_set_model->get_search_params($params))
 		{
-			$where_search = $this->_search_where($search, 'd.');
+			$search_where = $this->_search_where($search, 'd.');
 		}
 
 		// --------------------------------------
@@ -319,13 +324,13 @@ class Low_reorder_base {
 
 		$site_ids = (REQ == 'CP')
 		          ? array($this->site_id)
-		          : array_values($this->EE->TMPL->site_ids);
+		          : array_values(ee()->TMPL->site_ids);
 
 		// --------------------------------------
 		//	Get channel entries
 		// --------------------------------------
 
-		$this->EE->db->select('DISTINCT(t.entry_id), t.channel_id, t.title, t.status, t.url_title')
+		ee()->db->select('DISTINCT(t.entry_id), t.channel_id, t.title, t.status, t.url_title')
 		             ->from('channel_titles t')
 		             ->where_in('t.site_id', $site_ids);
 
@@ -336,7 +341,7 @@ class Low_reorder_base {
 			list($channel_ids, $in) = low_explode_param($params['channel_id']);
 
 			// Adjust query accordingly
-			$this->EE->db->{($in ? 'where_in' : 'where_not_in')}('t.channel_id', $channel_ids);
+			ee()->db->{($in ? 'where_in' : 'where_not_in')}('t.channel_id', $channel_ids);
 		}
 
 		// Limit by entry_ids
@@ -346,7 +351,7 @@ class Low_reorder_base {
 			list($entry_ids, $in) = low_explode_param($params['entry_id']);
 
 			// Adjust query accordingly
-			$this->EE->db->{($in ? 'where_in' : 'where_not_in')}('t.entry_id', $entry_ids);
+			ee()->db->{($in ? 'where_in' : 'where_not_in')}('t.entry_id', $entry_ids);
 		}
 
 		// Limit by status
@@ -356,7 +361,7 @@ class Low_reorder_base {
 			list($status, $in) = low_explode_param($params['status']);
 
 			// Adjust query accordingly
-			$this->EE->db->{($in ? 'where_in' : 'where_not_in')}('t.status', $status);
+			ee()->db->{($in ? 'where_in' : 'where_not_in')}('t.status', $status);
 		}
 
 		// Limit by category
@@ -366,27 +371,34 @@ class Low_reorder_base {
 			list($categories, $in) = low_explode_param($params['category']);
 
 			// Join table
-			$this->EE->db->join('category_posts cp', 't.entry_id = cp.entry_id');
-			$this->EE->db->{($in ? 'where_in' : 'where_not_in')}('cp.cat_id', $categories);
+			ee()->db->join('category_posts cp', 't.entry_id = cp.entry_id');
+			ee()->db->{($in ? 'where_in' : 'where_not_in')}('cp.cat_id', $categories);
 		}
 
 		// Hide expired entries
 		if (@$params['show_expired'] != 'yes')
 		{
-			$this->EE->db->where("(t.expiration_date = 0 OR t.expiration_date >= {$this->EE->localize->now})");
+			ee()->db->where(sprintf("(t.expiration_date = 0 OR t.expiration_date >= '%s')",
+				ee()->localize->now));
 		}
 
 		// Hide expired entries
 		if (@$params['show_future_entries'] != 'yes')
 		{
-			$this->EE->db->where('t.entry_date <=', $this->EE->localize->now);
+			ee()->db->where('t.entry_date <=', ee()->localize->now);
+		}
+
+		// Sticky only
+		if (@$params['sticky'] == 'yes')
+		{
+			ee()->db->where('t.sticky', 'y');
 		}
 
 		// Limit by where search
-		if ( ! empty($where_search))
+		if ( ! empty($search_where))
 		{
-			$this->EE->db->join('channel_data d', 't.entry_id = d.entry_id');
-			$this->EE->db->where(implode(' AND ', $where_search), NULL, FALSE);
+			ee()->db->join('channel_data d', 't.entry_id = d.entry_id');
+			ee()->db->where(implode(' AND ', $search_where), NULL, FALSE);
 		}
 
 		// Order by given set order or entry date as fallback
@@ -400,22 +412,22 @@ class Low_reorder_base {
 					$set_order = array_reverse($set_order);
 				}
 
-				$this->EE->db->order_by('FIELD(t.entry_id,'.implode(',', $set_order).')', FALSE, FALSE);
+				ee()->db->order_by('FIELD(t.entry_id,'.implode(',', $set_order).')', FALSE, FALSE);
 			}
 			else
 			{
 				// Order by custom order, fallback to entry date
-				$this->EE->db->order_by('t.entry_date', 'desc');
+				ee()->db->order_by('t.entry_date', 'desc');
 			}
 		}
 
 		// Optional limit
 		if ($limit)
 		{
-			$this->EE->db->limit($limit);
+			ee()->db->limit($limit);
 		}
 
-		$query = $this->EE->db->get();
+		$query = ee()->db->get();
 
 		// --------------------------------------
 		// Return the retrieved entries
@@ -462,7 +474,7 @@ class Low_reorder_base {
 			// Exact matches
 			if (substr($val, 0, 1) == '=')
 			{
-				$val   = substr($terms, 1);
+				$val   = substr($val, 1);
 				$exact = TRUE;
 			}
 
@@ -470,7 +482,6 @@ class Low_reorder_base {
 			if (strpos($val, '&&') !== FALSE)
 			{
 				$all = TRUE;
-				$val = str_replace('&&', '|', $val);
 			}
 
 			// Convert parameter to bool and array
@@ -486,6 +497,17 @@ class Low_reorder_base {
 				$empty = ($item == 'IS_EMPTY');
 				$item  = str_replace('IS_EMPTY', '', $item);
 
+				// greater/less than matches
+				if (preg_match('/^([<>]=?)(\d+)$/', $item, $matches))
+				{
+					$gtlt = $matches[1];
+					$item = $matches[2];
+				}
+				else
+				{
+					$gtlt = FALSE;
+				}
+
 				// whole word? Regexp search
 				if (substr($item, -2) == '\W')
 				{
@@ -499,13 +521,19 @@ class Low_reorder_base {
 					{
 						// Use exact operand if empty or = was the first char in param
 						$operand = $in ? '=' : '!=';
-						$item = "'".$this->EE->db->escape_str($item)."'";
+						$item = "'".ee()->db->escape_str($item)."'";
+					}
+					// Greater/Less than option
+					elseif ($gtlt !== FALSE)
+					{
+						$operand = $gtlt;
+						$item = "'".ee()->db->escape_str($item)."'";
 					}
 					else
 					{
 						// Use like operand in all other cases
 						$operand = $in ? 'LIKE' : 'NOT LIKE';
-						$item = "'%".$this->EE->db->escape_str($item)."%'";
+						$item = "'%".ee()->db->escape_str($item)."%'";
 					}
 				}
 
@@ -542,11 +570,11 @@ class Low_reorder_base {
 		if ( ! ($fields = low_get_cache('channel', 'custom_channel_fields')))
 		{
 			// Load channel fields API
-			$this->EE->load->library('api');
-			$this->EE->api->instantiate('channel_fields');
+			ee()->load->library('api');
+			ee()->api->instantiate('channel_fields');
 
 			// Call API
-			$fields = $this->EE->api_channel_fields->fetch_custom_channel_fields();
+			$fields = ee()->api_channel_fields->fetch_custom_channel_fields();
 
 			// Register to cache
 			foreach ($fields AS $key => $val)

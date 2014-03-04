@@ -73,8 +73,8 @@ class Low_reorder_set_model extends Low_reorder_model {
 		parent::install();
 
 		// Add indexes to table
-		$this->EE->db->query("ALTER TABLE {$this->table()} ADD INDEX (`site_id`)");
-		$this->EE->db->query("ALTER TABLE {$this->table()} ADD INDEX (`set_name`)");
+		ee()->db->query("ALTER TABLE {$this->table()} ADD INDEX (`site_id`)");
+		ee()->db->query("ALTER TABLE {$this->table()} ADD INDEX (`set_name`)");
 	}
 
 	// --------------------------------------------------------------------
@@ -88,7 +88,7 @@ class Low_reorder_set_model extends Low_reorder_model {
 	 */
 	public function get_by_channel($channel_id)
 	{
-		$this->EE->db->like('channels', "|{$channel_id}|");
+		ee()->db->like('channels', "|{$channel_id}|");
 		return $this->get_all();
 	}
 
@@ -168,7 +168,7 @@ class Low_reorder_set_model extends Low_reorder_model {
 	public function get_permissions($given_permissions = array())
 	{
 		// Shortcut for current member group
-		$group_id = $this->EE->session->userdata('group_id');
+		$group_id = ee()->session->userdata('group_id');
 
 		// Default value for permissions
 		$default = ($group_id == 1);
@@ -208,7 +208,7 @@ class Low_reorder_set_model extends Low_reorder_model {
 	 */
 	public function name_is_unique($set_id, $set_name, $site_id = 0)
 	{
-		$count = $this->EE->db->where('set_id !=', $set_id)
+		$count = ee()->db->where('set_id !=', $set_id)
 		       ->where('set_name', $set_name)
 		       ->where('site_id', $site_id)
 		       ->count_all_results($this->table());

@@ -38,7 +38,7 @@ class Structure_mcp
 	);
 	// Enable additional reordering options on a per-level basis
 	// Used only in conjunction with per-member group reorder settings
-	var $extra_reorder_options = TRUE; // Default: FALSE
+	var $extra_reorder_options = FALSE; // Default: FALSE
 
 
 	/**
@@ -63,7 +63,10 @@ class Structure_mcp
 		$settings = $this->sql->get_settings();
 		$channel_data = $this->structure->get_structure_channels('page');
 
-		$nav = array('Pages' => $this->base_url);
+		$nav = array();
+		
+		if ($this->sql->user_access('perm_admin_channels', $settings) || $this->sql->user_access('perm_admin_structure', $settings))
+		$nav['Pages'] = $this->base_url;
 
 		if ($this->sql->user_access('perm_admin_channels', $settings))
 			$nav['Channel Settings'] = $this->base_url.AMP.'method=channel_settings';
@@ -147,7 +150,7 @@ class Structure_mcp
 			$page_choices = array_intersect_key($data['valid_channels'], $data['assigned_channels']);
 
 		$data['page_choices'] = $page_choices;
-
+		
 		if ($page_choices && count($page_choices == 1))
 			$data['add_page_url'] = BASE.AMP.'C=content_publish'.AMP.'M=entry_form'.AMP.'channel_id='.key($page_choices);
 		elseif ($data['page_count'] == 0)

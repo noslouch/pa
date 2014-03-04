@@ -4,7 +4,7 @@
  * @package        low_reorder
  * @author         Lodewijk Schutte <hi@gotolow.com>
  * @link           http://gotolow.com/addons/low-reorder
- * @copyright      Copyright (c) 2009-2012, Low
+ * @copyright      Copyright (c) 2009-2013, Low
  */
 
 // Anonymous wrapper
@@ -12,7 +12,7 @@
 
 /**
  * Stuff to execute on page load
- */	
+ */
 $(function(){
 
 	// Show/hide category options
@@ -94,7 +94,7 @@ $(function(){
 		$(this).addClass('grabbing');
 	}).mouseup(function(){
 		$(this).removeClass('grabbing');
-	});	
+	});
 
 });
 

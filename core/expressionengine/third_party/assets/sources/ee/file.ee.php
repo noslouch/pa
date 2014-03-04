@@ -16,9 +16,9 @@ class Assets_ee_file extends Assets_base_file
 	/**
 	 * Constructor
 	 */
-	function __construct($file_id, Assets_ee_source $source)
+	function __construct($file_id, Assets_ee_source $source, $prefetched_row = null)
 	{
-		parent::__construct($file_id, $source);
+		parent::__construct($file_id, $source, $prefetched_row);
 
 		$cache =& $this->EE->session->cache['assets'];
 		$upload_filedir_id = $this->folder_row->filedir_id;

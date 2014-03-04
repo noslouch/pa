@@ -78,6 +78,7 @@ class Structure extends Channel
 		$max_depth       		= 	$this->EE->TMPL->fetch_param('max_depth', -1); // max depth ever shown by the tag
 		$status          		= 	$this->EE->TMPL->fetch_param('status', 'open');
 		$include         		= 	$this->EE->TMPL->fetch_param('include', array());
+		$recursive_overview		=	$this->EE->TMPL->fetch_param('recursive_overview','no');
 		$exclude         		= 	$this->EE->TMPL->fetch_param('exclude', array());
 		$show_overview   		= 	$this->EE->TMPL->fetch_param('show_overview', FALSE);
 		$rename_overview 		= 	$this->EE->TMPL->fetch_param('rename_overview', 'Overview');
@@ -106,10 +107,9 @@ class Structure extends Channel
 		
 		$start_from = Structure_Helper::remove_double_slashes($start_from);
 
-		$selective_data = $this->sql->get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future,$override_hidden_state);
+		$selective_data = $this->sql->get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future,$override_hidden_state,$recursive_overview);
 		
-		
-		$html = $this->sql->generate_nav($selective_data, $current_id, $branch_entry_id, $mode, $show_overview,$rename_overview,$override_hidden_state);
+		$html = $this->sql->generate_nav($selective_data, $current_id, $branch_entry_id, $mode, $show_overview,$rename_overview,$override_hidden_state,$recursive_overview);
 
 		return $html;
 	}
@@ -3166,6 +3166,18 @@ class Structure extends Channel
 		// set site_pages to be compatible with EE core
 		$site_pages['uris'][$entry_id] = $uri;
 		$site_pages['templates'][$entry_id] = $template_id;
+		
+		$settings = $this->sql->get_settings();
+		
+		$trailing_slash = isset($settings['add_trailing_slash']) && $settings['add_trailing_slash'] === 'y';
+		
+		if ($trailing_slash !== FALSE)
+		{
+			foreach ($site_pages['uris'] as $e_id => $uri)
+			{
+				$site_pages['uris'][$e_id] = $uri.'/';
+			}
+		}
 
 		// Stay connected
 		$this->EE->db->reconnect();

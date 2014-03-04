@@ -44,32 +44,8 @@ class Low_reorder_model extends CI_Model {
 	 */
 	private $_attributes = array();
 
-	/**
-	 * EE Instance
-	 *
-	 * @access      protected
-	 * @var         object
-	 */
-	protected $EE;
-
 	// --------------------------------------------------------------------
 	// METHODS
-	// --------------------------------------------------------------------
-
-	/**
-	 * PHP5 Constructor
-	 *
-	 * @return     void
-	 */
-	function __construct()
-	{
-		// Call parent constructor
-		parent::__construct();
-
-		// Set global object
-		$this->EE =& get_instance();
-	}
-
 	// --------------------------------------------------------------------
 
 	/**
@@ -84,7 +60,7 @@ class Low_reorder_model extends CI_Model {
 	protected function initialize($table, $pk, $attributes)
 	{
 		// Check table prefix
-		$prefix = $this->EE->db->dbprefix;
+		$prefix = ee()->db->dbprefix;
 
 		// Add prefix to table name if not there
 		if (substr($table, 0, strlen($prefix)) != $prefix)
@@ -108,11 +84,9 @@ class Low_reorder_model extends CI_Model {
 	 */
 	public function load_models()
 	{
-		$EE =& get_instance();
-
 		foreach (array('set', 'order') AS $model)
 		{
-			$EE->load->model("low_reorder_{$model}_model");
+			ee()->load->model("low_reorder_{$model}_model");
 		}
 	}
 
@@ -169,7 +143,7 @@ class Low_reorder_model extends CI_Model {
 	{
 		if ($attr === FALSE) $attr = $this->_pk;
 
-		return $this->EE->db->where($attr, $id)->get($this->_table)->row_array();
+		return ee()->db->where($attr, $id)->get($this->_table)->row_array();
 	}
 
 	// --------------------------------------------------------------------
@@ -182,7 +156,7 @@ class Low_reorder_model extends CI_Model {
 	 */
 	public function get_all()
 	{
-		return $this->EE->db->get($this->_table)->result_array();
+		return ee()->db->get($this->_table)->result_array();
 	}
 
 	// --------------------------------------------------------------------
@@ -216,7 +190,7 @@ class Low_reorder_model extends CI_Model {
 			// loop through attributes to get posted data
 			foreach ($this->attributes() AS $attr)
 			{
-				if (($val = $this->EE->input->post($attr)) !== FALSE)
+				if (($val = ee()->input->post($attr)) !== FALSE)
 				{
 					$data[$attr] = $val;
 				}
@@ -224,8 +198,8 @@ class Low_reorder_model extends CI_Model {
 		}
 
 		// Insert data and return inserted id
-		$this->EE->db->insert($this->_table, $data);
-		return $this->EE->db->insert_id();
+		ee()->db->insert($this->_table, $data);
+		return ee()->db->insert_id();
 	}
 
 	// --------------------------------------------------------------------
@@ -244,7 +218,7 @@ class Low_reorder_model extends CI_Model {
 			// loop through attributes to get posted data
 			foreach ($this->attributes() AS $attr)
 			{
-				if (($val = $this->EE->input->post($attr)) !== FALSE)
+				if (($val = ee()->input->post($attr)) !== FALSE)
 				{
 					$data[$attr] = $val;
 				}
@@ -252,7 +226,7 @@ class Low_reorder_model extends CI_Model {
 		}
 
 		// Insert data and return inserted id
-		$this->EE->db->update($this->_table, $data, "{$this->_pk} = '{$id}'");
+		ee()->db->update($this->_table, $data, "{$this->_pk} = '{$id}'");
 	}
 
 	// --------------------------------------------------------------------
@@ -274,7 +248,7 @@ class Low_reorder_model extends CI_Model {
 
 		if ($attr === FALSE) $attr = $this->_pk;
 
-		$this->EE->db->where_in($attr, $id)->delete($this->_table);
+		ee()->db->where_in($attr, $id)->delete($this->_table);
 	}
 
 	// --------------------------------------------------------------------
@@ -310,10 +284,13 @@ class Low_reorder_model extends CI_Model {
 		}
 
 		// Set PK
-		$sql .= "PRIMARY KEY (".implode(',', (array) $this->_pk)."))";
+		$sql .= "PRIMARY KEY (".implode(',', (array) $this->_pk).")) ";
+
+		// And character set
+		$sql .= "CHARACTER SET utf8 COLLATE utf8_general_ci;";
 
 		// Execute query
-		$this->EE->db->query($sql);
+		ee()->db->query($sql);
 	}
 
 	// --------------------------------------------------------------------
@@ -326,7 +303,7 @@ class Low_reorder_model extends CI_Model {
 	 */
 	public function uninstall()
 	{
-		$this->EE->db->query("DROP TABLE IF EXISTS {$this->_table}");
+		ee()->db->query("DROP TABLE IF EXISTS {$this->_table}");
 	}
 
 	// --------------------------------------------------------------------

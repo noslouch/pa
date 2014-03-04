@@ -29,6 +29,8 @@
 						$this->load->view('filemanager/folder', $vars);
 					}
 				?>
+				<li class="assets-fm-folder" data-source_id="recent"><a data-id="recent" style="padding-left: 20px;" data-no_uploads="1" data-no_menu="1"><span class="assets-fm-label"><?php echo lang('recent_uploads') ?></span></a></li>
+
 			</ul>
 		</div>
 	</div>

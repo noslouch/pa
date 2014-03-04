@@ -122,6 +122,8 @@ class Assets_upd
 			'col_id'		=> array('type' => 'int', 'constraint' => 6, 'unsigned' => TRUE),
 			'row_id'		=> array('type' => 'int', 'constraint' => 10, 'unsigned' => TRUE),
 			'var_id'		=> array('type' => 'int', 'constraint' => 6, 'unsigned' => TRUE),
+			'element_id'    => array('type' => 'varchar', 'constraint' => 255, 'null' => TRUE),
+			'content_type'  => array('type' => 'varchar', 'constraint' => 255, 'null' => TRUE),
 			'sort_order'	=> array('type' => 'int', 'constraint' => 4, 'unsigned' => TRUE),
 			'is_draft'  	=> array('type' => 'TINYINT', 'constraint' => '1', 'unsigned' => TRUE, 'default' => 0)
 		);
@@ -164,9 +166,6 @@ class Assets_upd
 		$this->EE->dbforge->add_field($fields);
 		$this->EE->dbforge->add_key('source_id', true);
 		$this->EE->dbforge->create_table('assets_sources');
-
-		$this->EE->db->query('ALTER TABLE exp_assets_sources ADD UNIQUE unq_source_type__source_id (`source_type`, `source_id`)');
-
 
 		// table for temporary data during indexing
 		$fields = array(
@@ -241,9 +240,9 @@ class Assets_upd
 				// is this an MCP index request?
 				$mcp_index = (
 					$this->EE->input->get('C') == 'addons_modules' &&
-						$this->EE->input->get('M') == 'show_module_cp' &&
-						$this->EE->input->get('module') == 'assets' &&
-						(($method = $this->EE->input->get('method')) === FALSE || $method == 'index')
+					$this->EE->input->get('M') == 'show_module_cp' &&
+					$this->EE->input->get('module') == 'assets' &&
+					(($method = $this->EE->input->get('method')) === FALSE || $method == 'index')
 				);
 
 				if (!$mcp_index || $this->EE->input->get('goforth') != 'y')
@@ -379,13 +378,16 @@ class Assets_upd
 					{
 						$first_asset_id = array_shift($asset_ids);
 
-						// point any entries that were using the duplicate IDs over to the first one
-						$this->EE->db->where_in('asset_id', $asset_ids)
-							->update('assets_entries', array('asset_id' => $first_asset_id));
+						if (count($asset_ids))
+						{
+							// point any entries that were using the duplicate IDs over to the first one
+							$this->EE->db->where_in('asset_id', $asset_ids)
+								->update('assets_entries', array('asset_id' => $first_asset_id));
 
-						// delete the duplicates in exp_assets
-						$this->EE->db->where_in('asset_id', $asset_ids)
-							->delete('assets');
+							// delete the duplicates in exp_assets
+							$this->EE->db->where_in('asset_id', $asset_ids)
+								->delete('assets');
+						}
 					}
 				}
 
@@ -579,7 +581,7 @@ class Assets_upd
 			$this->EE->dbforge->create_table('assets_rackspace_access');
 		}
 
-		if (version_compare($current, '2.1.2'))
+		if (version_compare($current, '2.1.2', '<'))
 		{
 			// Clean up possible incorrect indexes
 			$query = $this->EE->db->query('SHOW INDEX FROM exp_assets_folders WHERE Key_name = "unq_source_type__source_id__full_path"');
@@ -612,9 +614,39 @@ class Assets_upd
 
 		}
 
-		if (version_compare($current, '2.1.4'))
+		if (version_compare($current, '2.1.4', '<'))
 		{
-			$this->EE->db->query('ALTER TABLE exp_assets_files MODIFY COLUMN `date` INT(255) NULL');
+			$this->EE->db->query('ALTER TABLE exp_assets_files MODIFY COLUMN `date` INT(10) NULL');
+		}
+
+		if (version_compare($current, '2.2', '<'))
+		{
+			if (!$this->EE->db->field_exists('element_id', 'assets_selections'))
+			{
+				$this->EE->db->query('ALTER TABLE exp_assets_selections ADD COLUMN `element_id` VARCHAR(255) NULL AFTER `var_id`');
+			}
+			if (!$this->EE->db->field_exists('content_type', 'assets_selections'))
+			{
+				$this->EE->db->query('ALTER TABLE exp_assets_selections ADD COLUMN `content_type` VARCHAR(255) NULL AFTER `element_id`');
+			}
+
+			$query = $this->EE->db->query('SHOW INDEX FROM exp_assets_sources WHERE Key_name = "unq_source_type__source_id"');
+			if ($query->num_rows())
+			{
+				// Drop the unq_file_path index
+				$this->EE->db->query('ALTER TABLE exp_assets_sources DROP INDEX unq_source_type__source_id');
+			}
+
+		}
+
+		if (version_compare($current, '2.2.2', '<'))
+		{
+			// Paranoia will destroy ya
+			if (!$this->EE->db->field_exists('content_type', 'assets_selections') && !version_compare($current, '2.2', '<'))
+			{
+				$this->EE->db->query('ALTER TABLE exp_assets_selections ADD COLUMN `content_type` VARCHAR(255) NULL AFTER `element_id`');
+			}
+			$this->EE->db->query("UPDATE exp_assets_selections SET content_type = 'matrix' WHERE row_id > 0 AND (content_type = '' OR content_type IS NULL)");
 		}
 
 		// -------------------------------------------
@@ -847,7 +879,7 @@ class Assets_upd
 						);
 						$data = array(
 							'name' => $previous_settings->name,
-							'settings' => json_encode($new_settings)
+							'settings' => Assets_helper::get_json($new_settings)
 						);
 
 						$this->EE->db->update('assets_sources', $data, array('source_id' => $source->source_id));

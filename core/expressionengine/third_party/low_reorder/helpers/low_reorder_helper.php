@@ -6,7 +6,7 @@
  * @package        low_reorder
  * @author         Lodewijk Schutte <hi@gotolow.com>
  * @link           http://gotolow.com/addons/low-reorder
- * @copyright      Copyright (c) 2009-2012, Low
+ * @copyright      Copyright (c) 2009-2013, Low
  */
 
 /**
@@ -260,7 +260,7 @@ if ( ! function_exists('low_explode_param'))
 		// Return two values in an array
 		// --------------------------------------
 
-		return array(preg_split('/(&+|\|)/', $str), $in);
+		return array(preg_split('/(&&?|\|)/', $str), $in);
 	}
 }
 
@@ -277,15 +277,13 @@ if ( ! function_exists('low_get_cache'))
 {
 	function low_get_cache($a, $b)
 	{
-		$EE =& get_instance();
-
-		if (method_exists($EE->session, 'cache'))
+		if (method_exists(ee()->session, 'cache'))
 		{
-			return $EE->session->cache($a, $b);
+			return ee()->session->cache($a, $b);
 		}
 		else
 		{
-			return (isset($EE->session->cache[$a][$b]) ? $EE->session->cache[$a][$b] : FALSE);
+			return (isset(ee()->session->cache[$a][$b]) ? ee()->session->cache[$a][$b] : FALSE);
 		}
 	}
 }
@@ -304,15 +302,13 @@ if ( ! function_exists('low_set_cache'))
 {
 	function low_set_cache($a, $b, $c)
 	{
-		$EE =& get_instance();
-
-		if (method_exists($EE->session, 'set_cache'))
+		if (method_exists(ee()->session, 'set_cache'))
 		{
-			$EE->session->set_cache($a, $b, $c);
+			ee()->session->set_cache($a, $b, $c);
 		}
 		else
 		{
-			$EE->session->cache[$a][$b] = $c;
+			ee()->session->cache[$a][$b] = $c;
 		}
 	}
 }

@@ -86,6 +86,8 @@
 
 .assets-props .assets-contents h2 { font-size: 19px; font-weight: normal; font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif; font-weight: normal; word-wrap: break-word; }
 
+.hud-shade { display: none; position: fixed; top: 0; left: 0; z-index: 1000; width: 100%; height: 100%; background: none; }
+
 /* file data */
 .assets-props .assets-contents table { margin: 15px 0; width: 100%; }
 
@@ -121,7 +123,7 @@
 
 .assets-listview table th, .assets-listview table td { border-bottom: 1px dotted rgba(0, 0, 0, 0.1); }
 
-.assets-listview table .assets-lv-name { padding-left: 42px; }
+.assets-listview table .assets-lv-name { padding-left: 42px; word-break: break-all; }
 
 .assets-listview table .assets-lv-size { width: 1%; white-space: nowrap; text-align: right; }
 
@@ -200,7 +202,7 @@
 .assets-fm-sidebar .assets-qq-upload-list { display: none; }
 
 /* folders */
-.assets-fm-folders { width: 225px; overflow-y: auto; overflow-x: hidden; }
+.assets-fm-folders { width: 225px; overflow-y: auto; overflow-x: hidden; padding-bottom: 15px; }
 
 .assets-fm-folders.assets-fixed { position: fixed; top: 0; left: 0; margin: 0; height: 100%; overflow: auto; }
 
@@ -349,8 +351,10 @@ body.assets-noscroll { overflow: hidden; }
 
 .assets-sheet .assets-fm .assets-fm-sidebar, .assets-sheet .assets-fm .assets-fm-main { height: 100%; overflow: auto; }
 
-/*-- Matrix/Low Variables overrides --*/
+/*-- Matrix/Grid/Low Variables overrides --*/
 #low-varlist .assets-field, .matrix .assets-field { margin-top: -6px; }
+
+.grid_cell .assets-field { margin: 0 0; }
 
 table.mainTable .assets-listview table thead, table.mainTable .assets-listview table th, table.mainTable .assets-listview table td { border-left: none; background: none; }
 

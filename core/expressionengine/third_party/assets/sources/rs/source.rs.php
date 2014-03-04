@@ -317,59 +317,64 @@ class Assets_rs_source extends Assets_base_source
 		// Let's assume that we'll need more memory if we hit an arbitrary amount of entries
 		if (count($file_list) > 2000)
 		{
-			ini_set('memory_liimt', '64M');
+			ini_set('memory_limit', '64M');
 		}
 
 		$container_folders = array();
+
+		// Check if we should bother at all.
 		foreach ($file_list as $file)
 		{
-			$parts = explode("/", $file->name);
-			foreach ($parts as $part)
+			$file->name = substr($file->name, strlen($prefix));
+
+			if ($file->content_type == 'application/directory')
 			{
-				if (substr($part, 0, 1) == '_')
+				if (!$this->_is_allowed_folder_path($file->name))
 				{
-					continue 2;
+					continue;
+				}
+			}
+			else
+			{
+				if (!$this->_is_allowed_file_path($file->name))
+				{
+					continue;
 				}
 			}
 
-			if ( !preg_match(Assets_helper::INDEX_SKIP_ITEMS_PATTERN, $file->name))
+			// So in RackSpace a folder may or may not exist. For path a/path/to/file.jpg, any of those folders may
+			// or may not exist. So we have to add all the segments to $containerFolders to make sure we index them
+
+			// Matches all paths with folders, except if there if no folder at all.
+			if (preg_match('/(.*\/).+$/', $file->name, $matches))
 			{
+				$folders = explode('/', rtrim($matches[1], '/'));
+				$base_path = '';
 
-				$file->name = substr($file->name, strlen($prefix));
-				// So in RackSpace a folder may or may not exist. For path a/path/to/file.jpg, any of those folders may
-				// or may not exist. So we have to add all the segments to $containerFolders to make sure we index them
-
-				// Matches all paths with folders, except if there if no folder at all.
-				if (preg_match('/(.*\/).+$/', $file->name, $matches))
+				foreach ($folders as $folder)
 				{
-					$folders = explode('/', rtrim($matches[1], '/'));
-					$base_path = '';
+					$base_path .= $folder;
 
-					foreach ($folders as $folder)
+					// This is exactly the case referred to above
+					if ( ! isset($container_folders[$base_path]))
 					{
-						$base_path .= $folder;
-
-						// This is exactly the case referred to above
-						if ( ! isset($container_folders[$base_path]))
-						{
-							$container_folders[$base_path] = true;
-							$this->_store_rs_folder($base_path, $indexed_folder_ids);
-						}
-
-						$base_path .= '/';
+						$container_folders[$base_path] = true;
+						$this->_store_rs_folder($base_path, $indexed_folder_ids);
 					}
-				}
 
-				if ($file->content_type == 'application/directory')
-				{
-					$this->_store_rs_folder($file->name, $indexed_folder_ids);
-					$container_folders[$file->name] = true;
+					$base_path .= '/';
 				}
-				else
-				{
-					$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file->name, $file->bytes);
-					$total_file_count++;
-				}
+			}
+
+			if ($file->content_type == 'application/directory')
+			{
+				$this->_store_rs_folder($file->name, $indexed_folder_ids);
+				$container_folders[$file->name] = true;
+			}
+			else
+			{
+				$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file->name, $file->bytes);
+				$total_file_count++;
 			}
 		}
 
@@ -412,9 +417,15 @@ class Assets_rs_source extends Assets_base_source
 		foreach ($file_list as $file)
 		{
 			$file->name = substr($file->name, strlen($this->_get_path_prefix()));
+
 			// Only allow files directly in this folder
 			if (strpos(substr($file->name, strlen($folder_row->full_path)), '/') === FALSE)
 			{
+				if (!$this->_is_allowed_file_path($file->name))
+				{
+					continue;
+				}
+
 				$count++;
 				$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file->name);
 			}
@@ -677,7 +688,7 @@ class Assets_rs_source extends Assets_base_source
 	 * @param $file_name
 	 * @return mixed|void
 	 */
-	protected function _get_name_replacement($folder_row, $file_name)
+	public function get_name_replacement($folder_row, $file_name)
 	{
 		$file_list = $this->_get_file_list($folder_row->full_path);
 
@@ -1086,7 +1097,7 @@ class Assets_rs_source extends Assets_base_source
 	 */
 	public function download_file($path, $target_file)
 	{
-		$prefix = isset($this->settings()->subfolder) ? $this->settings()->subfolder : '';
+		$prefix = !empty($this->settings()->subfolder) ? rtrim($this->settings()->subfolder).'/' : '';
 		$path = $this->_source_settings->url_prefix.$prefix.$path;
 
 		$ch = curl_init($path);

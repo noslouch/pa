@@ -21,7 +21,7 @@ class Assets_s3_source extends Assets_base_source
 	const IMAGE_SOURCE_SIZE = '400x400';
 
 	/**
-	 * @var S3
+	 * @var Assets_S3
 	 */
 	public $s3 = null;
 
@@ -32,8 +32,8 @@ class Assets_s3_source extends Assets_base_source
 	{
 		parent::__construct();
 
-		require_once PATH_THIRD . 'assets/sources/s3/lib/S3.php';
-		$this->s3 = new S3($settings->access_key_id, $settings->secret_access_key);
+		require_once PATH_THIRD . 'assets/sources/s3/lib/Assets_S3.php';
+		$this->s3 = new Assets_S3($settings->access_key_id, $settings->secret_access_key);
 
 		$this->_source_settings = $settings;
 		$this->_source_id = $source_id;
@@ -72,8 +72,8 @@ class Assets_s3_source extends Assets_base_source
 	 */
 	public static function get_bucket_list($key_id, $secret_key)
 	{
-		require_once PATH_THIRD . 'assets/sources/s3/lib/S3.php';
-		$s3 = new S3($key_id, $secret_key);
+		require_once PATH_THIRD . 'assets/sources/s3/lib/Assets_S3.php';
+		$s3 = new Assets_S3($key_id, $secret_key);
 		$buckets = @$s3->listBuckets();
 		if (empty($buckets))
 		{
@@ -108,7 +108,7 @@ class Assets_s3_source extends Assets_base_source
 
 		$this->s3->setEndpoint($this->get_endpoint_by_location($bucket_data->location));
 
-		return $this->s3->putObject('', $bucket_data->bucket, $this->_get_path_prefix().rtrim($server_path, '/') . '/', S3::ACL_PUBLIC_READ);
+		return $this->s3->putObject('', $bucket_data->bucket, $this->_get_path_prefix().rtrim($server_path, '/') . '/', Assets_S3::ACL_PUBLIC_READ);
 	}
 
 	/**
@@ -133,7 +133,7 @@ class Assets_s3_source extends Assets_base_source
 
 			$this->s3->copyObject($bucket_data->bucket, str_replace('//', '/', $file['name']),
 				$bucket_data->bucket, $this->_get_path_prefix().ltrim(str_replace('//', '/', $new_path . '/' . $file_path), '/'),
-				S3::ACL_PUBLIC_READ);
+				Assets_S3::ACL_PUBLIC_READ);
 
 			$this->s3->setEndpoint($this->get_endpoint_by_location($bucket_data->location));
 			$this->s3->deleteObject($bucket_data->bucket, $file['name']);
@@ -246,7 +246,7 @@ class Assets_s3_source extends Assets_base_source
 		$this->_s3_set_creds($bucket_data->access_key_id, $bucket_data->secret_access_key);
 		$this->s3->setEndpoint($this->get_endpoint_by_location($bucket_data->location));
 
-		if ($this->s3->putObject(array('file' => $temp_file_path), $bucket_data->bucket, $this->_get_path_prefix().$file_path, S3::ACL_PUBLIC_READ))
+		if ($this->s3->putObject(array('file' => $temp_file_path), $bucket_data->bucket, $this->_get_path_prefix().$file_path, Assets_S3::ACL_PUBLIC_READ))
 		{
 			return array('success' => TRUE, 'path' => $file_path);
 		}
@@ -287,9 +287,9 @@ class Assets_s3_source extends Assets_base_source
 		$old_bucket_data = $this->get_source_settings($previous_folder_row->source_id);
 		$new_bucket_data = $this->get_source_settings($folder_row->source_id);
 
-		$old_prefix = isset($old_bucket_data->subfolder) ? $old_bucket_data->subfolder : '';
+		$old_prefix = !empty($old_bucket_data->subfolder) ? rtrim($old_bucket_data->subfolder, '/').'/' : '';
 		$this->_s3_set_creds($new_bucket_data->access_key_id, $new_bucket_data->secret_access_key);
-		if ($this->s3->copyObject($old_bucket_data->bucket, $old_prefix.ltrim($old_path, '/') . $file->filename(), $new_bucket_data->bucket, $this->_get_path_prefix().ltrim($new_path, '/') . $new_file_name, S3::ACL_PUBLIC_READ))
+		if ($this->s3->copyObject($old_bucket_data->bucket, $old_prefix.ltrim($old_path, '/') . $file->filename(), $new_bucket_data->bucket, $this->_get_path_prefix().ltrim($new_path, '/') . $new_file_name, Assets_S3::ACL_PUBLIC_READ))
 		{
 			$this->_delete_source_file($file->server_path(), $old_bucket_data);
 			return array(
@@ -373,21 +373,30 @@ class Assets_s3_source extends Assets_base_source
 		// Let's assume that we'll need more memory if we hit an arbitrary amount of entries
 		if (count($file_list) > 2000)
 		{
-			ini_set('memory_liimt', '64M');
+			ini_set('memory_limit', '64M');
 		}
 
 		foreach ($file_list as $file)
 		{
-			$parts = explode("/", $file['name']);
-			foreach ($parts as $part)
+			$file['name'] = substr($file['name'], strlen($prefix));
+
+			// Check if we should bother at all.
+			if (substr($file['name'], -1) == '/')
 			{
-				if (substr($part, 0, 1) == '_')
+				if (!$this->_is_allowed_folder_path($file['name']))
 				{
-					continue 2;
+					continue;
 				}
 			}
+			else
+			{
+				if (!$this->_is_allowed_file_path($file['name']))
+				{
+					continue;
+				}
 
-			$file['name'] = substr($file['name'], strlen($prefix));
+			}
+
 
 			// in S3, it's possible to have files in folders that don't exist. E.g. - one/two/three.jpg.
 			// if folder "one" is empty, except for folder "two", this won't show up in this list so we work around it
@@ -409,20 +418,17 @@ class Assets_s3_source extends Assets_base_source
 				}
 			}
 
-			if ( !preg_match(Assets_helper::INDEX_SKIP_ITEMS_PATTERN, $file['name']))
+			if (substr($file['name'], -1) == '/')
 			{
-				if (substr($file['name'], -1) == '/')
-				{
-					$this->_store_s3_folder($file['name'], $indexed_folder_ids);
-					$existing_bucket_files[$file['name']] = TRUE;
-				}
-				else
-				{
-					$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file['name'], $file['size']);
-					$total_file_count++;
-				}
-
+				$this->_store_s3_folder($file['name'], $indexed_folder_ids);
+				$existing_bucket_files[$file['name']] = TRUE;
 			}
+			else
+			{
+				$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file['name'], $file['size']);
+				$total_file_count++;
+			}
+
 		}
 
 		$this->_execute_index_batch();
@@ -472,6 +478,11 @@ class Assets_s3_source extends Assets_base_source
 			// Only allow files directly in this folder
 			if (strpos(substr($file['name'], strlen($folder_row->full_path)), '/') === FALSE)
 			{
+				if (!$this->_is_allowed_file_path($file['name']))
+				{
+					continue;
+				}
+
 				$count++;
 				$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file['name'], $file['size']);
 			}
@@ -726,7 +737,7 @@ class Assets_s3_source extends Assets_base_source
 	 * @param $file_name
 	 * @return mixed|void
 	 */
-	protected function _get_name_replacement($folder_row, $file_name)
+	public function get_name_replacement($folder_row, $file_name)
 	{
 		$bucket_data = $this->get_source_settings($folder_row->source_id);
 
@@ -771,6 +782,6 @@ class Assets_s3_source extends Assets_base_source
 	 */
 	private function _s3_set_creds($accessKey, $secretKey)
 	{
-		S3::setAuth($accessKey, $secretKey);
+		Assets_S3::setAuth($accessKey, $secretKey);
 	}
 }

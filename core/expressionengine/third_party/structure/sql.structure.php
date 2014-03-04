@@ -176,7 +176,7 @@ class Sql_structure
 	 *
 	 * @return array
 	 */
-	function get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future, $override_hidden_state="no")
+	function get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future, $override_hidden_state="no",$recursive_overview="no")
 	{
 		
 		$parent_id = $this->get_parent_id($current_id);
@@ -213,7 +213,7 @@ class Sql_structure
 						last which means it will over-ride all the others.
 						(use -1 to disable)
 		*/
-
+		
 		switch ($mode)
 		{
 			case 'full':
@@ -347,7 +347,8 @@ class Sql_structure
 		// ---
 		// Build branch tree and trim
 		// ---
-
+		// =debug
+		
 		$tree = structure_leaf::build_from_results($results);
 
 		// find the current page in the tree
@@ -457,6 +458,8 @@ class Sql_structure
 		// rebuild results from what is left in the tree
 		$results = $tree->get_results();
 		
+		
+		
 		if ($show_overview)
 		{
 			// add sql to get this entry
@@ -468,6 +471,11 @@ class Sql_structure
 
 			array_unshift($results, $overview);
 		}
+		
+		if ($this->EE->config->item('site_url'))
+			{ $site_url = $this->EE->config->item('site_url'); }
+		else
+			{ $site_url = $pages['url']; }
 
 		$data = array();
 		foreach ($results as $row)
@@ -477,7 +485,7 @@ class Sql_structure
 			if (isset($pages['uris'][$row['entry_id']]))
 			{
 				$data[$row['entry_id']] = $row;
-				$data[$row['entry_id']]['uri'] = $this->EE->functions->create_page_url($pages['url'], $pages['uris'][$row['entry_id']], $trailing_slash);
+				$data[$row['entry_id']]['uri'] = $this->EE->functions->create_page_url($site_url, $pages['uris'][$row['entry_id']], $trailing_slash);
 				$data[$row['entry_id']]['slug'] = $pages['uris'][$row['entry_id']];
 				$data[$row['entry_id']]['classes'] = array();
 				$data[$row['entry_id']]['ids'] = array();
@@ -729,7 +737,7 @@ class Sql_structure
 	 * Get the HTML code for an unordered list of the tree
 	 * @return string HTML code for an unordered list of the whole tree
 	 */
-	function generate_nav($selective_data, $current_id, $entry_id, $mode, $show_overview, $rename_overview,$override_hidden_state="no")
+	function generate_nav($selective_data, $current_id, $entry_id, $mode, $show_overview, $rename_overview,$override_hidden_state="no", $recursive_overview="no")
 	{
 		
 		$html = '';
@@ -778,6 +786,9 @@ class Sql_structure
 			// Build class string if any exist
 			$classes = count($tree[$i]['classes']) > 0 ? ' class="'. implode(' ',$tree[$i]['classes']) .'"' : NULL;
 			
+			if ($show_overview)
+			{ $classes = str_replace("first", "", $classes); }
+			
 			// Build id string if any exist
 			$ids = count($tree[$i]['ids']) > 0 ? ' id="'. implode(' ',$tree[$i]['ids']) .'"' : NULL;
 
@@ -794,7 +805,7 @@ class Sql_structure
 			// -------------------------------------------
 			//  The list item itself
 			// -------------------------------------------
-
+			
 			$html .= '<li'. $classes . $ids . '><a href="' . $tree[$i]['uri'] . '">' . $title_output .'</a>';
 
 			// Closing up a level
@@ -804,21 +815,37 @@ class Sql_structure
 				
 				if ($show_overview)
 				{
-					if ($tree[$i]['depth']=="1")
+					if ($recursive_overview=="no")
 					{
-					
-					if($rename_overview=="title")
-					{
-						$title = $tree[$i]['title'];
+						if ($tree[$i]['depth']=="1")
+						{
+							if($rename_overview=="title")
+							{
+								$title = $tree[$i]['title'];
+							}
+							else
+							{
+								$title = $rename_overview;
+							}
+							
+							$html .= '<li class="first"><a href="' . $tree[$i]['uri'] . '">'.$title.'</a></li>'."\n";
+						}
 					}
 					else
 					{
-						$title = $rename_overview;
-					}
-					
-					$html .= '<li'. $classes . $ids . '><a href="' . $tree[$i]['uri'] . '">'.$title.'</a>';	
+						if($rename_overview=="title")
+						{
+							$title = $tree[$i]['title'];
+						}
+						else
+						{
+							$title = $rename_overview;
+						}
+						
+						$html .= '<li class="first"><a href="' . $tree[$i]['uri'] . '">'.$title.'</a></li>'."\n";
 					}
 				}
+				
 				
 				
 			}
@@ -1318,6 +1345,7 @@ class Sql_structure
 	 */
 	function get_site_pages($cache_bust=false, $override_slash=false)
 	{
+	
 		$settings = $this->get_settings();
 
 		$trailing_slash = $override_slash === false && isset($settings['add_trailing_slash']) && $settings['add_trailing_slash'] === 'y';
@@ -1328,13 +1356,14 @@ class Sql_structure
 			'templates' => array()
 		);
 
-		if ($cache_bust === true) {
-			$sql = "SELECT site_pages FROM exp_sites WHERE site_id = $this->site_id";
-			$pages_array = $this->EE->sql_helper->row($sql);
-			$all_pages = unserialize(base64_decode($pages_array['site_pages']));
-		} else {
-			$all_pages = $this->EE->config->item('site_pages');
-		}
+		$site_id = $this->EE->config->item('site_id');
+		
+		$page_data = $this->EE->db->select("site_pages")
+						->from("sites")
+						->where('site_id',$site_id)
+						->get()->row()->site_pages;
+						
+		$all_pages = unserialize(base64_decode($page_data));
 
 		if (is_array($all_pages) && isset($all_pages[$this->site_id]) && is_array($all_pages[$this->site_id])) {
 			$site_pages = array_merge($blank_pages, $all_pages[$this->site_id]);

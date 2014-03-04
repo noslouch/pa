@@ -21,10 +21,8 @@ class Assets_helper
 	const ACTIONS_CANCEL = 'cancel';
 	const ACTIONS_KEEP_BOTH = 'keep_both';
 
-	/**
-	 * Skip item, if it matches this pattern
-	 */
-	const INDEX_SKIP_ITEMS_PATTERN = '/.*(Thumbs\.db|__MACOSX|__MACOSX\/|__MACOSX\/.*|\.DS_STORE)$/i';
+	private static $_skip_file_patterns = array('^Thumbs\.db$', '^\.DS_STORE$');
+	private static $_skip_folder_patterns = array('^_');
 
 	/**
 	 * Constructor
@@ -192,12 +190,13 @@ class Assets_helper
 			self::include_garnish();
 			self::include_css('assets.css');
 			self::include_js('assets.js');
+			self::insert_css('.content_elements_icon_assets { background: url('.self::_theme_url().'images/ce_icon.png) !important; background-size: 16px !important; }');
 
 			$js = self::get_actions_js()."\n"
 				. self::get_lang_js('upload_files', 'upload_status', 'showing', 'of', 'file', 'files', 'selected',
 					'new_subfolder', 'rename', '_delete', 'view_file', 'edit_file',
 					'remove_file', 'remove_files', 'confirm_delete_folder', 'confirm_delete_file', 'confirm_delete_files',
-					'how_to_proceed', 'apply_to_remaining_conflicts', 'perform_selected')."\n"
+					'how_to_proceed', 'apply_to_remaining_conflicts', 'perform_selected', 'couldnt_upload')."\n"
 				. 'Assets.siteId = '.self::_get_EE()->config->item('site_id').";\n"
 				. 'Assets.siteUrl = "'.self::get_site_url().'";';
 
@@ -359,7 +358,7 @@ class Assets_helper
 			$json[$act->method] = $act->action_id;
 		}
 
-		return 'Assets.actions = '.json_encode($json).';';
+		return 'Assets.actions = '.Assets_helper::get_json($json).';';
 	}
 
 
@@ -399,7 +398,7 @@ class Assets_helper
 			$json[$line] = lang($line);
 		}
 
-		return 'Assets.lang = '. json_encode($json).';';
+		return 'Assets.lang = '. Assets_helper::get_json($json).';';
 	}
 
 	/**
@@ -546,7 +545,10 @@ class Assets_helper
 				$var_prefix.'height'                 => $file->height(),
 				$var_prefix.'size'                   => $size,
 				$var_prefix.'size unformatted="yes"' => $unformatted_size,
-				$var_prefix.'total_files'            => $file_count
+				$var_prefix.'total_files'            => $file_count,
+				$var_prefix.'source_id'              => $file->source()->get_source_id(),
+				$var_prefix.'folder_id'              => $file->folder_id(),
+				$var_prefix.'source_subfolder'       => $file->source_subfolder(),
 			);
 
 			// add additional image sizes.
@@ -720,12 +722,19 @@ class Assets_helper
 		$preferences = self::_get_EE()->filemanager->fetch_upload_dir_prefs($upload_folder_id);
 		$preferences['file_name'] = pathinfo($image_path, PATHINFO_BASENAME);
 
-		$preferences['server_path'] = Assets_ee_source::resolve_server_path($preferences['server_path']);
+		$preferences['server_path'] = Assets_ee_source::resolve_server_path(Assets_helper::normalize_path($preferences['server_path']));
 
 
 		// Trick Filemanager into creating the thumbnail where WE need it
 		$preferences['server_path'] .= str_replace($preferences['server_path'], '',
 			str_replace(pathinfo($image_path, PATHINFO_BASENAME), '', $image_path));
+
+		// On Windows machines CI's Image_lib gets all sorts of confused, so have to make sure our paths use the DIRECTORY_SEPARATOR separator
+		if (DIRECTORY_SEPARATOR === "\\")
+		{
+			$preferences['server_path'] = str_replace('/', '\\', $preferences['server_path']);
+			$image_path = str_replace('/', '\\', $image_path);
+		}
 
 		return self::_get_EE()->filemanager->create_thumb($image_path, $preferences);
 	}
@@ -747,4 +756,96 @@ class Assets_helper
 			return json_encode($data);
 		}
 	}
+
+	/**
+	 * Apply source overrides.
+	 *
+	 * @param $source_id
+	 * @param StdClass $settings
+	 * @return StdClass
+	 */
+	public static function apply_source_overrides($source_id, $settings)
+	{
+
+		static $overrides = NULL;
+		if (is_null($overrides))
+		{
+			$overrides = self::_get_EE()->config->item('assets_source_settings');
+			if (!is_array($overrides))
+			{
+				$overrides = array();
+			}
+		}
+
+		if (isset($overrides[$source_id]) && is_array($overrides[$source_id]))
+		{
+			foreach ($overrides[$source_id] as $key => $value)
+			{
+				$settings->{$key} = $value;
+			}
+		}
+
+		return $settings;
+	}
+
+	/**
+	 * Return true, if the item name is allowed.
+	 *
+	 * @param $name
+	 * @return bool
+	 */
+	public static function is_allowed_file_name($name)
+	{
+		static $_combined_patterns = NULL;
+		if (is_null($_combined_patterns))
+		{
+			$config_patterns = self::_get_EE()->config->item('assets_ignore_file_patterns');
+			if (!is_array($config_patterns))
+			{
+				$config_patterns = array();
+			}
+
+			$_combined_patterns = array_merge(self::$_skip_file_patterns, $config_patterns);
+		}
+
+		foreach ($_combined_patterns as $pattern)
+		{
+			if (preg_match('/'.trim($pattern, '/').'/', $name))
+			{
+				return FALSE;
+			}
+		}
+		return TRUE;
+	}
+
+	/**
+	 * Return true, if the item name is allowed.
+	 *
+	 * @param $name
+	 * @return bool
+	 */
+	public static function is_allowed_folder_name($name)
+	{
+		static $_combined_patterns = NULL;
+		if (is_null($_combined_patterns))
+		{
+			$config_patterns = self::_get_EE()->config->item('assets_ignore_folder_patterns');
+			if (!is_array($config_patterns))
+			{
+				$config_patterns = array();
+			}
+
+			$_combined_patterns = array_merge(self::$_skip_folder_patterns, $config_patterns);
+		}
+
+		foreach ($_combined_patterns as $pattern)
+		{
+			if (preg_match('/'.trim($pattern, '/').'/', $name))
+			{
+				return FALSE;
+			}
+		}
+		return TRUE;
+	}
+
 }

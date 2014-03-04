@@ -35,6 +35,10 @@ class Structure_ft extends EE_Fieldtype {
 		EE_Fieldtype::__construct();
 
 		$this->sql = new Sql_structure();
+		
+		if ( ! $this->sql->module_is_installed())
+			return FALSE;
+		
 		$this->site_pages = $this->sql->get_site_pages();
 		$this->site_id = $this->EE->config->item('site_id');
 	}
@@ -44,6 +48,11 @@ class Structure_ft extends EE_Fieldtype {
 		return array(
 			'structure_list_type' => 'pages'
 		);
+	}
+	
+	public function accepts_content_type($name)
+	{
+	    return ($name == 'channel' || $name == 'grid');
 	}
 	
 	// --------------------------------------------------------------------
@@ -111,7 +120,7 @@ class Structure_ft extends EE_Fieldtype {
 	
 	function _get_dropdown($data)
 	{
-	    $selected = array_get($data, 'structure_list_type', null);
+	    $selected = structure_array_get($data, 'structure_list_type', null);
 
 	    $rows = array();
 		$listing_channels = $this->sql->get_structure_channels('listing');

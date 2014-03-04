@@ -83,7 +83,7 @@ class ImageAction_resize_adaptive extends ImageAction
 
 	public function save_settings($settings)
 	{
-		$this->EE->cache['channel_images']['group_final_size'] = $settings;
+		$this->EE->session->cache['channel_images']['group_final_size'] = $settings;
 		return $settings;
 	}
 

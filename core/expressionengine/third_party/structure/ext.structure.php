@@ -31,10 +31,11 @@ class Structure_ext {
 	{
 		$this->EE =& get_instance();
 		$this->sql = new Sql_structure();
-		$this->site_pages = $this->sql->get_site_pages();
-
-		if ( ! $this->sql->module_is_installed() || ! is_array($this->site_pages))
+		
+		if ( ! $this->sql->module_is_installed())
 			return FALSE;
+
+		$this->site_pages = $this->sql->get_site_pages();
 
 		$this->entry_id = FALSE;
 		$this->parent_id = FALSE;
@@ -496,8 +497,8 @@ class Structure_ext {
 		$default_template = $listing_entry ? $listing_entry['template_id'] : $this->sql->get_default_template($channel_id);
 
 		$template_id = pick(
-			array_get($obj->entry, 'structure_template_id'),
-			array_get($this->site_pages['templates'], $entry_id)
+			structure_array_get($obj->entry, 'structure_template_id'),
+			structure_array_get($this->site_pages['templates'], $entry_id)
 		);
 
 		if ( ! $this->sql->is_valid_template($template_id)) {
@@ -509,11 +510,11 @@ class Structure_ext {
 		| URI
 		|-------------------------------------------------------------------------
 		*/
-		$default_uri = $listing_entry ? array_get($listing_entry, 'uri') : array_get($this->site_pages['uris'], $entry_id);
+		$default_uri = $listing_entry ? structure_array_get($listing_entry, 'uri') : structure_array_get($this->site_pages['uris'], $entry_id);
 
 		$uri = Structure_Helper::tidy_url(
 			pick(
-				array_get($obj->entry, 'structure_uri'),
+				structure_array_get($obj->entry, 'structure_uri'),
 				Structure_Helper::get_slug($default_uri),
 				$obj->entry['url_title']
 			)
@@ -527,7 +528,7 @@ class Structure_ext {
 		$default_parent_id = $channel_type == 'listing' ? $this->sql->get_listing_parent($channel_id) : 0;
 
 		$parent_id = pick(
-			array_get($obj->entry, 'structure_parent_id'),
+			structure_array_get($obj->entry, 'structure_parent_id'),
 			$this->sql->get_parent_id($entry_id, null),
 			$default_parent_id
 		);
@@ -537,7 +538,7 @@ class Structure_ext {
 		| Parent URI
 		|-------------------------------------------------------------------------
 		*/
-		$parent_uri  = array_get($this->site_pages['uris'], $parent_id, '/');
+		$parent_uri  = structure_array_get($this->site_pages['uris'], $parent_id, '/');
 
 		/*
 		|-------------------------------------------------------------------------
@@ -559,7 +560,7 @@ class Structure_ext {
 		|-------------------------------------------------------------------------
 		*/
 		$hidden = pick(
-			array_get($obj->entry, 'structure_hidden'),
+			structure_array_get($obj->entry, 'structure_hidden'),
 			$this->sql->get_hidden_state($entry_id),
 			'n'
 		);
@@ -621,8 +622,8 @@ class Structure_ext {
 		$default_template = $listing_entry ? $listing_entry['template_id'] : $this->sql->get_default_template($channel_id);
 
 		$template_id = pick(
-			array_get($obj->EE->api_sc_channel_entries->data, 'structure_template_id'),
-			array_get($this->site_pages['templates'], $entry_id)
+			structure_array_get($obj->EE->api_sc_channel_entries->data, 'structure_template_id'),
+			structure_array_get($this->site_pages['templates'], $entry_id)
 		);
 
 		if ( ! $this->sql->is_valid_template($template_id)) {
@@ -634,11 +635,11 @@ class Structure_ext {
 		| URI
 		|-------------------------------------------------------------------------
 		*/
-		$default_uri = $listing_entry ? array_get($listing_entry, 'uri') : array_get($this->site_pages['uris'], $entry_id);
+		$default_uri = $listing_entry ? structure_array_get($listing_entry, 'uri') : structure_array_get($this->site_pages['uris'], $entry_id);
 
 		$uri = Structure_Helper::tidy_url(
 			pick(
-				array_get($obj->EE->api_sc_channel_entries->data, 'structure_uri'),
+				structure_array_get($obj->EE->api_sc_channel_entries->data, 'structure_uri'),
 				Structure_Helper::get_slug($default_uri),
 				$obj->entry['url_title']
 			)
@@ -652,7 +653,7 @@ class Structure_ext {
 		$default_parent_id = $channel_type == 'listing' ? $this->sql->get_listing_parent($channel_id) : 0;
 
 		$parent_id = pick(
-			array_get($obj->EE->api_sc_channel_entries->data, 'structure_parent_id'),
+			structure_array_get($obj->EE->api_sc_channel_entries->data, 'structure_parent_id'),
 			$this->sql->get_parent_id($entry_id, null),
 			$default_parent_id
 		);
@@ -662,7 +663,7 @@ class Structure_ext {
 		| Parent URI
 		|-------------------------------------------------------------------------
 		*/
-		$parent_uri  = array_get($this->site_pages['uris'], $parent_id, '/');
+		$parent_uri  = structure_array_get($this->site_pages['uris'], $parent_id, '/');
 
 		/*
 		|-------------------------------------------------------------------------
@@ -684,7 +685,7 @@ class Structure_ext {
 		|-------------------------------------------------------------------------
 		*/
 		$hidden = pick(
-			array_get($obj->EE->api_sc_channel_entries->data, 'structure_hidden'),
+			structure_array_get($obj->EE->api_sc_channel_entries->data, 'structure_hidden'),
 			$this->sql->get_hidden_state($entry_id),
 			'n'
 		);

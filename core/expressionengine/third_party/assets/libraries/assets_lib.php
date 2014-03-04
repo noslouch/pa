@@ -43,6 +43,11 @@ class Assets_lib
 	);
 
 	/**
+	 * Last X hours for an Asset to count as a recently uploaded one.
+	 */
+	const RECENT_UPLOAD_HOURS = 24;
+
+	/**
 	 * All source types
 	 * @var array
 	 */
@@ -573,6 +578,7 @@ class Assets_lib
 				'name' => $row->folder_name,
 				'type' => $row->source_type,
 				'filedir_id' => $row->filedir_id,
+				'source_id' => $row->source_id,
 				'children' => array()
 			);
 
@@ -630,6 +636,32 @@ class Assets_lib
 	}
 
 	/**
+	 * Get recently uploaded files by parameters
+	 *
+	 * @param $params
+	 * @return array
+	 */
+	public function get_recent_files($params)
+	{
+		// Some things cannot be changed for recent files.
+		$params['search_type'] = 'shallow';
+		$params['orderby'] = 'date_modified';
+		$params['sort'] = 'desc';
+
+		try{
+			$params = array_merge($this->_default_file_params, $params);
+			$hours = $this->EE->config->item('assets_recent_upload_hours') ? $this->EE->config->item('assets_recent_upload_hours') : self::RECENT_UPLOAD_HOURS;
+			$where = array('`date_modified` >= ' . (time() - ($hours * 60 * 60)));
+			$files = $this->_get_files($params['folders'], $params['keywords'], $params['kinds'], $params['search_type'], $params['limit'], $params['offset'],$params['orderby'], $params['sort'], $params['file_ids'], $where);
+		}
+		catch (Exception $exception)
+		{
+			return array();
+		}
+
+		return $files;
+	}
+	/**
 	 * Get file list for folders
 	 *
 	 * @param $folders
@@ -638,9 +670,13 @@ class Assets_lib
 	 * @param string $search_type shallow|deep
 	 * @param int $limit
 	 * @param int $offset
+ 	 * @param $order_by
+	 * @param $order_type
+	 * @param $file_ids array of files to filter the list by.
+	 * @param $where array of extra criteria
 	 * @return array
 	 */
-	private function _get_files($folders, $keywords = '', $kinds = 'any', $search_type, $limit = 0, $offset = 0, $order_by = '', $order_type = '', $file_ids = array())
+	private function _get_files($folders, $keywords = '', $kinds = 'any', $search_type, $limit = 0, $offset = 0, $order_by = '', $order_type = '', $file_ids = array(), $where = array())
 	{
 		if (empty($limit))
 		{
@@ -652,14 +688,14 @@ class Assets_lib
 			$folders = array($folders);
 		}
 
-		$files = $this->get_files_in_folder($folders, $keywords, $search_type, $order_by, $order_type, $file_ids);
+		$files = $this->get_files_in_folder($folders, $keywords, $search_type, $order_by, $order_type, $file_ids, $where);
 
 		$output = array();
 		foreach ($files as $file_row)
 		{
 			try{
 				$source = $this->instantiate_source_type($file_row);
-				$file = $source->get_file($file_row->file_id);
+				$file = $source->get_file($file_row->file_id, FALSE, (array) $file_row);
 			}
 			catch (Exception $exception)
 			{
@@ -702,9 +738,11 @@ class Assets_lib
 	 * @param string $search_type deep|shallow
 	 * @param $order_by
 	 * @param $order_type
-	 * @return array of Assets_base_file
+	 * @param $file_ids array of file ids to filter by
+	 * @param $where array of extra criteria
+	 * @return array of file rows
 	 */
-	public function get_files_in_folder($folder_ids, $keywords, $search_type = '', $order_by = '', $order_type = 'asc', $file_ids = array())
+	public function get_files_in_folder($folder_ids, $keywords, $search_type = '', $order_by = '', $order_type = 'asc', $file_ids = array(), $where = array())
 	{
 		if (is_array($file_ids))
 		{
@@ -757,6 +795,14 @@ class Assets_lib
 			return array();
 		}
 
+		if (is_array($where))
+		{
+			foreach ($where as $criteria)
+			{
+				$this->EE->db->where($criteria);
+			}
+		}
+
 		$this->EE->db->select('*');
 
 		if (!empty($full_folder_list))
@@ -806,6 +852,7 @@ class Assets_lib
 
 				case 'date':
 				{
+					$this->EE->db->order_by('date', $order_type);
 					$this->EE->db->order_by('date_modified', $order_type);
 					break;
 				}
@@ -920,6 +967,12 @@ class Assets_lib
 	 */
 	public function upload_file($folder_id, $action = '', $action_info = '', $file_name = '')
 	{
+
+		if (!Assets_helper::is_allowed_file_name($file_name))
+		{
+			throw new Exception(lang('invalid_file_name'));
+		}
+
 		// a follow-up to an upload
 		if ( ! empty($action))
 		{
@@ -1089,6 +1142,34 @@ class Assets_lib
 			$folder_row = $this->get_folder_row_by_id($folder_id);
 			$new_source = $this->instantiate_source_type($folder_row);
 
+			// Fire hooks only if there is no conflict or this is a resolved conflict
+			if (!empty($action) OR
+				(!$new_source->source_file_exists($folder_row, $file_name) && !$this->get_file_id_by_folder_id_and_name($folder_id, $file_name))
+			)
+			{
+				$file = $old_source->get_file($file_id);
+
+				// The file name remains unchanged
+				if (empty($action) OR $action == Assets_helper::ACTIONS_REPLACE)
+				{
+					$new_file_name = $file_name;
+				}
+				// User has chosen to keep both files, so the file name will change.
+				else
+				{
+					$new_file_name = $new_source->get_name_replacement($folder_row, $file_name);
+				}
+
+				if ($file_row->folder_id == $folder_id)
+				{
+					$this->EE->assets_lib->call_extension('assets_rename_file', array($file, $new_file_name));
+				}
+				else
+				{
+					$this->call_extension('assets_move_file', array($file, $folder_row, $new_file_name));
+				}
+			}
+
 			if ($old_source && $new_source)
 			{
 				if ( !$result = $new_source->move_file_inside_source($old_source, $file_id, $folder_id, $file_name, $action))
@@ -1119,18 +1200,6 @@ class Assets_lib
 			{
 				$this->clear_file_cache();
 				$new_source->clear_file_cache();
-				$file = $new_source->get_file($file_id);
-				if ($file)
-				{
-					if ($file_row->folder_id == $folder_id)
-					{
-						$this->EE->assets_lib->call_extension('assets_rename_file', array($file, $file_name));
-					}
-					else
-					{
-						$this->call_extension('assets_move_file', array($file, $folder_row, $file_name));
-					}
-				}
 			}
 
 			// add in the old file id so the JS knows which file we're dealing with and can update the information
@@ -1221,6 +1290,8 @@ class Assets_lib
 	 */
 	public function save_file_properties($file_id, $data)
 	{
+		$this->call_extension('assets_file_meta_save', array($file_id, $data));
+
 		$this->EE->db->update('assets_files', $data, array('file_id' => $file_id));
 
 		$this->update_file_search_keywords($file_id);
@@ -1459,9 +1530,9 @@ class Assets_lib
 				{
 					throw new Exception(lang('unknown_source'));
 				}
-				$settings = json_decode($settings->settings);
 
 				$source_id = $data_object->source_id;
+				$settings = Assets_helper::apply_source_overrides($source_id, json_decode($settings->settings));
 			}
 
 			$this->cache['sources'][$source_key] = new $source_class($source_id, $settings, $ignore_restrictions);
@@ -1516,7 +1587,7 @@ class Assets_lib
 
 		foreach ($ee_filedirs as $row)
 		{
-			$output[$row->name.'_ee'] = (object) array('type' => 'ee', 'id' => $row->id, 'name' => $row->name, 'site_id' => $row->site_id);
+			$output[$row->name.'_ee_'.$row->site_id] = (object) array('type' => 'ee', 'id' => $row->id, 'name' => $row->name, 'site_id' => $row->site_id);
 		}
 
 		foreach ($other_sources as $row)
@@ -1717,6 +1788,38 @@ class Assets_lib
 		{
 			return $return;
 		}
+	}
+
+	/**
+	 * Get file ids by an element id.
+	 *
+	 * @param $element_id
+	 * @param $is_draft
+	 * @return array
+	 */
+	public function get_file_ids_by_element_id($element_id, $is_draft = FALSE)
+	{
+		static $cache = array();
+
+		if (empty($cache[$element_id]))
+		{
+			$output = array();
+			$query = $this->EE->db->select('file_id')
+				->where('element_id', $element_id)
+				->where('is_draft', $is_draft ? 1 : 0)
+				->order_by('sort_order');
+
+			$rows = $query->get('assets_selections')->result();
+
+			foreach ($rows as $row)
+			{
+				$output[] = $row->file_id;
+			}
+
+			$cache[$element_id] = $output;
+		}
+
+		return $cache[$element_id];
 	}
 
 	/**

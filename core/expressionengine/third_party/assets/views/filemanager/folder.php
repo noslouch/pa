@@ -1,4 +1,4 @@
-<li class="assets-fm-folder">
+<li class="assets-fm-folder"<?= $depth == 1 ? 'data-source_id="' . $folder->id . '"' : ''?>>
 	<a data-id="<?php echo $folder->id ?>" style="padding-left: <?php echo (20 + (18 * $depth)) ?>px"><span class="assets-fm-label"><?php echo $folder->name ?></a></a>
 	<?php if ( ! empty($folder->children)): ?>
 		<ul>

@@ -81,9 +81,9 @@ class ImageAction_crop_standard extends ImageAction
 
 	public function save_settings($settings)
 	{
-		$this->EE->cache['channel_images']['group_final_size'] = $settings;
-		unset($this->EE->cache['channel_images']['group_final_size']['start_x']);
-		unset($this->EE->cache['channel_images']['group_final_size']['start_y']);
+		$this->EE->session->cache['channel_images']['group_final_size'] = $settings;
+		unset($this->EE->session->cache['channel_images']['group_final_size']['start_x']);
+		unset($this->EE->session->cache['channel_images']['group_final_size']['start_y']);
 		return $settings;
 	}
 

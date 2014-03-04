@@ -560,7 +560,7 @@ ChannelImages.HTML5.Init = function(FIELD_ID) {
     input.setAttribute('name', 'channel_images_file');
     input.setAttribute('id', 'ci_upload_btn_'+FIELD_ID);
     input.setAttribute('accept', 'image/*');
-    input.setAttribute('style', 'position:absolute; cursor:pointer; top:0; left:0; opacity: 0; filter:alpha(opacity: 0);');
+    input.setAttribute('style', 'position:absolute; cursor:pointer; top:0; left:0; opacity: 0; filter:alpha(opacity: 0); width:100%');
 
     // Replace the placeholder with the input
     $('#ChannelImagesSelect_'+FIELD_ID).replaceWith(input);

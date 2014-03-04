@@ -84,7 +84,7 @@ class Structure_upd {
 		$this->EE->db->insert('actions', $data);
 
 		$results = $this->EE->db->query("SELECT * FROM exp_sites");
-
+		
 		if ( ! in_array('site_pages', $results->result_array()))
 		{
 			// ALTER EE TABLES
@@ -134,7 +134,7 @@ class Structure_upd {
 
 		// Insert the action id
 		$action_id  = $this->EE->cp->fetch_action_id('Structure', 'ajax_move_set_data');
-		$data = array('id' => '', 'site_id' => 0, 'var' => 'action_ajax_move', 'var_value' => $action_id);
+		$data = array('site_id' => 0, 'var' => 'action_ajax_move', 'var_value' => $action_id);
 		$sql = $this->EE->db->insert_string('structure_settings', $data);
 		$this->EE->db->query($sql);
 
@@ -145,43 +145,43 @@ class Structure_upd {
 		$sql = array();
 		$sql[] =
 					"INSERT IGNORE INTO exp_structure_settings ".
-					"(id, site_id, var, var_value) VALUES ".
-					"('', 0, 'module_id', " . $module_id . ")";
+					"(site_id, var, var_value) VALUES ".
+					"(0, 'module_id', " . $module_id . ")";
 
 		$sql[] =
 					"INSERT IGNORE INTO exp_structure_settings ".
-					"(id, site_id, var, var_value) VALUES ".
-					"('', 1, 'show_picker', 'y')";
+					"(site_id, var, var_value) VALUES ".
+					"(1, 'show_picker', 'y')";
 
 		$sql[] =
 					"INSERT IGNORE INTO exp_structure_settings ".
-					"(id, site_id, var, var_value) VALUES ".
-					"('', 1, 'show_view_page', 'y')";
+					"(site_id, var, var_value) VALUES ".
+					"(1, 'show_view_page', 'y')";
 
 		$sql[] =
 					"INSERT IGNORE INTO exp_structure_settings ".
-					"(id, site_id, var, var_value) VALUES ".
-					"('', 1, 'show_global_add_page', 'y')";
+					"(site_id, var, var_value) VALUES ".
+					"(1, 'show_global_add_page', 'y')";
 
 		$sql[] =
 					"INSERT IGNORE INTO exp_structure_settings ".
-					"(id, site_id, var, var_value) VALUES ".
-					"('', 1, 'hide_hidden_templates', 'y')";
+					"(site_id, var, var_value) VALUES ".
+					"(1, 'hide_hidden_templates', 'y')";
 
 		$sql[] =
 					"INSERT IGNORE INTO exp_structure_settings ".
-					"(id, site_id, var, var_value) VALUES ".
-					"('', 1, 'redirect_on_login', 'n')";
+					"(site_id, var, var_value) VALUES ".
+					"(1, 'redirect_on_login', 'n')";
 
 		$sql[] =
 					"INSERT IGNORE INTO exp_structure_settings ".
-					"(id, site_id, var, var_value) VALUES ".
-					"('', 1, 'redirect_on_publish', 'n')";
+					"(site_id, var, var_value) VALUES ".
+					"(1, 'redirect_on_publish', 'n')";
 
 		$sql[] =
 					"INSERT IGNORE INTO exp_structure_settings ".
-					"(id, site_id, var, var_value) VALUES ".
-					"('', 1, 'add_trailing_slash', 'y')";
+					"(site_id, var, var_value) VALUES ".
+					"(1, 'add_trailing_slash', 'y')";
 
 
 		foreach ($sql as $query)

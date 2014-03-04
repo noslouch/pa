@@ -489,7 +489,7 @@ class Assets_ee_source extends Assets_base_source
 			return array('error'=> lang('couldnt_save'));
 		}
 
-		chmod($file_path, FILE_WRITE_MODE);
+		@chmod($file_path, FILE_WRITE_MODE);
 
 		$source_server_path = $this->get_filedir($folder_data->filedir_id)->server_path;
 
@@ -734,9 +734,17 @@ class Assets_ee_source extends Assets_base_source
 
 		foreach ($file_list as $file)
 		{
+
 			if (is_dir($file))
 			{
 				$full_path = rtrim(str_replace($filedir->server_path, '', $file), '/') . '/';
+				$parts = explode('/', rtrim($full_path, '/'));
+
+				if (!$this->_is_allowed_folder_path($full_path))
+				{
+					continue;
+				}
+
 				$folder_search = array(
 					'source_type' => $this->get_source_type(),
 					'filedir_id' => $this->get_source_id(),
@@ -748,7 +756,6 @@ class Assets_ee_source extends Assets_base_source
 				// new folder
 				if (empty($folder_row))
 				{
-					$parts = explode('/', rtrim($full_path, '/'));
 					$folder_name = array_pop($parts);
 
 					// check for parent by path segment in table
@@ -788,6 +795,12 @@ class Assets_ee_source extends Assets_base_source
 			}
 			else
 			{
+				$full_path = str_replace($filedir->server_path, '', $file);
+				if (!$this->_is_allowed_file_path($full_path))
+				{
+					continue;
+				}
+
 				$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file);
 			}
 		}
@@ -834,15 +847,12 @@ class Assets_ee_source extends Assets_base_source
 		{
 			foreach ($file_list as $file)
 			{
-				if ( !preg_match(Assets_helper::INDEX_SKIP_ITEMS_PATTERN, $file))
+				// parse folders and add files
+				$file = Assets_helper::normalize_path($file);
+				if (substr($file, -1) != '/' && Assets_helper::is_allowed_file_name(pathinfo($file, PATHINFO_BASENAME)))
 				{
-					// parse folders and add files
-					$file = Assets_helper::normalize_path($file);
-					if (substr($file, -1) != '/')
-					{
-						$count++;
-						$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file);
-					}
+					$count++;
+					$this->_store_index_entry($session_id, $this->get_source_type(), $this->get_source_id(), $offset++, $file);
 				}
 			}
 			$this->_execute_index_batch();
@@ -980,20 +990,17 @@ class Assets_ee_source extends Assets_base_source
 		{
 			foreach ($list as $item)
 			{
-				if ( !preg_match(Assets_helper::INDEX_SKIP_ITEMS_PATTERN, $item))
+				// parse folders and add files
+				$item = Assets_helper::normalize_path($item);
+				if (substr($item, -1) == '/')
 				{
-					// parse folders and add files
-					$item = Assets_helper::normalize_path($item);
-					if (substr($item, -1) == '/')
-					{
-						// add with dropped slash and parse
-						$folder_files[] = substr($item, 0, -1);
-						$this->_load_folder_contents($item, $folder_files);
-					}
-					else
-					{
-						$folder_files[] = $item;
-					}
+					// add with dropped slash and parse
+					$folder_files[] = substr($item, 0, -1);
+					$this->_load_folder_contents($item, $folder_files);
+				}
+				else
+				{
+					$folder_files[] = $item;
 				}
 			}
 		}
@@ -1029,6 +1036,15 @@ class Assets_ee_source extends Assets_base_source
 	}
 
 	/**
+	 * @param $path
+	 * @return array|void
+	 */
+	protected function _source_file_exists($path)
+	{
+		return file_exists($path) && !is_dir($path);
+	}
+
+	/**
 	 * @param StdClass $old_path
 	 * @param StdClass $new_path
 	 * @return bool
@@ -1057,7 +1073,7 @@ class Assets_ee_source extends Assets_base_source
 	 * @param $file_name
 	 * @return mixed|void
 	 */
-	protected function _get_name_replacement($folder_row, $file_name)
+	public function get_name_replacement($folder_row, $file_name)
 	{
 		$filedir = $this->get_filedir($folder_row->filedir_id);
 		$full_path = $filedir->server_path . $folder_row->full_path . $file_name;
@@ -1134,7 +1150,7 @@ class Assets_ee_source extends Assets_base_source
 			}
 		}
 
-		$filedir->server_path = Assets_helper::normalize_path($filedir->server_path);
+		$filedir->server_path = rtrim(Assets_helper::normalize_path($filedir->server_path), '/') . '/';
 
 		return $filedir;
 	}

@@ -3,7 +3,7 @@
  *
  * @copyright 2013 Pixel & Tonic, Inc.. All rights reserved.
  * @author    Brandon Kelly <brandon@pixelandtonic.com>
- * @version   2.1.4
+ * @version   2.2.4
  */
 (function($){
 
@@ -587,29 +587,47 @@ Assets.FileManager = Garnish.Base.extend({
         this._singleFileMenu = [];
         this._multiFileMenu = [];
 
+		this.currentSource = 0;
+
+		this.defaultSourceState = {
+			view: 'thumbs',
+			searchMode: 'shallow',
+			orderby: 'name',
+			sort: 'asc'
+		};
 
         // -------------------------------------------
         // Application State
         // -------------------------------------------
 
         // set the default state
-        this.state = {
-            view: 'thumbs',
+        this.instanceState = {
             folders: {},
-            selectedFolders: [],
-            searchMode: 'shallow',
-            orderby: 'name',
-            sort: 'asc'
+            selectedFolders: []
         };
 
-        this.stateStorageKey = 'PT_Assets_' + this.settings.namespace;
+		this.sourceState = {
 
-        // Merge in the previous state if available
-        if (typeof Storage !== 'undefined' && typeof localStorage[this.stateStorageKey] != 'undefined')
+		};
+
+        this.instanceStateStorageKey = 'PT_Assets_' + this.settings.namespace;
+
+        // Merge in the previous instance state if available
+        if (typeof Storage !== 'undefined' && typeof localStorage[this.instanceStateStorageKey] != 'undefined')
         {
-	        var storedState = $.evalJSON(localStorage[this.stateStorageKey]);
-	        $.extend(this.state, storedState);
+	        var storedState = $.evalJSON(localStorage[this.instanceStateStorageKey]);
+	        $.extend(this.instanceState, storedState);
         }
+
+		this.sourceStateStorageKey = 'PT_Assets_Source_State_' + this.settings.context;
+
+		// Merge in the previous source state if available
+		if (typeof Storage !== 'undefined' && typeof localStorage[this.sourceStateStorageKey] != 'undefined')
+		{
+			var storedSoureState = $.evalJSON(localStorage[this.sourceStateStorageKey]);
+			$.extend(this.sourceState, storedSoureState);
+		}
+
 
 		// -------------------------------------------
 		//  File Uploads
@@ -1296,7 +1314,7 @@ Assets.FileManager = Garnish.Base.extend({
 		this.$searchOptions = $('.assets-fm-searchoptions:first', this.$toolbar);
         this.$searchModeCheckbox = $('input', this.$searchOptions);
 
-		if (this.state.searchMode == 'deep')
+		if (this.getSourceState('searchMode') == 'deep')
 		{
 			this.$searchModeCheckbox.prop('checked', true);
 		}
@@ -1308,12 +1326,10 @@ Assets.FileManager = Garnish.Base.extend({
         // Bring Assets to the stored state
         // -------------------------------------------
 
-        this.viewSelect.selectItem(this.viewBtns[this.state.view]);
-
         // expand folders
-        for (var folder in this.state.folders)
+        for (var folder in this.instanceState.folders)
         {
-            if (this.state.folders[folder] == 'expanded'
+            if (this.instanceState.folders[folder] == 'expanded'
                 && typeof this.folders[folder] !== 'undefined'
                 && this.folders[folder].hasSubfolders())
             {
@@ -1324,12 +1340,13 @@ Assets.FileManager = Garnish.Base.extend({
 
         // mark selected
         var folderSelected = false;
-        for (var i = 0; i < this.state.selectedFolders.length; i++)
+        for (var i = 0; i < this.instanceState.selectedFolders.length; i++)
         {
-            if (typeof this.folders[this.state.selectedFolders[i]] !== 'undefined')
+            if (typeof this.folders[this.instanceState.selectedFolders[i]] !== 'undefined')
             {
-                var folder = this.folders[this.state.selectedFolders[i]];
+                var folder = this.folders[this.instanceState.selectedFolders[i]];
                 this.folderSelect.selectItem(folder.$a, true);
+				this.currentSource = folder.$a.parents('[data-source_id]').data('source_id');
                 folderSelected = true;
                 break;
             }
@@ -1353,7 +1370,9 @@ Assets.FileManager = Garnish.Base.extend({
         //  Initialize the files view
         // -------------------------------------------
 
-        this._updateSelectedFolders();
+		this.viewSelect.selectItem(this.viewBtns[this.getSourceState('view')]);
+
+		this._updateSelectedFolders();
 	},
 
 	_onWindowScroll: function()
@@ -1403,9 +1422,10 @@ Assets.FileManager = Garnish.Base.extend({
 		for (var i = 0; i < $selected.length; i++)
 		{
 			this.selectedFolderIds.push($($selected[i]).attr('data-id'));
-		};
+			this.currentSource = $($selected[i]).parents('[data-source_id]').data('source_id');
+		}
 
-        this.setState('selectedFolders', this.selectedFolderIds);
+        this.setInstanceState('selectedFolders', this.selectedFolderIds);
 
 		// clear the keyword search and reset the offset
 		this.eraseSearch();
@@ -1418,7 +1438,7 @@ Assets.FileManager = Garnish.Base.extend({
 		//  Upload button state
 		// -------------------------------------------
 
-		if (this.selectedFolderIds.length == 1)
+		if (this.selectedFolderIds.length == 1 && !$($selected[0]).data('no_uploads'))
 		{
 			// enable the upload button
             this.enableUploadBtn();
@@ -1428,6 +1448,11 @@ Assets.FileManager = Garnish.Base.extend({
 			this.disableUploadBtn();
 		}
 
+		// -------------------------------------------
+		//  View button state
+		// -------------------------------------------
+
+		this.viewBtns[this.getSourceState('view')].addClass('assets-active').siblings().removeClass('assets-active');
 	},
 
      enableUploadBtn: function ()
@@ -1990,11 +2015,11 @@ Assets.FileManager = Garnish.Base.extend({
     		var searchMode = 'shallow';
     	}
 
-		this.setState('searchMode', searchMode)
+		this.setSourceState('searchMode', searchMode);
         this.updateFiles();
 	},
 
-	eraseSearch: function(event)
+	eraseSearch: function()
 	{
 		this.$searchInput.val('');
 		this.searchVal = '';
@@ -2005,11 +2030,11 @@ Assets.FileManager = Garnish.Base.extend({
 	// -------------------------------------------
 
 	/**
-	 * Set the new state of the app, updating localStorage if possible.
+	 * Set the new state of the instance, updating localStorage if possible.
 	 *
-	 * Accepts two formats: setState('property', 'newValue') and setState{ property1: 'newValue', property2: 'newValue', ... }
+	 * Accepts two formats: setInstanceState('property', 'newValue') and setInstanceState{ property1: 'newValue', property2: 'newValue', ... }
 	 */
-    setState: function(key, value)
+    setInstanceState: function(key, value)
     {
     	if (typeof key == 'string')
     	{
@@ -2021,11 +2046,11 @@ Assets.FileManager = Garnish.Base.extend({
     		var newState = key;
     	}
 
-        $.extend(this.state, newState);
+        $.extend(this.instanceState, newState);
 
         if (typeof Storage !== 'undefined')
         {
-            localStorage[this.stateStorageKey] = $.toJSON(this.state);
+            localStorage[this.instanceStateStorageKey] = $.toJSON(this.instanceState);
         }
     },
 
@@ -2034,10 +2059,49 @@ Assets.FileManager = Garnish.Base.extend({
      */
     setFolderState: function(folder, state)
     {
-        var newStates = this.state.folders;
+        var newStates = this.instanceState.folders;
         newStates[folder] = state;
-        this.setState('folders', newStates);
+        this.setInstanceState('folders', newStates);
     },
+
+	/**
+	 * Set a state for a source.
+	 *
+	 * Accepts two formats: setInstanceState('property', 'newValue') and setInstanceState{ property1: 'newValue', property2: 'newValue', ... }
+	 */
+	setSourceState: function(key, value)
+	{
+		if (typeof(this.sourceState[this.currentSource]) == "undefined")
+		{
+			this.sourceState[this.currentSource] = this.defaultSourceState;
+		}
+
+		if (typeof key == 'string')
+		{
+			var newState = {};
+			newState[key] = value;
+		}
+		else
+		{
+			var newState = key;
+		}
+
+		$.extend(this.sourceState[this.currentSource], newState);
+
+		if (typeof Storage !== 'undefined')
+		{
+			localStorage[this.sourceStateStorageKey] = $.toJSON(this.sourceState);
+		}
+	},
+
+	getSourceState: function (key)
+	{
+		if (typeof this.sourceState[this.currentSource] == "undefined")
+		{
+			this.sourceState[this.currentSource] = this.defaultSourceState;
+		}
+		return this.sourceState[this.currentSource][key];
+	},
 
 	// -------------------------------------------
 	//  Update Files
@@ -2048,7 +2112,7 @@ Assets.FileManager = Garnish.Base.extend({
 		var $btn = this.viewSelect.getSelectedItems(),
 			view = $btn.attr('data-view');
 
-		this.setState('view', view);
+		this.setSourceState('view', view);
 		this.updateFiles();
 	},
 
@@ -2095,14 +2159,14 @@ Assets.FileManager = Garnish.Base.extend({
                 this.$files.html(data.html);
 
                 // initialize the files view
-				if (this.state.view == 'list')
+				if (this.getSourceState('view') == 'list')
 				{
 					this.filesView = new Assets.ListView($('> .assets-listview', this.$files), {
-						orderby: this.state.orderby,
-						sort:    this.state.sort,
+						orderby: this.getSourceState('orderby'),
+						sort:    this.getSourceState('sort'),
 						onSortChange: $.proxy(function(orderby, sort)
 						{
-							this.setState({
+							this.setSourceState({
 								orderby: orderby,
 								sort: sort
 							});
@@ -2120,7 +2184,7 @@ Assets.FileManager = Garnish.Base.extend({
                     selectedClass:     'assets-selected',
                     multi:             this.settings.multiSelect,
                     waitForDblClick:   (this.settings.multiSelect && this.settings.mode == 'select'),
-                    vertical:          (this.state.view == 'list'),
+                    vertical:          (this.getSourceState('view') == 'list'),
                     onSelectionChange: $.proxy(this, '_onFileSelectionChange'),
                     $scrollpane:       this.$scrollpane
                 });
@@ -2274,22 +2338,36 @@ Assets.FileManager = Garnish.Base.extend({
         var postData = {
             ACT:         Assets.actions.get_files_view_by_folders,
             requestId:   this.filesRequestId,
-            view:        this.state.view,
+            view:        this.getSourceState('view'),
             keywords:    this.searchVal,
-            search_type: this.state.searchMode
+            search_type: this.getSourceState('searchMode')
         };
 
-        if (this.state.view == 'list')
+        if (this.getSourceState('view') == 'list')
         {
-            postData.orderby = this.state.orderby;
-            postData.sort = this.state.sort;
+            postData.orderby = this.getSourceState('orderby');
+            postData.sort = this.getSourceState('sort');
         }
 
-        // pass the selected folder IDs
-        for (var i in this.selectedFolderIds)
-        {
-            postData['folders['+i+']'] = this.selectedFolderIds[i];
-        }
+		// Check if this is the recent uploads folder
+		if (this.selectedFolderIds.length && this.selectedFolderIds[0] == 'recent')
+		{
+			//If so, mark that property and add *all* the folders we have in the current view.
+			var i = 0;
+			for (var folderId in this.folders)
+			{
+				postData['folders['+ (i++) +']'] = folderId;
+			}
+			postData['special'] = "recent";
+		}
+		// Just the folder(s), please.
+		else
+		{
+			for (var i in this.selectedFolderIds)
+			{
+				postData['folders['+i+']'] = this.selectedFolderIds[i];
+			}
+		}
 
         // pass the file kinds
         if (! this.settings.kinds || this.settings.kinds == 'any')
@@ -2373,7 +2451,7 @@ Assets.FileManager = Garnish.Base.extend({
                 // ignore if this isn't the current request
                 if (data.requestId != this.filesRequestId) return;
 
-                if (this.state.view == 'list')
+                if (this.getSourceState('view') == 'list')
                 {
                     $newFiles = $(data.html).find('tbody>tr');
                 }
@@ -2405,6 +2483,12 @@ Assets.FileManager = Garnish.Base.extend({
 	refreshFiles: function()
 	{
 		var folderId = this.selectedFolderIds[0];
+		if (folderId == "recent")
+		{
+			this._updateSelectedFolders();
+			return;
+		}
+
 		this.$fm.addClass('assets-loading');
 
 		// prepare the progress bar
@@ -2680,7 +2764,8 @@ Assets.FileManager = Garnish.Base.extend({
 		multiSelect:   true,
 		kinds:         'any',
 		disabledFiles: [],
-	    namespace:     'panel'
+	    namespace:     'panel',
+		context:       'sheet'
 	}
 });
 
@@ -2731,23 +2816,27 @@ Assets.FileManagerFolder = Garnish.Base.extend({
 
 		var menuOptions = [];
 
-		if (this.fm.settings.mode == 'full' && this.depth > 1)
+		if (! this.$a.data('no_menu'))
 		{
-			menuOptions.push({ label: Assets.lang.rename, onClick: $.proxy(this, '_rename') });
-			menuOptions.push('-');
+
+			if (this.fm.settings.mode == 'full' && this.depth > 1)
+			{
+				menuOptions.push({ label: Assets.lang.rename, onClick: $.proxy(this, '_rename') });
+				menuOptions.push('-');
+			}
+
+			menuOptions.push({ label: Assets.lang.new_subfolder, onClick: $.proxy(this, '_createSubfolder') });
+
+			if (this.fm.settings.mode == 'full' && this.depth > 1)
+			{
+				menuOptions.push('-');
+				menuOptions.push({ label: Assets.lang._delete, onClick: $.proxy(this, '_delete') });
+			}
+
+			new Garnish.ContextMenu(this.$a, menuOptions, {
+				menuClass: 'assets-contextmenu'
+			});
 		}
-
-		menuOptions.push({ label: Assets.lang.new_subfolder, onClick: $.proxy(this, '_createSubfolder') });
-
-		if (this.fm.settings.mode == 'full' && this.depth > 1)
-		{
-			menuOptions.push('-');
-			menuOptions.push({ label: Assets.lang._delete, onClick: $.proxy(this, '_delete') });
-		}
-
-		new Garnish.ContextMenu(this.$a, menuOptions, {
-			menuClass: 'assets-contextmenu'
-		});
 	},
 
 	// -------------------------------------------

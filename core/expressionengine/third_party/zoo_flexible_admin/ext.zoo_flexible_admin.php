@@ -5,7 +5,7 @@ class Zoo_flexible_admin_ext
 {
 
 	var $name = 'Zoo Flexible Admin';
-	var $version = '1.79';
+	var $version = '1.80';
 	var $description = '';
 	var $settings_exist = 'n';
 	var $docs_url = '';
@@ -311,8 +311,11 @@ EE.navigation.mouse_listen()
 								$replace = $data->userdata['fingerprint'];
 								break;
 						}
+
+
 						//replace all session id's with the current one
 						$startpage = preg_replace('/S=.+?&D/', "S=" . $replace . "&D", $startpage);
+
 					}
 					//redirect, prevents loop
 					header("Refresh: 0;url=" . $startpage);

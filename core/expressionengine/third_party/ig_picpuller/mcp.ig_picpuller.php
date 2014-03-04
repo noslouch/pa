@@ -49,7 +49,7 @@ class Ig_picpuller_mcp {
 
 		$this->_the_server = $_SERVER['HTTP_HOST'];
 
-		$this->_base_url = BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=ig_picpuller';
+		$this->_base_url = BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module='.PP_IG_PACKAGE;
 
 		$this->EE->load->library('session');
 
@@ -78,9 +78,9 @@ class Ig_picpuller_mcp {
 
 		// set the name of the CP title
 		if (function_exists('ee')) {
-			$this->EE->view->cp_page_title = lang('ig_picpuller_module_name');
+			$this->EE->view->cp_page_title = lang(PP_IG_PACKAGE.'_module_name');
 		} else {
-			$this->EE->cp->set_variable('cp_page_title', lang('ig_picpuller_module_name'));
+			$this->EE->cp->set_variable('cp_page_title', lang(PP_IG_PACKAGE.'_module_name'));
 		}
 	}
 
@@ -343,8 +343,14 @@ class Ig_picpuller_mcp {
 	{
 		$vars['site_label'] = $this->getSiteLabel();
 		$vars['moduleTitle'] = lang('ig_picpuller_module_name');
-		$vars['moduleShortTitle'] = lang('ig_picpuller_short_module_name');
-		$this->EE->cp->set_variable('cp_page_title', lang('ig_picpuller_module_name'));
+		$vars['moduleShortTitle'] = lang('ig_picpuller_short_module_name');// set the name of the CP title
+		
+		if (function_exists('ee')) {
+			$this->EE->view->cp_page_title = lang(PP_IG_PACKAGE.'_module_name');
+		} else {
+			$this->EE->cp->set_variable('cp_page_title', lang(PP_IG_PACKAGE.'_module_name'));
+		}
+
 		$ig_client_id = $this->getClientID();
 		$ig_client_secret = $this->EE->input->post('ig_client_secret', TRUE);
 		$data = array(
@@ -392,7 +398,11 @@ class Ig_picpuller_mcp {
 		$vars['site_label'] = $this->getSiteLabel();
 		$vars['moduleTitle'] = lang('ig_picpuller_module_name');
 		$vars['moduleShortTitle'] = lang('ig_picpuller_short_module_name');
-		$this->EE->cp->set_variable('cp_page_title', lang('ig_picpuller_module_name'));
+		if (function_exists('ee')) {
+			$this->EE->view->cp_page_title = lang(PP_IG_PACKAGE.'_module_name');
+		} else {
+			$this->EE->cp->set_variable('cp_page_title', lang(PP_IG_PACKAGE.'_module_name'));
+		}
 		$ig_client_id = $this->getClientID();
 		$ig_picpuller_prefix = $this->EE->input->post('ig_picpuller_prefix', TRUE);
 		$data = array(
@@ -441,7 +451,7 @@ class Ig_picpuller_mcp {
 		$vars['site_label'] = $this->getSiteLabel();
 		$vars['moduleTitle'] = lang('ig_picpuller_module_name');
 		$vars['moduleShortTitle'] = lang('ig_picpuller_short_module_name');
-		$this->EE->cp->set_variable('cp_page_title', lang('ig_picpuller_module_name'));
+		$this->EE->view->cp_page_title = lang('ig_picpuller_module_name');
 		$ig_client_id = $this->getClientID();
 
 		$frontend_auth_url = $this->EE->input->post('frontend_auth_url', TRUE);
@@ -485,8 +495,11 @@ class Ig_picpuller_mcp {
 		$vars['moduleShortTitle'] = lang('ig_picpuller_short_module_name');
 		$vars['app_info_link'] = $this->_base_url.'&method=ig_info';
 		$vars['edit_tab_name'] =  $this->EE->lang->line('ig_info');
-
-		$this->EE->cp->set_variable('cp_page_title', lang('ig_picpuller_module_name'));
+		if (function_exists('ee')) {
+			$this->EE->view->cp_page_title = lang(PP_IG_PACKAGE.'_module_name');
+		} else {
+			$this->EE->cp->set_variable('cp_page_title', lang(PP_IG_PACKAGE.'_module_name'));
+		}
 		$ig_client_id = $this->EE->input->post('ig_client_id', TRUE);
 		$ig_client_secret = $this->EE->input->post('ig_client_secret', TRUE);
 
@@ -738,7 +751,7 @@ class Ig_picpuller_mcp {
 
 	private function getRedirectURL($urlEncoded = false)
 	{
-		return $this->EE->functions->fetch_site_index(0, 0).QUERY_MARKER.'ACT='.$this->EE->cp->fetch_action_id('ig_picpuller', 'authorization');
+		return $this->EE->functions->fetch_site_index(0, 0).QUERY_MARKER.'ACT='.$this->EE->cp->fetch_action_id(PP_IG_PACKAGE, 'authorization');
 
 	}
 
