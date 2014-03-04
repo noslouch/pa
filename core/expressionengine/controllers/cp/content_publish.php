@@ -7,7 +7,7 @@
  *
  * @package		ExpressionEngine
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2013, EllisLab, Inc.
+ * @copyright	Copyright (c) 2003 - 2014, EllisLab, Inc.
  * @license		http://ellislab.com/expressionengine/user-guide/license.html
  * @link		http://ellislab.com
  * @since		Version 2.0
@@ -682,7 +682,7 @@ class Content_publish extends CP_Controller {
 
 		if ($show_comments_link)
 		{
-			if (isset($this->installed_modules['comment']))
+			if (isset($this->cp->installed_modules['comment']))
 			{
 				$comment_count = $this->db->where('entry_id', $entry_id)
 										  ->count_all_results('comments');
@@ -1300,6 +1300,7 @@ class Content_publish extends CP_Controller {
 			'lang.duplicate_tab_name'			=> lang('duplicate_tab_name'),
 			'lang.hide_toolbar' 				=> lang('hide_toolbar'),
 			'lang.illegal_characters'			=> lang('illegal_characters'),
+			'lang.illegal_tab_name'				=> lang('illegal_tab_name'),
 			'lang.loading'						=> lang('loading'),
 			'lang.tab_name'						=> lang('tab_name'),
 			'lang.show_toolbar' 				=> lang('show_toolbar'),

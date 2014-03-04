@@ -4,7 +4,7 @@
  *
  * @package		ExpressionEngine
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2013, EllisLab, Inc.
+ * @copyright	Copyright (c) 2003 - 2014, EllisLab, Inc.
  * @license		http://ellislab.com/expressionengine/user-guide/license.html
  * @link		http://ellislab.com
  * @since		Version 2.0
@@ -154,6 +154,8 @@ class Checkboxes_ft extends EE_Fieldtype {
 		ee()->load->helper('custom_field');
 		$data = decode_multi_field($data);
 
+		ee()->load->library('typography');
+
 		if ($tagdata)
 		{
 			return $this->_parse_multi($data, $params, $tagdata);
@@ -202,8 +204,8 @@ class Checkboxes_ft extends EE_Fieldtype {
 			return ee()->functions->encode_ee_tags($entry);
 		}
 
-		$text_format = (isset($this->row['field_ft_'.$this->field_id]))
-			? $this->row['field_ft_'.$this->field_id] : 'none';
+		$text_format = ($this->content_type() == 'grid')
+			? $this->settings['field_fmt'] : $this->row('field_ft_'.$this->field_id);
 
 		return ee()->typography->parse_type(
 				ee()->functions->encode_ee_tags($entry),

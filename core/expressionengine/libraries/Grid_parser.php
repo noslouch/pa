@@ -5,7 +5,7 @@
  *
  * @package		ExpressionEngine
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2013, EllisLab, Inc.
+ * @copyright	Copyright (c) 2003 - 2014, EllisLab, Inc.
  * @license		http://ellislab.com/expressionengine/user-guide/license.html
  * @link		http://ellislab.com
  * @since		Version 2.7
@@ -58,7 +58,7 @@ class Grid_parser {
 	{
 		// Bail out if there are no grid fields present to parse
 		if ( ! preg_match_all(
-				"/".LD.'\/?('.preg_quote($pre_parser->prefix()).'(?:(?:'.implode('|', array_flip($grid_fields)).'):?)+)\b([^}{]*)?'.RD."/",
+				"/".LD.'\/?('.preg_quote($pre_parser->prefix()).'(?:(?:'.implode('|', array_flip($grid_fields)).'):?))\b([^}{]*)?'.RD."/",
 				$tagdata,
 				$matches,
 				PREG_SET_ORDER)
@@ -66,6 +66,8 @@ class Grid_parser {
 		{
 			return FALSE;
 		}
+
+		$field_ids = array();
 
 		// Validate matches
 		foreach ($matches as $key => $match)
@@ -154,6 +156,29 @@ class Grid_parser {
 		$entry_data = $entry_data[$entry_id];
 		$field_name = $this->grid_field_names[$field_id];
 
+		// Fix for when there is a Grid field in a Channel Entries loop, but
+		// the same Grid field is also being brought in via a Relationships
+		// field in the same loop, the first Grid field is not parsed because
+		// it was replaced in the $grid_field_names array by the tag name in
+		// the Relationships tag pair; a better fix is having a separate parser
+		// instance for each instance of the Channel Entries parser but this
+		// will have to do for now
+		if (strpos($tagdata, $field_name) === FALSE)
+		{
+			$field_name = substr($field_name, strrpos($field_name, ':') + 1);
+			$this->grid_field_names[$field_id] = $field_name;
+		}
+
+		// Add field_row_index and field_row_count variables to get the index
+		// and count of rows in the field regardless of front-end output
+		$field_row_count = 1;
+		foreach ($entry_data as &$entry_data_row)
+		{
+			$entry_data_row['field_row_index'] = $field_row_count - 1;
+			$entry_data_row['field_row_count'] = $field_row_count;
+			$field_row_count++;
+		}
+
 		// :field_total_rows single variable
 		// Currently does not work well with fixed_order and search params
 		$field_total_rows = count($entry_data);
@@ -171,39 +196,45 @@ class Grid_parser {
 
 			$row_ids = explode('|', $row_ids);
 
-			// If there are mutliple row IDs
-			if (count($row_ids) > 1)
+			// Unset the "not" row_ids from entry_data
+			if ($not)
 			{
-				// Unset the "not" row_ids from entry_data
-				if ($not)
+				foreach ($row_ids as $row_id)
 				{
-					foreach ($row_ids as $row_id)
-					{
-						if (isset($entry_data[$row_id]))
-						{
-							unset($entry_data[$row_id]);
-						}
-					}
-				}
-				// Unset all rows that AREN'T in the row_id parameter
-				else
-				{
-					foreach (array_diff(array_keys($entry_data), $row_ids) as $row_id)
+					if (isset($entry_data[$row_id]))
 					{
 						unset($entry_data[$row_id]);
 					}
 				}
 			}
-			// Otherwise, if there is just one row_id, we're likely inside
-			// a next_row or prev_row tag, don't modify the entry_data
-			// so we still have access to next and previous rows
-			elseif (count($row_ids) == 1)
+			else
 			{
-				$row_index = array_search(current($row_ids), array_keys($entry_data));
+				// If there are mutliple row IDs
+				if (count($row_ids) > 1)
+				{
+					// Unset all rows that AREN'T in the row_id parameter
+					foreach (array_diff(array_keys($entry_data), $row_ids) as $row_id)
+					{
+						unset($entry_data[$row_id]);
+					}
+				}
+				// Otherwise, if there is just one row_id, we're likely inside
+				// a next_row or prev_row tag, don't modify the entry_data
+				// so we still have access to next and previous rows
+				elseif (count($row_ids) == 1)
+				{
+					$row_index = array_search(current($row_ids), array_keys($entry_data));
 
-				$params['offset'] += $row_index;
-				$params['limit'] = 1;
+					$params['offset'] += $row_index;
+					$params['limit'] = 1;
+				}
 			}
+		}
+
+		// Order by random
+		if ($params['orderby'] == 'random')
+		{
+			shuffle($entry_data);
 		}
 
 		// We'll handle limit and offset parameters this way; we can't do
@@ -215,7 +246,12 @@ class Grid_parser {
 			TRUE
 		);
 
-		$row_ids = array_keys($entry_data);
+		// Collect row IDs
+		$row_ids = array();
+		foreach ($display_entry_data as $row)
+		{
+			$row_ids[] = $row['row_id'];
+		}
 
 		// :total_rows single variable
 		$total_rows = count($display_entry_data);
@@ -291,7 +327,7 @@ class Grid_parser {
 			$row['total_rows'] = $total_rows;
 			$row['field_total_rows'] = $field_total_rows;
 
-			$grid_row = ee()->TMPL->parse_switch($grid_row, $count, $prefix);
+			$grid_row = ee()->TMPL->parse_switch($grid_row, $row['index'], $prefix);
 
 			$count++;
 
@@ -352,6 +388,12 @@ class Grid_parser {
 			$grid_tagdata .= $this->_parse_row($channel_row, $field_id, $grid_row, $row, $content_type);
 		}
 
+		// Backspace parameter
+		if (isset($params['backspace']) && $params['backspace'] > 0)
+		{
+			$grid_tagdata = substr($grid_tagdata, 0, -$params['backspace']);
+		}
+
 		return $grid_tagdata;
 	}
 
@@ -374,7 +416,7 @@ class Grid_parser {
 
 		// Gather the variables to parse
 		if ( ! preg_match_all(
-				"/".LD.'?[^\/]((?:(?:'.preg_quote($field_name).'):?)+)\b([^}{]*)?'.RD."/",
+				"/".LD.'?[^\/]((?:(?:'.preg_quote($field_name).'):?))\b([^}{]*)?'.RD."/",
 				$tagdata,
 				$matches,
 				PREG_SET_ORDER) || empty($row)

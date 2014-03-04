@@ -5,7 +5,7 @@
  *
  * @package		ExpressionEngine
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2013, EllisLab, Inc.
+ * @copyright	Copyright (c) 2003 - 2014, EllisLab, Inc.
  * @license		http://ellislab.com/expressionengine/user-guide/license.html
  * @link		http://ellislab.com
  * @since		Version 2.6
@@ -140,7 +140,7 @@ class EE_relationship_tree_builder {
 			);
 		}
 
-		$this->_unique_ids = array_unique(
+		$this->_unique_ids = ee_array_unique(
 			call_user_func_array('array_merge', $all_entry_ids),
 			SORT_NUMERIC
 		);

@@ -4,7 +4,7 @@
  *
  * @package		ExpressionEngine
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2013, EllisLab, Inc.
+ * @copyright	Copyright (c) 2003 - 2014, EllisLab, Inc.
  * @license		http://ellislab.com/expressionengine/user-guide/license.html
  * @link		http://ellislab.com
  * @since		Version 2.0
@@ -254,7 +254,7 @@ class Members extends CP_Controller {
 				'username'		=> '<a href="'.BASE.AMP.'C=myaccount'.AMP.'id='.$member['member_id'].'">'.$member['username'].'</a>',
 				'screen_name'	=> $member['screen_name'],
 				'email'			=> '<a href="mailto:'.$member['email'].'">'.$member['email'].'</a>',
-				'join_date'		=> $this->localize->format_date('%Y-%m-%d', $member['join_date']),
+				'join_date'		=> $this->localize->format_date(ee()->session->userdata('date_format', ee()->config->item('date_format')), $member['join_date']),
 				'last_visit'	=> ($member['last_visit'] == 0) ? ' - ' : $this->localize->human_time($member['last_visit']),
 				'group_id'		=> $groups[$member['group_id']],
 				'_check'		=> '<input class="toggle" type="checkbox" name="toggle[]" value="'.$member['member_id'].'" />'
@@ -566,12 +566,12 @@ class Members extends CP_Controller {
 		// Set cookie expiration to one year if the "remember me" button is clicked
 
 		$expire = 0;
-		$type = (isset($_POST['return_destination']) && $_POST['return_destination'] == 'cp') ? $this->config->item('admin_session_type') : $this->config->item('user_session_type');
+		$type = (isset($_POST['return_destination']) && $_POST['return_destination'] == 'cp') ? $this->config->item('cp_session_type') : $this->config->item('website_session_type');
 
 		if ($type != 's')
 		{
-			$this->functions->set_cookie($this->session->c_expire , time()+$expire, $expire);
-			$this->functions->set_cookie($this->session->c_anon , 1,  $expire);
+			$this->input->set_cookie($this->session->c_expire , time()+$expire, $expire);
+			$this->input->set_cookie($this->session->c_anon , 1,  $expire);
 		}
 
 		// Create a new session
@@ -588,18 +588,7 @@ class Members extends CP_Controller {
 		{
 			if ($_POST['return_destination'] == 'cp')
 			{
-				$admin_session_type = $this->config->item('admin_session_type');
-
-				switch ($admin_session_type)
-				{
-					case 's' 	: $s = $this->session->userdata['session_id'];
-						break;
-					case 'cs' 	: $s = $this->session->userdata['fingerprint'];
-						break;
-					default 	: $s = 0;
-				}
-
-				$return_path = $this->config->item('cp_url', FALSE).'?S='.$s;
+				$return_path = $this->config->item('cp_url', FALSE).'?S='.ee()->session->session_id();
 			}
 			elseif ($_POST['return_destination'] == 'other' && isset($_POST['other_url']) && stristr($_POST['other_url'], 'http'))
 			{
@@ -2343,7 +2332,9 @@ class Members extends CP_Controller {
 		$data['join_date']	= $this->localize->now;
 		$data['language'] 	= $this->config->item('deft_lang');
 		$data['timezone'] 	= $this->config->item('default_site_timezone');
-		$data['time_format'] = $this->config->item('time_format') ? $this->config->item('time_format') : 'us';
+		$data['date_format'] = $this->config->item('date_format') ? $this->config->item('date_format') : '%n/%j/%y';
+		$data['time_format'] = $this->config->item('time_format') ? $this->config->item('time_format') : '12';
+		$data['include_seconds'] = $this->config->item('include_seconds') ? $this->config->item('include_seconds') : 'n';
 
 		// Was a member group ID submitted?
 
@@ -3060,11 +3051,11 @@ class Members extends CP_Controller {
 		foreach ($custom_fields->result() as $field)
 		{
 			$fields[] = array(
-								'id'	=> $field->m_field_id,
-								'label'	=> $field->m_field_label,
-								'name'	=> $field->m_field_name,
-								'value'	=> $field->m_field_order
-							);
+				'id'	=> $field->m_field_id,
+				'label'	=> $field->m_field_label,
+				'name'	=> $field->m_field_name,
+				'value'	=> $field->m_field_order
+			);
 		}
 
 		$vars['fields'] = $fields;
@@ -3113,30 +3104,24 @@ class Members extends CP_Controller {
 	 */
 	public function ip_search()
 	{
-		if ( ! $this->cp->allowed_group('can_access_members') OR ! $this->cp->allowed_group('can_admin_members'))
+		if ( ! ee()->cp->allowed_group('can_access_members', 'can_admin_members'))
 		{
 			show_error(lang('unauthorized_access'));
 		}
 
-		$message = '';
-		$ip = ($this->input->get_post('ip_address') != FALSE) ? str_replace('_', '.',$this->input->get_post('ip_address')) : '';
-
-		if ($this->input->get_post('error') == 2)
+		switch ((int) ee()->input->get_post('error'))
 		{
-			$message = lang('ip_search_no_results');
-		}
-		elseif ($this->input->get_post('error') == 1)
-		{
-			$message = lang('ip_search_too_short');
+			case 1: $error = lang('ip_search_too_short');
+				break;
+			case 2: $error = lang('ip_search_no_results');
 		}
 
-        $this->load->library('table');
+		ee()->load->library('table');
 
-		$this->view->cp_page_title = lang('ip_search');
+		ee()->view->cp_page_title = lang('ip_search');
+		ee()->view->cp_messages   = compact('error');
 
-		$vars['message'] = $message;
-
-		$this->cp->render('members/ip_search', $vars);
+		ee()->cp->render('members/ip_search');
 	}
 
 	// --------------------------------------------------------------------
@@ -3150,7 +3135,7 @@ class Members extends CP_Controller {
 	 */
 	public function do_ip_search()
 	{
-		if ( ! $this->cp->allowed_group('can_access_members') OR ! $this->cp->allowed_group('can_admin_members'))
+		if ( ! $this->cp->allowed_group('can_access_members', 'can_admin_members'))
 		{
 			show_error(lang('unauthorized_access'));
 		}
@@ -3208,8 +3193,7 @@ class Members extends CP_Controller {
 				FROM exp_channel_titles t, exp_members m, exp_sites s
 				WHERE t.ip_address LIKE '%".$this->db->escape_like_str($ip)."%'
 				AND t.site_id = s.site_id
-				AND t.author_id = m.member_id
-				ORDER BY entry_id desc ";
+				AND t.author_id = m.member_id";
 
 		$query = $this->db->query($sql);
 		$total = $query->row('count');
@@ -3237,14 +3221,11 @@ class Members extends CP_Controller {
 		$this->db->where('module_name', 'Comment');
 		$comment_installed = $this->db->count_all_results();
 
-		if ($comment_installed  == 1)
+		if ($comment_installed == 1)
 		{
 			$sql = "SELECT COUNT(*) AS count
-					FROM exp_channel_titles t, exp_members m, exp_sites s
-					WHERE t.ip_address LIKE '%".$this->db->escape_like_str($ip)."%'
-					AND t.site_id = s.site_id
-					AND t.author_id = m.member_id
-					ORDER BY entry_id desc ";
+					FROM exp_comments c
+					WHERE c.ip_address LIKE '%".$this->db->escape_like_str($ip)."%'";
 
 			$query = $this->db->query($sql);
 			$total = $query->row('count');
@@ -3254,16 +3235,14 @@ class Members extends CP_Controller {
 			$config['total_rows'] = $total;
 			$this->pagination->initialize($config);
 
-			$sql = "SELECT s.site_label, t.entry_id, t.channel_id, t.title, t.ip_address, m.member_id, m.username, m.screen_name, m.email
-					FROM exp_channel_titles t, exp_members m, exp_sites s
-					WHERE t.ip_address LIKE '%".$this->db->escape_like_str($ip)."%'
-					AND t.site_id = s.site_id
-					AND t.author_id = m.member_id
-					ORDER BY entry_id desc
+			$sql = "SELECT c.entry_id, c.channel_id, c.comment, c.ip_address, c.author_id, c.name, c.comment_id, c.email
+					FROM exp_comments c
+					WHERE c.ip_address LIKE '%".$this->db->escape_like_str($ip)."%'
+					ORDER BY entry_id, comment_id desc
 					LIMIT {$per_page}, 10";
 
-			$vars['channel_entries_pagination'] = $this->pagination->create_links();
-			$vars['channel_entries'] = $this->db->query($sql);
+			$vars['comments_pagination'] = $this->pagination->create_links();
+			$vars['comments'] = $this->db->query($sql);
 		}
 
 		// Find Forum Topics with IP
@@ -3279,8 +3258,7 @@ class Members extends CP_Controller {
 					FROM exp_forum_topics f, exp_members m, exp_forum_boards b
 					WHERE f.ip_address LIKE '%".$this->db->escape_like_str($ip)."%'
 					AND f.board_id = b.board_id
-					AND f.author_id = m.member_id
-					ORDER BY f.topic_id desc";
+					AND f.author_id = m.member_id";
 
 			$query = $this->db->query($sql);
 			$total = $query->row('count');
@@ -3306,8 +3284,7 @@ class Members extends CP_Controller {
 			$sql = "SELECT COUNT(*) AS count
 					FROM exp_forum_posts p, exp_members m
 					WHERE p.ip_address LIKE '%".$this->db->escape_like_str($ip)."%'
-					AND p.author_id = m.member_id
-					ORDER BY p.topic_id desc";
+					AND p.author_id = m.member_id";
 
 			$query = $this->db->query($sql);
 			$total = $query->row('count');

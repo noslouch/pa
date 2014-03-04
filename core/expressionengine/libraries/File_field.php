@@ -5,7 +5,7 @@
  *
  * @package		ExpressionEngine
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2013, EllisLab, Inc.
+ * @copyright	Copyright (c) 2003 - 2014, EllisLab, Inc.
  * @license		http://ellislab.com/expressionengine/user-guide/license.html
  * @link		http://ellislab.com
  * @since		Version 2.4
@@ -122,6 +122,7 @@ class File_field {
 		));
 
 		$vars['allowed_file_dirs'] = $allowed_file_dirs;
+		$vars['directory'] = form_hidden($field_name.'_directory', $vars['upload_location_id']);
 		$vars['dropdown'] = form_dropdown($field_name.'_directory', $upload_dirs, $vars['upload_location_id']);
 
 		// Check to see if they have access to any directories to create an upload link
