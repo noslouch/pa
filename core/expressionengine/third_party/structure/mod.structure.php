@@ -107,9 +107,20 @@ class Structure extends Channel
 		
 		$start_from = Structure_Helper::remove_double_slashes($start_from);
 
+		// This level defines how deep to go if recursive is set to no. For / it's 1 deep, if anything else 
+		// it's 0.
+		if ($start_from=="/")
+		{
+			$level="1";
+		}
+		else
+		{
+			$level="0";
+		}
+
 		$selective_data = $this->sql->get_selective_data($site_id, $current_id, $branch_entry_id, $mode, $show_depth, $max_depth, $status, $include, $exclude, $show_overview, $rename_overview, $show_expired, $show_future,$override_hidden_state,$recursive_overview);
 		
-		$html = $this->sql->generate_nav($selective_data, $current_id, $branch_entry_id, $mode, $show_overview,$rename_overview,$override_hidden_state,$recursive_overview);
+		$html = $this->sql->generate_nav($selective_data, $current_id, $branch_entry_id, $mode, $show_overview,$rename_overview,$override_hidden_state,$recursive_overview,$level);
 
 		return $html;
 	}

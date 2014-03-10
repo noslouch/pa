@@ -737,7 +737,7 @@ class Sql_structure
 	 * Get the HTML code for an unordered list of the tree
 	 * @return string HTML code for an unordered list of the whole tree
 	 */
-	function generate_nav($selective_data, $current_id, $entry_id, $mode, $show_overview, $rename_overview,$override_hidden_state="no", $recursive_overview="no")
+	function generate_nav($selective_data, $current_id, $entry_id, $mode, $show_overview, $rename_overview,$override_hidden_state="no", $recursive_overview="no", $level=1)
 	{
 		
 		$html = '';
@@ -817,7 +817,7 @@ class Sql_structure
 				{
 					if ($recursive_overview=="no")
 					{
-						if ($tree[$i]['depth']=="1")
+						if ($tree[$i]['depth']==$level)
 						{
 							if($rename_overview=="title")
 							{

@@ -38,7 +38,7 @@ class Structure_mcp
 	);
 	// Enable additional reordering options on a per-level basis
 	// Used only in conjunction with per-member group reorder settings
-	var $extra_reorder_options = TRUE; // Default: FALSE
+	var $extra_reorder_options = FALSE; // Default: FALSE
 
 
 	/**
@@ -522,7 +522,7 @@ class Structure_mcp
 
 		$settings_json = json_encode($settings_array);
 
-		$this->EE->cp->add_to_head('
+		$this->EE->cp->add_to_foot('
 		<script type="text/javascript">
 			var structure_settings = ' . $settings_json . ';
 		</script>');
