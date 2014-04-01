@@ -57,6 +57,7 @@ define([
         section : function( segment, urlTitle ) {
             var spinner = new Spinner()
             var section = Backbone.history.fragment.match(/[^\/]*/).join('') === '' ? 'home' : Backbone.history.fragment.match(/[^\/]*/).join('')
+
             Chrome.section( spinner, section, segment, urlTitle )
         },
 
@@ -105,33 +106,17 @@ define([
             }
             $('nav .active').removeClass('active')
         }
-
-/*
-        singleFilm : function( filmUrl ) {
-            console.log(Backbone.history.fragment.match(/^.*\//).join('').slice(0,-1))
-            var spinner = new Spinner()
-            Chrome.singleFilm( spinner, filmUrl )
-        },
-
-        singleBook : function( bookUrl ) {
-            var spinner = new Spinner()
-            Chrome.singleBook( spinner, bookUrl )
-        },
-
-        singleProject : function(projectUrl, showcaseUrl) {
-            console.log(Backbone.history.fragment.match(/^.*\//).join('').slice(0,-1))
-            var spinner = new Spinner()
-            Chrome.singleProject( spinner, projectUrl, showcaseUrl, this.previous )
-        },
-*/
     })
 
     var router = new Router()
 
     Backbone.dispatcher.on('navigate:section', function(e) {
+        var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
+
         Backbone.dispatcher.trigger('filterCheck', router)
         //$('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
-        var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
+        $(window).on('hashchange', router.saveHistory)
+
         router.navigate( l )
         router._trackPageview()
     })
