@@ -104,6 +104,7 @@ $config['ci_s3_storage']['reduced']	= 'STORAGE_REDUCED';
 //$config['channel_images']['ascii_filename'] = 'yes';
 //$config['channel_images']['utf8_encode_fields_for_json'] = 'yes';
 //$config['channel_images_act_url']['channel_images_router'] = '';
+//$config['channel_images']['xss_field_strings'] = 'no';
 
 
 // Cloudfiles

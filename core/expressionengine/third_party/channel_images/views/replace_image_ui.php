@@ -3,7 +3,11 @@
 <div>
 <?php
 $hidden_fields = array();
-$hidden_fields['XID'] = $this->security->generate_xid();
+if (version_compare(APP_VER, '2.8.0') >= 0) {
+  $hidden_fields['CSRF_TOKEN'] = CSRF_TOKEN;
+} else {
+  $hidden_fields['XID'] = $this->security->generate_xid();
+}
 $formdata = array();
 $formdata['enctype'] = 'multi';
 $formdata['hidden_fields'] = $hidden_fields;

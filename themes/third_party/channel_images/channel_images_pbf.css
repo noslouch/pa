@@ -122,7 +122,7 @@
 
 /* WYGWAM */
 .WCI_Images {}
-.WCI_Images ul.tabs {border-bottom:1px solid #ccc;}
+.WCI_Images ul.tabs {border-bottom:1px solid #ccc; background:none;}
 .WCI_Images ul.tabs li.ui-tabs-selected {background:none;}
 .WCI_Images .CImage {height:60px; overflow:hidden; float:left; border:5px solid #fff;}
 .WCI_Images .CImage:hover {border-color:#eee;}

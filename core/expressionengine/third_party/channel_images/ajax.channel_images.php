@@ -3236,7 +3236,7 @@ class Channel_Images_AJAX
 	// ********************************************************************************* //
 
 	private function adjustPicOrientation($full_filename){
-        $exif = exif_read_data($full_filename);
+        $exif = @exif_read_data($full_filename);
         if($exif && isset($exif['Orientation'])) {
             $orientation = $exif['Orientation'];
             if($orientation != 1){

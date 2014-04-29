@@ -118,8 +118,14 @@ class Channel_Images_API
 
 	public function process_field_string($string)
 	{
+		$conf = $this->EE->config->item('channel_images');
+
 		//$this->EE->firephp->log('BEFORE: '.$string);
-		$string = $this->EE->security->xss_clean($string);
+
+		// Disable XSS?
+		if (isset($conf['xss_field_strings']) === true && $conf['xss_field_strings'] == 'yes') {
+			$string = $this->EE->security->xss_clean($string);
+		}
 		//$this->EE->firephp->log('AFTER XSS: '.$string);
 		$string = htmlentities($string, ENT_QUOTES, "UTF-8");
 		//$this->EE->firephp->log('AFTER HTML ENTITIES: '.$string);

@@ -310,13 +310,13 @@ class Channel_images_ft extends EE_Fieldtype
                 // ReAssign Field ID (WE NEED THIS)
                 $image->field_id = $this->field_id;
 
-                $image->title = html_entity_decode( str_replace('&quot;', '"', $image->title) );
-                $image->description = html_entity_decode( str_replace('&quot;', '"', $image->description) );
-                $image->cifield_1 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_1) );
-                $image->cifield_2 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_2) );
-                $image->cifield_3 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_3) );
-                $image->cifield_4 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_4) );
-                $image->cifield_5 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_5) );
+                $image->title = html_entity_decode( str_replace('&quot;', '"', $image->title), ENT_QUOTES);
+                $image->description = html_entity_decode( str_replace('&quot;', '"', $image->description), ENT_QUOTES);
+                $image->cifield_1 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_1), ENT_QUOTES);
+                $image->cifield_2 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_2), ENT_QUOTES);
+                $image->cifield_3 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_3), ENT_QUOTES);
+                $image->cifield_4 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_4), ENT_QUOTES);
+                $image->cifield_5 = html_entity_decode( str_replace('&quot;', '"', $image->cifield_5), ENT_QUOTES);
 
                 // On some systems characters are not passed on as UTF-8, json_encode only works with UTF-8 chars.
                 // This "hack" forces utf-8 encoding, good for swedisch chars etc
@@ -1223,6 +1223,7 @@ class Channel_images_ft extends EE_Fieldtype
 
             $file->title = base64_decode($file->title);
             $file->description = base64_decode($file->description);
+            $file->url_title = base64_decode($file->url_title);
             $file->category = base64_decode($file->category);
             $file->cifield_1 = base64_decode($file->cifield_1);
             $file->cifield_2 = base64_decode($file->cifield_2);
@@ -1238,6 +1239,7 @@ class Channel_images_ft extends EE_Fieldtype
                 $API->delete_image($file);
                 unset($data['images'][$order]);
             }
+
         }
 
         // -----------------------------------------
@@ -1404,7 +1406,7 @@ class Channel_images_ft extends EE_Fieldtype
                                     'cifield_3' =>  $API->process_field_string($file->cifield_3),
                                     'cifield_4' =>  $API->process_field_string($file->cifield_4),
                                     'cifield_5' =>  $API->process_field_string($file->cifield_5),
-                                    'cover'     =>  $file->cover,
+                                    'cover'     =>  $file->cover ? 1 : 0,
                                     'sizes_metadata' => $mt,
                                     'iptc'      =>  $file->iptc,
                                     'exif'      =>  $file->exif,
@@ -1418,7 +1420,7 @@ class Channel_images_ft extends EE_Fieldtype
                     // -----------------------------------------
                     // Old File
                     // -----------------------------------------
-                    $data = array(  'cover'     =>  $file->cover,
+                    $data = array(  'cover'     =>  $file->cover ? 1 : 0,
                                     'channel_id'=>  $channel_id,
                                     'field_id'  =>  $field_id,
                                     'is_draft'  =>  $is_draft,
@@ -1451,7 +1453,7 @@ class Channel_images_ft extends EE_Fieldtype
                     // -----------------------------------------
                     // Old File
                     // -----------------------------------------
-                    $this->EE->db->set('cover', $file->cover);
+                    $this->EE->db->set('cover', ($file->cover ? 1 : 0) );
                     $this->EE->db->set('image_order', $order);
                     $this->EE->db->set('title', $API->process_field_string($file->title) );
                     $this->EE->db->set('url_title', $API->process_field_string($file->url_title) );
@@ -1561,7 +1563,7 @@ class Channel_images_ft extends EE_Fieldtype
                                 'cifield_3' =>  $API->process_field_string($file->cifield_3),
                                 'cifield_4' =>  $API->process_field_string($file->cifield_4),
                                 'cifield_5' =>  $API->process_field_string($file->cifield_5),
-                                'cover'     =>  $file->cover,
+                                'cover'     =>  $file->cover ? 1 : 0,
                                 'sizes_metadata' => $mt,
                                 'iptc'      =>  $file->iptc,
                                 'exif'      =>  $file->exif,

@@ -21,7 +21,9 @@ class Channel_images_ext
 	public $docs_url		= 'http://www.devdemon.com';
 	public $settings_exist	= FALSE;
 	public $settings		= array();
-	public $hooks			= array('wygwam_config', 'wygwam_before_display', 'wygwam_before_save', 'wygwam_before_replace', 'editor_before_display', 'editor_before_save', 'editor_before_replace');
+	public $hooks			= array('wygwam_config', 'wygwam_tb_groups', 'wygwam_before_display', 'wygwam_before_save', 'wygwam_before_replace', 'editor_before_display', 'editor_before_save', 'editor_before_replace');
+
+	private static $_included_ckeditor_resources = FALSE;
 
 	// ********************************************************************************* //
 
@@ -56,15 +58,54 @@ class Channel_images_ext
 			$config = $this->EE->extensions->last_call;
 		}
 
-		// Check just to be sure!
-		// if (isset($config['extraPlugins']) != FALSE)
-        if (isset($config['extraPlugins']) != FALSE && strpos($config['extraPlugins'],'channelimages') !== FALSE )
-		{
-			// $config['extraPlugins'] .= ',channelimages';
-			$config['toolbar'][] = array('ChannelImages');
-		}
+		// Check if our toolbar button has been added
+        $include_btn = FALSE;
+
+        foreach ($config['toolbar'] as $tbgroup)
+        {
+            if (in_array('ChannelImages', $tbgroup))
+            {
+                $include_btn = TRUE;
+                break;
+            }
+        }
+
+        if ($include_btn)
+        {
+            // Add our plugin to CKEditor
+            if (!empty($config['extraPlugins']))
+            {
+                $config['extraPlugins'] .= ',';
+            }
+
+            $config['extraPlugins'] .= 'channelimages';
+
+            $this->_include_ckeditor_resources();
+        }
 
 		return $config;
+	}
+
+	// ********************************************************************************* //
+
+	public function wygwam_tb_groups($tb_groups=array())
+	{
+		if (($last_call = ee()->extensions->last_call) !== FALSE)
+        {
+            $tb_groups = $last_call;
+        }
+
+        $tb_groups[] = array('ChannelImages');
+
+        // Is this the toolbar editor?
+        if (ee()->input->get('M') == 'show_module_cp')
+        {
+            // Give our toolbar button an icon
+            $icon_url = URL_THIRD_THEMES.'channel_images/img/select_images.png';
+            ee()->cp->add_to_head('<style type="text/css">.cke_button__channelimages_icon { background-image: url('.$icon_url.'); }</style>');
+        }
+
+        return $tb_groups;
 	}
 
 	// ********************************************************************************* //
@@ -180,6 +221,22 @@ class Channel_images_ext
 	}
 
 	// ********************************************************************************* //
+
+	private function _include_ckeditor_resources()
+    {
+        // Is this the first time we've been called?
+        if (!self::$_included_ckeditor_resources)
+        {
+            // Tell CKEditor where to find our plugin
+            $plugin_url = URL_THIRD_THEMES.'channel_images/ckeditor/';
+            ee()->cp->add_to_foot('<script type="text/javascript">CKEDITOR.plugins.addExternal("channelimages", "'.$plugin_url.'");</script>');
+
+            // Don't do that again
+            self::$_included_ckeditor_resources = TRUE;
+        }
+    }
+
+    // ********************************************************************************* //
 
 	/**
 	 * Called by ExpressionEngine when the user activates the extension.

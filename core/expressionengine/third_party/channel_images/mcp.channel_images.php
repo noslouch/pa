@@ -49,7 +49,7 @@ class Channel_images_mcp
 
 		$this->site_id = $this->EE->config->item('site_id');
 
-		if (function_exists('ee')) {
+		if (version_compare(APP_VER, '2.6.0', '>=')) {
 			ee()->view->cp_page_title = $this->EE->lang->line('channel_images');
 		} else {
 			$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('channel_images'));
@@ -113,7 +113,7 @@ class Channel_images_mcp
 		// Page Title & BreadCumbs
 		$this->vData['section'] = 'actions';
 
-		if (function_exists('ee')) {
+		if (version_compare(APP_VER, '2.6.0', '>=')) {
 			ee()->view->cp_page_title = $this->EE->lang->line('ci:legacy_settings');
 		} else {
 			$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('ci:legacy_settings'));
@@ -146,7 +146,7 @@ class Channel_images_mcp
 		// Page Title & BreadCumbs
 
 		$this->vData['section'] = 'import';
-		if (function_exists('ee')) {
+		if (version_compare(APP_VER, '2.6.0', '>=')) {
 			ee()->view->cp_page_title = $this->EE->lang->line('ci:import');
 		} else {
 			$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('ci:import'));

@@ -195,6 +195,7 @@ ChannelImages.AddNewFile = function(JSONOBJ, FIELD_ID, Sync){
 	jsonData.cifield_3 = $.base64Encode(jsonData.cifield_3);
 	jsonData.cifield_4 = $.base64Encode(jsonData.cifield_4);
 	jsonData.cifield_5 = $.base64Encode(jsonData.cifield_5);
+	jsonData.cover = $.base64Encode(jsonData.cover);
 
 	// Lets store it for POST
 	JSONOBJ.json_data = JSON.stringify(jsonData);
@@ -1681,160 +1682,134 @@ ChannelImages.OpenImageReplace = function(e){
 
 //********************************************************************************* //
 
-ChannelImages.EditorOpenModal = function(redactor, buttonName, buttonDOM, buttonObject){
-	var HTML = [];
-	HTML.push('<div class="WCI_Images">');
+;(function(global, $){
+    //es5 strict mode
+    "use strict";
 
-	HTML.push('<ul class="tabs">');
-	for (var FIELD in ChannelImages.Fields){
-		HTML.push('<li><a href="#'+FIELD+'">'+ChannelImages.Fields[FIELD].field_label+'</a></li>');
-	}
+    var ChannelImages = global.ChannelImages = global.ChannelImages || {};
 
-	HTML.push('</ul>');
+    // ----------------------------------------------------------------------
 
-	for (FIELD in ChannelImages.Fields){
-		HTML.push('<div id="' + FIELD + '" class="tabcontent">');
+    ChannelImages.openModal = function(btnName, buttonElem, btnObject, event, redactor) {
+    	redactor.selectionSave();
 
+        var data = {};
+        data.fields = ChannelImages.Fields;
 
-		if (typeof(ChannelImages.Fields[FIELD].wimages) == 'undefined' || ChannelImages.Fields[FIELD].wimages.length === 0){
-			HTML.push('<p>No images have yet been uploaded.</p>');
-		} else {
+        for (var fieldid in data.fields) {
+            data.fields[fieldid].sizes = [];
+            var checked = false;
 
-			HTML.push('<div class="imageholder">');
-			for (var i = 0; i < ChannelImages.Fields[FIELD].wimages.length; i++) {
-				var IMG = ChannelImages.Fields[FIELD].wimages[i];
-				HTML.push('<div class="CImage"><img src="'+IMG.big_img_url+'" title="'+IMG.title+'" alt="'+IMG.description+'" data-filename="'+IMG.filename+'" data-field_id="'+IMG.field_id+'" data-index="'+(i+1)+'"></div>');
-			}
+            if (data.fields[fieldid].settings.wysiwyg_original == 'yes') {
+                checked = true;
+                data.fields[fieldid].sizes.push({name: 'original', label: 'ORIGINAL', checked: checked});
+            }
 
-			HTML.push('</div>');
+            if (typeof data.fields[fieldid].settings.action_groups == 'undefined') continue;
 
-			HTML.push('<br clear="all">');
+            for (var i in data.fields[fieldid].settings.action_groups) {
+                if (data.fields[fieldid].settings.action_groups[i].wysiwyg != 'yes') continue;
 
-			HTML.push('<div class="sizeholder">');
-			HTML.push('<ul>');
+                data.fields[fieldid].sizes.push({
+                    name: data.fields[fieldid].settings.action_groups[i].group_name,
+                    label: data.fields[fieldid].settings.action_groups[i].group_name,
+                    checked: (checked === false)
+                });
+                checked = true;
+            }
 
-			var Checked = false;
+        }
 
-			if (ChannelImages.Fields[FIELD].settings.wysiwyg_original == 'yes') {
-				Checked = true;
-				HTML.push('<li><input name="size_'+FIELD+'" type="radio" value="original" checked> ORIGINAL</li>');
-			}
+        // title, content, width, callback
+        redactor.modalInit('Channel Images', ChannelImages.Templates.editor_ci_modal(data), 600, $.proxy(modalInitCallback, redactor));
+    };
 
-			if (typeof(ChannelImages.Fields[FIELD].settings.action_groups) != 'undefined'){
+    // ----------------------------------------------------------------------
 
-				for (i in ChannelImages.Fields[FIELD].settings.action_groups) {
-					if (ChannelImages.Fields[FIELD].settings.action_groups[i].wysiwyg != 'yes') continue;
-					var CheckText = (Checked === false) ? 'checked' : '';
-					HTML.push('<li><input name="size_'+FIELD+'" type="radio" value="'+ChannelImages.Fields[FIELD].settings.action_groups[i].group_name+'"  '+CheckText+'> '+ChannelImages.Fields[FIELD].settings.action_groups[i].group_name+'</li>');
-					Checked = true;
-				}
+    function modalInitCallback() {
+        var redactor = this;
+        var modal = $('#redactor_modal');
 
-			}
+        modal.find('.WCI_Images').tabs().find('.CImage').click(function(evt){
+            selectImage(redactor, evt, modal);
+        });
 
-			HTML.push('</ul>');
-			HTML.push('<br clear="all">');
-			HTML.push('</div>');
+        modal.find('.redactor_modal_action_btn').click(function(evt){
+            insertImage(redactor, evt, modal);
+        });
+    }
 
-		}
+    // ----------------------------------------------------------------------
 
-		HTML.push('</div>');
-	}
+    function selectImage(redactor, evt, modal){
 
-	HTML.push('</div>'); // WCI Images
-	HTML.push('<br>');
+        if (typeof(evt.target) == 'undefined') return;
 
-	var ModalContent = '<div id="redactor_modal_content">' +
-				'<div id="redactor_modal_inner">' +
-					'<section>'+
-					HTML.join('')+
-					'</section>'+
-					'<footer>' +
-						'<a href="javascript:void(null);" class="redactor_modal_btn redactor_btn_modal_close">' + redactor.opts.curLang.cancel + '</a>' +
-						'<input type="button" class="redactor_modal_btn redactor_btn_modal_insert" value="' + redactor.opts.curLang.insert + '" />' +
-					'</footer>' +
-				'</div>';
+        var target = jQuery(evt.target);
 
-	redactor.modalInit('Channel Images', ModalContent, 600, function(){
-		var Modal = $('#redactor_modal');
+        // Remove all other
+        target.closest('.tabcontent').find('.CImage').removeClass('Selected');
 
-		Modal.find('.WCI_Images').tabs().find('.CImage').click(function(e){
-			ChannelImages.EditorSelectImage(redactor, e);
-		});
+        target.closest('.CImage').addClass('Selected');
+    }
 
-		Modal.find('.redactor_btn_modal_insert').click(function(e){
-			ChannelImages.EditorInsertImage(redactor, e);
-		});
-	});
-};
+    // ----------------------------------------------------------------------
 
-//********************************************************************************* //
+    function insertImage(redactor, evt, modal){
+        var wrapper = modal.find('.tabcontent:visible');
+        if (wrapper.find('.Selected').length === 0) return;
 
-ChannelImages.EditorSelectImage = function(redactor, e){
+        var selected = wrapper.find('.Selected img');
 
-	if (typeof(e.target) == 'undefined') return;
+        var IMGSRC = selected.attr('src');
 
-	var Target = jQuery(e.target);
+        var filename = selected.data('filename');
+        var field_id = selected.data('field_id');
+        var image_index = selected.data('index');
 
-	// Remove all other
-	Target.closest('.tabcontent').find('.CImage').removeClass('Selected');
+        var output_type = 'image_url';
 
-	Target.closest('.CImage').addClass('Selected');
-};
+        if (typeof(ChannelImages.Fields['Field_'+field_id]) != 'undefined') {
+            var settings = ChannelImages.Fields['Field_'+field_id].settings;
+            if (typeof(settings.wysiwyg_output) != 'undefined') {
+                output_type = settings.wysiwyg_output;
+            }
+        }
 
-//********************************************************************************* //
+        var dot = filename.lastIndexOf('.');
+        var extension = filename.substr(dot,filename.length);
 
-ChannelImages.EditorInsertImage = function(redactor, e){
-	var Wrapper = $('#redactor_modal').find('.tabcontent:visible');
+        var Size = wrapper.find('.sizeholder input[type=radio]:checked').val();
+        var OLDFILENAME = selected.data('filename');
 
-	if ( Wrapper.find('.Selected').length === 0) return;
+        if (Size != 'original'){
+            var NewName = filename.replace(extension, '__'+Size+extension);
+            IMGSRC = IMGSRC.replace(/f\=(.*?)\&/, 'f='+NewName+'&');
 
-	var Selected = Wrapper.find('.Selected img');
+        }
+        else {
+            IMGSRC = IMGSRC.replace(/f\=(.*?)\&/, 'f='+filename+'&');
+        }
 
-	var IMGSRC = Selected.attr('src');
+        var img = '<img src="'+IMGSRC+'" alt="'+selected.attr('alt')+'" class="ci-image ci-'+Size+'">';
 
-	var filename = Selected.data('filename');
-	var field_id = Selected.data('field_id');
-	var image_index = Selected.data('index');
+        selected.parent().removeClass('Selected');
 
-	var output_type = 'image_url';
-	if (typeof(ChannelImages.Fields['Field_'+field_id]) != 'undefined') {
-		var settings = ChannelImages.Fields['Field_'+field_id].settings;
-		if (typeof(settings.wysiwyg_output) != 'undefined') {
-			output_type = settings.wysiwyg_output;
-		}
-	}
+        if (output_type == 'static_image') {
+            if (Size == 'original') {
+                img = '{image:'+image_index+'}';
+            } else {
+                img = '{image:'+image_index+':'+Size+'}';
+            }
+        }
 
-	var dot = filename.lastIndexOf('.');
-	var extension = filename.substr(dot,filename.length);
+        redactor.selectionRestore();
+        redactor.insertHtml(img);
+        redactor.sync();
+        redactor.modalClose();
+        redactor.observeImages();
+    }
 
-	var Size = Wrapper.find('.sizeholder input[type=radio]:checked').val();
-	var OLDFILENAME = Selected.data('filename');
+    //********************************************************************************* //
 
-	if (Size != 'original'){
-		var NewName = filename.replace(extension, '__'+Size+extension);
-		IMGSRC = IMGSRC.replace(/f\=(.*?)\&/, 'f='+NewName+'&');
-
-	}
-	else {
-		IMGSRC = IMGSRC.replace(/f\=(.*?)\&/, 'f='+filename+'&');
-	}
-
-	var img = '<img src="'+IMGSRC+'" alt="'+Selected.attr('alt')+'" class="ci-image ci-'+Size+'">';
-
-	Selected.parent().removeClass('Selected');
-
-	if (output_type == 'static_image') {
-		if (Size == 'original') {
-			img = '{image:'+image_index+'}';
-		} else {
-			img = '{image:'+image_index+':'+Size+'}';
-		}
-	}
-
-	redactor.insertHtml(img);
-	redactor.sync();
-	redactor.modalClose();
-	redactor.observeImages();
-};
-
-//********************************************************************************* //
+}(window, jQuery));
