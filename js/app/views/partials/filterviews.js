@@ -269,6 +269,7 @@ define([
         },
 
         events : {
+            'click #brand a' : 'hideTip',
             'click .filter a' : 'filter',
             'click .sorts button' : 'filter',
             'click .views button' : 'filter',
@@ -393,6 +394,10 @@ define([
         onClose : function() {
             this.$el.removeClass('filter-bar')
             $('.tooltip').remove()
+        },
+
+        hideTip : function() {
+            $('span.tooltip:visible').hide()
         },
 
         filter : function(e) {
