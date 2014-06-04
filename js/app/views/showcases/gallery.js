@@ -101,6 +101,9 @@ define([
                     },
                     onLayout : function() {
                         $(this).css('overflow', 'visible')
+                        $('html, body').animate({
+                            scrollTop : 0
+                        })
                     },
                     getSortData : {
                         name : function($el) {
