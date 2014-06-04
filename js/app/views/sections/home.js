@@ -19,10 +19,13 @@ define([
             this.$el.addClass( 'home' )
 
             if ( !$('#n-container').length ) {
-                var q = new Backbone.Collection({}, { url : '/api/quotes' }),
-                    n = new Backbone.Collection({}, { url : '/api/noteworthy' }),
+                var q = new Backbone.Collection(),
+                    n = new Backbone.Collection(),
                     promiseStack = [],
                     self = this
+
+                q.url = '/api/quotes'
+                n.url = '/api/noteworthy'
 
                 promiseStack.push(q.fetch(), n.fetch())
                 $.when.apply( $, promiseStack ).done(function(quotesRes, bricksRes){

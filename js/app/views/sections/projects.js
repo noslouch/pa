@@ -60,7 +60,9 @@ define([
             this.model.on( 'layout', this.jumpSet )
             Backbone.dispatcher.on('filterCheck', function(router){
                 if ( router.previous.href.match('projects') ) {
-                    self.filterbar.close()
+                    if ( self.filterbar ) {
+                        self.filterbar.close()
+                    }
                 }
             })
 
@@ -132,7 +134,9 @@ define([
         onClose : function() {
             this.model.unset('sort').unset('filter').unset('view')
             this.$el.removeClass('projects')
-            this.filterbar.close()
+            if (this.filterbar) {
+                this.filterbar.close()
+            }
             $(window).off('hashchange')
         },
 
