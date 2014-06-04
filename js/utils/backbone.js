@@ -22,6 +22,9 @@ define([
         this.$el.empty()
         this.stopListening()
         this.undelegateEvents()
+        if ( this.spinner ) {
+            this.spinner.detach()
+        }
         if ( this.onClose ) {
             this.onClose()
         }
