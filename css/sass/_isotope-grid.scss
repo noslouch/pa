@@ -104,7 +104,6 @@
     opacity: 0;
     @include translate3d(0,0,0);
     @include box-shadow(0 0 0 0 rgba(0,0,0,0));
-    @include backface-visibility(hidden);
     @include transition(opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms);
 
     p {
@@ -112,11 +111,14 @@
         font-size: emCalc(11);
         font-weight: 500;
         line-height: 1;
+        @include backface-visibility(hidden);
     }
 
     .year {
         font-weight: 300;
         font-size: emCalc(11);
+        display: inline-block;
+        @include backface-visibility(hidden);
     }
 }
 
