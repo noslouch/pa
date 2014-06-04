@@ -26,6 +26,9 @@ define([
     })
 
     var Collection = Backbone.Collection.extend({
+        initialize : function( models, options ) {
+            this.url = options.url
+        },
         parse : function( response, options ) {
             _.each( response, function( model ) {
                 model.htmlDate = Backbone.Model.prototype.makeHtmlDate( model.timestamp )
@@ -35,21 +38,18 @@ define([
         }
     })
 
-    var bio = new Backbone.Model({}, {
-        url : '/api/bio'
-    })
+    var bio = new Backbone.Model()
+    bio.url = "/api/bio"
 
-    var photosOf = new Backbone.Model({}, {
-        url : '/api/paphotos'
-    })
+    var photosOf = new Backbone.Model()
+    photosOf.url = '/api/paphotos'
     photosOf.parse = function( response, options ) {
         response.photos = new CoverGallery( response.gallery )
         return response
     }
 
-    var ack = new Backbone.Model({}, {
-        url : '/api/acknowledgements'
-    })
+    var ack = new Backbone.Model()
+    ack.url = '/api/acknowledgements'
 
     var press = new Collection([], {
         model : Backbone.Model,

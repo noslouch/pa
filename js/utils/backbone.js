@@ -3,10 +3,20 @@
 'use strict';
 
 define([
-    'lib/backbone/backbone-amd.min',
+    //'lib/backbone/backbone-amd.min',
+    'lib/backbone/backbone-min',
     'moment',
     'underscore'
 ], function( Backbone, moment, _ ) {
+
+    Backbone.View = (function(View) {
+        return View.extend({
+            constructor : function( options ) {
+                this.options = options || {}
+                View.apply(this, arguments)
+            }
+        })
+    })(Backbone.View)
 
     Backbone.View.prototype.close = function() {
         this.$el.empty()
