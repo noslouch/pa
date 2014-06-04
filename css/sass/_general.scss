@@ -172,12 +172,8 @@ iframe {
     &.film,
     &.projects {
         padding-top: 192px;
-    }
-
-    &.photography,
-    &.books,
-    &.film,
-    &.photography {
+        //overflow: hidden;
+        padding-bottom: 105px;
         height: 100%;
     }
 }
