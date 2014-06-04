@@ -14,12 +14,13 @@
         width: 667px;
         float: right;
     }
-    
+
     img {
         opacity: 0;
         position: relative;
         z-index: 1;
-        @include transition(opacity 150ms ease, box-shadow 150ms ease 150ms);
+        @include box-shadow(0 0 20px 0 rgba(0,0,0,0));
+        @include transition(opacity 150ms ease, box-shadow 150ms ease);
     }
 
     .wrapper { 
@@ -79,6 +80,7 @@
 
         img.loaded {
             @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
+            @include transition(box-shadow 150ms ease 150ms);
 
             + .caption {
                 opacity: 1;
