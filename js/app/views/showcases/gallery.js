@@ -94,6 +94,7 @@ define([
                 $el = this.$el,
                 path = 'ontouchstart' in window ? 'touchLoader' : 'fbLoader',
                 isoOps = {
+                    //containerStyle : null,
                     isFitWidth : true,
                     itemSelector: '.thumb',
                     layoutMode : fixed ? 'masonry' : 'fitRows',
@@ -111,10 +112,10 @@ define([
 
             function onLayout( iso ) {
                 console.log('layout complete')
-                $(iso.element).css('overflow', 'visible')
-                $('html, body').animate({
-                    scrollTop : 0
-                })
+                //$(iso.element).css('overflow', 'visible')
+                // $('html, body').animate({
+                //     scrollTop : 0
+                // }, 'fast')
             }
 
             var spinner = new Spinner()
@@ -122,7 +123,7 @@ define([
                 self.$el.imagesLoaded( function() {
                     g()
                     $el.isotope(isoOps)
-                    $el.isotope('on', 'layoutComplete', onLayout)
+                    //$el.isotope('on', 'layoutComplete', onLayout)
 
                     spinner.detach()
                     $img.addClass('loaded')

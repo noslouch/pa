@@ -403,6 +403,9 @@ define([
         filter : function(e) {
             var hash, option
 
+            $('html, body').animate({ scrollTop: 0  }, 'fast')
+            //console.log('filter')
+
             try {
                 hash = e.type === 'change' ? e.currentTarget.selectedOptions[0].dataset.hash : e.currentTarget.dataset.hash
                 option = $.deparam( hash, true )
