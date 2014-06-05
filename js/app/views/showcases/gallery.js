@@ -3,15 +3,15 @@
 'use strict';
 
 define([
+    'require',
     'jquery',
     'backbone',
     'underscore',
     'tpl/jst',
     'utils/spinner',
-    'is!mobile?utils/touchLoader:utils/fbLoader',
     'isotope',
     'imagesLoaded'
-], function( $, Backbone, _, TPL, Spinner, g ) {
+], function( require, $, Backbone, _, TPL, Spinner ) {
 
     // Thumb
     // Image Showcase thumbnail used in Isotope
@@ -92,6 +92,7 @@ define([
                 rtl = this.$el.hasClass('rtl'),
                 fixed = this.$el.hasClass('fixed'),
                 $el = this.$el,
+                path = 'ontouchstart' in window ? 'touchLoader' : 'fbLoader',
                 isoOps = {
                     isFitWidth : true,
                     itemSelector: '.thumb',
@@ -116,15 +117,9 @@ define([
                 })
             }
 
-            if ( this.$el.hasClass('isotope') ) {
-                this.$el.isotope(isoOps)
-                this.$el.isotope('on', 'layoutComplete', onLayout)
-                this.$el.isotope( 'updateSortData', $('.thumb') )
-                this.filter( this.model.get('filter') )
-                this.sort( this.model.get('sort') )
-            } else {
-                var spinner = new Spinner()
-                this.$el.imagesLoaded( function() {
+            var spinner = new Spinner()
+            require(['utils/' + path], function(g) {
+                self.$el.imagesLoaded( function() {
                     g()
                     $el.isotope(isoOps)
                     $el.isotope('on', 'layoutComplete', onLayout)
@@ -139,7 +134,14 @@ define([
                         self.model.trigger('layout')
                     }
                 })
-            }
+            })
+            // if ( this.$el.hasClass('isotope') ) {
+            //     this.$el.isotope(isoOps)
+            //     this.$el.isotope('on', 'layoutComplete', onLayout)
+            //     this.$el.isotope( 'updateSortData', $('.thumb') )
+            //     this.filter( this.model.get('filter') )
+            //     this.sort( this.model.get('sort') )
+            // } else {
         },
 
         filter : function(filter) {

@@ -1,5 +1,5 @@
 /* init.js */
-/*global document,window*/
+/*global document*/
 'use strict';
 
 require.config({
@@ -69,18 +69,19 @@ require.config({
         'utils/spinner'                 : '/js/utils/spinner.@@hash',
         'utils/quotes'                  : '/js/utils/quotes.@@hash',
         'utils/fbLoader'                : '/js/utils/fbLoader.@@hash',
+        'utils/touchLoader'             : '/js/utils/touchLoader.@@hash',
         'tpl/jst'                       : '/js/tpl/jst.@@hash'
     },
-    map : {
-        '*' : {
-            'is' : '/js/lib/require-is/is'
-        }
-    },
-    config : {
-        '/js/lib/require-is/is' : {
-            mobile : 'ontouchstart' in window
-        }
-    },
+    // map : {
+    //     '*' : {
+    //         'is' : '/js/lib/require-is/is'
+    //     }
+    // },
+    // config : {
+    //     '/js/lib/require-is/is' : {
+    //         mobile : 'ontouchstart' in window
+    //     }
+    // },
     shim : {
         'jquery': {
             exports: '$'
