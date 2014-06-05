@@ -65,7 +65,7 @@ define([
             $('#' + section).addClass( 'active' )
             var self = this
 
-            require(['/js/app/views/sections/' + section], function( view ) {
+            require(['app/views/sections/' + section], function( view ) {
                 self.setView(view)
                 view.setElement('.page')
                 if (section === 'home') {
@@ -97,7 +97,7 @@ define([
 
         detail : function( spinner, section, urlTitle, hidden, previous ) {
             var self = this
-            require(['/js/app/views/details/' + section], function( view ) {
+            require(['app/views/details/' + section], function( view ) {
                 self.setView( view )
                 view.on('rendered', function() {
                     spinner.detach()
