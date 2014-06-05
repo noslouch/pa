@@ -4,7 +4,7 @@
 
 define([
     //'lib/backbone/backbone-amd.min',
-    '/js/lib/backbone/backbone-min',
+    '/js/lib/backbone/backbone-min.js',
     'moment',
     'underscore'
 ], function( Backbone, moment, _ ) {
