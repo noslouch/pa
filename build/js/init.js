@@ -3,74 +3,78 @@
 'use strict';
 
 require.config({
+    baseUrl : '/bower_components/',
     paths : {
-        jquery : 'lib/jquery/jquery',
-        underscore : 'lib/underscore/underscore-amd.min',
-        // using extend backbone
-        backbone : 'utils/backbone.@@hash',
-        moment : 'lib/moment/moment.min',
-        isotope : 'utils/iso.@@hash',
-        bbq : 'lib/bbq/jquery.ba-bbq.no-legacy',
-        foundation : '../bower_components/foundation/js/foundation.min',
-        tooltips : '../bower_components/foundation/js/foundation/foundation.tooltip',
-        fancybox : 'lib/fancybox/jquery.fancybox',
-        swipe : 'lib/swipe/swipe',
-        json : 'lib/json/json2',
-        imagesLoaded : '../bower_components/imagesloaded/imagesloaded',
-        mixitup : '../bower_components/mixitup/jquery.mixitup.min',
-        'eventie': '../bower_components/eventie',
-        'eventEmitter': '../bower_components/eventEmitter',
-        'app/router' : 'app/router.@@hash',
-        'app/collections/covergallery' : 'app/collections/covergallery.@@hash',
-        'app/collections/films' : 'app/collections/films.@@hash',
-        'app/collections/instagrams' : 'app/collections/instagrams.@@hash',
-        'app/collections/photography' : 'app/collections/photography.@@hash',
-        'app/collections/profile' : 'app/collections/profile.@@hash',
-        'app/collections/projects' : 'app/collections/projects.@@hash',
-        'app/collections/showcases' : 'app/collections/showcases.@@hash',
-        'app/models/cover' : 'app/models/cover.@@hash',
-        'app/models/film' : 'app/models/film.@@hash',
-        'app/models/photo' : 'app/models/photo.@@hash',
-        'app/models/profile' : 'app/models/profile.@@hash',
-        'app/models/project' : 'app/models/project.@@hash',
-        'app/models/searchQuery' : 'app/models/searchQuery.@@hash',
-        'app/models/showcase' : 'app/models/showcase.@@hash',
-        'app/views/chrome' : 'app/views/chrome.@@hash',
-        //'app/views/details/album' : 'app/views/details/album.@@hash',
-        'app/views/details/books' : 'app/views/details/books.@@hash',
-        'app/views/details/films' : 'app/views/details/films.@@hash',
-        'app/views/details/photography' : 'app/views/details/photography.@@hash',
-        'app/views/details/projects' : 'app/views/details/projects.@@hash',
-        'app/views/partials/album' : 'app/views/partials/album.@@hash',
-        'app/views/partials/filterviews' : 'app/views/partials/filterviews.@@hash',
-        'app/views/partials/grid' : 'app/views/partials/grid.@@hash',
-        'app/views/partials/jumplist' : 'app/views/partials/jumplist.@@hash',
-        'app/views/sections/books' : 'app/views/sections/books.@@hash',
-        'app/views/sections/contact' : 'app/views/sections/contact.@@hash',
-        'app/views/sections/film' : 'app/views/sections/film.@@hash',
-        'app/views/sections/home' : 'app/views/sections/home.@@hash',
-        'app/views/sections/photography' : 'app/views/sections/photography.@@hash',
-        'app/views/sections/profile' : 'app/views/sections/profile.@@hash',
-        'app/views/sections/projects' : 'app/views/sections/projects.@@hash',
-        'app/views/sections/search' : 'app/views/sections/search.@@hash',
-        'app/views/sections/stream' : 'app/views/sections/stream.@@hash',
-        'app/views/showcases/gallery' : 'app/views/showcases/gallery.@@hash',
-        'app/views/showcases/list' : 'app/views/showcases/list.@@hash',
-        'app/views/showcases/starfield' : 'app/views/showcases/starfield.@@hash',
-        'app/views/showcases/text' : 'app/views/showcases/text.@@hash',
-        'app/views/showcases/video' : 'app/views/showcases/video.@@hash',
-        'utils/spinner' : 'utils/spinner.@@hash',
-        'utils/quotes' : 'utils/quotes.@@hash',
-        'utils/fbLoader' : 'utils/fbLoader.@@hash',
-        'tpl/jst' : 'tpl/jst.@@hash'
+        jquery                          : '/js/lib/jquery/jquery',
+        underscore                      : '/js/lib/underscore/underscore-amd.min',
+        // using ext                    end../js/ backbone
+        backbone                        : '/js/utils/backbone.@@hash',
+        moment                          : '/js/lib/moment/moment.min',
+        isotope                         : '/js/utils/iso.@@hash',
+        //isotope :                     '..../js//bower_components/isotope/dist/isotope.pkgd.min',
+        bbq                             : '/js/lib/bbq/jquery.ba-bbq.no-legacy',
+        foundation                      : 'foundation/js/foundation.min',
+        tooltips                        : 'foundation/js/foundation/foundation.tooltip',
+        fancybox                        : '/js/lib/fancybox/jquery.fancybox',
+        swipe                           : '/js/lib/swipe/swipe',
+        json                            : '/js/lib/json/json2',
+        imagesLoaded                    : 'imagesloaded/imagesloaded',
+        mixitup : 'mixitup/jquery.mixitup.min',
+        fastclick                       : '/js/lib/fastclick/fastclick.min',
+        domReady                        : '/js/lib/requirejs/domReady',
+        //'eventie': '../bower_components/eventie',
+        //'eventEmitter': '../bower_components/eventEmitter',
+        'app/router'                    : '/js/app/router.@@hash',
+        'app/collections/covergallery'  : '/js/app/collections/covergallery.@@hash',
+        'app/collections/films'         : '/js/app/collections/films.@@hash',
+        'app/collections/instagrams'    : '/js/app/collections/instagrams.@@hash',
+        'app/collections/photography'   : '/js/app/collections/photography.@@hash',
+        'app/collections/profile'       : '/js/app/collections/profile.@@hash',
+        'app/collections/projects'      : '/js/app/collections/projects.@@hash',
+        'app/collections/showcases'     : '/js/app/collections/showcases.@@hash',
+        'app/models/cover'              : '/js/app/models/cover.@@hash',
+        'app/models/film'               : '/js/app/models/film.@@hash',
+        'app/models/photo'              : '/js/app/models/photo.@@hash',
+        'app/models/profile'            : '/js/app/models/profile.@@hash',
+        'app/models/project'            : '/js/app/models/project.@@hash',
+        'app/models/searchQuery'        : '/js/app/models/searchQuery.@@hash',
+        'app/models/showcase'           : '/js/app/models/showcase.@@hash',
+        'app/views/chrome'              : '/js/app/views/chrome.@@hash',
+        //'app/views/details/album' : 'app//js/views/details/album.@@hash',
+        'app/views/details/books'       : '/js/app/views/details/books.@@hash',
+        'app/views/details/films'       : '/js/app/views/details/films.@@hash',
+        'app/views/details/photography' : '/js/app/views/details/photography.@@hash',
+        'app/views/details/projects'    : '/js/app/views/details/projects.@@hash',
+        'app/views/partials/album'      : '/js/app/views/partials/album.@@hash',
+        'app/views/partials/filterviews': '/js/app/views/partials/filterviews.@@hash',
+        'app/views/partials/grid'       : '/js/app/views/partials/grid.@@hash',
+        'app/views/partials/jumplist'   : '/js/app/views/partials/jumplist.@@hash',
+        'app/views/sections/books'      : '/js/app/views/sections/books.@@hash',
+        'app/views/sections/contact'    : '/js/app/views/sections/contact.@@hash',
+        'app/views/sections/film'       : '/js/app/views/sections/film.@@hash',
+        'app/views/sections/home'       : '/js/app/views/sections/home.@@hash',
+        'app/views/sections/photography': '/js/app/views/sections/photography.@@hash',
+        'app/views/sections/profile'    : '/js/app/views/sections/profile.@@hash',
+        'app/views/sections/projects'   : '/js/app/views/sections/projects.@@hash',
+        'app/views/sections/search'     : '/js/app/views/sections/search.@@hash',
+        'app/views/sections/stream'     : '/js/app/views/sections/stream.@@hash',
+        'app/views/showcases/gallery'   : '/js/app/views/showcases/gallery.@@hash',
+        'app/views/showcases/list'      : '/js/app/views/showcases/list.@@hash',
+        'app/views/showcases/starfield' : '/js/app/views/showcases/starfield.@@hash',
+        'app/views/showcases/text'      : '/js/app/views/showcases/text.@@hash',
+        'app/views/showcases/video'     : '/js/app/views/showcases/video.@@hash',
+        'utils/spinner'                 : '/js/utils/spinner.@@hash',
+        'utils/quotes'                  : '/js/utils/quotes.@@hash',
+        'utils/fbLoader'                : '/js/utils/fbLoader.@@hash',
+        'tpl/jst'                       : '/js/tpl/jst.@@hash'
     },
     map : {
         '*' : {
-            'is' : 'lib/require-is/is'
+            'is' : '/js/lib/require-is/is'
         }
     },
     config : {
-        'lib/require-is/is' : {
+        '/js/lib/require-is/is' : {
             mobile : 'ontouchstart' in window
         }
     },
@@ -78,7 +82,7 @@ require.config({
         'jquery': {
             exports: '$'
         },
-        'isotope' : ['jquery'],
+        //'isotope' : ['jquery'],
         'bbq' : {
             deps : ['jquery']
         },
@@ -98,7 +102,7 @@ require.config({
     waitSeconds : 20
 })
 
-require( ['jquery', 'underscore', 'backbone', 'app/router', 'lib/fastclick/fastclick.min', 'app/views/chrome'],
+require( ['jquery', 'underscore', 'backbone', 'app/router', 'fastclick', 'app/views/chrome'],
 function( $, _, Backbone, Router, fastClick ){
     Backbone.history.start({ pushState : true, root : '/' })
     fastClick.attach(document.body)

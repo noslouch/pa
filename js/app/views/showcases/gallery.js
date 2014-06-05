@@ -9,7 +9,8 @@ define([
     'tpl/jst',
     'utils/spinner',
     'is!mobile?utils/touchLoader:utils/fbLoader',
-    'isotope'
+    'isotope',
+    'imagesLoaded'
 ], function( $, Backbone, _, TPL, Spinner, g ) {
 
     // Thumb
@@ -92,31 +93,32 @@ define([
                 fixed = this.$el.hasClass('fixed'),
                 $el = this.$el,
                 isoOps = {
-                    transformsEnabled: !rtl,
+                    isFitWidth : true,
                     itemSelector: '.thumb',
                     layoutMode : fixed ? 'masonry' : 'fitRows',
                     masonry : {
-                        gutterWidth: 7,
-                        columnWidth: rtl ? 164*1.5 : 164
-                    },
-                    onLayout : function() {
-                        $(this).css('overflow', 'visible')
-                        $('html, body').animate({
-                            scrollTop : 0
-                        })
+                        gutter: 7,
+                        columnWidth: 164
                     },
                     getSortData : {
-                        name : function($el) {
-                            return $el.find('.caption p').text()
-                        },
-                        date : function($el) {
-                            return parseInt( $el.find('.year').text(), 10 )
+                        name : '.caption p',
+                        date : function(el) {
+                            return parseInt( $(el).find('.year').text(), 10 )
                         }
                     }
                 }
 
+            function onLayout( iso ) {
+                console.log('layout complete')
+                $(iso.element).css('overflow', 'visible')
+                $('html, body').animate({
+                    scrollTop : 0
+                })
+            }
+
             if ( this.$el.hasClass('isotope') ) {
                 this.$el.isotope(isoOps)
+                this.$el.isotope('on', 'layoutComplete', onLayout)
                 this.$el.isotope( 'updateSortData', $('.thumb') )
                 this.filter( this.model.get('filter') )
                 this.sort( this.model.get('sort') )
@@ -125,6 +127,7 @@ define([
                 this.$el.imagesLoaded( function() {
                     g()
                     $el.isotope(isoOps)
+                    $el.isotope('on', 'layoutComplete', onLayout)
 
                     spinner.detach()
                     $img.addClass('loaded')

@@ -16,7 +16,7 @@ define([
     'foundation',
     'tooltips',
     'bbq',
-    'lib/requirejs/domReady!'
+    'domReady!'
 ], function( require, $, Backbone, _, FilterBar, G, l, Starfield, CoverGallery, Projects ) {
 
     var ProjectLanding = Backbone.View.extend({

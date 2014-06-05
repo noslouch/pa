@@ -3,74 +3,78 @@
 'use strict';
 
 require.config({
+    baseUrl : '/bower_components/',
     paths : {
-        jquery : 'lib/jquery/jquery',
-        underscore : 'lib/underscore/underscore-amd.min',
-        // using extend backbone
-        backbone : 'utils/backbone.1401900944504410106',
-        moment : 'lib/moment/moment.min',
-        isotope : 'utils/iso.1401900944504410106',
-        bbq : 'lib/bbq/jquery.ba-bbq.no-legacy',
-        foundation : '../bower_components/foundation/js/foundation.min',
-        tooltips : '../bower_components/foundation/js/foundation/foundation.tooltip',
-        fancybox : 'lib/fancybox/jquery.fancybox',
-        swipe : 'lib/swipe/swipe',
-        json : 'lib/json/json2',
-        imagesLoaded : '../bower_components/imagesloaded/imagesloaded',
-        mixitup : '../bower_components/mixitup/jquery.mixitup.min',
-        'eventie': '../bower_components/eventie',
-        'eventEmitter': '../bower_components/eventEmitter',
-        'app/router' : 'app/router.1401900944504410106',
-        'app/collections/covergallery' : 'app/collections/covergallery.1401900944504410106',
-        'app/collections/films' : 'app/collections/films.1401900944504410106',
-        'app/collections/instagrams' : 'app/collections/instagrams.1401900944504410106',
-        'app/collections/photography' : 'app/collections/photography.1401900944504410106',
-        'app/collections/profile' : 'app/collections/profile.1401900944504410106',
-        'app/collections/projects' : 'app/collections/projects.1401900944504410106',
-        'app/collections/showcases' : 'app/collections/showcases.1401900944504410106',
-        'app/models/cover' : 'app/models/cover.1401900944504410106',
-        'app/models/film' : 'app/models/film.1401900944504410106',
-        'app/models/photo' : 'app/models/photo.1401900944504410106',
-        'app/models/profile' : 'app/models/profile.1401900944504410106',
-        'app/models/project' : 'app/models/project.1401900944504410106',
-        'app/models/searchQuery' : 'app/models/searchQuery.1401900944504410106',
-        'app/models/showcase' : 'app/models/showcase.1401900944504410106',
-        'app/views/chrome' : 'app/views/chrome.1401900944504410106',
-        //'app/views/details/album' : 'app/views/details/album.1401900944504410106',
-        'app/views/details/books' : 'app/views/details/books.1401900944504410106',
-        'app/views/details/films' : 'app/views/details/films.1401900944504410106',
-        'app/views/details/photography' : 'app/views/details/photography.1401900944504410106',
-        'app/views/details/projects' : 'app/views/details/projects.1401900944504410106',
-        'app/views/partials/album' : 'app/views/partials/album.1401900944504410106',
-        'app/views/partials/filterviews' : 'app/views/partials/filterviews.1401900944504410106',
-        'app/views/partials/grid' : 'app/views/partials/grid.1401900944504410106',
-        'app/views/partials/jumplist' : 'app/views/partials/jumplist.1401900944504410106',
-        'app/views/sections/books' : 'app/views/sections/books.1401900944504410106',
-        'app/views/sections/contact' : 'app/views/sections/contact.1401900944504410106',
-        'app/views/sections/film' : 'app/views/sections/film.1401900944504410106',
-        'app/views/sections/home' : 'app/views/sections/home.1401900944504410106',
-        'app/views/sections/photography' : 'app/views/sections/photography.1401900944504410106',
-        'app/views/sections/profile' : 'app/views/sections/profile.1401900944504410106',
-        'app/views/sections/projects' : 'app/views/sections/projects.1401900944504410106',
-        'app/views/sections/search' : 'app/views/sections/search.1401900944504410106',
-        'app/views/sections/stream' : 'app/views/sections/stream.1401900944504410106',
-        'app/views/showcases/gallery' : 'app/views/showcases/gallery.1401900944504410106',
-        'app/views/showcases/list' : 'app/views/showcases/list.1401900944504410106',
-        'app/views/showcases/starfield' : 'app/views/showcases/starfield.1401900944504410106',
-        'app/views/showcases/text' : 'app/views/showcases/text.1401900944504410106',
-        'app/views/showcases/video' : 'app/views/showcases/video.1401900944504410106',
-        'utils/spinner' : 'utils/spinner.1401900944504410106',
-        'utils/quotes' : 'utils/quotes.1401900944504410106',
-        'utils/fbLoader' : 'utils/fbLoader.1401900944504410106',
-        'tpl/jst' : 'tpl/jst.1401900944504410106'
+        jquery                          : '/js/lib/jquery/jquery',
+        underscore                      : '/js/lib/underscore/underscore-amd.min',
+        // using ext                    end../js/ backbone
+        backbone                        : '/js/utils/backbone.1401990222950372866',
+        moment                          : '/js/lib/moment/moment.min',
+        isotope                         : '/js/utils/iso.1401990222950372866',
+        //isotope :                     '..../js//bower_components/isotope/dist/isotope.pkgd.min',
+        bbq                             : '/js/lib/bbq/jquery.ba-bbq.no-legacy',
+        foundation                      : 'foundation/js/foundation.min',
+        tooltips                        : 'foundation/js/foundation/foundation.tooltip',
+        fancybox                        : '/js/lib/fancybox/jquery.fancybox',
+        swipe                           : '/js/lib/swipe/swipe',
+        json                            : '/js/lib/json/json2',
+        imagesLoaded                    : 'imagesloaded/imagesloaded',
+        mixitup : 'mixitup/jquery.mixitup.min',
+        fastclick                       : '/js/lib/fastclick/fastclick.min',
+        domReady                        : '/js/lib/requirejs/domReady',
+        //'eventie': '../bower_components/eventie',
+        //'eventEmitter': '../bower_components/eventEmitter',
+        'app/router'                    : '/js/app/router.1401990222950372866',
+        'app/collections/covergallery'  : '/js/app/collections/covergallery.1401990222950372866',
+        'app/collections/films'         : '/js/app/collections/films.1401990222950372866',
+        'app/collections/instagrams'    : '/js/app/collections/instagrams.1401990222950372866',
+        'app/collections/photography'   : '/js/app/collections/photography.1401990222950372866',
+        'app/collections/profile'       : '/js/app/collections/profile.1401990222950372866',
+        'app/collections/projects'      : '/js/app/collections/projects.1401990222950372866',
+        'app/collections/showcases'     : '/js/app/collections/showcases.1401990222950372866',
+        'app/models/cover'              : '/js/app/models/cover.1401990222950372866',
+        'app/models/film'               : '/js/app/models/film.1401990222950372866',
+        'app/models/photo'              : '/js/app/models/photo.1401990222950372866',
+        'app/models/profile'            : '/js/app/models/profile.1401990222950372866',
+        'app/models/project'            : '/js/app/models/project.1401990222950372866',
+        'app/models/searchQuery'        : '/js/app/models/searchQuery.1401990222950372866',
+        'app/models/showcase'           : '/js/app/models/showcase.1401990222950372866',
+        'app/views/chrome'              : '/js/app/views/chrome.1401990222950372866',
+        //'app/views/details/album' : 'app//js/views/details/album.1401990222950372866',
+        'app/views/details/books'       : '/js/app/views/details/books.1401990222950372866',
+        'app/views/details/films'       : '/js/app/views/details/films.1401990222950372866',
+        'app/views/details/photography' : '/js/app/views/details/photography.1401990222950372866',
+        'app/views/details/projects'    : '/js/app/views/details/projects.1401990222950372866',
+        'app/views/partials/album'      : '/js/app/views/partials/album.1401990222950372866',
+        'app/views/partials/filterviews': '/js/app/views/partials/filterviews.1401990222950372866',
+        'app/views/partials/grid'       : '/js/app/views/partials/grid.1401990222950372866',
+        'app/views/partials/jumplist'   : '/js/app/views/partials/jumplist.1401990222950372866',
+        'app/views/sections/books'      : '/js/app/views/sections/books.1401990222950372866',
+        'app/views/sections/contact'    : '/js/app/views/sections/contact.1401990222950372866',
+        'app/views/sections/film'       : '/js/app/views/sections/film.1401990222950372866',
+        'app/views/sections/home'       : '/js/app/views/sections/home.1401990222950372866',
+        'app/views/sections/photography': '/js/app/views/sections/photography.1401990222950372866',
+        'app/views/sections/profile'    : '/js/app/views/sections/profile.1401990222950372866',
+        'app/views/sections/projects'   : '/js/app/views/sections/projects.1401990222950372866',
+        'app/views/sections/search'     : '/js/app/views/sections/search.1401990222950372866',
+        'app/views/sections/stream'     : '/js/app/views/sections/stream.1401990222950372866',
+        'app/views/showcases/gallery'   : '/js/app/views/showcases/gallery.1401990222950372866',
+        'app/views/showcases/list'      : '/js/app/views/showcases/list.1401990222950372866',
+        'app/views/showcases/starfield' : '/js/app/views/showcases/starfield.1401990222950372866',
+        'app/views/showcases/text'      : '/js/app/views/showcases/text.1401990222950372866',
+        'app/views/showcases/video'     : '/js/app/views/showcases/video.1401990222950372866',
+        'utils/spinner'                 : '/js/utils/spinner.1401990222950372866',
+        'utils/quotes'                  : '/js/utils/quotes.1401990222950372866',
+        'utils/fbLoader'                : '/js/utils/fbLoader.1401990222950372866',
+        'tpl/jst'                       : '/js/tpl/jst.1401990222950372866'
     },
     map : {
         '*' : {
-            'is' : 'lib/require-is/is'
+            'is' : '/js/lib/require-is/is'
         }
     },
     config : {
-        'lib/require-is/is' : {
+        '/js/lib/require-is/is' : {
             mobile : 'ontouchstart' in window
         }
     },
@@ -78,7 +82,7 @@ require.config({
         'jquery': {
             exports: '$'
         },
-        'isotope' : ['jquery'],
+        //'isotope' : ['jquery'],
         'bbq' : {
             deps : ['jquery']
         },
@@ -98,7 +102,7 @@ require.config({
     waitSeconds : 20
 })
 
-require( ['jquery', 'underscore', 'backbone', 'app/router', 'lib/fastclick/fastclick.min', 'app/views/chrome'],
+require( ['jquery', 'underscore', 'backbone', 'app/router', 'fastclick', 'app/views/chrome'],
 function( $, _, Backbone, Router, fastClick ){
     Backbone.history.start({ pushState : true, root : '/' })
     fastClick.attach(document.body)
