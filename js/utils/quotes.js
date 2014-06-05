@@ -6,7 +6,7 @@
 define([
     'jquery',
     'underscore',
-    'lib/requirejs/domReady!'
+    'domReady!'
 ], function( $, _ ) {
 
     function Slide(h3, gallery){

@@ -6,7 +6,7 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/partials/mixfilter',
+    'mixfilter',
     'mixitup',
     'imagesLoaded'
 ], function( $, Backbone, _, TPL, Filter ) {
