@@ -19,13 +19,12 @@
         opacity: 0;
         position: relative;
         z-index: 1;
-        @include box-shadow(0 0 20px 0 rgba(0,0,0,0));
-        @include transition(opacity 150ms ease, box-shadow 150ms ease);
     }
 
     .wrapper { 
+        @include box-shadow(0 0 20px 0 rgba(0,0,0,0));
         @include scale(1);
-        @include transition(transform 150ms linear);
+        @include transition(transform 150ms linear, opacity 150ms ease, box-shadow 150ms ease);
         //overflow: hidden;
     }
 
@@ -73,19 +72,18 @@
 
     .thumb:hover {
         z-index: 4;
-        
+
         .wrapper {
-            @include scale(1.2);
-            //@include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
+            @include scale(1.21);
+            @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
         }
 
         img.loaded {
-            @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
-            @include transition(box-shadow 150ms ease 150ms);
 
             + .caption {
                 opacity: 1;
-                @include translate3d(0,100%,0);
+                //@include translate3d(0,98%,0);
+                @include translateY(98%);
                 @include box-shadow(0 0 20px 0 rgba(0,0,0,0.25));
                 @include transition(opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms);
             }
@@ -103,7 +101,7 @@
     bottom: 0;
     padding: 12px 10px;
     opacity: 0;
-    @include translate3d(0,0,0);
+    //@include translate3d(0,0,0);
     @include box-shadow(0 0 0 0 rgba(0,0,0,0));
     @include transition(opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms);
 
