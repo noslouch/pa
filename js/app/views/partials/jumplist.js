@@ -72,7 +72,8 @@ define([
         openMenu : function(e) {
             e.preventDefault()
             e.stopPropagation()
-            $(e.target.parentElement).addClass('open')
+            var flag = $(e.target.parentElement).hasClass('open')
+            $(e.target.parentElement).toggleClass('open', !flag)
         }
 
     })
