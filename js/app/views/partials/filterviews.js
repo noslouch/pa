@@ -437,8 +437,9 @@ define([
         openMenu : function(e) {
             e.preventDefault()
             e.stopPropagation()
+            var flag = $(e.target.parentElement).hasClass('open')
             this.$('.open').removeClass('open')
-            $(e.target.parentElement).addClass('open')
+            $(e.target.parentElement).toggleClass('open', !flag)
         }
     })
 
