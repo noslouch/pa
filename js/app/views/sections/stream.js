@@ -6,15 +6,21 @@ define([
     'backbone',
     'underscore',
     'jquery',
-    'app/collections/instagrams',
+    'app/collections/covergallery',
+    'app/collections/projects',
     'app/views/showcases/starfield'
-], function( Backbone, _, $, IG, Starfield ) {
+], function( Backbone, _, $, Covers, Projects, Starfield ) {
 
     var Stream = Backbone.View.extend({
         initialize : function() {
             _.bindAll( this, 'render', 'renderOut' )
-            this.collection.fetch()
-            this.starfield = new Starfield({ collection : this.collection }, true)
+            this.collection.fetch({
+                success : function(projects) {
+                    this.starfield = new Starfield({
+                        collection : new Covers( projects.pluck('coverImage') )
+                    })
+                }.bind(this)
+            })
         },
         render : function(spinner){
             this.spinner = spinner
@@ -27,9 +33,12 @@ define([
         renderOut : function() {
             this.$el.html( this.starfield.render() )
             this.spinner.detach()
+        },
+        onClose : function() {
+            this.starfield.destroy()
         }
     })
 
-    return new Stream({ collection : IG })
+    return new Stream({ collection : Projects })
 
 })

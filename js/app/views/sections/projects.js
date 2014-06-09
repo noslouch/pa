@@ -114,7 +114,7 @@ define([
             if ( document.location.hash ) {
                 $(window).trigger('hashchange')
             } else {
-                $.bbq.pushState({ view : 'random' })
+                $.bbq.pushState({ view : 'cover' })
             }
 
             $(document).foundation({

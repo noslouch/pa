@@ -301,7 +301,7 @@ function( _ ){
             '<ul>',
                 '<li><button class="icon-view active" data-hash="view=cover" id="cover" type="button">Image</button></li>',
                 '<li><button class="title-view" data-hash="view=list" id="list" type="button">Title</button></li>',
-                '<li><button class="random-view" data-hash="view=random" id="random" type="button">Stream</button></li>',
+                //'<li><button class="random-view" data-hash="view=random" id="random" type="button">Stream</button></li>',
            '</ul>',
         '</div>'
     ].join('\n')
@@ -311,7 +311,7 @@ function( _ ){
             '<option>View By</option>',
             '<option data-hash="view=cover" id="cover">Image</option>',
             '<option data-hash="view=list" id="list">Title</option>',
-            '<option data-hash="view=random" id="random">Stream</option>',
+            //'<option data-hash="view=random" id="random">Stream</option>',
         '</select>'
     ].join('\n')
 
