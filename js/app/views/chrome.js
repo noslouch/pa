@@ -68,6 +68,7 @@ define([
             require(['app/views/sections/' + section], function( view ) {
                 self.setView(view)
                 view.setElement('.page')
+
                 if (section === 'home') {
                     var bootstrap = !!$('#n-container').length
                     view.render(spinner)

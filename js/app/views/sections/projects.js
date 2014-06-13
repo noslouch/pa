@@ -132,6 +132,7 @@ define([
         },
 
         onClose : function() {
+            this.model.cover.$el.isotope('destroy')
             this.model.unset('sort').unset('filter').unset('view')
             this.$el.removeClass('projects')
             if (this.filterbar) {
