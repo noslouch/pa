@@ -45,7 +45,7 @@ require.config({
         'app/views/chrome'              : '/js/app/views/chrome.@@hash',
         //'app/views/details/album' : 'app//js/views/details/album.@@hash',
         'app/views/details/books'       : '/js/app/views/details/books.@@hash',
-        'app/views/details/films'       : '/js/app/views/details/films.@@hash',
+        'app/views/details/film'       : '/js/app/views/details/film.@@hash',
         'app/views/details/photography' : '/js/app/views/details/photography.@@hash',
         'app/views/details/projects'    : '/js/app/views/details/projects.@@hash',
         'app/views/partials/album'      : '/js/app/views/partials/album.@@hash',
