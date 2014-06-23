@@ -77,7 +77,7 @@ define([
                         break;
                 }
 
-                this.$el.html( showcase.render() )
+                this.$el.html( showcase.render({gallery : true}) )
 
                 try {
                     showcase.firstLoad()

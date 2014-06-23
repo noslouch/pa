@@ -138,5 +138,7 @@ define([
         router._trackPageview()
     })
 
+    Backbone.dispatcher.on('savehistory', router.saveHistory)
+
     exports.router = router
 })

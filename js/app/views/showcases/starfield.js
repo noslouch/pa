@@ -85,6 +85,7 @@ define([
                 self = this
 
             function go(){
+                /*jshint validthis:true*/
                 self.$el.append(
                     new Star({
                         model : self.images.models[i],

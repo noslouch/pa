@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="projectsLanding"
+             errors="0"
+             failures="0"
+             tests="4">
+  
+  <testsuite errors="0" failures="0" hostname="" id=""
+    name="Cover Images by default" package="projectsLanding" skipped="0"
+    tests="4" time="" timestamp="">
+    
+    
+      <testcase name="Element &lt;.thumb:first-child&gt; was visible after 1581 milliseconds.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if the URL contains &quot;filter=*&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if the URL contains &quot;sort=name&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if the URL contains &quot;view=cover&quot;.">
+        
+        
+      </testcase>
+    
+    
+    </testsuite>
+  
+</testsuites>

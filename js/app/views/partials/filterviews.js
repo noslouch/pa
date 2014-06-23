@@ -210,8 +210,9 @@ define([
         tagName : mobile ? 'select' : 'ul',
 
         initialize : function(options) {
-            _.bindAll(this, 'toggleActive')
-            this.listenTo( this.model, 'change:sort', this.toggleActive)
+            _.bindAll(this, 'toggleActive', 'toggleVisible', 'prepList')
+            this.listenTo( this.model, 'change:sort', this.toggleActive )
+            this.listenTo( this.model, 'isotope:ready', this.toggleVisible )
         },
 
         render : function() {
@@ -258,6 +259,64 @@ define([
 
         toggleActive : function( pageModel, sort ) {
             this.$el.toggleClass( 'active', sort === this.className )
+        },
+
+        prepList : function ( model ) {
+            this.listenTo( this.model, 'change:filter', this.toggleVisible )
+            this.toggleVisible()
+        },
+
+        toggleVisible : function() {
+            var currentView = this.model.get('view'),
+                currentSort = this.model.get('sort'),
+                currentItems,
+                groups
+
+            //if ( this.className !== currentSort ) { return }
+
+            if ( currentView === 'cover' ) {
+                currentItems = this.model.cover.$el.data('isotope').filteredItems
+
+                if ( this.className === 'name' ) {
+                    groups = _.groupBy(currentItems, function(thumb) {
+                        return $(thumb.element).find('.title').text()[0]
+                    })
+
+                    // clear all "jump to" ids
+                    $('.thumb').each(function(i, thumb) {
+                        $(this).find('.title')[0].id = ''
+                    })
+
+                    // look at each group and ID first element with letter
+                    _.each(groups, function(group, letter) {
+                        $(group[0].element).find('.title')[0].id = letter
+                    })
+                } else {
+                    groups = _.groupBy(currentItems, function(thumb) {
+                        return $(thumb.element).find('.year').text()
+                    })
+
+                    // clear all "jump to" ids
+                    $('.thumb').each(function(i, thumb) {
+                        $(this).find('.year')[0].id = ''
+                    })
+
+                    // look at each group and ID first element with year
+                    _.each(groups, function(group, year) {
+                        $(group[0].element).find('.year')[0].id = year
+                    })
+                }
+
+                groups = Object.keys(groups)
+
+                this.$el.children().each(function(i, el) {
+                    if ( groups.indexOf(el.innerText) === -1 ) {
+                        el.style.display = 'none'
+                    } else {
+                        el.style.display = ''
+                    }
+                })
+            }
         }
     })
 
@@ -412,8 +471,8 @@ define([
             } catch(err) { return false }
 
             e.preventDefault()
-            e.stopPropagation()
-            $.bbq.pushState( option, option.view === 'random' ? 2 : 0 )
+            this.model.set( option )
+            history.pushState({}, '', $.param.fragment(document.location.hash, option))
             if ( !$(e.target).parents('#sorts').length ) {
                 this.$('.open').removeClass('open')
             }

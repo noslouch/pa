@@ -3,7 +3,8 @@
 define([
     'require',
     'jquery',
-    '/bower_components/isotope/dist/isotope.pkgd.min.js'
+    //'/bower_components/isotope/dist/isotope.pkgd.min.js'
+    '/bower_components/isotope/dist/isotope.pkgd.js'
 ], function( require, $, Isotope ) {
 
     require( [ 'jquery-bridget/jquery.bridget' ],

@@ -1,0 +1,45 @@
+{
+  "src_folders" : ["testing/e2e"],
+  "output_folder" : "testing/e2e/reports",
+  "custom_commands_path" : "",
+  "custom_assertions_path" : "",
+  "globals_path" : "",
+  
+  "selenium" : {
+    "start_process" : true,
+    "server_path" : "/Library/WebServer/Documents/selenium-server-standalone-2.42.2.jar",
+    "log_path" : "./testing/e2e/logs",
+    "host" : "127.0.0.1",
+    "port" : 4444,
+    "cli_args" : {
+      "webdriver.chrome.driver" : "/usr/local/bin/chromedriver",
+      "webdriver.ie.driver" : ""
+    }  
+  },
+  
+  "test_settings" : {
+    "default" : {
+      "launch_url" : "http://pa.dev",
+      "selenium_port"  : 4444,
+      "selenium_host"  : "pa.dev",
+      "silent": true,
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    },
+    
+    "firefox" : {
+      "desiredCapabilities": {
+        "browserName": "firefox",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    }
+  }
+}

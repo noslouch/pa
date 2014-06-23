@@ -10,24 +10,25 @@ define([
     'app/views/partials/filterviews',
     'app/views/showcases/gallery',
     'app/views/showcases/list',
-    'app/views/showcases/starfield',
+    //'app/views/showcases/starfield',
     'app/collections/covergallery',
     'app/collections/projects',
+    'utils/spinner',
     'foundation',
     'tooltips',
     'bbq',
     'domReady!'
-], function( require, $, Backbone, _, FilterBar, G, l, Starfield, CoverGallery, Projects ) {
+], function( require, $, Backbone, _, FilterBar, G, l, CoverGallery, Projects, Spinner ) {
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
-            _.bindAll( this, 'render', 'jumpSet', 'navigate', 'init' )
+            _.bindAll( this, 'render', 'navigate', 'init' )
             var self = this
 
             this.collection.fetch({
                 success : function(projects) {
 
-                    self.model.cover = new G({
+                    self.model.cover = self.cover = new G({
                         projects : true,
                         //cover : true,
                         collection : new CoverGallery( projects.pluck('coverImage') ),
@@ -35,7 +36,7 @@ define([
                         model : self.model
                     })
 
-                    self.model.list = new l.List({
+                    self.model.list = self.list = new l.List({
                         collection : new CoverGallery( projects.pluck('coverImage') ),
                         pageClass : 'projects',
                         path : 'projects',
@@ -43,9 +44,9 @@ define([
                         model : self.model
                     })
 
-                    self.model.random = new Starfield({
-                        collection : self.model.cover.collection
-                    })
+                    // self.model.random = new Starfield({
+                    //     collection : self.model.cover.collection
+                    // })
 
                     self.filterbar = new FilterBar({
                         el : '#filter-bar',
@@ -57,7 +58,7 @@ define([
                 }
             })
 
-            this.model.on( 'layout', this.jumpSet )
+            //this.model.on( 'layout', this.jumpSet )
             Backbone.dispatcher.on('filterCheck', function(router){
                 if ( router.previous.href.match('projects') ) {
                     if ( self.filterbar ) {
@@ -72,32 +73,9 @@ define([
             'click .showcase a' : 'navigate'
         },
 
-        render : function() {
-            if (!this.spinner.running) { this.spinner.append() }
-            var hashObj = $.deparam.fragment()
-            if ( this.model.get('view') === 'random' && hashObj.view === 'random' ) {
-                // random view is currently running
-                // and a filter of another dimension has been chosen
-                // use cover view as default
-                $.bbq.pushState({ view : 'cover' })
-                return
-            } else {
-                hashObj.filter = hashObj.filter || '*'
-                hashObj.view = hashObj.view || 'cover'
-                hashObj.sort = hashObj.sort || 'name'
-            }
-            this.model.set( hashObj )
-            if (hashObj.view === 'random') {
-                console.log('setting timeout at', Date.now() )
-                setTimeout( this.spinner.detach, 1250 )
-            } else {
-                this.spinner.detach()
-            }
-            this.$el.html( this.model[hashObj.view].render() )
-            this.filterbar.delegateEvents()
-        },
-
         init : function(spinner) {
+            var hashObj = $.deparam.fragment()
+
             this.spinner = spinner
             this.delegateEvents()
             this.filterbar.render()
@@ -110,12 +88,13 @@ define([
                 }
             }
 
-            $(window).on('hashchange', this.render)
-            if ( document.location.hash ) {
-                $(window).trigger('hashchange')
-            } else {
-                $.bbq.pushState({ view : 'cover' })
-            }
+            hashObj.filter = hashObj.filter || '*'
+            hashObj.view = hashObj.view || 'cover'
+            hashObj.sort = hashObj.sort || 'name'
+            this.model.set( hashObj )
+            history.replaceState({}, '', $.param.fragment('', hashObj))
+
+            this.render()
 
             $(document).foundation({
                 tooltip : {
@@ -125,6 +104,67 @@ define([
             })
         },
 
+        render : function() {
+            //var spinner = new Spinner()
+
+            var currentView = this.model.get('view')
+            this.$el.html( this[currentView].render({ gallery : false }) )
+            this.filterbar.delegateEvents()
+
+            this.spinner.detach()
+
+            this.model.on('change', function(model) {
+                var newAttr = model.changedAttributes()
+                if ( newAttr.filter ) {
+                    this.setFilter(newAttr.filter)
+                } else if ( newAttr.view ) {
+                    this.setView(newAttr.view)
+                } else if ( newAttr.sort ) {
+                    this.setSort(newAttr.sort)
+                }
+                Backbone.dispatcher.trigger('savehistory')
+            }, this)
+
+            $(window).on('hashchange', function() {
+                var hashObj = $.deparam.fragment()
+                this.model.set(hashObj)
+            }.bind(this))
+        },
+
+        setSort : function( sort ) {
+            var currentOrder = this.model.get('sort'),
+                currentView = this.model.get('view')
+            if ( currentView === 'list' ) {
+                this.list.render()
+            } else if ( currentView === 'cover' ) {
+                this.cover.sort( sort )
+            }
+        },
+
+        setFilter : function( filter ) {
+            var currentView = this.model.get('view')
+            if ( currentView ===  'list' ) {
+                this.list.render()
+            } else if ( currentView === 'cover' ) {
+                this.cover.filter(filter)
+            }
+            this.model.trigger('isotope:ready')
+        },
+
+        setView : function( view ) {
+            if ( view === 'cover' ) {
+                this.$el.html( this.cover.$el )
+                this.cover.isotope({ gallery: false })
+            } else if ( view === 'list' ) {
+                this.$el.html( this.list.render() )
+
+                this.cover.$el.find('.thumb').each(function(i, el) {
+                    el.style.display = ''
+                    $(el).find('img').removeClass('loaded')
+                })
+            }
+        },
+
         navigate : function(e) {
             e.preventDefault()
             Backbone.dispatcher.trigger('navigate:detail', e, this)
@@ -132,16 +172,18 @@ define([
         },
 
         onClose : function() {
-            this.model.cover.$el.isotope('destroy')
-            this.model.unset('sort').unset('filter').unset('view')
+            this.cover.$el.isotope('destroy')
+            //this.model.unset('sort').unset('filter').unset('view')
             this.$el.removeClass('projects')
+            this.model.off('change')
             if (this.filterbar) {
                 this.filterbar.close()
             }
-            $(window).off('hashchange')
+            //$(window).off('hashchange')
         },
 
         jumpSet : function() {
+            console.log('jumpSet')
             var t = $('.thumb')
             var byFirst = _.groupBy( t, function(el) { return $(el).find('.title').text()[0] })
             var byDate = _.groupBy( t, function(el) { return $(el).find('.year').text() })

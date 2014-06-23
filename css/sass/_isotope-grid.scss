@@ -19,12 +19,13 @@
         opacity: 0;
         position: relative;
         z-index: 1;
+        @include transition(opacity 150ms ease);
     }
 
     .wrapper { 
         @include box-shadow(0 0 20px 0 rgba(0,0,0,0));
         @include scale(1);
-        @include transition(transform 150ms linear, opacity 150ms ease, box-shadow 150ms ease);
+        @include transition(transform 150ms linear, box-shadow 150ms ease);
         //overflow: hidden;
     }
 
