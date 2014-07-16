@@ -73,7 +73,7 @@ define([
                 collection : this.collection
             })
 
-            this.$viewer.html( gallery.render() )
+            this.$viewer.html( gallery.render({ gallery : true }) )
 
                 var projectTitle = this.model.get('title')
                 $('#showcaseContainer a').each(function(idx, el) {
@@ -85,7 +85,7 @@ define([
         back : function(e) {
             e.preventDefault()
             Backbone.dispatcher.trigger('navigate:section', e)
-            Backbone.dispatcher.trigger( 'goBack', new Spinner(), this.namespace )
+            //Backbone.dispatcher.trigger( 'goBack', new Spinner(), this.namespace )
         }
 
     })
