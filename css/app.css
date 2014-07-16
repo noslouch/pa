@@ -5696,6 +5696,7 @@ a.fancybox-prev:hover span {
 }
 /* line 32, sass/_isotope-grid.scss */
 .isotope-grid .thumb {
+  height: 216px;
   margin-bottom: 7px;
   margin-left: 7px;
   -webkit-transform: translate3d(0, 0, 0);
@@ -5704,49 +5705,28 @@ a.fancybox-prev:hover span {
   -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-/* line 39, sass/_isotope-grid.scss */
+/* line 40, sass/_isotope-grid.scss */
 .isotope-grid .thumb a {
   display: block;
-  width: auto;
-  height: 216px;
-}
-/* line 45, sass/_isotope-grid.scss */
-.photography .isotope-grid .thumb a {
-  width: auto !important;
 }
 /* line 54, sass/_isotope-grid.scss */
-.isotope-grid.rtl .thumb a {
-  height: auto;
+.isotope-grid.rtl .thumb {
+  height: 323px;
 }
-/* line 56, sass/_isotope-grid.scss */
+/* line 57, sass/_isotope-grid.scss */
 .isotope-grid.fixed .thumb {
   margin-left: 0;
-}
-/* line 59, sass/_isotope-grid.scss */
-.isotope-grid.fixed .thumb a {
   width: 164px;
 }
-/* line 63, sass/_isotope-grid.scss */
-.isotope-grid.fixed.rtl .thumb a {
-  width: 246px;
-}
-/* line 65, sass/_isotope-grid.scss */
+/* line 67, sass/_isotope-grid.scss */
 .isotope-grid.fixed .wide.thumb {
-  margin-left: 0;
-}
-/* line 66, sass/_isotope-grid.scss */
-.isotope-grid.fixed .wide.thumb a {
   width: 334px;
 }
-/* line 72, sass/_isotope-grid.scss */
-.isotope-grid.fixed.rtl .wide.thumb a {
-  width: 501px;
-}
-/* line 74, sass/_isotope-grid.scss */
+/* line 77, sass/_isotope-grid.scss */
 .isotope-grid .thumb:hover {
   z-index: 4;
 }
-/* line 77, sass/_isotope-grid.scss */
+/* line 80, sass/_isotope-grid.scss */
 .isotope-grid .thumb:hover .wrapper {
   -webkit-transform: scale(1.21, 1.21);
   -moz-transform: scale(1.21, 1.21);
@@ -5757,7 +5737,7 @@ a.fancybox-prev:hover span {
   -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
 }
-/* line 84, sass/_isotope-grid.scss */
+/* line 87, sass/_isotope-grid.scss */
 .isotope-grid .thumb:hover img.loaded + .caption {
   opacity: 1;
   -webkit-transform: translateY(98%);
@@ -5775,7 +5755,7 @@ a.fancybox-prev:hover span {
   transition: opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms;
 }
 
-/* line 96, sass/_isotope-grid.scss */
+/* line 99, sass/_isotope-grid.scss */
 .caption {
   color: red;
   background: white;
@@ -5794,7 +5774,7 @@ a.fancybox-prev:hover span {
   -o-transition: opacity 150ms ease, -o-transform 150ms linear, box-shadow 150ms ease 150ms;
   transition: opacity 150ms ease, transform 150ms linear, box-shadow 150ms ease 150ms;
 }
-/* line 109, sass/_isotope-grid.scss */
+/* line 112, sass/_isotope-grid.scss */
 .caption p {
   margin: 0;
   font-size: 0.57895rem;
@@ -5806,7 +5786,7 @@ a.fancybox-prev:hover span {
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-/* line 117, sass/_isotope-grid.scss */
+/* line 120, sass/_isotope-grid.scss */
 .caption .year {
   font-weight: 300;
   font-size: 0.57895rem;
@@ -5818,7 +5798,7 @@ a.fancybox-prev:hover span {
   backface-visibility: hidden;
 }
 
-/* line 126, sass/_isotope-grid.scss */
+/* line 130, sass/_isotope-grid.scss */
 .thumb img {
   max-height: 100%;
   max-width: 100%;
