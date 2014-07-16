@@ -112,21 +112,28 @@ define([
 
             if ( options.gallery ) {
                 require(['utils/' + path], function(g) {
-                    self.$el.imagesLoaded( function() {
+                    self.$el.imagesLoaded()
+                    .progress(function(instance, image) {
+                        image.img.classList.add('loaded')
+                    }).done(function() {
                         g()
                         $el.isotope(isoOps)
                         //$el.isotope('on', 'layoutComplete', onLayout)
 
-                        $img.addClass('loaded')
+                        //$img.addClass('loaded')
                     })
                 })
             } else {
-                self.$el.imagesLoaded( function() { 
+                self.$el.imagesLoaded()
+                .progress(function(instance, image) {
+                    image.img.classList.add('loaded')
+                })
+                .done(function() { 
                     isoOps.filter = model.get('filter')
                     isoOps.sort = model.get('sort')
 
                     $el.isotope(isoOps)
-                    $img.addClass('loaded')
+                    //$img.addClass('loaded')
 
                     model.trigger('isotope:ready')
                 })
