@@ -112,9 +112,12 @@ define([
 
             if ( options.gallery ) {
                 require(['utils/' + path], function(g) {
-                    $el.isotope(isoOps)
                     g()
-                    self.$el.imagesLoaded().progress(function(instance, image) {
+                    self.$el.imagesLoaded()
+                    .done(function() {
+                        $el.isotope(isoOps)
+                    })
+                    .progress(function(instance, image) {
                         image.img.classList.add('loaded')
                     })
                 })
