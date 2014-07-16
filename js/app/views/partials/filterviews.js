@@ -216,8 +216,10 @@ define([
         tagName : mobile ? 'select' : 'ul',
 
         initialize : function(options) {
-            _.bindAll(this, 'toggleActive', 'toggleVisible', 'prepList')
+            _.bindAll(this, 'toggleActive', 'toggleVisible')
             this.listenTo( this.model, 'change:sort', this.toggleActive )
+
+            this.listenTo( this.model, 'list:ready', this.toggleVisible )
             this.listenTo( this.model, 'isotope:ready', this.toggleVisible )
         },
 
@@ -267,19 +269,11 @@ define([
             this.$el.toggleClass( 'active', sort === this.className )
         },
 
-        prepList : function ( model ) {
-            console.log('prepList')
-            this.listenTo( this.model, 'change:filter', this.toggleVisible )
-            this.toggleVisible()
-        },
-
         toggleVisible : function() {
             var currentView = this.model.get('view'),
                 currentSort = this.model.get('sort'),
                 currentItems,
                 groups
-
-            //if ( this.className !== currentSort ) { return }
 
             if ( currentView === 'cover' ) {
                 currentItems = this.model.cover.$el.data('isotope').filteredItems
@@ -316,14 +310,20 @@ define([
 
                 groups = Object.keys(groups)
 
-                this.$el.children().each(function(i, el) {
-                    if ( groups.indexOf(el.innerText) === -1 ) {
-                        el.style.display = 'none'
-                    } else {
-                        el.style.display = ''
-                    }
+            } else {
+                groups = []
+                $('.list').children().each(function() {
+                    groups.push(this.id)
                 })
             }
+
+            this.$el.children().each(function(i, el) {
+                if ( groups.indexOf(el.innerText) === -1 ) {
+                    el.style.display = 'none'
+                } else {
+                    el.style.display = ''
+                }
+            })
         }
     })
 

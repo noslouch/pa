@@ -107,6 +107,8 @@ define([
             }, this )
 
             setTimeout( this.stagger, 50 )
+            setTimeout( function() { this.model.trigger('list:ready') }.bind(this), 0 )
+
             return this.el
         },
 

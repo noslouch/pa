@@ -69,6 +69,7 @@ define([
             this.spinner = spinner
             this.delegateEvents()
             this.filterbar.render()
+            this.filterbar.$el.addClass('projects')
             this.$el.addClass('projects')
 
             if ( !this.collection.length ) {
@@ -170,6 +171,7 @@ define([
             this.model.clear({silent: true})
             if (this.filterbar) {
                 this.filterbar.close()
+                this.filterbar.$el.removeClass('projects')
             }
             //$(window).off('hashchange')
         },
