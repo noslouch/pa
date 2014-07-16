@@ -183,20 +183,26 @@ define([
         },
         render : function() {
             if (!mobile && this.id !== 'views') {
+                this.dateList = new JumpMenu({
+                    model : this.model,
+                    collection : this.collection,
+                    className : 'date',
+                    id : 'date'
+                })
+                this.nameList = new JumpMenu({
+                    model : this.model,
+                    collection : this.collection,
+                    className : 'name',
+                    id : 'name'
+                })
+                this.onClose = function() {
+                    this.nameList.close()
+                    this.dateList.close()
+                }
                 this.$('.wrapper')
                     .append('<h4>Jump To</h4>')
-                    .append( new JumpMenu({
-                        model : this.model,
-                        collection : this.collection,
-                        className : 'date',
-                        id : 'date'
-                    }).render() )
-                    .append( new JumpMenu({
-                        model : this.model,
-                        collection : this.collection,
-                        className : 'name',
-                        id : 'name'
-                    }).render() )
+                    .append( this.dateList.render() )
+                    .append( this.nameList.render() )
             }
             return this.el
         },
@@ -262,6 +268,7 @@ define([
         },
 
         prepList : function ( model ) {
+            console.log('prepList')
             this.listenTo( this.model, 'change:filter', this.toggleVisible )
             this.toggleVisible()
         },
@@ -419,20 +426,22 @@ define([
                             collection : this.collection
                         }).render() )
 
+                    this.sortList = new ViewSort({
+                        model : this.model,
+                        collection : this.collection,
+                        id : 'sorts',
+                        type : 'sort',
+                        template : TPL.sorts
+                    })
+                    this.viewList = new ViewSort({
+                        model : this.model,
+                        id : 'views',
+                        type : 'view',
+                        template : TPL.views
+                    })
                     this.$el
-                        .append( new ViewSort({
-                            model : this.model,
-                            collection : this.collection,
-                            id : 'sorts',
-                            type : 'sort',
-                            template : TPL.sorts
-                        }).render() )
-                        .append( new ViewSort({
-                            model : this.model,
-                            id : 'views',
-                            type : 'view',
-                            template : TPL.views
-                        }).render() )
+                        .append( this.sortList.render() )
+                        .append( this.viewList.render() )
                 }
             }
 
@@ -451,6 +460,9 @@ define([
         },
 
         onClose : function() {
+            this.undelegateEvents()
+            this.sortList.close()
+            this.viewList.close()
             this.$el.removeClass('filter-bar')
             $('.tooltip').remove()
         },

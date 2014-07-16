@@ -97,6 +97,7 @@ define([
         },
         render : function() {
             if (!mobile && this.id !== 'views') {
+                console.log('not views')
             }
             return this.el
         },
@@ -136,14 +137,15 @@ define([
                 this.$('#all').remove()
             }
 
+            this.sortList = new ViewSort({
+                model : this.model,
+                collection : this.collection,
+                id : 'sorts',
+                type : 'sort',
+                template : TPL.sorts
+            })
             this.$el
-                .append( new ViewSort({
-                    model : this.model,
-                    collection : this.collection,
-                    id : 'sorts',
-                    type : 'sort',
-                    template : TPL.sorts
-                }).render() )
+                .append( this.sortList.render() )
             this.delegateEvents()
 
             this.$('#brand').remove()
@@ -151,6 +153,8 @@ define([
         },
 
         onClose : function() {
+            this.undelegateEvents()
+            this.sortList.close()
             this.$el.removeClass('filter-bar')
         },
 

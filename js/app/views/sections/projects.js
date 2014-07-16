@@ -173,9 +173,11 @@ define([
 
         onClose : function() {
             this.cover.$el.isotope('destroy')
+            this.cover.$('.thumb').show()
             //this.model.unset('sort').unset('filter').unset('view')
             this.$el.removeClass('projects')
             this.model.off('change')
+            this.model.clear({silent: true})
             if (this.filterbar) {
                 this.filterbar.close()
             }
