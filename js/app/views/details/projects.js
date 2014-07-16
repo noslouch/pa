@@ -254,7 +254,7 @@ define([
         goBack : function(e) {
             e.preventDefault()
             Backbone.dispatcher.trigger( 'navigate:section', e )
-            Backbone.dispatcher.trigger( 'goBack', new Spinner(), 'projects' )
+            //Backbone.dispatcher.trigger( 'goBack', new Spinner(), 'projects' )
         }
     })
 

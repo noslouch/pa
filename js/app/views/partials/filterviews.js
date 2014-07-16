@@ -483,8 +483,8 @@ define([
             } catch(err) { return false }
 
             e.preventDefault()
-            this.model.set( option )
             history.pushState({}, '', $.param.fragment(document.location.hash, option))
+            this.model.set( option )
             if ( !$(e.target).parents('#sorts').length ) {
                 this.$('.open').removeClass('open')
             }

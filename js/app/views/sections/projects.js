@@ -57,16 +57,6 @@ define([
                     Backbone.dispatcher.trigger('projects:ready')
                 }
             })
-
-            //this.model.on( 'layout', this.jumpSet )
-            Backbone.dispatcher.on('filterCheck', function(router){
-                if ( router.previous.href.match('projects') ) {
-                    if ( self.filterbar ) {
-                        self.filterbar.close()
-                    }
-                }
-            })
-
         },
 
         events : {

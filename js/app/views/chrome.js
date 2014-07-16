@@ -21,7 +21,7 @@ define([
                 el : '#searchForm'
             })
 
-            Backbone.dispatcher.on('goBack', this.section)
+            //Backbone.dispatcher.on('goBack', this.section)
             //Backbone.dispatcher.on('projects:goBack', this.projects)
             //Backbone.dispatcher.on('film:goBack', this.film)
             //Backbone.dispatcher.on('photography:goBack', this.photography)
@@ -49,10 +49,11 @@ define([
                 return
             }
             e.preventDefault()
-            this.currentView.close()
 
-            var spinner = new Spinner()
-            this.section(spinner,e.target.id)
+            //this.currentView.close()
+
+            //var spinner = new Spinner()
+            //this.section(spinner,e.target.id)
             Backbone.dispatcher.trigger('navigate:section', e)
         },
 
@@ -82,7 +83,6 @@ define([
                             view.render( segment, urlTitle, spinner )
                         })
                     }
-                    //self.listenTo( view.collection, 'change:active', self.detail )
                 } else {
                     try {
                         view.init(spinner)
