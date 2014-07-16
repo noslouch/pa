@@ -61,7 +61,7 @@ module.exports = function(grunt) {
     qunit: {
         all : {
             options : {
-                urls : ['http://pa.local/testing/index.html']
+                urls : ['http://pa.dev/testing/index.html']
             }
         }
     },

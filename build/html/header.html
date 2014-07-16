@@ -26,12 +26,12 @@
     <body>
         <div class="header-wrapper">
             <div class="inner-header {embed:nav}">
-                <header class="site-header{if segment_1==''} home{/if}">
-                <h1 class="logo"><a href="{site_url}">Peter Arnell</a></h1>
+                <header class="site-header">
+                <h1 class="logo"><a href="{path='projects'}">Peter Arnell</a></h1>
                     <nav id="nav">
                         <h2 class="visuallyhidden">Main Navigation</h2>
                         <ul>
-                            <li><a href="{site_url}"{if embed:nav == 'home'} class="active"{/if} id="home">Home</a></li>
+                            <!--<li><a href="{site_url}"{if embed:nav == 'home'} class="active"{/if} id="home">Home</a></li>-->
                             <li><a href="{path='projects'}"{if embed:nav=='projects'} class="active"{/if} id="projects">Projects</a></li>
                             <li><a href="{path='photography'}"{if embed:nav=='photography'} class="active"{/if} id="photography">Photography</a></li>
                             <li><a href="{path='film'}"{if embed:nav=='film'} class="active"{/if} id="film">Film</a></li>

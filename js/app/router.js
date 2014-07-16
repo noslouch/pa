@@ -55,10 +55,14 @@ define([
         },
 
         section : function( segment, urlTitle ) {
-            var spinner = new Spinner()
-            var section = Backbone.history.fragment.match(/[^\/]*/).join('') === '' ? 'home' : Backbone.history.fragment.match(/[^\/]*/).join('')
+            var section = Backbone.history.fragment.match(/[^\/]*/).join('')
 
-            Chrome.section( spinner, section, segment, urlTitle )
+            if ( section === '' ) {
+                this.navigate('/projects', { trigger : true })
+            } else {
+                var spinner = new Spinner()
+                Chrome.section( spinner, section, segment, urlTitle )
+            }
         },
 
         detail : function( urlTitle, hidden ) {
@@ -112,6 +116,7 @@ define([
 
     Backbone.dispatcher.on('navigate:section', function(e) {
         var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
+        l = l === '/' ? '/projects' : l
 
         Backbone.dispatcher.trigger('filterCheck', router)
         //$('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
