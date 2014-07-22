@@ -5709,15 +5709,6 @@ a.fancybox-prev:hover span {
 /* line 87, sass/_isotope-grid.scss */
 .isotope-grid .thumb:hover img.loaded + .caption {
   opacity: 1;
-  -webkit-transform: translateY(98%);
-  -moz-transform: translateY(98%);
-  -ms-transform: translateY(98%);
-  -o-transform: translateY(98%);
-  transform: translateY(98%);
-  -webkit-transition: opacity 150ms ease, -webkit-transform 150ms linear;
-  -moz-transition: opacity 150ms ease, -moz-transform 150ms linear;
-  -o-transition: opacity 150ms ease, -o-transform 150ms linear;
-  transition: opacity 150ms ease, transform 150ms linear;
 }
 
 /* line 97, sass/_isotope-grid.scss */
@@ -5727,13 +5718,9 @@ a.fancybox-prev:hover span {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  top: 100%;
   padding: 12px 10px;
   opacity: 0;
-  -webkit-transition: opacity 150ms ease, -webkit-transform 150ms linear;
-  -moz-transition: opacity 150ms ease, -moz-transform 150ms linear;
-  -o-transition: opacity 150ms ease, -o-transform 150ms linear;
-  transition: opacity 150ms ease, transform 150ms linear;
 }
 /* line 109, sass/_isotope-grid.scss */
 .caption p {

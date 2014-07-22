@@ -86,8 +86,8 @@
 
             + .caption {
                 opacity: 1;
-                @include translateY(98%);
-                @include transition(opacity 150ms ease, transform 150ms linear);
+                //@include translateY(98%);
+                //@include transition(opacity 150ms ease, transform 150ms linear);
             }
         }
 
@@ -100,10 +100,10 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
+    top: 100%;
     padding: 12px 10px;
     opacity: 0;
-    @include transition(opacity 150ms ease, transform 150ms linear);
+    //@include transition(opacity 150ms ease, transform 150ms linear);
     @extend .antialiased;
 
     p {
