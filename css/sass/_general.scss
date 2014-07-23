@@ -102,31 +102,28 @@ iframe {
     @include transition( opacity 300ms ease-in );
 
     &.home { opacity: 0; }
-    
+
     .logo {
-        //@include grid-column(4,$collapse: true);
         float: left;
         font-size: emCalc(19);
         font-weight: 500;
         line-height: 1;
         a { color: $secondary-color; }
         a:hover { color: $gray; }
-        //padding-left: 0;
     }
 
-    nav { 
-        //@include grid-column(8, $float: right, $collapse: true);
+    nav {
         float: right;
         font-weight: 500;
         font-size: emCalc(19);
         width: 512px;
         a:hover { color: $secondary-color; }
 
-        ul { 
+        ul {
             @include inline-list;
             float: left;
             margin: 0;
-            > li { 
+            > li {
                 line-height: 1.5;
                 margin-left: 15px; }
             li:first-child { margin-left: 0; }
@@ -142,7 +139,6 @@ iframe {
 .outer-wrapper {
     max-width: 1280px;
     margin: 0 auto;
-    //height: 100%;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -154,12 +150,10 @@ iframe {
 
 .page {
     padding: 110px emCalc(37) emCalc(35);
-    //height: 100%;
     position: relative;
     overflow: visible;
 
-    &.home { 
-        //z-index: 4;
+    &.home {
         padding-top: 70px;
         padding-bottom: 55px;
         height: 100%;
@@ -172,10 +166,20 @@ iframe {
     &.film,
     &.projects {
         padding-top: 192px;
-        //overflow: hidden;
         padding-bottom: 105px;
         height: 100%;
     }
+}
+
+.page.project-single {
+    height: 100%;
+    position: absolute;
+    background: white;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 //
@@ -183,151 +187,142 @@ iframe {
 //
 
 // Noteworthy layout & animation
-.n-wrapper {
-    width: 100%;
-    max-width: 1280px;
-    //z-index: 1;
-    position: relative;
-    //bottom: 0;
-    //left: 0;
-    //right: 0;
-    //margin: 0 auto;
-    //padding: 0 2rem;
+// .n-wrapper {
+//     width: 100%;
+//     max-width: 1280px;
+//     position: relative;
+// 
+//     @include transition( opacity 300ms ease-in );
+// 
+//     &.home { opacity: 0; }
+// }
 
-    @include transition( opacity 300ms ease-in );
-
-    &.home { opacity: 0; }
-}
-
-.n-container {
-    bottom: 0;
-    border-top: 1px $gray solid;
-    background: white;
-
-    @include grid-row(collapse);
-    @include translate3d( 0, 0, 0 );
-    @include transition(transform 150ms ease);
-
-    margin: 0 auto;
-
-    &.open { 
-        @include translate3d( 0, 0px, 0 );
-        h2:before { content:"-"; }
-
-        .row { opacity: 1; }
-    }
-
-    header { 
-        @include grid-row(collapse);
-        padding-top: 1em;
-        padding-bottom: 1em;
-        // Fixes Mobile Safari 'div seam' artifact
-        margin: -1px;
-
-        &:hover { 
-            a,
-            h2:before { color: red; }
-        }
-    }
-
-    h2 { 
-        @include grid-column(2);
-        &:before {
-            content: "+";
-            display: inline-block;
-            margin-right: 5px;
-            @include transition(color 450ms ease-out);
-        }
-    }
-
-    .row {
-        opacity: 0;
-        padding-bottom: emCalc(35);
-        @include transition(opacity 150ms ease);
-    }
-
-    //.row.one .brick { @include grid-column(6, $center: true); }
-    .row.one, .row.two .brick { @include grid-column(6); }
-    .row.three .brick { @include grid-column(4); }
-    .row.four .brick { @include grid-column(3); }
-    // bricks are in an html defined row
-    .brick {
-        height: 150px;
-        position: relative;
-
-        .copy {
-            padding: 1em;
-            height: 100%;
-            background: black;
-            @include transition(box-shadow 150ms ease);
-        }
-
-        .img { 
-            @include grid-column(12);
-            position: absolute;
-            text-align: center;
-            left: 0;
-            right: 0;
-            // z-index: -1;
-            pointer-events: none;
-            @include translate3d(0,-100%,0);
-            @include backface-visibility(hidden);
-        }
-
-        img {
-            max-width: 100%;
-            opacity: 0;
-            @include transition(box-shadow 150ms ease, opacity 150ms ease);
-        }
-
-        &:hover { 
-
-            .copy {
-                background: white;
-                @include box-shadow(0 5px 30px 0px rgba(0,0,0,0.1));
-            }
-
-            img {
-                opacity: 1;
-                @include box-shadow(0 5px 30px 2px rgba(0,0,0,0.1));
-            }
-        }
-    }
-
-}
+// .n-container {
+//     bottom: 0;
+//     border-top: 1px $gray solid;
+//     background: white;
+// 
+//     @include grid-row(collapse);
+//     @include translate3d( 0, 0, 0 );
+//     @include transition(transform 150ms ease);
+// 
+//     margin: 0 auto;
+// 
+//     &.open { 
+//         @include translate3d( 0, 0px, 0 );
+//         h2:before { content:"-"; }
+// 
+//         .row { opacity: 1; }
+//     }
+// 
+//     header { 
+//         @include grid-row(collapse);
+//         padding-top: 1em;
+//         padding-bottom: 1em;
+//         // Fixes Mobile Safari 'div seam' artifact
+//         margin: -1px;
+// 
+//         &:hover { 
+//             a,
+//             h2:before { color: red; }
+//         }
+//     }
+// 
+//     h2 { 
+//         @include grid-column(2);
+//         &:before {
+//             content: "+";
+//             display: inline-block;
+//             margin-right: 5px;
+//             @include transition(color 450ms ease-out);
+//         }
+//     }
+// 
+//     .row {
+//         opacity: 0;
+//         padding-bottom: emCalc(35);
+//         @include transition(opacity 150ms ease);
+//     }
+// 
+//     .row.one, .row.two .brick { @include grid-column(6); }
+//     .row.three .brick { @include grid-column(4); }
+//     .row.four .brick { @include grid-column(3); }
+//     // bricks are in an html defined row
+//     .brick {
+//         height: 150px;
+//         position: relative;
+// 
+//         .copy {
+//             padding: 1em;
+//             height: 100%;
+//             background: black;
+//             @include transition(box-shadow 150ms ease);
+//         }
+// 
+//         .img { 
+//             @include grid-column(12);
+//             position: absolute;
+//             text-align: center;
+//             left: 0;
+//             right: 0;
+//             pointer-events: none;
+//             @include translate3d(0,-100%,0);
+//             @include backface-visibility(hidden);
+//         }
+// 
+//         img {
+//             max-width: 100%;
+//             opacity: 0;
+//             @include transition(box-shadow 150ms ease, opacity 150ms ease);
+//         }
+// 
+//         &:hover {
+// 
+//             .copy {
+//                 background: white;
+//                 @include box-shadow(0 5px 30px 0px rgba(0,0,0,0.1));
+//             }
+// 
+//             img {
+//                 opacity: 1;
+//                 @include box-shadow(0 5px 30px 2px rgba(0,0,0,0.1));
+//             }
+//         }
+//     }
+// }
 
 // Noteworthy type
-.n-container {
-
-    h2 {
-        font-size: emCalc(13);
-        font-weight: 500;
-    }
-
-    h3 {
-        font-size: emCalc(19);
-        font-weight: 500;
-        line-height: 1.2;
-    }
-
-    p, h3 {
-        color: white;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        @include rotate(0);
-    }
-
-    p { 
-        font-size: emCalc(13);
-        line-height: 1.2;
-    }
-
-    .brick:hover {
-        p,h3 {
-            color: black;
-        }
-    }
-}
+// .n-container {
+// 
+//     h2 {
+//         font-size: emCalc(13);
+//         font-weight: 500;
+//     }
+// 
+//     h3 {
+//         font-size: emCalc(19);
+//         font-weight: 500;
+//         line-height: 1.2;
+//     }
+// 
+//     p, h3 {
+//         color: white;
+//         -webkit-font-smoothing: antialiased;
+//         -moz-osx-font-smoothing: grayscale;
+//         @include rotate(0);
+//     }
+// 
+//     p { 
+//         font-size: emCalc(13);
+//         line-height: 1.2;
+//     }
+// 
+//     .brick:hover {
+//         p,h3 {
+//             color: black;
+//         }
+//     }
+// }
 
 //
 // FILTERS
@@ -373,7 +368,7 @@ iframe {
         overflow: hidden;
         margin: 0.3rem 0.75rem;
     }
-    
+
     .close { float: right; }
 
     .wrapper {
@@ -397,7 +392,7 @@ iframe {
     }
 
     &.open {
-        h3 { 
+        h3 {
             background: white;
             @include box-shadow(0 3px 10px rgba(0,0,0,0.25));
         }
@@ -414,7 +409,7 @@ iframe {
     .name { opacity: 0; }
     .icon { 
         opacity: 0;
-        
+
         a {
             display: block; 
             text-align: center; 
@@ -438,11 +433,9 @@ iframe {
         h4 { display: none; }
 
         width: 508px;
-        //width: 100%;
         li {
             width: 80px;
             height: 45px;
-            //width: 16.66667%;
             float: left;
             margin-bottom: 5px;
             padding: 0 5px;
@@ -457,7 +450,7 @@ iframe {
 .view-all {
     @extend .filter;
     h3 { padding: 0; }
-    a { 
+    a {
         display: block;
         padding: 0.75em;
     }
@@ -478,8 +471,6 @@ iframe {
         line-height: inherit;
         width: 100%;
     }
-
-    //ul { overflow: hidden; }
 }
 
 .jumps {
@@ -489,9 +480,9 @@ iframe {
         font-weight: 400;
     }
     .name,
-    .date { 
+    .date {
         display: none;
-        &.show { display: block; } 
+        &.show { display: block; }
     }
 
     .wrapper {
@@ -502,8 +493,6 @@ iframe {
     .touch .profile & {
         padding: 0.75em;
     }
-
-
 }
 
 
@@ -552,8 +541,8 @@ iframe {
     }
 }
 
-.controls { 
-    
+.controls {
+
     .views {
         float: left;
         margin: 0;
@@ -581,10 +570,6 @@ iframe {
         margin-top: 0;
         margin-left: 0;
         position: relative;
-    }
-
-    .title-view:before {
-        //margin-bottom: 1px;
     }
 }
 
@@ -666,6 +651,12 @@ iframe {
     margin: 0 auto;
 }
 
+.project.viewer {
+    @include flexbox;
+    @include flex-flow(column nowrap);
+    height: 100%;
+}
+
 .details {
     @include grid-column(3);
     position: fixed;
@@ -683,10 +674,14 @@ iframe {
     // .type and .links are nested in .row defined in the markup
     .tags > li { line-height: 1.2; }
     .type {
-        @include grid-column(4.5, $collapse: true);
+        float: left;
+        width: 90px;
+        //@include grid-column(6, $collapse: true);
     }
-    .links { 
-        @include grid-column(7.5, $collapse: true);
+    .links {
+        float: left;
+        //@include grid-column(6, $collapse: true);
+        width: 250px;
     }
 
     .touch & {
@@ -694,16 +689,42 @@ iframe {
     }
 }
 
-.container {
-    //@include grid-row(collapse);
-    //max-width: 1190px;
-    //margin: 0 auto;
+.details--project {
+    padding: 0;
+    width: auto;
+    float: none;
+    position: relative;
+    max-width: none;
+    min-width: 0px;
+    height: auto;
+    overflow: auto;
 
-    //.viewer & {
-        @include grid-column(8.7, $float: right, $collapse: true);
-        max-width: 854px;
-    //}
+    .tags {
+        margin: 0;
+        float: left;
+    }
+
+    header {
+        margin-bottom: 0;
+        margin-right: 1.5rem;
+        float: left;
+    }
 }
+
+.container {
+    @include grid-column(8.7, $float: right, $collapse: true);
+    max-width: 854px;
+}
+
+.container.container--project {
+    width: auto;
+    float: none;
+    max-width: none;
+    margin-bottom: 30px;
+    z-index: 1;
+    @include flex(1);
+}
+
 
 .viewer,
 .container {

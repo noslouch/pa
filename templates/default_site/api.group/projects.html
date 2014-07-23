@@ -1,4 +1,4 @@
-<?php header('Content-type: application/json'); ?>
+<?php header('Content-Type: application/json'); ?>
 {exp:ce_cache:stat:ic seconds="86400"}
 {if segment_3 == ''}
 [
@@ -63,13 +63,10 @@
             },
             {/categories}
         ],
-        "showcases": 
-        [ 
+        "media": 
+        { 
             {if gallery_projects}
-            {
-                "title" : "Gallery",
-                "url_title" : "gallery",
-                "type" : "gallery",
+            "gallery" : {
                 "images": [
                 {gallery_projects backspace="18" skip_cover="yes"}
                     { 
@@ -83,10 +80,7 @@
             }
             {/if}
             {if video_id_projects OR video_src_projects}
-            ,{ 
-                "title" : "Video",
-                "url_title" : "video",
-                "type" : "video",
+            , "video" : { 
                 {if video_id_projects}
                 "video_id": "{video_id_projects}",
                 "youtube" : "{youtube}",
@@ -96,13 +90,17 @@
                 "caption" : "{video_caption_projects}"
             }
             {/if}
-        ],
-        "info" : {exp:json_encode}{info_projects}{/exp:json_encode},
-        "relatedLinks" : [
-            {related_links backspace="8"}
-                "{item}",
-            {/related_links}
-        ]
+            {if info_projects}
+            , "info" : {exp:json_encode}{info_projects}{/exp:json_encode}
+            {/if}
+            {if related_links}
+            , "relatedLinks" : [
+                {related_links backspace="12"}
+                    "{item}",
+                {/related_links}
+            ]
+            {/if}
+        }
     },
     {/exp:channel:entries}
 {if segment_3 == ''}

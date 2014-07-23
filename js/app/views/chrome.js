@@ -106,7 +106,6 @@ define([
 
                 $('.page')
                     .html( view.render( urlTitle, hidden, previous ) )
-                    .removeClass('projects')
             })
         },
 

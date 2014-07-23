@@ -32,92 +32,92 @@ button {
     background: $light-gray;
 }
 
-.quotes {
-    height: 100%;
-    position: relative;
-    z-index: 0;
-    @include transition(height 150ms ease);
-
-    &.short { height: 66%; }
-    &.small h3 { font-size: emCalc(10); }
-
-    .container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-    }
-
-    .container .back {
-        //position: absolute;
-        //bottom: 0;
-        //left: 0;
-        line-height: 1;
-        margin: 0;
-        margin-top: 2rem;
-        @include transition(opacity 2000ms ease-out);
-
-        &:before { content: ">"; vertical-align: text-top; }
-        &.closed { opacity: 0; }
-        &.opened { opacity: 1; }
-    }
-
-    .slide {
-        display: table;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        z-index: 1;
-
-        img { 
-            margin: auto;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            min-width: 0;
-            max-height: 100%;
-        }
-    }
-
-    h3 {
-        display: table-cell;
-        vertical-align: middle;
-        font-size: emCalc(10);
-        @include transition(font-size 150ms ease);
-
-        &.image {
-            display: block;
-            // position: relative;
-            overflow: hidden;
-            height: 100%;
-            margin: 0;
-            padding-bottom: 15px;
-            z-index: 0;
-        }
-    }
-
-    .indicators {
-        z-index: 1; 
-        opacity: 0;
-        @include transition( opacity 300ms ease-in );
-    }
-
-    .indicators ul { overflow: auto; }
-
-    .image .back {
-        position: absolute;
-        bottom: 13px;
-        left: 100px;
-        right: 100px;
-        text-align: center;
-        margin: 0;
-        z-index: 1;
-    }
-
-}
+// .quotes {
+//     height: 100%;
+//     position: relative;
+//     z-index: 0;
+//     @include transition(height 150ms ease);
+// 
+//     &.short { height: 66%; }
+//     &.small h3 { font-size: emCalc(10); }
+// 
+//     .container {
+//         position: relative;
+//         width: 100%;
+//         height: 100%;
+//         max-width: 100%;
+//     }
+// 
+//     .container .back {
+//         //position: absolute;
+//         //bottom: 0;
+//         //left: 0;
+//         line-height: 1;
+//         margin: 0;
+//         margin-top: 2rem;
+//         @include transition(opacity 2000ms ease-out);
+// 
+//         &:before { content: ">"; vertical-align: text-top; }
+//         &.closed { opacity: 0; }
+//         &.opened { opacity: 1; }
+//     }
+// 
+//     .slide {
+//         display: table;
+//         width: 100%;
+//         height: 100%;
+//         position: absolute;
+//         top: 0;
+//         z-index: 1;
+// 
+//         img { 
+//             margin: auto;
+//             position: absolute;
+//             top: 0;
+//             left: 0;
+//             bottom: 0;
+//             right: 0;
+//             min-width: 0;
+//             max-height: 100%;
+//         }
+//     }
+// 
+//     h3 {
+//         display: table-cell;
+//         vertical-align: middle;
+//         font-size: emCalc(10);
+//         @include transition(font-size 150ms ease);
+// 
+//         &.image {
+//             display: block;
+//             // position: relative;
+//             overflow: hidden;
+//             height: 100%;
+//             margin: 0;
+//             padding-bottom: 15px;
+//             z-index: 0;
+//         }
+//     }
+// 
+//     .indicators {
+//         z-index: 1; 
+//         opacity: 0;
+//         @include transition( opacity 300ms ease-in );
+//     }
+// 
+//     .indicators ul { overflow: auto; }
+// 
+//     .image .back {
+//         position: absolute;
+//         bottom: 13px;
+//         left: 100px;
+//         right: 100px;
+//         text-align: center;
+//         margin: 0;
+//         z-index: 1;
+//     }
+// 
+// }
 
 
 
@@ -694,3 +694,103 @@ a.fancybox-prev {
     }
 }
 
+// SLICK SLIDER
+.project-gallery.slick-slider {
+    margin-bottom: 0;
+
+    .slick-track {
+        height: 100%;
+    }
+
+    .slick-slide {
+        background-color: white;
+    }
+}
+
+.project-controls {
+    position: absolute;
+    bottom: 3px;
+    right: 0;
+    overflow: auto;
+
+    .slick-next,
+    .slick-prev {
+        position: static;
+        float: left;
+        margin: 0;
+        height: 100%;
+
+        &:before {
+            content: '';
+            width: 9px;
+            height: 16px;
+            display: block;
+        }
+
+        &:focus {
+            background-color: transparent;
+        }
+    }
+
+    .slick-next:before {
+        @include icons-sprite(next);
+    }
+
+    .slick-next:hover{
+        background-color: transparent;
+
+        &:before {
+            @include icons-sprite(next-hover);
+        }
+    }
+
+    .slick-prev:before {
+        @include icons-sprite(prev);
+    }
+
+    .slick-prev:hover {
+        background-color: transparent;
+
+         &:before {
+            @include icons-sprite(prev-hover);
+        }
+    }
+}
+
+.project-dots.slick-dots {
+    float: left;
+    position: relative;
+    bottom: 0;
+    width: auto;
+    margin: -1px;
+    padding: 0;
+    background: black;
+    z-index: 0;
+    border-top: 3px solid white;
+
+    > li {
+        background: image-url('small-mask.png');
+        float: left;
+        width: 17px;
+        height: 12px;
+        margin: 0;
+    }
+
+    button {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+
+        &:before {
+            content: none;
+        }
+    }
+}
+
+
+.project-image {
+    margin: 0 auto;
+    height: auto;
+    max-height: 100%;
+}

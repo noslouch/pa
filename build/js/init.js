@@ -6,6 +6,7 @@ require.config({
     baseUrl : '/bower_components/',
     paths : {
         jquery                          : '/js/lib/jquery/jquery',
+        slick                           : 'slick-carousel/slick/slick.min',
         underscore                      : '/js/lib/underscore/underscore-amd.min',
         // using ext                    end/js/ backbone
         backbone                        : '/js/utils/backbone.@@hash',
@@ -100,6 +101,9 @@ require.config({
             deps : ['jquery']
         },
         'json' : {
+            deps : ['jquery']
+        },
+        'slick' : {
             deps : ['jquery']
         }
     },
