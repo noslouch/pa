@@ -714,7 +714,7 @@ a.fancybox-prev {
     position: absolute;
     bottom: 3px;
     right: 0;
-    overflow: auto;
+    overflow: hidden;
 
     .slick-next,
     .slick-prev {
@@ -791,6 +791,19 @@ a.fancybox-prev {
     }
 }
 
+.project-summary {
+    background: white;
+    max-width: 50%;
+    margin: 0 auto;
+    height: 100%;
+    display: table;
+
+    p {
+        display: table-cell;
+        vertical-align: middle;
+        font-weight: 100;
+    }
+}
 
 .project-image {
     height: auto;

@@ -5030,7 +5030,7 @@ a.fancybox-prev:hover span {
   position: absolute;
   bottom: 3px;
   right: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 /* line 720, sass/_modules.scss */
 .project-controls .slick-next,
@@ -5110,7 +5110,22 @@ a.fancybox-prev:hover span {
   content: none;
 }
 
-/* line 795, sass/_modules.scss */
+/* line 794, sass/_modules.scss */
+.project-summary {
+  background: white;
+  max-width: 50%;
+  margin: 0 auto;
+  height: 100%;
+  display: table;
+}
+/* line 801, sass/_modules.scss */
+.project-summary p {
+  display: table-cell;
+  vertical-align: middle;
+  font-weight: 100;
+}
+
+/* line 808, sass/_modules.scss */
 .project-image {
   height: auto;
   max-height: 100%;
@@ -5561,21 +5576,37 @@ a.fancybox-prev:hover span {
 
 /* line 7, sass/_video-showcase.scss */
 .video.showcase {
-  min-width: 616px;
+  margin: 0 auto;
+}
+/* line 10, sass/_video-showcase.scss */
+.video.showcase > div {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+}
+/* line 17, sass/_video-showcase.scss */
+.video.showcase iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-/* line 13, sass/_video-showcase.scss */
+/* line 28, sass/_video-showcase.scss */
 .video-caption {
   width: 60%;
 }
-/* line 16, sass/_video-showcase.scss */
+/* line 31, sass/_video-showcase.scss */
 .video-caption h3 {
   font-size: 1rem;
   font-weight: 500;
   margin-top: 1em;
   margin-bottom: 0;
 }
-/* line 22, sass/_video-showcase.scss */
+/* line 37, sass/_video-showcase.scss */
 .video-caption p {
   font-size: 0.68421rem;
   font-weight: 300;
@@ -5843,38 +5874,32 @@ html body {
   opacity: 1 !important;
 }
 
-/* line 70, sass/_general.scss */
-iframe {
-  width: 100%;
-  height: 490px;
-}
-
-/* line 79, sass/_general.scss */
+/* line 74, sass/_general.scss */
 .header-wrapper {
   position: fixed;
   width: 100%;
   background: white;
   z-index: 4;
 }
-/* line 85, sass/_general.scss */
+/* line 80, sass/_general.scss */
 .header-wrapper.shadow {
   -webkit-box-shadow: 0 2px 30px -10px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 2px 30px -10px rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 30px -10px rgba(0, 0, 0, 0.1);
 }
 
-/* line 88, sass/_general.scss */
+/* line 83, sass/_general.scss */
 .inner-header {
   max-width: 1280px;
   margin: 0 auto;
   padding: 1.94737rem;
 }
-/* line 93, sass/_general.scss */
+/* line 88, sass/_general.scss */
 .inner-header.profile {
   padding-bottom: 0;
 }
 
-/* line 96, sass/_general.scss */
+/* line 91, sass/_general.scss */
 .site-header {
   width: 100%;
   max-width: 1190px;
@@ -5887,26 +5912,26 @@ iframe {
   -o-transition: opacity 300ms ease-in;
   transition: opacity 300ms ease-in;
 }
-/* line 105, sass/_general.scss */
+/* line 100, sass/_general.scss */
 .site-header.home {
   opacity: 0;
 }
-/* line 107, sass/_general.scss */
+/* line 102, sass/_general.scss */
 .site-header .logo {
   float: left;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1;
 }
-/* line 112, sass/_general.scss */
+/* line 107, sass/_general.scss */
 .site-header .logo a {
   color: red;
 }
-/* line 113, sass/_general.scss */
+/* line 108, sass/_general.scss */
 .site-header .logo a:hover {
   color: #999999;
 }
-/* line 116, sass/_general.scss */
+/* line 111, sass/_general.scss */
 .site-header nav {
   float: right;
   font-weight: 500;
@@ -5917,11 +5942,11 @@ iframe {
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
 }
-/* line 123, sass/_general.scss */
+/* line 118, sass/_general.scss */
 .site-header nav a:hover {
   color: red;
 }
-/* line 125, sass/_general.scss */
+/* line 120, sass/_general.scss */
 .site-header nav ul {
   margin: 0 auto 0.89474rem auto;
   margin-left: -1.15789rem;
@@ -5943,26 +5968,26 @@ iframe {
 .site-header nav ul > li > * {
   display: block;
 }
-/* line 129, sass/_general.scss */
+/* line 124, sass/_general.scss */
 .site-header nav ul > li {
   line-height: 1.5;
   margin-left: 15px;
 }
-/* line 132, sass/_general.scss */
+/* line 127, sass/_general.scss */
 .site-header nav ul li:first-child {
   margin-left: 0;
 }
-/* line 137, sass/_general.scss */
+/* line 132, sass/_general.scss */
 .site-header .search-icon {
   margin-top: 7px;
 }
 
-/* line 142, sass/_general.scss */
+/* line 137, sass/_general.scss */
 nav.is-notvisible {
   opacity: 0;
 }
 
-/* line 146, sass/_general.scss */
+/* line 141, sass/_general.scss */
 .outer-wrapper {
   max-width: 1280px;
   margin: 0 auto;
@@ -5977,20 +6002,20 @@ nav.is-notvisible {
   transition: opacity 150ms ease;
 }
 
-/* line 158, sass/_general.scss */
+/* line 153, sass/_general.scss */
 .page {
   padding: 5.78947rem 1.94737rem 1.84211rem;
   position: relative;
   overflow: visible;
 }
-/* line 174, sass/_general.scss */
+/* line 169, sass/_general.scss */
 .page.photography, .page.books, .page.film, .page.projects {
   padding-top: 10.10526rem;
   padding-bottom: 5.52632rem;
   height: 100%;
 }
 
-/* line 181, sass/_general.scss */
+/* line 176, sass/_general.scss */
 .page.project-single {
   padding-top: 10.10526rem;
   height: 100%;
@@ -6001,7 +6026,7 @@ nav.is-notvisible {
   left: 0;
 }
 
-/* line 191, sass/_general.scss */
+/* line 186, sass/_general.scss */
 .project-back {
   position: absolute;
   right: 0;
@@ -6013,17 +6038,17 @@ nav.is-notvisible {
   margin: 0;
   padding: 0.5rem;
 }
-/* line 203, sass/_general.scss */
+/* line 198, sass/_general.scss */
 .project-back:focus, .project-back:active {
   background-color: transparent;
 }
-/* line 207, sass/_general.scss */
+/* line 202, sass/_general.scss */
 .project-back:hover {
   background-color: transparent;
   color: black;
 }
 
-/* line 359, sass/_general.scss */
+/* line 354, sass/_general.scss */
 .filter-bar {
   width: 100%;
   margin: 0;
@@ -6043,23 +6068,23 @@ nav.is-notvisible {
 .filter-bar:after {
   clear: both;
 }
-/* line 366, sass/_general.scss */
+/* line 361, sass/_general.scss */
 .filter-bar button {
   padding: 0;
   margin: 0;
 }
-/* line 371, sass/_general.scss */
+/* line 366, sass/_general.scss */
 .filter-bar .wrapper {
   text-align: left;
   margin-bottom: 0.75em;
 }
 
-/* line 377, sass/_general.scss */
+/* line 372, sass/_general.scss */
 .profile.filter-bar {
   padding: 0;
 }
 
-/* line 381, sass/_general.scss */
+/* line 376, sass/_general.scss */
 .filter, .view-all, .views,
 .jumps,
 .sorts {
@@ -6072,7 +6097,7 @@ nav.is-notvisible {
   margin-right: 20px;
   position: relative;
 }
-/* line 388, sass/_general.scss */
+/* line 383, sass/_general.scss */
 .filter h3, .view-all h3, .views h3,
 .jumps h3,
 .sorts h3 {
@@ -6081,20 +6106,20 @@ nav.is-notvisible {
   padding: 0.75em;
   cursor: pointer;
 }
-/* line 395, sass/_general.scss */
+/* line 390, sass/_general.scss */
 .filter .controls, .view-all .controls, .views .controls,
 .jumps .controls,
 .sorts .controls {
   overflow: hidden;
   margin: 0.3rem 0.75rem;
 }
-/* line 400, sass/_general.scss */
+/* line 395, sass/_general.scss */
 .filter .close, .view-all .close, .views .close,
 .jumps .close,
 .sorts .close {
   float: right;
 }
-/* line 402, sass/_general.scss */
+/* line 397, sass/_general.scss */
 .filter .wrapper, .view-all .wrapper, .views .wrapper,
 .jumps .wrapper,
 .sorts .wrapper {
@@ -6113,7 +6138,7 @@ nav.is-notvisible {
   -moz-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
 }
-/* line 414, sass/_general.scss */
+/* line 409, sass/_general.scss */
 .filter ul, .view-all ul, .views ul,
 .jumps ul,
 .sorts ul {
@@ -6123,7 +6148,7 @@ nav.is-notvisible {
   margin: 0;
   padding: 0 16px 0 12px;
 }
-/* line 423, sass/_general.scss */
+/* line 418, sass/_general.scss */
 .filter.open h3, .open.view-all h3, .open.views h3,
 .open.jumps h3,
 .open.sorts h3 {
@@ -6132,7 +6157,7 @@ nav.is-notvisible {
   -moz-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
-/* line 427, sass/_general.scss */
+/* line 422, sass/_general.scss */
 .filter.open .wrapper, .open.view-all .wrapper, .open.views .wrapper,
 .open.jumps .wrapper,
 .open.sorts .wrapper {
@@ -6141,20 +6166,20 @@ nav.is-notvisible {
   pointer-events: auto;
 }
 
-/* line 437, sass/_general.scss */
+/* line 432, sass/_general.scss */
 .brand .name {
   opacity: 0;
 }
-/* line 438, sass/_general.scss */
+/* line 433, sass/_general.scss */
 .brand .icon {
   opacity: 0;
 }
-/* line 441, sass/_general.scss */
+/* line 436, sass/_general.scss */
 .brand .icon a {
   display: block;
   text-align: center;
 }
-/* line 448, sass/_general.scss */
+/* line 443, sass/_general.scss */
 .brand .name,
 .brand .icon {
   -webkit-transition: opacity 150ms ease;
@@ -6163,23 +6188,23 @@ nav.is-notvisible {
   transition: opacity 150ms ease;
   text-align: left;
 }
-/* line 453, sass/_general.scss */
+/* line 448, sass/_general.scss */
 .brand .names img {
   display: none;
 }
-/* line 455, sass/_general.scss */
+/* line 450, sass/_general.scss */
 .brand .names .name {
   opacity: 1;
 }
-/* line 460, sass/_general.scss */
+/* line 455, sass/_general.scss */
 .brand .icons {
   width: 508px;
 }
-/* line 461, sass/_general.scss */
+/* line 456, sass/_general.scss */
 .brand .icons h4 {
   display: none;
 }
-/* line 464, sass/_general.scss */
+/* line 459, sass/_general.scss */
 .brand .icons li {
   width: 80px;
   height: 45px;
@@ -6187,29 +6212,29 @@ nav.is-notvisible {
   margin-bottom: 5px;
   padding: 0 5px;
 }
-/* line 471, sass/_general.scss */
+/* line 466, sass/_general.scss */
 .brand .icons .icon {
   opacity: 1;
 }
 
-/* line 480, sass/_general.scss */
+/* line 475, sass/_general.scss */
 .view-all h3 {
   padding: 0;
 }
-/* line 481, sass/_general.scss */
+/* line 476, sass/_general.scss */
 .view-all a {
   display: block;
   padding: 0.75em;
 }
 
-/* line 489, sass/_general.scss */
+/* line 484, sass/_general.scss */
 .views,
 .jumps,
 .sorts {
   float: right;
 }
 
-/* line 496, sass/_general.scss */
+/* line 491, sass/_general.scss */
 .sorts button,
 .views button {
   display: block;
@@ -6218,115 +6243,115 @@ nav.is-notvisible {
   width: 100%;
 }
 
-/* line 506, sass/_general.scss */
+/* line 501, sass/_general.scss */
 .jumps select.date,
 .jumps select.name {
   font-size: 0.63158rem;
   font-weight: 400;
 }
-/* line 511, sass/_general.scss */
+/* line 506, sass/_general.scss */
 .jumps .name,
 .jumps .date {
   display: none;
 }
-/* line 513, sass/_general.scss */
+/* line 508, sass/_general.scss */
 .jumps .name.show,
 .jumps .date.show {
   display: block;
 }
-/* line 516, sass/_general.scss */
+/* line 511, sass/_general.scss */
 .jumps .wrapper {
   min-width: 0;
   width: 100%;
 }
-/* line 521, sass/_general.scss */
+/* line 516, sass/_general.scss */
 .touch .profile .jumps {
   padding: 0.75em;
 }
 
-/* line 527, sass/_general.scss */
+/* line 522, sass/_general.scss */
 .sorts {
   margin-right: -0.8em;
   margin-left: 0.5em;
 }
-/* line 531, sass/_general.scss */
+/* line 526, sass/_general.scss */
 .sorts h3 {
   padding: 0.75em 1em;
 }
-/* line 532, sass/_general.scss */
+/* line 527, sass/_general.scss */
 .sorts h4 {
   color: gray;
   font-size: 0.68421rem;
   padding: 0 1em;
 }
-/* line 538, sass/_general.scss */
+/* line 533, sass/_general.scss */
 .sorts .wrapper {
   right: 0;
   min-width: 80px;
   width: 100%;
 }
-/* line 544, sass/_general.scss */
+/* line 539, sass/_general.scss */
 .projects .sorts .wrapper ul:first-child {
   margin-bottom: 1em;
 }
-/* line 549, sass/_general.scss */
+/* line 544, sass/_general.scss */
 .sorts .name,
 .sorts .date {
   display: none;
 }
-/* line 551, sass/_general.scss */
+/* line 546, sass/_general.scss */
 .sorts .name.active,
 .sorts .date.active {
   display: block;
 }
-/* line 554, sass/_general.scss */
+/* line 549, sass/_general.scss */
 .sorts button {
   padding: 0;
 }
-/* line 555, sass/_general.scss */
+/* line 550, sass/_general.scss */
 .sorts li {
   line-height: 1.3;
 }
 
-/* line 558, sass/_general.scss */
+/* line 553, sass/_general.scss */
 .views {
   margin-right: 5px;
 }
-/* line 561, sass/_general.scss */
+/* line 556, sass/_general.scss */
 .views button {
   padding-left: 1.5em;
   line-height: 1.5;
 }
-/* line 566, sass/_general.scss */
+/* line 561, sass/_general.scss */
 .views .wrapper {
   left: 0;
   min-width: 150px;
 }
 
-/* line 574, sass/_general.scss */
+/* line 569, sass/_general.scss */
 .controls .views {
   float: left;
   margin: 0;
 }
-/* line 578, sass/_general.scss */
+/* line 573, sass/_general.scss */
 .controls .views button {
   display: inline-block;
   width: auto;
   padding-left: 0;
 }
-/* line 583, sass/_general.scss */
+/* line 578, sass/_general.scss */
 .controls .views button:focus, .controls .views button:active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
-/* line 590, sass/_general.scss */
+/* line 585, sass/_general.scss */
 .controls .views button.active:focus, .controls .views button.active:active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
-/* line 597, sass/_general.scss */
+/* line 592, sass/_general.scss */
 .controls .icon-view:before,
 .controls .title-view:before {
   margin-top: 0;
@@ -6334,7 +6359,7 @@ nav.is-notvisible {
   position: relative;
 }
 
-/* line 608, sass/_general.scss */
+/* line 603, sass/_general.scss */
 .filter h3, .view-all h3, .views h3,
 .jumps h3,
 .sorts h3 {
@@ -6346,19 +6371,19 @@ nav.is-notvisible {
   -o-transition: color 150ms ease;
   transition: color 150ms ease;
 }
-/* line 614, sass/_general.scss */
+/* line 609, sass/_general.scss */
 .filter h3:hover, .view-all h3:hover, .views h3:hover,
 .jumps h3:hover,
 .sorts h3:hover {
   color: red;
 }
-/* line 617, sass/_general.scss */
+/* line 612, sass/_general.scss */
 .filter.open h3, .open.view-all h3, .open.views h3,
 .open.jumps h3,
 .open.sorts h3 {
   color: red;
 }
-/* line 620, sass/_general.scss */
+/* line 615, sass/_general.scss */
 .filter ul .icon, .view-all ul .icon, .views ul .icon,
 .jumps ul .icon,
 .sorts ul .icon,
@@ -6371,13 +6396,13 @@ nav.is-notvisible {
   font-weight: 500;
   margin: 0;
 }
-/* line 626, sass/_general.scss */
+/* line 621, sass/_general.scss */
 .filter button:focus, .view-all button:focus, .views button:focus,
 .jumps button:focus,
 .sorts button:focus {
   outline: none;
 }
-/* line 629, sass/_general.scss */
+/* line 624, sass/_general.scss */
 .filter button.active:focus, .view-all button.active:focus, .views button.active:focus,
 .jumps button.active:focus,
 .sorts button.active:focus {
@@ -6387,7 +6412,7 @@ nav.is-notvisible {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2) inset;
 }
 
-/* line 636, sass/_general.scss */
+/* line 631, sass/_general.scss */
 .jumps a,
 .sorts a {
   font-size: 1rem;
@@ -6395,37 +6420,37 @@ nav.is-notvisible {
   margin: 0;
 }
 
-/* line 644, sass/_general.scss */
+/* line 639, sass/_general.scss */
 .views button,
 .sorts button {
   font-size: 1rem;
   background: none;
 }
-/* line 647, sass/_general.scss */
+/* line 642, sass/_general.scss */
 .views button:hover,
 .sorts button:hover {
   color: red;
 }
 
-/* line 655, sass/_general.scss */
+/* line 650, sass/_general.scss */
 .contact {
   display: table;
   height: 100%;
   width: 100%;
 }
-/* line 660, sass/_general.scss */
+/* line 655, sass/_general.scss */
 .contact .wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-/* line 665, sass/_general.scss */
+/* line 660, sass/_general.scss */
 .contact h3 {
   margin: 0px;
   line-height: 1;
   font-size: 2.63158rem;
 }
 
-/* line 676, sass/_general.scss */
+/* line 671, sass/_general.scss */
 .viewer {
   width: 100%;
   margin: 0;
@@ -6444,7 +6469,7 @@ nav.is-notvisible {
   clear: both;
 }
 
-/* line 682, sass/_general.scss */
+/* line 677, sass/_general.scss */
 .project.viewer {
   height: 100%;
   max-width: none;
@@ -6459,7 +6484,7 @@ nav.is-notvisible {
   flex-flow: column nowrap;
 }
 
-/* line 689, sass/_general.scss */
+/* line 684, sass/_general.scss */
 .details {
   padding-left: 0.44737rem;
   padding-right: 0.44737rem;
@@ -6473,32 +6498,32 @@ nav.is-notvisible {
   overflow-y: auto;
   padding-bottom: 7em;
 }
-/* line 701, sass/_general.scss */
+/* line 696, sass/_general.scss */
 .details header,
 .details .summary,
 .details ul {
   margin-bottom: 1.5rem;
 }
-/* line 704, sass/_general.scss */
+/* line 699, sass/_general.scss */
 .details .tags > li {
   line-height: 1.2;
 }
-/* line 705, sass/_general.scss */
+/* line 700, sass/_general.scss */
 .details .type {
   float: left;
   width: 4.73684rem;
 }
-/* line 710, sass/_general.scss */
+/* line 705, sass/_general.scss */
 .details .links {
   float: left;
   width: 13.15789rem;
 }
-/* line 716, sass/_general.scss */
+/* line 711, sass/_general.scss */
 .touch .details {
   min-width: 0;
 }
 
-/* line 721, sass/_general.scss */
+/* line 716, sass/_general.scss */
 .details--project {
   height: auto;
   width: 100%;
@@ -6510,19 +6535,19 @@ nav.is-notvisible {
   position: relative;
   overflow: auto;
 }
-/* line 732, sass/_general.scss */
+/* line 727, sass/_general.scss */
 .details--project .tags {
   margin: 0;
   float: left;
 }
-/* line 737, sass/_general.scss */
+/* line 732, sass/_general.scss */
 .details--project header {
   margin-bottom: 0;
   margin-right: 1.5rem;
   float: left;
 }
 
-/* line 744, sass/_general.scss */
+/* line 739, sass/_general.scss */
 .container {
   padding-left: 0;
   padding-right: 0;
@@ -6531,7 +6556,7 @@ nav.is-notvisible {
   max-width: 854px;
 }
 
-/* line 749, sass/_general.scss */
+/* line 744, sass/_general.scss */
 .container.container--project {
   width: auto;
   float: none;
@@ -6546,7 +6571,7 @@ nav.is-notvisible {
   flex: 1;
 }
 
-/* line 761, sass/_general.scss */
+/* line 756, sass/_general.scss */
 .viewer .back,
 .container .back {
   display: block;
@@ -6554,7 +6579,7 @@ nav.is-notvisible {
   font-weight: 300;
   margin-bottom: 1em;
 }
-/* line 767, sass/_general.scss */
+/* line 762, sass/_general.scss */
 .viewer .back:before,
 .container .back:before {
   content: "<";
@@ -6563,35 +6588,35 @@ nav.is-notvisible {
   vertical-align: text-top;
   margin-right: 0.5em;
 }
-/* line 775, sass/_general.scss */
+/* line 770, sass/_general.scss */
 .viewer .back:hover,
 .container .back:hover {
   color: red;
 }
 
-/* line 785, sass/_general.scss */
+/* line 780, sass/_general.scss */
 .details h3, .details time {
   font-size: 1rem;
 }
-/* line 786, sass/_general.scss */
+/* line 781, sass/_general.scss */
 .details h3 {
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
 }
-/* line 792, sass/_general.scss */
+/* line 787, sass/_general.scss */
 .details time {
   display: block;
   font-weight: 300;
 }
-/* line 797, sass/_general.scss */
+/* line 792, sass/_general.scss */
 .details p {
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.4;
 }
 
-/* line 805, sass/_general.scss */
+/* line 800, sass/_general.scss */
 .showcase-links,
 .profile-links {
   font-size: 1rem;
@@ -6599,43 +6624,43 @@ nav.is-notvisible {
   line-height: 1.2;
 }
 
-/* line 811, sass/_general.scss */
+/* line 806, sass/_general.scss */
 .tags {
   font-size: 0.68421rem;
 }
 
-/* line 815, sass/_general.scss */
+/* line 810, sass/_general.scss */
 .type {
   font-weight: 300;
 }
 
-/* line 819, sass/_general.scss */
+/* line 814, sass/_general.scss */
 .links {
   font-weight: 500;
 }
 
-/* line 824, sass/_general.scss */
+/* line 819, sass/_general.scss */
 .profile .details {
   -webkit-transform: translateZ(0);
 }
-/* line 826, sass/_general.scss */
+/* line 821, sass/_general.scss */
 .profile .details li {
   line-height: 1.3;
 }
 
 @media (max-width: 1024px) {
-  /* line 831, sass/_general.scss */
+  /* line 826, sass/_general.scss */
   .header-wrapper {
     position: relative;
     padding-bottom: 2px;
   }
 
-  /* line 837, sass/_general.scss */
+  /* line 832, sass/_general.scss */
   .inner-header {
     margin-bottom: -3px;
   }
 
-  /* line 844, sass/_general.scss */
+  /* line 839, sass/_general.scss */
   .views,
   .jumps,
   .sorts {

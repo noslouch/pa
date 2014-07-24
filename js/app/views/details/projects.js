@@ -58,7 +58,7 @@ define([
             // initialize custom version of slick slider with this.model.get('media')
             var media = o.project.get('media')
 
-            if (media.gallery) {
+            if ( media.gallery ) {
                 _.each(media.gallery.images, function(image, i) {
                     var d = document.createElement('div'),
                         img = new Image()
@@ -67,6 +67,24 @@ define([
                     d.appendChild(img)
                     this.$el.append(d)
                 }, this)
+            }
+
+            if ( media.video ) {
+                var d = document.createElement('div')
+                d.appendChild( new V({
+                    model : new Backbone.Model(media.video)
+                }).render() )
+                this.$el.append(d)
+            }
+
+            if ( media.summary ) {
+                var d = document.createElement('div'),
+                    summary = document.createElement('div')
+
+                summary.innerHTML = media.summary
+                summary.className = 'project-summary'
+                d.appendChild(summary)
+                this.$el.append(d)
             }
 
             this.$el.slick({
@@ -88,8 +106,12 @@ define([
         },
 
         resizeHandler : function() {
-            var targetHeight = $('#showcaseContainer').height()
-            $('.slick-list').height(targetHeight)
+            var targetHeight = $('#showcaseContainer').height(),
+                $slickTarget = $('.slick-list')
+
+            $slickTarget.height(targetHeight)
+            $slickTarget.find('iframe').height(targetHeight)
+            $slickTarget.find('.video').width(targetHeight / 0.5625)
         },
 
         keyHandler : function(e) {

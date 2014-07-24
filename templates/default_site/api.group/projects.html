@@ -91,8 +91,8 @@
                 "caption" : "{video_caption_projects}"
             }
             {/if}
-            {if info_projects}
-            , "info" : {exp:json_encode}{info_projects}{/exp:json_encode}
+            {if summary_projects}
+            , "summary" : {exp:json_encode}{summary_projects}{/exp:json_encode}
             {/if}
             {if related_links}
             , "relatedLinks" : [
