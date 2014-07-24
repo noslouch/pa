@@ -224,14 +224,19 @@ define([
         },
 
         render : function() {
-            var sorted
+            var sorted,
+                sortedKeys
             switch( this.className ) {
                 case 'date':
                     sorted = this.collection.groupBy(function(model) {
                         return model.get('date').year()
                     })
 
-                    _.each( sorted, function( model, date ) {
+                    sortedKeys = Object.keys(sorted).sort()
+
+                    _.each( sortedKeys, function( key ) {
+                        var model = sorted[key],
+                            date = key
                         if ( mobile ) {
                             var $op = $('<option/>').attr('value', date).html(date)
                             this.$el.append($op)
@@ -318,7 +323,8 @@ define([
             }
 
             this.$el.children().each(function(i, el) {
-                if ( groups.indexOf(el.innerText) === -1 ) {
+                var t = el.innerText ? el.innerText : el.textContent
+                if ( groups.indexOf(t) === -1 ) {
                     el.style.display = 'none'
                 } else {
                     el.style.display = ''
