@@ -715,6 +715,9 @@ a.fancybox-prev {
     bottom: 3px;
     right: 0;
     overflow: hidden;
+    opacity: 0;
+
+    @include transition(opacity 150ms ease);
 
     .slick-next,
     .slick-prev {
@@ -814,4 +817,6 @@ a.fancybox-prev {
     right: 0;
     bottom: 0;
     left: 0;
+    opacity: 0;
+    @include transition(opacity 150ms ease);
 }

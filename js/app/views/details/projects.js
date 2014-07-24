@@ -13,7 +13,8 @@ define([
     'app/collections/projects',
     'utils/spinner',
     'app/views/partials/filterviews',
-    'slick'
+    'slick',
+    'imagesLoaded'
 ], function( $, Backbone, _, TPL, V, ProjectModel, Projects, Spinner, FilterBar ) {
 
     var TagRow = Backbone.View.extend({
@@ -87,12 +88,19 @@ define([
                 this.$el.append(d)
             }
 
+            $('#showcaseContainer').imagesLoaded().progress(function(il, image) {
+                image.img.classList.add('loaded')
+            })
+
             this.$el.slick({
                 dots : true,
                 fade : true,
                 onInit : function() {
                     this.resizeHandler()
                     this.galleryControls()
+                    setTimeout( function() {
+                        $('.project-controls').addClass('loaded')
+                    }, 200 )
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
                     $(window).on('keyup', this.keyHandler.bind(this))
                 }.bind(this), // force bind b/c slick binds this to the slick object
