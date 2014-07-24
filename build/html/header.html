@@ -11,7 +11,7 @@
     
         <script src="{site_url}/js/lib/modernizr/custom.modernizr.js"></script>
 
-        {if segment_1 == 'projects'}
+        {if segment_1 == 'projects' || segment_1 == ''}
         {exp:ce_cache:it global="yes" id="projects_bootstrap"}
         <script>
             var PA = {};
