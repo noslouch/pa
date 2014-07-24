@@ -206,7 +206,7 @@ define([
             this.viewer = new ProjectGallery({
                 className : 'project-gallery'
             })
-            this.viewer.on('close', this.goBack)
+            this.viewer.on('close', this.goBack.bind(this))
 
             this.filterbar = new FilterBar({
                 el : '#filter-bar',
