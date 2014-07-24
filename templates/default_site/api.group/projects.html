@@ -1,9 +1,10 @@
-<?php header('Content-Type: application/json'); ?>
 {exp:ce_cache:stat:ic seconds="86400"}
 {if segment_3 == ''}
 [
 {/if}
 {exp:channel:entries
+    dynamic="off"
+    {sn_url_title}
     channel="projects"
     limit="500"
     backspace="6"

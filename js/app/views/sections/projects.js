@@ -1,3 +1,4 @@
+/*global PA*/
 /* app/views/sections/projects.js
  * projects landing page - shit is complex! */
 'use strict';
@@ -10,7 +11,6 @@ define([
     'app/views/partials/filterviews',
     'app/views/showcases/gallery',
     'app/views/showcases/list',
-    //'app/views/showcases/starfield',
     'app/collections/covergallery',
     'app/collections/projects',
     'utils/spinner',
@@ -25,38 +25,11 @@ define([
             _.bindAll( this, 'render', 'navigate', 'init' )
             var self = this
 
-            this.collection.fetch({
-                success : function(projects) {
+            if ( !Projects.length ) {
+                this.collection.add(PA.projects, { parse : true })
+            }
 
-                    self.model.cover = self.cover = new G({
-                        projects : true,
-                        //cover : true,
-                        collection : new CoverGallery( projects.pluck('coverImage') ),
-                        //path : 'projects',
-                        model : self.model
-                    })
-
-                    self.model.list = self.list = new l.List({
-                        collection : new CoverGallery( projects.pluck('coverImage') ),
-                        pageClass : 'projects',
-                        path : 'projects',
-                        section : 'Projects',
-                        model : self.model
-                    })
-
-                    // self.model.random = new Starfield({
-                    //     collection : self.model.cover.collection
-                    // })
-
-                    self.filterbar = new FilterBar({
-                        el : '#filter-bar',
-                        model : self.model,
-                        collection : projects
-                    })
-
-                    Backbone.dispatcher.trigger('projects:ready')
-                }
-            })
+            this.build()
         },
 
         events : {
@@ -68,8 +41,10 @@ define([
 
             this.spinner = spinner
             this.delegateEvents()
+
             this.filterbar.render()
             this.filterbar.$el.addClass('projects')
+
             this.$el.addClass('projects')
 
             if ( !this.collection.length ) {
@@ -96,10 +71,9 @@ define([
         },
 
         render : function() {
-            //var spinner = new Spinner()
-
             var currentView = this.model.get('view')
             this.$el.html( this[currentView].render({ gallery : false }) )
+
             this.filterbar.delegateEvents()
 
             this.spinner.detach()
@@ -147,25 +121,23 @@ define([
                 this.$el.html( this.cover.$el )
                 this.cover.isotope({ gallery: false })
             } else if ( view === 'list' ) {
-                this.$el.html( this.list.render() )
+                this.cover.isotope('destroy')
+                this.cover.$('.thumb').show()
 
-                this.cover.$el.find('.thumb').each(function(i, el) {
-                    el.style.display = ''
-                    $(el).find('img').removeClass('loaded')
-                })
+                this.$el.html( this.list.render() )
             }
         },
 
         navigate : function(e) {
             e.preventDefault()
             Backbone.dispatcher.trigger('navigate:detail', e, this)
-            //this.collection.get( e.currentTarget.id ).activate()
         },
 
         onClose : function() {
-            this.cover.$el.isotope('destroy')
-            this.cover.$('.thumb').show()
-            //this.model.unset('sort').unset('filter').unset('view')
+            if ( $.contains(this.cover.$el) ) {
+                this.cover.$el.isotope('destroy')
+            }
+            this.cover.$('.thumb').show().find('img').removeClass('loaded')
             this.$el.removeClass('projects')
             this.model.off('change')
             this.model.clear({silent: true})
@@ -173,7 +145,6 @@ define([
                 this.filterbar.close()
                 this.filterbar.$el.removeClass('projects')
             }
-            //$(window).off('hashchange')
         },
 
         jumpSet : function() {
@@ -194,6 +165,30 @@ define([
             window.projects = this.model.get('projects')
             window.chrome = this.model
         },
+
+        build : function(projects) {
+            this.model.cover = this.cover = new G({
+                projects : true,
+                collection : new CoverGallery( Projects.pluck('coverImage') ),
+                model : this.model
+            })
+
+            this.model.list = this.list = new l.List({
+                collection : new CoverGallery( Projects.pluck('coverImage') ),
+                pageClass : 'projects',
+                path : 'projects',
+                section : 'Projects',
+                model : this.model
+            })
+
+            this.filterbar = new FilterBar({
+                el : '#filter-bar',
+                model : this.model,
+                collection : Projects
+            })
+
+            Backbone.dispatcher.trigger('projects:ready')
+        }
     })
 
     return new ProjectLanding({

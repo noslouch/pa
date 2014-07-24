@@ -99,6 +99,7 @@ iframe {
     min-width: 850px;
     margin: 0 auto;
     background: white;
+    position: relative;
     @include transition( opacity 300ms ease-in );
 
     &.home { opacity: 0; }
@@ -117,6 +118,8 @@ iframe {
         font-weight: 500;
         font-size: emCalc(19);
         width: 512px;
+        @include transition(opacity 150ms ease);
+
         a:hover { color: $secondary-color; }
 
         ul {
@@ -136,6 +139,10 @@ iframe {
     }
 }
 
+nav.is-notvisible {
+    opacity: 0;
+}
+
 .outer-wrapper {
     max-width: 1280px;
     margin: 0 auto;
@@ -149,37 +156,58 @@ iframe {
 }
 
 .page {
-    padding: 110px emCalc(37) emCalc(35);
+    padding: rem-calc(110) rem-calc(37) rem-calc(35);
     position: relative;
     overflow: visible;
 
-    &.home {
-        padding-top: 70px;
-        padding-bottom: 55px;
-        height: 100%;
-        overflow: hidden;
-        @include transition(padding 150ms ease);
-    }
+    // &.home {
+    //     padding-top: 70px;
+    //     padding-bottom: 55px;
+    //     height: 100%;
+    //     overflow: hidden;
+    //     @include transition(padding 150ms ease);
+    // }
 
     &.photography,
     &.books,
     &.film,
     &.projects {
-        padding-top: 192px;
-        padding-bottom: 105px;
+        padding-top: rem-calc(192);
+        padding-bottom: rem-calc(105);
         height: 100%;
     }
 }
 
 .page.project-single {
+    padding-top: rem-calc(192);
     height: 100%;
-    position: absolute;
-    background: white;
-    z-index: 4;
+    position: fixed;
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
+    left: 0;
+}
+
+.project-back {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: 100 !important;
+    font-size: rem-calc(19);
+    color: red;
+    background-color: transparent;
+    margin: 0;
+    padding: 0.5rem;
+
+    &:focus,
+    &:active {
+        background-color: transparent;
+    }
+
+    &:hover {
+        background-color: transparent;
+        color: black;
+    }
 }
 
 //
@@ -652,9 +680,10 @@ iframe {
 }
 
 .project.viewer {
+    height: 100%;
+    max-width: none;
     @include flexbox;
     @include flex-flow(column nowrap);
-    height: 100%;
 }
 
 .details {
@@ -675,13 +704,13 @@ iframe {
     .tags > li { line-height: 1.2; }
     .type {
         float: left;
-        width: 90px;
+        width: rem-calc(90);
         //@include grid-column(6, $collapse: true);
     }
     .links {
         float: left;
         //@include grid-column(6, $collapse: true);
-        width: 250px;
+        width: rem-calc(250);
     }
 
     .touch & {
@@ -690,13 +719,14 @@ iframe {
 }
 
 .details--project {
+    height: auto;
+    width: 100%;
+    min-width: 0;
+    max-width: rem-calc(1190);
+    margin: 0 auto;
     padding: 0;
-    width: auto;
     float: none;
     position: relative;
-    max-width: none;
-    min-width: 0px;
-    height: auto;
     overflow: auto;
 
     .tags {

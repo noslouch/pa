@@ -1,3 +1,4 @@
+/*global PA*/
 /* app/views/details/project.js
  * detail view for projects */
 'use strict';
@@ -9,9 +10,11 @@ define([
     'tpl/jst',
     'app/views/showcases/video',
     'app/models/project',
+    'app/collections/projects',
     'utils/spinner',
+    'app/views/partials/filterviews',
     'slick'
-], function( $, Backbone, _, TPL, V, ProjectModel, Spinner ) {
+], function( $, Backbone, _, TPL, V, ProjectModel, Projects, Spinner, FilterBar ) {
 
     var TagRow = Backbone.View.extend({
         tagName : 'li',
@@ -46,10 +49,13 @@ define([
                 link.href = '/bower_components/slick-carousel/slick/slick.css'
                 document.getElementsByTagName("head")[0].appendChild(link);
             }
+            if ( !Projects.length ) {
+                Projects.add( PA.projects, { parse : true } )
+            }
         },
-        render : function() {
+        render : function(o) {
             // initialize custom version of slick slider with this.model.get('media')
-            var media = this.model.get('media')
+            var media = o.project.get('media')
 
             if (media.gallery) {
                 _.each(media.gallery.images, function(image, i) {
@@ -70,7 +76,7 @@ define([
                     this.galleryControls()
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
                     $(window).on('keyup', this.keyHandler.bind(this))
-                }.bind(this),
+                }.bind(this), // force bind b/c slick binds this to the slick object
                 onBeforeChange : function(s, i) {},
                 onAfterChange : function(s, i) {
                     $('#dot').animate({
@@ -206,26 +212,26 @@ define([
     var Details = Backbone.View.extend({
         events : {},
         template : TPL.projectDetails,
-        render : function(options) {
+        render : function(o) {
 
             this.$el.html( this.template({
-                htmlDate : this.model.get('htmlDate'),
-                date : this.model.get('date').year(),
-                title : this.model.get('title')
+                htmlDate    : o.project.get('htmlDate'),
+                date        : o.project.get('date').year(),
+                title       : o.project.get('title')
             }) )
 
             this.$('#tags')
                 .append( new TagRow({
                     type : 'Brand',
-                    tags : this.model.get('brand_tags')
+                    tags : o.project.get('brand_tags')
                 }).render() )
                 .append( new TagRow({
                     type : 'Industry',
-                    tags : this.model.get('industry_tags')
+                    tags : o.project.get('industry_tags')
                 }).render() )
                 .append( new TagRow({
                     type : 'Project Type',
-                    tags : this.model.get('type_tags')
+                    tags : o.project.get('type_tags')
                 }).render() )
         }
     })
@@ -234,96 +240,91 @@ define([
         tagName : "div",
         className : "project viewer",
         baseTmpl : TPL.viewer,
-        back : TPL.backButton,
         initialize : function() {
             _.bindAll(this, 'render', 'renderOut', 'onClose' )
-            this.model = new ProjectModel()
-        },
 
-        events : {
-            'click #back' : 'goBack'
+            this.$back = $('<button/>').attr({
+                id : 'back',
+                class : 'project-back'
+            }).text('X')
+            $(document).on('click', '#back', this.goBack.bind(this))
         },
 
         onClose : function() {
-            $(window).off('resize', this.viewer.resizeHandler)
-            $(window).off('keyup', this.viewer.keyHandler)
+            $(window).off('resize')
+            $(window).off('keyup')
+            $(document).off('click', '#back', this.goBack)
             $('.page').removeClass('project-single')
+            $('#nav').removeClass('is-notvisible')
+            this.filterbar.close()
+            this.$back.remove()
         },
 
         render : function( projectUrl, hidden, previous ) {
             $('.page').addClass('project-single')
+            $('#nav').addClass('is-notvisible')
             this.$el.html( this.baseTmpl() )
 
             this.details = new Details({
-                el : this.$('#details').addClass('details--project'),
-                model : this.model
+                el : this.$('#details').addClass('details--project')
             })
 
             this.viewer = new ProjectGallery({
-                className : 'project-gallery',
-                model : this.model
+                className : 'project-gallery'
+            })
+
+            this.filterbar = new FilterBar({
+                el : '#filter-bar',
+                collection : this.collection,
+                projectDetail : true,
+                previous : previous ? $.deparam.fragment(previous.hash) : null
             })
 
             this.$('#showcaseContainer').addClass('container--project').append(this.viewer.el)
+            this.$back.appendTo('.site-header')
 
             this.delegateEvents()
-            this.previous = previous
+            this.previous = previous ? $.deparam.fragment(previous.hash) : null
 
-            // TODO skip fetch if we already have all the projects
-            this.model.fetch({
-                url : '/api/projects/' + projectUrl + ( hidden ? '/private' : '' ),
-                success : this.renderOut
-            })
+            if ( this.collection.length ) {
+                this.model = this.collection.findWhere({ 'url-title' : projectUrl })
+                setTimeout(this.renderOut, 0)
+            } else {
+                this.model.fetch({
+                    url : '/api/projects/' + projectUrl + ( hidden ? '/private' : '' ),
+                    success : this.renderOut
+                })
+            }
 
             return this.el
         },
 
         renderOut : function( model, response, ops ) {
             $('#showcaseContainer').after($('#details'))
-            this.details.render()
+            this.details.render({ project : this.model })
+            this.filterbar.render()
+            this.filterbar.delegateEvents()
 
-            // TODO make this the close button
-            // this.$('#details').prepend( this.back({
-            //     buttonText : 'Back to All Projects',
-            //     url : this.previous ? '/projects' + this.previous.hash : '/projects'
-            // }) )
-
-            try {
-                // new kind of showcases
-                if ( _.isEmpty(this.model.get('media')) ) {
-                    throw 'NoMedia'
-                } else {
-                    this.viewer.render()
-                }
-
-                // detach spinner
-                this.trigger('rendered')
-
-                // different kind of showcase
-                // if ( this.collection.findWhere({ active : true }).get('type') === 'gallery') {
-                //     var projectTitle = this.model.get('title')
-                //     $('#showcaseContainer a').each(function(idx, el) {
-                //         $(el).attr('title', ( el.title ? projectTitle + ': ' + el.title : projectTitle ))
-                //     })
-                // }
-            } catch(e) {
+            if ( _.isEmpty(this.model.get('media')) ) {
                 this.viewer.$el.html('<p>No media for this project</p>')
-                this.trigger('rendered')
+            } else {
+                this.viewer.render({ project : this.model })
             }
-        },
 
-        // no more showcases
-        // swap : function(showcase) {
-        //     this.collection.findWhere({ active : true }).deactivate()
-        //     showcase.activate()
-        // },
+            this.trigger('rendered')
+        },
 
         goBack : function(e) {
             e.preventDefault()
-            Backbone.dispatcher.trigger( 'navigate:section', e )
-            //Backbone.dispatcher.trigger( 'goBack', new Spinner(), 'projects' )
+            if (this.previous) {
+                history.go(-1)
+            } else {
+                Backbone.dispatcher.trigger( 'navigate:section', '/projects' )
+            }
         }
     })
 
-    return new ProjectView()
+    return new ProjectView({
+        collection : Projects
+    })
 })

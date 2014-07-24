@@ -10,6 +10,16 @@
         <link href="{site_url}/css/app.@@hash.css" rel="stylesheet">
     
         <script src="{site_url}/js/lib/modernizr/custom.modernizr.js"></script>
+
+        {if segment_1 == 'projects'}
+        {exp:ce_cache:it global="yes" id="projects_bootstrap"}
+        <script>
+            var PA = {};
+            PA.projects = {embed="api/projects"};
+        </script>
+        {/exp:ce_cache:it}
+        {/if}
+
         {if embed:secure != 'y'}
         <script data-main="/js/init.@@hash.js" src="{site_url}/js/lib/requirejs/require.min.js"></script>
         {/if}
@@ -28,7 +38,11 @@
             <div class="inner-header">
                 <header class="site-header">
                 <h1 class="logo"><a href="{path='projects'}">Peter Arnell</a></h1>
+                    {if embed:nav == 'projects' && segment_2}
+                    <nav id="nav" class="is-notvisible">
+                    {if:else}
                     <nav id="nav">
+                    {/if}
                         <h2 class="visuallyhidden">Main Navigation</h2>
                         <ul>
                             <!--<li><a href="{site_url}"{if embed:nav == 'home'} class="active"{/if} id="home">Home</a></li>-->

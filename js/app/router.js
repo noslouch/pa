@@ -117,8 +117,15 @@ define([
     var router = new Router()
 
     Backbone.dispatcher.on('navigate:section', function(e) {
-        var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
-        l = l === '/' ? '/projects' : l
+        var l
+        if ( typeof e === 'string' ) {
+            // triggered by project detail filter bar
+            l = e
+        } else {
+            // triggered by main menu click
+            l = l === '/' ? '/projects' : e.target.pathname + (e.target.hash ? e.target.hash : '')
+        }
+
         router.navigate( l , {trigger : true })
     })
 
@@ -138,5 +145,5 @@ define([
 
     Backbone.dispatcher.on('savehistory', router.saveHistory)
 
-    exports.router = router
+    //exports.router = router
 })

@@ -94,7 +94,6 @@ define([
                 $el = this.$el,
                 path = 'ontouchstart' in window ? 'touchLoader' : 'fbLoader',
                 isoOps = {
-                    //containerStyle : null,
                     isFitWidth : true,
                     itemSelector: '.thumb',
                     layoutMode : fixed ? 'masonry' : 'fitRows',
@@ -104,9 +103,7 @@ define([
                     },
                     getSortData : {
                         name : '.caption p',
-                        date : function(el) {
-                            return parseInt( $(el).find('.year').text(), 10 )
-                        }
+                        date : '.year parseInt'
                     }
                 }
 
@@ -123,7 +120,7 @@ define([
                 })
             } else {
                 isoOps.filter = model.get('filter')
-                isoOps.sort = model.get('sort')
+                isoOps.sortBy = model.get('sort')
 
                 $el.isotope(isoOps)
                 model.trigger('isotope:ready')

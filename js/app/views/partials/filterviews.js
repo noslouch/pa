@@ -378,32 +378,34 @@ define([
                             collection : this.collection
                         }).render() )
 
-                    this.$el
-                        .append('<div class="jumps"></div>')
-                        .append( new ViewSort({
-                            model : this.model,
-                            id : 'sorts',
-                            type : 'sort',
-                            template : TPL.mobileSorts
-                        }).render() )
-                        .append( new ViewSort({
-                            model : this.model,
-                            id : 'views',
-                            type : 'view',
-                            template : TPL.mobileViews
-                        }).render() )
+                    if ( !this.options.projectDetail ) {
+                        this.$el
+                            .append('<div class="jumps"></div>')
+                            .append( new ViewSort({
+                                model : this.model,
+                                id : 'sorts',
+                                type : 'sort',
+                                template : TPL.mobileSorts
+                            }).render() )
+                            .append( new ViewSort({
+                                model : this.model,
+                                id : 'views',
+                                type : 'view',
+                                template : TPL.mobileViews
+                            }).render() )
 
-                    this.$('.jumps')
-                        .append( new JumpMenu({
-                            model : this.model,
-                            collection : this.collection,
-                            className : 'date'
-                        }).render() )
-                        .append( new JumpMenu({
-                            model : this.model,
-                            collection : this.collection,
-                            className : 'name'
-                        }).render() )
+                        this.$('.jumps')
+                            .append( new JumpMenu({
+                                model : this.model,
+                                collection : this.collection,
+                                className : 'date'
+                            }).render() )
+                            .append( new JumpMenu({
+                                model : this.model,
+                                collection : this.collection,
+                                className : 'name'
+                            }).render() )
+                    }
                 } else {
                     this.$('#brand .wrapper')
                         .append( new LogoBtns({
@@ -426,25 +428,26 @@ define([
                             collection : this.collection
                         }).render() )
 
-                    this.sortList = new ViewSort({
-                        model : this.model,
-                        collection : this.collection,
-                        id : 'sorts',
-                        type : 'sort',
-                        template : TPL.sorts
-                    })
-                    this.viewList = new ViewSort({
-                        model : this.model,
-                        id : 'views',
-                        type : 'view',
-                        template : TPL.views
-                    })
-                    this.$el
-                        .append( this.sortList.render() )
-                        .append( this.viewList.render() )
+                    if ( !this.options.projectDetail ) {
+                        this.sortList = new ViewSort({
+                            model : this.model,
+                            collection : this.collection,
+                            id : 'sorts',
+                            type : 'sort',
+                            template : TPL.sorts
+                        })
+                        this.viewList = new ViewSort({
+                            model : this.model,
+                            id : 'views',
+                            type : 'view',
+                            template : TPL.views
+                        })
+                        this.$el
+                            .append( this.sortList.render() )
+                            .append( this.viewList.render() )
+                    }
                 }
             }
-
 
             if (mobile) {
                 var hash = $.bbq.getState()
@@ -460,9 +463,13 @@ define([
         },
 
         onClose : function() {
+            if ( this.sortList ) {
+                this.sortList.close()
+            }
+            if ( this.viewList ) {
+                this.viewList.close()
+            }
             this.undelegateEvents()
-            this.sortList.close()
-            this.viewList.close()
             this.$el.removeClass('filter-bar')
             $('.tooltip').remove()
         },
@@ -483,10 +490,18 @@ define([
             } catch(err) { return false }
 
             e.preventDefault()
-            history.pushState({}, '', $.param.fragment(document.location.hash, option))
-            this.model.set( option )
-            if ( !$(e.target).parents('#sorts').length ) {
-                this.$('.open').removeClass('open')
+
+            if ( !this.model ) {
+                if ( !_.isEmpty(this.options.previous) ) {
+                    hash = $.param( _.extend(this.options.previous, option) )
+                }
+                Backbone.dispatcher.trigger('navigate:section', '/projects#' + hash)
+            } else {
+                history.pushState({}, '', $.param.fragment(document.location.hash, option))
+                this.model.set( option )
+                if ( !$(e.target).parents('#sorts').length ) {
+                    this.$('.open').removeClass('open')
+                }
             }
         },
 

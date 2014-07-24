@@ -20,11 +20,6 @@ define([
             this.searchForm = new Search.Form({
                 el : '#searchForm'
             })
-
-            //Backbone.dispatcher.on('goBack', this.section)
-            //Backbone.dispatcher.on('projects:goBack', this.projects)
-            //Backbone.dispatcher.on('film:goBack', this.film)
-            //Backbone.dispatcher.on('photography:goBack', this.photography)
         },
 
         events : {
@@ -43,17 +38,11 @@ define([
         },
 
         navigate : function(e) {
-            if ( e.target.id === 'home' ) {
-                //$('.site-header').addClass( 'home' )
-            } else if ( e.target.id === 'search') {
+            if ( e.target.id === 'search') {
                 return
             }
             e.preventDefault()
 
-            //this.currentView.close()
-
-            //var spinner = new Spinner()
-            //this.section(spinner,e.target.id)
             Backbone.dispatcher.trigger('navigate:section', e)
         },
 
@@ -70,12 +59,7 @@ define([
                 self.setView(view)
                 view.setElement('.page')
 
-                if (section === 'home') {
-                    var bootstrap = !!$('#n-container').length
-                    view.render(spinner)
-                } else if (section === 'stream') {
-                    view.render(spinner)
-                } else if ( section === 'profile' ) {
+                if ( section === 'profile' ) {
                     try {
                         view.render( segment, urlTitle, spinner )
                     } catch(e) {

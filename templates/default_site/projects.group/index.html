@@ -1,4 +1,3 @@
-{!-- exp:stash:set_value type="snippet" value="cats" scope="site" save="yes" name="unlock"--}
 {if segment_2 != ''}
     {exp:channel:entries url_title="{segment_2}" channel="projects" status="open|private"}
         {if status == 'Private'}
@@ -16,9 +15,9 @@
             {embed="includes/footer"}
         <?php } else if ( $pw == '{project-password}' ) { ?>
             {embed="includes/header" nav="projects"}
+
             </div> <!-- .page -->
             {embed="includes/footer"}
-
         <?php } else { ?>
             {embed="includes/header" nav="projects" secure='y'}
 
@@ -36,6 +35,7 @@
         {if:else}
 
             {embed="includes/header" nav="projects"}
+
             </div> <!-- .page -->
             {embed="includes/footer"}
 
@@ -43,6 +43,7 @@
     {/exp:channel:entries}
 {if:else}
     {embed="includes/header" nav="projects"}
+
     </div> <!-- .page -->
     {embed="includes/footer"}
 {/if}
