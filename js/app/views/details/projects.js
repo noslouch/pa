@@ -53,6 +53,7 @@ define([
                 Projects.add( PA.projects, { parse : true } )
             }
         },
+
         render : function(o) {
             // initialize custom version of slick slider with this.model.get('media')
             var media = o.project.get('media')
@@ -98,7 +99,7 @@ define([
             } else if ( key === 37 ) { // left arrow
                 this.$el.slickPrev()
             } else if ( key === 27 ) { // excape key
-                //close()
+                this.trigger('close')
             }
         },
 
@@ -109,105 +110,8 @@ define([
             $('.slick-dots').addClass('project-dots').append($dot).appendTo($controls)
             $controls.prepend( $('.slick-prev'), $('.slick-next'))
             $('#details').append($controls)
-        },
-
-        onClose : function() {}
+        }
     })
-
-// NO MORE SHOWCASES
-// var Showcase = Backbone.View.extend({
-//     initialize : function() {
-//         _.bindAll( this, 'render' )
-//     },
-//     render : function(model, value, options) {
-//         if (value) {
-
-//             var showcase
-//             switch( model.get('type') ) {
-//                 case 'gallery':
-//                     model.set('page', this)
-//                     showcase = new G({
-//                         collection : model.get('gallery'),
-//                         model : model
-//                     })
-//                     break;
-
-//                 case 'video':
-//                     showcase = new V({ model : model })
-//                     break;
-
-//                 case 'info':
-    //                     showcase = new T()
-    //                     showcase.$el.append( showcase.base({
-    //                         type : '.project-info',
-    //                         content : model.get('content')
-    //                     }) )
-    //                     break;
-
-    //                 case 'related':
-    //                     showcase = new l.SmList({
-    //                         collection : model.get('links')
-    //                     })
-    //                     break;
-
-    //                 default:
-    //                     break;
-    //             }
-
-    //             this.$el.html( showcase.render({gallery : true}) )
-
-    //             try {
-    //                 showcase.firstLoad()
-    //             } catch(e1) {}
-    //         }
-    //     }
-    // })
-
-    // no more showcases
-    // var Link = Backbone.View.extend({
-    //     tagName : 'li',
-    //     template : TPL.showcaseLinks,
-    //     initialize: function() {
-    //         _.bindAll( this, 'toggleView', 'toggleModel')
-    //     },
-
-    //     events : {
-    //         'click a' : 'toggleModel'
-    //     },
-
-    //     render : function() {
-    //         this.listenTo(this.model, 'change:active', this.toggleView)
-    //         var title
-    //         switch( this.model.get('type') ) {
-    //             case 'gallery':
-    //                 title = 'Gallery'
-    //                 break;
-    //             case 'video':
-    //                 title = 'Video'
-    //                 break;
-    //             default:
-    //                 title = this.model.get('title')
-    //                 break;
-    //         }
-
-    //         var html = this.template({
-    //             cid : this.model.cid,
-    //             title : title
-    //         })
-
-    //         this.$el.html(html)
-    //         return this.el
-    //     },
-
-    //     toggleView : function(model, value, options) {
-    //         this.$('a').toggleClass('active', value)
-    //     },
-
-    //     toggleModel : function(e) {
-    //         e.preventDefault()
-    //         this.model.trigger('swap', this.model)
-    //     }
-    // })
 
     var Details = Backbone.View.extend({
         events : {},
@@ -272,6 +176,7 @@ define([
             this.viewer = new ProjectGallery({
                 className : 'project-gallery'
             })
+            this.viewer.on('close', this.goBack)
 
             this.filterbar = new FilterBar({
                 el : '#filter-bar',
@@ -315,7 +220,9 @@ define([
         },
 
         goBack : function(e) {
-            e.preventDefault()
+            if (e) {
+                e.preventDefault()
+            }
             if (this.previous) {
                 history.go(-1)
             } else {

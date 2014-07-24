@@ -78,11 +78,7 @@ define([
 
         render : function(options){
             setTimeout(this.isotope.bind(this, options), 0) // triggers post-render callback
-            // if ( this.options.path === 'photography' ||
-            //      this.model.hasChanged('view') ||
-            //      this.model.get('type') === 'gallery' ) {
-                return this.el
-            //}
+            return this.el
         },
 
         isotope : function(options) {

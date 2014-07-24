@@ -5020,16 +5020,19 @@ a.fancybox-prev:hover span {
 /* line 705, sass/_modules.scss */
 .project-gallery.slick-slider .slick-slide {
   background-color: white;
+  background-image: url(/css/img/loader.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-/* line 710, sass/_modules.scss */
+/* line 713, sass/_modules.scss */
 .project-controls {
   position: absolute;
   bottom: 3px;
   right: 0;
   overflow: auto;
 }
-/* line 717, sass/_modules.scss */
+/* line 720, sass/_modules.scss */
 .project-controls .slick-next,
 .project-controls .slick-prev {
   position: static;
@@ -5037,7 +5040,7 @@ a.fancybox-prev:hover span {
   margin: 0;
   height: 100%;
 }
-/* line 723, sass/_modules.scss */
+/* line 726, sass/_modules.scss */
 .project-controls .slick-next:before,
 .project-controls .slick-prev:before {
   content: '';
@@ -5045,37 +5048,37 @@ a.fancybox-prev:hover span {
   height: 16px;
   display: block;
 }
-/* line 730, sass/_modules.scss */
+/* line 733, sass/_modules.scss */
 .project-controls .slick-next:focus,
 .project-controls .slick-prev:focus {
   background-color: transparent;
 }
-/* line 735, sass/_modules.scss */
+/* line 738, sass/_modules.scss */
 .project-controls .slick-next:before {
   background-position: 0 -278px;
 }
-/* line 739, sass/_modules.scss */
+/* line 742, sass/_modules.scss */
 .project-controls .slick-next:hover {
   background-color: transparent;
 }
-/* line 742, sass/_modules.scss */
+/* line 745, sass/_modules.scss */
 .project-controls .slick-next:hover:before {
   background-position: 0 -167px;
 }
-/* line 747, sass/_modules.scss */
+/* line 750, sass/_modules.scss */
 .project-controls .slick-prev:before {
   background-position: 0 -245px;
 }
-/* line 751, sass/_modules.scss */
+/* line 754, sass/_modules.scss */
 .project-controls .slick-prev:hover {
   background-color: transparent;
 }
-/* line 754, sass/_modules.scss */
+/* line 757, sass/_modules.scss */
 .project-controls .slick-prev:hover:before {
   background-position: 0 -151px;
 }
 
-/* line 760, sass/_modules.scss */
+/* line 763, sass/_modules.scss */
 .project-dots.slick-dots {
   float: left;
   position: relative;
@@ -5087,7 +5090,7 @@ a.fancybox-prev:hover span {
   z-index: 0;
   border-top: 3px solid white;
 }
-/* line 771, sass/_modules.scss */
+/* line 774, sass/_modules.scss */
 .project-dots.slick-dots > li {
   background: url('img/small-mask.png?1392842492');
   float: left;
@@ -5095,19 +5098,19 @@ a.fancybox-prev:hover span {
   height: 12px;
   margin: 0;
 }
-/* line 779, sass/_modules.scss */
+/* line 782, sass/_modules.scss */
 .project-dots.slick-dots button {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
-/* line 785, sass/_modules.scss */
+/* line 788, sass/_modules.scss */
 .project-dots.slick-dots button:before {
   content: none;
 }
 
-/* line 792, sass/_modules.scss */
+/* line 795, sass/_modules.scss */
 .project-image {
   height: auto;
   max-height: 100%;
