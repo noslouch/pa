@@ -181,8 +181,8 @@ define([
             this.$el.append( this.template() )
             this.listenTo( this.model, 'change:' + options.type, this.toggleActive )
         },
-        render : function() {
-            if (!mobile && this.id !== 'views') {
+        render : function(renderOptions) {
+            if (!mobile && renderOptions.jumpTo) {
                 this.dateList = new JumpMenu({
                     model : this.model,
                     collection : this.collection,
@@ -333,7 +333,7 @@ define([
         }
     })
 
-    // instantiate with projects collection
+    // instantiate with a given collection
     var Filter = Backbone.View.extend({
         template : TPL.projectFilter,
         initialize : function() {
@@ -359,98 +359,26 @@ define([
             console.log(this)
         },
 
-        render : function() {
+        render : function(renderOptions) {
             this.$el.html( this.template() )
             this.$el.addClass('filter-bar')
 
+            var options = options || {}
             if ( !this.options.profile ) {
 
                 if (mobile) {
-                    this.$('#brand')
-                        .append( new LogoUl({
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-                    this.$('#industry')
-                        .html( new ProjectUl({
-                            type : 'industry',
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-                    this.$('#type')
-                        .html( new ProjectUl({
-                            type : 'type',
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-
-                    if ( !this.options.projectDetail ) {
-                        this.$el
-                            .append('<div class="jumps"></div>')
-                            .append( new ViewSort({
-                                model : this.model,
-                                id : 'sorts',
-                                type : 'sort',
-                                template : TPL.mobileSorts
-                            }).render() )
-                            .append( new ViewSort({
-                                model : this.model,
-                                id : 'views',
-                                type : 'view',
-                                template : TPL.mobileViews
-                            }).render() )
-
-                        this.$('.jumps')
-                            .append( new JumpMenu({
-                                model : this.model,
-                                collection : this.collection,
-                                className : 'date'
-                            }).render() )
-                            .append( new JumpMenu({
-                                model : this.model,
-                                collection : this.collection,
-                                className : 'name'
-                            }).render() )
-                    }
+                    this.touchDOM(renderOptions)
                 } else {
-                    this.$('#brand .wrapper')
-                        .append( new LogoBtns({
-                            model : this.model
-                        }).render() )
-                        .append( new LogoUl({
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-                    this.$('#industry .wrapper')
-                        .append( new ProjectUl({
-                            type : 'industry',
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-                    this.$('#type .wrapper')
-                        .append( new ProjectUl({
-                            type : 'type',
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
+                    this.mouseDOM(renderOptions)
+                }
 
-                    if ( !this.options.projectDetail ) {
-                        this.sortList = new ViewSort({
-                            model : this.model,
-                            collection : this.collection,
-                            id : 'sorts',
-                            type : 'sort',
-                            template : TPL.sorts
-                        })
-                        this.viewList = new ViewSort({
-                            model : this.model,
-                            id : 'views',
-                            type : 'view',
-                            template : TPL.views
-                        })
-                        this.$el
-                            .append( this.sortList.render() )
-                            .append( this.viewList.render() )
+                if ( renderOptions.mixitup ) {
+                    this.$('#brand').remove()
+                    this.$('#industry').remove()
+
+                    if ( !renderOptions.hasTags ) {
+                        this.$('#type').remove()
+                        this.$('#all').remove()
                     }
                 }
             }
@@ -466,6 +394,154 @@ define([
                 }
             }
             this.delegateEvents()
+        },
+
+        mouseDOM : function(options) {
+            if ( !options.mixitup ) { 
+                // projects detail & landing
+                this.$('#brand .wrapper')
+                    .append( new LogoBtns({
+                        model : this.model
+                    }).render() )
+                    .append( new LogoUl({
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+                this.$('#industry .wrapper')
+                    .append( new ProjectUl({
+                        type : 'industry',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+                this.$('#type .wrapper')
+                    .append( new ProjectUl({
+                        type : 'type',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+
+                if ( !this.options.parentSection ) {
+                    // projects landing only
+                    this.sortList = new ViewSort({
+                        model : this.model,
+                        collection : this.collection,
+                        id : 'sorts',
+                        type : 'sort',
+                        template : TPL.sorts
+                    })
+                    this.viewList = new ViewSort({
+                        model : this.model,
+                        id : 'views',
+                        type : 'view',
+                        template : TPL.views
+                    })
+                    this.$el
+                        .append( this.sortList.render(options) )
+                        .append( this.viewList.render({ jumpTo : false }) )
+                }
+            } else if ( options.mixitup ) {
+                // books, film, photography
+                this.sortList = new ViewSort({
+                    model : this.model,
+                    collection : this.collection,
+                    id : 'sorts',
+                    type : 'sort',
+                    template : TPL.sorts
+                })
+
+                this.$el.append( this.sortList.render(options) )
+
+                if ( options.hasTags ) {
+                    // if there are tags on this section landing
+                    this.$('#type .wrapper')
+                        .html( new ProjectUl({
+                            type : 'type',
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                }
+            } else {
+                console.log('remove type and all?')
+                // this.$('#type').remove()
+                // this.$('#all').remove()
+            }
+        },
+
+        touchDOM : function(options) {
+            if ( !options.mixitup ) {
+                //projects detail & landing
+                this.$('#brand')
+                    .append( new LogoUl({
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+                this.$('#industry')
+                    .html( new ProjectUl({
+                        type : 'industry',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+                this.$('#type')
+                    .html( new ProjectUl({
+                        type : 'type',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+
+                if ( !this.options.parentSection ) {
+                    // projects landing only
+                    this.$el
+                        .append('<div class="jumps"></div>')
+                        .append( new ViewSort({
+                            model : this.model,
+                            id : 'sorts',
+                            type : 'sort',
+                            template : TPL.mobileSorts
+                        }).render() )
+                        .append( new ViewSort({
+                            model : this.model,
+                            id : 'views',
+                            type : 'view',
+                            template : TPL.mobileViews
+                        }).render() )
+
+                    this.$('.jumps')
+                        .append( new JumpMenu({
+                            model : this.model,
+                            collection : this.collection,
+                            className : 'date'
+                        }).render() )
+                        .append( new JumpMenu({
+                            model : this.model,
+                            collection : this.collection,
+                            className : 'name'
+                        }).render() )
+                }
+            } else if ( options.mixitup ) {
+                // books, film, photography
+                this.sortList = new ViewSort({
+                    model : this.model,
+                    collection : this.collection,
+                    id : 'sorts',
+                    type : 'sort',
+                    template : TPL.sorts
+                })
+
+                this.$el.append( this.sortList.render() )
+                if ( options.hasTags ) {
+                    // if there are tags on this section landing
+                    this.$('#type')
+                        .html( new ProjectUl({
+                            type : 'type',
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                }
+            } else {
+                console.log('remove type and all?')
+                // this.$('#type').remove()
+                // this.$('#all').remove()
+            }
         },
 
         onClose : function() {
@@ -485,10 +561,11 @@ define([
         },
 
         filter : function(e) {
-            var hash, option
+            var hash, option,
+                isDetail = !!this.options.parentSection,
+                topLevel = isDetail ? '/' + this.options.parentSection : false
 
             $('html, body').animate({ scrollTop: 0  }, 'fast')
-            //console.log('filter')
 
             try {
                 hash = e.type === 'change' ? e.currentTarget.selectedOptions[0].dataset.hash : e.currentTarget.dataset.hash
@@ -497,11 +574,11 @@ define([
 
             e.preventDefault()
 
-            if ( !this.model ) {
+            if ( isDetail ) {
                 if ( !_.isEmpty(this.options.previous) ) {
                     hash = $.param( _.extend(this.options.previous, option) )
                 }
-                Backbone.dispatcher.trigger('navigate:section', '/projects#' + hash)
+                Backbone.dispatcher.trigger('navigate:section', topLevel + '#' + hash)
             } else {
                 history.pushState({}, '', $.param.fragment(document.location.hash, option))
                 this.model.set( option )

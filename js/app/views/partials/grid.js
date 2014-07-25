@@ -6,7 +6,8 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'mixfilter',
+    //'mixfilter',
+    'app/views/partials/filterviews',
     'mixitup',
     'imagesLoaded'
 ], function( $, Backbone, _, TPL, Filter ) {
@@ -48,14 +49,6 @@ define([
             if ( this.$el.children().length ) { return this.el }
 
             this.collection.forEach( function(model, index){
-                //if (index % 4 === 0) {
-                //    this.$row = $( this.rowTmpl() ).addClass(this.class)
-                //    this.$el.append(this.$row)
-                //}
-                //this.$row.append( new this.Thumb({
-                //    model : model
-                //}).render() )
-
                 this.$el.append( new this.Thumb({
                     model : model
                 }).render() )
@@ -64,7 +57,6 @@ define([
         },
 
         render : function() {
-            //this.delegateEvents()
             return this.el
         }
     })
@@ -99,7 +91,7 @@ define([
 
         render : function() {
             var self = this
-            $(window).on('hashchange', this.filter)
+            //$(window).on('hashchange', this.filter)
             this.$el.html( this.grid.render() )
 
             this.$('.page').imagesLoaded(function(){
@@ -109,7 +101,7 @@ define([
                     minHeight : '100%',
                     onMixLoad : function() {
                         if ( document.location.hash ) {
-                            $(window).trigger('hashchange')
+                            //$(window).trigger('hashchange')
                         }
                     }
                 })
@@ -120,7 +112,9 @@ define([
         init : function(spinner) {
 
             this.delegateEvents()
-            this.filterbar.render( this.collection.some(function(m){ return m.has('type_tags') }) )
+
+            var hasTags = this.collection.some(function(m){ return m.has('type_tags') }) 
+            this.filterbar.render({ mixitup : true, hasTags : hasTags })
             this.$el.addClass(this.class)
 
             if ( !this.collection.length ) {
@@ -151,7 +145,7 @@ define([
             this.model.unset('sort').unset('filter')
             $('.page').removeClass(this.class)
             this.filterbar.close()
-            $(window).off('hashchange')
+            //$(window).off('hashchange')
         },
 
 

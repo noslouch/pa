@@ -46,7 +46,7 @@ define([
             this.spinner = spinner
             this.delegateEvents()
 
-            this.filterbar.render()
+            this.filterbar.render({ mixitup : false, jumpTo : true })
 
             this.$el.addClass('projects')
 
@@ -144,6 +144,7 @@ define([
             this.$el.removeClass('projects')
             this.model.off('change')
             this.model.clear({silent: true})
+            $(window).off('hashchange')
             if (this.filterbar) {
                 this.filterbar.close()
             }

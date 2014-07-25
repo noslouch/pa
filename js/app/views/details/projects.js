@@ -211,7 +211,7 @@ define([
             this.filterbar = new FilterBar({
                 el : '#filter-bar',
                 collection : this.collection,
-                projectDetail : true,
+                parentSection : 'projects',
                 previous : previous ? $.deparam.fragment(previous.hash) : null
             })
 
