@@ -421,6 +421,9 @@ define([
             }
 
             if ( options.types ) {
+                if ( location.pathname.match(/^\/film/) ) {
+                    this.$('#type h3').text('Film Type')
+                }
                 this.$('#type .wrapper')
                     .append( new ProjectUl({
                         type : 'type',
