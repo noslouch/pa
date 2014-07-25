@@ -26,10 +26,14 @@ define([
             var self = this
 
             if ( !Projects.length ) {
-                this.collection.add(PA.projects, { parse : true })
+                try {
+                    this.collection.add(PA.projects, { parse : true })
+                    this.build()
+                } catch (e) {
+                    this.collection.fetch({ success : this.build.bind(this) })
+                }
             }
 
-            this.build()
         },
 
         events : {
@@ -43,7 +47,6 @@ define([
             this.delegateEvents()
 
             this.filterbar.render()
-            this.filterbar.$el.addClass('projects')
 
             this.$el.addClass('projects')
 
@@ -143,7 +146,6 @@ define([
             this.model.clear({silent: true})
             if (this.filterbar) {
                 this.filterbar.close()
-                this.filterbar.$el.removeClass('projects')
             }
         },
 

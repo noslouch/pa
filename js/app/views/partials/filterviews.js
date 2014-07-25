@@ -476,7 +476,7 @@ define([
                 this.viewList.close()
             }
             this.undelegateEvents()
-            this.$el.removeClass('filter-bar')
+            this.$el.removeClass()
             $('.tooltip').remove()
         },
 

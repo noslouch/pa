@@ -92,6 +92,7 @@ define([
                 group = this.groupSort( this.model.get('sort'), filtered )
             } catch(e) {
                 group = this.groupSort( 'date', this.collection.models )
+                this.model = this.collection
             }
 
             this.$el.empty()
