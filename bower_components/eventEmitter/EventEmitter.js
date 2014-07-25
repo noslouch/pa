@@ -1,5 +1,5 @@
 /*!
- * EventEmitter v4.2.4 - git.io/ee
+ * EventEmitter v4.2.7 - git.io/ee
  * Oliver Caldwell
  * MIT license
  * @preserve
@@ -17,9 +17,9 @@
 	function EventEmitter() {}
 
 	// Shortcuts to improve speed and size
-
-	// Easy access to the prototype
 	var proto = EventEmitter.prototype;
+	var exports = this;
+	var originalGlobalValue = exports.EventEmitter;
 
 	/**
 	 * Finds the index of the listener for the event in it's storage array.
@@ -69,7 +69,7 @@
 
 		// Return a concatenated array of all matching events if
 		// the selector is a regular expression.
-		if (typeof evt === 'object') {
+		if (evt instanceof RegExp) {
 			response = {};
 			for (key in events) {
 				if (events.hasOwnProperty(key) && evt.test(key)) {
@@ -322,7 +322,7 @@
 			// Remove all listeners for the specified event
 			delete events[evt];
 		}
-		else if (type === 'object') {
+		else if (evt instanceof RegExp) {
 			// Remove all events matching the regex.
 			for (key in events) {
 				if (events.hasOwnProperty(key) && evt.test(key)) {
@@ -445,6 +445,16 @@
 	 */
 	proto._getEvents = function _getEvents() {
 		return this._events || (this._events = {});
+	};
+
+	/**
+	 * Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.
+	 *
+	 * @return {Function} Non conflicting EventEmitter class.
+	 */
+	EventEmitter.noConflict = function noConflict() {
+		exports.EventEmitter = originalGlobalValue;
+		return EventEmitter;
 	};
 
 	// Expose the class either via AMD, CommonJS or the global object
