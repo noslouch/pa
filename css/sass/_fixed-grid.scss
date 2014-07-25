@@ -13,7 +13,7 @@ $column-gutter: emCalc(7);
 }
 
 .photo-cell {
-    @include grid-column(3, $float: none);
+    @include grid-column(3);
     font-size: 16px;
     margin-bottom: 25px;
     vertical-align: top;

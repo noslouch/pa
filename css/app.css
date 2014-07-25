@@ -5637,7 +5637,7 @@ a.fancybox-prev:hover span {
   padding-left: 0.18421rem;
   padding-right: 0.18421rem;
   width: 25%;
-  float: none;
+  float: left;
   font-size: 16px;
   margin-bottom: 25px;
   vertical-align: top;
