@@ -15,7 +15,7 @@
     RewriteRule ^index\.php/(.+) http://%{HTTP_HOST}/$1 [R=301,L,QSA]
 
     #------------------- CE Cache Static Driver -------------------
-    RewriteCond %{REQUEST_URI} !^/system [NC]
+    RewriteCond %{REQUEST_URI} !^/core [NC]
     RewriteCond %{QUERY_STRING} !ACT|URL [NC]
     RewriteCond %{REQUEST_METHOD} !=POST [NC]
     RewriteCond %{DOCUMENT_ROOT}/static/ce_cache/29174f/static%{REQUEST_URI}/index\.html -f [NC]

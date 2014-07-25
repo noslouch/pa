@@ -70,6 +70,10 @@ define([
             this.instagram = instagram
         },
 
+        onClose : function() {
+            clearTimeout(this.timer)
+        },
+
         stagger : function() {
             var SCREEN_WIDTH = window.innerWidth,
                 SCREEN_HEIGHT = window.innerHeight,
@@ -81,6 +85,7 @@ define([
                 self = this
 
             function go(){
+                /*jshint validthis:true*/
                 self.$el.append(
                     new Star({
                         model : self.images.models[i],
@@ -91,11 +96,11 @@ define([
 
                 // CHANGE TO IMAGELIMIT WHEN PROJECTS INCREASE
                 if ( i < self.images.length ) {
-                    setTimeout(go, 550)
+                    this.timer = setTimeout(go.bind(this), 550)
                 }
             }
 
-            go()
+            go.call(this)
 
             this.starsRunning = false
         },
@@ -105,6 +110,7 @@ define([
             this.$el.empty()
             this.remove()
             this.unbind()
+            clearTimeout(this.timer)
         },
 
         render : function() {

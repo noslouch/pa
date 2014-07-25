@@ -92,6 +92,7 @@ define([
                 group = this.groupSort( this.model.get('sort'), filtered )
             } catch(e) {
                 group = this.groupSort( 'date', this.collection.models )
+                this.model = this.collection
             }
 
             this.$el.empty()
@@ -107,6 +108,8 @@ define([
             }, this )
 
             setTimeout( this.stagger, 50 )
+            setTimeout( function() { this.model.trigger('list:ready') }.bind(this), 0 )
+
             return this.el
         },
 

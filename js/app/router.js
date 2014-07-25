@@ -16,9 +16,6 @@ define([
         initialize : function() {
             _.bindAll( this, 'debug', 'payload', 'saveHistory' )
             this.on('route', this.saveHistory)
-            $(window).on('hashchange', this.saveHistory)
-            //this.on('route', this.debug)
-            //this.on('route', this.semantics)
             this.history = [document.location]
             this.bind('all', this._trackPageview)
         },
@@ -27,10 +24,7 @@ define([
             var url;
             url = Backbone.history.getFragment();
             window.ga('send', 'pageview', {
-                'page' : '/' + url,
-                'hitCallback' : function() {
-                    //console.log('Tracked: ', '/' + url)
-                }
+                'page' : '/' + url
             })
         },
 
@@ -55,16 +49,28 @@ define([
         },
 
         section : function( segment, urlTitle ) {
-            var spinner = new Spinner()
-            var section = Backbone.history.fragment.match(/[^\/]*/).join('') === '' ? 'home' : Backbone.history.fragment.match(/[^\/]*/).join('')
+            var section = Backbone.history.fragment.match(/[^\/]*/).join('')
+            try {
+                Chrome.currentView.close()
+            } catch(e) {}
 
-            Chrome.section( spinner, section, segment, urlTitle )
+            router._trackPageview()
+
+            if ( section === '' ) {
+                this.navigate('/projects', { trigger : true })
+            } else {
+                var spinner = new Spinner()
+                Chrome.section( spinner, section, segment, urlTitle )
+            }
         },
 
         detail : function( urlTitle, hidden ) {
             var section = Backbone.history.fragment.match(/[^\/]*/).join('')
-            var spinner = new Spinner()
+            try {
+                Chrome.currentView.close()
+            } catch(e) {}
 
+            var spinner = new Spinner()
             Chrome.detail( spinner, section, urlTitle, hidden, this.previous )
         },
 
@@ -111,24 +117,23 @@ define([
     var router = new Router()
 
     Backbone.dispatcher.on('navigate:section', function(e) {
-        var l = e.target.pathname + (e.target.hash ? e.target.hash : '')
+        var l
+        if ( typeof e === 'string' ) {
+            // triggered by detail filter bar
+            l = e
+        } else {
+            // triggered by main menu click
+            l = l === '/' ? '/projects' : e.target.pathname + (e.target.hash ? e.target.hash : '')
+        }
 
-        Backbone.dispatcher.trigger('filterCheck', router)
-        //$('.page').removeClass().addClass( e.target.pathname.slice(1) + ' page' ).empty()
-        $(window).on('hashchange', router.saveHistory)
-
-        router.navigate( l )
-        router._trackPageview()
+        router.navigate( l , {trigger : true })
     })
 
     Backbone.dispatcher.on('navigate:detail', function(e, currentView) {
-        Backbone.dispatcher.trigger('filterCheck', router)
-        currentView.close()
         router.navigate(e.currentTarget.pathname, { trigger: true })
     })
 
     Backbone.dispatcher.on('navigate:showcase', function(ops) {
-        Backbone.dispatcher.trigger('filterCheck', router)
         router.navigate( ops.url, { replace : ops.replace })
         router._trackPageview()
     })
@@ -138,5 +143,7 @@ define([
         router._trackPageview()
     })
 
-    exports.router = router
+    Backbone.dispatcher.on('savehistory', router.saveHistory)
+
+    //exports.router = router
 })

@@ -1,3 +1,4 @@
+/*global PA*/
 /* app/views/details/book.js
  * details view for book galleries */
 'use strict';
@@ -8,20 +9,21 @@ define([
     'underscore',
     'tpl/jst',
     'app/models/book',
+    'app/collections/books',
     'app/views/partials/album'
-], function( $, Backbone, _, TPL, B, A ) {
+], function( $, Backbone, _, TPL, BookModel, Books, Album ) {
 
-    var BookDetails = A.Details.extend({
-        buttonText : 'Back to All Books',
-        url : '/books'
+    try {
+        Books.add( PA.books, { parse : true } )
+    } catch (e) {
+        Books.fetch()
+    }
+
+    var BookDetails = new Album({
+        collection : Books,
+        model : new BookModel(),
+        section : 'books'
     })
 
-    var BookAlbum = A.Album.extend({
-        model : new B(),
-        Details : BookDetails,
-        url : '/api/books/',
-        namespace : 'books'
-    })
-
-    return new BookAlbum()
+    return BookDetails
 })

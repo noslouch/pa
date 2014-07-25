@@ -1,6 +1,8 @@
 {
   "name": "foundation_project",
   "dependencies": {
-    "foundation": "zurb/bower-foundation#~5.1.1"
+    "foundation": "zurb/bower-foundation#~5.1.1",
+    "slick-carousel": "~1.3.6",
+    "mixitup": "~2.1.5"
   }
 }

@@ -8,10 +8,9 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'utils/spinner',
     'isotope',
     'imagesLoaded'
-], function( require, $, Backbone, _, TPL, Spinner ) {
+], function( require, $, Backbone, _, TPL ) {
 
     // Thumb
     // Image Showcase thumbnail used in Isotope
@@ -78,23 +77,19 @@ define([
         },
 
         render : function(options){
-            setTimeout(this.isotope, 0) // triggers post-render callback
-            if ( //this.options.path === 'photography' ||
-                 this.model.hasChanged('view') ||
-                 this.model.get('type') === 'gallery' ) {
-                return this.el
-            }
+            setTimeout(this.isotope.bind(this, options), 0) // triggers post-render callback
+            return this.el
         },
 
-        isotope : function() {
+        isotope : function(options) {
             var self = this,
+                model = this.model,
                 $img = this.$('img'),
                 rtl = this.$el.hasClass('rtl'),
                 fixed = this.$el.hasClass('fixed'),
                 $el = this.$el,
                 path = 'ontouchstart' in window ? 'touchLoader' : 'fbLoader',
                 isoOps = {
-                    //containerStyle : null,
                     isFitWidth : true,
                     itemSelector: '.thumb',
                     layoutMode : fixed ? 'masonry' : 'fitRows',
@@ -104,45 +99,32 @@ define([
                     },
                     getSortData : {
                         name : '.caption p',
-                        date : function(el) {
-                            return parseInt( $(el).find('.year').text(), 10 )
-                        }
+                        date : '.year parseInt'
                     }
                 }
 
-            function onLayout( iso ) {
-                console.log('layout complete')
-                //$(iso.element).css('overflow', 'visible')
-                // $('html, body').animate({
-                //     scrollTop : 0
-                // }, 'fast')
-            }
-
-            var spinner = new Spinner()
-            require(['utils/' + path], function(g) {
-                self.$el.imagesLoaded( function() {
+            if ( options.gallery ) {
+                require(['utils/' + path], function(g) {
                     g()
-                    $el.isotope(isoOps)
-                    //$el.isotope('on', 'layoutComplete', onLayout)
-
-                    spinner.detach()
-                    $img.addClass('loaded')
-
-                    if ( self.model.has('filter') ) {
-                        $el.isotope( 'updateSortData', $('.thumb') )
-                        self.filter( self.model.get('filter') )
-                        self.sort( self.model.get('sort') )
-                        self.model.trigger('layout')
-                    }
+                    self.$el.imagesLoaded()
+                    .done(function() {
+                        $el.isotope(isoOps)
+                    })
+                    .progress(function(instance, image) {
+                        image.img.classList.add('loaded')
+                    })
                 })
-            })
-            // if ( this.$el.hasClass('isotope') ) {
-            //     this.$el.isotope(isoOps)
-            //     this.$el.isotope('on', 'layoutComplete', onLayout)
-            //     this.$el.isotope( 'updateSortData', $('.thumb') )
-            //     this.filter( this.model.get('filter') )
-            //     this.sort( this.model.get('sort') )
-            // } else {
+            } else {
+                isoOps.filter = model.get('filter')
+                isoOps.sortBy = model.get('sort')
+
+                $el.isotope(isoOps)
+                model.trigger('isotope:ready')
+
+                self.$el.imagesLoaded().progress(function(instance, image) {
+                    image.img.classList.add('loaded')
+                })
+            }
         },
 
         filter : function(filter) {

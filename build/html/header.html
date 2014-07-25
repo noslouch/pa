@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" id="viewport" content="">
+        <meta name="viewport" id="viewport" content="user-scalable=no">
         <title>Peter Arnell</title>
 
         <link href="{site_url}/js/lib/fancybox/jquery.fancybox.css" rel="stylesheet" />
@@ -10,6 +10,37 @@
         <link href="{site_url}/css/app.@@hash.css" rel="stylesheet">
     
         <script src="{site_url}/js/lib/modernizr/custom.modernizr.js"></script>
+
+        {if segment_1 == 'projects' || segment_1 == ''}
+        {exp:ce_cache:it global="yes" id="projects_bootstrap"}
+        <script>
+            var PA = {};
+            PA.projects = {embed="api/projects"};
+        </script>
+        {/exp:ce_cache:it}
+        {if:elseif segment_1 == 'books'}
+        {exp:ce_cache:it global="yes" id="books_bootstrap"}
+        <script>
+            var PA = {};
+            PA.books = {embed="api/books"};
+        </script>
+        {/exp:ce_cache:it}
+        {if:elseif segment_1 == 'film'}
+        {exp:ce_cache:it global="yes" id="film_bootstrap"}
+        <script>
+            var PA = {};
+            PA.film = {embed="api/film"};
+        </script>
+        {/exp:ce_cache:it}
+        {if:elseif segment_1 == 'photography'}
+        {exp:ce_cache:it global="yes" id="photography_bootstrap"}
+        <script>
+            var PA = {};
+            PA.photography = {embed="api/photography"};
+        </script>
+        {/exp:ce_cache:it}
+        {/if}
+
         {if embed:secure != 'y'}
         <script data-main="/js/init.@@hash.js" src="{site_url}/js/lib/requirejs/require.min.js"></script>
         {/if}
@@ -25,20 +56,24 @@
     </head>
     <body>
         <div class="header-wrapper">
-            <div class="inner-header {embed:nav}">
-                <header class="site-header{if segment_1==''} home{/if}">
-                <h1 class="logo"><a href="{site_url}">Peter Arnell</a></h1>
+            <div class="inner-header">
+                <header class="site-header">
+                <h1 class="logo"><a href="{path='projects'}">Peter Arnell</a></h1>
+                    {if segment_2}
+                    <nav id="nav" class="is-notvisible">
+                    {if:else}
                     <nav id="nav">
+                    {/if}
                         <h2 class="visuallyhidden">Main Navigation</h2>
                         <ul>
-                            <li><a href="{site_url}"{if embed:nav == 'home'} class="active"{/if} id="home">Home</a></li>
+                            <!--<li><a href="{site_url}"{if embed:nav == 'home'} class="active"{/if} id="home">Home</a></li>-->
                             <li><a href="{path='projects'}"{if embed:nav=='projects'} class="active"{/if} id="projects">Projects</a></li>
                             <li><a href="{path='photography'}"{if embed:nav=='photography'} class="active"{/if} id="photography">Photography</a></li>
                             <li><a href="{path='film'}"{if embed:nav=='film'} class="active"{/if} id="film">Film</a></li>
                             <li><a href="{path='books'}"{if embed:nav=='books'} class="active"{/if} id="books">Books</a></li>
                             <li><a href="{path='profile'}"{if embed:nav=='profile'} class="active"{/if} id="profile">Profile</a></li>
                             <li><a href="{path='contact'}"{if embed:nav=='contact'} class="active"{/if} id="contact">Contact</a></li>
-                            <li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if} id="stream">Stream</a></li>
+                            <!--<li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if} id="stream">Stream</a></li>-->
                             <li><a href="#" id="search" class="search-icon"></a></li>
                         </ul>
                     </nav>

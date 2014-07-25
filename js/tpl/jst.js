@@ -54,9 +54,6 @@ function( _ ){
             '<h3><%= title %></h3>',
             '<time datetime="<%= htmlDate %>"><%= date %></time>',
         '</header>',
-        '<div class="summary"><%= summary %></div>',
-        '<ul class="showcase-links" id="showcaseLinks">',
-        '</ul>',
         '<ul class="tags" id="tags"></ul>'
     ].join('\n')
 
@@ -89,7 +86,7 @@ function( _ ){
         '<div class="links" id="tagLinks"></div>'
     ].join('\n')
 
-    JST.tag = '<a href="/projects#filter=.<%= className %>"><%= tag %></a>'
+    JST.tag = '<a href="/<%= section %>#filter=.<%= className %>"><%= tag %></a>'
 
     JST.textTemplate = [
         '<article class="<%= type %>">', // .project-info, .press, .bio
@@ -132,7 +129,7 @@ function( _ ){
 
     JST.videoID = [
         '<div>',
-            '<iframe src="http://<% youtube ? print("www.youtube.com/embed/") : print("player.vimeo.com/video/") %><%= videoSrc %>?autoplay=1" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>',
+            '<iframe src="http://<% youtube ? print("www.youtube.com/embed/") : print("player.vimeo.com/video/") %><%= videoSrc %>" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>',
         '</div>'
     ].join('\n')
 
@@ -301,7 +298,7 @@ function( _ ){
             '<ul>',
                 '<li><button class="icon-view active" data-hash="view=cover" id="cover" type="button">Image</button></li>',
                 '<li><button class="title-view" data-hash="view=list" id="list" type="button">Title</button></li>',
-                '<li><button class="random-view" data-hash="view=random" id="random" type="button">Stream</button></li>',
+                //'<li><button class="random-view" data-hash="view=random" id="random" type="button">Stream</button></li>',
            '</ul>',
         '</div>'
     ].join('\n')
@@ -311,7 +308,7 @@ function( _ ){
             '<option>View By</option>',
             '<option data-hash="view=cover" id="cover">Image</option>',
             '<option data-hash="view=list" id="list">Title</option>',
-            '<option data-hash="view=random" id="random">Stream</option>',
+            //'<option data-hash="view=random" id="random">Stream</option>',
         '</select>'
     ].join('\n')
 

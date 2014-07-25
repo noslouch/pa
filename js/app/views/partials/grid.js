@@ -6,7 +6,8 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'mixfilter',
+    //'mixfilter',
+    'app/views/partials/filterviews',
     'mixitup',
     'imagesLoaded'
 ], function( $, Backbone, _, TPL, Filter ) {
@@ -48,23 +49,16 @@ define([
             if ( this.$el.children().length ) { return this.el }
 
             this.collection.forEach( function(model, index){
-                //if (index % 4 === 0) {
-                //    this.$row = $( this.rowTmpl() ).addClass(this.class)
-                //    this.$el.append(this.$row)
-                //}
-                //this.$row.append( new this.Thumb({
-                //    model : model
-                //}).render() )
-
                 this.$el.append( new this.Thumb({
                     model : model
                 }).render() )
             }, this )
 
+            this.$el.append($('<div class="gap" />')).append($('<div class="gap" />'))
+
         },
 
         render : function() {
-            //this.delegateEvents()
             return this.el
         }
     })
@@ -97,30 +91,14 @@ define([
             'click .photo-cell a' : 'navigate'
         },
 
-        render : function() {
-            var self = this
-            $(window).on('hashchange', this.filter)
-            this.$el.html( this.grid.render() )
-
-            this.$('.page').imagesLoaded(function(){
-                $( '#' + self.class + '-grid' ).mixitup({
-                    targetSelector : '.photo-cell',
-                    filterSelector : '',
-                    minHeight : '100%',
-                    onMixLoad : function() {
-                        if ( document.location.hash ) {
-                            $(window).trigger('hashchange')
-                        }
-                    }
-                })
-
-            })
-        },
-
         init : function(spinner) {
+            var hashObj = $.deparam.fragment()
 
             this.delegateEvents()
-            this.filterbar.render( this.collection.some(function(m){ return m.has('type_tags') }) )
+
+            var hasTags = this.collection.some(function(m){ return m.has('type_tags') }) 
+            this.filterbar.render({ mixitup : true, hasTags : hasTags })
+
             this.$el.addClass(this.class)
 
             if ( !this.collection.length ) {
@@ -130,30 +108,74 @@ define([
                 }
             }
 
+            hashObj.filter = hashObj.filter || '*'
+            hashObj.sort = hashObj.sort || 'name'
+            this.model.set( hashObj )
+
+            history.replaceState({}, '', $.param.fragment('', hashObj))
             if (spinner) {spinner.detach()}
             this.render()
         },
 
-        filter : function(e) {
-            if (!e.fragment) { return }
-            var hash = $.bbq.getState()
-            this.model.set(hash)
-            if (this.model.hasChanged('filter')) {
-                this.grid.$el.mixitup('filter', hash.filter === '*' ? 'all' : hash.filter.slice(1) )
-            }
-            if (this.model.hasChanged('sort')) {
-                this.grid.$el.mixitup('sort', 'data-' + hash.sort)
-            }
-            this.filterbar.delegateEvents()
+        render : function() {
+            var self = this
+
+            this.$el.html( this.grid.render() )
+
+            this.$('.page').imagesLoaded(function(){
+                $( '#' + self.class + '-grid' ).mixItUp({
+                    selectors : {
+                        target : '.photo-cell',
+                        filter : '',
+                        sort : ''
+                    },
+                    callbacks : {},
+                    controls : {
+                        enable : false
+                    },
+                    load : {
+                        filter : self.model.get('filter') || '*',
+                        sort : self.model.get('sort') + ':asc'
+                    }
+                })
+            })
+
+            this.model.on('change', function(model) {
+                var newAttr = model.changedAttributes()
+                if ( newAttr.filter ) {
+                    this.filter(newAttr.filter)
+                } else if ( newAttr.sort ) {
+                    this.sort(newAttr.sort)
+                }
+                Backbone.dispatcher.trigger('savehistory')
+            }, this)
+
+            $(window).on('hashchange', function() {
+                var hashObj = $.deparam.fragment()
+                this.model.set(hashObj)
+            }.bind(this))
+        },
+
+        filter : function(filter) {
+            this.grid.$el.mixItUp('filter', filter)
+        },
+
+        sort : function(sort) {
+            this.grid.$el.mixItUp('sort', sort + ':asc')
         },
 
         onClose : function() {
-            this.model.unset('sort').unset('filter')
-            $('.page').removeClass(this.class)
-            this.filterbar.close()
-            $(window).off('hashchange')
-        },
+            this.grid.$el.mixItUp('destroy', true)
 
+            $('.page').removeClass(this.class)
+
+            this.model.off('change')
+            this.model.clear({ silent : true })
+
+            $(window).off('hashchange')
+
+            this.filterbar.close()
+        },
 
         navigate : function(e) {
             e.preventDefault()
