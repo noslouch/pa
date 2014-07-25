@@ -8,16 +8,26 @@ $column-gutter: emCalc(7);
     width: 100%;
     max-width: 1190px;
     margin: 0 auto;
-    font-size: 0.1px;
+    font-size: 0px;
     min-height: 100%;
+    text-align: justify;
+
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 100%;
+    }
+}
+
+.gap {
+    display: inline-block;
+    width: 25%;
 }
 
 .photo-cell {
-    @include grid-column(3);
-    font-size: 16px;
-    margin-bottom: 25px;
+    width: 25%;
+    padding: 3px;
     vertical-align: top;
-    //opacity: 0;
     display: none;
 
     .img {
@@ -56,11 +66,13 @@ $column-gutter: emCalc(17);
         font-weight: 500;
         margin-bottom: 0;
         margin-top: 0.75em;
+        text-align: left;
     }
     a p { 
         font-size: emCalc(13);
         font-weight: 300;
         line-height: 1.2;
         color: $primary-color;
+        text-align: left;
     }
 }

@@ -54,6 +54,8 @@ define([
                 }).render() )
             }, this )
 
+            this.$el.append($('<div class="gap" />')).append($('<div class="gap" />'))
+
         },
 
         render : function() {

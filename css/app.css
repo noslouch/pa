@@ -5628,34 +5628,43 @@ a.fancybox-prev:hover span {
   width: 100%;
   max-width: 1190px;
   margin: 0 auto;
-  font-size: 0.1px;
+  font-size: 0px;
   min-height: 100%;
+  text-align: justify;
+}
+/* line 15, sass/_fixed-grid.scss */
+.photo-grid:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
 }
 
-/* line 15, sass/_fixed-grid.scss */
-.photo-cell {
-  padding-left: 0.18421rem;
-  padding-right: 0.18421rem;
+/* line 22, sass/_fixed-grid.scss */
+.gap {
+  display: inline-block;
   width: 25%;
-  float: left;
-  font-size: 16px;
-  margin-bottom: 25px;
+}
+
+/* line 27, sass/_fixed-grid.scss */
+.photo-cell {
+  width: 25%;
+  padding: 3px;
   vertical-align: top;
   display: none;
 }
-/* line 23, sass/_fixed-grid.scss */
+/* line 33, sass/_fixed-grid.scss */
 .photo-cell .img {
   position: relative;
 }
-/* line 27, sass/_fixed-grid.scss */
+/* line 37, sass/_fixed-grid.scss */
 .photography .photo-cell .img, .books .photo-cell .img {
   height: 216px;
 }
-/* line 31, sass/_fixed-grid.scss */
+/* line 41, sass/_fixed-grid.scss */
 .photo-cell a {
   display: block;
 }
-/* line 33, sass/_fixed-grid.scss */
+/* line 43, sass/_fixed-grid.scss */
 .film .photo-cell .img:before {
   background-position: 0 -17px;
   content: '';
@@ -5667,24 +5676,26 @@ a.fancybox-prev:hover span {
   top: 50%;
   margin-top: -22px;
 }
-/* line 45, sass/_fixed-grid.scss */
+/* line 55, sass/_fixed-grid.scss */
 .film .photo-cell:hover .img:before {
   background-position: 0 -60px;
 }
 
-/* line 54, sass/_fixed-grid.scss */
+/* line 64, sass/_fixed-grid.scss */
 .photo-cell h3 {
   font-size: 1rem;
   font-weight: 500;
   margin-bottom: 0;
   margin-top: 0.75em;
+  text-align: left;
 }
-/* line 60, sass/_fixed-grid.scss */
+/* line 71, sass/_fixed-grid.scss */
 .photo-cell a p {
   font-size: 0.68421rem;
   font-weight: 300;
   line-height: 1.2;
   color: black;
+  text-align: left;
 }
 
 /* line 7, sass/_isotope-grid.scss */
