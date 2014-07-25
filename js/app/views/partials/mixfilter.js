@@ -1,4 +1,5 @@
-/* app/views/partials/mixfilter.js - Filter for Fixed Photo grids running mixitup.js */
+/* DEPRECATED
+/* app/views/partials/mixfilter.js - Filter for Fixed Photo grids running mixitup.js
 'use strict';
 
 define([
@@ -186,3 +187,4 @@ define([
     return Filter
 
 })
+*/

@@ -5010,15 +5010,15 @@ a.fancybox-prev:hover span {
   }
 }
 /* line 698, sass/_modules.scss */
-.project-gallery.slick-slider {
+.slideshow.slick-slider {
   margin-bottom: 0;
 }
 /* line 701, sass/_modules.scss */
-.project-gallery.slick-slider .slick-track {
+.slideshow.slick-slider .slick-track {
   height: 100%;
 }
 /* line 705, sass/_modules.scss */
-.project-gallery.slick-slider .slick-slide {
+.slideshow.slick-slider .slick-slide {
   background-color: white;
   background-image: url(/css/img/loader.gif);
   background-position: center center;
@@ -5641,7 +5641,6 @@ a.fancybox-prev:hover span {
   font-size: 16px;
   margin-bottom: 25px;
   vertical-align: top;
-  opacity: 0;
   display: none;
 }
 /* line 23, sass/_fixed-grid.scss */
@@ -6026,7 +6025,7 @@ nav.is-notvisible {
 }
 
 /* line 176, sass/_general.scss */
-.page.project-single {
+.page.detail-view {
   padding-top: 10.10526rem;
   height: 100%;
   position: fixed;
@@ -6037,7 +6036,7 @@ nav.is-notvisible {
 }
 
 /* line 186, sass/_general.scss */
-.project-back {
+.detail-back {
   position: absolute;
   right: 0;
   top: 0;
@@ -6049,11 +6048,11 @@ nav.is-notvisible {
   padding: 0.5rem;
 }
 /* line 198, sass/_general.scss */
-.project-back:focus, .project-back:active {
+.detail-back:focus, .detail-back:active {
   background-color: transparent;
 }
 /* line 202, sass/_general.scss */
-.project-back:hover {
+.detail-back:hover {
   background-color: transparent;
   color: black;
 }
@@ -6480,7 +6479,7 @@ nav.is-notvisible {
 }
 
 /* line 677, sass/_general.scss */
-.project.viewer {
+.detail.viewer {
   height: 100%;
   max-width: none;
   display: -webkit-box;
@@ -6534,7 +6533,7 @@ nav.is-notvisible {
 }
 
 /* line 716, sass/_general.scss */
-.details--project {
+.details--detail {
   height: auto;
   width: 100%;
   min-width: 0;
@@ -6543,15 +6542,15 @@ nav.is-notvisible {
   padding: 0;
   float: none;
   position: relative;
-  overflow: auto;
+  overflow: hidden;
 }
 /* line 727, sass/_general.scss */
-.details--project .tags {
+.details--detail .tags {
   margin: 0;
   float: left;
 }
 /* line 732, sass/_general.scss */
-.details--project header {
+.details--detail header {
   margin-bottom: 0;
   margin-right: 1.5rem;
   float: left;
@@ -6567,7 +6566,7 @@ nav.is-notvisible {
 }
 
 /* line 744, sass/_general.scss */
-.container.container--project {
+.container.container--detail {
   width: auto;
   float: none;
   max-width: none;

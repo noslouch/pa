@@ -360,10 +360,15 @@ define([
         },
 
         render : function(renderOptions) {
+            var renderOptions = renderOptions || {}
+            renderOptions.brands = !!_.flatten( this.collection.pluck('brand_tags') ).length
+            renderOptions.types = !!_.flatten( this.collection.pluck('type_tags') ).length
+            renderOptions.industry = !!_.flatten( this.collection.pluck('industry_tags') ).length
+
             this.$el.html( this.template() )
             this.$el.addClass('filter-bar')
+            this.previous = renderOptions.previous
 
-            var options = options || {}
             if ( !this.options.profile ) {
 
                 if (mobile) {
@@ -371,15 +376,8 @@ define([
                 } else {
                     this.mouseDOM(renderOptions)
                 }
-
-                if ( renderOptions.mixitup ) {
-                    this.$('#brand').remove()
-                    this.$('#industry').remove()
-
-                    if ( !renderOptions.hasTags ) {
-                        this.$('#type').remove()
-                        this.$('#all').remove()
-                    }
+                if (!renderOptions.brands && !renderOptions.types && !renderOptions.industry) {
+                    this.$('#all').remove()
                 }
             }
 
@@ -397,8 +395,8 @@ define([
         },
 
         mouseDOM : function(options) {
-            if ( !options.mixitup ) { 
-                // projects detail & landing
+            // detail & landing
+            if ( options.brands ) {
                 this.$('#brand .wrapper')
                     .append( new LogoBtns({
                         model : this.model
@@ -407,40 +405,34 @@ define([
                         model : this.model,
                         collection : this.collection
                     }).render() )
+            } else {
+                this.$('#brand').remove()
+            }
+
+            if ( options.industry ) {
                 this.$('#industry .wrapper')
                     .append( new ProjectUl({
                         type : 'industry',
                         model : this.model,
                         collection : this.collection
                     }).render() )
+            } else {
+                this.$('#industry').remove()
+            }
+
+            if ( options.types ) {
                 this.$('#type .wrapper')
                     .append( new ProjectUl({
                         type : 'type',
                         model : this.model,
                         collection : this.collection
                     }).render() )
+            } else {
+                this.$('#type').remove()
+            }
 
-                if ( !this.options.parentSection ) {
-                    // projects landing only
-                    this.sortList = new ViewSort({
-                        model : this.model,
-                        collection : this.collection,
-                        id : 'sorts',
-                        type : 'sort',
-                        template : TPL.sorts
-                    })
-                    this.viewList = new ViewSort({
-                        model : this.model,
-                        id : 'views',
-                        type : 'view',
-                        template : TPL.views
-                    })
-                    this.$el
-                        .append( this.sortList.render(options) )
-                        .append( this.viewList.render({ jumpTo : false }) )
-                }
-            } else if ( options.mixitup ) {
-                // books, film, photography
+            if ( !this.options.parentSection ) {
+                // landing only
                 this.sortList = new ViewSort({
                     model : this.model,
                     collection : this.collection,
@@ -448,45 +440,48 @@ define([
                     type : 'sort',
                     template : TPL.sorts
                 })
+                this.$el
+                    .append( this.sortList.render(options) )
 
-                this.$el.append( this.sortList.render(options) )
-
-                if ( options.hasTags ) {
-                    // if there are tags on this section landing
-                    this.$('#type .wrapper')
-                        .html( new ProjectUl({
-                            type : 'type',
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
+                if ( !options.mixitup ) {
+                    this.viewList = new ViewSort({
+                        model : this.model,
+                        id : 'views',
+                        type : 'view',
+                        template : TPL.views
+                    })
+                    this.$el
+                        .append( this.viewList.render({ jumpTo : false }) )
                 }
-            } else {
-                console.log('remove type and all?')
-                // this.$('#type').remove()
-                // this.$('#all').remove()
             }
         },
 
         touchDOM : function(options) {
             if ( !options.mixitup ) {
                 //projects detail & landing
-                this.$('#brand')
-                    .append( new LogoUl({
-                        model : this.model,
-                        collection : this.collection
-                    }).render() )
-                this.$('#industry')
-                    .html( new ProjectUl({
-                        type : 'industry',
-                        model : this.model,
-                        collection : this.collection
-                    }).render() )
-                this.$('#type')
-                    .html( new ProjectUl({
-                        type : 'type',
-                        model : this.model,
-                        collection : this.collection
-                    }).render() )
+                if ( options.brands ) {
+                    this.$('#brand')
+                        .append( new LogoUl({
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                }
+                if ( options.industry ) { 
+                    this.$('#industry')
+                        .html( new ProjectUl({
+                            type : 'industry',
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                }
+                if ( options.types ) {
+                    this.$('#type')
+                        .html( new ProjectUl({
+                            type : 'type',
+                            model : this.model,
+                            collection : this.collection
+                        }).render() )
+                }
 
                 if ( !this.options.parentSection ) {
                     // projects landing only

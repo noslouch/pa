@@ -22,16 +22,13 @@ define([
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
-            _.bindAll( this, 'render', 'navigate', 'init' )
-            var self = this
+            _.bindAll( this, 'render', 'navigate', 'init', 'build' )
 
-            if ( !Projects.length ) {
-                try {
-                    this.collection.add(PA.projects, { parse : true })
-                    this.build()
-                } catch (e) {
-                    this.collection.fetch({ success : this.build.bind(this) })
-                }
+            if ( PA.projects ) {
+                this.collection.add(PA.projects, { parse : true })
+                this.build()
+            } else {
+                this.collection.fetch({ success : this.build })
             }
 
         },
@@ -141,10 +138,14 @@ define([
                 this.cover.$el.isotope('destroy')
             }
             this.cover.$('.thumb').show().find('img').removeClass('loaded')
+
             this.$el.removeClass('projects')
+
             this.model.off('change')
-            this.model.clear({silent: true})
+            this.model.clear({ silent : true})
+
             $(window).off('hashchange')
+
             if (this.filterbar) {
                 this.filterbar.close()
             }

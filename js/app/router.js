@@ -119,7 +119,7 @@ define([
     Backbone.dispatcher.on('navigate:section', function(e) {
         var l
         if ( typeof e === 'string' ) {
-            // triggered by project detail filter bar
+            // triggered by detail filter bar
             l = e
         } else {
             // triggered by main menu click

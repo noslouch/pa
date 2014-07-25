@@ -18,6 +18,27 @@
             PA.projects = {embed="api/projects"};
         </script>
         {/exp:ce_cache:it}
+        {if:elseif segment_1 == 'books'}
+        {exp:ce_cache:it global="yes" id="books_bootstrap"}
+        <script>
+            var PA = {};
+            PA.books = {embed="api/books"};
+        </script>
+        {/exp:ce_cache:it}
+        {if:elseif segment_1 == 'film'}
+        {exp:ce_cache:it global="yes" id="film_bootstrap"}
+        <script>
+            var PA = {};
+            PA.film = {embed="api/film"};
+        </script>
+        {/exp:ce_cache:it}
+        {if:elseif segment_1 == 'photography'}
+        {exp:ce_cache:it global="yes" id="photography_bootstrap"}
+        <script>
+            var PA = {};
+            PA.photography = {embed="api/photography"};
+        </script>
+        {/exp:ce_cache:it}
         {/if}
 
         {if embed:secure != 'y'}
@@ -38,7 +59,7 @@
             <div class="inner-header">
                 <header class="site-header">
                 <h1 class="logo"><a href="{path='projects'}">Peter Arnell</a></h1>
-                    {if embed:nav == 'projects' && segment_2}
+                    {if segment_2}
                     <nav id="nav" class="is-notvisible">
                     {if:else}
                     <nav id="nav">

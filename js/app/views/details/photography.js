@@ -1,3 +1,4 @@
+/*global PA*/
 /* app/views/details/photography.js
  * detail view for photo galleries */
 'use strict';
@@ -8,20 +9,22 @@ define([
     'underscore',
     'tpl/jst',
     'app/models/photo',
+    'app/collections/photography',
     'app/views/partials/album',
-], function( $, Backbone, _, TPL, P, A ) {
+], function( $, Backbone, _, TPL, PhotoModel, Photos, Album ) {
 
-    var PhotoDetails = A.Details.extend({
-        buttonText : 'Back to All Photography',
-        url : '/photography'
+    try {
+        Photos.add( PA.photography, { parse : true } )
+    } catch (e) {
+        Photos.fetch()
+    }
+
+    var PhotoDetails = new Album({
+        collection : Photos,
+        model : new PhotoModel(),
+        section : 'photography'
     })
 
-    var PhotoAlbum = A.Album.extend({
-        model : new P(),
-        Details : PhotoDetails,
-        url : '/api/photography/',
-        namespace : 'photography'
-    })
+    return PhotoDetails
 
-    return new PhotoAlbum()
 })

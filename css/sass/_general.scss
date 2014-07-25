@@ -173,7 +173,7 @@ nav.is-notvisible {
     }
 }
 
-.page.project-single {
+.page.detail-view {
     padding-top: rem-calc(192);
     height: 100%;
     position: fixed;
@@ -183,7 +183,7 @@ nav.is-notvisible {
     left: 0;
 }
 
-.project-back {
+.detail-back {
     position: absolute;
     right: 0;
     top: 0;
@@ -674,7 +674,7 @@ nav.is-notvisible {
     margin: 0 auto;
 }
 
-.project.viewer {
+.detail.viewer {
     height: 100%;
     max-width: none;
     @include flexbox;
@@ -713,7 +713,7 @@ nav.is-notvisible {
     }
 }
 
-.details--project {
+.details--detail {
     height: auto;
     width: 100%;
     min-width: 0;
@@ -722,7 +722,7 @@ nav.is-notvisible {
     padding: 0;
     float: none;
     position: relative;
-    overflow: auto;
+    overflow: hidden;
 
     .tags {
         margin: 0;
@@ -741,7 +741,7 @@ nav.is-notvisible {
     max-width: 854px;
 }
 
-.container.container--project {
+.container.container--detail {
     width: auto;
     float: none;
     max-width: none;

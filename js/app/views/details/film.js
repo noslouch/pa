@@ -1,3 +1,4 @@
+/*global PA*/
 /* app/views/film.js
  * Single Film detail view */
 'use strict';
@@ -7,31 +8,22 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/showcases/video',
-    'app/views/partials/album',
     'app/models/film',
-], function( $, Backbone, _, TPL, V, A, FilmModel ) {
+    'app/collections/films',
+    'app/views/partials/album'
+], function( $, Backbone, _, TPL, FilmModel, Films, Album) {
 
-    var FilmDetails = A.Details.extend({
-        buttonText: 'Back to All Film',
-        url : '/film'
-    })
+    try {
+        Films.add( PA.film, { parse : true } )
+    } catch (e) {
+        Films.fetch()
+    }
 
-    var Film = A.Album.extend({
-        className : 'film viewer',
+    var FilmDetails = new Album({
+        collection : Films,
         model : new FilmModel(),
-        Details : FilmDetails,
-        url : '/api/film/',
-        namespace : 'film',
-        renderOut : function( model, response, ops ) {
-            this.details.render()
-            var video = new V({
-                model : this.model
-            })
-            this.$viewer.html( video.render() )
-            this.trigger( 'rendered' )
-        }
+        section : 'film'
     })
 
-    return new Film()
+    return FilmDetails
 })

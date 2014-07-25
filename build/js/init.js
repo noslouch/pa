@@ -20,7 +20,7 @@ require.config({
         swipe                           : '/js/lib/swipe/swipe',
         json                            : '/js/lib/json/json2',
         imagesLoaded                    : 'imagesloaded/imagesloaded',
-        mixitup                         : 'mixitup/jquery.mixitup.min',
+        mixitup                         : 'mixitup/build/jquery.mixitup.min',
         mixfilter                       : '/js/app/views/partials/mixfilter.@@hash',
         fastclick                       : '/js/lib/fastclick/fastclick.min',
         domReady                        : '/js/lib/requirejs/domReady',
