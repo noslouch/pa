@@ -85,6 +85,8 @@ define([
 
     var Gallery = Backbone.View.extend({
         initialize: function() {
+            _.bindAll(this, 'keyHandler', 'next')
+
             if ( !$('#slickCSS').length ) {
                 var link = document.createElement("link");
                 link.id = 'slickCSS'
@@ -142,7 +144,8 @@ define([
                         $('.project-controls').addClass('loaded')
                     }, 200 )
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
-                    $(window).on('keyup', this.keyHandler.bind(this))
+                    $(window).on('keyup', this.keyHandler)
+                    $('.slick-slide').click(this.next)
                 }.bind(this), // force bind b/c slick binds this to the slick object
                 onBeforeChange : function(s, i) {},
                 onAfterChange : function(s, i) {
@@ -151,6 +154,10 @@ define([
                     })
                 }
             })
+        },
+
+        next : function() {
+            this.$el.slickNext()
         },
 
         resizeHandler : function() {
