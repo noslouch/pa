@@ -10,7 +10,7 @@
     width: 100%;
 }
 
-.press {
+article.press {
 
     header {
         @include grid-row;
@@ -56,7 +56,7 @@
     }
 }
 
-.press {
+article.press {
     h3, time {
         font-size: emCalc(19);
     }
