@@ -12,28 +12,28 @@
         <script src="{site_url}/js/lib/modernizr/custom.modernizr.js"></script>
 
         {if segment_1 == 'projects' || segment_1 == ''}
-        {exp:ce_cache:it global="yes" id="projects_bootstrap"}
+        {exp:ce_cache:it global="yes" id="projects_bootstrap" seconds="2592000"}
         <script>
             var PA = {};
             PA.projects = {embed="api/projects"};
         </script>
         {/exp:ce_cache:it}
         {if:elseif segment_1 == 'books'}
-        {exp:ce_cache:it global="yes" id="books_bootstrap"}
+        {exp:ce_cache:it global="yes" id="books_bootstrap" seconds="2592000"}
         <script>
             var PA = {};
             PA.books = {embed="api/books"};
         </script>
         {/exp:ce_cache:it}
         {if:elseif segment_1 == 'film'}
-        {exp:ce_cache:it global="yes" id="film_bootstrap"}
+        {exp:ce_cache:it global="yes" id="film_bootstrap" seconds="2592000"}
         <script>
             var PA = {};
             PA.film = {embed="api/film"};
         </script>
         {/exp:ce_cache:it}
         {if:elseif segment_1 == 'photography'}
-        {exp:ce_cache:it global="yes" id="photography_bootstrap"}
+        {exp:ce_cache:it global="yes" id="photography_bootstrap" seconds="2592000"}
         <script>
             var PA = {};
             PA.photography = {embed="api/photography"};
