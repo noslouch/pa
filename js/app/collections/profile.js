@@ -88,9 +88,9 @@ define([
         , new Section({ id : 'awards', content : awards })
         , new Section({ id : 'photos-of-pa', content : photosOf })
         , new Section({ id : 'articles-by-pa', content : paAuthor })
-        , new Section({ id : 'articles-about-pa', content : paSubject })
+        //, new Section({ id : 'articles-about-pa', content : paSubject })
         , new Section({ id : 'interviews', content : interviews })
-        , new Section({ id : 'transcripts', content : transcripts })
+        //, new Section({ id : 'transcripts', content : transcripts })
     ])
     profileSections.section = function(t) {
         return this._byId[t].get('content')

@@ -103,7 +103,7 @@ define([
                     }
                 }
 
-            if ( options.gallery ) {
+            if ( this.model.get('type') === 'gallery' ) {
                 require(['utils/' + path], function(g) {
                     g()
                     self.$el.imagesLoaded()
