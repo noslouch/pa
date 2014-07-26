@@ -4644,7 +4644,7 @@ button {
 .open.view-all h3:after,
 .open.views h3:after,
 .open.jumps h3:after,
-.open.sorts h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, a.fancybox-next span, a.fancybox-next:hover span, a.fancybox-prev span, a.fancybox-prev:hover span, .project-controls .slick-next:before, .project-controls .slick-next:hover:before, .project-controls .slick-prev:before, .project-controls .slick-prev:hover:before, .film .photo-cell .img:before, .film .photo-cell:hover .img:before {
+.open.sorts h3:after, .icon-view:before, .icon-view:hover:before, .icon-view.active:before, .title-view:before, .title-view:hover:before, .title-view.active:before, .random-view:before, .random-view:hover:before, .random-view.active:before, .alpha-sort, .alpha-sort:hover, .alpha-sort.active, .date-sort, .date-sort:hover, .date-sort.active, a.fancybox-next span, a.fancybox-next:hover span, a.fancybox-prev span, a.fancybox-prev:hover span, .project-controls .slick-next:before, .project-controls .slick-next:hover:before, .project-controls .slick-prev:before, .project-controls .slick-prev:hover:before {
   background: url('img/icons-sf90dc8fc94.png') no-repeat;
 }
 
@@ -5663,22 +5663,6 @@ article.press p {
 /* line 41, sass/_fixed-grid.scss */
 .photo-cell a {
   display: block;
-}
-/* line 43, sass/_fixed-grid.scss */
-.film .photo-cell .img:before {
-  background-position: 0 -17px;
-  content: '';
-  position: absolute;
-  width: 76px;
-  height: 43px;
-  left: 50%;
-  margin-left: -38px;
-  top: 50%;
-  margin-top: -22px;
-}
-/* line 55, sass/_fixed-grid.scss */
-.film .photo-cell:hover .img:before {
-  background-position: 0 -60px;
 }
 
 /* line 64, sass/_fixed-grid.scss */

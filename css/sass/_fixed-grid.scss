@@ -40,21 +40,21 @@ $column-gutter: emCalc(7);
     }
     a { display: block; }
 
-    .film & .img:before {
-        @include icons-sprite(play);
-        content: '';
-        position: absolute;
-        width: 76px;
-        height: 43px;
-        left: 50%;
-        margin-left: -38px;
-        top: 50%;
-        margin-top: -22px;
-    }
+    // .film & .img:before {
+    //     @include icons-sprite(play);
+    //     content: '';
+    //     position: absolute;
+    //     width: 76px;
+    //     height: 43px;
+    //     left: 50%;
+    //     margin-left: -38px;
+    //     top: 50%;
+    //     margin-top: -22px;
+    // }
 
-    .film &:hover .img:before {
-        @include icons-sprite(play-hover);
-    }
+    // .film &:hover .img:before {
+    //     @include icons-sprite(play-hover);
+    // }
 }
 
 $column-gutter: emCalc(17);
