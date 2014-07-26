@@ -216,6 +216,7 @@ define([
             this.previous = previous ? $.deparam.fragment(previous.hash) : null
 
             $('.page').addClass('detail-view')
+
             $('#nav').addClass('is-notvisible')
             $(document).on('click', '#back', this.goBack)
 
@@ -239,6 +240,11 @@ define([
         },
 
         renderOut : function( model, response, ops ) {
+
+            $('<p class="copyright" />')
+                .text('Copyright ' + new Date().getFullYear() + ', Peter Arnell')
+                .attr('id', 'copyright')
+                .appendTo($('.page'))
 
             this.details = new Details({
                 el : this.$('#details').addClass('details--detail'),
@@ -278,11 +284,11 @@ define([
             $(window).off('keyup')
             $(document).off('click', '#back', this.goBack)
             $('.page').removeClass('detail-view')
+            $('#copyright').remove()
             $('#nav').removeClass('is-notvisible')
             this.filterbar.close()
             this.$back.remove()
         },
-
 
         goBack : function(e) {
             if (e) {
@@ -295,86 +301,6 @@ define([
             }
         }
     })
-
-
-    // var AlbumDetails = Backbone.View.extend({
-    //     template : TPL.textTemplate, // type, content
-    //     header : TPL.textTemplateHeader, // title, htmlDate, date
-    //     back : TPL.backButton, // buttonText, url
-    //     render : function() {
-    //         var $article = $( this.template({
-    //             type : null,
-    //             content : this.model.get('content')
-    //         }) ).prepend( this.header({
-    //             title : this.model.get('title'),
-    //             htmlDate : this.model.get('htmlDate'),
-    //             date : this.model.get('date').year()
-    //         }) ).prepend( this.back({
-    //             buttonText : this.buttonText,
-    //             url : this.url
-    //         }) )
-
-    //         this.$el.append($article)
-    //     }
-    // })
-
-    // var Album = Backbone.View.extend({
-    //     tagName : 'div',
-    //     className : 'photo viewer',
-    //     baseTmpl : TPL.viewer,
-    //     initialize : function() {
-    //         _.bindAll( this, 'render', 'renderOut' )
-    //     },
-    //     events : {
-    //         'click #back' : 'back'
-    //     },
-
-    //     render : function( albumUrl ) {
-    //         this.$el.html( this.baseTmpl() )
-    //         this.details = new this.Details({
-    //             el : this.$('#details'),
-    //             model : this.model
-    //         })
-    //         this.$viewer = this.$('#showcaseContainer')
-    //         this.delegateEvents()
-
-    //         this.model.fetch({
-    //             url : this.url + albumUrl,
-    //             success : this.renderOut
-    //         })
-
-    //         return this.el
-    //     },
-
-    //     renderOut : function( model, response, ops ) {
-    //         this.model.set('type', 'gallery')
-    //         this.collection = this.model.get('photos')
-
-    //         this.details.render({
-    //             collection : this.collection
-    //         })
-
-    //         var gallery = new G({
-    //             model : this.model,
-    //             collection : this.collection
-    //         })
-
-    //         this.$viewer.html( gallery.render({ gallery : true }) )
-
-    //             var projectTitle = this.model.get('title')
-    //             $('#showcaseContainer a').each(function(idx, el) {
-    //                 $(el).attr('title', ( el.title ? projectTitle + ': ' + el.title : projectTitle ))
-    //             })
-    //         this.trigger( 'rendered' )
-    //     },
-
-    //     back : function(e) {
-    //         e.preventDefault()
-    //         Backbone.dispatcher.trigger('navigate:section', e)
-    //         //Backbone.dispatcher.trigger( 'goBack', new Spinner(), this.namespace )
-    //     }
-
-    // })
 
     return AlbumView
 })
