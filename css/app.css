@@ -5675,7 +5675,7 @@ article.press p {
 /* line 27, sass/_fixed-grid.scss */
 .photo-cell {
   width: 25%;
-  padding: 3px 6px;
+  padding: 3px;
   vertical-align: top;
   display: none;
 }
@@ -5698,14 +5698,16 @@ article.press p {
   font-weight: 500;
   margin-top: 0.75em;
   text-align: left;
+  padding-right: 10px;
 }
-/* line 71, sass/_fixed-grid.scss */
+/* line 72, sass/_fixed-grid.scss */
 .photo-cell a p {
   font-size: 0.68421rem;
   font-weight: 300;
   line-height: 1.2;
   color: black;
   text-align: left;
+  padding-right: 10px;
 }
 
 /* line 7, sass/_isotope-grid.scss */
