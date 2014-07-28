@@ -6588,7 +6588,7 @@ nav.is-notvisible {
   padding: 0;
   float: none;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 /* line 740, sass/_general.scss */
 .details--detail .tags {
@@ -6724,12 +6724,12 @@ nav.is-notvisible {
   }
 }
 /* line 859, sass/_general.scss */
-.copyright {
+p.copyright {
   font-size: 0.75rem;
   color: #999;
   margin: 0;
   position: absolute;
-  bottom: 10px;
-  right: 20px;
+  bottom: -20px;
+  right: 0;
   font-weight: 200;
 }

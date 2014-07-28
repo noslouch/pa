@@ -295,7 +295,7 @@ define([
             $('<p class="copyright" />')
                 .text('Copyright ' + new Date().getFullYear() + ', Peter Arnell')
                 .attr('id', 'copyright')
-                .appendTo($('.page'))
+                .appendTo($('#details'))
 
             this.details = new Details({
                 el : this.$('#details').addClass('details--detail'),
