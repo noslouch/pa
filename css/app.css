@@ -4554,14 +4554,26 @@ button {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
   border-radius: 50%;
+  -webkit-transition: border-radius 100ms ease;
+  -moz-transition: border-radius 100ms ease;
+  -o-transition: border-radius 100ms ease;
+  transition: border-radius 100ms ease;
+}
+/* line 194, sass/_modules.scss */
+.dot.square {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
 }
 
-/* line 194, sass/_modules.scss */
+/* line 199, sass/_modules.scss */
 .active-slide a {
   color: red;
 }
 
-/* line 202, sass/_modules.scss */
+/* line 207, sass/_modules.scss */
 .search-form {
   display: none;
   background: white;
@@ -4572,7 +4584,7 @@ button {
   transition: opacity 150ms ease;
 }
 
-/* line 209, sass/_modules.scss */
+/* line 214, sass/_modules.scss */
 .search-form.active {
   display: block;
   position: fixed;
@@ -4582,19 +4594,19 @@ button {
   right: 0;
   opacity: 0.95;
 }
-/* line 218, sass/_modules.scss */
+/* line 223, sass/_modules.scss */
 .search-form.active .table-wrapper {
   display: table;
   width: 100%;
   height: 100%;
 }
-/* line 223, sass/_modules.scss */
+/* line 228, sass/_modules.scss */
 .search-form.active .cell-wrapper {
   display: table-cell;
   vertical-align: middle;
   padding: 0 3em;
 }
-/* line 229, sass/_modules.scss */
+/* line 234, sass/_modules.scss */
 .search-form.active .search {
   width: 100%;
   padding: 0;
@@ -4608,28 +4620,28 @@ button {
   -moz-appearance: none;
   appearance: none;
 }
-/* line 242, sass/_modules.scss */
+/* line 247, sass/_modules.scss */
 .search-form.active .submit-search,
 .search-form.active .cancel-search {
   outline: none;
   background: #e0e0e0;
 }
-/* line 246, sass/_modules.scss */
+/* line 251, sass/_modules.scss */
 .search-form.active .submit-search:hover,
 .search-form.active .cancel-search:hover {
   background: red;
   color: white;
 }
 
-/* line 254, sass/_modules.scss */
+/* line 259, sass/_modules.scss */
 .page.search .search-form {
   position: relative;
 }
-/* line 257, sass/_modules.scss */
+/* line 262, sass/_modules.scss */
 .page.search .search-form .cell-wrapper {
   padding: 0;
 }
-/* line 262, sass/_modules.scss */
+/* line 267, sass/_modules.scss */
 .page.search .cancel-search {
   display: none;
 }
@@ -4648,14 +4660,14 @@ button {
   background: url('img/icons-sf90dc8fc94.png') no-repeat;
 }
 
-/* line 280, sass/_modules.scss */
+/* line 285, sass/_modules.scss */
 .search-icon {
   background-position: 0 0;
   width: 13px;
   height: 17px;
 }
 
-/* line 286, sass/_modules.scss */
+/* line 291, sass/_modules.scss */
 .filter h3:after, .view-all h3:after, .views h3:after,
 .jumps h3:after,
 .sorts h3:after {
@@ -4668,7 +4680,7 @@ button {
   margin-bottom: 3px;
 }
 
-/* line 297, sass/_modules.scss */
+/* line 302, sass/_modules.scss */
 .filter h3:hover:after, .view-all h3:hover:after, .views h3:hover:after,
 .jumps h3:hover:after,
 .sorts h3:hover:after,
@@ -4680,12 +4692,12 @@ button {
   background-position: 0 -377px;
 }
 
-/* line 301, sass/_modules.scss */
+/* line 306, sass/_modules.scss */
 .view-all h3:after {
   content: none;
 }
 
-/* line 307, sass/_modules.scss */
+/* line 312, sass/_modules.scss */
 .icon-view:before {
   background-position: 0 -385px;
   width: 16px;
@@ -4696,16 +4708,16 @@ button {
   position: absolute;
   left: 0;
 }
-/* line 318, sass/_modules.scss */
+/* line 323, sass/_modules.scss */
 .icon-view:hover:before {
   background-position: 0 -362px;
 }
-/* line 322, sass/_modules.scss */
+/* line 327, sass/_modules.scss */
 .icon-view.active:before {
   background-position: 0 -347px;
 }
 
-/* line 329, sass/_modules.scss */
+/* line 334, sass/_modules.scss */
 .title-view:before {
   background-position: 0 -313px;
   width: 17px;
@@ -4716,16 +4728,16 @@ button {
   position: absolute;
   left: -1px;
 }
-/* line 340, sass/_modules.scss */
+/* line 345, sass/_modules.scss */
 .title-view:hover:before {
   background-position: 0 -261px;
 }
-/* line 344, sass/_modules.scss */
+/* line 349, sass/_modules.scss */
 .title-view.active:before {
   background-position: 0 -330px;
 }
 
-/* line 351, sass/_modules.scss */
+/* line 356, sass/_modules.scss */
 .random-view:before {
   background-position: 0 -294px;
   width: 17px;
@@ -4736,71 +4748,71 @@ button {
   left: -1px;
   margin-top: 4px;
 }
-/* line 362, sass/_modules.scss */
+/* line 367, sass/_modules.scss */
 .random-view:hover:before {
   background-position: 0 -207px;
 }
-/* line 366, sass/_modules.scss */
+/* line 371, sass/_modules.scss */
 .random-view.active:before {
   background-position: 0 -226px;
 }
 
-/* line 371, sass/_modules.scss */
+/* line 376, sass/_modules.scss */
 .alpha-sort {
   background-position: 0 -103px;
   width: 26px;
   height: 8px;
 }
-/* line 376, sass/_modules.scss */
+/* line 381, sass/_modules.scss */
 .alpha-sort:hover {
   background-position: 0 -119px;
 }
-/* line 380, sass/_modules.scss */
+/* line 385, sass/_modules.scss */
 .alpha-sort.active {
   background-position: 0 -127px;
 }
 
-/* line 385, sass/_modules.scss */
+/* line 390, sass/_modules.scss */
 .date-sort {
   background-position: 0 -111px;
   width: 21px;
   height: 8px;
 }
-/* line 390, sass/_modules.scss */
+/* line 395, sass/_modules.scss */
 .date-sort:hover {
   background-position: 0 -135px;
 }
-/* line 394, sass/_modules.scss */
+/* line 399, sass/_modules.scss */
 .date-sort.active {
   background-position: 0 -143px;
 }
 
-/* line 399, sass/_modules.scss */
+/* line 404, sass/_modules.scss */
 .close {
   font-size: 1rem;
   font-weight: 100;
 }
-/* line 403, sass/_modules.scss */
+/* line 408, sass/_modules.scss */
 .close span {
   color: red;
 }
-/* line 407, sass/_modules.scss */
+/* line 412, sass/_modules.scss */
 .close:hover {
   color: red;
 }
 
-/* line 419, sass/_modules.scss */
+/* line 424, sass/_modules.scss */
 .isotope-item {
   z-index: 2;
 }
 
-/* line 423, sass/_modules.scss */
+/* line 428, sass/_modules.scss */
 .isotope-hidden.isotope-item {
   pointer-events: none;
   z-index: 1;
 }
 
-/* line 480, sass/_modules.scss */
+/* line 485, sass/_modules.scss */
 #fancybox-lock .logo {
   position: fixed;
   top: 39px;
@@ -4813,15 +4825,15 @@ button {
   font-weight: 500;
   line-height: 1;
 }
-/* line 492, sass/_modules.scss */
+/* line 497, sass/_modules.scss */
 #fancybox-lock .logo a {
   color: red;
 }
-/* line 493, sass/_modules.scss */
+/* line 498, sass/_modules.scss */
 #fancybox-lock .logo a:hover {
   color: #999999;
 }
-/* line 496, sass/_modules.scss */
+/* line 501, sass/_modules.scss */
 #fancybox-lock .close {
   position: fixed;
   top: 0;
@@ -4830,21 +4842,21 @@ button {
   padding: 39px;
 }
 
-/* line 505, sass/_modules.scss */
+/* line 510, sass/_modules.scss */
 .fancybox-skin {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 507, sass/_modules.scss */
+/* line 512, sass/_modules.scss */
 a.fancybox-nav {
   display: block;
   float: left;
   margin-right: 10px;
 }
 
-/* line 517, sass/_modules.scss */
+/* line 522, sass/_modules.scss */
 a.fancybox-next span,
 a.fancybox-prev span {
   width: 9px;
@@ -4855,25 +4867,25 @@ a.fancybox-prev span {
   margin: 0;
 }
 
-/* line 527, sass/_modules.scss */
+/* line 532, sass/_modules.scss */
 a.fancybox-next span {
   background-position: 0 -278px;
 }
-/* line 530, sass/_modules.scss */
+/* line 535, sass/_modules.scss */
 a.fancybox-next:hover span {
   background-position: 0 -167px;
 }
 
-/* line 534, sass/_modules.scss */
+/* line 539, sass/_modules.scss */
 a.fancybox-prev span {
   background-position: 0 -245px;
 }
-/* line 537, sass/_modules.scss */
+/* line 542, sass/_modules.scss */
 a.fancybox-prev:hover span {
   background-position: 0 -151px;
 }
 
-/* line 540, sass/_modules.scss */
+/* line 545, sass/_modules.scss */
 .fancybox-lock .indicators {
   position: fixed;
   left: 3em;
@@ -4881,25 +4893,25 @@ a.fancybox-prev:hover span {
   height: auto;
   z-index: 8040;
 }
-/* line 547, sass/_modules.scss */
+/* line 552, sass/_modules.scss */
 .fancybox-lock .indicators ul {
   margin: -1px;
   float: right;
   border-top: 3px solid white;
 }
-/* line 558, sass/_modules.scss */
+/* line 563, sass/_modules.scss */
 .fancybox-lock .indicators li:hover {
   background: white;
 }
-/* line 561, sass/_modules.scss */
+/* line 566, sass/_modules.scss */
 .fancybox-lock .indicators li:hover a {
   opacity: 1;
 }
-/* line 565, sass/_modules.scss */
+/* line 570, sass/_modules.scss */
 .fancybox-lock .indicators li.active-slide:hover a {
   background: red;
 }
-/* line 570, sass/_modules.scss */
+/* line 575, sass/_modules.scss */
 .fancybox-lock .indicators li a {
   background: black;
   width: 12px;
@@ -4917,7 +4929,7 @@ a.fancybox-prev:hover span {
   transition: transform 100ms ease;
 }
 
-/* line 581, sass/_modules.scss */
+/* line 586, sass/_modules.scss */
 .fancybox-title {
   color: black;
   position: fixed;
@@ -4929,7 +4941,7 @@ a.fancybox-prev:hover span {
   text-shadow: none;
 }
 
-/* line 596, sass/_modules.scss */
+/* line 601, sass/_modules.scss */
 .swipe {
   overflow: hidden;
   visibility: hidden;
@@ -4938,14 +4950,14 @@ a.fancybox-prev:hover span {
   z-index: 8030;
 }
 
-/* line 603, sass/_modules.scss */
+/* line 608, sass/_modules.scss */
 .swipe-wrap {
   overflow: hidden;
   position: relative;
   height: 100%;
 }
 
-/* line 608, sass/_modules.scss */
+/* line 613, sass/_modules.scss */
 .swipe-wrap > div {
   float: left;
   width: 100%;
@@ -4953,13 +4965,13 @@ a.fancybox-prev:hover span {
   overflow: auto;
   height: 100%;
 }
-/* line 620, sass/_modules.scss */
+/* line 625, sass/_modules.scss */
 .swipe-wrap > div .inner-wrap {
   width: 100%;
   position: relative;
   height: 100%;
 }
-/* line 626, sass/_modules.scss */
+/* line 631, sass/_modules.scss */
 .swipe-wrap > div img {
   overflow: auto;
   margin: auto;
@@ -4975,11 +4987,11 @@ a.fancybox-prev:hover span {
 }
 
 @media only screen and (min-width: 1024px) {
-  /* line 644, sass/_modules.scss */
+  /* line 649, sass/_modules.scss */
   .fancybox-lock .indicators {
     z-index: 8040;
   }
-  /* line 647, sass/_modules.scss */
+  /* line 652, sass/_modules.scss */
   .fancybox-lock .indicators li:hover a {
     -webkit-transform: translate3d(0, -5px, 0);
     -moz-transform: translate3d(0, -5px, 0);
@@ -4989,12 +5001,12 @@ a.fancybox-prev:hover span {
   }
 }
 @media only screen and (max-width: 1024px) {
-  /* line 654, sass/_modules.scss */
+  /* line 659, sass/_modules.scss */
   .fancybox-lock .outer-wrapper {
     opacity: 0;
   }
 
-  /* line 657, sass/_modules.scss */
+  /* line 662, sass/_modules.scss */
   .fancybox-overlay {
     opacity: 0;
     -webkit-transition: opacity 150ms ease;
@@ -5004,20 +5016,20 @@ a.fancybox-prev:hover span {
   }
 }
 @media only screen and (min-width: 1080px) {
-  /* line 692, sass/_modules.scss */
+  /* line 697, sass/_modules.scss */
   .quotes h3 {
     font-size: 0.78947rem;
   }
 }
-/* line 698, sass/_modules.scss */
+/* line 703, sass/_modules.scss */
 .slideshow.slick-slider {
   margin-bottom: 0;
 }
-/* line 701, sass/_modules.scss */
+/* line 706, sass/_modules.scss */
 .slideshow.slick-slider .slick-track {
   height: 100%;
 }
-/* line 705, sass/_modules.scss */
+/* line 710, sass/_modules.scss */
 .slideshow.slick-slider .slick-slide {
   background-color: white;
   background-image: url(/css/img/loader.gif);
@@ -5025,7 +5037,7 @@ a.fancybox-prev:hover span {
   background-repeat: no-repeat;
 }
 
-/* line 713, sass/_modules.scss */
+/* line 718, sass/_modules.scss */
 .project-controls {
   position: absolute;
   bottom: 3px;
@@ -5037,7 +5049,7 @@ a.fancybox-prev:hover span {
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
 }
-/* line 723, sass/_modules.scss */
+/* line 728, sass/_modules.scss */
 .project-controls .slick-next,
 .project-controls .slick-prev {
   position: static;
@@ -5045,7 +5057,7 @@ a.fancybox-prev:hover span {
   margin: 0;
   height: 100%;
 }
-/* line 729, sass/_modules.scss */
+/* line 734, sass/_modules.scss */
 .project-controls .slick-next:before,
 .project-controls .slick-prev:before {
   content: '';
@@ -5053,43 +5065,43 @@ a.fancybox-prev:hover span {
   height: 16px;
   display: block;
 }
-/* line 736, sass/_modules.scss */
+/* line 741, sass/_modules.scss */
 .project-controls .slick-next:focus,
 .project-controls .slick-prev:focus {
   background-color: transparent;
 }
-/* line 741, sass/_modules.scss */
+/* line 746, sass/_modules.scss */
 .project-controls .slick-next:before {
   background-position: 0 -278px;
 }
-/* line 745, sass/_modules.scss */
+/* line 750, sass/_modules.scss */
 .project-controls .slick-next:hover {
   background-color: transparent;
 }
-/* line 748, sass/_modules.scss */
+/* line 753, sass/_modules.scss */
 .project-controls .slick-next:hover:before {
   background-position: 0 -167px;
 }
-/* line 753, sass/_modules.scss */
+/* line 758, sass/_modules.scss */
 .project-controls .slick-prev:before {
   background-position: 0 -245px;
 }
-/* line 757, sass/_modules.scss */
+/* line 762, sass/_modules.scss */
 .project-controls .slick-prev:hover {
   background-color: transparent;
 }
-/* line 760, sass/_modules.scss */
+/* line 765, sass/_modules.scss */
 .project-controls .slick-prev:hover:before {
   background-position: 0 -151px;
 }
 
-/* line 768, sass/_modules.scss */
+/* line 773, sass/_modules.scss */
 .project-controls.project-controls--nodots .slick-next,
 .project-controls.project-controls--nodots .slick-prev {
   height: 40px;
 }
 
-/* line 773, sass/_modules.scss */
+/* line 778, sass/_modules.scss */
 .project-dots.slick-dots {
   float: left;
   position: relative;
@@ -5102,7 +5114,7 @@ a.fancybox-prev:hover span {
   border-top: 3px solid white;
   overflow: hidden;
 }
-/* line 785, sass/_modules.scss */
+/* line 790, sass/_modules.scss */
 .project-dots.slick-dots > li {
   background: url('img/small-mask.png?1406566640');
   float: left;
@@ -5110,24 +5122,24 @@ a.fancybox-prev:hover span {
   height: 12px;
   margin: 0;
 }
-/* line 793, sass/_modules.scss */
+/* line 798, sass/_modules.scss */
 .project-dots.slick-dots > .text-slide {
   background: url('img/hamburger-mask.png?1406567558');
   width: 11px;
 }
-/* line 798, sass/_modules.scss */
+/* line 803, sass/_modules.scss */
 .project-dots.slick-dots button {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
-/* line 804, sass/_modules.scss */
+/* line 809, sass/_modules.scss */
 .project-dots.slick-dots button:before {
   content: none;
 }
 
-/* line 810, sass/_modules.scss */
+/* line 815, sass/_modules.scss */
 .project-summary {
   background: white;
   max-width: 50%;
@@ -5135,14 +5147,14 @@ a.fancybox-prev:hover span {
   height: 100%;
   display: table;
 }
-/* line 817, sass/_modules.scss */
+/* line 822, sass/_modules.scss */
 .project-summary p {
   display: table-cell;
   vertical-align: middle;
   font-weight: 100;
 }
 
-/* line 824, sass/_modules.scss */
+/* line 829, sass/_modules.scss */
 .project-image {
   height: auto;
   width: auto;
@@ -5160,7 +5172,7 @@ a.fancybox-prev:hover span {
   transition: opacity 150ms ease;
 }
 
-/* line 838, sass/_modules.scss */
+/* line 843, sass/_modules.scss */
 .project-dropdown {
   min-width: 40px;
   width: auto;
@@ -5171,11 +5183,11 @@ a.fancybox-prev:hover span {
   background-color: white;
   border: none;
 }
-/* line 848, sass/_modules.scss */
+/* line 853, sass/_modules.scss */
 .project-dropdown:hover {
   background-color: white;
 }
-/* line 852, sass/_modules.scss */
+/* line 857, sass/_modules.scss */
 .project-dropdown:focus {
   background-color: white;
   outline: none;
