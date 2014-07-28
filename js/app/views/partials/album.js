@@ -193,7 +193,7 @@ define([
                 $controls = $('<div/>').addClass('project-controls'),
                 $dropdown, $option
 
-            if ( slider.slideCount > 20 ) {
+            if ( slider.slideCount > 40 ) {
                 $('.slick-dots').hide()
                 $dropdown = $('<select />', { id : 'chooseSlide' }).addClass('project-dropdown')
                 for (var i = 0; i < slider.slideCount; i++) {
