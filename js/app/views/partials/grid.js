@@ -120,7 +120,11 @@ define([
         render : function() {
             var self = this
 
-            this.$el.html( this.grid.render() )
+            this.$el.html( this.grid.render({
+                scrolTo : this.lastY
+            }) )
+
+            this.lastY = null
 
             this.$('.page').imagesLoaded(function(){
                 $( '#' + self.class + '-grid' ).mixItUp({
@@ -179,6 +183,7 @@ define([
 
         navigate : function(e) {
             e.preventDefault()
+            this.lastY = window.pageYOffset
             Backbone.dispatcher.trigger('navigate:detail', e, this)
         }
 

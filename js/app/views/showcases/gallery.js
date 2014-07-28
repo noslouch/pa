@@ -120,6 +120,9 @@ define([
 
                 $el.isotope(isoOps)
                 model.trigger('isotope:ready')
+                if ( options.scrollTo ) {
+                    $('html, body').animate({ scrollTop: options.scrollTo }, 'fast')
+                }
 
                 self.$el.imagesLoaded().progress(function(instance, image) {
                     image.img.classList.add('loaded')

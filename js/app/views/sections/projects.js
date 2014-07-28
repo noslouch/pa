@@ -72,7 +72,12 @@ define([
 
         render : function() {
             var currentView = this.model.get('view')
-            this.$el.html( this[currentView].render({ gallery : false }) )
+            this.$el.html( this[currentView].render({
+                gallery : false,
+                scrollTo : this.lastY
+            }) )
+
+            this.lastY = null
 
             this.filterbar.delegateEvents()
 
@@ -130,6 +135,7 @@ define([
 
         navigate : function(e) {
             e.preventDefault()
+            this.lastY = window.pageYOffset
             Backbone.dispatcher.trigger('navigate:detail', e, this)
         },
 
