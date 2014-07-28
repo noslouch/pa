@@ -144,6 +144,7 @@ define([
             this.$el.slick({
                 dots : true,
                 fade : true,
+                draggable : false,
                 onInit : function(slider) {
                     this.resizeHandler()
                     this.galleryControls(slider)
