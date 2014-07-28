@@ -31,14 +31,16 @@
         ],
         "media" :
         {
-            "videos" : [
-                {videos_film backspace="18"}
-                {
-                    "title" : {exp:json_encode}{videos_film:embed_title}{/exp:json_encode},
-                    "embed" : {exp:json_encode}{videos_film:embed_code}{/exp:json_encode}
-                },
-                {/videos_film}
-            ],
+            "videos" : {
+                {if video_id_film}
+                "video_id": "{video_id_film}",
+                {if:else}
+                "video_src" : "{video_src_film}",
+                {/if}
+                "youtube" : "{youtube_film}",
+                "caption" : {exp:json_encode}{caption_film}{/exp:json_encode},
+                "single" : true
+            },
             "summary": {exp:json_encode}{content_film}{/exp:json_encode}
         }
     },
