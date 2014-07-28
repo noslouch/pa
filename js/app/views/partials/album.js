@@ -85,7 +85,7 @@ define([
 
     var Gallery = Backbone.View.extend({
         initialize: function() {
-            _.bindAll(this, 'keyHandler', 'next')
+            _.bindAll(this, 'keyHandler', 'next', 'goToSlide')
 
             if ( !$('#slickCSS').length ) {
                 var link = document.createElement("link");
@@ -142,13 +142,17 @@ define([
                     this.galleryControls(slider)
                     setTimeout( function() {
                         $('.project-controls').addClass('loaded')
-                    }, 200 )
+                    }, 400 )
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
                     $(window).on('keyup', this.keyHandler)
                     $('.slick-slide').click(this.next)
                 }.bind(this), // force bind b/c slick binds this to the slick object
-                onBeforeChange : function(s, i) {},
+                onBeforeChange : function(s, i) {
+                    // ideally we should change the dropdown menu here
+                    // but we don't know which directin the gallery is moving
+                },
                 onAfterChange : function(s, i) {
+                    $('#chooseSlide').val(i)
                     $('#dot').animate({
                         left: $('.slick-dots li').eq(s.currentSlide).position().left
                     })
@@ -158,6 +162,10 @@ define([
 
         next : function() {
             this.$el.slickNext()
+        },
+
+        goToSlide : function(e) {
+            this.$el.slickGoTo( parseInt(e.currentTarget.value, 10) )
         },
 
         resizeHandler : function() {
@@ -182,14 +190,21 @@ define([
 
         galleryControls : function(slider) {
             var $dot = $('<div/>').attr('id','dot').addClass('dot'),
-                $controls = $('<div/>').addClass('project-controls')
+                $controls = $('<div/>').addClass('project-controls'),
+                $dropdown, $option
 
-            if ( slider.slideCount > 40 ) {
+            if ( slider.slideCount > 20 ) {
                 $('.slick-dots').hide()
+                $dropdown = $('<select />', { id : 'chooseSlide' }).addClass('project-dropdown')
+                for (var i = 0; i < slider.slideCount; i++) {
+                    $option = $('<option />').val(i).text(i+1)
+                    $dropdown.append($option).change(this.goToSlide)
+                }
+                $controls.append( $dropdown, $('.slick-prev'), $('.slick-next') ).addClass('project-controls--nodots')
             } else {
                 $('.slick-dots').addClass('project-dots').append($dot).appendTo($controls)
+                $controls.prepend( $('.slick-prev'), $('.slick-next'))
             }
-            $controls.prepend( $('.slick-prev'), $('.slick-next'))
             $('#details').append($controls)
         }
     })

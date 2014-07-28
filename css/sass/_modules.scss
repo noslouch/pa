@@ -763,6 +763,13 @@ a.fancybox-prev {
     }
 }
 
+.project-controls.project-controls--nodots {
+    .slick-next,
+    .slick-prev {
+        height: 40px;
+    }
+}
+
 .project-dots.slick-dots {
     float: left;
     position: relative;
@@ -819,4 +826,24 @@ a.fancybox-prev {
     left: 0;
     opacity: 0;
     @include transition(opacity 150ms ease);
+}
+
+.project-dropdown {
+    min-width: 40px;
+    width: auto;
+    height: 40px;
+    margin: 0;
+    margin-right: 20px;
+    float: left;
+    background-color: white;
+    border: none;
+
+    &:hover {
+        background-color: white;
+    }
+
+    &:focus {
+        background-color: white;
+        outline: none;
+    }
 }

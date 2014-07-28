@@ -5083,7 +5083,13 @@ a.fancybox-prev:hover span {
   background-position: 0 -151px;
 }
 
-/* line 766, sass/_modules.scss */
+/* line 768, sass/_modules.scss */
+.project-controls.project-controls--nodots .slick-next,
+.project-controls.project-controls--nodots .slick-prev {
+  height: 40px;
+}
+
+/* line 773, sass/_modules.scss */
 .project-dots.slick-dots {
   float: left;
   position: relative;
@@ -5095,7 +5101,7 @@ a.fancybox-prev:hover span {
   z-index: 0;
   border-top: 3px solid white;
 }
-/* line 777, sass/_modules.scss */
+/* line 784, sass/_modules.scss */
 .project-dots.slick-dots > li {
   background: url('img/small-mask.png?1392842492');
   float: left;
@@ -5103,19 +5109,19 @@ a.fancybox-prev:hover span {
   height: 12px;
   margin: 0;
 }
-/* line 785, sass/_modules.scss */
+/* line 792, sass/_modules.scss */
 .project-dots.slick-dots button {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
-/* line 791, sass/_modules.scss */
+/* line 798, sass/_modules.scss */
 .project-dots.slick-dots button:before {
   content: none;
 }
 
-/* line 797, sass/_modules.scss */
+/* line 804, sass/_modules.scss */
 .project-summary {
   background: white;
   max-width: 50%;
@@ -5123,14 +5129,14 @@ a.fancybox-prev:hover span {
   height: 100%;
   display: table;
 }
-/* line 804, sass/_modules.scss */
+/* line 811, sass/_modules.scss */
 .project-summary p {
   display: table-cell;
   vertical-align: middle;
   font-weight: 100;
 }
 
-/* line 811, sass/_modules.scss */
+/* line 818, sass/_modules.scss */
 .project-image {
   height: auto;
   max-height: 100%;
@@ -5145,6 +5151,27 @@ a.fancybox-prev:hover span {
   -moz-transition: opacity 150ms ease;
   -o-transition: opacity 150ms ease;
   transition: opacity 150ms ease;
+}
+
+/* line 831, sass/_modules.scss */
+.project-dropdown {
+  min-width: 40px;
+  width: auto;
+  height: 40px;
+  margin: 0;
+  margin-right: 20px;
+  float: left;
+  background-color: white;
+  border: none;
+}
+/* line 841, sass/_modules.scss */
+.project-dropdown:hover {
+  background-color: white;
+}
+/* line 845, sass/_modules.scss */
+.project-dropdown:focus {
+  background-color: white;
+  outline: none;
 }
 
 /* line 10, sass/_starfield.scss */
