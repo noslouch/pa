@@ -34,7 +34,7 @@ define([
             },
             afterLoad : function() {
                 var $bullets = $('#bullet-wrap'),
-                    $close = $('<a title="Close" class="close" href="javascript:;" id="fb-close"><span>X</span> Close</a>')
+                    $close = $('<a title="Close" class="close" href="javascript:;" id="fb-close"><span>X</span></a>')
 
                 if (!$bullets.length) {
                     $bullets = $('<div/>').attr('id', 'bullet-wrap').addClass('indicators')
