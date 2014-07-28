@@ -5675,7 +5675,7 @@ article.press p {
 /* line 27, sass/_fixed-grid.scss */
 .photo-cell {
   width: 25%;
-  padding: 3px;
+  padding: 3px 6px;
   vertical-align: top;
   display: none;
 }
