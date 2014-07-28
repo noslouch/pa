@@ -106,7 +106,8 @@ define([
                 _.each(media.gallery.images, function(image, i) {
                     var d = document.createElement('div'),
                         img = new Image()
-                    img.src = image.url
+                    //img.src = image.url
+                    img.dataset.lazy = image.url
                     img.className = 'project-image'
                     d.appendChild(img)
                     this.$el.append(d)
@@ -143,6 +144,7 @@ define([
             })
 
             this.$el.slick({
+                lazyLoad : 'progressive',
                 dots : true,
                 fade : true,
                 draggable : false,
