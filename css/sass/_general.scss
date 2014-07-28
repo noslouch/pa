@@ -88,6 +88,10 @@ html {
     &.profile { padding-bottom: 0; }
 }
 
+.detail-view.detail-view--nofilter .inner-header {
+    padding-bottom: 0;
+}
+
 .site-header {
     width: 100%;
     max-width: 1190px;
@@ -136,6 +140,7 @@ html {
 
 nav.is-notvisible {
     opacity: 0;
+    pointer-events: none;
 }
 
 .outer-wrapper {
@@ -173,7 +178,7 @@ nav.is-notvisible {
     }
 }
 
-.page.detail-view {
+.detail-view .page {
     padding-top: rem-calc(192);
     height: 100%;
     position: fixed;
@@ -181,6 +186,10 @@ nav.is-notvisible {
     right: 0;
     bottom: 0;
     left: 0;
+}
+
+.detail-view.detail-view--nofilter .page {
+    padding-top: rem-calc(16);
 }
 
 .detail-back {

@@ -457,6 +457,10 @@ define([
                         .append( this.viewList.render({ jumpTo : false }) )
                 }
             }
+
+            if ( !options.brands && !options.types && !options.industry && $('body').hasClass('detail-view') && this.previous ) {
+                $('body').addClass('detail-view--nofilter')
+            }
         },
 
         touchDOM : function(options) {

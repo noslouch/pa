@@ -215,7 +215,7 @@ define([
         render : function( urlTitle, hidden, previous ) {
             this.previous = previous ? $.deparam.fragment(previous.hash) : null
 
-            $('.page').addClass('detail-view')
+            $('body').addClass('detail-view')
 
             $('#nav').addClass('is-notvisible')
             $(document).on('click', '#back', this.goBack)
@@ -283,7 +283,7 @@ define([
             $(window).off('resize')
             $(window).off('keyup')
             $(document).off('click', '#back', this.goBack)
-            $('.page').removeClass('detail-view')
+            $('body').removeClass('detail-view')
             $('#copyright').remove()
             $('#nav').removeClass('is-notvisible')
             this.filterbar.close()
