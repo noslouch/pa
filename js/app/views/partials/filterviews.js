@@ -376,8 +376,12 @@ define([
                 } else {
                     this.mouseDOM(renderOptions)
                 }
+
                 if (!renderOptions.brands && !renderOptions.types && !renderOptions.industry) {
                     this.$('#all').remove()
+                    if ( document.body.classList.contains('detail-view') ) {
+                        document.body.classList.add('detail-view--nofilter')
+                    }
                 }
             }
 
@@ -456,10 +460,6 @@ define([
                     this.$el
                         .append( this.viewList.render({ jumpTo : false }) )
                 }
-            }
-
-            if ( !options.brands && !options.types && !options.industry && $('body').hasClass('detail-view') && this.previous ) {
-                $('body').addClass('detail-view--nofilter')
             }
         },
 
