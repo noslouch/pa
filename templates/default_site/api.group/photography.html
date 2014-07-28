@@ -36,6 +36,16 @@
                 ]
             },	
             "summary": {exp:json_encode}{content_photography}{/exp:json_encode}
+            {if videos_photography}
+            , "videos" : [
+                {videos_photography backspace="18"}
+                {
+                    "title" : {exp:json_encode}{videos_photography:embed_title}{/exp:json_encode},
+                    "embed" : {exp:json_encode}{videos_photography:embed_code}{/exp:json_encode}
+                },
+                {/videos_photography}
+            ],
+            {/if}
         },
         "cover" : {
         {gallery_photography cover_only="yes"}
