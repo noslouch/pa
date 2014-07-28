@@ -137,9 +137,9 @@ define([
             this.$el.slick({
                 dots : true,
                 fade : true,
-                onInit : function() {
+                onInit : function(slider) {
                     this.resizeHandler()
-                    this.galleryControls()
+                    this.galleryControls(slider)
                     setTimeout( function() {
                         $('.project-controls').addClass('loaded')
                     }, 200 )
@@ -180,11 +180,15 @@ define([
             }
         },
 
-        galleryControls : function() {
+        galleryControls : function(slider) {
             var $dot = $('<div/>').attr('id','dot').addClass('dot'),
                 $controls = $('<div/>').addClass('project-controls')
 
-            $('.slick-dots').addClass('project-dots').append($dot).appendTo($controls)
+            if ( slider.slideCount > 40 ) {
+                $('.slick-dots').hide()
+            } else {
+                $('.slick-dots').addClass('project-dots').append($dot).appendTo($controls)
+            }
             $controls.prepend( $('.slick-prev'), $('.slick-next'))
             $('#details').append($controls)
         }
