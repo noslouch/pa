@@ -56,6 +56,11 @@ module.exports = function(grunt) {
         src: '<%= concat.dist.dest %>',
         dest: 'build/<%= pkg.name %>.min.js'
       },
+      slick : {
+          files : {
+              'bower_components/slick-carousel/slick/slick.min.js' : ['bower_components/slick-carousel/slick/slick.js']
+          }
+      }
     },
 
     qunit: {

@@ -45,7 +45,9 @@ function( _ ){
     ].join('\n')
 
     JST.viewer = [
-        '<div class="details" id="details"></div>',
+        '<div class="details" id="details">',
+            '<div class="project-controls" id="controls"></div>',
+        '</div>',
         '<div class="container" id="showcaseContainer"></div>'
     ].join('\n')
 

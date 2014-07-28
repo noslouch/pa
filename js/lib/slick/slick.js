@@ -5,7 +5,7 @@ define([
     'backbone',
     'underscore',
     'jquery',
-    'slick-carousel/slick/slick.min'
+    'slick-carousel/slick/slick'
 ], function( Backbone, _, $ ) {
 
 

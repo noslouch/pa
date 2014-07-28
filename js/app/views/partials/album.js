@@ -50,7 +50,7 @@ define([
         template : TPL.projectDetails,
         render : function(options) {
 
-            this.$el.html( this.template({
+            this.$el.prepend( this.template({
                 htmlDate    : this.model.get('htmlDate'),
                 date        : this.model.get('date').year(),
                 title       : this.model.get('title')
@@ -148,6 +148,9 @@ define([
                 dots : true,
                 fade : true,
                 draggable : false,
+                appendArrows : '#controls',
+                dotsClass : 'slick-dots project-dots',
+                pauseOnHover : false,
                 onInit : function(slider) {
                     this.resizeHandler()
                     this.galleryControls(slider)
@@ -204,7 +207,7 @@ define([
 
         galleryControls : function(slider) {
             var $dot = $('<div/>').attr('id','dot').addClass('dot'),
-                $controls = $('<div/>').addClass('project-controls'),
+                $controls = $('#controls'),
                 $dropdown, $option, summaryIndex, s = document.getElementById('summary')
 
             if ( slider.slideCount > 40 ) {
@@ -215,17 +218,15 @@ define([
                     $dropdown.append($option)
                 }
                 $dropdown.change(this.goToSlide)
-                $controls.append( $dropdown, $('.slick-prev'), $('.slick-next') ).addClass('project-controls--nodots')
+                $controls.prepend( $dropdown ).addClass('project-controls--nodots')
             } else {
-                $('.slick-dots').addClass('project-dots').append($dot).appendTo($controls)
-                $controls.prepend( $('.slick-prev'), $('.slick-next'))
+                $('.slick-dots').append($dot).appendTo($controls)
 
                 summaryIndex = $('.slick-slide').index(s)
                 if ( summaryIndex !== -1 && !!s ) {
                     $controls.find('.slick-dots li').eq(summaryIndex).addClass('text-slide')
                 }
             }
-            $('#details').append($controls)
         }
     })
 
