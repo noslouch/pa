@@ -7,13 +7,13 @@ define([
     'backbone',
     'underscore',
     'tpl/jst',
-    'app/views/showcases/video',
+    //'app/views/showcases/video',
     'app/views/showcases/gallery',
     'app/views/partials/filterviews',
     'utils/spinner',
     'slick',
     'imagesLoaded'
-], function( $, Backbone, _, TPL, V, G, FilterBar, Spinner ) {
+], function( $, Backbone, _, TPL, G, FilterBar, Spinner ) {
 
     var TagRow = Backbone.View.extend({
         tagName : 'li',
@@ -112,12 +112,18 @@ define([
                 }, this)
             }
 
-            if ( media.video ) {
-                var d = document.createElement('div')
-                d.appendChild( new V({
-                    model : new Backbone.Model(media.video)
-                }).render() )
-                this.$el.append(d)
+            if ( media.videos ) {
+                _.each(media.videos, function(video, i) {
+                    var d = document.createElement('div'),
+                        showcase = document.createElement('div'),
+                        inner = document.createElement('div')
+
+                    showcase.className = 'showcase video'
+                    inner.innerHTML = video.embed
+                    showcase.appendChild(inner)
+                    d.appendChild(showcase)
+                    this.$el.append(d)
+                }, this)
             }
 
             if ( media.summary ) {
