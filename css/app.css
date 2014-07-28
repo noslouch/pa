@@ -5989,7 +5989,7 @@ html body {
   padding: 0;
   list-style: none;
   overflow: hidden;
-  float: left;
+  float: right;
   margin: 0;
 }
 /* line 37, ../bower_components/foundation/scss/foundation/components/_inline-lists.scss */
