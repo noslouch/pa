@@ -120,11 +120,8 @@ define([
         render : function() {
             var self = this
 
-            this.$el.html( this.grid.render({
-                scrolTo : this.lastY
-            }) )
+            this.$el.html( this.grid.render() )
 
-            this.lastY = null
 
             this.$('.page').imagesLoaded(function(){
                 $( '#' + self.class + '-grid' ).mixItUp({
@@ -133,7 +130,12 @@ define([
                         filter : '',
                         sort : ''
                     },
-                    callbacks : {},
+                    callbacks : {
+                        onMixLoad : function(state) {
+                            $('html, body').animate({ scrollTop: this.lastY }, 'fast')
+                            this.lastY = null
+                        }.bind(self)
+                    },
                     controls : {
                         enable : false
                     },
