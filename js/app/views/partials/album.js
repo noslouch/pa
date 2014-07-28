@@ -212,8 +212,9 @@ define([
                 $dropdown = $('<select />', { id : 'chooseSlide' }).addClass('project-dropdown')
                 for (var i = 0; i < slider.slideCount; i++) {
                     $option = $('<option />').val(i).text(i+1)
-                    $dropdown.append($option).change(this.goToSlide)
+                    $dropdown.append($option)
                 }
+                $dropdown.change(this.goToSlide)
                 $controls.append( $dropdown, $('.slick-prev'), $('.slick-next') ).addClass('project-controls--nodots')
             } else {
                 $('.slick-dots').addClass('project-dots').append($dot).appendTo($controls)

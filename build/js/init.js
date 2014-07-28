@@ -113,5 +113,5 @@ require.config({
 require( ['jquery', 'underscore', 'backbone', 'app/router', 'fastclick', 'app/views/chrome'],
 function( $, _, Backbone, Router, fastClick ){
     Backbone.history.start({ pushState : true, root : '/' })
-    //fastClick.attach(document.body)
+    fastClick.attach(document.body)
 } )
