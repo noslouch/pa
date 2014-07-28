@@ -127,6 +127,7 @@ define([
                 summary.innerHTML = media.summary
                 summary.className = 'project-summary'
                 d.appendChild(summary)
+                d.id = 'summary'
                 this.$el.append(d)
             }
 
@@ -191,7 +192,7 @@ define([
         galleryControls : function(slider) {
             var $dot = $('<div/>').attr('id','dot').addClass('dot'),
                 $controls = $('<div/>').addClass('project-controls'),
-                $dropdown, $option
+                $dropdown, $option, summaryIndex
 
             if ( slider.slideCount > 40 ) {
                 $('.slick-dots').hide()
@@ -204,6 +205,11 @@ define([
             } else {
                 $('.slick-dots').addClass('project-dots').append($dot).appendTo($controls)
                 $controls.prepend( $('.slick-prev'), $('.slick-next'))
+
+                summaryIndex = $('.slick-slide').index(document.getElementById('summary'))
+                if ( summaryIndex !== -1 ) {
+                    $controls.find('.slick-dots li').eq(summaryIndex).addClass('text-slide')
+                }
             }
             $('#details').append($controls)
         }

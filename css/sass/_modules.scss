@@ -188,7 +188,7 @@ button {
     width: 12px;
     height: 12px;
     background: red;
-    @include border-radius(6px);
+    //@include border-radius(6px);
 }
 
 .active-slide a {
@@ -787,6 +787,11 @@ a.fancybox-prev {
         width: 17px;
         height: 12px;
         margin: 0;
+    }
+
+    > .text-slide {
+        background: image-url('hamburger-mask.png');
+        width: 11px;
     }
 
     button {

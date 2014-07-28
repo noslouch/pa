@@ -4525,7 +4525,7 @@ button {
 }
 /* line 170, sass/_modules.scss */
 .indicators li {
-  background: url('img/small-mask.png?1392842492');
+  background: url('img/small-mask.png?1406566640');
   float: left;
   width: 17px;
   height: 12px;
@@ -4549,11 +4549,6 @@ button {
   width: 12px;
   height: 12px;
   background: red;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  -ms-border-radius: 6px;
-  -o-border-radius: 6px;
-  border-radius: 6px;
 }
 
 /* line 194, sass/_modules.scss */
@@ -5103,25 +5098,30 @@ a.fancybox-prev:hover span {
 }
 /* line 784, sass/_modules.scss */
 .project-dots.slick-dots > li {
-  background: url('img/small-mask.png?1392842492');
+  background: url('img/small-mask.png?1406566640');
   float: left;
   width: 17px;
   height: 12px;
   margin: 0;
 }
 /* line 792, sass/_modules.scss */
+.project-dots.slick-dots > .text-slide {
+  background: url('img/hamburger-mask.png?1406567558');
+  width: 11px;
+}
+/* line 797, sass/_modules.scss */
 .project-dots.slick-dots button {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
-/* line 798, sass/_modules.scss */
+/* line 803, sass/_modules.scss */
 .project-dots.slick-dots button:before {
   content: none;
 }
 
-/* line 804, sass/_modules.scss */
+/* line 809, sass/_modules.scss */
 .project-summary {
   background: white;
   max-width: 50%;
@@ -5129,14 +5129,14 @@ a.fancybox-prev:hover span {
   height: 100%;
   display: table;
 }
-/* line 811, sass/_modules.scss */
+/* line 816, sass/_modules.scss */
 .project-summary p {
   display: table-cell;
   vertical-align: middle;
   font-weight: 100;
 }
 
-/* line 818, sass/_modules.scss */
+/* line 823, sass/_modules.scss */
 .project-image {
   height: auto;
   max-height: 100%;
@@ -5153,7 +5153,7 @@ a.fancybox-prev:hover span {
   transition: opacity 150ms ease;
 }
 
-/* line 831, sass/_modules.scss */
+/* line 836, sass/_modules.scss */
 .project-dropdown {
   min-width: 40px;
   width: auto;
@@ -5164,11 +5164,11 @@ a.fancybox-prev:hover span {
   background-color: white;
   border: none;
 }
-/* line 841, sass/_modules.scss */
+/* line 846, sass/_modules.scss */
 .project-dropdown:hover {
   background-color: white;
 }
-/* line 845, sass/_modules.scss */
+/* line 850, sass/_modules.scss */
 .project-dropdown:focus {
   background-color: white;
   outline: none;
