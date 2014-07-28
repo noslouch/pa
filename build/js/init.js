@@ -22,7 +22,7 @@ require.config({
         imagesLoaded                    : 'imagesloaded/imagesloaded',
         mixitup                         : 'mixitup/build/jquery.mixitup.min',
         mixfilter                       : '/js/app/views/partials/mixfilter.@@hash',
-        fastclick                       : '/js/lib/fastclick/fastclick.min',
+        fastclick                       : 'fastclick/lib/fastclick.min',
         domReady                        : '/js/lib/requirejs/domReady',
         //'eventie': '../bower_components/eventie',
         //'eventEmitter': '../bower_components/eventEmitter',
