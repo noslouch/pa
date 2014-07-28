@@ -34,8 +34,8 @@ define([
                 summary : this.model.get('summary')
             })
             this.$el.append( html )
-            this.el.dataset.name = this.model.get('title')
-            this.el.dataset.date = this.model.get('date').unix()
+            this.$el.data( 'name', this.model.get('title') )
+            this.$el.data( 'date', this.model.get('date').unix() )
             return this.el
         }
     })

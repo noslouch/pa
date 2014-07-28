@@ -570,7 +570,7 @@ define([
             $('html, body').animate({ scrollTop: 0  }, 'fast')
 
             try {
-                hash = e.type === 'change' ? e.currentTarget.selectedOptions[0].dataset.hash : e.currentTarget.dataset.hash
+                hash = e.type === 'change' ? $(e.currentTarget.selectedOptions[0]).data('hash') : $(e.currentTarget).data('hash')
                 option = $.deparam( hash, true )
             } catch(err) { return false }
 
