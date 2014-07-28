@@ -192,7 +192,7 @@ define([
         galleryControls : function(slider) {
             var $dot = $('<div/>').attr('id','dot').addClass('dot'),
                 $controls = $('<div/>').addClass('project-controls'),
-                $dropdown, $option, summaryIndex
+                $dropdown, $option, summaryIndex, s = document.getElementById('summary')
 
             if ( slider.slideCount > 40 ) {
                 $('.slick-dots').hide()
@@ -206,8 +206,8 @@ define([
                 $('.slick-dots').addClass('project-dots').append($dot).appendTo($controls)
                 $controls.prepend( $('.slick-prev'), $('.slick-next'))
 
-                summaryIndex = $('.slick-slide').index(document.getElementById('summary'))
-                if ( summaryIndex !== -1 ) {
+                summaryIndex = $('.slick-slide').index(s)
+                if ( summaryIndex !== -1 && !!s ) {
                     $controls.find('.slick-dots li').eq(summaryIndex).addClass('text-slide')
                 }
             }
