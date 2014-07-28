@@ -152,6 +152,7 @@ define([
                 dotsClass : 'slick-dots project-dots',
                 pauseOnHover : false,
                 onInit : function(slider) {
+                    console.log('init')
                     this.resizeHandler()
                     this.galleryControls(slider)
                     setTimeout( function() {
@@ -165,10 +166,12 @@ define([
                     $chooseSlide = $('#chooseSlide')
                 }.bind(this), // force bind b/c slick binds this to the slick object
                 onBeforeChange : function(s, i) {
+                    console.log('before change')
                     // ideally we should change the dropdown menu here
                     // but we don't know which directin the gallery is moving
                 },
                 onAfterChange : function(s, i) {
+                    console.log('after change')
                     $chooseSlide.val(i)
                     $dot.animate({
                         left: $dots.eq(i).position().left
@@ -178,10 +181,12 @@ define([
         },
 
         next : function() {
+            console.log('this.next')
             this.$el.slickNext()
         },
 
         goToSlide : function(e) {
+            console.log('goToSlide change listener')
             this.$el.slickGoTo( e.target.options.selectedIndex )
         },
 
