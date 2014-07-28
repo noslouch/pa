@@ -153,7 +153,7 @@ define([
                     }, 400 )
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
                     $(window).on('keyup', this.keyHandler)
-                    $('.slick-slide').click(this.next)
+                    $(document).on('click', '.slick-slide', this.next)
                 }.bind(this), // force bind b/c slick binds this to the slick object
                 onBeforeChange : function(s, i) {
                     // ideally we should change the dropdown menu here
