@@ -154,7 +154,7 @@ define([
                     }, 400 )
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
                     $(window).on('keyup', this.keyHandler)
-                    $(document).on('click', '.slick-slide', this.next)
+                    $('.slick-track').on('click', '.slick-slide', this.next)
                     $dot = $('#dot')
                     $dots = $('.slick-dots li')
                     $chooseSlide = $('#chooseSlide')
