@@ -99,7 +99,8 @@ define([
 
         render : function() {
             // initialize custom version of slick slider with this.model.get('media')
-            var media = this.model.get('media')
+            var media = this.model.get('media'),
+                $chooseSlide, $dots, $dot
 
             if ( media.gallery ) {
                 _.each(media.gallery.images, function(image, i) {
@@ -154,15 +155,18 @@ define([
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
                     $(window).on('keyup', this.keyHandler)
                     $(document).on('click', '.slick-slide', this.next)
+                    $dot = $('#dot')
+                    $dots = $('.slick-dots li')
+                    $chooseSlide = $('#chooseSlide')
                 }.bind(this), // force bind b/c slick binds this to the slick object
                 onBeforeChange : function(s, i) {
                     // ideally we should change the dropdown menu here
                     // but we don't know which directin the gallery is moving
                 },
                 onAfterChange : function(s, i) {
-                    $('#chooseSlide').val(i)
-                    $('#dot').animate({
-                        left: $('.slick-dots li').eq(s.currentSlide).position().left
+                    $chooseSlide.val(i)
+                    $dot.animate({
+                        left: $dots.eq(i).position().left
                     })
                 }
             })
