@@ -125,6 +125,11 @@ define([
 
             this.$('.page').imagesLoaded(function(){
                 $( '#' + self.class + '-grid' ).mixItUp({
+                    animation : {
+                        effects : 'fade',
+                        duration : 250,
+                        easing : 'ease-in'
+                    },
                     selectors : {
                         target : '.photo-cell',
                         filter : '',
