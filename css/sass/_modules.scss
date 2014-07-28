@@ -185,10 +185,10 @@ button {
 .dot {
     position: absolute;
     z-index: -1;
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
     background: red;
-    //@include border-radius(6px);
+    @include border-radius(50%);
 }
 
 .active-slide a {
@@ -780,6 +780,7 @@ a.fancybox-prev {
     background: black;
     z-index: 0;
     border-top: 3px solid white;
+    overflow: hidden;
 
     > li {
         background: image-url('small-mask.png');
