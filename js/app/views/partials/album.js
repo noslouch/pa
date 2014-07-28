@@ -179,7 +179,7 @@ define([
         },
 
         goToSlide : function(e) {
-            this.$el.slickGoTo( parseInt(e.currentTarget.value, 10) )
+            this.$el.slickGoTo( e.target.options.selectedIndex )
         },
 
         resizeHandler : function() {
