@@ -147,7 +147,7 @@ define([
             }
 
             $('#showcaseContainer').imagesLoaded().progress(function(il, image) {
-                image.img.classList.add('loaded')
+                image.img.parentElement.classList.add('is-ready')
             })
 
             this.$el.slick({
@@ -164,7 +164,7 @@ define([
                     $dots = $('.slick-dots li')
                     $chooseSlide = $('#chooseSlide')
 
-                    $('.project-controls, .slideshow').addClass('is-ready')
+                    $('.project-controls').addClass('is-ready')
 
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
                     $(window).on('keyup', this.keyHandler)

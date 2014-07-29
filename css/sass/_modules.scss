@@ -705,19 +705,24 @@ a.fancybox-prev {
 
     .slick-track {
         height: 100%;
+    }
+
+    .slick-slide {
         background-color: white;
         background-image: url(/css/img/loader.gif);
         background-position: center center;
         background-repeat: no-repeat;
 
-    }
-
-    .slick-slide {
-        background-color: rgba(255, 255, 255, 0);
-        @include transition(background-color 150ms ease);
-
         img {
             display: none;
+        }
+
+        &.is-ready {
+            background-image: none;
+
+            img {
+                opacity: 1;
+            }
         }
 
     }
@@ -725,12 +730,6 @@ a.fancybox-prev {
     .slick-slide:first-child img,
     .slick-slide.slick-active img {
         display: block;
-    }
-
-    &.is-ready {
-        .slick-slide {
-            background-color: white;
-        }
     }
 }
 
