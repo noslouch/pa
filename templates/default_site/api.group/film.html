@@ -18,7 +18,16 @@
         "url-title": "{url_title}",
         "summary": {exp:json_encode}{summary_film}{/exp:json_encode},
         "thumb" : "{cover_image_film}{image:url:thumb}{/cover_image_film}",
-        "brand_tags" : [],
+        "brand_tags" : 
+        [
+            {categories show_group="21" backspace="14"}
+            { 
+                "title" : "{category_name}",
+                "className" : "{category_url_title}",
+                "logo" : "{category_image}"
+            },
+            {/categories}
+        ],
         "industry_tags" : [],
         "type_tags" :
         [
