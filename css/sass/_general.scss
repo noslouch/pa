@@ -857,11 +857,12 @@ nav.is-notvisible {
 }
 
 p.copyright {
-    font-size: rem-calc(12);
+    font-size: rem-calc(11);
+    letter-spacing: 0.5px;
     color: #999;
     margin: 0;
     position: absolute;
     bottom: -20px;
     right: 0;
-    font-weight: 200;
+    font-weight: 100;
 }
