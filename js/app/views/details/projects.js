@@ -11,6 +11,7 @@ define([
     'app/models/project',
     'app/collections/projects',
     'app/views/partials/album',
+    'foundation'
 ], function( $, Backbone, _, TPL, ProjectModel, Projects, Album ) {
 
     try {
