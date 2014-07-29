@@ -277,7 +277,7 @@ define([
 
             this.delegateEvents()
 
-            if ( this.collection.length ) {
+            if ( this.collection.length && !hidden ) {
                 this.model = this.collection.findWhere({ 'url-title' : urlTitle })
                 setTimeout(this.renderOut, 0)
             } else {
