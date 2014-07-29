@@ -158,12 +158,12 @@ define([
                 dotsClass : 'slick-dots project-dots',
                 pauseOnHover : false,
                 onInit : function(slider) {
+                    this.resizeHandler()
+                    this.galleryControls(slider)
                     $dot = $('#dot')
                     $dots = $('.slick-dots li')
                     $chooseSlide = $('#chooseSlide')
 
-                    this.resizeHandler()
-                    this.galleryControls(slider)
                     $('.project-controls, .slideshow').addClass('is-ready')
 
                     $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
