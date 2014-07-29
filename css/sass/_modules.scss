@@ -700,18 +700,37 @@ a.fancybox-prev {
 }
 
 // SLICK SLIDER
-.slideshow.slick-slider {
+.slideshow {
     margin-bottom: 0;
 
     .slick-track {
         height: 100%;
-    }
-
-    .slick-slide {
         background-color: white;
         background-image: url(/css/img/loader.gif);
         background-position: center center;
         background-repeat: no-repeat;
+
+    }
+
+    .slick-slide {
+        background-color: rgba(255, 255, 255, 0);
+        @include transition(background-color 150ms ease);
+
+        img {
+            display: none;
+        }
+
+    }
+
+    .slick-slide:first-child img,
+    .slick-slide.slick-active img {
+        display: block;
+    }
+
+    &.is-ready {
+        .slick-slide {
+            background-color: white;
+        }
     }
 }
 
@@ -722,7 +741,11 @@ a.fancybox-prev {
     overflow: hidden;
     opacity: 0;
 
-    @include transition(opacity 150ms ease);
+    @include transition(opacity 150ms ease 400ms);
+
+    &.is-ready {
+        opacity: 1;
+    }
 
     .slick-next,
     .slick-prev {

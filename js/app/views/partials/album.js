@@ -158,17 +158,17 @@ define([
                 dotsClass : 'slick-dots project-dots',
                 pauseOnHover : false,
                 onInit : function(slider) {
-                    this.resizeHandler()
-                    this.galleryControls(slider)
-                    setTimeout( function() {
-                        $('.project-controls').addClass('loaded')
-                    }, 400 )
-                    $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
-                    $(window).on('keyup', this.keyHandler)
-                    $('.slick-track').on('click', '.slick-slide', this.next)
                     $dot = $('#dot')
                     $dots = $('.slick-dots li')
                     $chooseSlide = $('#chooseSlide')
+
+                    this.resizeHandler()
+                    this.galleryControls(slider)
+                    $('.project-controls, .slideshow').addClass('is-ready')
+
+                    $(window).on('resize', _.debounce(this.resizeHandler, 50, false))
+                    $(window).on('keyup', this.keyHandler)
+                    $('.slick-track').on('click', '.slick-slide', this.next)
                 }.bind(this), // force bind b/c slick binds this to the slick object
                 onBeforeChange : function(s, i) {
                     // ideally we should change the dropdown menu here
