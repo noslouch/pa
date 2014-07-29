@@ -7,7 +7,7 @@
 
         <link href="{site_url}/js/lib/fancybox/jquery.fancybox.css" rel="stylesheet" />
         <link href="{site_url}/js/lib/jscrollpane/jquery.jscrollpane.css" rel="stylesheet">
-        <link href="{site_url}/css/app.1406660640730597642.css" rel="stylesheet">
+        <link href="{site_url}/css/app.1406661250084598229.css" rel="stylesheet">
     
         <script src="{site_url}/js/lib/modernizr/custom.modernizr.js"></script>
 
@@ -15,34 +15,34 @@
         {exp:ce_cache:it global="yes" id="projects_bootstrap" seconds="2592000"}
         <script>
             var PA = {};
-            PA.projects = {embed="api/projects"};
+            PA.projects = {embed="api/projects"}
         </script>
         {/exp:ce_cache:it}
         {if:elseif segment_1 == 'books'}
         {exp:ce_cache:it global="yes" id="books_bootstrap" seconds="2592000"}
         <script>
             var PA = {};
-            PA.books = {embed="api/books"};
+            PA.books = {embed="api/books"}
         </script>
         {/exp:ce_cache:it}
         {if:elseif segment_1 == 'film'}
         {exp:ce_cache:it global="yes" id="film_bootstrap" seconds="2592000"}
         <script>
             var PA = {};
-            PA.film = {embed="api/film"};
+            PA.film = {embed="api/film"}
         </script>
         {/exp:ce_cache:it}
         {if:elseif segment_1 == 'photography'}
         {exp:ce_cache:it global="yes" id="photography_bootstrap" seconds="2592000"}
         <script>
             var PA = {};
-            PA.photography = {embed="api/photography"};
+            PA.photography = {embed="api/photography"}
         </script>
         {/exp:ce_cache:it}
         {/if}
 
         {if embed:secure != 'y'}
-        <script data-main="/js/init.1406660640730597642.js" src="{site_url}/js/lib/requirejs/require.min.js"></script>
+        <script data-main="/js/init.1406661250084598229.js" src="{site_url}/js/lib/requirejs/require.min.js"></script>
         {/if}
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
