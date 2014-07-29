@@ -728,6 +728,7 @@ a.fancybox-prev {
     }
 
     .slick-slide:first-child img,
+    .slick-slide:last-child img,
     .slick-slide.slick-active img {
         display: block;
     }

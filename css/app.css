@@ -5048,13 +5048,14 @@ a.fancybox-prev:hover span {
 .slideshow .slick-slide.is-ready img {
   opacity: 1;
 }
-/* line 731, sass/_modules.scss */
+/* line 732, sass/_modules.scss */
 .slideshow .slick-slide:first-child img,
+.slideshow .slick-slide:last-child img,
 .slideshow .slick-slide.slick-active img {
   display: block;
 }
 
-/* line 736, sass/_modules.scss */
+/* line 737, sass/_modules.scss */
 .project-controls {
   position: absolute;
   bottom: 3px;
@@ -5067,11 +5068,11 @@ a.fancybox-prev:hover span {
   -o-transition: opacity 150ms ease 400ms;
   transition: opacity 150ms ease 400ms;
 }
-/* line 745, sass/_modules.scss */
+/* line 746, sass/_modules.scss */
 .project-controls.is-ready {
   opacity: 1;
 }
-/* line 750, sass/_modules.scss */
+/* line 751, sass/_modules.scss */
 .project-controls .slick-next,
 .project-controls .slick-prev {
   position: static;
@@ -5079,7 +5080,7 @@ a.fancybox-prev:hover span {
   margin: 0;
   height: 100%;
 }
-/* line 756, sass/_modules.scss */
+/* line 757, sass/_modules.scss */
 .project-controls .slick-next:before,
 .project-controls .slick-prev:before {
   content: '';
@@ -5087,43 +5088,43 @@ a.fancybox-prev:hover span {
   height: 16px;
   display: block;
 }
-/* line 763, sass/_modules.scss */
+/* line 764, sass/_modules.scss */
 .project-controls .slick-next:focus,
 .project-controls .slick-prev:focus {
   background-color: transparent;
 }
-/* line 768, sass/_modules.scss */
+/* line 769, sass/_modules.scss */
 .project-controls .slick-next:before {
   background-position: 0 -278px;
 }
-/* line 772, sass/_modules.scss */
+/* line 773, sass/_modules.scss */
 .project-controls .slick-next:hover {
   background-color: transparent;
 }
-/* line 775, sass/_modules.scss */
+/* line 776, sass/_modules.scss */
 .project-controls .slick-next:hover:before {
   background-position: 0 -167px;
 }
-/* line 780, sass/_modules.scss */
+/* line 781, sass/_modules.scss */
 .project-controls .slick-prev:before {
   background-position: 0 -245px;
 }
-/* line 784, sass/_modules.scss */
+/* line 785, sass/_modules.scss */
 .project-controls .slick-prev:hover {
   background-color: transparent;
 }
-/* line 787, sass/_modules.scss */
+/* line 788, sass/_modules.scss */
 .project-controls .slick-prev:hover:before {
   background-position: 0 -151px;
 }
 
-/* line 795, sass/_modules.scss */
+/* line 796, sass/_modules.scss */
 .project-controls.project-controls--nodots .slick-next,
 .project-controls.project-controls--nodots .slick-prev {
   height: 40px;
 }
 
-/* line 800, sass/_modules.scss */
+/* line 801, sass/_modules.scss */
 .project-dots.slick-dots {
   float: left;
   position: relative;
@@ -5136,7 +5137,7 @@ a.fancybox-prev:hover span {
   border-top: 3px solid white;
   overflow: hidden;
 }
-/* line 812, sass/_modules.scss */
+/* line 813, sass/_modules.scss */
 .project-dots.slick-dots > li {
   background: url('img/small-mask.png?1406566640');
   float: left;
@@ -5144,24 +5145,24 @@ a.fancybox-prev:hover span {
   height: 12px;
   margin: 0;
 }
-/* line 820, sass/_modules.scss */
+/* line 821, sass/_modules.scss */
 .project-dots.slick-dots > .text-slide {
   background: url('img/hamburger-mask.png?1406567558');
   width: 11px;
 }
-/* line 825, sass/_modules.scss */
+/* line 826, sass/_modules.scss */
 .project-dots.slick-dots button {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
-/* line 831, sass/_modules.scss */
+/* line 832, sass/_modules.scss */
 .project-dots.slick-dots button:before {
   content: none;
 }
 
-/* line 837, sass/_modules.scss */
+/* line 838, sass/_modules.scss */
 .project-summary {
   background: white;
   max-width: 50%;
@@ -5169,14 +5170,14 @@ a.fancybox-prev:hover span {
   height: 100%;
   display: table;
 }
-/* line 844, sass/_modules.scss */
+/* line 845, sass/_modules.scss */
 .project-summary p {
   display: table-cell;
   vertical-align: middle;
   font-weight: 100;
 }
 
-/* line 851, sass/_modules.scss */
+/* line 852, sass/_modules.scss */
 .project-image {
   height: auto;
   width: auto;
@@ -5194,7 +5195,7 @@ a.fancybox-prev:hover span {
   transition: opacity 150ms ease;
 }
 
-/* line 865, sass/_modules.scss */
+/* line 866, sass/_modules.scss */
 .project-dropdown {
   min-width: 40px;
   width: auto;
@@ -5205,11 +5206,11 @@ a.fancybox-prev:hover span {
   background-color: white;
   border: none;
 }
-/* line 875, sass/_modules.scss */
+/* line 876, sass/_modules.scss */
 .project-dropdown:hover {
   background-color: white;
 }
-/* line 879, sass/_modules.scss */
+/* line 880, sass/_modules.scss */
 .project-dropdown:focus {
   background-color: white;
   outline: none;
