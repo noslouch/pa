@@ -1,0 +1,53 @@
+{if segment_2 != ''}
+    {exp:channel:entries url_title="{segment_2}" channel="{segment_1}" status="open|private"}
+        {if status == 'Private'}
+        <?php if ( ! $pw = ee()->input->post('pw', true) ) { ?>
+            {embed="includes/header" nav="{segment_1}" secure="y"}
+
+            <form action="{structure:page:url}/private" method="post">
+                <input type="hidden" name="XID" value="{XID_HASH}" /> 
+                <label>Enter your password
+                    <input autofocus type="password" name="pw" id="pw"></label>
+                <input type="submit" value="Submit">
+            </form>
+
+            </div> <!-- .page -->
+            {embed="includes/footer"}
+        <?php } else if ( $pw == '{project-password}'
+                        || $pw == '{photography-password}'
+                        || $pw == '{book-password}'
+                        || $pw == '{film-password}' ) { ?>
+            {embed="includes/header" nav="{segment_1"}
+
+            </div> <!-- .page -->
+            {embed="includes/footer"}
+        <?php } else { ?>
+            {embed="includes/header" nav="{segment_1}" secure='y'}
+
+            <p>Incorrect password. Would you like to try again?</p>
+            <form action="" method="post">
+                <input type="hidden" name="XID" value="{XID_HASH}" /> 
+                <label>Enter your password
+                    <input autofocus type="password" name="pw" id="pw"></label>
+                <input type="submit" value="Submit">
+            </form>
+
+            </div> <!-- .page -->
+            {embed="includes/footer"}
+        <?php } ?>
+        {if:else}
+
+            {embed="includes/header" nav="{segment_1}"}
+
+            </div> <!-- .page -->
+            {embed="includes/footer"}
+
+        {/if}
+    {/exp:channel:entries}
+{if:else}
+    {embed="includes/header" nav="{segment_1}"}
+
+    </div> <!-- .page -->
+    {embed="includes/footer"}
+{/if}
+
