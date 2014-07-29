@@ -7,15 +7,16 @@ define([
 
     var Film = Backbone.Model.extend({
         parse : function( response, options ) {
+            var temp = response['brand_tags']
+                .concat( response['type_tags'], response['industry_tags'] )
+            if ( temp.length ) {
+                response.tags = temp
+            }
             response.htmlDate = this.makeHtmlDate( response.timestamp )
             response.date = this.parseDate( response.timestamp )
             response.path = '/film/' + response['url-title']
             return response
         }
-
-        //path : function() {
-        //    return '/film/' + this.get('url')
-        //}
     })
 
     return Film

@@ -15,9 +15,9 @@ define([
     var GridThumb = Backbone.View.extend({
         tagName : 'div',
         className : function() {
-            if ( this.model.has('type_tags') ) {
+            if ( this.model.has('tags') ) {
                 var tags = []
-                _.each( this.model.get('type_tags'), function(obj) {
+                _.each( this.model.get('tags'), function(obj) {
                     tags.push( obj.className )
                 }, this )
                 return 'photo-cell ' + tags.join(' ')

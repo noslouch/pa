@@ -10,6 +10,8 @@ define([
 
     var Project = Backbone.Model.extend({
         parse : function(response, options){
+            var temp = response['brand_tags']
+                .concat( response['type_tags'], response['industry_tags'] )
 
             response.htmlDate = this.makeHtmlDate( response.timestamp )
             response.date = this.parseDate( response.timestamp )
@@ -25,9 +27,7 @@ define([
             }
 
             response.coverImage = new CoverImage( response.cover, {
-                tags : response['brand_tags']
-                        .concat( response['type_tags'] )
-                        .concat( response['industry_tags'] ),
+                tags : temp.length ? temp : false,
                 year : response.date.year()
             } )
 
