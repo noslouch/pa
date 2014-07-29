@@ -22,6 +22,7 @@ define([
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
+            var PA = PA || {}
             _.bindAll( this, 'render', 'navigate', 'init', 'build' )
 
             if ( PA.projects ) {
@@ -62,12 +63,6 @@ define([
 
             this.render()
 
-            $(document).foundation({
-                tooltip : {
-                    hover_delay: 50,
-                    disable_for_touch: true
-                }
-            })
         },
 
         render : function() {

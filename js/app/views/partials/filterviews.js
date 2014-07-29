@@ -396,6 +396,13 @@ define([
                 }
             }
             this.delegateEvents()
+
+            $(document).foundation({
+                tooltip : {
+                    hover_delay: 50,
+                    disable_for_touch: true
+                }
+            })
         },
 
         mouseDOM : function(options) {
