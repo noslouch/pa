@@ -509,16 +509,19 @@ nav.is-notvisible {
     }
 }
 
-.jumps {
+.jumps-mobile {
+    min-width: 10px;
+    float: right;
+
     select.date,
     select.name {
-        font-size: emCalc(12);
-        font-weight: 400;
+        color: black;
+        padding-right: 15px;
     }
     .name,
     .date {
         display: none;
-        &.show { display: block; }
+        &.active { display: block; }
     }
 
     .wrapper {
@@ -561,6 +564,10 @@ nav.is-notvisible {
 
     button { padding: 0; }
     li { line-height: 1.3; }
+    > select:first-child {
+        width: auto;
+        margin-right: 10px;
+    }
 }
 
 .views {

@@ -139,9 +139,10 @@ define([
     var ProjectUl = FilterMenu.extend({
         tagName : mobile ? 'select' : 'ul',
         className : 'names',
-        render : function() {
+        render : function(ops) {
             var filter,
                 title
+
             switch (this.options.type) {
                 case 'industry':
                     filter = 'industry_tags'
@@ -149,7 +150,7 @@ define([
                     break;
                 case 'type':
                     filter = 'type_tags'
-                    title = 'Project Type'
+                    title = document.location.pathname.match(/^\/film/) ? 'Film Type' : 'Project Type'
                     break;
                 default:
                     break;
@@ -182,7 +183,7 @@ define([
             this.listenTo( this.model, 'change:' + options.type, this.toggleActive )
         },
         render : function(renderOptions) {
-            if (!mobile && renderOptions.jumpTo) {
+            if ( renderOptions.jumpTo ) {
                 this.dateList = new JumpMenu({
                     model : this.model,
                     collection : this.collection,
@@ -199,13 +200,28 @@ define([
                     this.nameList.close()
                     this.dateList.close()
                 }
-                this.$('.wrapper')
-                    .append('<h4>Jump To</h4>')
-                    .append( this.dateList.render() )
-                    .append( this.nameList.render() )
+
+                if ( mobile ) {
+                    this.$('#jumps')
+                        .append( this.dateList.render() )
+                        .append( this.nameList.render() )
+                } else {
+                    this.$('.wrapper')
+                        .append('<h4>Jump To</h4>')
+                        .append( this.dateList.render() )
+                        .append( this.nameList.render() )
+                }
             }
+
+            if ( this.id === 'views' ) {
+                this.toggleActive( this.model, this.model.get('view') )
+            } else {
+                this.toggleActive( this.model, this.model.get('sort') )
+            }
+
             return this.el
         },
+
         toggleActive : function(model, set){
             this.$('button').removeClass('active')
             this.$('#' + set).addClass('active')
@@ -216,121 +232,104 @@ define([
         tagName : mobile ? 'select' : 'ul',
 
         initialize : function(options) {
-            _.bindAll(this, 'toggleActive', 'toggleVisible')
-            this.listenTo( this.model, 'change:sort', this.toggleActive )
-
-            this.listenTo( this.model, 'list:ready', this.toggleVisible )
-            this.listenTo( this.model, 'isotope:ready', this.toggleVisible )
+            _.bindAll( this, 'toggleActive'  )
+            this.listenTo( this.model, 'change:sort', this.render )
+            this.listenTo( this.model, 'list:ready', this.render )
+            this.listenTo( this.model, 'isotope:ready', this.render )
         },
 
         render : function() {
-            var sorted,
-                sortedKeys
-            switch( this.className ) {
-                case 'date':
-                    sorted = this.collection.groupBy(function(model) {
-                        return model.get('date').year()
-                    })
-
-                    sortedKeys = Object.keys(sorted).sort()
-
-                    _.each( sortedKeys, function( key ) {
-                        var model = sorted[key],
-                            date = key
-                        if ( mobile ) {
-                            var $op = $('<option/>').attr('value', date).html(date)
-                            this.$el.append($op)
-                        } else {
-                            var li = document.createElement('li'),
-                                $tag = $('<a />').attr('href', '#' + date).html(date)
-                            $tag.appendTo(li)
-                            this.$el.append(li)
-                        }
-                    }, this )
-                    break;
-                case 'name':
-                    sorted = this.collection.groupBy(function(model) {
-                        return model.get('title')[0]
-                    })
-
-                    _.each( sorted, function( model, first) {
-                        if ( mobile ) {
-                            var $op = $('<option/>').attr('value', first).html(first)
-                            this.$el.append($op)
-                        } else {
-                            var li = document.createElement('li'),
-                                $tag = $('<a />').attr('href', '#' + first).html(first)
-                            $tag.appendTo(li)
-                            this.$el.append(li)
-                        }
-                    }, this )
-                    break;
-            }
-
-            return this.el
-        },
-
-        toggleActive : function( pageModel, sort ) {
-            this.$el.toggleClass( 'active', sort === this.className )
-        },
-
-        toggleVisible : function() {
             var currentView = this.model.get('view'),
-                currentSort = this.model.get('sort'),
-                currentItems,
-                groups
+                groups,
+                currentItems
+
+            this.$el.empty()
+            this.toggleActive( this.model.get('sort') )
 
             if ( currentView === 'cover' ) {
-                currentItems = this.model.cover.$el.data('isotope').filteredItems
+                try {
+                    currentItems = this.model.cover.$el.data('isotope').filteredItems
+                } catch (e) {
+                    // should only run on initial page render
+                    currentItems = this.model.cover.$el.children()
+                }
 
-                if ( this.className === 'name' ) {
+                if ( this.className === 'name' ) { 
                     groups = _.groupBy(currentItems, function(thumb) {
-                        return $(thumb.element).find('.title').text()[0]
+                        if ( thumb.element ) {
+                            return $(thumb.element).find('.title').text()[0]
+                        } else {
+                            return $(thumb).find('.title').text()[0]
+                        }
                     })
 
                     // clear all "jump to" ids
                     $('.thumb').each(function(i, thumb) {
-                        $(this).find('.title')[0].id = ''
+                        $(this).find('.title').attr('id', '')
                     })
 
                     // look at each group and ID first element with letter
                     _.each(groups, function(group, letter) {
-                        $(group[0].element).find('.title')[0].id = letter
+                        if ( group[0].element ) {
+                            $(group[0].element).find('.title').attr('id', letter)
+                        } else {
+                            $(group[0]).find('.title').attr('id', letter)
+                        }
                     })
                 } else {
                     groups = _.groupBy(currentItems, function(thumb) {
-                        return $(thumb.element).find('.year').text()
+                        if ( thumb.element ) {
+                            return $(thumb.element).find('.year').text()
+                        } else {
+                            return $(thumb).find('.year').text()
+                        }
                     })
 
                     // clear all "jump to" ids
                     $('.thumb').each(function(i, thumb) {
-                        $(this).find('.year')[0].id = ''
+                        $(this).find('.year').attr('id' , '')
                     })
 
                     // look at each group and ID first element with year
                     _.each(groups, function(group, year) {
-                        $(group[0].element).find('.year')[0].id = year
+                        if ( group[0].element ) {
+                            $(group[0].element).find('.year').attr('id', year)
+                        } else {
+                            $(group[0]).find('.year').attr('id', year)
+                        }
                     })
+
                 }
 
-                groups = Object.keys(groups)
+                groups = Object.keys(groups).sort()
 
             } else {
                 groups = []
                 $('.list').children().each(function() {
                     groups.push(this.id)
                 })
+
             }
 
-            this.$el.children().each(function(i, el) {
-                var t = el.innerText ? el.innerText : el.textContent
-                if ( groups.indexOf(t) === -1 ) {
-                    el.style.display = 'none'
+            _.each( groups, function(group) {
+                if ( mobile ) {
+                    var $op = $('<option />').attr('value', group).html(group)
+                    this.$el.append($op)
                 } else {
-                    el.style.display = ''
+                    var li = document.createElement('li'),
+                        $tag = $('<a />').attr('href', '#' + group).html(group)
+                    $tag.appendTo(li)
+                    this.$el.append(li)
                 }
-            })
+            }, this )
+
+            return this.el
+        },
+
+        toggleActive : function( sort ) {
+            this.$el.toggleClass( 'active', sort === this.className )
         }
+
     })
 
     // instantiate with a given collection
@@ -350,7 +349,7 @@ define([
             'change .sorts select' : 'filter',
             'change .views select' : 'filter',
             'change .filter select' : 'filter',
-            'change .jumps select' : 'jump'
+            'change #jumps select' : 'jump'
         },
 
         debug : function() {
@@ -471,85 +470,64 @@ define([
         },
 
         touchDOM : function(options) {
-            if ( !options.mixitup ) {
-                //projects detail & landing
-                if ( options.brands ) {
-                    this.$('#brand')
-                        .append( new LogoUl({
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-                }
-                if ( options.industry ) { 
-                    this.$('#industry')
-                        .html( new ProjectUl({
-                            type : 'industry',
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-                }
-                if ( options.types ) {
-                    this.$('#type')
-                        .html( new ProjectUl({
-                            type : 'type',
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-                }
+            // detail & landing
+            if ( options.brands ) {
+                this.$('#brand')
+                    .append( new LogoUl({
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+            } else {
+                this.$('#brand').remove()
+            }
 
-                if ( !this.options.parentSection ) {
-                    // projects landing only
+            if ( options.industry ) {
+                this.$('#industry')
+                    .html( new ProjectUl({
+                        type : 'industry',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+            } else {
+                this.$('#industry').remove()
+            }
+
+            if ( options.types ) {
+                this.$('#type')
+                    .html( new ProjectUl({
+                        type : 'type',
+                        model : this.model,
+                        collection : this.collection
+                    }).render() )
+            } else {
+                this.$('#type').remove()
+            }
+
+            if ( !this.options.parentSection ) {
+                // landing only
+
+                if ( !options.mixitup ) {
+                    this.viewList = new ViewSort({
+                        model : this.model,
+                        id : 'views',
+                        type : 'view',
+                        template : TPL.mobileViews
+                    })
+
                     this.$el
-                        .append('<div class="jumps"></div>')
-                        .append( new ViewSort({
-                            model : this.model,
-                            id : 'sorts',
-                            type : 'sort',
-                            template : TPL.mobileSorts
-                        }).render() )
-                        .append( new ViewSort({
-                            model : this.model,
-                            id : 'views',
-                            type : 'view',
-                            template : TPL.mobileViews
-                        }).render() )
-
-                    this.$('.jumps')
-                        .append( new JumpMenu({
-                            model : this.model,
-                            collection : this.collection,
-                            className : 'date'
-                        }).render() )
-                        .append( new JumpMenu({
-                            model : this.model,
-                            collection : this.collection,
-                            className : 'name'
-                        }).render() )
+                        .append( this.viewList.render({ jumpTo : false }) )
                 }
-            } else if ( options.mixitup ) {
-                // books, film, photography
+
                 this.sortList = new ViewSort({
                     model : this.model,
                     collection : this.collection,
                     id : 'sorts',
                     type : 'sort',
-                    template : TPL.sorts
+                    template : TPL.mobileSorts
                 })
 
-                this.$el.append( this.sortList.render() )
-                if ( options.hasTags ) {
-                    // if there are tags on this section landing
-                    this.$('#type')
-                        .html( new ProjectUl({
-                            type : 'type',
-                            model : this.model,
-                            collection : this.collection
-                        }).render() )
-                }
-            } else {
-                console.log('remove type and all?')
-                // this.$('#type').remove()
-                // this.$('#all').remove()
+                this.$el
+                    .append( this.sortList.render(options) )
             }
         },
 
@@ -583,6 +561,9 @@ define([
 
             e.preventDefault()
 
+            if ( mobile ) {
+                this.$el.find('.filter select').not(e.target).prop('selectedIndex', 0)
+            }
             if ( isDetail ) {
                 if ( !_.isEmpty(this.options.previous) ) {
                     hash = $.param( _.extend(this.options.previous, option) )

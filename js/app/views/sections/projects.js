@@ -44,7 +44,6 @@ define([
             this.spinner = spinner
             this.delegateEvents()
 
-            this.filterbar.render({ mixitup : false, jumpTo : true })
 
             this.$el.addClass('projects')
 
@@ -58,11 +57,14 @@ define([
             hashObj.filter = hashObj.filter || '*'
             hashObj.view = hashObj.view || 'cover'
             hashObj.sort = hashObj.sort || 'name'
+
             this.model.set( hashObj )
+
+
             history.replaceState({}, '', $.param.fragment('', hashObj))
 
             this.render()
-
+            this.filterbar.render({ mixitup : false, jumpTo : true })
         },
 
         render : function() {
@@ -74,7 +76,7 @@ define([
 
             this.lastY = null
 
-            this.filterbar.delegateEvents()
+            //this.filterbar.delegateEvents()
 
             this.spinner.detach()
 

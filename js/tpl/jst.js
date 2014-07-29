@@ -291,7 +291,8 @@ function( _ ){
             '<option>Sort By</option>',
             '<option data-hash="sort=name" id="name">Name</option>',
             '<option data-hash="sort=date" id="date">Date</option>',
-        '</select>'
+        '</select>',
+        '<div class="jumps-mobile" id="jumps"></div>'
     ].join('\n')
 
     JST.views = [
