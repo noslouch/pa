@@ -248,7 +248,7 @@ define([
         render : function( segment, urlTitle, spinner ) {
             this.listenTo( this.collection, 'change:active', this.swap )
             this.$container.html( TPL.profileLinks() ).append( this.viewer.el )
-            $('.inner-header').addClass('profile')
+            $('.inner-header, .page').addClass('profile')
             this.delegateEvents()
             if ( !this.model.get('loaded') ){
                 throw {

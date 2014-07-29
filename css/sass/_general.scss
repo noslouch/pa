@@ -156,23 +156,15 @@ nav.is-notvisible {
 }
 
 .page {
-    padding: rem-calc(110) rem-calc(37) rem-calc(35);
+    padding: rem-calc(120) rem-calc(37) rem-calc(35);
     position: relative;
     overflow: visible;
-
-    // &.home {
-    //     padding-top: 70px;
-    //     padding-bottom: 55px;
-    //     height: 100%;
-    //     overflow: hidden;
-    //     @include transition(padding 150ms ease);
-    // }
 
     &.photography,
     &.books,
     &.film,
     &.projects {
-        padding-top: rem-calc(192);
+        padding-top: rem-calc(142);
         padding-bottom: rem-calc(105);
         height: 100%;
     }
@@ -364,7 +356,7 @@ nav.is-notvisible {
     @include grid-row(collapse);
     text-align: right;
     clear: both;
-    padding-top: 2em;
+    //padding-top: 2em;
     background: white;
 
     button {
@@ -375,6 +367,10 @@ nav.is-notvisible {
     .wrapper {
         text-align: left;
         margin-bottom: 0.75em;
+    }
+
+    .touch & {
+        padding-top: 1rem;
     }
 }
 
@@ -524,14 +520,18 @@ nav.is-notvisible {
         &.active { display: block; }
     }
 
+    .touch .profile & {
+        padding: 0.75em;
+    }
+}
+
+.jumps {
+
     .wrapper {
         min-width: 0;
         width: 100%;
     }
 
-    .touch .profile & {
-        padding: 0.75em;
-    }
 }
 
 
@@ -568,6 +568,14 @@ nav.is-notvisible {
         width: auto;
         margin-right: 10px;
     }
+
+    // &:last-child {
+    //     margin-right: 0;
+
+    //     > select:first-child {
+    //         margin-right: 0;
+    //     }
+    // }
 }
 
 .views {
@@ -857,8 +865,8 @@ nav.is-notvisible {
     .views,
     .jumps,
     .sorts {
-        margin-left: 0;
-        margin-right: 0.5em;
+        // margin-left: 0;
+        // margin-right: 0.5em;
     }
 
 }
