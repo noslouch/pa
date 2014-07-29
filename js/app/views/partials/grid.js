@@ -28,7 +28,7 @@ define([
         template : TPL.gridThumb,
         render : function() {
             var html = this.template({
-                url : this.url(),
+                url : this.model.get('path'),
                 thumb : this.model.get('thumb'),
                 title : this.model.get('title'),
                 summary : this.model.get('summary')
@@ -49,7 +49,7 @@ define([
             if ( this.$el.children().length ) { return this.el }
 
             this.collection.forEach( function(model, index){
-                this.$el.append( new this.Thumb({
+                this.$el.append( new GridThumb({
                     model : model
                 }).render() )
             }, this )
@@ -65,26 +65,31 @@ define([
 
     var GridPage = Backbone.View.extend({
         initialize : function(){
-            _.bindAll( this, 'render', 'navigate', 'filter', 'init' )
+            _.bindAll( this, 'render', 'navigate', 'filter', 'init', 'build')
             var self = this
 
-            this.collection.fetch({
-                success : function(collection) {
-                    self.grid = new self.Grid({
-                        collection : collection,
-                        id : self.class + '-grid'
-                    })
+            if ( !this.collection.length ) {
+                this.collection.url = '/api' + document.location.pathname
+                this.collection.fetch({ success : this.build })
+            } else {
+                this.build()
+            }
 
-                    self.filterbar = new Filter({
-                        el : '#filter-bar',
-                        model : self.model,
-                        collection : collection
-                    })
+        },
 
-                    Backbone.dispatcher.trigger(self.class + ':ready', self)
-                }
+        build : function() {
+            this.grid = new Grid({
+                collection : this.collection,
+                id : this.class + '-grid'
             })
 
+            this.filterbar = new Filter({
+                el : '#filter-bar',
+                model : this.model,
+                collection : this.collection
+            })
+
+            Backbone.dispatcher.trigger(this.class + ':ready', this)
         },
 
         events : {

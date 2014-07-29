@@ -6,10 +6,13 @@ define([
     'backbone',
     'app/models/film'
 ], function( Backbone, Film ) {
-    var Films = Backbone.Collection.extend({
-        model : Film,
-        url : '/api/film'
-    })
+    var PA = window.PA || {}
 
-    return new Films()
+    if ( PA.film ) {
+        return new Backbone.Collection( PA.film, { model : Film, parse : true } )
+    } else {
+        return new Backbone.Collection([], {
+            model : Film
+        })
+    }
 })

@@ -7,10 +7,11 @@
 
         <link href="{site_url}/js/lib/fancybox/jquery.fancybox.css" rel="stylesheet" />
         <link href="{site_url}/js/lib/jscrollpane/jquery.jscrollpane.css" rel="stylesheet">
-        <link href="{site_url}/css/app.1406662917766802383.css" rel="stylesheet">
+        <link href="{site_url}/css/app.1406668159404117054.css" rel="stylesheet">
     
         <script src="{site_url}/js/lib/modernizr/custom.modernizr.js"></script>
 
+        {exp:ifelse parse="inward"}
         {if segment_1 == 'projects' || segment_1 == ''}
         {exp:ce_cache:it global="yes" id="projects_bootstrap" seconds="2592000"}
         <script>
@@ -40,9 +41,10 @@
         </script>
         {/exp:ce_cache:it}
         {/if}
+        {/exp:ifelse}
 
         {if embed:secure != 'y'}
-        <script data-main="/js/init.1406662917766802383.js" src="{site_url}/js/lib/requirejs/require.min.js"></script>
+        <script data-main="/js/init.1406668159404117054.js" src="{site_url}/js/lib/requirejs/require.min.js"></script>
         {/if}
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

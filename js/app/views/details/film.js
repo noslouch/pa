@@ -10,7 +10,8 @@ define([
     'tpl/jst',
     'app/models/film',
     'app/collections/films',
-    'app/views/partials/album'
+    'app/views/partials/album',
+    'foundation'
 ], function( $, Backbone, _, TPL, FilmModel, Films, Album) {
 
     try {

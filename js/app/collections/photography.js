@@ -7,11 +7,13 @@ define([
     'app/models/photo'
 ], function( Backbone, PhotoAlbum ) {
 
-    var PhotoAlbums = Backbone.Collection.extend({
-        model : PhotoAlbum,
-        url : '/api/photography',
-        path : 'photography'
-    })
+    var PA = window.PA || {}
 
-    return new PhotoAlbums()
+    if ( PA.photography ) {
+        return new Backbone.Collection( PA.photography, { model : PhotoAlbum, parse : true })
+    } else {
+        return new Backbone.Collection([], {
+            model : PhotoAlbum
+        })
+    }
 })

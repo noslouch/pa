@@ -7,11 +7,13 @@ define([
     'app/models/book'
 ], function( Backbone, Book ) {
 
-    var Books = Backbone.Collection.extend({
-        model : Book,
-        url : '/api/books',
-        path : 'books'
-    })
+    var PA = window.PA || {}
 
-    return new Books()
+    if ( PA.books ) {
+        return new Backbone.Collection( PA.books, { model : Book, parse : true } )
+    } else {
+        return new Backbone.Collection([], {
+            model : Book
+        })
+    }
 })

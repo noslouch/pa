@@ -22,7 +22,7 @@ define([
 
     var ProjectLanding = Backbone.View.extend({
         initialize : function() {
-            var PA = PA || {}
+            var PA = window.PA || {}
             _.bindAll( this, 'render', 'navigate', 'init', 'build' )
 
             if ( PA.projects ) {
