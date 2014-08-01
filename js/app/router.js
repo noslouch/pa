@@ -145,5 +145,5 @@ define([
 
     Backbone.dispatcher.on('savehistory', router.saveHistory)
 
-    //exports.router = router
+    exports.router = router
 })

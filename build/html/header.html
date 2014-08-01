@@ -61,7 +61,11 @@
             <div class="inner-header">
                 <header class="site-header">
                 <h1 class="logo"><a href="{path='projects'}">Peter Arnell</a></h1>
-                    {if segment_2 && segment_1 != 'profile'}
+                    {if segment_1 == 'profile' ||
+                        segment_1 == 'search' ||
+                        segment_1 == 'contact'}
+                    <nav id="nav">
+                    {if:elseif segment_2}
                     <nav id="nav" class="is-notvisible">
                     {if:else}
                     <nav id="nav">
@@ -76,7 +80,7 @@
                             <li><a href="{path='profile'}"{if embed:nav=='profile'} class="active"{/if} id="profile">Profile</a></li>
                             <li><a href="{path='contact'}"{if embed:nav=='contact'} class="active"{/if} id="contact">Contact</a></li>
                             <!--<li><a href="{path='stream'}"{if embed:nav=='stream'} class="active"{/if} id="stream">Stream</a></li>-->
-                            <!--<li><a href="#" id="search" class="search-icon"></a></li>-->
+                            <li><a href="#" id="search" class="search-icon"></a></li>
                         </ul>
                     </nav>
                     <div id="filter-bar"></div>
@@ -88,15 +92,13 @@
                                 <button class="cancel-search button" id="cancelSearch" type="button">Cancel</button>
                                 <fieldset>
                                     <legend>Advanced Search</legend>
-                                    <label><input type="checkbox" id="search:projects">Projects</label>
-                                    <label><input type="checkbox" id="search:photography">Photography</label>
-                                    <label><input type="checkbox" id="search:film">Film</label>
-                                    <label><input type="checkbox" id="search:press">Press</label>
-                                    <label><input type="checkbox" id="search:paAuthor">Articles by Peter</label>
-                                    <label><input type="checkbox" id="search:paSubject">Articles about Peter</label>
-                                    <label><input type="checkbox" id="search:allArticles">All Articles</label>
-                                    <label><input type="checkbox" id="search:interviews">Interviews</label>
-                                    <label><input type="checkbox" id="search:transcripts">Transcripts</label>
+                                    <label><input type="checkbox" name="channel" value="projects">Projects</label>
+                                    <label><input type="checkbox" name="channel" value="photography">Photography</label>
+                                    <label><input type="checkbox" name="channel" value="film">Film</label>
+                                    <label><input type="checkbox" name="channel" value="books">Books</label>
+                                    <label><input type="checkbox" name="channel" value="press">Press</label>
+                                    <label><input type="checkbox" name="channel" value="articles-by-pa">Articles by Peter</label>
+                                    <label><input type="checkbox" name="channel" value="interviews">Interviews</label>
                                 </fieldset>
                             </div> <!-- .cell-wrapper -->
                         </div> <!-- .table-wrapper -->
