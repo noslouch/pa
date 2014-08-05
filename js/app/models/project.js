@@ -40,6 +40,8 @@ define([
             return '/projects/' + this.get('url-title')
         },
 
+        urlRoot : '/api/project'
+
     })
 
     return Project

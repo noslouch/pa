@@ -1,9 +1,7 @@
 {exp:http_header content_type="application/json"}
 
 {exp:ce_cache:it}
-{if segment_3 == ''}
 [
-{/if}
 {exp:channel:entries
     channel="projects"
     dynamic="off"
@@ -19,7 +17,6 @@
         "title": "{title}",
         "timestamp" : "{year_projects}000",
         "url-title": "{url_title}",
-        "summary": {exp:json_encode}{summary_projects}{/exp:json_encode},
         "cover" : {
             {gallery_projects cover_only="yes"}
             {if image:category == 'landscape'}
@@ -66,47 +63,8 @@
                 "className" : "{category_url_title}"
             },
             {/categories}
-        ],
-        "media": 
-        { 
-            {if gallery_projects}
-            "gallery" : {
-                "images": [
-                {gallery_projects backspace="18" skip_cover="yes" limit="500"}
-                    { 
-                        "lg_thumb" : "{image:url:lg-thumb}",
-                        "thumb" : "{image:url:thumb}",
-                        "url" : "{image:url}",
-                        "caption": {exp:json_encode}{image:description}{/exp:json_encode}
-                    },
-                {/gallery_projects}
-                ]
-            }
-            {/if}
-            {if videos_projects}
-            , "videos" : [
-                {videos_projects backspace="18"}
-                {
-                    "title" : {exp:json_encode}{videos_projects:embed_title}{/exp:json_encode},
-                    "embed" : {exp:json_encode}{videos_projects:embed_code}{/exp:json_encode}
-                },
-                {/videos_projects}
-            ]
-            {/if}
-            {if summary_projects}
-            , "summary" : {exp:json_encode}{summary_projects}{/exp:json_encode}
-            {/if}
-            {if related_links}
-            , "relatedLinks" : [
-                {related_links backspace="12"}
-                    "{item}",
-                {/related_links}
-            ]
-            {/if}
-        }
+        ]
     },
     {/exp:channel:entries}
-{if segment_3 == ''}
 ]
-{/if}
 {/exp:ce_cache:it}
