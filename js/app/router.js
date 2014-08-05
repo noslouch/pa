@@ -16,8 +16,8 @@ define([
         initialize : function() {
             _.bindAll( this, 'debug', 'payload', 'saveHistory' )
             this.on('route', this.saveHistory)
+            this.on('route', this._trackPageview)
             this.history = [document.location]
-            this.bind('all', this._trackPageview)
         },
 
         _trackPageview : function() {
@@ -53,8 +53,6 @@ define([
             try {
                 Chrome.currentView.close()
             } catch(e) {}
-
-            router._trackPageview()
 
             if ( section === '' ) {
                 this.navigate('/projects', { trigger : true })
@@ -135,7 +133,6 @@ define([
 
     Backbone.dispatcher.on('navigate:showcase', function(ops) {
         router.navigate( ops.url, { replace : ops.replace })
-        router._trackPageview()
     })
 
     Backbone.dispatcher.on('profile:navigate', function( path ){

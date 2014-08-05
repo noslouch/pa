@@ -246,10 +246,8 @@ define([
         },
 
         render : function( segment, urlTitle, spinner ) {
-            this.listenTo( this.collection, 'change:active', this.swap )
             this.$container.html( TPL.profileLinks() ).append( this.viewer.el )
             $('.inner-header, .page').addClass('profile')
-            this.delegateEvents()
             if ( !this.model.get('loaded') ){
                 throw {
                     message : 'Profile isn\'t loaded.',
@@ -257,6 +255,8 @@ define([
                 }
             }
 
+            this.listenTo( this.collection, 'change:active', this.swap )
+            this.delegateEvents()
             this.$el.html( this.$container )
             var section = segment ? segment : 'bio'
             this.collection.get(section).activate(urlTitle)
@@ -274,8 +274,7 @@ define([
             _.each( this.collection.where({ active : true }), function(model) {
                 model.deactivate(true)
             })
-            $('.inner-header').removeClass('profile')
-            $('.page').removeClass('profile')
+            $('.inner-header, .page').removeClass('profile')
             $('#filter-bar').empty()
         },
 
