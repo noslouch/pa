@@ -170,20 +170,20 @@ define([
                     $(window).on('keyup', this.keyHandler)
                     $('.slick-track').on('click', '.slick-slide', this.next)
                 }.bind(this), // force bind b/c slick binds this to the slick object
-                onBeforeChange : function(s, i) {
-                    // ideally we should change the dropdown menu here
-                    // but we don't know which directin the gallery is moving
-                },
-                onAfterChange : function(s, i) {
-                    $chooseSlide.val(i)
+                onBeforeChange : function(s, currentIndex, upcomingIndex) {
+                    $chooseSlide.val(upcomingIndex)
                     $dot.animate({
-                        left: $dots.eq(i).position().left
+                        left: $dots.eq(upcomingIndex).position().left
                     })
-                    if ( $dots.eq(i).hasClass('text-slide') ) {
+                    if ( $dots.eq(upcomingIndex).hasClass('text-slide') ) {
                         $dot.addClass('square')
                     } else {
                         $dot.removeClass('square')
                     }
+                    // ideally we should change the dropdown menu here
+                    // but we don't know which directin the gallery is moving
+                },
+                onAfterChange : function(s, i) {
                 }
             })
         },
