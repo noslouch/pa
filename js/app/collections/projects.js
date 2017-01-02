@@ -5,11 +5,11 @@
 define([
     'backbone',
     'underscore',
-    'app/models/project'
-], function( Backbone, _, ProjectModel ) {
+    'app/models/cover'
+], function( Backbone, _, Cover ) {
 
     var Projects = Backbone.Collection.extend({
-        model : ProjectModel,
+        model : Cover,
         url : '/api/projects',
         comparator : function(project) {
             return project.get('title')
